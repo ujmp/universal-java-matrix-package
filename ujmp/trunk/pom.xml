@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <properties>
+      <ujmp.version>0.0.2</ujmp.version>
+    </properties>
+
+	<groupId>org.ujmp</groupId>
+	<artifactId>ujmp</artifactId>
+	<version>${ujmp.version}</version>
+	<packaging>pom</packaging>
+    <url>http://www.ujmp.org</url>
+
+	<build>
+    <resources>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}/src/main/resource/META-INF</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+      </resource>
+    </resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+
+			
+
+		</dependencies>
+	</dependencyManagement>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+        		<inherited>true</inherited>
+		        <configuration>
+		        <outputDirectory>../ujmp/target/${project.version}/docs/${project.name}</outputDirectory>
+		        <reportOutputDirectory>../ujmp/target/${project.version}/docs/${project.name}</reportOutputDirectory>
+		        <linksource>true</linksource>
+		        <links>
+		          <link>http://java.sun.com/javase/6/docs/api/</link>
+		          <link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-core/apidocs</link>
+		        </links>
+		        </configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<distributionManagement>
+		<repository>
+			<id>ujmp-repository</id>
+			<name>UJMP Repository</name>
+			<url>file:/~/.m2/repository</url>
+		</repository>
+	</distributionManagement>
+
+
+</project>

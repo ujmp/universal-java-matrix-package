@@ -23,33 +23,64 @@
 
 package org.ujmp.core.io;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.ujmp.core.Matrix;
 import org.ujmp.core.Matrix.Format;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class LinkMatrix {
+public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 
-	public static Matrix toFile(Format format, File file, Object... parameters)
-			throws MatrixException, IOException {
+	@Override
+	public Format getFormat() {
+		return Format.MDB;
+	}
+
+	@Override
+	public void testExportToFile() throws Exception {
 		try {
-			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
-			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
-			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
-			return matrix;
+			Class.forName("org.ujmp.jackcess.ExportMatrixMDB");
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			return;
 		}
+		super.testExportToFile();
+	}
+
+	@Override
+	public void testExportToStream() throws Exception {
+		try {
+			super.testExportToStream();
+		} catch (MatrixException e) {
+			return;
+		}
+		throw new Exception("this method should not be supported");
+	}
+
+	@Override
+	public void testExportToWriter() throws Exception {
+		try {
+			super.testExportToWriter();
+		} catch (MatrixException e) {
+			return;
+		}
+		throw new Exception("this method should not be supported");
+	}
+
+	@Override
+	public void testExportToClipboard() throws Exception {
+		try {
+			super.testExportToClipboard();
+		} catch (MatrixException e) {
+			return;
+		}
+		throw new Exception("this method should not be supported");
+	}
+
+	@Override
+	public void testExportToString() throws Exception {
+		try {
+			super.testExportToString();
+		} catch (MatrixException e) {
+			return;
+		}
+		throw new Exception("this method should not be supported");
 	}
 
 }

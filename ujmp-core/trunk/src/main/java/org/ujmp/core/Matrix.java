@@ -51,9 +51,10 @@ import org.ujmp.core.io.ExportMatrixInterface;
  * @log $Log$
  * 
  */
-public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateFunctions, MatrixEntryGettersAndSetters,
-		BasicMatrixProperties, CanPerformCalculations, CanBeReshaped, DistanceMeasures, Comparable<Matrix>, Cloneable,
-		Clearable, HasAnnotation, HasLabel, HasGUIObject {
+public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateFunctions,
+		MatrixEntryGettersAndSetters, BasicMatrixProperties, CanPerformCalculations, CanBeReshaped,
+		DistanceMeasures, Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel,
+		HasGUIObject {
 
 	/**
 	 * Defines the object types that can be stored in a Matrix. Different matrix
@@ -86,7 +87,7 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 	 * Import and export formats that are supported.
 	 */
 	public enum Format {
-		CSV, TXT, M, MAT, R, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF
+		CSV, TXT, M, MAT, MDB, R, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF
 	};
 
 	public Matrix clone();

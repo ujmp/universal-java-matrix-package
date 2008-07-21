@@ -25,31 +25,16 @@ package org.ujmp.core.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.Format;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrices.io.WaveMatrix;
 
-public abstract class LinkMatrix {
+public class LinkMatrixWAV {
 
-	public static Matrix toFile(Format format, File file, Object... parameters)
-			throws MatrixException, IOException {
-		try {
-			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
-			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
-			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
-			return matrix;
-		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
-		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
-		}
+	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
+			IOException {
+		return new WaveMatrix(file);
 	}
 
 }

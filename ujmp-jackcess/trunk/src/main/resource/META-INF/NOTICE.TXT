@@ -20,9 +20,3 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA  02110-1301  USA
  */
-
-package org.ujmp.jackcess;
-
-public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
-
-}

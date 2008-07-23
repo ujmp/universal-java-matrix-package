@@ -21,8 +21,25 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jackcess;
+package org.ujmp.core.io;
 
-public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
+import java.io.File;
+import java.lang.reflect.Method;
+
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
+
+public class ImportMatrixMDB {
+
+	public static Matrix fromFile(File file, Object... parameters) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jackcess.ImportMatrixMDB");
+			Method method = c.getMethod("fromFile", new Class[] { File.class, Object[].class });
+			Matrix matrix = (Matrix) method.invoke(null, file, parameters);
+			return matrix;
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
 
 }

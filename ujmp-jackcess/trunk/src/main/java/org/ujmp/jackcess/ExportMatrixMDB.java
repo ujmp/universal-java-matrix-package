@@ -23,6 +23,18 @@
 
 package org.ujmp.jackcess;
 
-public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
+import java.io.File;
+import java.io.IOException;
+
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
+
+public class ExportMatrixMDB {
+
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
+			MatrixException {
+		DenseJackcessMatrix2D mdb = new DenseJackcessMatrix2D(file, matrix);
+		mdb.close();
+	}
 
 }

@@ -76,6 +76,12 @@
 		        <version>${ujmp.version}</version>
 				<scope>compile</scope>
 		    </dependency>
+		    <dependency>
+      			<groupId>org.ujmp</groupId>
+		        <artifactId>ujmp-vecmath</artifactId>
+		        <version>${ujmp.version}</version>
+				<scope>compile</scope>
+		    </dependency>
 
 			<dependency>
 				<groupId>junit</groupId>
@@ -171,6 +177,12 @@
 				<groupId>xerbla</groupId>
 				<artifactId>xerbla</artifactId>
 				<version>0.8</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>vecmath</groupId>
+				<artifactId>vecmath</artifactId>
+				<version>1.5.1</version>
 				<scope>compile</scope>
 			</dependency>
 			

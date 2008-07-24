@@ -29,7 +29,7 @@ public class AllTests extends TestSuite {
 
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestJamaMatrix.class);
+		suite.addTestSuite(TestJamaDenseDoubleMatrix2D.class);
 		return suite;
 	}
 

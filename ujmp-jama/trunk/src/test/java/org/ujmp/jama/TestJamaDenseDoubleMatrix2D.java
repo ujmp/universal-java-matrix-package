@@ -27,7 +27,7 @@ import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class TestJamaMatrix extends AbstractMatrixTest {
+public class TestJamaDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {

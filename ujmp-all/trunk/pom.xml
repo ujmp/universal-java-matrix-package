@@ -29,6 +29,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-colt</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jama</artifactId>
+		</dependency>
 	
 		<dependency>
 			<groupId>junit</groupId>

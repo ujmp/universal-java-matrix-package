@@ -58,6 +58,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-jama</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>junit</groupId>
@@ -93,6 +99,12 @@
 				<groupId>colt</groupId>
 				<artifactId>colt</artifactId>
 				<version>1.2.0</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>jama</groupId>
+				<artifactId>jama</artifactId>
+				<version>1.0.2</version>
 				<scope>compile</scope>
 			</dependency>
 			

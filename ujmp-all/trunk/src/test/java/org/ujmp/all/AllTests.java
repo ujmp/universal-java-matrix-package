@@ -31,6 +31,7 @@ public class AllTests extends TestSuite {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTest(org.ujmp.core.AllTests.suite());
 		suite.addTest(org.ujmp.colt.AllTests.suite());
+		suite.addTest(org.ujmp.jama.AllTests.suite());
 		suite.addTest(org.ujmp.jackcess.AllTests.suite());
 		return suite;
 	}

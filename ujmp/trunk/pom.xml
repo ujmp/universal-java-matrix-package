@@ -64,6 +64,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+      			<groupId>org.ujmp</groupId>
+		        <artifactId>ujmp-jmatrices</artifactId>
+		        <version>${ujmp.version}</version>
+				<scope>compile</scope>
+		    </dependency>
 
 			<dependency>
 				<groupId>junit</groupId>
@@ -107,6 +113,12 @@
 				<version>1.0.2</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+      			<groupId>jmatrices</groupId>
+		        <artifactId>jmatrices</artifactId>
+		        <version>0.6</version>
+				<scope>compile</scope>
+		    </dependency>
 			
 			
 

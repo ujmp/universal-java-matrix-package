@@ -52,6 +52,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-colt</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>junit</groupId>
@@ -81,6 +87,12 @@
 				<groupId>jackcess</groupId>
 				<artifactId>jackcess</artifactId>
 				<version>1.1.15</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>colt</groupId>
+				<artifactId>colt</artifactId>
+				<version>1.2.0</version>
 				<scope>compile</scope>
 			</dependency>
 			

@@ -37,6 +37,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatrices</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-mtj</artifactId>
+		</dependency>
 	
 		<dependency>
 			<groupId>junit</groupId>

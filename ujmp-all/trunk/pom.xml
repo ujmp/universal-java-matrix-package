@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp-all</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>ujmp-all</name>
 		
 	<parent>
@@ -14,6 +14,7 @@
 		<relativePath>../ujmp</relativePath>
 	</parent>
 	
+
 	
 	<dependencies>
 	
@@ -59,5 +60,17 @@
 			<artifactId>junit</artifactId>
 		</dependency>		
 	</dependencies>
+
+  <modules>
+    <module>../ujmp-core</module>
+    <module>../ujmp-colt</module>
+    <module>../ujmp-jackcess</module>
+    <module>../ujmp-jama</module>
+    <module>../ujmp-jexcelapi</module>
+    <module>../ujmp-jmatio</module>
+    <module>../ujmp-jmatrices</module>
+    <module>../ujmp-mtj</module>
+    <module>../ujmp-vecmath</module>
+  </modules>
 
 </project>

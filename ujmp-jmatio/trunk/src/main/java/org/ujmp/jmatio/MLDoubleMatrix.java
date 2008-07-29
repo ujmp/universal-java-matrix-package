@@ -50,13 +50,12 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapp
 	}
 
 	public MLDoubleMatrix(long... size) {
-		this.matrix = new MLDouble("matrix" + System.nanoTime(), new double[(int) size[ROW]][(int) size[COLUMN]]);
-		setAnnotation(new MLAnnotation(matrix));
+		this.matrix = new MLDouble("matrix" + System.nanoTime(),
+				new double[(int) size[ROW]][(int) size[COLUMN]]);
 	}
 
 	public MLDoubleMatrix(MLDouble matrix) {
 		this.matrix = matrix;
-		setAnnotation(new MLAnnotation(matrix));
 	}
 
 	public long[] getSize() {
@@ -84,7 +83,6 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapp
 		String name = (String) s.readObject();
 		double[][] values = (double[][]) s.readObject();
 		matrix = new MLDouble(name, values);
-		((MLAnnotation) getAnnotation()).setMLArray(matrix);
 	}
 
 	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {

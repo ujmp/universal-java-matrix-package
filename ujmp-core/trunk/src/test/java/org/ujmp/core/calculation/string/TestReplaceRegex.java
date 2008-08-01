@@ -31,8 +31,8 @@ import junit.framework.TestCase;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.calculation.entrywise.replace.ReplaceRegex;
+import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.doublecalculation.entrywise.replace.ReplaceRegex;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestReplaceRegex extends TestCase {

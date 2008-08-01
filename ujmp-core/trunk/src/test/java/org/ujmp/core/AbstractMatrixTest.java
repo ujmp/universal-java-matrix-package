@@ -29,8 +29,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.AbstractDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.SerializationUtil;

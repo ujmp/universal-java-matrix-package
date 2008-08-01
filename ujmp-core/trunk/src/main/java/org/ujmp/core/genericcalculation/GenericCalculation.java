@@ -21,41 +21,13 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.general.solving;
+package org.ujmp.core.genericcalculation;
 
-import org.ujmp.core.Matrix;
+import org.ujmp.core.doublecalculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface SolvingCalculations {
+public interface GenericCalculation<A> extends Calculation {
 
-	/**
-	 * Calculates the inverse of the Matrix using either LUDecomposition (for
-	 * square matrices) or QRDecomposition (otherwise).
-	 * 
-	 * @return Inverse of the matrix
-	 */
-	public Matrix inv() throws MatrixException;
-
-	/**
-	 * Calculates the pseudo inverse of the Matrix using Singular Value
-	 * Decomposition.
-	 * 
-	 * @return Pseudo inverse of the Matrix
-	 */
-	public Matrix pinv() throws MatrixException;
-
-	/**
-	 * Projects the matrix into the space of the principal components.
-	 * 
-	 * @return Matrix projected on principal components.
-	 */
-	public Matrix princomp() throws MatrixException;
-
-	/**
-	 * Calculates the singular value decomposition of the matrix.
-	 * 
-	 * @return Singular value decomposition of the matrix.
-	 */
-	public Matrix[] svd() throws MatrixException;
+	public A getObject(long... coordinates) throws MatrixException;
 
 }

@@ -30,9 +30,9 @@ import java.util.TreeSet;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
-import org.ujmp.core.doublecalculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix2D;
+import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 import org.ujmp.core.util.Sortable;
 
 /**

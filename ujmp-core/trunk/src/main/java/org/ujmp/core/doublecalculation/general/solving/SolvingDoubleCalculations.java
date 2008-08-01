@@ -21,15 +21,41 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.general;
+package org.ujmp.core.doublecalculation.general.solving;
 
-import org.ujmp.core.doublecalculation.general.discretize.DiscretizeCalculations;
-import org.ujmp.core.doublecalculation.general.misc.MiscGeneralCalculations;
-import org.ujmp.core.doublecalculation.general.missingvalues.MissingValueCalculations;
-import org.ujmp.core.doublecalculation.general.solving.SolvingCalculations;
-import org.ujmp.core.doublecalculation.general.statistical.StatisticalCalculations;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 
-public interface GeneralCalculations extends StatisticalCalculations, SolvingCalculations, MissingValueCalculations,
-		MiscGeneralCalculations, DiscretizeCalculations {
+public interface SolvingDoubleCalculations {
+
+	/**
+	 * Calculates the inverse of the Matrix using either LUDecomposition (for
+	 * square matrices) or QRDecomposition (otherwise).
+	 * 
+	 * @return Inverse of the matrix
+	 */
+	public Matrix inv() throws MatrixException;
+
+	/**
+	 * Calculates the pseudo inverse of the Matrix using Singular Value
+	 * Decomposition.
+	 * 
+	 * @return Pseudo inverse of the Matrix
+	 */
+	public Matrix pinv() throws MatrixException;
+
+	/**
+	 * Projects the matrix into the space of the principal components.
+	 * 
+	 * @return Matrix projected on principal components.
+	 */
+	public Matrix princomp() throws MatrixException;
+
+	/**
+	 * Calculates the singular value decomposition of the matrix.
+	 * 
+	 * @return Singular value decomposition of the matrix.
+	 */
+	public Matrix[] svd() throws MatrixException;
 
 }

@@ -21,13 +21,14 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation;
+package org.ujmp.core.stringcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractStringCalculation extends AbstractGenericCalculation<String> {

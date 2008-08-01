@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
-import org.ujmp.core.doublecalculation.AbstractStringCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.stringcalculation.AbstractStringCalculation;
 
 public class ReplaceRegex extends AbstractStringCalculation {
 	private static final long serialVersionUID = 8158807887609103123L;

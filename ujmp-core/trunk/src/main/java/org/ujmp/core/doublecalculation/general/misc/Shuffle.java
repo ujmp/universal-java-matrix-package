@@ -28,8 +28,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 
 public class Shuffle extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -6935375114060680121L;

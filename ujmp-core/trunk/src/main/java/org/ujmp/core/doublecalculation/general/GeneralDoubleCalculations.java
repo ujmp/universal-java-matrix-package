@@ -21,18 +21,15 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise;
+package org.ujmp.core.doublecalculation.general;
 
-import org.ujmp.core.doublecalculation.entrywise.basic.BasicEntrywiseCalculations;
-import org.ujmp.core.doublecalculation.entrywise.creators.CreatorCalculations;
-import org.ujmp.core.doublecalculation.entrywise.hyperbolic.HyperbolicCalculations;
-import org.ujmp.core.doublecalculation.entrywise.misc.MiscEntrywiseCalculations;
-import org.ujmp.core.doublecalculation.entrywise.replace.ReplaceCalculations;
-import org.ujmp.core.doublecalculation.entrywise.rounding.RoundingCalculations;
-import org.ujmp.core.doublecalculation.entrywise.trigonometric.TrigonometricCalculations;
+import org.ujmp.core.doublecalculation.general.discretize.DiscretizeCalculations;
+import org.ujmp.core.doublecalculation.general.misc.MiscGeneralDoubleCalculations;
+import org.ujmp.core.doublecalculation.general.missingvalues.MissingValueDoubleCalculations;
+import org.ujmp.core.doublecalculation.general.solving.SolvingDoubleCalculations;
+import org.ujmp.core.doublecalculation.general.statistical.StatisticalDoubleCalculations;
 
-public interface EntrywiseCalculations extends BasicEntrywiseCalculations, RoundingCalculations,
-		HyperbolicCalculations, TrigonometricCalculations, CreatorCalculations, ReplaceCalculations,
-		MiscEntrywiseCalculations {
+public interface GeneralDoubleCalculations extends StatisticalDoubleCalculations, SolvingDoubleCalculations, MissingValueDoubleCalculations,
+		MiscGeneralDoubleCalculations, DiscretizeCalculations {
 
 }

@@ -27,7 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface MissingValueCalculations {
+public interface MissingValueDoubleCalculations {
 
 	/**
 	 * Adds a specified amount of missing values (Double.NaN) to the Matrix

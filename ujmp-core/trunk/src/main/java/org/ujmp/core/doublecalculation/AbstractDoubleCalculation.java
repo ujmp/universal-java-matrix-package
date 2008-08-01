@@ -28,6 +28,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
 public abstract class AbstractDoubleCalculation extends AbstractGenericCalculation<Double> {
 

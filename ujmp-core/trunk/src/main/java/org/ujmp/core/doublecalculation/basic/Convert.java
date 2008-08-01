@@ -28,8 +28,8 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.AnnotationTransfer;
 import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.doublecalculation.AbstractGenericCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
 public class Convert extends AbstractGenericCalculation {
 	private static final long serialVersionUID = 6393277198816850597L;

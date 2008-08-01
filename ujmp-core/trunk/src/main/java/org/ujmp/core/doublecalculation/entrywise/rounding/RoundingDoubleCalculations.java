@@ -21,45 +21,44 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise.hyperbolic;
+package org.ujmp.core.doublecalculation.entrywise.rounding;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface HyperbolicCalculations {
-
-	// sinh, cosh, tanh, cotanh, sech, cosech
-	// asinh, acosh, atanh, acotanh, asech, acosech
+public interface RoundingDoubleCalculations {
 
 	/**
-	 * Calculates the hyperbolic sinus of all entries in the matrix.
+	 * Returns a matrix with all entries rounded to integer values.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @return Matrix with hyperbolic sinus values
+	 * @return Matrix with rounded values
 	 */
-	public Matrix sinh(Ret returnType) throws MatrixException;
+	public Matrix round(Ret returnType) throws MatrixException;
 
 	/**
-	 * Calculates the hyperbolic cosinus of all entries in the matrix.
+	 * Returns a matrix with all entries rounded down to the next integer. The
+	 * result is a new Matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @return Matrix with hyperbolic cosinus values
+	 * @return Matrix with rounded values
 	 */
-	public Matrix cosh(Ret returnType) throws MatrixException;
+	public Matrix floor(Ret returnType) throws MatrixException;
 
 	/**
-	 * Calculates the hyperbolic tangens of all entries in the matrix.
+	 * Returns a matrix with all entries rounded up to the next integer. The
+	 * result is a new Matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @return Matrix with hyperbolic tangens values
+	 * @return Matrix with rounded values
 	 */
-	public Matrix tanh(Ret returnType) throws MatrixException;
+	public Matrix ceil(Ret returnType) throws MatrixException;
 
 }

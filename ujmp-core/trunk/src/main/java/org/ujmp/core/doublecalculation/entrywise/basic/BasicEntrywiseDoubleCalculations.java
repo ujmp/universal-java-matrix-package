@@ -27,7 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface BasicEntrywiseCalculations {
+public interface BasicEntrywiseDoubleCalculations {
 
 	/**
 	 * Calculates the absolute values of all entries in a Matrix. Positive

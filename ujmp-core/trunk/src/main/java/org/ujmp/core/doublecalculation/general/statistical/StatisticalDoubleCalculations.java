@@ -27,7 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface StatisticalCalculations {
+public interface StatisticalDoubleCalculations {
 
 	/**
 	 * Calculates the mimimum of the values in the matrix either rowwise,

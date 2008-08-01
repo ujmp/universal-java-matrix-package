@@ -26,7 +26,7 @@ package org.ujmp.core.doublecalculation.entrywise.creators;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface CreatorCalculations {
+public interface CreatorDoubleCalculations {
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to zero.

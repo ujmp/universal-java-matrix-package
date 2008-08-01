@@ -26,9 +26,9 @@ package org.ujmp.core.doublecalculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Calc;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
-import org.ujmp.core.doublecalculation.basic.BasicCalculations;
-import org.ujmp.core.doublecalculation.entrywise.EntrywiseCalculations;
-import org.ujmp.core.doublecalculation.general.GeneralCalculations;
+import org.ujmp.core.doublecalculation.basic.BasicDoubleCalculations;
+import org.ujmp.core.doublecalculation.entrywise.EntrywiseDoubleCalculations;
+import org.ujmp.core.doublecalculation.general.GeneralDoubleCalculations;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
@@ -62,7 +62,7 @@ import org.ujmp.core.exceptions.MatrixException;
  * @author Holger Arndt
  *
  */
-public interface CanPerformCalculations extends BasicCalculations, EntrywiseCalculations, GeneralCalculations {
+public interface CanPerformCalculations extends BasicDoubleCalculations, EntrywiseDoubleCalculations, GeneralDoubleCalculations {
 
 	public Matrix calcNew(Calculation calculation) throws MatrixException;
 

@@ -26,8 +26,8 @@ package org.ujmp.core.doublecalculation.entrywise.creators;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
-import org.ujmp.core.doublecalculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 
 public class Fill extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -3477957135967841340L;

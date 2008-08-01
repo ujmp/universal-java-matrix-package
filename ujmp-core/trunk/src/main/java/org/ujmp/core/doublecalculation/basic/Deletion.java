@@ -27,8 +27,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 

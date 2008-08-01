@@ -21,49 +21,42 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise.trigonometric;
+package org.ujmp.core.doublecalculation.entrywise.replace;
+
+import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-/**
- * This interface lists all trigonometric functions that can be calculated on a
- * Matrix.
- */
-public interface TrigonometricCalculations {
-
-	// sin, cos, tan, cot, sec, cosec
-	// asin, acos, atan, acot, asec, acosec
+public interface ReplaceStringCalculations {
 
 	/**
-	 * Calculates the sinus of all entries in the matrix.
+	 * Replaces matching text in every entry of the matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @return Matrix with sinus values
+	 * @param search
+	 *            Regular expression to search for
+	 * @param replacement
+	 *            Replacement String
+	 * @return matrix with modified entries
 	 */
-	public Matrix sin(Ret returnType) throws MatrixException;
+	public Matrix replaceRegex(Ret returnType, String search, String replacement) throws MatrixException;
 
 	/**
-	 * Calculates the cosinus of all entries in the matrix.
+	 * Replaces matching text in every entry of the matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @return Matrix with cosinus values
+	 * @param search
+	 *            Regular expression pattern to search for
+	 * @param replacement
+	 *            Replacement String
+	 * @return matrix with modified entries
 	 */
-	public Matrix cos(Ret returnType) throws MatrixException;
-
-	/**
-	 * Calculates the tangens of all entries in the matrix.
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @return Matrix with tangens values
-	 */
-	public Matrix tan(Ret returnType) throws MatrixException;
+	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement) throws MatrixException;
 
 }

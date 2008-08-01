@@ -21,42 +21,49 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise.replace;
-
-import java.util.regex.Pattern;
+package org.ujmp.core.doublecalculation.entrywise.trigonometric;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface ReplaceCalculations {
+/**
+ * This interface lists all trigonometric functions that can be calculated on a
+ * Matrix.
+ */
+public interface TrigonometricDoubleCalculations {
+
+	// sin, cos, tan, cot, sec, cosec
+	// asin, acos, atan, acot, asec, acosec
 
 	/**
-	 * Replaces matching text in every entry of the matrix.
+	 * Calculates the sinus of all entries in the matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @param search
-	 *            Regular expression to search for
-	 * @param replacement
-	 *            Replacement String
-	 * @return matrix with modified entries
+	 * @return Matrix with sinus values
 	 */
-	public Matrix replaceRegex(Ret returnType, String search, String replacement) throws MatrixException;
+	public Matrix sin(Ret returnType) throws MatrixException;
 
 	/**
-	 * Replaces matching text in every entry of the matrix.
+	 * Calculates the cosinus of all entries in the matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @param search
-	 *            Regular expression pattern to search for
-	 * @param replacement
-	 *            Replacement String
-	 * @return matrix with modified entries
+	 * @return Matrix with cosinus values
 	 */
-	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement) throws MatrixException;
+	public Matrix cos(Ret returnType) throws MatrixException;
+
+	/**
+	 * Calculates the tangens of all entries in the matrix.
+	 * 
+	 * @param returnType
+	 *            Select whether a new or a linked Matrix is returned, or if the
+	 *            operation is performed on the original Matrix
+	 * @return Matrix with tangens values
+	 */
+	public Matrix tan(Ret returnType) throws MatrixException;
 
 }

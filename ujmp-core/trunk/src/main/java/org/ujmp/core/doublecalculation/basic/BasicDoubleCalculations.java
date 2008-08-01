@@ -31,7 +31,7 @@ import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface BasicCalculations {
+public interface BasicDoubleCalculations {
 
 	/**
 	 * Creates a copy of the matrix. Annotation is linked by default.

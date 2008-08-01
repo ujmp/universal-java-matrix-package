@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation;
+package org.ujmp.core.genericcalculation;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +31,9 @@ import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublecalculation.Calculation;
+import org.ujmp.core.doublecalculation.Calculation.Calc;
+import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.basic.Convert;
 import org.ujmp.core.doublecalculation.basic.Divide;
 import org.ujmp.core.doublecalculation.basic.Minus;

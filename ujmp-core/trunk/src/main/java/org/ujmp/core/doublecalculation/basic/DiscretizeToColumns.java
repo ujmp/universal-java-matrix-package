@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 import org.ujmp.core.util.MathUtil;
 
 public class DiscretizeToColumns extends AbstractObjectCalculation {

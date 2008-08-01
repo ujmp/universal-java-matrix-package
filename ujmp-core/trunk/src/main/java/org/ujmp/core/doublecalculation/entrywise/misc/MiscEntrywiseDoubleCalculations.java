@@ -21,12 +21,8 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation;
+package org.ujmp.core.doublecalculation.entrywise.misc;
 
-import org.ujmp.core.exceptions.MatrixException;
-
-public interface GenericCalculation<A> extends Calculation {
-
-	public A getObject(long... coordinates) throws MatrixException;
+public interface MiscEntrywiseDoubleCalculations {
 
 }

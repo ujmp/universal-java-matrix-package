@@ -27,7 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface MiscGeneralCalculations {
+public interface MiscGeneralDoubleCalculations {
 
 	/**
 	 * Subtracts the mean from the matrix.

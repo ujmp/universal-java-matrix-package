@@ -26,9 +26,9 @@ package org.ujmp.vecmath;
 import javax.vecmath.GMatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrices.stubs.AbstractDenseDoubleMatrix2D;
 
 public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<GMatrix> {
 	private static final long serialVersionUID = 3792684800581150214L;

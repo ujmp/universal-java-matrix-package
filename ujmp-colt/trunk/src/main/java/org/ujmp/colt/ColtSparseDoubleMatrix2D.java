@@ -30,9 +30,9 @@ import java.util.Set;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrices.stubs.AbstractSparseDoubleMatrix2D;
 
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 

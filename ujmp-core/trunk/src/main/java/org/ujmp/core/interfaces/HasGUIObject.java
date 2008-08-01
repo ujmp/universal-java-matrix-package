@@ -23,6 +23,8 @@
 
 package org.ujmp.core.interfaces;
 
+import javax.swing.JFrame;
+
 /**
  * Declares, that an object suitable for displaying on the screen with
  * listeners, icon, etc. can be returned.
@@ -55,6 +57,6 @@ public interface HasGUIObject {
 	 * This method will show the object in a JFrame on the screen.
 	 * 
 	 */
-	public void showGUI();
+	public JFrame showGUI();
 
 }

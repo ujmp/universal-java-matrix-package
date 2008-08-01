@@ -31,8 +31,8 @@ import junit.framework.TestCase;
 
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.AbstractDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.stubs.AbstractDoubleMatrix;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest extends TestCase {

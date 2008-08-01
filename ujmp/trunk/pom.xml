@@ -107,6 +107,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-jmathplot</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 		    
 		    
 
@@ -222,6 +228,12 @@
      			  <groupId>jmatio</groupId>
 			      <artifactId>jmatio</artifactId>
 			      <version>0.2.2</version>
+				  <scope>compile</scope>
+		    </dependency>
+		    <dependency>
+     			  <groupId>jmathplot</groupId>
+			      <artifactId>jmathplot</artifactId>
+			      <version>20070905</version>
 				  <scope>compile</scope>
 		    </dependency>
 			

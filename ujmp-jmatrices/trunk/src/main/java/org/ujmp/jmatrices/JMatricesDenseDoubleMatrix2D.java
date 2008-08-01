@@ -24,9 +24,9 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrices.stubs.AbstractDenseDoubleMatrix2D;
 
 public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<org.jmatrices.dbl.Matrix> {
 	private static final long serialVersionUID = 513251881654621L;

@@ -29,6 +29,7 @@ public class AllTests extends TestSuite {
 
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
+		suite.addTestSuite(MatrixFactoryTest.class);
 		suite.addTest(org.ujmp.core.calculation.AllTests.suite());
 		suite.addTest(org.ujmp.core.collections.AllTests.suite());
 		suite.addTest(org.ujmp.core.implementations.AllTests.suite());

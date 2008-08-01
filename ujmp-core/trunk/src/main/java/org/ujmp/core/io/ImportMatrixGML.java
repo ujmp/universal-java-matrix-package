@@ -25,8 +25,8 @@ package org.ujmp.core.io;
 
 import java.io.File;
 
-import org.ujmp.core.matrices.graph.DefaultGraphMatrix;
-import org.ujmp.core.matrices.stubs.AbstractGraphMatrix;
+import org.ujmp.core.graphmatrix.AbstractGraphMatrix;
+import org.ujmp.core.graphmatrix.DefaultGraphMatrix;
 
 public abstract class ImportMatrixGML {
 

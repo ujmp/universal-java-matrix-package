@@ -61,7 +61,6 @@ import org.ujmp.core.calculation.general.statistical.Sum;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.basic.GenericCalculationMatrix;
 
 public abstract class AbstractGenericCalculation<A> implements GenericCalculation<A> {
 

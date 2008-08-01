@@ -25,8 +25,8 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.CommonsMathRealMatrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.misc.CommonsMathRealMatrix;
 
 public class TestCommonsMathRealMatrix extends AbstractMatrixTest {
 

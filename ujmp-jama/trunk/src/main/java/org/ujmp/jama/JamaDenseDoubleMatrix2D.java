@@ -23,9 +23,9 @@
 
 package org.ujmp.jama;
 
+import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrices.stubs.AbstractDenseDoubleMatrix2D;
 
 import Jama.Matrix;
 

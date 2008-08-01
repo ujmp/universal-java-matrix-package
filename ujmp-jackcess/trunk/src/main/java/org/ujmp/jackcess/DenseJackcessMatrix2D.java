@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.stubs.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
 import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.ColumnBuilder;

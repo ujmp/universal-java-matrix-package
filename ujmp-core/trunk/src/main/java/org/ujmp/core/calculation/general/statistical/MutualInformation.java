@@ -27,14 +27,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ujmp.core.DoubleMatrix2D;
-import org.ujmp.core.IntMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.basic.DefaultDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class MutualInformation extends AbstractDoubleCalculation {

@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.io.CSVMatrix;
+import org.ujmp.core.stringmatrix.CSVMatrix;
 
 public class LinkMatrixCSV {
 

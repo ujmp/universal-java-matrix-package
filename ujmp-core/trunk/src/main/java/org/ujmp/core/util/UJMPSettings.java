@@ -25,7 +25,7 @@ package org.ujmp.core.util;
 
 import java.io.File;
 
-import org.ujmp.core.util.io.RingBufferWriter;
+import org.ujmp.core.util.io.RingBufferOutputStream;
 import org.ujmp.core.util.io.TeeStream;
 
 public abstract class UJMPSettings {
@@ -81,13 +81,13 @@ public abstract class UJMPSettings {
 	 */
 	private static long maxToolTipCols = 10;
 
-	private static RingBufferWriter out = null;
+	private static RingBufferOutputStream out = null;
 
-	private static RingBufferWriter err = null;
+	private static RingBufferOutputStream err = null;
 
 	static {
-		out = new RingBufferWriter(systemOutBufferSize);
-		err = new RingBufferWriter(systemErrBufferSize);
+		out = new RingBufferOutputStream(systemOutBufferSize);
+		err = new RingBufferOutputStream(systemErrBufferSize);
 
 		System.setOut(new TeeStream(System.out, out));
 		System.setErr(new TeeStream(System.err, err));

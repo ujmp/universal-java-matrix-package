@@ -26,7 +26,7 @@ package org.ujmp.core.implementations;
 import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.basic.DefaultSparseRowMatrix2D;
+import org.ujmp.core.genericmatrix.DefaultSparseRowMatrix2D;
 
 public class TestDefaultSparseRowMatrix2D extends AbstractMatrixTest {
 

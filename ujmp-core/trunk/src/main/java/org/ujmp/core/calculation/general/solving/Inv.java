@@ -28,8 +28,8 @@ import java.lang.reflect.Constructor;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.CommonsMathRealMatrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.misc.CommonsMathRealMatrix;
 
 public class Inv extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 7886298456216056038L;

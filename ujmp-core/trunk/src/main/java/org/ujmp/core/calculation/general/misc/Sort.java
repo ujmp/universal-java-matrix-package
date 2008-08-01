@@ -27,12 +27,12 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.ujmp.core.IntMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.calculation.AbstractObjectCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.util.Sortable;
 
 /**

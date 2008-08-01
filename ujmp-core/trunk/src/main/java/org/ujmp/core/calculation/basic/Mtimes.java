@@ -28,8 +28,8 @@ import java.util.logging.Level;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrices.basic.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class Mtimes extends AbstractDoubleCalculation {

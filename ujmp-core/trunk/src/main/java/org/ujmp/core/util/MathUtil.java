@@ -25,6 +25,8 @@ package org.ujmp.core.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -163,7 +165,8 @@ public abstract class MathUtil {
 	}
 
 	public static double ignoreNaN(double v) {
-		return (v != v) || (v == Double.POSITIVE_INFINITY) || (v == Double.NEGATIVE_INFINITY) ? 0.0 : v;
+		return (v != v) || (v == Double.POSITIVE_INFINITY) || (v == Double.NEGATIVE_INFINITY) ? 0.0
+				: v;
 	}
 
 	public static boolean isNaNOrInfinite(double v) {
@@ -171,7 +174,8 @@ public abstract class MathUtil {
 	}
 
 	public static boolean isNaNOrInfinite(Object o) {
-		return Double.valueOf(Double.NaN).equals(o) || Double.valueOf(Double.POSITIVE_INFINITY).equals(o)
+		return Double.valueOf(Double.NaN).equals(o)
+				|| Double.valueOf(Double.POSITIVE_INFINITY).equals(o)
 				|| Double.valueOf(Double.NEGATIVE_INFINITY).equals(o);
 	}
 
@@ -357,5 +361,102 @@ public abstract class MathUtil {
 
 	public static double fBetaMeasure(double beta, double precision, double recall) {
 		return ((1 + beta * beta) * precision * recall) / (beta * beta * precision + recall);
+	}
+
+	public static boolean getBoolean(Object o) {
+		if (o == null) {
+			return false;
+		}
+		if (o instanceof Boolean) {
+			return (Boolean) o;
+		}
+		if (o instanceof Number) {
+			return ((Number) o).doubleValue() != 0;
+		}
+		return true;
+	}
+
+	public static byte getByte(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Byte) {
+			return (Byte) o;
+		}
+		if (o instanceof Number) {
+			return ((Number) o).byteValue();
+		}
+		return 0;
+	}
+
+	public static char getChar(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Character) {
+			return (Character) o;
+		}
+		if (o instanceof Number) {
+			return (char) ((Number) o).byteValue();
+		}
+		return 0;
+	}
+
+	public static Date getDate(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof Date) {
+			return (Date) o;
+		}
+		if (o instanceof String) {
+			try {
+				return DateFormat.getDateInstance().parse((String) o);
+			} catch (ParseException e) {
+			}
+		}
+		if (o instanceof Number) {
+			return new Date(((Number) o).longValue());
+		}
+		return null;
+	}
+
+	public static float getFloat(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Float) {
+			return (Float) o;
+		}
+		if (o instanceof Number) {
+			return (char) ((Number) o).floatValue();
+		}
+		return 0;
+	}
+
+	public static int getInt(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Integer) {
+			return (Integer) o;
+		}
+		if (o instanceof Number) {
+			return (char) ((Number) o).intValue();
+		}
+		return 0;
+	}
+
+	public static long getLong(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Long) {
+			return (Long) o;
+		}
+		if (o instanceof Number) {
+			return (char) ((Number) o).longValue();
+		}
+		return 0;
 	}
 }

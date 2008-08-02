@@ -23,6 +23,7 @@
 
 package org.ujmp.core.booleanmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -60,8 +61,8 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		setBoolean(value != 0, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.BOOLEAN;
+	public final ValueType getValueType() {
+		return ValueType.BOOLEAN;
 	}
 
 }

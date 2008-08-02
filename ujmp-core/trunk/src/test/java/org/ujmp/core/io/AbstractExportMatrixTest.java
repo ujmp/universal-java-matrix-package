@@ -30,9 +30,9 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
-import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.FileFormat;
 
 public abstract class AbstractExportMatrixTest extends TestCase {
 

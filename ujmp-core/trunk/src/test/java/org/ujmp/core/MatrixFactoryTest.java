@@ -25,8 +25,8 @@ package org.ujmp.core;
 
 import junit.framework.TestCase;
 
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class MatrixFactoryTest extends TestCase {
@@ -53,10 +53,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testZerosConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
@@ -64,10 +64,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testZerosConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
@@ -75,10 +75,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testZerosConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
@@ -106,10 +106,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testSparseConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
@@ -117,10 +117,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testSparseConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
@@ -128,10 +128,10 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testSparseConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
-		for (EntryType e : EntryType.values()) {
-			if (!EntryType.GENERIC.equals(e)) {
+		for (ValueType e : ValueType.values()) {
+			if (!ValueType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getEntryType());
+				assertEquals(e.name(), e, m.getValueType());
 				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}

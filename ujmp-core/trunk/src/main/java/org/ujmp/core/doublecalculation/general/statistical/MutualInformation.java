@@ -29,9 +29,9 @@ import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.doublecalculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.IntMatrix2D;
@@ -117,14 +117,15 @@ public class MutualInformation extends AbstractDoubleCalculation {
 	}
 
 	public static DoubleMatrix2D calcNew(Matrix matrix) {
-		return calcNew(matrix.convert(EntryType.INT));
+		return calcNew(matrix.convert(ValueType.INT));
 	}
 
 	public static DoubleMatrix2D calcNew(IntMatrix2D matrix) {
 		DefaultDenseIntMatrix2D matrix2 = (DefaultDenseIntMatrix2D) matrix;
 		long count = matrix.getColumnCount();
 		int samples = (int) matrix.getRowCount();
-		DoubleMatrix2D result = (DoubleMatrix2D) MatrixFactory.zeros(Matrix.EntryType.DOUBLE, count, count);
+		DoubleMatrix2D result = (DoubleMatrix2D) MatrixFactory
+				.zeros(ValueType.DOUBLE, count, count);
 		int[] d_dc = new int[(int) count];
 		// int[][] matrixInt = matrix.toIntArray();
 		Arrays.fill(d_dc, (int) matrix.getMaxValue() + 1);
@@ -161,7 +162,8 @@ public class MutualInformation extends AbstractDoubleCalculation {
 						Nab[i][j] /= samples;
 
 						if (Na[i] != 0 && Nb[j] != 0 && Nab[i][j] != 0) {
-							mutual += Nab[i][j] * (Math.log(Nab[i][j]) - NaLog[i] - NbLog[j]) / log2;
+							mutual += Nab[i][j] * (Math.log(Nab[i][j]) - NaLog[i] - NbLog[j])
+									/ log2;
 						}
 					}
 				}

@@ -23,12 +23,12 @@
 
 package org.ujmp.core.interfaces;
 
-import org.ujmp.core.Matrix.EntryType;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicMatrixProperties {
 
-	public EntryType getEntryType();
+	public ValueType getValueType();
 
 	public long getValueCount();
 

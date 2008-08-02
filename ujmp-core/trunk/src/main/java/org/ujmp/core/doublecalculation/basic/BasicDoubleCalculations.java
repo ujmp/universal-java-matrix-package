@@ -27,8 +27,8 @@ import java.util.Collection;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.Matrix.AnnotationTransfer;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicDoubleCalculations {
@@ -62,22 +62,23 @@ public interface BasicDoubleCalculations {
 	/**
 	 * Creates a copy of the matrix with the desired type for matrix entries.
 	 * 
-	 * @param newEntryType
+	 * @param newValueType
 	 *            defines the new format of the matrix
 	 * @return Matrix with the same entries in the new format
 	 */
-	public Matrix convert(EntryType newEntryType) throws MatrixException;
+	public Matrix convert(ValueType newValueType) throws MatrixException;
 
 	/**
 	 * Creates a copy of the matrix with the desired type for matrix entries.
 	 * 
-	 * @param newEntryType
+	 * @param newValueType
 	 *            defines the new format of the matrix
 	 * @param annotationTransfer
 	 *            defines how annotation should be treated
 	 * @return Matrix with the same entries in the new format
 	 */
-	public Matrix convert(EntryType newEntryType, AnnotationTransfer annotationTransfer) throws MatrixException;
+	public Matrix convert(ValueType newValueType, AnnotationTransfer annotationTransfer)
+			throws MatrixException;
 
 	/**
 	 * Adds a specified value to all entries in the matrix.
@@ -323,7 +324,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired rows and columns
 	 * @throws MatrixException
 	 */
-	public Matrix select(Ret returnType, Collection<? extends Number>... selection) throws MatrixException;
+	public Matrix select(Ret returnType, Collection<? extends Number>... selection)
+			throws MatrixException;
 
 	/**
 	 * Delete rows and columns in the Matrix and returns a link to it.
@@ -335,7 +337,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired rows and columns
 	 * @throws MatrixException
 	 */
-	public Matrix delete(Ret returnType, Collection<? extends Number>... selection) throws MatrixException;
+	public Matrix delete(Ret returnType, Collection<? extends Number>... selection)
+			throws MatrixException;
 
 	/**
 	 * Selects rows in the Matrix and returns a link to it.
@@ -371,7 +374,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired rows
 	 * @throws MatrixException
 	 */
-	public Matrix selectRows(Ret returnType, Collection<? extends Number> rows) throws MatrixException;
+	public Matrix selectRows(Ret returnType, Collection<? extends Number> rows)
+			throws MatrixException;
 
 	/**
 	 * Deletes rows in the Matrix and returns a link to it.
@@ -383,7 +387,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired rows
 	 * @throws MatrixException
 	 */
-	public Matrix deleteRows(Ret returnType, Collection<? extends Number> rows) throws MatrixException;
+	public Matrix deleteRows(Ret returnType, Collection<? extends Number> rows)
+			throws MatrixException;
 
 	/**
 	 * Selects columns in the Matrix and returns a link to it.
@@ -419,7 +424,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired columns
 	 * @throws MatrixException
 	 */
-	public Matrix selectColumns(Ret returnType, Collection<? extends Number> columns) throws MatrixException;
+	public Matrix selectColumns(Ret returnType, Collection<? extends Number> columns)
+			throws MatrixException;
 
 	/**
 	 * Deletes columns in the Matrix and returns a link to it.
@@ -431,7 +437,8 @@ public interface BasicDoubleCalculations {
 	 * @return Link to original Matrix with desired columns
 	 * @throws MatrixException
 	 */
-	public Matrix deleteColumns(Ret returnType, Collection<? extends Number> columns) throws MatrixException;
+	public Matrix deleteColumns(Ret returnType, Collection<? extends Number> columns)
+			throws MatrixException;
 
 	/**
 	 * Selects rows and columns in the Matrix and returns a link to it.
@@ -466,7 +473,7 @@ public interface BasicDoubleCalculations {
 	 */
 	public Matrix delete(Ret returnType, String selection) throws MatrixException;
 
-	public Matrix subMatrix(Ret returnType, long startRow, long startColumn, long endRow, long endColumn)
-			throws MatrixException;
+	public Matrix subMatrix(Ret returnType, long startRow, long startColumn, long endRow,
+			long endColumn) throws MatrixException;
 
 }

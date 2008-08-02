@@ -25,8 +25,8 @@ package org.ujmp.core.objectcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
@@ -67,10 +67,10 @@ public abstract class AbstractObjectCalculation extends AbstractGenericCalculati
 	}
 
 	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getEntryType(), getSize());
+		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
 		// TODO: copy annotation
 
-		switch (getEntryType()) {
+		switch (getValueType()) {
 		case DOUBLE:
 			for (long[] c : result.allCoordinates()) {
 				result.setAsDouble(getDouble(c), c);
@@ -87,7 +87,8 @@ public abstract class AbstractObjectCalculation extends AbstractGenericCalculati
 
 	public final Matrix calcOrig() throws MatrixException {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException("Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
+			throw new MatrixException(
+					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setObject(getObject(c), c);
@@ -96,8 +97,8 @@ public abstract class AbstractObjectCalculation extends AbstractGenericCalculati
 	}
 
 	@Override
-	public EntryType getEntryType() {
-		return getSource().getEntryType();
+	public ValueType getValueType() {
+		return getSource().getValueType();
 	}
 
 }

@@ -25,6 +25,7 @@ package org.ujmp.core.datematrix;
 
 import java.util.Date;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -61,8 +62,8 @@ public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> imp
 		setDate(new Date((long) value));
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.DATE;
+	public final ValueType getValueType() {
+		return ValueType.DATE;
 	}
 
 }

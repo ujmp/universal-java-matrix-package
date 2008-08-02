@@ -26,10 +26,12 @@ package org.ujmp.core.genericmatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.DefaultMatrixList;
 import org.ujmp.core.collections.MatrixList;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasSourceMatrix;
 
-public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> implements HasSourceMatrix {
+public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> implements
+		HasSourceMatrix {
 	private static final long serialVersionUID = -4456493053286654056L;
 
 	private Matrix matrix = null;
@@ -95,8 +97,8 @@ public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> imple
 		return matrices;
 	}
 
-	public EntryType getEntryType() {
-		return matrix.getEntryType();
+	public ValueType getValueType() {
+		return matrix.getValueType();
 	}
 
 }

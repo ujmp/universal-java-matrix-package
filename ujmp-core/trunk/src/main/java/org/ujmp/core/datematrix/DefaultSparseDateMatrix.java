@@ -26,6 +26,7 @@ package org.ujmp.core.datematrix;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
@@ -49,8 +50,8 @@ public class DefaultSparseDateMatrix extends DefaultSparseGenericMatrix<Date> {
 	}
 
 	@Override
-	public final EntryType getEntryType() {
-		return EntryType.DATE;
+	public final ValueType getValueType() {
+		return ValueType.DATE;
 	}
 
 }

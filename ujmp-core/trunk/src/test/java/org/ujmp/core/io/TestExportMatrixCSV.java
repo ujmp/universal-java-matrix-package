@@ -23,7 +23,7 @@
 
 package org.ujmp.core.io;
 
-import org.ujmp.core.FileFormat;
+import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixCSV extends AbstractExportMatrixTest {
 

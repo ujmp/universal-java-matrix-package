@@ -23,12 +23,14 @@
 
 package org.ujmp.core.stringmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String> implements StringMatrix {
+public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String> implements
+		StringMatrix {
 
 	@Override
 	public final String getObject(long... coordinates) throws MatrixException {
@@ -57,8 +59,8 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		setString(string, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.STRING;
+	public final ValueType getValueType() {
+		return ValueType.STRING;
 	}
 
 }

@@ -25,7 +25,7 @@ package org.ujmp.core.doublecalculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 
@@ -45,7 +45,7 @@ public class Fill extends AbstractObjectCalculation {
 	}
 
 	public static Matrix calc(Matrix source, Object fill) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getEntryType(), source.getSize());
+		Matrix ret = MatrixFactory.zeros(source.getValueType(), source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setObject(fill, c);
 		}
@@ -55,11 +55,11 @@ public class Fill extends AbstractObjectCalculation {
 	public static Matrix calc(Object fill, long... size) throws MatrixException {
 		Matrix ret = null;
 		if (fill instanceof Number) {
-			ret = MatrixFactory.zeros(EntryType.DOUBLE, size);
+			ret = MatrixFactory.zeros(ValueType.DOUBLE, size);
 		} else if (fill instanceof String) {
-			ret = MatrixFactory.zeros(EntryType.STRING, size);
+			ret = MatrixFactory.zeros(ValueType.STRING, size);
 		} else {
-			ret = MatrixFactory.zeros(EntryType.OBJECT, size);
+			ret = MatrixFactory.zeros(ValueType.OBJECT, size);
 		}
 		for (long[] c : ret.allCoordinates()) {
 			ret.setObject(fill, c);

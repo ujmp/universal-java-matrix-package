@@ -34,8 +34,8 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ExportMatrix {

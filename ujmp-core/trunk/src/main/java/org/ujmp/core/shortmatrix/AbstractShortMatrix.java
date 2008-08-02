@@ -23,6 +23,7 @@
 
 package org.ujmp.core.shortmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -49,8 +50,8 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		setShort(value, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.SHORT;
+	public final ValueType getValueType() {
+		return ValueType.SHORT;
 	}
 
 }

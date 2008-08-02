@@ -35,7 +35,7 @@ import jxl.read.biff.BiffException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrixXLS {
@@ -46,7 +46,7 @@ public abstract class ImportMatrixXLS {
 			Sheet sheet = workbook.getSheet(0);
 			int rows = sheet.getRows();
 			int columns = sheet.getColumns();
-			Matrix matrix = MatrixFactory.zeros(EntryType.OBJECT, rows, columns);
+			Matrix matrix = MatrixFactory.zeros(ValueType.OBJECT, rows, columns);
 			for (int row = 0; row < rows; row++) {
 				for (int column = 0; column < columns; column++) {
 					Cell c = sheet.getCell(column, row);
@@ -73,7 +73,7 @@ public abstract class ImportMatrixXLS {
 			Sheet sheet = workbook.getSheet(0);
 			int rows = sheet.getRows();
 			int columns = sheet.getColumns();
-			Matrix matrix = MatrixFactory.zeros(EntryType.OBJECT, rows, columns);
+			Matrix matrix = MatrixFactory.zeros(ValueType.OBJECT, rows, columns);
 			for (int row = 0; row < rows; row++) {
 				for (int column = 0; column < columns; column++) {
 					Cell c = sheet.getCell(column, row);

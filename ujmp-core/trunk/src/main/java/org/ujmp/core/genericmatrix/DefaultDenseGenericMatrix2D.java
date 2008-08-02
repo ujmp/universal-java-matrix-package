@@ -24,6 +24,7 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D<A> {
@@ -74,8 +75,8 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 
 	}
 
-	public EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 }

@@ -28,6 +28,7 @@ import java.util.Map;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
@@ -116,8 +117,8 @@ public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDense
 		getMap().put(c, m);
 	}
 
-	public EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 	public long[] getSize() {

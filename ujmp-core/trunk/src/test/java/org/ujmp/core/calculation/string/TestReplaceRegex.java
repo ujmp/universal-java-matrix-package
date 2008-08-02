@@ -30,15 +30,15 @@ import junit.framework.TestCase;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.entrywise.replace.ReplaceRegex;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestReplaceRegex extends TestCase {
 
 	private static Matrix getTestMatrix() throws MatrixException {
-		Matrix m = MatrixFactory.zeros(EntryType.STRING, 2, 2);
+		Matrix m = MatrixFactory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("aabbcabd", 0, 0);
 		m.setAsString(null, 0, 1);
 		m.setAsString("ad", 1, 0);
@@ -47,7 +47,7 @@ public class TestReplaceRegex extends TestCase {
 	}
 
 	private static Matrix getResultMatrix() throws MatrixException {
-		Matrix m = MatrixFactory.zeros(EntryType.STRING, 2, 2);
+		Matrix m = MatrixFactory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("afgrbcfgrd", 0, 0);
 		m.setAsString(null, 0, 1);
 		m.setAsString("ad", 1, 0);

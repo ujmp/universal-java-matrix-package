@@ -29,9 +29,9 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.FileFormat;
 
 public class Octave {
 

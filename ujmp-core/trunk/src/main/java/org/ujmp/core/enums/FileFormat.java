@@ -21,35 +21,11 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.booleanmatrix;
+package org.ujmp.core.enums;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
-
-public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boolean> {
-	private static final long serialVersionUID = 8467706530550022243L;
-
-	public DefaultSparseBooleanMatrix(Matrix m) throws MatrixException {
-		super(m, -1);
-	}
-
-	public DefaultSparseBooleanMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
-		super(m, maximumNumberOfEntries);
-	}
-
-	public DefaultSparseBooleanMatrix(long... size) {
-		super(size);
-	}
-
-	public DefaultSparseBooleanMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
-	@Override
-	public final ValueType getValueType() {
-		return ValueType.BOOLEAN;
-	}
-
+/**
+ * Import and export formats that are supported.
+ */
+public enum FileFormat {
+	CSV, TXT, M, MAT, MDB, R, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF
 }

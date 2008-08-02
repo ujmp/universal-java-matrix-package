@@ -23,6 +23,7 @@
 
 package org.ujmp.core.bytematrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -59,8 +60,8 @@ public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> imp
 		setByte((byte) value);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.BYTE;
+	public final ValueType getValueType() {
+		return ValueType.BYTE;
 	}
 
 }

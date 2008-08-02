@@ -25,8 +25,8 @@ package org.ujmp.core.io;
 
 import java.io.File;
 
-import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixM extends AbstractExportMatrixTest {
 

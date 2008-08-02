@@ -35,6 +35,7 @@ import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
@@ -74,10 +75,12 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 			// oos.writeInt(dimension);
 			oos.flush();
 			oos.close();
-			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(), destination);
+			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(),
+					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
+					.getData()));
 			int command = ois.readInt();
 			if (command != ServerMatrixUDP.GETDIMENSIONCOUNT) {
 				logger.log(Level.WARNING, "could not set value");
@@ -99,10 +102,12 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 			oos.writeObject(coordinates);
 			oos.flush();
 			oos.close();
-			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(), destination);
+			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(),
+					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
+					.getData()));
 			int command = ois.readInt();
 			if (command != ServerMatrixUDP.GETDOUBLEVALUE) {
 				logger.log(Level.WARNING, "could not get value");
@@ -125,10 +130,12 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 			oos.writeDouble(value);
 			oos.flush();
 			oos.close();
-			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(), destination);
+			DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(),
+					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
+					.getData()));
 			int command = ois.readInt();
 			ois.close();
 			if (command != ServerMatrixUDP.SETDOUBLEVALUE) {
@@ -175,8 +182,8 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 		return false;
 	}
 
-	public EntryType getEntryType() {
-		return null;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 }

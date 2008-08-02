@@ -27,13 +27,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublecalculation.Calculation;
-import org.ujmp.core.doublecalculation.Calculation.Calc;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.basic.Convert;
 import org.ujmp.core.doublecalculation.basic.Divide;
 import org.ujmp.core.doublecalculation.basic.Minus;
@@ -63,11 +59,13 @@ import org.ujmp.core.doublecalculation.entrywise.trigonometric.Tan;
 import org.ujmp.core.doublecalculation.general.statistical.Max;
 import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractGenericCalculation<A> implements GenericCalculation<A> {
 
-	protected static final Logger logger = Logger.getLogger(AbstractGenericCalculation.class.getName());
+	protected static final Logger logger = Logger.getLogger(AbstractGenericCalculation.class
+			.getName());
 
 	private Matrix[] sources = null;
 
@@ -122,8 +120,8 @@ public abstract class AbstractGenericCalculation<A> implements GenericCalculatio
 		return new GenericCalculationMatrix(this);
 	}
 
-	public static Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix source0, Matrix... sources)
-			throws MatrixException {
+	public static Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix source0,
+			Matrix... sources) throws MatrixException {
 		switch (calculation) {
 		case CLONE:
 			return new Convert(source0).calc(returnType);
@@ -213,7 +211,7 @@ public abstract class AbstractGenericCalculation<A> implements GenericCalculatio
 		return getSource().getSize();
 	}
 
-	public abstract EntryType getEntryType();
+	public abstract ValueType getValueType();
 
 	public final Matrix calc(Ret returnType) throws MatrixException {
 		switch (returnType) {

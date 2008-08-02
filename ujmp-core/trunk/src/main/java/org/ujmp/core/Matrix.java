@@ -56,15 +56,6 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 		DistanceMeasures, Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel,
 		HasGUIObject {
 
-	/**
-	 * Defines the object types that can be stored in a Matrix. Different matrix
-	 * implementation might exist for each type. Use EntryType.OBJECT for other
-	 * object types.
-	 */
-	public enum EntryType {
-		GENERIC, BOOLEAN, BYTE, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
-	};
-
 	public enum AnnotationTransfer {
 		NONE, LINK, COPY
 	};

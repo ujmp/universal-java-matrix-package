@@ -23,6 +23,7 @@
 
 package org.ujmp.core.floatmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -50,8 +51,8 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 		setFloat(value, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.FLOAT;
+	public final ValueType getValueType() {
+		return ValueType.FLOAT;
 	}
 
 }

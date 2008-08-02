@@ -29,7 +29,7 @@ import java.util.TreeSet;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
@@ -60,7 +60,7 @@ public class Sort extends AbstractObjectCalculation {
 
 	private void createSortIndex() {
 		Matrix m = getSource();
-		IntMatrix2D indexMatrix = (IntMatrix2D) MatrixFactory.zeros(EntryType.INT, m.getSize());
+		IntMatrix2D indexMatrix = (IntMatrix2D) MatrixFactory.zeros(ValueType.INT, m.getSize());
 		for (long i = 0; i < m.getRowCount(); i++) {
 			SortedSet<Sortable<?, Long>> sortedSet = new TreeSet<Sortable<?, Long>>();
 			for (long j = 0; j < m.getColumnCount(); j++) {

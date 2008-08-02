@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringcalculation.AbstractStringCalculation;
 
@@ -55,8 +55,9 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		return (src == null) ? null : searchPattern.matcher(src).replaceAll(replaceString);
 	}
 
-	public static Matrix calc(Matrix source, Pattern search, String replacement) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(EntryType.STRING, source.getSize());
+	public static Matrix calc(Matrix source, Pattern search, String replacement)
+			throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(ValueType.STRING, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			String src = source.getAsString(c);
 			ret.setAsString((src == null) ? null : search.matcher(src).replaceAll(replacement), c);
@@ -64,7 +65,8 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Matrix source, String searchString, String replacement) throws MatrixException {
+	public static Matrix calc(Matrix source, String searchString, String replacement)
+			throws MatrixException {
 		return calc(source, Pattern.compile(searchString), replacement);
 	}
 }

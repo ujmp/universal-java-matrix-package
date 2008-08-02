@@ -26,8 +26,8 @@ package org.ujmp.core.doublecalculation;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
@@ -100,6 +100,6 @@ public interface Calculation extends Serializable {
 
 	public long[] getSize();
 
-	public abstract EntryType getEntryType();
+	public abstract ValueType getValueType();
 
 }

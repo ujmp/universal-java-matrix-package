@@ -24,6 +24,7 @@
 package org.ujmp.core.charmatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
@@ -47,8 +48,8 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Boolean>
 	}
 
 	@Override
-	public final EntryType getEntryType() {
-		return EntryType.CHAR;
+	public final ValueType getValueType() {
+		return ValueType.CHAR;
 	}
 
 }

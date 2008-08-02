@@ -23,6 +23,7 @@
 
 package org.ujmp.core.charmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -60,8 +61,8 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 		setChar((char) value);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.CHAR;
+	public final ValueType getValueType() {
+		return ValueType.CHAR;
 	}
 
 }

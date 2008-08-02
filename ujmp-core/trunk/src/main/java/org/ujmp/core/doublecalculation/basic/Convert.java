@@ -26,8 +26,8 @@ package org.ujmp.core.doublecalculation.basic;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Matrix.AnnotationTransfer;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
@@ -43,9 +43,9 @@ public class Convert extends AbstractGenericCalculation {
 		return getSource().getAsDouble(coordinates);
 	}
 
-	public static Matrix calcNew(EntryType entryType, AnnotationTransfer annotationTransfer, Matrix source)
-			throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(entryType, source.getSize());
+	public static Matrix calcNew(ValueType valueType, AnnotationTransfer annotationTransfer,
+			Matrix source) throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(source.getAsDouble(c), c);
 		}
@@ -65,13 +65,14 @@ public class Convert extends AbstractGenericCalculation {
 		return ret;
 	}
 
-	public static Matrix calcNew(AnnotationTransfer annotationTransfer, Matrix matrix) throws MatrixException {
-		return calcNew(matrix.getEntryType(), annotationTransfer, matrix);
+	public static Matrix calcNew(AnnotationTransfer annotationTransfer, Matrix matrix)
+			throws MatrixException {
+		return calcNew(matrix.getValueType(), annotationTransfer, matrix);
 	}
 
 	@Override
-	public EntryType getEntryType() {
-		return getSource().getEntryType();
+	public ValueType getValueType() {
+		return getSource().getValueType();
 	}
 
 	@Override

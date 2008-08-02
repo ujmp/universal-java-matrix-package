@@ -23,7 +23,7 @@
 
 package org.ujmp.core.io;
 
-import org.ujmp.core.FileFormat;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixMAT extends AbstractExportMatrixTest {

@@ -24,6 +24,7 @@
 package org.ujmp.core.bytematrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
@@ -47,8 +48,8 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Boolean>
 	}
 
 	@Override
-	public final EntryType getEntryType() {
-		return EntryType.BYTE;
+	public final ValueType getValueType() {
+		return ValueType.BYTE;
 	}
 
 }

@@ -25,8 +25,8 @@ package org.ujmp.core.doublecalculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.doublecalculation.AbstractDoubleCalculation;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -53,7 +53,7 @@ public class Randn extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(long... size) throws MatrixException {
-		return calc(EntryType.DOUBLE, size);
+		return calc(ValueType.DOUBLE, size);
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
@@ -68,8 +68,8 @@ public class Randn extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(EntryType entryType, long... size) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(entryType, size);
+	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(0.0, 1.0), c);
 		}

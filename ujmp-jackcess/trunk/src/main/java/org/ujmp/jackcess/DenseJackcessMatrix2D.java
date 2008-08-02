@@ -71,7 +71,7 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 
 			for (int i = 0; i < matrix.getColumnCount(); i++) {
 				ColumnBuilder cb = new ColumnBuilder("Column" + i);
-				switch (matrix.getEntryType()) {
+				switch (matrix.getValueType()) {
 				case DOUBLE:
 					cb.setSQLType(Types.DOUBLE);
 					break;

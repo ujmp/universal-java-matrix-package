@@ -29,12 +29,13 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToSparseMatrixWrapper<A> extends AbstractSparseGenericMatrix<A> implements
-		Wrapper<Map<Coordinates, Object>> {
+public abstract class AbstractMapToSparseMatrixWrapper<A> extends AbstractSparseGenericMatrix<A>
+		implements Wrapper<Map<Coordinates, Object>> {
 
 	private final A defaultValue = null;
 
@@ -108,8 +109,8 @@ public abstract class AbstractMapToSparseMatrixWrapper<A> extends AbstractSparse
 		}
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public final ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 	public final int getMaximumNumberOfEntries() {

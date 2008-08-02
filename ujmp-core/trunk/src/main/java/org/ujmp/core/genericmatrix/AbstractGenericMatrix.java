@@ -42,7 +42,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
-import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
@@ -110,6 +109,8 @@ import org.ujmp.core.doublecalculation.general.statistical.PairedTTest;
 import org.ujmp.core.doublecalculation.general.statistical.Std;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.doublecalculation.general.statistical.Var;
+import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.interfaces.GUIObject;
@@ -328,13 +329,13 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return false;
 	}
 
-	public final Matrix convert(EntryType newEntryType) throws MatrixException {
-		return Convert.calcNew(newEntryType, AnnotationTransfer.COPY, this);
+	public final Matrix convert(ValueType newValueType) throws MatrixException {
+		return Convert.calcNew(newValueType, AnnotationTransfer.COPY, this);
 	}
 
-	public final Matrix convert(EntryType newEntryType, AnnotationTransfer annotationTransfer)
+	public final Matrix convert(ValueType newValueType, AnnotationTransfer annotationTransfer)
 			throws MatrixException {
-		return Convert.calcNew(newEntryType, annotationTransfer, this);
+		return Convert.calcNew(newValueType, annotationTransfer, this);
 	}
 
 	public final Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
@@ -1204,8 +1205,8 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		ExportMatrix.toFile(format, file, this, parameters);
 	}
 
-	public final void exportToStream(FileFormat format, OutputStream outputStream, Object... parameters)
-			throws MatrixException, IOException {
+	public final void exportToStream(FileFormat format, OutputStream outputStream,
+			Object... parameters) throws MatrixException, IOException {
 		ExportMatrix.toStream(format, outputStream, this, parameters);
 	}
 

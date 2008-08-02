@@ -33,6 +33,7 @@ import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
@@ -116,7 +117,8 @@ public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
 
 					socket.receive(receivedPacket);
 
-					ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket.getData()));
+					ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+							receivedPacket.getData()));
 					ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
 					ObjectOutputStream oos = new ObjectOutputStream(bos);
 
@@ -146,8 +148,8 @@ public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
 
 					oos.flush();
 
-					DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(), receivedPacket
-							.getAddress(), receivedPacket.getPort());
+					DatagramPacket sentPacket = new DatagramPacket(bos.toByteArray(), bos.size(),
+							receivedPacket.getAddress(), receivedPacket.getPort());
 					socket.send(sentPacket);
 
 				}
@@ -167,8 +169,8 @@ public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
 		return matrix.isReadOnly();
 	}
 
-	public EntryType getEntryType() {
-		return matrix.getEntryType();
+	public ValueType getValueType() {
+		return matrix.getValueType();
 	}
 
 }

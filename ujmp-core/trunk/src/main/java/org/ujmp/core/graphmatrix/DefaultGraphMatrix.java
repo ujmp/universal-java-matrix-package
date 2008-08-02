@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ujmp.core.collections.ArrayIndexList;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
@@ -186,9 +187,11 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	public void setEdge(E edgeObject, long nodeIndex1, long nodeIndex2) {
 		int nmbOfNodes = nodes.size();
 		if (nodeIndex1 >= nmbOfNodes)
-			throw new MatrixException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes + " available");
+			throw new MatrixException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes
+					+ " available");
 		if (nodeIndex2 >= nmbOfNodes)
-			throw new MatrixException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes + " available");
+			throw new MatrixException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes
+					+ " available");
 		edges.put(new Coordinates(nodeIndex1, nodeIndex2), edgeObject);
 		List<Long> list = children.get(nodeIndex1);
 		if (list == null) {
@@ -220,8 +223,8 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 
 	}
 
-	public org.ujmp.core.Matrix.EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 }

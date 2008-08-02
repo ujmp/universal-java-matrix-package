@@ -28,11 +28,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D<A> implements ListMatrix<A> {
+public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D<A> implements
+		ListMatrix<A> {
 
 	public abstract List<A> getList();
 
@@ -165,8 +167,8 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		setObject(value, coordinates);
 	}
 
-	public org.ujmp.core.Matrix.EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 }

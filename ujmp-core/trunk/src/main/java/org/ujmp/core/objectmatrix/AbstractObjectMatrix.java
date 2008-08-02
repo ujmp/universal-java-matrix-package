@@ -23,11 +23,13 @@
 
 package org.ujmp.core.objectmatrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements ObjectMatrix {
+public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements
+		ObjectMatrix {
 
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
@@ -37,8 +39,8 @@ public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object>
 		setObject(v, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.OBJECT;
+	public final ValueType getValueType() {
+		return ValueType.OBJECT;
 	}
 
 }

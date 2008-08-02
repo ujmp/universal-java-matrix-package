@@ -31,6 +31,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -95,8 +96,8 @@ public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> 
 		m.setObject(o, 0, coordinates[COLUMN]);
 	}
 
-	public EntryType getEntryType() {
-		return EntryType.GENERIC;
+	public ValueType getValueType() {
+		return ValueType.GENERIC;
 	}
 
 	public long[] getSize() {

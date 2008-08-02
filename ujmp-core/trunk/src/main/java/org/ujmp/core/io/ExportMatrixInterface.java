@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import org.ujmp.core.FileFormat;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface ExportMatrixInterface {

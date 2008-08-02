@@ -29,6 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.DefaultMatrixList;
 import org.ujmp.core.collections.MatrixList;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasSourceMatrix;
 
@@ -144,8 +145,8 @@ public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> implements HasSo
 		return source;
 	}
 
-	public EntryType getEntryType() {
-		return getSourceMatrix().getEntryType();
+	public ValueType getValueType() {
+		return getSourceMatrix().getValueType();
 	}
 
 }

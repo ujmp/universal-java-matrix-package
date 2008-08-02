@@ -23,6 +23,7 @@
 
 package org.ujmp.core.genericcalculation;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 
@@ -36,8 +37,8 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 		setAnnotation(calculation.getAnnotation());
 	}
 
-	public EntryType getEntryType() {
-		return calculation.getEntryType();
+	public ValueType getValueType() {
+		return calculation.getValueType();
 	}
 
 	public boolean contains(long... coordinates) {

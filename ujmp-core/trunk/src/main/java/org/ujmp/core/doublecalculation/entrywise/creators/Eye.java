@@ -27,9 +27,9 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.AbstractDoubleCalculation;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Eye extends AbstractDoubleCalculation {
@@ -55,11 +55,11 @@ public class Eye extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(long... size) throws MatrixException {
-		return calc(EntryType.DOUBLE, size);
+		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(EntryType entryType, long... size) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(entryType, size);
+	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(valueType, size);
 		long[] c = new long[size.length];
 		for (int i = 0; Coordinates.isSmallerThan(c, size); i++) {
 			ret.setAsDouble(1.0, c);

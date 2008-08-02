@@ -23,6 +23,7 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -47,8 +48,8 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 		setDouble(value, coordinates);
 	}
 
-	public final EntryType getEntryType() {
-		return EntryType.DOUBLE;
+	public final ValueType getValueType() {
+		return ValueType.DOUBLE;
 	}
 
 }

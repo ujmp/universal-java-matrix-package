@@ -25,8 +25,8 @@ package org.ujmp.core.stringcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.EntryType;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
@@ -65,7 +65,8 @@ public abstract class AbstractStringCalculation extends AbstractGenericCalculati
 
 	public final Matrix calcOrig() throws MatrixException {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException("Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
+			throw new MatrixException(
+					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsString(getString(c), c);
@@ -74,7 +75,7 @@ public abstract class AbstractStringCalculation extends AbstractGenericCalculati
 	}
 
 	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getEntryType(), getSize());
+		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
 		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsString(getString(c), c);
@@ -83,8 +84,8 @@ public abstract class AbstractStringCalculation extends AbstractGenericCalculati
 	}
 
 	@Override
-	public EntryType getEntryType() {
-		return EntryType.STRING;
+	public ValueType getValueType() {
+		return ValueType.STRING;
 	}
 
 }

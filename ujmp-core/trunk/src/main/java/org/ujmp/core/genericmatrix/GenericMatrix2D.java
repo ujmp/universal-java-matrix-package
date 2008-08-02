@@ -27,5 +27,5 @@ public interface GenericMatrix2D<A> extends GenericMatrix<A> {
 
 	public A getObject(long row, long column);
 
-	public void setObject(A value, long row, long column);
+	public void setObject(Object value, long row, long column);
 }

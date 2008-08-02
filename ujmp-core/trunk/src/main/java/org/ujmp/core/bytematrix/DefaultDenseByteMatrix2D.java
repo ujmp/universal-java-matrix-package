@@ -43,7 +43,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 		} else {
 			values = new byte[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsBoolean(m.getAsBoolean(c), c);
+				setAsByte(m.getAsByte(c), c);
 			}
 		}
 	}

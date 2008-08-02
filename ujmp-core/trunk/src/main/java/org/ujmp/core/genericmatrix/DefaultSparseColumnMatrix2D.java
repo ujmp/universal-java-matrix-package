@@ -28,14 +28,12 @@ import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
-public class DefaultSparseColumnMatrix2D<A> extends AbstractSparseGenericMatrix<A> {
+public class DefaultSparseColumnMatrix2D<A> extends AbstractSparseGenericMatrix2D<A> {
 	private static final long serialVersionUID = -1943118812754494387L;
 
 	private long[] size = new long[] { 1, 1 };
@@ -54,13 +52,9 @@ public class DefaultSparseColumnMatrix2D<A> extends AbstractSparseGenericMatrix<
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
-		Matrix m = columns.get((int) coordinates[COLUMN]);
-		return (A) m.getObject(coordinates[ROW], 0);
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public A getObject(long row, long column) throws MatrixException {
+		Matrix m = columns.get((int) column);
+		return (A) m.getObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
@@ -83,17 +77,10 @@ public class DefaultSparseColumnMatrix2D<A> extends AbstractSparseGenericMatrix<
 		}
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
-	}
-
-	public void setObject(Object o, long... coordinates) throws MatrixException {
-		Matrix m = columns.get((int) coordinates[COLUMN]);
-		m.setObject(o, coordinates[ROW], 0);
+	@Override
+	public void setObject(Object o, long row, long column) throws MatrixException {
+		Matrix m = columns.get((int) column);
+		m.setObject(o, row, 0);
 	}
 
 	public ValueType getValueType() {

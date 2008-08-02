@@ -21,46 +21,39 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.charmatrix;
+package org.ujmp.core.longmatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
-	private static final long serialVersionUID = -172129670809500830L;
+public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
+	private static final long serialVersionUID = -7417716969329064637L;
 
-	private char[][] values = null;
+	private long[][] values = null;
 
-	public DefaultDenseCharMatrix2D(Matrix m) throws MatrixException {
-		if (m instanceof DefaultDenseCharMatrix2D) {
-			char[][] v = ((DefaultDenseCharMatrix2D) m).values;
-			this.values = new char[v.length][v[0].length];
+	public DefaultDenseLongMatrix2D(Matrix m) throws MatrixException {
+		if (m instanceof DefaultDenseLongMatrix2D) {
+			long[][] v = ((DefaultDenseLongMatrix2D) m).values;
+			this.values = new long[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
 					values[r][c] = v[r][c];
 				}
 			}
 		} else {
-			values = new char[(int) m.getRowCount()][(int) m.getColumnCount()];
+			values = new long[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsChar(m.getAsChar(c), c);
+				setAsLong(m.getAsLong(c), c);
 			}
 		}
 	}
 
-	public DefaultDenseCharMatrix2D(char[]... v) {
+	public DefaultDenseLongMatrix2D(long[]... v) {
 		this.values = v;
 	}
 
-	public DefaultDenseCharMatrix2D(long... size) {
-		values = new char[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
-	public DefaultDenseCharMatrix2D(char[] v) {
-		this.values = new char[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public DefaultDenseLongMatrix2D(long... size) {
+		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public long[] getSize() {
@@ -77,23 +70,23 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 		return values[0].length;
 	}
 
-	public char getChar(long row, long column) {
+	public long getLong(long row, long column) {
 		return values[(int) row][(int) column];
 	}
 
-	public void setChar(char value, long row, long column) {
+	public void setLong(long value, long row, long column) {
 		values[(int) row][(int) column] = value;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		char[][] result = new char[values[0].length][values.length];
+		long[][] result = new long[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
 				result[r][c] = values[c][r];
 			}
 		}
-		return new DefaultDenseCharMatrix2D(result);
+		return new DefaultDenseLongMatrix2D(result);
 	}
 
 }

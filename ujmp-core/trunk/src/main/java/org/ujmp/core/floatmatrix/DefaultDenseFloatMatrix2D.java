@@ -21,43 +21,43 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.charmatrix;
+package org.ujmp.core.floatmatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
-	private static final long serialVersionUID = -172129670809500830L;
+public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
+	private static final long serialVersionUID = 6599658021180126741L;
 
-	private char[][] values = null;
+	private float[][] values = null;
 
-	public DefaultDenseCharMatrix2D(Matrix m) throws MatrixException {
-		if (m instanceof DefaultDenseCharMatrix2D) {
-			char[][] v = ((DefaultDenseCharMatrix2D) m).values;
-			this.values = new char[v.length][v[0].length];
+	public DefaultDenseFloatMatrix2D(Matrix m) throws MatrixException {
+		if (m instanceof DefaultDenseFloatMatrix2D) {
+			float[][] v = ((DefaultDenseFloatMatrix2D) m).values;
+			this.values = new float[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
 					values[r][c] = v[r][c];
 				}
 			}
 		} else {
-			values = new char[(int) m.getRowCount()][(int) m.getColumnCount()];
+			values = new float[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsChar(m.getAsChar(c), c);
+				setAsFloat(m.getAsFloat(c), c);
 			}
 		}
 	}
 
-	public DefaultDenseCharMatrix2D(char[]... v) {
+	public DefaultDenseFloatMatrix2D(float[]... v) {
 		this.values = v;
 	}
 
-	public DefaultDenseCharMatrix2D(long... size) {
-		values = new char[(int) size[ROW]][(int) size[COLUMN]];
+	public DefaultDenseFloatMatrix2D(long... size) {
+		values = new float[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
-	public DefaultDenseCharMatrix2D(char[] v) {
-		this.values = new char[v.length][1];
+	public DefaultDenseFloatMatrix2D(float[] v) {
+		this.values = new float[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
 		}
@@ -77,23 +77,23 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 		return values[0].length;
 	}
 
-	public char getChar(long row, long column) {
+	public float getFloat(long row, long column) {
 		return values[(int) row][(int) column];
 	}
 
-	public void setChar(char value, long row, long column) {
+	public void setFloat(float value, long row, long column) {
 		values[(int) row][(int) column] = value;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		char[][] result = new char[values[0].length][values.length];
+		float[][] result = new float[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
 				result[r][c] = values[c][r];
 			}
 		}
-		return new DefaultDenseCharMatrix2D(result);
+		return new DefaultDenseFloatMatrix2D(result);
 	}
 
 }

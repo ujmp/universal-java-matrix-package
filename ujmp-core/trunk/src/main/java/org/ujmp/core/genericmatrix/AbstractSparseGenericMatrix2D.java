@@ -24,21 +24,31 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A> implements
-		GenericMatrix2D<A> {
+public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
+		implements GenericMatrix2D<A> {
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
 	@Override
-	public final A getObject(long... coordinates) {
+	public final A getObject(long... coordinates) throws MatrixException {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final void setObject(Object value, long... coordinates) {
+	public final void setObject(Object value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public double getAsDouble(long... coordinates) throws MatrixException {
+		return MathUtil.getDouble(getObject(coordinates));
+	}
+
+	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setObject(value, coordinates);
 	}
 
 }

@@ -80,14 +80,6 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return values[0].length;
 	}
 
-	public double getAsDouble(long... coordinates) {
-		return values[(int) coordinates[ROW]][(int) coordinates[COLUMN]];
-	}
-
-	public void setAsDouble(double value, long... coordinates) {
-		values[(int) coordinates[ROW]][(int) coordinates[COLUMN]] = (int) value;
-	}
-
 	public int getInt(long row, long column) {
 		return values[(int) row][(int) column];
 	}
@@ -197,7 +189,8 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 
 	public IntMatrix mtimes(IntMatrix matrix) throws MatrixException {
 		if (values[0].length != matrix.getRowCount()) {
-			logger.log(Level.WARNING, "matrices have wrong size: " + Coordinates.toString(getSize()) + " and "
+			logger.log(Level.WARNING, "matrices have wrong size: "
+					+ Coordinates.toString(getSize()) + " and "
 					+ Coordinates.toString(matrix.getSize()), new Exception());
 			return null;
 		}

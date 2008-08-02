@@ -49,6 +49,16 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		setLong(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getLong(coordinates);
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setLong((int) value);
+	}
+
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

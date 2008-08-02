@@ -45,7 +45,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 		} else {
 			values = new Date[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsBoolean(m.getAsBoolean(c), c);
+				setAsDate(m.getAsDate(c), c);
 			}
 		}
 	}

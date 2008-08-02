@@ -21,23 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix;
+package org.ujmp.core.floatmatrix;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
-		DoubleMatrix2D {
+public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> {
+	private static final long serialVersionUID = -3321607593194609473L;
 
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public DefaultSparseFloatMatrix(Matrix m) throws MatrixException {
+		super(m, -1);
 	}
 
-	public final double getDouble(long... coordinates) {
-		return getDouble(coordinates[ROW], coordinates[COLUMN]);
+	public DefaultSparseFloatMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+		super(m, maximumNumberOfEntries);
 	}
 
-	public final void setDouble(double value, long... coordinates) {
-		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
+	public DefaultSparseFloatMatrix(long... size) {
+		super(size);
+	}
+
+	public DefaultSparseFloatMatrix(int maximumNumberOfEntries, long... size) {
+		super(maximumNumberOfEntries, size);
+	}
+
+	@Override
+	public final ValueType getValueType() {
+		return ValueType.FLOAT;
 	}
 
 }

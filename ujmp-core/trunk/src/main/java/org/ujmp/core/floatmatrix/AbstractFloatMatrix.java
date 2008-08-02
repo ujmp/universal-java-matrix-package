@@ -51,6 +51,16 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 		setFloat(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getFloat(coordinates);
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setFloat((float) value);
+	}
+
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

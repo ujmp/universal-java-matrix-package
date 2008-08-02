@@ -21,23 +21,23 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix;
+package org.ujmp.core.shortmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
-		DoubleMatrix2D {
+public abstract class AbstractSparseShortMatrix2D extends AbstractSparseShortMatrix implements
+		ShortMatrix2D {
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	public final double getDouble(long... coordinates) {
-		return getDouble(coordinates[ROW], coordinates[COLUMN]);
+	public final short getShort(long... coordinates) {
+		return getShort(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final void setDouble(double value, long... coordinates) {
-		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
+	public final void setShort(long value, long... coordinates) {
+		setShort(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
 }

@@ -50,6 +50,16 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		setShort(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getShort(coordinates);
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setShort((short) value);
+	}
+
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

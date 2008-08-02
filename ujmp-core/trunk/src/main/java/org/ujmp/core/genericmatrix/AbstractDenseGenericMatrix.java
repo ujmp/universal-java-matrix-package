@@ -27,7 +27,7 @@ import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> {
 
-	public final boolean contains(long... coordinates) {
+	public boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 

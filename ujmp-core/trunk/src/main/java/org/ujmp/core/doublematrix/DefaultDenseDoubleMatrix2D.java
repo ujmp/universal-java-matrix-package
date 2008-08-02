@@ -190,14 +190,14 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	@Override
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
 		if (values[0].length != matrix.getRowCount()) {
-			logger.log(Level.WARNING, "matrices have wrong size: " + Coordinates.toString(getSize()) + " and "
+			logger.log(Level.WARNING, "matrices have wrong size: "
+					+ Coordinates.toString(getSize()) + " and "
 					+ Coordinates.toString(matrix.getSize()), new Exception());
 			return null;
 		}
 
 		int i, j, k;
 		double sum;
-		double v1, v2;
 		double[][] ret = new double[values.length][(int) matrix.getColumnCount()];
 
 		for (i = values.length; --i >= 0;) {

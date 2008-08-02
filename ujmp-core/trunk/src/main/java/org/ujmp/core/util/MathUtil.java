@@ -429,7 +429,7 @@ public abstract class MathUtil {
 			return (Float) o;
 		}
 		if (o instanceof Number) {
-			return (char) ((Number) o).floatValue();
+			return ((Number) o).floatValue();
 		}
 		return 0;
 	}
@@ -442,7 +442,7 @@ public abstract class MathUtil {
 			return (Integer) o;
 		}
 		if (o instanceof Number) {
-			return (char) ((Number) o).intValue();
+			return ((Number) o).intValue();
 		}
 		return 0;
 	}
@@ -455,7 +455,20 @@ public abstract class MathUtil {
 			return (Long) o;
 		}
 		if (o instanceof Number) {
-			return (char) ((Number) o).longValue();
+			return ((Number) o).longValue();
+		}
+		return 0;
+	}
+
+	public static short getShort(Object o) {
+		if (o == null) {
+			return 0;
+		}
+		if (o instanceof Short) {
+			return (Short) o;
+		}
+		if (o instanceof Number) {
+			return ((Number) o).shortValue();
 		}
 		return 0;
 	}

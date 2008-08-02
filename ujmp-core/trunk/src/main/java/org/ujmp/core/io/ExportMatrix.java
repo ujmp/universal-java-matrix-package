@@ -34,8 +34,8 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.Format;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ExportMatrix {
@@ -50,12 +50,12 @@ public abstract class ExportMatrix {
 		toFile(guessFormat(new File(file)), file, m, parameters);
 	}
 
-	public static final void toFile(Format format, String filename, Matrix matrix,
+	public static final void toFile(FileFormat format, String filename, Matrix matrix,
 			Object... parameters) throws MatrixException, IOException {
 		toFile(format, new File(filename), matrix, parameters);
 	}
 
-	public static final void toFile(Format format, File file, Matrix matrix, Object... parameters)
+	public static final void toFile(FileFormat format, File file, Matrix matrix, Object... parameters)
 			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ExportMatrix" + format.name());
@@ -73,7 +73,7 @@ public abstract class ExportMatrix {
 		}
 	}
 
-	public static Format guessFormat(File file) {
+	public static FileFormat guessFormat(File file) {
 		String filename = file.getAbsolutePath();
 		String[] components = filename.split("\\.");
 		String suffix = components[components.length - 1];
@@ -83,7 +83,7 @@ public abstract class ExportMatrix {
 			suffix = components[components.length - 2];
 		}
 
-		for (Format f : Format.values()) {
+		for (FileFormat f : FileFormat.values()) {
 			if (suffix.equalsIgnoreCase(f.name())) {
 				return f;
 			}
@@ -93,7 +93,7 @@ public abstract class ExportMatrix {
 				"could not guess file format, please use exportToFile(Format,File,Matrix)");
 	}
 
-	public static final String toString(Format format, Matrix matrix, Object... parameters)
+	public static final String toString(FileFormat format, Matrix matrix, Object... parameters)
 			throws MatrixException, IOException {
 		StringWriter writer = new StringWriter();
 		toWriter(format, writer, matrix, parameters);
@@ -101,14 +101,14 @@ public abstract class ExportMatrix {
 		return writer.toString();
 	}
 
-	public static final void toClipboard(Format format, Matrix matrix, Object... parameters)
+	public static final void toClipboard(FileFormat format, Matrix matrix, Object... parameters)
 			throws MatrixException, IOException {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection ms = new StringSelection(toString(format, matrix, parameters));
 		clipboard.setContents(ms, ms);
 	}
 
-	public static final void toStream(Format format, OutputStream outputStream, Matrix matrix,
+	public static final void toStream(FileFormat format, OutputStream outputStream, Matrix matrix,
 			Object... parameters) throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ExportMatrix" + format.name());
@@ -120,7 +120,7 @@ public abstract class ExportMatrix {
 		}
 	}
 
-	public static final void toWriter(Format format, Writer writer, Matrix matrix,
+	public static final void toWriter(FileFormat format, Writer writer, Matrix matrix,
 			Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ExportMatrix" + format.name());

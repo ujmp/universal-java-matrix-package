@@ -49,6 +49,16 @@ public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> imp
 		setByte(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getByte(coordinates);
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setByte((byte) value);
+	}
+
 	public final EntryType getEntryType() {
 		return EntryType.BYTE;
 	}

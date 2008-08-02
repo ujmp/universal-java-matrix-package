@@ -23,14 +23,14 @@
 
 package org.ujmp.core.io;
 
-import org.ujmp.core.Matrix.Format;
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 
 	@Override
-	public Format getFormat() {
-		return Format.MDB;
+	public FileFormat getFormat() {
+		return FileFormat.MDB;
 	}
 
 	@Override

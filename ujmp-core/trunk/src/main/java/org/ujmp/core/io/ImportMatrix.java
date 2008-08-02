@@ -34,17 +34,19 @@ import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.Format;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrix {
 
-	public static Matrix fromFile(File file, Object... parameters) throws MatrixException, IOException {
+	public static Matrix fromFile(File file, Object... parameters) throws MatrixException,
+			IOException {
 		return fromFile(ExportMatrix.guessFormat(file), file, parameters);
 	}
 
-	public static Matrix fromFile(Format format, File file, Object... parameters) throws MatrixException, IOException {
+	public static Matrix fromFile(FileFormat format, File file, Object... parameters)
+			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromFile", new Class<?>[] { File.class, Object[].class });
@@ -65,7 +67,8 @@ public abstract class ImportMatrix {
 		return ImportMatrixCSV.fromString(string, parameters);
 	}
 
-	public static Matrix fromString(Format format, String string, Object parameters) throws MatrixException {
+	public static Matrix fromString(FileFormat format, String string, Object parameters)
+			throws MatrixException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromString", new Class<?>[] { String.class, Object[].class });
@@ -82,11 +85,12 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromStream(Format format, InputStream stream, Object parameters) throws MatrixException,
-			IOException {
+	public static Matrix fromStream(FileFormat format, InputStream stream, Object parameters)
+			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
-			Method m = c.getMethod("fromStream", new Class<?>[] { InputStream.class, Object[].class });
+			Method m = c.getMethod("fromStream",
+					new Class<?>[] { InputStream.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, stream, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
@@ -100,8 +104,8 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromReader(Format format, Reader reader, Object parameters) throws MatrixException,
-			IOException {
+	public static Matrix fromReader(FileFormat format, Reader reader, Object parameters)
+			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromReader", new Class<?>[] { Reader.class, Object[].class });
@@ -118,7 +122,7 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromClipboard(Format format, Object... parameters) throws MatrixException {
+	public static Matrix fromClipboard(FileFormat format, Object... parameters) throws MatrixException {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable clipData = clipboard.getContents(null);
 		String s;

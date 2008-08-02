@@ -49,7 +49,7 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 	}
 
 	public final EntryType getEntryType() {
-		return EntryType.INTEGER;
+		return EntryType.INT;
 	}
 
 }

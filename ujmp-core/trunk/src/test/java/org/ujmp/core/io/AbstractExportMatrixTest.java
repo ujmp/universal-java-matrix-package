@@ -30,13 +30,13 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.Format;
 
 public abstract class AbstractExportMatrixTest extends TestCase {
 
-	public abstract Format getFormat();
+	public abstract FileFormat getFormat();
 
 	public Matrix getMatrix() {
 		return MatrixFactory.rand(5, 8);
@@ -68,7 +68,8 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 	public void testExportToStream() throws Exception {
 
-		File file = File.createTempFile("testExportToStream" + getFormat(), "." + getFormat().name().toLowerCase());
+		File file = File.createTempFile("testExportToStream" + getFormat(), "."
+				+ getFormat().name().toLowerCase());
 		file.deleteOnExit();
 
 		OutputStream os = new FileOutputStream(file);
@@ -88,7 +89,8 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 	public void testExportToWriter() throws Exception {
 
-		File file = File.createTempFile("testExportToWriter", "." + getFormat().name().toLowerCase());
+		File file = File.createTempFile("testExportToWriter", "."
+				+ getFormat().name().toLowerCase());
 		file.deleteOnExit();
 
 		FileWriter fw = new FileWriter(file);

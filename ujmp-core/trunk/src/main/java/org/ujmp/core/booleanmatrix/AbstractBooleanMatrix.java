@@ -50,6 +50,16 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		setBoolean(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getBoolean(coordinates) ? 1 : 0;
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setBoolean(value != 0, coordinates);
+	}
+
 	public final EntryType getEntryType() {
 		return EntryType.BOOLEAN;
 	}

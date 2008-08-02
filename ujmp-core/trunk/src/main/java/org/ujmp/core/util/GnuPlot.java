@@ -29,9 +29,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.Format;
 
 public class GnuPlot {
 
@@ -145,7 +144,7 @@ public class GnuPlot {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.exportToString(Format.M));
+		execute(label + "=" + matrix.exportToString(FileFormat.M));
 	}
 
 	public static boolean isAvailable() {
@@ -153,7 +152,7 @@ public class GnuPlot {
 	}
 
 	public void plot(Matrix matrix, String... format) throws Exception {
-		matrix.exportToFile(Format.CSV, matrixFile);
+		matrix.exportToFile(FileFormat.CSV, matrixFile);
 		execute(getPlotCommand(matrix, true, true));
 	}
 
@@ -183,7 +182,7 @@ public class GnuPlot {
 	}
 
 	public void scatterPlot(Matrix matrix, String... format) throws Exception {
-		matrix.exportToFile(Format.CSV, matrixFile);
+		matrix.exportToFile(FileFormat.CSV, matrixFile);
 		execute(getPlotCommand(matrix, false, false));
 	}
 

@@ -23,14 +23,14 @@
 
 package org.ujmp.core.io;
 
-import org.ujmp.core.Matrix.Format;
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 
 	@Override
-	public Format getFormat() {
-		return Format.XLS;
+	public FileFormat getFormat() {
+		return FileFormat.XLS;
 	}
 
 	@Override

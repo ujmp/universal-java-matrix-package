@@ -29,14 +29,15 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.Format;
 
 public class Matlab {
 
 	public static final String[] SEARCH = new String[] { System.getProperty("Matlab"),
-			System.getProperty("user.home") + "/matlab/bin/matlab", "/usr/bin/matlab", "/opt/matlab/bin/matlab" };
+			System.getProperty("user.home") + "/matlab/bin/matlab", "/usr/bin/matlab",
+			"/opt/matlab/bin/matlab" };
 
 	public static final String MATLABPARAMETERS = "-nosplash -nojvm";
 
@@ -143,7 +144,7 @@ public class Matlab {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.exportToString(Format.M));
+		execute(label + "=" + matrix.exportToString(FileFormat.M));
 	}
 
 	public Matrix getMatrix(String label) throws Exception {

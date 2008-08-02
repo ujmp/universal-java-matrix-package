@@ -50,8 +50,18 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 		setChar(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getChar(coordinates);
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setChar((char) value);
+	}
+
 	public final EntryType getEntryType() {
-		return EntryType.CHARACTER;
+		return EntryType.CHAR;
 	}
 
 }

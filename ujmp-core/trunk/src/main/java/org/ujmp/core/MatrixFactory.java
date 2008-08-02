@@ -36,7 +36,11 @@ import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix.AnnotationTransfer;
 import org.ujmp.core.Matrix.EntryType;
-import org.ujmp.core.Matrix.Format;
+import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix;
+import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.DefaultSparseBooleanMatrix;
 import org.ujmp.core.doublecalculation.basic.Convert;
 import org.ujmp.core.doublecalculation.entrywise.creators.Eye;
 import org.ujmp.core.doublecalculation.entrywise.creators.Fill;
@@ -44,8 +48,10 @@ import org.ujmp.core.doublecalculation.entrywise.creators.Ones;
 import org.ujmp.core.doublecalculation.entrywise.creators.Rand;
 import org.ujmp.core.doublecalculation.entrywise.creators.Randn;
 import org.ujmp.core.doublecalculation.general.misc.Dense2Sparse;
+import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -188,28 +194,6 @@ public abstract class MatrixFactory {
 
 	private static Constructor<?> sparseStringMatrix2DConstructor = null;
 
-	private static Constructor<?> sparseBooleanMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseByteMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseCharMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseDateMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseDoubleMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseFloatMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseIntMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseLongMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseShortMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseObjectMatrix3DConstructor = null;
-
-	private static Constructor<?> sparseStringMatrix3DConstructor = null;
-
 	private static Constructor<?> sparseBooleanMatrixMultiDConstructor = null;
 
 	private static Constructor<?> sparseByteMatrixMultiDConstructor = null;
@@ -234,7 +218,14 @@ public abstract class MatrixFactory {
 
 	private static void findMatrixClasses() {
 		try {
+			setDenseBooleanMatrix2DClassName(DefaultDenseBooleanMatrix2D.class.getName());
+			setDenseBooleanMatrixMultiDClassName(DefaultSparseBooleanMatrix.class.getName());
+			setSparseBooleanMatrix2DClassName(DefaultSparseBooleanMatrix.class.getName());
+			setSparseBooleanMatrixMultiDClassName(DefaultSparseBooleanMatrix.class.getName());
+
 			setDenseDoubleMatrix2DClassName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
+			setDenseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
+
 			setDenseObjectMatrix2DClassName(DefaultDenseObjectMatrix2D.class.getName());
 			setDenseStringMatrix2DClassName(DefaultDenseStringMatrix2D.class.getName());
 		} catch (Exception e) {
@@ -253,6 +244,71 @@ public abstract class MatrixFactory {
 					+ " instead.");
 		}
 		denseDoubleMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static void setDenseDoubleMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseDoubleMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseDoubleMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseDoubleMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static void setDenseBooleanMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBooleanMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultDenseBooleanMatrix2D.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBooleanMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static void setDenseBooleanMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBooleanMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBooleanMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBooleanMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static void setSparseBooleanMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractSparseBooleanMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBooleanMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBooleanMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static void setSparseBooleanMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBooleanMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBooleanMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBooleanMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public static void setDenseStringMatrix2DClassName(String className) throws Exception {
@@ -411,6 +467,10 @@ public abstract class MatrixFactory {
 	}
 
 	public static Matrix zeros(EntryType entryType, long... size) throws MatrixException {
+		return dense(entryType, size);
+	}
+
+	public static Matrix dense(EntryType entryType, long... size) throws MatrixException {
 		try {
 			switch (size.length) {
 			case 0:
@@ -419,29 +479,59 @@ public abstract class MatrixFactory {
 				throw new MatrixException("Size must be at least 2-dimensional");
 			case 2:
 				switch (entryType) {
+				case BOOLEAN:
+					return (Matrix) denseBooleanMatrix2DConstructor.newInstance(size);
+				case BYTE:
+					return (Matrix) denseByteMatrix2DConstructor.newInstance(size);
+				case CHAR:
+					return (Matrix) denseCharMatrix2DConstructor.newInstance(size);
+				case DATE:
+					return (Matrix) denseDateMatrix2DConstructor.newInstance(size);
 				case DOUBLE:
 					return (Matrix) denseDoubleMatrix2DConstructor.newInstance(size);
+				case FLOAT:
+					return (Matrix) denseFloatMatrix2DConstructor.newInstance(size);
+				case INT:
+					return (Matrix) denseIntMatrix2DConstructor.newInstance(size);
+				case LONG:
+					return (Matrix) denseLongMatrix2DConstructor.newInstance(size);
 				case OBJECT:
 					return (Matrix) denseObjectMatrix2DConstructor.newInstance(size);
+				case SHORT:
+					return (Matrix) denseShortMatrix2DConstructor.newInstance(size);
 				case STRING:
 					return (Matrix) denseStringMatrix2DConstructor.newInstance(size);
 				case GENERIC:
 					throw new MatrixException(
-							"use new DefaultDenseGenericMatrix<T>() to create generic matrices.");
-				default:
-					throw new MatrixException("entry type not yet supported: " + entryType);
-				}
-			case 3:
-				switch (entryType) {
-				case DOUBLE:
-					return (Matrix) denseDoubleMatrix3DConstructor.newInstance(size);
+							"use new DefaultDenseGenericMatrix2D<T>() to create generic matrices.");
 				default:
 					throw new MatrixException("entry type not yet supported: " + entryType);
 				}
 			default:
 				switch (entryType) {
+				case BOOLEAN:
+					return (Matrix) denseBooleanMatrixMultiDConstructor.newInstance(size);
+				case BYTE:
+					return (Matrix) denseByteMatrixMultiDConstructor.newInstance(size);
+				case CHAR:
+					return (Matrix) denseCharMatrixMultiDConstructor.newInstance(size);
 				case DOUBLE:
 					return (Matrix) denseDoubleMatrixMultiDConstructor.newInstance(size);
+				case FLOAT:
+					return (Matrix) denseFloatMatrixMultiDConstructor.newInstance(size);
+				case INT:
+					return (Matrix) denseIntMatrixMultiDConstructor.newInstance(size);
+				case LONG:
+					return (Matrix) denseLongMatrixMultiDConstructor.newInstance(size);
+				case OBJECT:
+					return (Matrix) denseObjectMatrixMultiDConstructor.newInstance(size);
+				case SHORT:
+					return (Matrix) denseShortMatrixMultiDConstructor.newInstance(size);
+				case STRING:
+					return (Matrix) denseStringMatrixMultiDConstructor.newInstance(size);
+				case GENERIC:
+					throw new MatrixException(
+							"use new DefaultSparseGenericMatrix<T>() to create generic matrices.");
 				default:
 					throw new MatrixException("entry type not yet supported: " + entryType);
 				}
@@ -498,12 +588,12 @@ public abstract class MatrixFactory {
 		return new DefaultListMatrix<Object>(list);
 	}
 
-	public static Matrix importFromStream(Format format, InputStream stream, Object... parameters)
+	public static Matrix importFromStream(FileFormat format, InputStream stream, Object... parameters)
 			throws MatrixException, IOException {
 		return ImportMatrix.fromStream(format, stream, parameters);
 	}
 
-	public static Matrix importFromString(Format format, String string, Object... parameters)
+	public static Matrix importFromString(FileFormat format, String string, Object... parameters)
 			throws MatrixException {
 		return ImportMatrix.fromString(format, string, parameters);
 	}
@@ -546,17 +636,98 @@ public abstract class MatrixFactory {
 	}
 
 	public final static Matrix sparse(EntryType entryType, long... size) throws MatrixException {
-		switch (entryType) {
-		default:
-			throw new MatrixException("entry type not yet supported: " + entryType);
+		try {
+			switch (size.length) {
+			case 0:
+				throw new MatrixException("Size not defined");
+			case 1:
+				throw new MatrixException("Size must be at least 2-dimensional");
+			case 2:
+				switch (entryType) {
+				case BOOLEAN:
+					return (Matrix) sparseBooleanMatrix2DConstructor.newInstance(size);
+				case BYTE:
+					return (Matrix) sparseByteMatrix2DConstructor.newInstance(size);
+				case CHAR:
+					return (Matrix) sparseCharMatrix2DConstructor.newInstance(size);
+				case DATE:
+					return (Matrix) sparseDateMatrix2DConstructor.newInstance(size);
+				case DOUBLE:
+					return (Matrix) sparseDoubleMatrix2DConstructor.newInstance(size);
+				case FLOAT:
+					return (Matrix) sparseFloatMatrix2DConstructor.newInstance(size);
+				case INT:
+					return (Matrix) sparseIntMatrix2DConstructor.newInstance(size);
+				case LONG:
+					return (Matrix) sparseLongMatrix2DConstructor.newInstance(size);
+				case OBJECT:
+					return (Matrix) sparseObjectMatrix2DConstructor.newInstance(size);
+				case SHORT:
+					return (Matrix) sparseShortMatrix2DConstructor.newInstance(size);
+				case STRING:
+					return (Matrix) sparseStringMatrix2DConstructor.newInstance(size);
+				case GENERIC:
+					throw new MatrixException(
+							"use new DefaultDenseGenericMatrix2D<T>() to create generic matrices.");
+				default:
+					throw new MatrixException("entry type not yet supported: " + entryType);
+				}
+			default:
+				switch (entryType) {
+				case BOOLEAN:
+					return (Matrix) sparseBooleanMatrixMultiDConstructor.newInstance(size);
+				case BYTE:
+					return (Matrix) sparseByteMatrixMultiDConstructor.newInstance(size);
+				case CHAR:
+					return (Matrix) sparseCharMatrixMultiDConstructor.newInstance(size);
+				case DOUBLE:
+					return (Matrix) sparseDoubleMatrixMultiDConstructor.newInstance(size);
+				case FLOAT:
+					return (Matrix) sparseFloatMatrixMultiDConstructor.newInstance(size);
+				case INT:
+					return (Matrix) sparseIntMatrixMultiDConstructor.newInstance(size);
+				case LONG:
+					return (Matrix) sparseLongMatrixMultiDConstructor.newInstance(size);
+				case OBJECT:
+					return (Matrix) sparseObjectMatrixMultiDConstructor.newInstance(size);
+				case SHORT:
+					return (Matrix) sparseShortMatrixMultiDConstructor.newInstance(size);
+				case STRING:
+					return (Matrix) sparseStringMatrixMultiDConstructor.newInstance(size);
+				case GENERIC:
+					throw new MatrixException(
+							"use new DefaultSparseGenericMatrix<T>() to create generic matrices.");
+				default:
+					throw new MatrixException("entry type not yet supported: " + entryType);
+				}
+			}
+		} catch (Exception e) {
+			throw new MatrixException(e);
 		}
 	}
 
 	public static Matrix zeros(long... size) throws MatrixException {
-		return zeros(EntryType.DOUBLE, size);
+		return dense(size);
 	}
 
-	public static final Matrix linkToFile(Format format, File file, Object... parameters)
+	public static Matrix dense(long... size) throws MatrixException {
+		try {
+			switch (size.length) {
+			case 0:
+				throw new MatrixException("Size not defined");
+			case 1:
+				throw new MatrixException("Size must be at least 2-dimensional");
+			case 2:
+				return (Matrix) denseDoubleMatrix2DConstructor.newInstance(size);
+			default:
+				return (Matrix) denseDoubleMatrixMultiDConstructor.newInstance(size);
+			}
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public static final Matrix linkToFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		return LinkMatrix.toFile(format, file, parameters);
 	}
@@ -571,17 +742,17 @@ public abstract class MatrixFactory {
 		return ImportMatrix.fromFile(file, parameters);
 	}
 
-	public static final Matrix importFromFile(Format format, String file, Object... parameters)
+	public static final Matrix importFromFile(FileFormat format, String file, Object... parameters)
 			throws MatrixException, IOException {
 		return ImportMatrix.fromFile(format, new File(file), parameters);
 	}
 
-	public static final Matrix importFromFile(Format format, File file, Object... parameters)
+	public static final Matrix importFromFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		return ImportMatrix.fromFile(format, file, parameters);
 	}
 
-	public static Matrix importFromClipboard(Format format, Object... parameters)
+	public static Matrix importFromClipboard(FileFormat format, Object... parameters)
 			throws MatrixException {
 		return ImportMatrix.fromClipboard(format, parameters);
 	}

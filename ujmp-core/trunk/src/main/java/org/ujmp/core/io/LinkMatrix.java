@@ -28,13 +28,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.Format;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class LinkMatrix {
 
-	public static Matrix toFile(Format format, File file, Object... parameters)
+	public static Matrix toFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());

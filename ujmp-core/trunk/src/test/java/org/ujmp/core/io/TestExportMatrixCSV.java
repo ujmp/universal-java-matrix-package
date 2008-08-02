@@ -23,12 +23,12 @@
 
 package org.ujmp.core.io;
 
-import org.ujmp.core.Matrix.Format;
+import org.ujmp.core.FileFormat;
 
 public class TestExportMatrixCSV extends AbstractExportMatrixTest {
 
 	@Override
-	public Format getFormat() {
-		return Format.CSV;
+	public FileFormat getFormat() {
+		return FileFormat.CSV;
 	}
 }

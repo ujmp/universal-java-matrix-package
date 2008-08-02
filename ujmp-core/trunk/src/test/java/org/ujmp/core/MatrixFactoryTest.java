@@ -56,8 +56,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}
@@ -67,8 +67,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}
@@ -78,8 +78,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}
@@ -109,8 +109,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}
@@ -120,8 +120,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}
@@ -131,8 +131,8 @@ public class MatrixFactoryTest extends TestCase {
 		for (EntryType e : EntryType.values()) {
 			if (!EntryType.GENERIC.equals(e)) {
 				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e, m.getEntryType());
-				assertTrue(Coordinates.equals(size, m.getSize()));
+				assertEquals(e.name(), e, m.getEntryType());
+				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 			}
 		}
 	}

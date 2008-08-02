@@ -117,7 +117,7 @@ public class MutualInformation extends AbstractDoubleCalculation {
 	}
 
 	public static DoubleMatrix2D calcNew(Matrix matrix) {
-		return calcNew(matrix.convert(EntryType.INTEGER));
+		return calcNew(matrix.convert(EntryType.INT));
 	}
 
 	public static DoubleMatrix2D calcNew(IntMatrix2D matrix) {

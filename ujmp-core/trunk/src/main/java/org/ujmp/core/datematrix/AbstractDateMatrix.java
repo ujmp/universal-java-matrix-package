@@ -51,6 +51,16 @@ public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> imp
 		setDate(value, coordinates);
 	}
 
+	@Override
+	public final double getAsDouble(long... coordinates) throws MatrixException {
+		return getDate(coordinates).getTime();
+	}
+
+	@Override
+	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		setDate(new Date((long) value));
+	}
+
 	public final EntryType getEntryType() {
 		return EntryType.DATE;
 	}

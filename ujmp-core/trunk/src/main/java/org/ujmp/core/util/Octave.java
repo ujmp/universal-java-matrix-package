@@ -29,14 +29,14 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.Format;
 
 public class Octave {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("Octave"), "/usr/bin/octave",
-			"/opt/octave/bin/octave" };
+	public static final String[] SEARCH = new String[] { System.getProperty("Octave"),
+			"/usr/bin/octave", "/opt/octave/bin/octave" };
 
 	public static final int POLLINTERVAL = 100;
 
@@ -109,8 +109,8 @@ public class Octave {
 					numberSeen = false;
 				}
 			} else if (colonSeen) {
-				if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'
-						|| c == '8' || c == '9') {
+				if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5'
+						|| c == '6' || c == '7' || c == '8' || c == '9') {
 					numberSeen = true;
 				} else {
 					colonSeen = false;
@@ -146,7 +146,7 @@ public class Octave {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.exportToString(Format.M));
+		execute(label + "=" + matrix.exportToString(FileFormat.M));
 	}
 
 	private static String findOctave() {
@@ -299,7 +299,8 @@ public class Octave {
 		setMatrix("ujmpmatrix_x", x);
 		setMatrix("ujmpmatrix_y", y);
 		execute("figure;");
-		execute("contour(ujmpmatrix_z,ujmpmatrix_n,ujmpmatrix_x,ujmpmatrix_y" + toString(format) + ");");
+		execute("contour(ujmpmatrix_z,ujmpmatrix_n,ujmpmatrix_x,ujmpmatrix_y" + toString(format)
+				+ ");");
 	}
 
 	public void mesh(Matrix x, Matrix y, Matrix z, String... format) throws Exception {

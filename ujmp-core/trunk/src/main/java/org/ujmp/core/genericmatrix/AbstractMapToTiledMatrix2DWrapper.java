@@ -34,8 +34,8 @@ import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDenseMatrix<A> implements
-		Wrapper<Map<Coordinates, ObjectMatrix2D>> {
+public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDenseGenericMatrix<A>
+		implements Wrapper<Map<Coordinates, ObjectMatrix2D>> {
 
 	private long tileSize = 100;
 
@@ -86,9 +86,11 @@ public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDense
 		return new CoordinateIterator2D(getSize());
 	}
 
+	@Override
 	public boolean contains(long... coordinates) {
 		if (Coordinates.isSmallerThan(coordinates, size)) {
-			Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
+			Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN]
+					/ tileSize);
 			Matrix m = getMap().get(c);
 			return m != null;
 		} else {

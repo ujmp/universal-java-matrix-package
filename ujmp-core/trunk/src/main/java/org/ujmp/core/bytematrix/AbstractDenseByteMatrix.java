@@ -21,10 +21,15 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.bytematrix;
 
+import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseMatrix<A> extends AbstractGenericMatrix<A> {
+public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix {
+
+	public final boolean contains(long... coordinates) {
+		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
 
 	public final boolean isSparse() {
 		return false;

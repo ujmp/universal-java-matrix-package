@@ -62,7 +62,7 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 	 * object types.
 	 */
 	public enum EntryType {
-		GENERIC, BOOLEAN, BYTE, CHARACTER, SHORT, INTEGER, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
+		GENERIC, BOOLEAN, BYTE, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
 	};
 
 	public enum AnnotationTransfer {
@@ -82,13 +82,6 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 	public static final int ALL = 0x7fffffff;
 
 	public static final int NONE = -1;
-
-	/**
-	 * Import and export formats that are supported.
-	 */
-	public enum Format {
-		CSV, TXT, M, MAT, MDB, R, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF
-	};
 
 	public Matrix clone();
 

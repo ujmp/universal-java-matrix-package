@@ -25,14 +25,14 @@ package org.ujmp.core.io;
 
 import java.io.File;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.Format;
 
 public class TestExportMatrixM extends AbstractExportMatrixTest {
 
 	@Override
-	public Format getFormat() {
-		return Format.M;
+	public FileFormat getFormat() {
+		return FileFormat.M;
 	}
 
 	@Override

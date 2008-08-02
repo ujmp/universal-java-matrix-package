@@ -75,7 +75,7 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 				case DOUBLE:
 					cb.setSQLType(Types.DOUBLE);
 					break;
-				case INTEGER:
+				case INT:
 					cb.setSQLType(Types.INTEGER);
 					break;
 				default:

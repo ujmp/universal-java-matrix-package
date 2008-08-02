@@ -28,26 +28,31 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import org.ujmp.core.Matrix.Format;
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface ExportMatrixInterface {
 
-	public void exportToFile(Format format, File file, Object... parameters) throws MatrixException, IOException;
+	public void exportToFile(FileFormat format, File file, Object... parameters)
+			throws MatrixException, IOException;
 
-	public void exportToFile(Format format, String file, Object... parameters) throws MatrixException, IOException;
+	public void exportToFile(FileFormat format, String file, Object... parameters)
+			throws MatrixException, IOException;
 
 	public void exportToFile(File file, Object... parameters) throws MatrixException, IOException;
 
 	public void exportToFile(String file, Object... parameters) throws MatrixException, IOException;
 
-	public void exportToStream(Format format, OutputStream stream, Object... parameters) throws MatrixException,
+	public void exportToStream(FileFormat format, OutputStream stream, Object... parameters)
+			throws MatrixException, IOException;
+
+	public void exportToWriter(FileFormat format, Writer writer, Object... parameters)
+			throws MatrixException, IOException;
+
+	public void exportToClipboard(FileFormat format, Object... parameters) throws MatrixException,
 			IOException;
 
-	public void exportToWriter(Format format, Writer writer, Object... parameters) throws MatrixException, IOException;
-
-	public void exportToClipboard(Format format, Object... parameters) throws MatrixException, IOException;
-
-	public String exportToString(Format format, Object... parameters) throws MatrixException, IOException;
+	public String exportToString(FileFormat format, Object... parameters) throws MatrixException,
+			IOException;
 
 }

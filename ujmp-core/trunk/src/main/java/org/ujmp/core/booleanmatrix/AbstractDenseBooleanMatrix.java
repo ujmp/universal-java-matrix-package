@@ -23,6 +23,16 @@
 
 package org.ujmp.core.booleanmatrix;
 
-public class AbstractDenseBooleanMatrix {
+import org.ujmp.core.coordinates.Coordinates;
+
+public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix {
+
+	public final boolean contains(long... coordinates) {
+		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
+
+	public final boolean isSparse() {
+		return false;
+	}
 
 }

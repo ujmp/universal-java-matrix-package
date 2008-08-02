@@ -30,13 +30,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.ujmp.core.FileFormat;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.Format;
 
 public class R {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("R"), "/usr/bin/R", "/opt/R/bin/R" };
+	public static final String[] SEARCH = new String[] { System.getProperty("R"), "/usr/bin/R",
+			"/opt/R/bin/R" };
 
 	public static final int POLLINTERVAL = 100;
 
@@ -153,7 +154,7 @@ public class R {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + " <- " + matrix.exportToString(Format.R));
+		execute(label + " <- " + matrix.exportToString(FileFormat.R));
 	}
 
 	private static String findR() {

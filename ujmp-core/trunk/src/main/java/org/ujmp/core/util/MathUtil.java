@@ -299,8 +299,46 @@ public abstract class MathUtil {
 		return list;
 	}
 
+	public static List<Double> sequenceListDouble(double start, double end) {
+		List<Double> list = new ArrayList<Double>();
+
+		if (start < end) {
+			for (double l = start; l <= end; l++) {
+				list.add(l);
+			}
+		} else {
+			for (double l = start; l >= end; l--) {
+				list.add(l);
+			}
+		}
+		return list;
+	}
+
+	public static List<Integer> sequenceListInt(int start, int end) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		if (start < end) {
+			for (int l = start; l <= end; l++) {
+				list.add(l);
+			}
+		} else {
+			for (int l = start; l >= end; l--) {
+				list.add(l);
+			}
+		}
+		return list;
+	}
+
 	public static long[] sequenceLong(long start, long end) {
 		return collectionToLong(sequenceListLong(start, end));
+	}
+
+	public static double[] sequenceDouble(double start, double end) {
+		return collectionToDouble(sequenceListDouble(start, end));
+	}
+
+	public static int[] sequenceInt(int start, int end) {
+		return collectionToInt(sequenceListInt(start, end));
 	}
 
 	public static List<Long> randPerm(long start, long end) {

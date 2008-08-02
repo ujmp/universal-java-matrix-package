@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.ujmp.core.Matrix.AnnotationTransfer;
 import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix;
 import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix2D;
@@ -53,6 +52,7 @@ import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;

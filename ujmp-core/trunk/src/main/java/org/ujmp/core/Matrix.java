@@ -56,10 +56,6 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 		DistanceMeasures, Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel,
 		HasGUIObject {
 
-	public enum AnnotationTransfer {
-		NONE, LINK, COPY
-	};
-
 	public static final int Y = 0;
 
 	public static final int X = 1;

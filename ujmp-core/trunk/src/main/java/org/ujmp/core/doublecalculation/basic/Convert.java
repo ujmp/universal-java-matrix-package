@@ -25,8 +25,8 @@ package org.ujmp.core.doublecalculation.basic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Matrix.AnnotationTransfer;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;

@@ -109,6 +109,7 @@ import org.ujmp.core.doublecalculation.general.statistical.PairedTTest;
 import org.ujmp.core.doublecalculation.general.statistical.Std;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.doublecalculation.general.statistical.Var;
+import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;

@@ -74,6 +74,7 @@ import org.ujmp.core.doublematrix.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.enums.AnnotationTransfer;
+import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -91,7 +92,9 @@ import org.ujmp.core.intmatrix.AbstractSparseIntMatrix2D;
 import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.DefaultSparseIntMatrix;
 import org.ujmp.core.io.ImportMatrix;
+import org.ujmp.core.io.ImportMatrixJDBC;
 import org.ujmp.core.io.LinkMatrix;
+import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.AbstractDenseLongMatrix;
 import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
@@ -105,9 +108,9 @@ import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix;
 import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix;
 import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.BufferedObjectMatrix;
 import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.DefaultSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix;
@@ -1158,18 +1161,25 @@ public abstract class MatrixFactory {
 		return new DenseFileMatrix2D(new File(filename), rowCount, columnCount);
 	}
 
-	public static final Matrix linkToJDBC(String url, String tablename, String username,
+	public static final ObjectMatrix2D linkToJDBC(String url, String tablename, String username,
 			String password) {
-		try {
-			Class<?> c = Class.forName("org.ujmp.jdbc.DenseODBCMatrix2D");
-			Constructor<?> constr = c.getConstructor(new Class[] { String.class, String.class,
-					String.class, String.class });
-			Matrix odbcMatrix = (Matrix) constr.newInstance(new Object[] { url, tablename,
-					username, password });
-			return new BufferedObjectMatrix(odbcMatrix);
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
+		return LinkMatrixJDBC.toDatabase(url, tablename, username, password);
+	}
+
+	public static final ObjectMatrix2D linkToJDBC(DB type, String host, int port, String database,
+			String tablename, String username, String password) {
+		return LinkMatrixJDBC.toDatabase(type, host, port, database, tablename, username, password);
+	}
+
+	public static final ObjectMatrix2D importFromJDBC(String url, String tablename,
+			String username, String password) {
+		return ImportMatrixJDBC.fromDatabase(url, tablename, username, password);
+	}
+
+	public static final ObjectMatrix2D importFromJDBC(DB type, String host, int port,
+			String database, String tablename, String username, String password) {
+		return ImportMatrixJDBC.fromDatabase(type, host, port, database, tablename, username,
+				password);
 	}
 
 	public final static Matrix sparse(long... size) throws MatrixException {

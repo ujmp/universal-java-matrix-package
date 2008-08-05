@@ -46,7 +46,9 @@ public class JMathPlotHistogramPanel extends AbstractJMathPlotPanel {
 			for (int r = 0; r < matrix.getRowCount(); r++) {
 				y[r] = matrix.getAsDouble(r, c);
 			}
-			panel.addHistogramPlot("Column " + c, y, bins);
+			String colName = matrix.getColumnLabel(c);
+			colName = colName == null ? "Column " + c : colName;
+			panel.addHistogramPlot(colName, y, bins);
 		}
 		panel.setAxisLabels(new String[] { "Value", "Frequency" });
 		setLayout(new BorderLayout());

@@ -38,6 +38,15 @@ public class JMathPlotScatterPanel extends AbstractJMathPlotPanel {
 	@Override
 	public void repaintUI() {
 		Matrix matrix = getMatrix();
+
+		String xLabel = matrix.getColumnLabel(0);
+		xLabel = xLabel == null ? "Column 0" : xLabel;
+		String yLabel = null;
+		if (matrix.getColumnCount() == 2) {
+			yLabel = matrix.getColumnLabel(1);
+		}
+		yLabel = yLabel == null ? "Value" : yLabel;
+
 		Plot2DPanel panel = new Plot2DPanel();
 		double[] x = new double[(int) getMatrix().getRowCount()];
 		for (int r = 0; r < matrix.getRowCount(); r++) {
@@ -48,9 +57,12 @@ public class JMathPlotScatterPanel extends AbstractJMathPlotPanel {
 			for (int r = 0; r < matrix.getRowCount(); r++) {
 				y[r] = matrix.getAsDouble(r, c);
 			}
-			panel.addScatterPlot("Column " + c, x, y);
+			String colLabel = matrix.getColumnLabel(c);
+			colLabel = colLabel == null ? "Column " + c : colLabel;
+			panel.addScatterPlot(colLabel, x, y);
 		}
-		panel.setAxisLabels(new String[] { "Column 0", "Value" });
+
+		panel.setAxisLabels(new String[] { xLabel, yLabel });
 		panel.addLegend("SOUTH");
 		setLayout(new BorderLayout());
 		add(panel, BorderLayout.CENTER);

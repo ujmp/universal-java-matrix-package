@@ -58,10 +58,6 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmathlib</artifactId>
-		</dependency>
 	
 		<dependency>
 			<groupId>junit</groupId>
@@ -78,7 +74,6 @@
     <module>../ujmp-jexcelapi</module>
     <module>../ujmp-jmatio</module>
     <module>../ujmp-jmatrices</module>
-    <module>../ujmp-jmathlib</module>
     <module>../ujmp-mtj</module>
     <module>../ujmp-vecmath</module>
   </modules>

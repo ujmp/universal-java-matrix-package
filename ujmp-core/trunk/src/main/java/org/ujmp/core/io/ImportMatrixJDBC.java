@@ -31,13 +31,13 @@ import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class ImportMatrixJDBC {
 
-	public static ObjectMatrix2D fromDatabase(String url, String tablename, String username,
+	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement, String username,
 			String password) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jdbc.ImportMatrixJDBC");
 			Method method = c.getMethod("fromDatabase", new Class[] { String.class, String.class,
 					String.class, String.class });
-			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(url, tablename, username,
+			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(url, sqlStatement, username,
 					password);
 			return matrix;
 		} catch (Exception e) {
@@ -46,13 +46,13 @@ public class ImportMatrixJDBC {
 	}
 
 	public static ObjectMatrix2D fromDatabase(DB type, String host, int port, String database,
-			String tablename, String username, String password) {
+			String sqlStatement, String username, String password) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jdbc.ImportMatrixJDBC");
 			Method method = c.getMethod("fromDatabase", new Class[] { DB.class, String.class,
 					Integer.TYPE, String.class, String.class, String.class, String.class });
 			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(type, host, port, database,
-					tablename, username, password);
+					sqlStatement, username, password);
 			return matrix;
 		} catch (Exception e) {
 			throw new MatrixException(e);

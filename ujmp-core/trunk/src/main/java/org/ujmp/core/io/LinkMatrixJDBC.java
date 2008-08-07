@@ -23,22 +23,22 @@
 
 package org.ujmp.core.io;
 
-import java.io.File;
 import java.lang.reflect.Method;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class LinkMatrixJDBC {
 
-	public static ObjectMatrix2D toDatabase(String url, String tablename, String username,
+	public static ObjectMatrix2D toDatabase(String url, String sqlStatement, String username,
 			String password) {
 		try {
-			Class<?> c = Class.forName("org.ujmp.jdbc.ImportMatrixJDBC");
-			Method method = c.getMethod("fromFile", new Class[] { File.class, Object[].class });
-			Matrix matrix = (Matrix) method.invoke(null, file, parameters);
+			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
+			Method method = c.getMethod("toDatabase", new Class[] { String.class, String.class,
+					String.class, String.class });
+			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(url, sqlStatement, username,
+					password);
 			return matrix;
 		} catch (Exception e) {
 			throw new MatrixException(e);
@@ -46,8 +46,17 @@ public class LinkMatrixJDBC {
 	}
 
 	public static ObjectMatrix2D toDatabase(DB type, String host, int port, String database,
-			String tablename, String username, String password) {
-		return null;
+			String sqlStatement, String username, String password) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
+			Method method = c.getMethod("toDatabase", new Class[] { DB.class, String.class,
+					Integer.TYPE, String.class, String.class, String.class, String.class });
+			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(type, host, port, database,
+					sqlStatement, username, password);
+			return matrix;
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 }

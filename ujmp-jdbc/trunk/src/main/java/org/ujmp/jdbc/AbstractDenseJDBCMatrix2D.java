@@ -154,6 +154,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 			connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
 			// DatabaseMetaData dbm = connection.getMetaData();
 			// dbm = null;
+			// ResultSet rs = dbm.getTables(null, null, "%", null);
 			connections.put(id, connection);
 		}
 		id = ++id >= connectionCount ? 0 : id;

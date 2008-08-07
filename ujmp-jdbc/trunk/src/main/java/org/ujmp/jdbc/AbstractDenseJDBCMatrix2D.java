@@ -56,7 +56,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	private long[] size = null;
 
-	private final int resultSize = 100000;
+	private final int resultSize = Integer.MAX_VALUE;
 
 	private final int connectionCount = 1;
 
@@ -79,6 +79,10 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 			ResultSet rs = getResultSet(row);
 			return rs.getObject((int) column + 1);
 		} catch (SQLException e) {
+			if ("S1009".equals(e.getSQLState())) {
+				// ignore Value '0000-00-00' can not be represented
+				return null;
+			}
 			throw new MatrixException(e);
 		}
 	}
@@ -128,10 +132,17 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 		ResultSet resultSet = resultSets.get(pos);
 		if (resultSet == null || resultSet.isClosed()) {
 			PreparedStatement ps = getSelectStatement();
-			ps.setInt(1, resultSize);
-			ps.setInt(2, offset);
+			// ps.setInt(1, resultSize);
+			// ps.setInt(2, offset);
 			resultSet = ps.executeQuery();
 			resultSets.put(pos, resultSet);
+			if (getMatrixAnnotation() == null) {
+				setMatrixAnnotation(getUrl() + " " + getSelectString());
+				ResultSetMetaData rsm = resultSet.getMetaData();
+				for (int c = 0; c < rsm.getColumnCount(); c++) {
+					setColumnLabel(c, rsm.getColumnLabel(c + 1));
+				}
+			}
 		}
 		resultSet.absolute(remain + 1);
 		// resultSet.next();

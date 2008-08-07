@@ -23,6 +23,7 @@
 
 package org.ujmp.jdbc;
 
+
 public class DenseMySQLMatrix2D extends AbstractDenseJDBCMatrix2D {
 	private static final long serialVersionUID = 6885926512790354810L;
 

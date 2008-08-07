@@ -37,8 +37,8 @@ public class LinkMatrixJDBC {
 			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
 			Method method = c.getMethod("toDatabase", new Class[] { String.class, String.class,
 					String.class, String.class });
-			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(url, sqlStatement, username,
-					password);
+			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(null, url, sqlStatement,
+					username, password);
 			return matrix;
 		} catch (Exception e) {
 			throw new MatrixException(e);
@@ -51,8 +51,8 @@ public class LinkMatrixJDBC {
 			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
 			Method method = c.getMethod("toDatabase", new Class[] { DB.class, String.class,
 					Integer.TYPE, String.class, String.class, String.class, String.class });
-			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(type, host, port, database,
-					sqlStatement, username, password);
+			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(null, type, host, port,
+					database, sqlStatement, username, password);
 			return matrix;
 		} catch (Exception e) {
 			throw new MatrixException(e);

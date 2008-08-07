@@ -47,7 +47,7 @@ public class Convert extends AbstractGenericCalculation {
 			Matrix source) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(source.getAsDouble(c), c);
+			ret.setObject(source.getObject(c), c);
 		}
 		switch (annotationTransfer) {
 		case LINK:

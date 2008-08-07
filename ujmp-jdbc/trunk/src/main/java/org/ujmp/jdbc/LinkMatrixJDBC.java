@@ -25,11 +25,10 @@ package org.ujmp.jdbc;
 
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class LinkMatrixJDBC {
 
-	public static ObjectMatrix2D toDatabase(String url, String sqlStatement, String username, String password)
+	public static AbstractDenseJDBCMatrix2D toDatabase(String url, String sqlStatement, String username, String password)
 			throws Exception {
 		if (url.startsWith("jdbc:mysql://")) {
 			return new DenseMySQLMatrix2D(url, sqlStatement, username, password);
@@ -44,8 +43,8 @@ public class LinkMatrixJDBC {
 		}
 	}
 
-	public static ObjectMatrix2D toDatabase(DB type, String host, int port, String databasename, String sqlStatement,
-			String username, String password) throws Exception {
+	public static AbstractDenseJDBCMatrix2D toDatabase(DB type, String host, int port, String databasename,
+			String sqlStatement, String username, String password) throws Exception {
 		switch (type) {
 		case MySQL:
 			return toDatabase("jdbc:mysql://" + host + ":" + port + "/" + databasename, sqlStatement, username,

@@ -30,11 +30,18 @@ public class ImportMatrixJDBC {
 
 	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement, String username, String password)
 			throws Exception {
-		return (ObjectMatrix2D) LinkMatrixJDBC.toDatabase(url, sqlStatement, username, password).copy();
+		AbstractDenseJDBCMatrix2D jdbcMatrix = LinkMatrixJDBC.toDatabase(url, sqlStatement, username, password);
+		ObjectMatrix2D matrix = (ObjectMatrix2D) jdbcMatrix.copy();
+		jdbcMatrix.close();
+		return matrix;
 	}
 
 	public static ObjectMatrix2D fromDatabase(DB type, String host, int port, String databasename, String sqlStatement,
 			String username, String password) throws Exception {
-		return LinkMatrixJDBC.toDatabase(type, host, port, databasename, sqlStatement, username, password);
+		AbstractDenseJDBCMatrix2D jdbcMatrix = LinkMatrixJDBC.toDatabase(type, host, port, databasename, sqlStatement,
+				username, password);
+		ObjectMatrix2D matrix = (ObjectMatrix2D) jdbcMatrix.copy();
+		jdbcMatrix.close();
+		return matrix;
 	}
 }

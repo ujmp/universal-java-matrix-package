@@ -118,8 +118,8 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public boolean remove(Object o) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		remove(indexOf(o));
+		return true;
 	}
 
 	public A remove(int index) {

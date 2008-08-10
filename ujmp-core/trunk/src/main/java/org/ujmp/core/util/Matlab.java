@@ -204,11 +204,19 @@ public class Matlab {
 	public void bar(Matrix matrix, String... format) throws Exception {
 		setMatrix("ujmpmatrix", matrix);
 		execute("figure;");
-		execute("bar(jdmpmatrix" + toString(format) + ");");
+		execute("bar(ujmpmatrix" + toString(format) + ");");
+	}
+
+	public void errorbar(Matrix x, Matrix y, Matrix e, String... format) throws Exception {
+		setMatrix("ujmpmatrix_x", x);
+		setMatrix("ujmpmatrix_y", y);
+		setMatrix("ujmpmatrix_e", e);
+		execute("figure;");
+		execute("errorbar(ujmpmatrix_x,ujmpmatrix_y,ujmpmatrix_e" + toString(format) + ");");
 	}
 
 	public void barh(Matrix matrix, String... format) throws Exception {
-		setMatrix("jdmpmatrix", matrix);
+		setMatrix("ujmpmatrix", matrix);
 		execute("figure;");
 		execute("barh(ujmpmatrix" + toString(format) + ");");
 	}

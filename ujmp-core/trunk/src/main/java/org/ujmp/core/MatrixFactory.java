@@ -1048,8 +1048,7 @@ public abstract class MatrixFactory {
 				case STRING:
 					return (Matrix) denseStringMatrix2DConstructor.newInstance(size);
 				case GENERIC:
-					throw new MatrixException(
-							"use new DefaultDenseGenericMatrix2D<T>() to create generic matrices.");
+					return (Matrix) denseObjectMatrix2DConstructor.newInstance(size);
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
@@ -1078,8 +1077,7 @@ public abstract class MatrixFactory {
 				case STRING:
 					return (Matrix) denseStringMatrixMultiDConstructor.newInstance(size);
 				case GENERIC:
-					throw new MatrixException(
-							"use new DefaultSparseGenericMatrix<T>() to create generic matrices.");
+					return (Matrix) denseObjectMatrixMultiDConstructor.newInstance(size);
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
@@ -1222,8 +1220,7 @@ public abstract class MatrixFactory {
 				case STRING:
 					return (Matrix) sparseStringMatrix2DConstructor.newInstance(size);
 				case GENERIC:
-					throw new MatrixException(
-							"use new DefaultDenseGenericMatrix2D<T>() to create generic matrices.");
+					return (Matrix) sparseObjectMatrix2DConstructor.newInstance(size);
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
@@ -1252,8 +1249,7 @@ public abstract class MatrixFactory {
 				case STRING:
 					return (Matrix) sparseStringMatrixMultiDConstructor.newInstance(size);
 				case GENERIC:
-					throw new MatrixException(
-							"use new DefaultSparseGenericMatrix<T>() to create generic matrices.");
+					return (Matrix) sparseObjectMatrixMultiDConstructor.newInstance(size);
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}

@@ -23,25 +23,67 @@
 
 package org.ujmp.jdbc;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+
+import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.DB;
+import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class ImportMatrixJDBC {
 
-	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement, String username, String password)
-			throws Exception {
-		AbstractDenseJDBCMatrix2D jdbcMatrix = LinkMatrixJDBC.toDatabase(url, sqlStatement, username, password);
-		ObjectMatrix2D matrix = (ObjectMatrix2D) jdbcMatrix.copy();
-		jdbcMatrix.close();
-		return matrix;
+	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement,
+			String username, String password) throws Exception {
+		if (url.startsWith("jdbc:mysql://")) {
+			Class.forName("com.mysql.jdbc.Driver");
+		} else if (url.startsWith("jdbc:postgresql://")) {
+			Class.forName("org.postgresql.Driver");
+		} else {
+			throw new MatrixException("Database format not supported: " + url);
+		}
+
+		Connection connection = DriverManager.getConnection(url, username,
+				password);
+		PreparedStatement selectStatement = connection
+				.prepareStatement(sqlStatement);
+		ResultSet resultSet = selectStatement.executeQuery();
+		ResultSetMetaData rsMetaData = resultSet.getMetaData();
+		long columnCount = rsMetaData.getColumnCount();
+		resultSet.last();
+		long rowCount = resultSet.getRow();
+		resultSet.first();
+		ObjectMatrix2D m = (ObjectMatrix2D) MatrixFactory.zeros(
+				ValueType.STRING, rowCount, columnCount);
+
+		for (int c = 0; c < columnCount; c++) {
+			m.setColumnLabel(c, rsMetaData.getColumnLabel(c + 1));
+		}
+
+		for (int r = 0; r < rowCount; r++) {
+			for (int c = 0; c < columnCount; c++) {
+				m.setObject(resultSet.getObject(c + 1), r, c);
+			}
+			resultSet.next();
+		}
+
+		connection.close();
+		return m;
 	}
 
-	public static ObjectMatrix2D fromDatabase(DB type, String host, int port, String databasename, String sqlStatement,
-			String username, String password) throws Exception {
-		AbstractDenseJDBCMatrix2D jdbcMatrix = LinkMatrixJDBC.toDatabase(type, host, port, databasename, sqlStatement,
-				username, password);
-		ObjectMatrix2D matrix = (ObjectMatrix2D) jdbcMatrix.copy();
-		jdbcMatrix.close();
-		return matrix;
+	public static ObjectMatrix2D fromDatabase(DB type, String host, int port,
+			String databasename, String sqlStatement, String username,
+			String password) throws Exception {
+		switch (type) {
+		case MySQL:
+			return fromDatabase("jdbc:mysql://" + host + ":" + port + "/"
+					+ databasename, sqlStatement, username, password);
+		default:
+			throw new MatrixException("not supported: " + type);
+		}
 	}
 }

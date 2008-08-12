@@ -1159,24 +1159,24 @@ public abstract class MatrixFactory {
 		return new DenseFileMatrix2D(new File(filename), rowCount, columnCount);
 	}
 
-	public static final ObjectMatrix2D linkToJDBC(String url, String tablename, String username,
+	public static final ObjectMatrix2D linkToJDBC(String url, String sqlStatement, String username,
 			String password) {
-		return LinkMatrixJDBC.toDatabase(url, tablename, username, password);
+		return LinkMatrixJDBC.toDatabase(url, sqlStatement, username, password);
 	}
 
 	public static final ObjectMatrix2D linkToJDBC(DB type, String host, int port, String database,
-			String tablename, String username, String password) {
-		return LinkMatrixJDBC.toDatabase(type, host, port, database, tablename, username, password);
+			String sqlStatement, String username, String password) {
+		return LinkMatrixJDBC.toDatabase(type, host, port, database, sqlStatement, username, password);
 	}
 
-	public static final ObjectMatrix2D importFromJDBC(String url, String tablename,
+	public static final ObjectMatrix2D importFromJDBC(String url, String sqlStatement,
 			String username, String password) {
-		return ImportMatrixJDBC.fromDatabase(url, tablename, username, password);
+		return ImportMatrixJDBC.fromDatabase(url, sqlStatement, username, password);
 	}
 
 	public static final ObjectMatrix2D importFromJDBC(DB type, String host, int port,
-			String database, String tablename, String username, String password) {
-		return ImportMatrixJDBC.fromDatabase(type, host, port, database, tablename, username,
+			String database, String sqlStatement, String username, String password) {
+		return ImportMatrixJDBC.fromDatabase(type, host, port, database, sqlStatement, username,
 				password);
 	}
 

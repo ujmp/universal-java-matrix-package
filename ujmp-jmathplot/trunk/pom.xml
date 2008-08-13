@@ -28,17 +28,10 @@
     	<dependency>
     	  <groupId>org.ujmp</groupId>
 	      <artifactId>ujmp-core</artifactId>
-    	</dependency>
-		
+    	</dependency>		
 		<dependency>
-			<groupId>org.jdmp</groupId>
-			<artifactId>jdmp-gui</artifactId>
-			<version>0.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jdmp</groupId>
-			<artifactId>jdmp-core</artifactId>
-			<version>0.0.2</version>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-gui</artifactId>
 		</dependency>
 	</dependencies>
 </project>

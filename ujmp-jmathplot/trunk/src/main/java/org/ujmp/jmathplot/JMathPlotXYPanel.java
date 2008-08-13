@@ -25,22 +25,14 @@ package org.ujmp.jmathplot;
 
 import java.awt.BorderLayout;
 
-import org.jdmp.core.dataset.DataSetFactory;
 import org.math.plot.Plot2DPanel;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public class JMathPlotXYPanel extends AbstractJMathPlotPanel {
 	private static final long serialVersionUID = -692582558308276742L;
 
 	public JMathPlotXYPanel(Matrix matrix) {
 		super(matrix);
-	}
-
-	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.randn(10, 10);
-		m = DataSetFactory.IRIS().getInputMatrix();
-		m.showGUI();
 	}
 
 	@Override

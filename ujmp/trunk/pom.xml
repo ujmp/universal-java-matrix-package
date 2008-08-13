@@ -119,6 +119,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-gui</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 		    
 		    
 

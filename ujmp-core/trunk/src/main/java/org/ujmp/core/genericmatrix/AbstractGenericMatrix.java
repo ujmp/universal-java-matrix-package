@@ -180,7 +180,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	public final GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
-				Class<?> c = Class.forName("org.jdmp.gui.matrix.MatrixGUIObject");
+				Class<?> c = Class.forName("org.ujmp.gui.matrix.MatrixGUIObject");
 				Constructor<?> con = c.getConstructor(new Class<?>[] { Matrix.class });
 				guiObject = (GUIObject) con.newInstance(new Object[] { this });
 			} catch (Exception e) {
@@ -592,7 +592,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public final JFrame showGUI() {
 		try {
-			Class<?> c = Class.forName("org.jdmp.gui.util.FrameManager");
+			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
 			Method method = c.getMethod("showFrame", new Class[] { GUIObject.class });
 			Object o = method.invoke(null, new Object[] { getGUIObject() });
 			return (JFrame) o;

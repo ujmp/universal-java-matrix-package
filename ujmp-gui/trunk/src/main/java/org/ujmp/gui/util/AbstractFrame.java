@@ -29,7 +29,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -48,13 +47,11 @@ import org.ujmp.gui.matrix.MatrixGUIObject;
 public abstract class AbstractFrame extends JFrame {
 	private static final long serialVersionUID = -4656308453503586700L;
 
-	private static final Logger logger = Logger.getLogger(AbstractFrame.class.getName());
-
 	private static Image image = Toolkit.getDefaultToolkit().getImage("jdmp16.png");
 
-	GUIObject object = null;
+	private GUIObject object = null;
 
-	StatusBar statusBar = null;
+	private StatusBar statusBar = null;
 
 	private static int frameCount = 0;
 
@@ -117,8 +114,8 @@ public abstract class AbstractFrame extends JFrame {
 			Icon icon = null;
 			int initialValue = 0;
 			String[] options = new String[] { "Exit", "Close", "Restore" };
-			int ret = JOptionPane.showOptionDialog(parentComponent, message, title, 0, messageType, icon, options,
-					initialValue);
+			int ret = JOptionPane.showOptionDialog(parentComponent, message, title, 0, messageType,
+					icon, options, initialValue);
 
 			if (ret == 0) {
 				System.exit(0);

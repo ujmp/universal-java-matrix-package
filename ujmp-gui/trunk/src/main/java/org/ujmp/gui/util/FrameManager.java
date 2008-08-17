@@ -46,6 +46,10 @@ public abstract class FrameManager {
 
 	protected static List<JComponent> actions = null;
 
+	static {
+		UIDefaults.setDefaults();
+	}
+
 	public static final JFrame showFrame(GUIObject o) {
 		if (o instanceof MatrixGUIObject) {
 			return showFrame((MatrixGUIObject) o);

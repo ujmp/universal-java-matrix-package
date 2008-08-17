@@ -61,7 +61,9 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 		assertTrue(getLabel(), m.equalsContent(m2));
 
-		file.delete();
+		boolean result = file.delete();
+		assertTrue(getLabel(), result);
+
 		assertFalse(getLabel(), file.exists());
 
 	}

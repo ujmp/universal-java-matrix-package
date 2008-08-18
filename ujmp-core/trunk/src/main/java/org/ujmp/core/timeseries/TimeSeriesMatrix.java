@@ -1,8 +1,10 @@
 package org.ujmp.core.timeseries;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -15,6 +17,14 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4326920011599023858L;
+
+	public enum Interpolation {
+		NONE, STEPS, LINEAR
+	};
+
+	private Interpolation defaultInterpolation = Interpolation.NONE;
+
+	private Map<Integer, Interpolation> seriesInterpolations = new HashMap<Integer, Interpolation>();
 
 	private List<SortedMap<Long, Double>> series = new ArrayList<SortedMap<Long, Double>>();
 
@@ -29,6 +39,23 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		for (int id = 0; id < value.getColumnCount(); id++) {
 			addEvent(timestamp, id, value.getAsDouble(0, id));
 		}
+	}
+
+	public Interpolation getInterpolation(int seriesId) {
+		Interpolation i = seriesInterpolations.get(seriesId);
+		if (i == null) {
+			return defaultInterpolation;
+		} else {
+			return i;
+		}
+	}
+
+	public Interpolation getDefaultInterpolation() {
+		return defaultInterpolation;
+	}
+
+	public void setDefaultInterpolation(Interpolation defaultInterpolation) {
+		this.defaultInterpolation = defaultInterpolation;
 	}
 
 	/**
@@ -77,28 +104,48 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	@Override
 	public double getDouble(long row, long column) {
+		int seriesId = (int) column - 1;
 		long timestamp = timestampsList.get((int) row);
 		if (column == 0) {
 			return timestamp;
 		} else {
-			SortedMap<Long, Double> map = series.get((int) column - 1);
-			Iterator<Long> it = map.keySet().iterator();
-			double value = 0.0;
-			while (it.hasNext()) {
-				long t = it.next();
-				if (t > timestamp) {
-					break;
+			SortedMap<Long, Double> map = series.get(seriesId);
+			switch (getInterpolation(seriesId)) {
+			case NONE:
+				Double v = map.get(timestamp);
+				if (v == null) {
+					return 0.0;
 				} else {
-					value = map.get(t);
+					return v;
 				}
+
+			case STEPS:
+				Iterator<Long> it = map.keySet().iterator();
+				double value = 0.0;
+				while (it.hasNext()) {
+					long t = it.next();
+					if (t > timestamp) {
+						break;
+					} else {
+						value = map.get(t);
+					}
+				}
+				return value;
+
+			default:
+				throw new MatrixException("Interpolation method not (yet) supported: "
+						+ getInterpolation(seriesId));
 			}
-			return value;
 		}
 	}
 
 	@Override
 	public void setDouble(double value, long row, long column) {
 		throw new MatrixException("please use addEvent() for changes");
+	}
+
+	public void setInterpolation(int seriesId, Interpolation interpolation) {
+		seriesInterpolations.put(seriesId, interpolation);
 	}
 
 }

@@ -155,7 +155,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		annotation.setMatrixAnnotation(value);
 	}
 
-	public final Object getAxisAnnotation(int axis, int positionOnAxis) {
+	public final Object getAxisAnnotation(int axis, long positionOnAxis) {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis, positionOnAxis);
 	}
 
@@ -163,7 +163,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis);
 	}
 
-	public final void setAxisAnnotation(int axis, int positionOnAxis, Object value) {
+	public final void setAxisAnnotation(int axis, long positionOnAxis, Object value) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation();
 		}
@@ -669,7 +669,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	}
 
 	public int getAsInt(long... coordinates) throws MatrixException {
-		return (int) Math.round(getAsDouble(coordinates));
+		return (int) getAsDouble(coordinates);
 	}
 
 	public void setAsInt(int value, long... coordinates) throws MatrixException {
@@ -1288,35 +1288,35 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return sum;
 	}
 
-	public final String getColumnLabel(int col) {
+	public final String getColumnLabel(long col) {
 		return StringUtil.format(getAxisAnnotation(COLUMN, col));
 	}
 
-	public final String getRowLabel(int row) {
+	public final String getRowLabel(long row) {
 		return StringUtil.format(getAxisAnnotation(ROW, row));
 	}
 
-	public final Object getRowObject(int row) {
+	public final Object getRowObject(long row) {
 		return getAxisAnnotation(ROW, row);
 	}
 
-	public final Object getColumnObject(int col) {
+	public final Object getColumnObject(long col) {
 		return getAxisAnnotation(COLUMN, col);
 	}
 
-	public final void setColumnLabel(int col, String label) {
+	public final void setColumnLabel(long col, String label) {
 		setAxisAnnotation(COLUMN, col, label);
 	}
 
-	public final void setRowLabel(int row, String label) {
+	public final void setRowLabel(long row, String label) {
 		setAxisAnnotation(ROW, row, label);
 	}
 
-	public final void setRowObject(int row, Object o) {
+	public final void setRowObject(long row, Object o) {
 		setAxisAnnotation(ROW, row, o);
 	}
 
-	public final void setColumnObject(int col, Object o) {
+	public final void setColumnObject(long col, Object o) {
 		setAxisAnnotation(COLUMN, col, o);
 	}
 

@@ -29,11 +29,11 @@ public interface HasAnnotation {
 
 	public void setAnnotation(Annotation annotation);
 
-	public Object getAxisAnnotation(int axis, int positionOnAxis);
+	public Object getAxisAnnotation(int axis, long positionOnAxis);
 
 	public Object getAxisAnnotation(int axis);
 
-	public void setAxisAnnotation(int axis, int positionOnAxis, Object value);
+	public void setAxisAnnotation(int axis, long positionOnAxis, Object value);
 
 	public void setAxisAnnotation(int axis, Object value);
 
@@ -41,20 +41,20 @@ public interface HasAnnotation {
 
 	public void setMatrixAnnotation(Object annotation);
 
-	public String getColumnLabel(int col);
+	public String getColumnLabel(long col);
 
-	public String getRowLabel(int row);
+	public String getRowLabel(long row);
 
-	public Object getRowObject(int row);
+	public Object getRowObject(long row);
 
-	public Object getColumnObject(int col);
+	public Object getColumnObject(long col);
 
-	public void setColumnLabel(int col, String label);
+	public void setColumnLabel(long col, String label);
 
-	public void setRowLabel(int row, String label);
+	public void setRowLabel(long row, String label);
 
-	public void setRowObject(int row, Object o);
+	public void setRowObject(long row, Object o);
 
-	public void setColumnObject(int col, Object o);
+	public void setColumnObject(long col, Object o);
 
 }

@@ -31,39 +31,39 @@ public class DefaultAnnotation implements Annotation {
 
 	protected Object matrixAnnotation = null;
 
-	protected Map<Integer, Map<Integer, Object>> axisAnnotation = null;
+	protected Map<Integer, Map<Long, Object>> axisAnnotation = null;
 
 	protected Map<Integer, Object> axisLabelAnnotation = null;
 
 	public DefaultAnnotation() {
-		axisAnnotation = new HashMap<Integer, Map<Integer, Object>>();
+		axisAnnotation = new HashMap<Integer, Map<Long, Object>>();
 		axisLabelAnnotation = new HashMap<Integer, Object>(2);
 	}
 
 	public DefaultAnnotation(Annotation annotation) {
 		this.matrixAnnotation = annotation.getMatrixAnnotation();
-		axisAnnotation = new HashMap<Integer, Map<Integer, Object>>();
+		axisAnnotation = new HashMap<Integer, Map<Long, Object>>();
 		axisLabelAnnotation = new HashMap<Integer, Object>(2);
 		axisLabelAnnotation.putAll(annotation.getAxisLabelAnnotation());
 		for (int i : annotation.getAxisAnnotation().keySet()) {
-			Map<Integer, Object> m = annotation.getAxisAnnotation().get(i);
-			Map<Integer, Object> mnew = new HashMap<Integer, Object>();
+			Map<Long, Object> m = annotation.getAxisAnnotation().get(i);
+			Map<Long, Object> mnew = new HashMap<Long, Object>();
 			mnew.putAll(m);
 			axisAnnotation.put(i, mnew);
 		}
 	}
 
-	public void setAxisAnnotation(int axis, int positionOnAxis, Object value) {
-		Map<Integer, Object> axisMap = axisAnnotation.get(axis);
+	public void setAxisAnnotation(int axis, long positionOnAxis, Object value) {
+		Map<Long, Object> axisMap = axisAnnotation.get(axis);
 		if (axisMap == null) {
-			axisMap = new HashMap<Integer, Object>(2);
+			axisMap = new HashMap<Long, Object>(2);
 			axisAnnotation.put(axis, axisMap);
 		}
 		axisMap.put(positionOnAxis, value);
 	}
 
-	public Object getAxisAnnotation(int axis, int positionOnAxis) {
-		Map<Integer, Object> axisMap = axisAnnotation.get(axis);
+	public Object getAxisAnnotation(int axis, long positionOnAxis) {
+		Map<Long, Object> axisMap = axisAnnotation.get(axis);
 		if (axisMap != null) {
 			return axisMap.get(positionOnAxis);
 		}
@@ -96,7 +96,7 @@ public class DefaultAnnotation implements Annotation {
 		return axisLabelAnnotation;
 	}
 
-	public Map<Integer, Map<Integer, Object>> getAxisAnnotation() {
+	public Map<Integer, Map<Long, Object>> getAxisAnnotation() {
 		return axisAnnotation;
 	}
 

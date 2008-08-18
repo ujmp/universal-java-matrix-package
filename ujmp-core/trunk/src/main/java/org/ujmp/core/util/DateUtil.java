@@ -21,31 +21,42 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.annotation;
+package org.ujmp.core.util;
 
-import java.io.Serializable;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
-public interface Annotation extends Serializable {
+public abstract class DateUtil {
 
-	public Map<Integer, Object> getAxisLabelAnnotation();
+	private static DateFormat dateFormat = DateFormat.getDateInstance();
 
-	public Map<Integer, Map<Long, Object>> getAxisAnnotation();
+	public static Date fromObject(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof Date) {
+			return (Date) o;
+		}
+		if (o instanceof Number) {
+			return fromLong(((Number) o).longValue());
+		}
+		if (o instanceof String) {
+			return fromString((String) o);
+		}
+		return fromString(StringUtil.format(o));
+	}
 
-	public void setAxisAnnotation(int axis, long positionOnAxis, Object value);
+	public static Date fromLong(long timestamp) {
+		return new Date(timestamp);
+	}
 
-	public Object getAxisAnnotation(int axis, long positionOnAxis);
-
-	public Object getAxisAnnotation(int axis);
-
-	public void setAxisAnnotation(int axis, Object value);
-
-	public Object getMatrixAnnotation();
-
-	public void setMatrixAnnotation(Object matrixAnnotation);
-
-	public Annotation clone();
-
-	public boolean equals(Annotation a);
+	public static Date fromString(String timeString) {
+		try {
+			return dateFormat.parse(timeString);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
 
 }

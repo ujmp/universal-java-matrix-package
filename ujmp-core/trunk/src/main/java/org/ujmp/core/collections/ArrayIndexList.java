@@ -42,6 +42,15 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 
 	private final Map<M, Integer> indexMap = new HashMap<M, Integer>();
 
+	public ArrayIndexList() {
+		super();
+	}
+
+	public ArrayIndexList(Collection<? extends M> c) {
+		super();
+		addAll(c);
+	}
+
 	@Override
 	public void add(int index, M element) {
 		new Exception("not implemented").printStackTrace();

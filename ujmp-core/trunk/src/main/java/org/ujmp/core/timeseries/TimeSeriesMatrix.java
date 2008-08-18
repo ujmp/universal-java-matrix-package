@@ -114,7 +114,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 			case NONE:
 				Double v = map.get(timestamp);
 				if (v == null) {
-					return 0.0;
+					return Double.NaN;
 				} else {
 					return v;
 				}

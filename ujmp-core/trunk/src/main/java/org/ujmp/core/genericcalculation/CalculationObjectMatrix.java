@@ -23,22 +23,17 @@
 
 package org.ujmp.core.genericcalculation;
 
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
+import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
 
-public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
+public class CalculationObjectMatrix extends AbstractObjectMatrix {
 	private static final long serialVersionUID = -8345796002435936888L;
 
-	private AbstractGenericCalculation<A> calculation = null;
+	private AbstractGenericCalculation calculation = null;
 
-	public GenericCalculationMatrix(AbstractGenericCalculation<A> calculation) {
+	public CalculationObjectMatrix(AbstractGenericCalculation calculation) {
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
-	}
-
-	public ValueType getValueType() {
-		return calculation.getValueType();
 	}
 
 	public boolean contains(long... coordinates) {
@@ -58,15 +53,8 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 		return calculation.getSize();
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		return calculation.getDouble(coordinates);
-	}
-
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-	}
-
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates) throws MatrixException {
 		return calculation.getObject(coordinates);
 	}
 
@@ -76,10 +64,6 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 	@Override
 	public String getAsString(long... coordinates) throws MatrixException {
 		return calculation.getString(coordinates);
-	}
-
-	@Override
-	public void setAsString(String s, long... coordinates) throws MatrixException {
 	}
 
 	public boolean isSparse() {

@@ -111,7 +111,7 @@ public abstract class AbstractGenericCalculation<A> implements GenericCalculatio
 	}
 
 	public final Matrix calcLink() {
-		return new GenericCalculationMatrix(this);
+		return new CalculationObjectMatrix(this);
 	}
 
 	public static Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix source0,

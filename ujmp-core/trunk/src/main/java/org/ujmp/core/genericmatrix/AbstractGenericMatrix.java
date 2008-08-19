@@ -76,6 +76,7 @@ import org.ujmp.core.doublecalculation.entrywise.creators.Zeros;
 import org.ujmp.core.doublecalculation.entrywise.hyperbolic.Cosh;
 import org.ujmp.core.doublecalculation.entrywise.hyperbolic.Sinh;
 import org.ujmp.core.doublecalculation.entrywise.hyperbolic.Tanh;
+import org.ujmp.core.doublecalculation.entrywise.replace.Replace;
 import org.ujmp.core.doublecalculation.entrywise.replace.ReplaceRegex;
 import org.ujmp.core.doublecalculation.entrywise.rounding.Ceil;
 import org.ujmp.core.doublecalculation.entrywise.rounding.Floor;
@@ -342,6 +343,11 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	public final Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
 			throws MatrixException {
 		return new ReplaceRegex(this, search, replacement).calc(returnType);
+	}
+
+	public final Matrix replace(Ret returnType, Object search, Object replacement)
+			throws MatrixException {
+		return new Replace(this, search, replacement).calc(returnType);
 	}
 
 	public final Matrix replaceRegex(Ret returnType, String search, String replacement)

@@ -32,6 +32,21 @@ import org.ujmp.core.exceptions.MatrixException;
 public interface ReplaceStringCalculations {
 
 	/**
+	 * Replaces matching values in the matrix with another value
+	 * 
+	 * @param returnType
+	 *            Select whether a new or a linked Matrix is returned, or if the
+	 *            operation is performed on the original Matrix
+	 * @param search
+	 *            Object to search for
+	 * @param replacement
+	 *            Object used to replace the original value
+	 * @return matrix with modified entries
+	 * @throws MatrixException
+	 */
+	public Matrix replace(Ret returnType, Object search, Object replacement) throws MatrixException;
+
+	/**
 	 * Replaces matching text in every entry of the matrix.
 	 * 
 	 * @param returnType
@@ -43,7 +58,8 @@ public interface ReplaceStringCalculations {
 	 *            Replacement String
 	 * @return matrix with modified entries
 	 */
-	public Matrix replaceRegex(Ret returnType, String search, String replacement) throws MatrixException;
+	public Matrix replaceRegex(Ret returnType, String search, String replacement)
+			throws MatrixException;
 
 	/**
 	 * Replaces matching text in every entry of the matrix.
@@ -57,6 +73,7 @@ public interface ReplaceStringCalculations {
 	 *            Replacement String
 	 * @return matrix with modified entries
 	 */
-	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement) throws MatrixException;
+	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
+			throws MatrixException;
 
 }

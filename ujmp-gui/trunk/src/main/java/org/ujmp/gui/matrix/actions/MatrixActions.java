@@ -56,6 +56,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 		this.add(new JMenuItem(new SumAction(c, m, v)));
 		this.add(new JMenuItem(new MeanAction(c, m, v)));
 		this.add(new JMenuItem(new VarianceAction(c, m, v)));
+		this.add(new JMenuItem(new CovarianceAction(c, m, v)));
 		this.add(new JMenuItem(new StandardDeviationAction(c, m, v)));
 		this.add(new JMenuItem(new CenterAction(c, m, v)));
 		this.add(new JMenuItem(new StandardizeAction(c, m, v)));

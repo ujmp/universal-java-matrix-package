@@ -61,7 +61,6 @@ import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericcalculation.CalculationObjectMatrix;
 
 public abstract class AbstractCalculation implements Calculation {
 
@@ -106,7 +105,7 @@ public abstract class AbstractCalculation implements Calculation {
 	}
 
 	public final Matrix calcLink() {
-		return new CalculationObjectMatrix(this);
+		return new CalculationMatrix(this);
 	}
 
 	public static Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix source0,

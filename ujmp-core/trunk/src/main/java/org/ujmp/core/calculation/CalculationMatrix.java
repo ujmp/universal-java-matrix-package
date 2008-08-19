@@ -21,18 +21,17 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericcalculation;
+package org.ujmp.core.calculation;
 
-import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
 
-public class CalculationObjectMatrix extends AbstractObjectMatrix {
+public class CalculationMatrix extends AbstractObjectMatrix {
 	private static final long serialVersionUID = -8345796002435936888L;
 
 	private AbstractCalculation calculation = null;
 
-	public CalculationObjectMatrix(AbstractCalculation calculation) {
+	public CalculationMatrix(AbstractCalculation calculation) {
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}

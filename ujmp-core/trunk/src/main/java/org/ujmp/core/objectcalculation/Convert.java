@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.basic;
+package org.ujmp.core.objectcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;

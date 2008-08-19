@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.general.misc;
+package org.ujmp.core.objectcalculation;
 
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -32,7 +32,6 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix2D;
-import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 import org.ujmp.core.util.Sortable;
 
 /**

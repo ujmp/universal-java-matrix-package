@@ -55,13 +55,8 @@ public interface MiscGeneralDoubleCalculations {
 	 *            should missing values be ignored
 	 * @return Matrix with zero mean and unit variance.
 	 */
-	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
-
-	public Matrix shuffle(Ret returnType) throws MatrixException;
-
-	public Matrix bootstrap(Ret returnType) throws MatrixException;
-
-	public Matrix bootstrap(Ret returnType, int count) throws MatrixException;
+	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN)
+			throws MatrixException;
 
 	public Matrix addColumnWithOnes() throws MatrixException;
 
@@ -71,9 +66,11 @@ public interface MiscGeneralDoubleCalculations {
 
 	public void rescaleEntries_() throws MatrixException;
 
-	public Matrix rescaleEntries(int axis, double targetMin, double targetMax) throws MatrixException;
+	public Matrix rescaleEntries(int axis, double targetMin, double targetMax)
+			throws MatrixException;
 
-	public void rescaleEntries_(int axis, double targetMin, double targetMax) throws MatrixException;
+	public void rescaleEntries_(int axis, double targetMin, double targetMax)
+			throws MatrixException;
 
 	public void addNoise_(double noiselevel) throws MatrixException;
 

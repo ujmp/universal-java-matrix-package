@@ -27,12 +27,11 @@ import org.ujmp.core.doublecalculation.entrywise.basic.BasicEntrywiseDoubleCalcu
 import org.ujmp.core.doublecalculation.entrywise.creators.CreatorDoubleCalculations;
 import org.ujmp.core.doublecalculation.entrywise.hyperbolic.HyperbolicDoubleCalculations;
 import org.ujmp.core.doublecalculation.entrywise.misc.MiscEntrywiseDoubleCalculations;
-import org.ujmp.core.doublecalculation.entrywise.replace.ReplaceStringCalculations;
 import org.ujmp.core.doublecalculation.entrywise.rounding.RoundingDoubleCalculations;
 import org.ujmp.core.doublecalculation.entrywise.trigonometric.TrigonometricDoubleCalculations;
 
-public interface EntrywiseDoubleCalculations extends BasicEntrywiseDoubleCalculations, RoundingDoubleCalculations,
-		HyperbolicDoubleCalculations, TrigonometricDoubleCalculations, CreatorDoubleCalculations, ReplaceStringCalculations,
-		MiscEntrywiseDoubleCalculations {
+public interface EntrywiseDoubleCalculations extends BasicEntrywiseDoubleCalculations,
+		RoundingDoubleCalculations, HyperbolicDoubleCalculations, TrigonometricDoubleCalculations,
+		CreatorDoubleCalculations, MiscEntrywiseDoubleCalculations {
 
 }

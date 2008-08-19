@@ -21,33 +21,39 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.general.misc;
+package org.ujmp.core.objectcalculation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
+import org.ujmp.core.util.MathUtil;
 
-public class Shuffle extends AbstractObjectCalculation {
-	private static final long serialVersionUID = -6935375114060680121L;
+public class Bootstrap extends AbstractObjectCalculation {
+	private static final long serialVersionUID = -5084329826465538416L;
+
+	private int count = 0;
 
 	private Matrix selection = null;
 
-	public Shuffle(Matrix m) {
+	public Bootstrap(Matrix m) {
+		this(m, (int) m.getRowCount());
+	}
+
+	public Bootstrap(Matrix m, int count) {
 		super(m);
+		this.count = count;
 	}
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (selection == null) {
 			List<Integer> rows = new ArrayList<Integer>();
-			for (int i = 0; i < getSource().getRowCount(); i++) {
-				rows.add(i);
+			for (int i = 0; i < count; i++) {
+				int s = MathUtil.nextInteger(0, (int) getSource().getRowCount() - 1);
+				rows.add(s);
 			}
-			Collections.shuffle(rows);
 			selection = getSource().selectRows(Ret.LINK, rows);
 		}
 		return selection.getObject(coordinates);

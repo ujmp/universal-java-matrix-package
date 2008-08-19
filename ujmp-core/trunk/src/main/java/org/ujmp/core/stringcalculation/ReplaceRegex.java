@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise.replace;
+package org.ujmp.core.stringcalculation;
 
 import java.util.regex.Pattern;
 
@@ -29,7 +29,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.stringcalculation.AbstractStringCalculation;
 
 public class ReplaceRegex extends AbstractStringCalculation {
 	private static final long serialVersionUID = 8158807887609103123L;

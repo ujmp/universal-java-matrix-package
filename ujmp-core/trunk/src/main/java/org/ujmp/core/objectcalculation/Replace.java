@@ -21,11 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.entrywise.replace;
+package org.ujmp.core.objectcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 
 public class Replace extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -1668944121367955215L;

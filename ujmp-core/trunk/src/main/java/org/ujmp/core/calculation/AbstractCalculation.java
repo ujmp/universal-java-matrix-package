@@ -30,13 +30,11 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublecalculation.basic.Convert;
 import org.ujmp.core.doublecalculation.basic.Divide;
 import org.ujmp.core.doublecalculation.basic.Minus;
 import org.ujmp.core.doublecalculation.basic.Mtimes;
 import org.ujmp.core.doublecalculation.basic.Plus;
 import org.ujmp.core.doublecalculation.basic.Times;
-import org.ujmp.core.doublecalculation.basic.Transpose;
 import org.ujmp.core.doublecalculation.entrywise.basic.Abs;
 import org.ujmp.core.doublecalculation.entrywise.basic.Log;
 import org.ujmp.core.doublecalculation.entrywise.basic.Power;
@@ -61,6 +59,8 @@ import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectcalculation.Convert;
+import org.ujmp.core.objectcalculation.Transpose;
 
 public abstract class AbstractCalculation implements Calculation {
 

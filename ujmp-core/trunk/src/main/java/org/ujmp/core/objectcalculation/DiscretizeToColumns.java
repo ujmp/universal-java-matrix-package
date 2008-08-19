@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation.basic;
+package org.ujmp.core.objectcalculation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,7 +30,6 @@ import java.util.Set;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectcalculation.AbstractObjectCalculation;
 import org.ujmp.core.util.MathUtil;
 
 public class DiscretizeToColumns extends AbstractObjectCalculation {

@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.basic.Convert;
@@ -62,7 +63,7 @@ import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractGenericCalculation<A> implements GenericCalculation<A> {
+public abstract class AbstractGenericCalculation implements Calculation {
 
 	protected static final Logger logger = Logger.getLogger(AbstractGenericCalculation.class
 			.getName());
@@ -99,12 +100,6 @@ public abstract class AbstractGenericCalculation<A> implements GenericCalculatio
 	public boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
-
-	public abstract double getDouble(long... coordinates) throws MatrixException;
-
-	public abstract A getObject(long... coordinates) throws MatrixException;
-
-	public abstract String getString(long... coordinates) throws MatrixException;
 
 	public Annotation getAnnotation() {
 		return sources == null ? null : sources[0].getAnnotation();

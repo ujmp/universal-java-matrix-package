@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractStringCalculation extends AbstractGenericCalculation<String> {
+public abstract class AbstractStringCalculation extends AbstractGenericCalculation {
 
 	public AbstractStringCalculation(Matrix... sources) {
 		super(sources);

@@ -32,7 +32,7 @@ import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractObjectCalculation extends AbstractGenericCalculation<Object> {
+public abstract class AbstractObjectCalculation extends AbstractGenericCalculation {
 
 	public AbstractObjectCalculation(Matrix... sources) {
 		super(sources);

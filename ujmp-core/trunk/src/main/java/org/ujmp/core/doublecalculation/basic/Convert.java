@@ -85,21 +85,6 @@ public class Convert extends AbstractGenericCalculation {
 		return getSource().getAsString(coordinates);
 	}
 
-	@Override
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-		getSource().setAsDouble(value, coordinates);
-	}
-
-	@Override
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-		getSource().setObject(value, coordinates);
-	}
-
-	@Override
-	public void setString(String value, long... coordinates) throws MatrixException {
-		getSource().setAsString(value, coordinates);
-	}
-
 	public Matrix calcNew() throws MatrixException {
 		return calcNew(AnnotationTransfer.LINK, getSource());
 	}

@@ -51,18 +51,6 @@ public abstract class AbstractStringCalculation extends AbstractGenericCalculati
 		return getString(coordinates);
 	}
 
-	@Override
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public void setString(String value, long... coordinates) throws MatrixException {
-	}
-
 	public final Matrix calcOrig() throws MatrixException {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new MatrixException(

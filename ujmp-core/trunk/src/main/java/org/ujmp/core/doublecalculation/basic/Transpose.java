@@ -59,11 +59,6 @@ public class Transpose extends AbstractDoubleCalculation {
 	}
 
 	@Override
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-		getSource().setAsDouble(value, Coordinates.transpose(coordinates, swap1, swap2));
-	}
-
-	@Override
 	public boolean contains(long... coordinates) {
 		return getSource().contains(Coordinates.transpose(coordinates, swap1, swap2));
 	}

@@ -51,18 +51,6 @@ public abstract class AbstractDoubleCalculation extends AbstractGenericCalculati
 		return "" + getDouble(coordinates);
 	}
 
-	@Override
-	public void setObject(Object object, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public void setString(String value, long... coordinates) throws MatrixException {
-	}
-
 	public final Matrix calcNew() throws MatrixException {
 		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
 		// TODO: copy annotation

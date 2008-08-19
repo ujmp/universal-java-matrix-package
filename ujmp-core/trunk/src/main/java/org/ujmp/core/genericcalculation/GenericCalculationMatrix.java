@@ -63,7 +63,6 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 	}
 
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		calculation.setDouble(value, coordinates);
 	}
 
 	@Override
@@ -72,7 +71,6 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 	}
 
 	public void setObject(Object o, long... coordinates) throws MatrixException {
-		calculation.setObject(o, coordinates);
 	}
 
 	@Override
@@ -82,7 +80,6 @@ public class GenericCalculationMatrix<A> extends AbstractGenericMatrix<A> {
 
 	@Override
 	public void setAsString(String s, long... coordinates) throws MatrixException {
-		calculation.setString(s, coordinates);
 	}
 
 	public boolean isSparse() {

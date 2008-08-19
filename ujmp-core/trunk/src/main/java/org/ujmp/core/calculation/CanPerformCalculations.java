@@ -28,6 +28,7 @@ import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.DoubleCalculations;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.stringcalculation.StringCalculations;
 
 /**
  * <p>
@@ -60,7 +61,7 @@ import org.ujmp.core.exceptions.MatrixException;
  * @author Holger Arndt
  *
  */
-public interface CanPerformCalculations extends DoubleCalculations {
+public interface CanPerformCalculations extends DoubleCalculations, StringCalculations {
 
 	public Matrix calcNew(Calculation calculation) throws MatrixException;
 

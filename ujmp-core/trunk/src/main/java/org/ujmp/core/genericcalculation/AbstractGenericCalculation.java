@@ -102,15 +102,9 @@ public abstract class AbstractGenericCalculation<A> implements GenericCalculatio
 
 	public abstract double getDouble(long... coordinates) throws MatrixException;
 
-	public abstract void setDouble(double value, long... coordinates) throws MatrixException;
-
 	public abstract A getObject(long... coordinates) throws MatrixException;
 
-	public abstract void setObject(Object value, long... coordinates) throws MatrixException;
-
 	public abstract String getString(long... coordinates) throws MatrixException;
-
-	public abstract void setString(String value, long... coordinates) throws MatrixException;
 
 	public Annotation getAnnotation() {
 		return sources == null ? null : sources[0].getAnnotation();

@@ -48,20 +48,6 @@ public abstract class AbstractObjectCalculation extends AbstractGenericCalculati
 	}
 
 	@Override
-	public final void setDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
-	}
-
-	@Override
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public final void setString(String value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
-	}
-
-	@Override
 	public final String getString(long... coordinates) throws MatrixException {
 		return StringUtil.convert(getObject(coordinates));
 	}

@@ -92,9 +92,4 @@ public class AddMissing extends AbstractDoubleCalculation {
 		}
 	}
 
-	@Override
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-		getSource().setAsDouble(value, coordinates);
-	}
-
 }

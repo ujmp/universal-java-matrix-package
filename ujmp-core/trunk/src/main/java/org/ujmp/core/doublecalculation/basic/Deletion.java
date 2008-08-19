@@ -86,11 +86,6 @@ public class Deletion extends AbstractObjectCalculation {
 	}
 
 	@Override
-	public void setObject(Object o, long... coordinates) throws MatrixException {
-		getSource().setObject(o, selection[ROW][(int) coordinates[ROW]], selection[COLUMN][(int) coordinates[COLUMN]]);
-	}
-
-	@Override
 	public long[] getSize() {
 		return new long[] { selection[ROW].length, selection[COLUMN].length };
 	}

@@ -26,7 +26,7 @@ package org.ujmp.core.doublecalculation.entrywise.replace;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface ReplaceStringCalculations {

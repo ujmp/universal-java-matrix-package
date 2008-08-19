@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation;
+package org.ujmp.core.calculation;
 
 import java.io.Serializable;
 
@@ -68,15 +68,9 @@ public interface Calculation extends Serializable {
 
 	public double getDouble(long... coordinates) throws MatrixException;
 
-	public void setDouble(double value, long... coordinates) throws MatrixException;
-
 	public Object getObject(long... coordinates) throws MatrixException;
 
-	public void setObject(Object value, long... coordinates) throws MatrixException;
-
 	public String getString(long... coordinates) throws MatrixException;
-
-	public void setString(String value, long... coordinates) throws MatrixException;
 
 	public Annotation getAnnotation();
 

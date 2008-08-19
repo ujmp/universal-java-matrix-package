@@ -21,14 +21,12 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublecalculation;
+package org.ujmp.core.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.Calculation.Calc;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
-import org.ujmp.core.doublecalculation.basic.BasicDoubleCalculations;
-import org.ujmp.core.doublecalculation.entrywise.EntrywiseDoubleCalculations;
-import org.ujmp.core.doublecalculation.general.GeneralDoubleCalculations;
+import org.ujmp.core.calculation.Calculation.Calc;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublecalculation.DoubleCalculations;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
@@ -62,7 +60,7 @@ import org.ujmp.core.exceptions.MatrixException;
  * @author Holger Arndt
  *
  */
-public interface CanPerformCalculations extends BasicDoubleCalculations, EntrywiseDoubleCalculations, GeneralDoubleCalculations {
+public interface CanPerformCalculations extends DoubleCalculations {
 
 	public Matrix calcNew(Calculation calculation) throws MatrixException;
 
@@ -70,18 +68,23 @@ public interface CanPerformCalculations extends BasicDoubleCalculations, Entrywi
 
 	public Matrix calcNew(String calculation, Matrix... matrices) throws MatrixException;
 
-	public Matrix calcNew(String calculation, int dimension, Matrix... matrices) throws MatrixException;
+	public Matrix calcNew(String calculation, int dimension, Matrix... matrices)
+			throws MatrixException;
 
-	public Matrix calc(String calculation, Ret returnType, Matrix... matrices) throws MatrixException;
+	public Matrix calc(String calculation, Ret returnType, Matrix... matrices)
+			throws MatrixException;
 
-	public Matrix calc(String calculation, Ret returnType, int dimension, Matrix... matrices) throws MatrixException;
+	public Matrix calc(String calculation, Ret returnType, int dimension, Matrix... matrices)
+			throws MatrixException;
 
 	public Matrix calcNew(Calc calculation, Matrix... matrices) throws MatrixException;
 
-	public Matrix calcNew(Calc calculation, int dimension, Matrix... matrices) throws MatrixException;
+	public Matrix calcNew(Calc calculation, int dimension, Matrix... matrices)
+			throws MatrixException;
 
 	public Matrix calc(Calc calculation, Ret returnType, Matrix... matrices) throws MatrixException;
 
-	public Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix... matrices) throws MatrixException;
+	public Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix... matrices)
+			throws MatrixException;
 
 }

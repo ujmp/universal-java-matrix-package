@@ -30,7 +30,8 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
-public abstract class AbstractDoubleCalculation extends AbstractGenericCalculation<Double> {
+public abstract class AbstractDoubleCalculation extends AbstractGenericCalculation<Double>
+		implements DoubleCalculation {
 
 	public AbstractDoubleCalculation(Matrix... sources) {
 		super(sources);

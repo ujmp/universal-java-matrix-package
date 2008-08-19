@@ -27,7 +27,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
-import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
 import org.ujmp.gui.matrix.MatrixGUIObject;

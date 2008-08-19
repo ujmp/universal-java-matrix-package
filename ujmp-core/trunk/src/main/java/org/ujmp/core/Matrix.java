@@ -26,7 +26,7 @@ package org.ujmp.core;
 import java.io.Serializable;
 
 import org.ujmp.core.annotation.HasAnnotation;
-import org.ujmp.core.doublecalculation.CanPerformCalculations;
+import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.CanBeReshaped;
 import org.ujmp.core.interfaces.Clearable;

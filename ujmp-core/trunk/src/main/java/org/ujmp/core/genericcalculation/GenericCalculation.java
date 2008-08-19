@@ -23,7 +23,7 @@
 
 package org.ujmp.core.genericcalculation;
 
-import org.ujmp.core.doublecalculation.Calculation;
+import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface GenericCalculation<A> extends Calculation {

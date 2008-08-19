@@ -33,7 +33,7 @@ import no.uib.cipr.matrix.SVD;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;

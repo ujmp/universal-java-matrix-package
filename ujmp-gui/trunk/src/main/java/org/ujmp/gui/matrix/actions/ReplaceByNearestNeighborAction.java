@@ -26,7 +26,7 @@ package org.ujmp.gui.matrix.actions;
 import javax.swing.Action;
 import javax.swing.JComponent;
 
-import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.general.missingvalues.ImputeKNN;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;

@@ -26,7 +26,7 @@ package org.ujmp.core.doublecalculation.basic;
 import java.util.Collection;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;

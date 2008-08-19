@@ -38,8 +38,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublecalculation.Calculation.Ret;
 import org.ujmp.core.doublecalculation.entrywise.creators.Fill;
 import org.ujmp.core.doublecalculation.entrywise.creators.Rand;
 import org.ujmp.core.doublecalculation.entrywise.creators.Randn;

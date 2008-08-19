@@ -26,12 +26,12 @@ package org.ujmp.core.doublecalculation.basic;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
-public class Convert extends AbstractGenericCalculation {
+public class Convert extends AbstractCalculation {
 	private static final long serialVersionUID = 6393277198816850597L;
 
 	public Convert(Matrix matrix) {

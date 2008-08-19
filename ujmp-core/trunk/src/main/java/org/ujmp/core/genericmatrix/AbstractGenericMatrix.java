@@ -46,6 +46,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -114,7 +115,6 @@ import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.interfaces.HasSourceMatrix;
@@ -642,7 +642,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix... matrices)
 			throws MatrixException {
-		return AbstractGenericCalculation.calc(calculation, returnType, dimension, this, matrices);
+		return AbstractCalculation.calc(calculation, returnType, dimension, this, matrices);
 	}
 
 	public Matrix calcNew(Calculation calculation) throws MatrixException {

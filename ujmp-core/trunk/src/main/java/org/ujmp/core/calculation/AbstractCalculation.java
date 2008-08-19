@@ -21,14 +21,13 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericcalculation;
+package org.ujmp.core.calculation;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.basic.Convert;
@@ -62,21 +61,22 @@ import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericcalculation.CalculationObjectMatrix;
 
-public abstract class AbstractGenericCalculation implements Calculation {
+public abstract class AbstractCalculation implements Calculation {
 
-	protected static final Logger logger = Logger.getLogger(AbstractGenericCalculation.class
+	protected static final Logger logger = Logger.getLogger(AbstractCalculation.class
 			.getName());
 
 	private Matrix[] sources = null;
 
 	private int dimension = NONE;
 
-	public AbstractGenericCalculation(Matrix... sources) {
+	public AbstractCalculation(Matrix... sources) {
 		this.sources = sources;
 	}
 
-	public AbstractGenericCalculation(int dimension, Matrix... sources) {
+	public AbstractCalculation(int dimension, Matrix... sources) {
 		this.sources = sources;
 		this.dimension = dimension;
 	}

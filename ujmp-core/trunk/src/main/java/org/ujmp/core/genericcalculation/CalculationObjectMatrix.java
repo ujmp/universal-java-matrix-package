@@ -23,15 +23,16 @@
 
 package org.ujmp.core.genericcalculation;
 
+import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
 
 public class CalculationObjectMatrix extends AbstractObjectMatrix {
 	private static final long serialVersionUID = -8345796002435936888L;
 
-	private AbstractGenericCalculation calculation = null;
+	private AbstractCalculation calculation = null;
 
-	public CalculationObjectMatrix(AbstractGenericCalculation calculation) {
+	public CalculationObjectMatrix(AbstractCalculation calculation) {
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}

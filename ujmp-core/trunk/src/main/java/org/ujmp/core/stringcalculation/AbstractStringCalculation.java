@@ -25,13 +25,13 @@ package org.ujmp.core.stringcalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractStringCalculation extends AbstractGenericCalculation {
+public abstract class AbstractStringCalculation extends AbstractCalculation {
 
 	public AbstractStringCalculation(Matrix... sources) {
 		super(sources);

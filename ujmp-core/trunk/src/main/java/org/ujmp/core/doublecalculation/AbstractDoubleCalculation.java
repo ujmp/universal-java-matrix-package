@@ -25,12 +25,12 @@ package org.ujmp.core.doublecalculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericcalculation.AbstractGenericCalculation;
 
-public abstract class AbstractDoubleCalculation extends AbstractGenericCalculation implements
+public abstract class AbstractDoubleCalculation extends AbstractCalculation implements
 		DoubleCalculation {
 
 	public AbstractDoubleCalculation(Matrix... sources) {

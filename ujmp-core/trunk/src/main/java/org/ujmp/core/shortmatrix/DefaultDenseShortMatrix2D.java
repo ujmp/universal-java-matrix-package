@@ -70,7 +70,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 		return values[0].length;
 	}
 
-	public long getShort(long row, long column) {
+	public short getShort(long row, long column) {
 		return values[(int) row][(int) column];
 	}
 

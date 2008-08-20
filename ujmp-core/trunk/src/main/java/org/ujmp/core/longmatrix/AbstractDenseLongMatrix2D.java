@@ -25,7 +25,8 @@ package org.ujmp.core.longmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-public abstract class AbstractDenseLongMatrix2D extends AbstractDenseLongMatrix {
+public abstract class AbstractDenseLongMatrix2D extends AbstractDenseLongMatrix implements
+		LongMatrix2D {
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

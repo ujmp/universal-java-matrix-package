@@ -60,6 +60,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 		this.add(new JMenuItem(new StandardDeviationAction(c, m, v)));
 		this.add(new JMenuItem(new CenterAction(c, m, v)));
 		this.add(new JMenuItem(new StandardizeAction(c, m, v)));
+		this.add(new JMenuItem(new SortAction(c, m, v)));
 
 		this.add(new JSeparator());
 		this.add(new JMenuItem(new ExitAction(c, m)));

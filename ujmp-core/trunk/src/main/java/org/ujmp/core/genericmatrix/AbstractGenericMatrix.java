@@ -1430,18 +1430,19 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return selectColumns(returnType, longsel);
 	}
 
-	public Matrix deleteRowsWithMissingValues(Ret returnType) throws MatrixException {
+	public Matrix deleteRowsWithMissingValues(Ret returnType, long threshold)
+			throws MatrixException {
 		Matrix mv = countMissing(Ret.NEW, Matrix.COLUMN);
 		List<Long> sel = new ArrayList<Long>();
 		for (long r = 0; r < mv.getRowCount(); r++) {
-			if (mv.getAsDouble(r, 0) == 0.0)
+			if (mv.getAsLong(r, 0) < threshold)
 				sel.add(r);
 		}
-		long[] longsel = new long[sel.size()];
-		for (int i = sel.size(); --i >= 0;) {
-			longsel[i] = sel.get(i);
+		if (sel.isEmpty()) {
+			return MatrixFactory.emptyMatrix();
+		} else {
+			return selectRows(returnType, sel);
 		}
-		return selectRows(returnType, longsel);
 	}
 
 	public final void fadeIn_(int axis, long start, long end) throws MatrixException {

@@ -42,7 +42,8 @@ public interface MissingValueDoubleCalculations {
 	 * @return Matrix with missing values
 	 * @throws MatrixException
 	 */
-	public Matrix addMissing(Ret returnType, int dimension, double... percentMissing) throws MatrixException;
+	public Matrix addMissing(Ret returnType, int dimension, double... percentMissing)
+			throws MatrixException;
 
 	/**
 	 * Counts the missing values within the matrix, i.e. Infinity or NaN
@@ -133,6 +134,7 @@ public interface MissingValueDoubleCalculations {
 
 	public Matrix deleteColumnsWithMissingValues(Ret returnType) throws MatrixException;
 
-	public Matrix deleteRowsWithMissingValues(Ret returnType) throws MatrixException;
+	public Matrix deleteRowsWithMissingValues(Ret returnType, long threshold)
+			throws MatrixException;
 
 }

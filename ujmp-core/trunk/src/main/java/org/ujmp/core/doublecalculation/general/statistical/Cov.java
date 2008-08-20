@@ -61,8 +61,10 @@ public class Cov extends AbstractDoubleCalculation {
 		if (ignoreNaN) {
 
 			for (int i = 0; i < rows; i++) {
-				deltaX = getSource().getAsDouble(i, coordinates[ROW]) - mean.getAsDouble(0, coordinates[ROW]);
-				deltaY = getSource().getAsDouble(i, coordinates[COLUMN]) - mean.getAsDouble(0, coordinates[COLUMN]);
+				deltaX = getSource().getAsDouble(i, coordinates[ROW])
+						- mean.getAsDouble(0, coordinates[ROW]);
+				deltaY = getSource().getAsDouble(i, coordinates[COLUMN])
+						- mean.getAsDouble(0, coordinates[COLUMN]);
 
 				if (!MathUtil.isNaNOrInfinite(deltaX) && !MathUtil.isNaNOrInfinite(deltaY)) {
 					N++;
@@ -74,14 +76,19 @@ public class Cov extends AbstractDoubleCalculation {
 
 			N = rows;
 			for (int i = 0; i < rows; i++) {
-				deltaX = getSource().getAsDouble(i, coordinates[ROW]) - mean.getAsDouble(0, coordinates[ROW]);
-				deltaY = getSource().getAsDouble(i, coordinates[COLUMN]) - mean.getAsDouble(0, coordinates[COLUMN]);
+				deltaX = getSource().getAsDouble(i, coordinates[ROW])
+						- mean.getAsDouble(0, coordinates[ROW]);
+				deltaY = getSource().getAsDouble(i, coordinates[COLUMN])
+						- mean.getAsDouble(0, coordinates[COLUMN]);
 				sumProd += deltaX * deltaY;
 			}
 
 		}
 
-		double cov = sumProd / (N - 1);
+		double cov = Double.NaN;
+		if (N > 0) {
+			cov = sumProd / (N - 1);
+		}
 
 		return cov;
 	}

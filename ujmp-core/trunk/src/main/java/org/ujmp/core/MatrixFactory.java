@@ -128,8 +128,8 @@ import org.ujmp.core.util.MathUtil;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
- * to create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
+ * create empty matrices.
  * 
  * 
  * 
@@ -155,6 +155,8 @@ public abstract class MatrixFactory {
 	public static final int ALL = Matrix.ALL;
 
 	public static final int NONE = Matrix.NONE;
+
+	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();
 
 	private static MapMatrix<Class<? extends Matrix>, String> matrixClasses = new DefaultMapMatrix<Class<? extends Matrix>, String>();
 
@@ -1166,7 +1168,8 @@ public abstract class MatrixFactory {
 
 	public static final ObjectMatrix2D linkToJDBC(DB type, String host, int port, String database,
 			String sqlStatement, String username, String password) {
-		return LinkMatrixJDBC.toDatabase(type, host, port, database, sqlStatement, username, password);
+		return LinkMatrixJDBC.toDatabase(type, host, port, database, sqlStatement, username,
+				password);
 	}
 
 	public static final ObjectMatrix2D importFromJDBC(String url, String sqlStatement,
@@ -1332,6 +1335,10 @@ public abstract class MatrixFactory {
 				141.7, 190.2, 184.8, 159, 112.3, 53.9, 37.5, 27.9, 10.2, 15.1, 47, 93.8, 105.9,
 				105.5, 104.5, 66.6, 68.9, 38, 34.5, 15.5, 12.6, 27.5, 92.5, 155.4, 154.6, 140.4,
 				115.9, 66.6, 45.9, 17.9, 13.4, 29.3 });
+	}
+
+	public static final Matrix emptyMatrix() {
+		return EMPTYMATRIX;
 	}
 
 }

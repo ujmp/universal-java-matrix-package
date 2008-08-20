@@ -32,6 +32,10 @@ public abstract class TooltipUtil {
 		String toolTip = "<html><b>[" + Coordinates.toString(coordinates)
 				+ "]</b>";
 
+		if (coordinates[0] == -1) {
+			System.out.println();
+		}
+
 		String columnLabel = matrix.getColumnLabel(coordinates[Matrix.COLUMN]);
 		if (columnLabel != null) {
 			toolTip += " <b>(" + columnLabel + ")</b>";

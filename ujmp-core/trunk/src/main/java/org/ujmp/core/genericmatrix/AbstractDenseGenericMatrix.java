@@ -24,8 +24,10 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.ObjectMatrix;
 
-public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> {
+public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
+		ObjectMatrix {
 
 	public boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

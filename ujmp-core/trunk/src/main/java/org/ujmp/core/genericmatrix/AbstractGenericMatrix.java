@@ -114,6 +114,7 @@ import org.ujmp.core.objectcalculation.Bootstrap;
 import org.ujmp.core.objectcalculation.Convert;
 import org.ujmp.core.objectcalculation.Deletion;
 import org.ujmp.core.objectcalculation.DiscretizeToColumns;
+import org.ujmp.core.objectcalculation.Distinct;
 import org.ujmp.core.objectcalculation.Replace;
 import org.ujmp.core.objectcalculation.Selection;
 import org.ujmp.core.objectcalculation.Shuffle;
@@ -1026,9 +1027,13 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	public final Matrix log(Ret returnType) throws MatrixException {
 		return new Log(this).calc(returnType);
 	}
-	
+
 	public final Matrix sort(Ret returnType) throws MatrixException {
 		return new Sort(this).calc(returnType);
+	}
+
+	public final Matrix distinct(Ret returnType) throws MatrixException {
+		return new Distinct(this).calc(returnType);
 	}
 
 	public final Matrix log2(Ret returnType) throws MatrixException {

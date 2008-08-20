@@ -52,6 +52,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.interfaces.HasToolTip;
 import org.ujmp.core.util.DateUtil;
 import org.ujmp.gui.io.ExportJPEG;
@@ -225,7 +226,8 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 
 	@Override
 	public String getToolTipText(MouseEvent e) {
-		if (matrix != null) {
+		// only generate tool text when there a matrix with size >0 is available
+		if (matrix != null && Coordinates.product(matrix.getSize()) != 0) {
 			int r = getRowPos(e.getY());
 			int c = getColPos(e.getX());
 			r = r < 0 ? 0 : r;

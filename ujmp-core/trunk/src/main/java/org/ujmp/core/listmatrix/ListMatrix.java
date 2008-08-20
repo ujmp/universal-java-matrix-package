@@ -26,7 +26,8 @@ package org.ujmp.core.listmatrix;
 import java.util.List;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
-public interface ListMatrix<A> extends GenericMatrix2D<A>, List<A> {
+public interface ListMatrix<A> extends GenericMatrix2D<A>, List<A>, ObjectMatrix2D {
 
 }

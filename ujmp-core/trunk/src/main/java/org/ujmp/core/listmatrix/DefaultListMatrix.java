@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-
 public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
 	private static final long serialVersionUID = -6381864884046078055L;
 
@@ -38,16 +37,16 @@ public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
 		if (list instanceof List) {
 			this.list = (List<A>) list;
 		} else {
-			list = new ArrayList<A>(list);
+			this.list = new ArrayList<A>(list);
 		}
 	}
 
 	public DefaultListMatrix() {
-		list = new ArrayList<A>();
+		this.list = new ArrayList<A>();
 	}
 
 	public DefaultListMatrix(A... objects) {
-		list = Arrays.asList(objects);
+		this.list = Arrays.asList(objects);
 	}
 
 	@Override

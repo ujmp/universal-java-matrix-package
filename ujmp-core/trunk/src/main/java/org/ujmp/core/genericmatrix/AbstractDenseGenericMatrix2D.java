@@ -24,9 +24,10 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
-public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix<A> implements
-		GenericMatrix2D<A> {
+public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix<A>
+		implements GenericMatrix2D<A>, ObjectMatrix2D {
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

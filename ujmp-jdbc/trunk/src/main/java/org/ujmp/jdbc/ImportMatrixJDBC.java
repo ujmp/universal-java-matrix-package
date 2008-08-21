@@ -25,9 +25,9 @@ package org.ujmp.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.DB;
@@ -49,9 +49,8 @@ public class ImportMatrixJDBC {
 
 		Connection connection = DriverManager.getConnection(url, username,
 				password);
-		PreparedStatement selectStatement = connection
-				.prepareStatement(sqlStatement);
-		ResultSet resultSet = selectStatement.executeQuery();
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(sqlStatement);
 		ResultSetMetaData rsMetaData = resultSet.getMetaData();
 		long columnCount = rsMetaData.getColumnCount();
 		resultSet.last();
@@ -71,6 +70,8 @@ public class ImportMatrixJDBC {
 			resultSet.next();
 		}
 
+		resultSet.close();
+		statement.close();
 		connection.close();
 		return m;
 	}

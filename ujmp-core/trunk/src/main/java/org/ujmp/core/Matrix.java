@@ -38,8 +38,8 @@ import org.ujmp.core.interfaces.MatrixEntryGettersAndSetters;
 import org.ujmp.core.io.ExportMatrixInterface;
 
 /**
- * <code>Matrix</code> is the main class for storing any type of data. You
- * have to choose the suitable implementation for your needs, e.g.
+ * <code>Matrix</code> is the main class for storing any type of data. You have
+ * to choose the suitable implementation for your needs, e.g.
  * <code>DefaultDenseDoubleMatrix2D</code> to store double values or
  * DefaultGenericMatrix if you want to specify the object type.
  * 
@@ -71,5 +71,8 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 	public static final int NONE = -1;
 
 	public Matrix clone();
+
+	// TODO: move to interface
+	public Iterable<Object> allValues();
 
 }

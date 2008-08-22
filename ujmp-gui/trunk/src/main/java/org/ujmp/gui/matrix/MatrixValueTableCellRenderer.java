@@ -25,6 +25,7 @@ package org.ujmp.gui.matrix;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -54,7 +55,11 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 
 		Color c = ColorUtil.fromObject(value);
 
-		setToolTipText(TooltipUtil.getTooltip(m.getMatrix(), row, column));
+		try {
+			setToolTipText(TooltipUtil.getTooltip(m.getMatrix(), row, column));
+		} catch (ConcurrentModificationException e) {
+			// not too bad
+		}
 
 		int width = table.getColumnModel().getColumn(column).getWidth();
 		if (width < 25) {

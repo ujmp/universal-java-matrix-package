@@ -54,6 +54,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	public final void setObject(Object key, long row, long column) {
 	}
 
+	// TODO: concurrentmodification exceptions can come from here
 	private final Object getKey(int index) {
 		if (getMap() instanceof List) {
 			return ((List) getMap()).get(index);

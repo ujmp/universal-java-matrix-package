@@ -1501,6 +1501,15 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return append(COLUMN, m);
 	}
 
+	// TODO: this can be done more efficiently with an iterator
+	public Iterable<Object> allValues() {
+		List<Object> list = new ArrayList<Object>();
+		for (long[] c : availableCoordinates()) {
+			list.add(getObject(c));
+		}
+		return list;
+	}
+
 	public final Matrix appendVertically(Matrix m) throws MatrixException {
 		return append(ROW, m);
 	}

@@ -92,6 +92,8 @@ import org.ujmp.core.doublecalculation.general.solving.Pinv;
 import org.ujmp.core.doublecalculation.general.solving.Princomp;
 import org.ujmp.core.doublecalculation.general.statistical.Corrcoef;
 import org.ujmp.core.doublecalculation.general.statistical.Cov;
+import org.ujmp.core.doublecalculation.general.statistical.Cumprod;
+import org.ujmp.core.doublecalculation.general.statistical.Cumsum;
 import org.ujmp.core.doublecalculation.general.statistical.IndexOfMax;
 import org.ujmp.core.doublecalculation.general.statistical.IndexOfMin;
 import org.ujmp.core.doublecalculation.general.statistical.Max;
@@ -1030,6 +1032,14 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public final Matrix sort(Ret returnType) throws MatrixException {
 		return new Sort(this).calc(returnType);
+	}
+
+	public final Matrix cumsum(boolean ignoreNaN) throws MatrixException {
+		return new Cumsum(this, ignoreNaN).calcNew();
+	}
+
+	public final Matrix cumprod(boolean ignoreNaN) throws MatrixException {
+		return new Cumprod(this, ignoreNaN).calcNew();
 	}
 
 	public final Matrix distinct(Ret returnType) throws MatrixException {

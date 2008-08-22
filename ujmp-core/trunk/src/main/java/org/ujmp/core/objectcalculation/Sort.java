@@ -61,7 +61,7 @@ public class Sort extends AbstractObjectCalculation {
 		if (index == null) {
 			createSortIndex();
 		}
-		return getSource().getObject(index.getLong(coordinates), coordinates[COLUMN]);
+		return getSource().getObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
 	/**

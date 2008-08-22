@@ -29,6 +29,10 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface StatisticalDoubleCalculations {
 
+	public Matrix cumsum(boolean ignoreNaN) throws MatrixException;
+
+	public Matrix cumprod(boolean ignoreNaN) throws MatrixException;
+
 	/**
 	 * Calculates the mimimum of the values in the matrix either rowwise,
 	 * columnwise, or global.

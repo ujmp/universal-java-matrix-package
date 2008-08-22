@@ -101,6 +101,7 @@ import org.ujmp.core.doublecalculation.general.statistical.Mean;
 import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.MutualInformation;
 import org.ujmp.core.doublecalculation.general.statistical.PairedTTest;
+import org.ujmp.core.doublecalculation.general.statistical.Prod;
 import org.ujmp.core.doublecalculation.general.statistical.Std;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
 import org.ujmp.core.doublecalculation.general.statistical.Var;
@@ -888,6 +889,10 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public final long getSize(int dimension) {
 		return getSize()[dimension];
+	}
+
+	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
+		return new Prod(dimension, ignoreNaN, this).calc(returnType);
 	}
 
 	public final Matrix sum(Ret returnType, int dimension, boolean ignoreNaN)

@@ -64,7 +64,7 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values[0].length };
+		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 
 	@Override
 	public long getColumnCount() {
-		return values[0].length;
+		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public float getFloat(long row, long column) {

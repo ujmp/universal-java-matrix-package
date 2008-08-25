@@ -61,7 +61,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values[0].length };
+		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 	@Override
 	public long getColumnCount() {
-		return values[0].length;
+		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public String getString(long row, long column) {

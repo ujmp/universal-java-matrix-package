@@ -94,6 +94,7 @@ import org.ujmp.core.doublecalculation.general.statistical.Corrcoef;
 import org.ujmp.core.doublecalculation.general.statistical.Cov;
 import org.ujmp.core.doublecalculation.general.statistical.Cumprod;
 import org.ujmp.core.doublecalculation.general.statistical.Cumsum;
+import org.ujmp.core.doublecalculation.general.statistical.Diff;
 import org.ujmp.core.doublecalculation.general.statistical.IndexOfMax;
 import org.ujmp.core.doublecalculation.general.statistical.IndexOfMin;
 import org.ujmp.core.doublecalculation.general.statistical.Max;
@@ -893,6 +894,10 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Prod(dimension, ignoreNaN, this).calc(returnType);
+	}
+
+	public Matrix diff(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
+		return new Diff(dimension, ignoreNaN, this).calc(returnType);
 	}
 
 	public final Matrix sum(Ret returnType, int dimension, boolean ignoreNaN)

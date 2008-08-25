@@ -29,6 +29,8 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface StatisticalDoubleCalculations {
 
+	public Matrix diff(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
+
 	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
 
 	public Matrix cumsum(boolean ignoreNaN) throws MatrixException;

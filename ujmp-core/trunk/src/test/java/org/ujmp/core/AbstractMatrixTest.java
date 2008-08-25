@@ -45,6 +45,11 @@ public abstract class AbstractMatrixTest extends TestCase {
 		return this.getClass().getSimpleName();
 	}
 
+	public Matrix getZeroSizeMatrix() throws Exception {
+		Matrix m = createMatrix(0, 0);
+		return m;
+	}
+
 	public Matrix getTestMatrix() throws Exception {
 		Matrix m = createMatrix(3, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -79,6 +84,13 @@ public abstract class AbstractMatrixTest extends TestCase {
 		long[] c9 = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c9, new long[] { 2, 2 }));
 		assertFalse(getLabel(), ci.hasNext());
+	}
+
+	public void testZeroSize() throws Exception {
+		Matrix m = getZeroSizeMatrix();
+		assertTrue(getLabel(), Coordinates.equals(m.getSize(), new long[] { 0, 0 }));
+		assertEquals(getLabel(), 0, m.getRowCount());
+		assertEquals(getLabel(), 0, m.getColumnCount());
 	}
 
 	public void testAvailableCoordinateIterator2D() throws Exception {
@@ -150,7 +162,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 		mTest.setObject(mTest.getObject(1, 1), 1, 1);
 		mTest.setObject(mTest.getObject(1, 2), 1, 2);
 
-		Iterator<long[]> ci = m.selectedCoordinates(new long[] { 0, 1 }, new long[] { 0, 1, 2 }).iterator();
+		Iterator<long[]> ci = m.selectedCoordinates(new long[] { 0, 1 }, new long[] { 0, 1, 2 })
+				.iterator();
 		long[] c = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 0, 0 }));
 		c = ci.next();

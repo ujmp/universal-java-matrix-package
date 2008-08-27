@@ -70,4 +70,31 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 			return compObjectEqual;
 		return ((Comparable<O>) object).compareTo(s.object);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Sortable) {
+			Sortable s = (Sortable) obj;
+			Comparable c = s.getComparable();
+			Object o = s.getObject();
+			if (getComparable().equals(c)) {
+				return false;
+			}
+			if (getObject().equals(o)) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		if (object != null) {
+			hash += object.hashCode();
+		}
+		return hash;
+	}
+
 }

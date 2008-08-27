@@ -909,6 +909,7 @@ public abstract class MatrixFactory {
 		return result;
 	}
 
+	// TODO: this should also work with emtpy matrices
 	public static final Matrix concat(int dimension, Collection<Matrix> matrices)
 			throws MatrixException {
 		List<Matrix> list = new ArrayList<Matrix>(matrices);

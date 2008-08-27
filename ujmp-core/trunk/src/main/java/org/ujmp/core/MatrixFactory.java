@@ -902,19 +902,25 @@ public abstract class MatrixFactory {
 	}
 
 	public static final Matrix concat(int dimension, Matrix... matrices) throws MatrixException {
-		Matrix result = MatrixFactory.copyFromMatrix(AnnotationTransfer.COPY, matrices[0]);
-		for (int i = 1; i < matrices.length; i++) {
-			result = result.append(dimension, matrices[i]);
+		List<Matrix> list = new ArrayList<Matrix>();
+		for (Matrix m : matrices) {
+			list.add(m);
 		}
-		return result;
+		return concat(dimension, list);
 	}
 
-	// TODO: this should also work with emtpy matrices
+	// TODO: this should be done in a calculation
 	public static final Matrix concat(int dimension, Collection<Matrix> matrices)
 			throws MatrixException {
-		List<Matrix> list = new ArrayList<Matrix>(matrices);
+		// only use non-empty matrices
+		List<Matrix> list = new ArrayList<Matrix>();
+		for (Matrix m : matrices) {
+			if (m.getRowCount() != 0 && m.getColumnCount() != 0) {
+				list.add(m);
+			}
+		}
 		Matrix result = MatrixFactory.copyFromMatrix(AnnotationTransfer.COPY, list.get(0));
-		for (int i = 1; i < matrices.size(); i++) {
+		for (int i = 1; i < list.size(); i++) {
 			result = result.append(dimension, list.get(i));
 		}
 		return result;

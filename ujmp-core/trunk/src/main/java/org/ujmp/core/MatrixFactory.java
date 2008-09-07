@@ -128,8 +128,8 @@ import org.ujmp.core.util.MathUtil;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
- * create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
+ * to create empty matrices.
  * 
  * 
  * 
@@ -274,7 +274,7 @@ public abstract class MatrixFactory {
 			setSparseDateMatrix2DClassName(DefaultSparseDateMatrix.class.getName());
 			setSparseDateMatrixMultiDClassName(DefaultSparseDateMatrix.class.getName());
 
-			setDenseDoubleMatrix2DClassName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
+			setDenseDoubleMatrix2DClassName(DefaultDenseDoubleMatrix2D.class.getName());
 			setDenseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
 			setSparseDoubleMatrix2DClassName(DefaultSparseDoubleMatrix.class.getName());
 			setSparseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());

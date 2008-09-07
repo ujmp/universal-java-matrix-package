@@ -1,0 +1,23 @@
+DIR="/home/arndt/workspace/ujmp-all"
+VERSION="0.1.1"
+PACKAGES="ujmp-core ujmp-gui ujmp-colt ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmatio ujmp-jmathplot ujmp-jmatrices ujmp-mtj ujmp-vecmath"
+
+cd $DIR
+rm -rf target
+mkdir -p target
+
+for p in $PACKAGES
+do
+  cp ../$p/target/$p-$VERSION.jar target/$p-$VERSION.zip
+done
+
+cd target
+
+for p in $PACKAGES
+do
+  unzip -o $p-$VERSION.zip
+done
+
+rm -rf *.zip
+
+zip -r ujmp-all-$VERSION.jar *

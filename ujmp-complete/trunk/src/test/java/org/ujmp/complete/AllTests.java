@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.all;
+package org.ujmp.complete;
 
 import junit.framework.TestSuite;
 

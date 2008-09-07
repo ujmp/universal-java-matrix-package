@@ -1,4 +1,4 @@
-DIR="/home/arndt/workspace/ujmp-all"
+DIR="/home/arndt/workspace/ujmp-complete"
 VERSION="0.1.1"
 PACKAGES="ujmp-core ujmp-gui ujmp-colt ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmatio ujmp-jmathplot ujmp-jmatrices ujmp-mtj ujmp-vecmath"
 
@@ -20,4 +20,4 @@ done
 
 rm -rf *.zip
 
-zip -r ujmp-all-$VERSION-sources.jar *
+zip -r ujmp-complete-$VERSION-sources.jar *

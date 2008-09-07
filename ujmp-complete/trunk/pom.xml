@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ujmp</groupId>
-	<artifactId>ujmp-all</artifactId>
+	<artifactId>ujmp-complete</artifactId>
 	<packaging>pom</packaging>
-	<name>ujmp-all</name>
+	<name>ujmp-complete</name>
 		
 	<parent>
 		<groupId>org.ujmp</groupId>

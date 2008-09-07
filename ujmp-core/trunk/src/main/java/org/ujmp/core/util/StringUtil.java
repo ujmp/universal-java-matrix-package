@@ -45,6 +45,10 @@ public abstract class StringUtil {
 		DefaultNF.setMaximumFractionDigits(4);
 	}
 
+	public static final String stripTags(String string) {
+		return string.replaceAll("\\<.*?>", "");
+	}
+
 	public static final String format(Object o) {
 		if (o == null) {
 			return "";

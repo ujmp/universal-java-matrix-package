@@ -71,11 +71,13 @@
 
   <modules>
     <module>../ujmp-core</module>
+    <module>../ujmp-gui</module>
     <module>../ujmp-colt</module>
     <module>../ujmp-jackcess</module>
     <module>../ujmp-jama</module>
     <module>../ujmp-jdbc</module>
     <module>../ujmp-jexcelapi</module>
+    <module>../ujmp-jmathplot</module>
     <module>../ujmp-jmatio</module>
     <module>../ujmp-jmatrices</module>
     <module>../ujmp-mtj</module>

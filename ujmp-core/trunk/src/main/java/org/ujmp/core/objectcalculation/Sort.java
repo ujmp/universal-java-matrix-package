@@ -91,11 +91,11 @@ public class Sort extends AbstractObjectCalculation {
 	// }
 	private void createSortIndex() {
 		Matrix m = getSource();
-		List<Sortable<?, Long>> rows = new ArrayList<Sortable<?, Long>>();
+		List<Sortable> rows = new ArrayList<Sortable>();
 
 		for (long r = 0; r < m.getRowCount(); r++) {
 			Comparable<?> c = (Comparable<?>) m.getObject(r, column);
-			Sortable<?, Long> s = new Sortable(c, r, true);
+			Sortable s = new Sortable(c, r, true);
 			rows.add(s);
 		}
 
@@ -105,7 +105,7 @@ public class Sort extends AbstractObjectCalculation {
 				1);
 
 		for (int r = 0; r < rows.size(); r++) {
-			indexMatrix.setLong(rows.get((int) r).getObject(), r, 0);
+			indexMatrix.setLong((Long) (rows.get(r)).getObject(), r, 0);
 		}
 
 		this.index = indexMatrix;

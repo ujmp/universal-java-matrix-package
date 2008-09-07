@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ujmp</groupId>
+	<artifactId>ujmp-all</artifactId>
+	<packaging>pom</packaging>
+	<name>ujmp-all</name>
+		
+	<parent>
+		<groupId>org.ujmp</groupId>
+		<artifactId>ujmp</artifactId>
+		<version>${ujmp.version}</version>
+		<relativePath>../ujmp</relativePath>
+	</parent>
+	
+
+	
+	<dependencies>
+	
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jackcess</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-colt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jama</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmatrices</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-mtj</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-vecmath</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jexcelapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmatio</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-gui</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>		
+	</dependencies>
+
+  <modules>
+    <module>../ujmp-core</module>
+    <module>../ujmp-gui</module>
+    <module>../ujmp-colt</module>
+    <module>../ujmp-jackcess</module>
+    <module>../ujmp-jama</module>
+    <module>../ujmp-jdbc</module>
+    <module>../ujmp-jexcelapi</module>
+    <module>../ujmp-jmathplot</module>
+    <module>../ujmp-jmatio</module>
+    <module>../ujmp-jmatrices</module>
+    <module>../ujmp-mtj</module>
+    <module>../ujmp-vecmath</module>
+  </modules>
+
+</project>

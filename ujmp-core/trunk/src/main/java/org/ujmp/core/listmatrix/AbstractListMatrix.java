@@ -156,7 +156,7 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 	}
 
 	public <T> T[] toArray(T[] a) {
-		return null;
+		return getList().toArray(a);
 	}
 
 	public double getAsDouble(long... coordinates) throws MatrixException {

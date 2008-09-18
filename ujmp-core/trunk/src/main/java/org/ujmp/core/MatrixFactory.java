@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -1146,6 +1147,11 @@ public abstract class MatrixFactory {
 	public static Matrix importFromStream(FileFormat format, InputStream stream,
 			Object... parameters) throws MatrixException, IOException {
 		return ImportMatrix.fromStream(format, stream, parameters);
+	}
+	
+	public static Matrix importFromURL(FileFormat format, URL url,
+			Object... parameters) throws MatrixException, IOException {
+		return ImportMatrix.fromURL(format, url, parameters);
 	}
 
 	public static Matrix importFromString(FileFormat format, String string, Object... parameters)

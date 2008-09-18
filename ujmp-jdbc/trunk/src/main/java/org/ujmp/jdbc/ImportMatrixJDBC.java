@@ -57,7 +57,7 @@ public class ImportMatrixJDBC {
 		long rowCount = resultSet.getRow();
 		resultSet.first();
 		ObjectMatrix2D m = (ObjectMatrix2D) MatrixFactory.zeros(
-				ValueType.STRING, rowCount, columnCount);
+				ValueType.OBJECT, rowCount, columnCount);
 
 		for (int c = 0; c < columnCount; c++) {
 			m.setColumnLabel(c, rsMetaData.getColumnLabel(c + 1));

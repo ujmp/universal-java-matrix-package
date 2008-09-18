@@ -27,12 +27,17 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
@@ -85,6 +90,32 @@ public abstract class ImportMatrix {
 		}
 	}
 
+	public static Matrix fromURL(FileFormat format, URL url, Object... parameters)
+			throws MatrixException, IOException {
+		URLConnection connection = url.openConnection();
+		if (connection instanceof HttpURLConnection) {
+			// String urlParameters = (String) parameters[0];
+			String urlParameters = "q=" + URLEncoder.encode("test", "UTF-8") + "&start="
+					+ URLEncoder.encode("10", "UTF-8");
+
+			HttpURLConnection httpConnection = (HttpURLConnection) connection;
+			httpConnection.setRequestMethod("GET");
+			// httpConnection.setRequestProperty("Content-Type",
+			// "application/x-www-form-urlencoded");
+			// httpConnection.setRequestProperty("Content-Length", ""
+			// + Integer.toString(urlParameters.getBytes().length));
+			// connection.setRequestProperty("Content-Language", "en-US");
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			//DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+			//out.writeBytes(urlParameters);
+			//out.close();
+		}
+		Matrix m = fromStream(format, connection.getInputStream(), parameters);
+		return m;
+	}
+
 	public static Matrix fromStream(FileFormat format, InputStream stream, Object parameters)
 			throws MatrixException, IOException {
 		try {
@@ -122,7 +153,8 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromClipboard(FileFormat format, Object... parameters) throws MatrixException {
+	public static Matrix fromClipboard(FileFormat format, Object... parameters)
+			throws MatrixException {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable clipData = clipboard.getContents(null);
 		String s;

@@ -142,4 +142,15 @@ public class IntelligentFileReader extends Reader {
 		return lr.read(cbuf, off, len);
 	}
 
+	public static String load(String filename) {
+		StringBuffer s = new StringBuffer();
+		IntelligentFileReader fr = new IntelligentFileReader(filename);
+		String line = null;
+		while ((line = fr.readLine()) != null) {
+			s.append(line + "\n");
+		}
+		fr.close();
+		return s.toString();
+	}
+
 }

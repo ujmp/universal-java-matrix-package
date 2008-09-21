@@ -147,7 +147,7 @@ public abstract class MathUtil {
 	 */
 	public static final int nextInteger(int min, int max) {
 		if (min == max) {
-			new Exception().printStackTrace();
+			return min;
 		}
 		return random.nextInt(min < max ? min : max, max > min ? max : min);
 	}

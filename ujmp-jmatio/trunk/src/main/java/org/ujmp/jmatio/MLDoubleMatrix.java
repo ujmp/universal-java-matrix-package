@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -50,8 +51,10 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapp
 	}
 
 	public MLDoubleMatrix(long... size) {
-		this.matrix = new MLDouble("matrix" + System.nanoTime(),
-				new double[(int) size[ROW]][(int) size[COLUMN]]);
+		if (size[ROW] > 0 && size[COLUMN] > 0) {
+			this.matrix = new MLDouble("matrix" + System.nanoTime(),
+					new double[(int) size[ROW]][(int) size[COLUMN]]);
+		}
 	}
 
 	public MLDoubleMatrix(MLDouble matrix) {
@@ -59,7 +62,7 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapp
 	}
 
 	public long[] getSize() {
-		return new long[] { matrix.getM(), matrix.getN() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getM(), matrix.getN() };
 	}
 
 	public double getDouble(long row, long column) {

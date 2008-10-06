@@ -24,11 +24,13 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<org.jmatrices.dbl.Matrix> {
+public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		Wrapper<org.jmatrices.dbl.Matrix> {
 	private static final long serialVersionUID = 513251881654621L;
 
 	private org.jmatrices.dbl.Matrix matrix = null;
@@ -38,7 +40,9 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D im
 	}
 
 	public JMatricesDenseDoubleMatrix2D(long... size) {
-		this.matrix = MatrixFactory.getMatrix((int) size[ROW], (int) size[COLUMN], null);
+		if (size[ROW] > 0 && size[COLUMN] > 0) {
+			this.matrix = MatrixFactory.getMatrix((int) size[ROW], (int) size[COLUMN], null);
+		}
 	}
 
 	public JMatricesDenseDoubleMatrix2D(org.ujmp.core.Matrix source) throws MatrixException {
@@ -53,7 +57,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D im
 	}
 
 	public long[] getSize() {
-		return new long[] { matrix.rows(), matrix.cols() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.rows(), matrix.cols() };
 	}
 
 	public void setDouble(double value, long row, long column) {

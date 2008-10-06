@@ -31,6 +31,7 @@ import java.sql.Types;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
@@ -121,7 +122,7 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 	@Override
 	public long[] getSize() {
 		if (table == null) {
-			return new long[] { 0, 0 };
+			return Coordinates.ZERO2D;
 		} else {
 			return new long[] { table.getRowCount(), table.getColumnCount() };
 		}

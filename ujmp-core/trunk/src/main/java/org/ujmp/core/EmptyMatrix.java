@@ -1,5 +1,6 @@
 package org.ujmp.core;
 
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
 public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
@@ -16,7 +17,7 @@ public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
 
 	@Override
 	public long[] getSize() {
-		return new long[] { 0, 0 };
+		return Coordinates.ZERO2D;
 	}
 
 }

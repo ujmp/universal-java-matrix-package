@@ -26,16 +26,20 @@ package org.ujmp.core.doublematrix;
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealMatrixImpl;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CommonsMathRealMatrix extends AbstractDenseDoubleMatrix2D implements Wrapper<RealMatrixImpl> {
+public class CommonsMathRealMatrix extends AbstractDenseDoubleMatrix2D implements
+		Wrapper<RealMatrixImpl> {
 	private static final long serialVersionUID = -1161807620507675926L;
 
 	private RealMatrixImpl matrix = null;
 
 	public CommonsMathRealMatrix(long... size) {
-		matrix = new RealMatrixImpl((int) size[ROW], (int) size[COLUMN]);
+		if (size[ROW] > 0 && size[COLUMN] > 0) {
+			matrix = new RealMatrixImpl((int) size[ROW], (int) size[COLUMN]);
+		}
 	}
 
 	public CommonsMathRealMatrix(org.ujmp.core.Matrix source) throws MatrixException {
@@ -70,7 +74,8 @@ public class CommonsMathRealMatrix extends AbstractDenseDoubleMatrix2D implement
 	}
 
 	public long[] getSize() {
-		return new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getRowDimension(),
+				matrix.getColumnDimension() };
 	}
 
 	@Override

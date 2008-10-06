@@ -44,6 +44,8 @@ public class Coordinates implements Serializable {
 
 	public static final Coordinates SINGLEVALUE = new Coordinates(1, 1);
 
+	public static final long[] ZERO2D = new long[] { 0, 0 };
+
 	public long[] dimensions = null;
 
 	public Coordinates(long... dimensions) {

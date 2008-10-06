@@ -2,6 +2,7 @@ package org.ujmp.core.util;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.MatrixList;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
@@ -23,7 +24,7 @@ public class MatrixListToMatrixWrapper extends AbstractDenseDoubleMatrix2D imple
 
 	public long[] getSize() {
 		if (matrixList.isEmpty()) {
-			return new long[] { 0, 0 };
+			return Coordinates.ZERO2D;
 		} else {
 			return new long[] { matrixList.size(), matrixList.getLast().getColumnCount() };
 		}

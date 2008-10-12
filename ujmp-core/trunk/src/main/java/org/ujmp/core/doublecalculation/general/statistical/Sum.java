@@ -33,6 +33,10 @@ public class Sum extends AbstractDoubleCalculation {
 
 	boolean ignoreNaN = false;
 
+	public Sum(Matrix matrix) {
+		super(matrix);
+	}
+
 	public Sum(int dimension, boolean ignoreNaN, Matrix matrix) {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;

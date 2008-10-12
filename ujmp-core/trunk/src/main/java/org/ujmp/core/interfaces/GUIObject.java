@@ -26,6 +26,7 @@ package org.ujmp.core.interfaces;
 import java.io.Serializable;
 
 import javax.swing.Icon;
+import javax.swing.JFrame;
 
 /**
  * A GUIObject is an object that can be displayed in a Frame. This interface is
@@ -45,7 +46,7 @@ public interface GUIObject extends Serializable, Cloneable, HasLabel, HasDescrip
 	 */
 	public void fireValueChanged();
 
-	public void showGUI();
+	public JFrame showGUI();
 
 	public void clear();
 

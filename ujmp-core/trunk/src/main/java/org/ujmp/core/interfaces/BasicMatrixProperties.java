@@ -28,6 +28,8 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicMatrixProperties {
 
+	public Iterable<Object> allValues();
+	
 	public ValueType getValueType();
 
 	public long getValueCount();
@@ -100,7 +102,7 @@ public interface BasicMatrixProperties {
 
 	/**
 	 * Sets the size of the matrix. This is an optional method that is not
-	 * implemented for all matrizes. If this method is not implemented, a
+	 * implemented for all matrices. If this method is not implemented, a
 	 * <code>MatrixException</code> is thrown.
 	 * 
 	 * @param size

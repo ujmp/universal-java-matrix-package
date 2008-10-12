@@ -96,4 +96,6 @@ public interface Calculation extends Serializable {
 
 	public abstract ValueType getValueType();
 
+	public Matrix[] calcMulti();
+
 }

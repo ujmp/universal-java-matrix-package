@@ -64,8 +64,7 @@ import org.ujmp.core.objectcalculation.Transpose;
 
 public abstract class AbstractCalculation implements Calculation {
 
-	protected static final Logger logger = Logger.getLogger(AbstractCalculation.class
-			.getName());
+	protected static final Logger logger = Logger.getLogger(AbstractCalculation.class.getName());
 
 	private Matrix[] sources = null;
 
@@ -210,6 +209,10 @@ public abstract class AbstractCalculation implements Calculation {
 		default: // must be NEW
 			return calcNew();
 		}
+	}
+
+	public Matrix[] calcMulti() throws MatrixException {
+		return new Matrix[] { calcNew() };
 	}
 
 }

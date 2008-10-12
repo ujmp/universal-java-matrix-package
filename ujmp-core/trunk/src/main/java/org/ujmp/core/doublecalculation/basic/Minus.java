@@ -34,6 +34,10 @@ public class Minus extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
+	public Minus(Matrix m1, Matrix m2) {
+		super(m1, m2);
+	}
+
 	public Minus(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
@@ -56,7 +60,8 @@ public class Minus extends AbstractDoubleCalculation {
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
 		if (ignoreNaN) {
 			for (long[] c : m2.availableCoordinates()) {
-				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c)) - MathUtil.ignoreNaN(m2.getAsDouble(c)), c);
+				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c))
+						- MathUtil.ignoreNaN(m2.getAsDouble(c)), c);
 			}
 		} else {
 			for (long[] c : m2.availableCoordinates()) {

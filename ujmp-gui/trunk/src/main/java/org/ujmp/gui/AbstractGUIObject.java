@@ -27,6 +27,8 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JFrame;
+
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -66,13 +68,14 @@ public abstract class AbstractGUIObject implements GUIObject {
 	public void fireValueChanged() {
 	}
 
-	public final void showGUI() {
+	public final JFrame showGUI() {
 		try {
-			Class<?> c = Class.forName("org.jdmp.gui.util.FrameManager");
-			Method method = c.getMethod("showFrame", new Class[] { Object.class });
-			method.invoke(null, new Object[] { this });
+			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
+			Method method = c.getMethod("showGUI", new Class[] { Object.class });
+			return (JFrame) method.invoke(null, new Object[] { this });
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "cannot show frame", e);
+			return null;
 		}
 	}
 

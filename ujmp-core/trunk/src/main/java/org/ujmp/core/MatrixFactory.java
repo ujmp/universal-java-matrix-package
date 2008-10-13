@@ -129,8 +129,8 @@ import org.ujmp.core.util.MathUtil;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
- * to create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
+ * create empty matrices.
  * 
  * 
  * 
@@ -1132,25 +1132,33 @@ public abstract class MatrixFactory {
 		return new FileListMatrix(dir);
 	}
 
-	public static final DefaultMapMatrix<?, ?> linkToMap(Map<?, ?> map) {
-		return new DefaultMapMatrix(map);
+	public static final Matrix linkToMap(Map<?, ?> map) {
+		if (map instanceof Matrix) {
+			return (Matrix) map;
+		} else {
+			return new DefaultMapMatrix(map);
+		}
 	}
 
 	public static final DefaultListMatrix<Object> linkToArray(Object... objects) {
 		return new DefaultListMatrix<Object>(objects);
 	}
 
-	public static final DefaultListMatrix<?> linkToCollection(Collection<?> list) {
-		return new DefaultListMatrix<Object>(list);
+	public static final Matrix linkToCollection(Collection<?> list) {
+		if (list instanceof Matrix) {
+			return (Matrix) list;
+		} else {
+			return new DefaultListMatrix<Object>(list);
+		}
 	}
 
 	public static Matrix importFromStream(FileFormat format, InputStream stream,
 			Object... parameters) throws MatrixException, IOException {
 		return ImportMatrix.fromStream(format, stream, parameters);
 	}
-	
-	public static Matrix importFromURL(FileFormat format, URL url,
-			Object... parameters) throws MatrixException, IOException {
+
+	public static Matrix importFromURL(FileFormat format, URL url, Object... parameters)
+			throws MatrixException, IOException {
 		return ImportMatrix.fromURL(format, url, parameters);
 	}
 

@@ -23,6 +23,7 @@
 
 package org.ujmp.core.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,8 @@ import java.util.Set;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A> {
+public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializable {
+	private static final long serialVersionUID = 4170885424845593802L;
 
 	private Set<A> set = null;
 

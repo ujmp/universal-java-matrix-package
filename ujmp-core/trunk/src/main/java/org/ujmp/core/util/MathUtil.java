@@ -32,10 +32,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.math.random.RandomDataImpl;
 
 public abstract class MathUtil {
 
@@ -45,10 +44,10 @@ public abstract class MathUtil {
 
 	private static long seed = System.nanoTime();
 
-	private static RandomDataImpl random = new RandomDataImpl();
+	private static Random random = new Random();
 
 	static {
-		random.reSeed(seed);
+		random.setSeed(seed);
 	}
 
 	public static String getMD5Sum(String text) {
@@ -76,7 +75,7 @@ public abstract class MathUtil {
 		return hexString.toString();
 	}
 
-	public static final RandomDataImpl getRandom() {
+	public static final Random getRandom() {
 		return random;
 	}
 
@@ -99,7 +98,7 @@ public abstract class MathUtil {
 
 	public static void setSeed(long seed) {
 		MathUtil.seed = seed;
-		random.reSeed(seed);
+		random.setSeed(seed);
 	}
 
 	public static double log2(double d) {
@@ -127,13 +126,19 @@ public abstract class MathUtil {
 	}
 
 	public static final double nextGaussian(double mean, double sigma) {
-		return sigma <= 0.0 ? 0.0 : random.nextGaussian(mean, sigma);
+		return sigma <= 0.0 ? 0.0 : sigma * random.nextGaussian() + mean;
 	}
 
 	public static final double nextUniform(double min, double max) {
-		if (min == max)
+		if (min == max) {
 			max += Double.MIN_VALUE;
-		return random.nextUniform(min < max ? min : max, max > min ? max : min);
+		}
+		double r = random.nextDouble();
+		while (r <= 0.0) {
+			r = random.nextDouble();
+		}
+
+		return min + r * (max - min);
 	}
 
 	/**
@@ -149,7 +154,8 @@ public abstract class MathUtil {
 		if (min == max) {
 			return min;
 		}
-		return random.nextInt(min < max ? min : max, max > min ? max : min);
+		double r = random.nextDouble();
+		return (int) ((r * max) + ((1.0 - r) * min) + r);
 	}
 
 	public static boolean isEventHappening(double probability) {
@@ -161,7 +167,7 @@ public abstract class MathUtil {
 	}
 
 	public static double nextDouble() {
-		return random.nextUniform(0.0, 1.0);
+		return random.nextDouble();
 	}
 
 	public static double ignoreNaN(double v) {

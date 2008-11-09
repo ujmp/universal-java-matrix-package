@@ -34,7 +34,6 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(TestDefaultDenseStringMatrix2D.class);
 		suite.addTestSuite(TestDefaultSparseRowMatrix2D.class);
 		suite.addTestSuite(TestDefaultSparseColumnMatrix2D.class);
-		suite.addTestSuite(TestCommonsMathRealMatrix.class);
 		suite.addTestSuite(TestDefaultTiledObjectMatrix2D.class);
 		return suite;
 	}

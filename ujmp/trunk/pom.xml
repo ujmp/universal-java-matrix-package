@@ -61,6 +61,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-commonsmath</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
 				<artifactId>ujmp-jackcess</artifactId>
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>

@@ -30,6 +30,7 @@ public class AllTests extends TestSuite {
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTest(org.ujmp.core.AllTests.suite());
+		suite.addTest(org.ujmp.commonsmath.AllTests.suite());
 		suite.addTest(org.ujmp.colt.AllTests.suite());
 		suite.addTest(org.ujmp.jama.AllTests.suite());
 		suite.addTest(org.ujmp.jmatrices.AllTests.suite());

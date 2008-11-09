@@ -28,7 +28,6 @@ import java.lang.reflect.Constructor;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublecalculation.AbstractDoubleCalculation;
-import org.ujmp.core.doublematrix.CommonsMathRealMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Inv extends AbstractDoubleCalculation {
@@ -52,7 +51,9 @@ public class Inv extends AbstractDoubleCalculation {
 					Constructor<?> con = c.getConstructor(Matrix.class);
 					m = (Matrix) con.newInstance(m);
 				} catch (ClassNotFoundException e) {
-					m = new CommonsMathRealMatrix(m);
+					Class<?> c = Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
+					Constructor<?> con = c.getConstructor(Matrix.class);
+					m = (Matrix) con.newInstance(m);
 				}
 
 				inv = m.inv();

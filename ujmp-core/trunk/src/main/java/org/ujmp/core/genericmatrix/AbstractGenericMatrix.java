@@ -101,7 +101,6 @@ import org.ujmp.core.doublecalculation.general.statistical.Max;
 import org.ujmp.core.doublecalculation.general.statistical.Mean;
 import org.ujmp.core.doublecalculation.general.statistical.Min;
 import org.ujmp.core.doublecalculation.general.statistical.MutualInformation;
-import org.ujmp.core.doublecalculation.general.statistical.PairedTTest;
 import org.ujmp.core.doublecalculation.general.statistical.Prod;
 import org.ujmp.core.doublecalculation.general.statistical.Std;
 import org.ujmp.core.doublecalculation.general.statistical.Sum;
@@ -1194,7 +1193,14 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	}
 
 	public Matrix pairedTTest(Ret returnType) throws MatrixException {
-		return new PairedTTest(this).calc(returnType);
+		try {
+			Class<?> c = Class.forName("org.ujmp.commonsmath.PairedTTest");
+			Constructor<?> con = c.getConstructor(Matrix.class);
+			Calculation calc = (Calculation) con.newInstance(this);
+			return calc.calc(returnType);
+		} catch (Exception e) {
+			throw new MatrixException("could not calculate", e);
+		}
 	}
 
 	public Matrix bootstrap(Ret returnType) throws MatrixException {

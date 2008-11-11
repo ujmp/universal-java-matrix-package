@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2008 Holger Arndt, Andreas Naegele and Markus Bundschus
+ *
+ * This file is part of the Universal Java Matrix Package (UJMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * UJMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * UJMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with UJMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
 package org.ujmp.core.timeseries;
 
 import java.util.ArrayList;
@@ -6,12 +29,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.SetToListWrapper;
+import org.ujmp.core.collections.SortedListSet;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -28,9 +49,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	private List<SortedMap<Long, Double>> series = new ArrayList<SortedMap<Long, Double>>();
 
-	private SortedSet<Long> timestampsSet = new TreeSet<Long>();
-
-	private List<Long> timestampsList = new SetToListWrapper<Long>(timestampsSet);
+	private SortedListSet<Long> timestampsListSet = new SortedListSet<Long>();
 
 	public void addEvent(long timestamp, Matrix value) {
 		if (value.getRowCount() != 1) {
@@ -76,17 +95,18 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
-	public void addEvent(long timestamp, int seriesId, double value) {
+	public void addEvent(long timestamp, int column, double value) {
+		int seriesId = column - 1;
 		while (series.size() <= seriesId) {
 			series.add(new TreeMap<Long, Double>());
 		}
 		SortedMap<Long, Double> map = series.get(seriesId);
 		map.put(timestamp, value);
-		timestampsSet.add(timestamp);
+		timestampsListSet.add(timestamp);
 	}
 
 	public int getEventCount() {
-		return timestampsSet.size();
+		return timestampsListSet.size();
 	}
 
 	public int getSeriesCount() {
@@ -94,7 +114,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public List<Long> getTimestamps() {
-		return timestampsList;
+		return timestampsListSet;
 	}
 
 	@Override
@@ -104,8 +124,13 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	@Override
 	public double getDouble(long row, long column) {
+
+		if (row < 0 || column >= getColumnCount()) {
+			return Double.NaN;
+		}
+
 		int seriesId = (int) column - 1;
-		long timestamp = timestampsList.get((int) row);
+		long timestamp = timestampsListSet.get((int) row);
 		if (column == 0) {
 			return timestamp;
 		} else {
@@ -141,11 +166,30 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	@Override
 	public void setDouble(double value, long row, long column) {
-		throw new MatrixException("please use addEvent() for changes");
+		throw new MatrixException("please use addEvent() for making changes");
 	}
 
-	public void setInterpolation(int seriesId, Interpolation interpolation) {
+	public void setInterpolation(int column, Interpolation interpolation) {
+		int seriesId = column - 1;
 		seriesInterpolations.put(seriesId, interpolation);
+	}
+
+	public long getRowForTime(long time) {
+		for (long r = 0; r < getRowCount(); r++) {
+			long t = getAsLong(r, 0);
+			if (t == time) {
+				return r;
+			}
+		}
+		return -1;
+	}
+
+	public double getAsDoubleForTime(long time, long column) {
+		long row = getRowForTime(time);
+		if (row < 0 || column >= getColumnCount()) {
+			return Double.NaN;
+		}
+		return getAsDouble(row, column);
 	}
 
 }

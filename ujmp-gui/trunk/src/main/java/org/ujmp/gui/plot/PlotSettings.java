@@ -29,7 +29,7 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class PlotSettings {
 

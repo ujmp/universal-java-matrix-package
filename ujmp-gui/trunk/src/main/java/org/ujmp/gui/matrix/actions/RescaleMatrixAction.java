@@ -29,7 +29,7 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class RescaleMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = -4509186928254414609L;

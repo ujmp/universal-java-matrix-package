@@ -31,8 +31,8 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.clipboard.MatrixSelection;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
 public class CopyAction extends ObjectAction {
 	private static final long serialVersionUID = -2679630812122400202L;

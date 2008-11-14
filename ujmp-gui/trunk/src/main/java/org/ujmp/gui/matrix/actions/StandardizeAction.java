@@ -32,7 +32,7 @@ import javax.swing.KeyStroke;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class StandardizeAction extends MatrixAction {
 	private static final long serialVersionUID = -1119142691820061993L;

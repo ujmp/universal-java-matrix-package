@@ -31,7 +31,7 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class FadeOutAction extends MatrixAction {
 	private static final long serialVersionUID = 7628774721821715864L;

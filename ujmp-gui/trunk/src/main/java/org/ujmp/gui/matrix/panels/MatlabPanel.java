@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.util.Matlab;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class MatlabPanel extends JPanel {
 	private static final long serialVersionUID = -2014717060178963100L;

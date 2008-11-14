@@ -33,6 +33,7 @@ import javax.swing.JSeparator;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.matrix.actions.MatrixActions;
 
 public class MatrixPopupMenu extends JPopupMenu {

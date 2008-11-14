@@ -27,6 +27,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
+import org.ujmp.gui.MatrixGUIObject;
+
 public class MatrixEditorPanel extends JPanel {
 	private static final long serialVersionUID = 1466769193543607213L;
 

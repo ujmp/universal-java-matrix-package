@@ -30,8 +30,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.ExitAction;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
 public class MatrixActions extends ArrayList<JComponent> {
 	private static final long serialVersionUID = -8960033736161810590L;

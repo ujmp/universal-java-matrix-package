@@ -30,8 +30,8 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.HasMatrixList;
 import org.ujmp.core.util.MatrixListToMatrixWrapper;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.ObjectAction;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
 public abstract class MatrixAction extends ObjectAction {
 

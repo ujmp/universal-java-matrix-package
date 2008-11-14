@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class AddMissingValuesAction extends MatrixAction {
 	private static final long serialVersionUID = -7585669703654474086L;

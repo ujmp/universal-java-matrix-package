@@ -55,6 +55,7 @@ import javax.swing.event.TableModelListener;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.interfaces.HasToolTip;
 import org.ujmp.core.util.DateUtil;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;

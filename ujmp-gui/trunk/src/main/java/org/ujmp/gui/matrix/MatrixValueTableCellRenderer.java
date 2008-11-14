@@ -34,6 +34,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
 import org.ujmp.gui.util.TooltipUtil;
 

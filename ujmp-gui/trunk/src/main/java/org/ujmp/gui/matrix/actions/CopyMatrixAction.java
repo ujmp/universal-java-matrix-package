@@ -31,7 +31,7 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class CopyMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = 6122103774731476379L;

@@ -41,6 +41,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
 import org.ujmp.gui.util.GraphicsUtil;
 import org.ujmp.gui.util.UIDefaults;

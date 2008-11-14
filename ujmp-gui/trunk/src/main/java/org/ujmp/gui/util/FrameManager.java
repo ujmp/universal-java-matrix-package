@@ -36,10 +36,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.ObjectAction;
 import org.ujmp.gui.frame.AbstractFrame;
 import org.ujmp.gui.matrix.MatrixFrame;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
 public abstract class FrameManager {
 

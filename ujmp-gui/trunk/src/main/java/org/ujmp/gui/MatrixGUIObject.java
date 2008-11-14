@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui;
 
 import java.awt.Component;
 import java.awt.image.BufferedImage;
@@ -44,14 +44,11 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Fill;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasColumnSelectionModel;
-import org.ujmp.core.interfaces.HasRowSelectionModel;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
-import org.ujmp.gui.AbstractGUIObject;
+import org.ujmp.gui.matrix.FastListSelectionModel;
 
-public class MatrixGUIObject extends AbstractGUIObject implements TableModel, HasColumnSelectionModel,
-		HasRowSelectionModel {
+public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	private static final long serialVersionUID = -5777110889052748093L;
 
 	private Matrix matrix = null;

@@ -32,7 +32,7 @@ import javax.swing.KeyStroke;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class TransposeMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = -993725459831614912L;

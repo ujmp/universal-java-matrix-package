@@ -30,7 +30,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeKNN;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class ReplaceByNearestNeighborAction extends MatrixAction {
 	private static final long serialVersionUID = -2401692333851059830L;

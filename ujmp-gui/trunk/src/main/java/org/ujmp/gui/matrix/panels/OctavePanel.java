@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.util.Octave;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class OctavePanel extends JPanel {
 	private static final long serialVersionUID = -894693635404746973L;

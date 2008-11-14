@@ -37,6 +37,7 @@ import org.ujmp.core.util.GnuPlot;
 import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.matrix.panels.AbstractPanel;
 import org.ujmp.gui.matrix.panels.BufferedPanel;
 import org.ujmp.gui.matrix.panels.GnuPlotPanel;

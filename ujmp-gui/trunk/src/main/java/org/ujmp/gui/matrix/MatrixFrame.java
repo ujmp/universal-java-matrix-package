@@ -25,6 +25,7 @@ package org.ujmp.gui.matrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.frame.AbstractFrame;
 
 public class MatrixFrame extends AbstractFrame {

@@ -31,7 +31,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.ujmp.core.util.GnuPlot;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class GnuPlotPanel extends JPanel {
 	private static final long serialVersionUID = -241038814283185885L;

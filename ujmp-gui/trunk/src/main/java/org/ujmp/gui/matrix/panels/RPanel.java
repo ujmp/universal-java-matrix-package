@@ -31,7 +31,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.ujmp.core.util.R;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class RPanel extends JPanel {
 	private static final long serialVersionUID = -3779245352485347462L;

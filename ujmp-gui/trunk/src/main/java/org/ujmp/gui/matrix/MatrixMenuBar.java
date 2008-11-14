@@ -28,6 +28,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.matrix.actions.MatrixActions;
 import org.ujmp.gui.menu.DefaultMenuBar;
 

@@ -38,8 +38,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeUpdated;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 import org.ujmp.gui.util.UpdateListener;

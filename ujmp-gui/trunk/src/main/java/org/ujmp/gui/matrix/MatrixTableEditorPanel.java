@@ -55,6 +55,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
+import org.ujmp.gui.MatrixGUIObject;
+
 public class MatrixTableEditorPanel extends JPanel implements TableModelListener, MouseListener, KeyListener,
 		ListSelectionListener {
 	private static final long serialVersionUID = -1794955656888362574L;

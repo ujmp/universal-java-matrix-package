@@ -31,7 +31,7 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class FillGaussianAction extends MatrixAction {
 	private static final long serialVersionUID = -8334744425028399100L;

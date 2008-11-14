@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class FillWithValueAction extends MatrixAction {
 	private static final long serialVersionUID = 6318874871015478768L;

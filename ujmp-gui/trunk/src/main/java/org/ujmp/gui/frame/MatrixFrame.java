@@ -26,8 +26,8 @@ package org.ujmp.gui.frame;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.matrix.panels.MatrixPanel;
 import org.ujmp.gui.menu.MatrixMenuBar;
+import org.ujmp.gui.panels.MatrixPanel;
 
 public class MatrixFrame extends AbstractFrame {
 	private static final long serialVersionUID = -3705093197648545721L;

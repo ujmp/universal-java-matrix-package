@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.panels;
+package org.ujmp.gui.panels;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

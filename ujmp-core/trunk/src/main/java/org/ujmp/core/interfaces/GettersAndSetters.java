@@ -38,7 +38,7 @@ import org.ujmp.core.exceptions.MatrixException;
  * no exception if the entry cannot be converted. Instead, the result will be
  * either null, 0, false or Double.NaN depending on the method.
  */
-public interface MatrixEntryGettersAndSetters {
+public interface GettersAndSetters {
 
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored

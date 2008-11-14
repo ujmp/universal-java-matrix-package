@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.interfaces;
+package org.ujmp.core.graphmatrix;
 
 import java.util.List;
 

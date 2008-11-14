@@ -34,6 +34,8 @@ import org.ujmp.core.exceptions.MatrixException;
  */
 public interface CoordinateFunctions {
 
+	public Iterable<long[]> nonZeroCoordinates();
+
 	/**
 	 * Returns an Iterator that goes over all coordinates in the Matrix. It goes
 	 * from 0,0 to the size of the Matrix.

@@ -43,6 +43,12 @@ public interface ObjectCalculations {
 
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException;
 
+	public Matrix reshape(long... newSize) throws MatrixException;
+
+	public Matrix toColumnVector() throws MatrixException;
+
+	public Matrix toRowVector() throws MatrixException;
+
 	/**
 	 * Replaces matching values in the matrix with another value
 	 * 

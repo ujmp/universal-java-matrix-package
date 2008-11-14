@@ -29,10 +29,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.ujmp.core.interfaces.HasCache;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CachedMap<K, V> implements HasCache<Map<K, V>>, Wrapper<Map<K, V>>, Map<K, V> {
+public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
 
 	private static final Logger logger = Logger.getLogger(CachedMap.class.getName());
 

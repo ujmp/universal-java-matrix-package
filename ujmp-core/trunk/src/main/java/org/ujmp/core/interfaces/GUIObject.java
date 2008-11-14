@@ -38,7 +38,8 @@ import javax.swing.JFrame;
  * @author Holger Arndt
  * 
  */
-public interface GUIObject extends Serializable, Cloneable, HasLabel, HasDescription, HasToolTip {
+public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel, HasDescription,
+		HasToolTip {
 
 	/**
 	 * Indicates that changed in the object have been made, that should be
@@ -47,8 +48,6 @@ public interface GUIObject extends Serializable, Cloneable, HasLabel, HasDescrip
 	public void fireValueChanged();
 
 	public JFrame showGUI();
-
-	public void clear();
 
 	public Icon getIcon();
 

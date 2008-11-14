@@ -21,16 +21,8 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.interfaces;
+package org.ujmp.core.treematrix;
 
-public interface MatrixIterators {
-
-	public Iterable<long[]> coordinates(String selection);
-
-	public Iterable<long[]> coordinates(int dimension, long... selection);
-
-	public Iterable<long[]> allCoordinates();
-
-	public Iterable<long[]> nonZeroCoordinates();
+public interface Tree<A> {
 
 }

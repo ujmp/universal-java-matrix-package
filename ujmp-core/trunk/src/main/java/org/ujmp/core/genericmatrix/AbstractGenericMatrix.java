@@ -448,6 +448,10 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 		return false;
 	}
 
+	public Iterable<long[]> nonZeroCoordinates() {
+		return availableCoordinates();
+	}
+
 	public Iterable<long[]> availableCoordinates() {
 		return allCoordinates();
 	}

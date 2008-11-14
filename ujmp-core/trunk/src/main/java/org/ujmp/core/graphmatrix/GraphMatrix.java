@@ -24,7 +24,6 @@
 package org.ujmp.core.graphmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
-import org.ujmp.core.interfaces.GenericGraph;
 
 public interface GraphMatrix<N, E> extends GenericMatrix2D<E>, GenericGraph<N, E> {
 

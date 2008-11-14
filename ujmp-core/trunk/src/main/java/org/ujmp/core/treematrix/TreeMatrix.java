@@ -24,7 +24,6 @@
 package org.ujmp.core.treematrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
-import org.ujmp.core.interfaces.Tree;
 
 public interface TreeMatrix<A> extends GenericMatrix2D<A>, Tree<A> {
 

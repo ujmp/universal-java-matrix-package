@@ -33,7 +33,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.stringcalculation.ReplaceRegex;
+import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 
 public class TestReplaceRegex extends TestCase {
 

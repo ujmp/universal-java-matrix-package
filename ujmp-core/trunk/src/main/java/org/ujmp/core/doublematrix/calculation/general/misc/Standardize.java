@@ -21,41 +21,44 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.doublematrix.calculation.general.misc;
 
-import org.apache.commons.math.stat.inference.TestUtils;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class PairedTTest extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 9074733842439986005L;
+public class Standardize extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 6454174968175712888L;
 
-	public PairedTTest(Matrix matrix) {
-		super(matrix);
+	private Matrix center = null;
+
+	private Matrix sigma = null;
+
+	private boolean ignoreNaN = false;
+
+	public Standardize(boolean ignoreNaN, int dimension, Matrix matrix) {
+		super(dimension, matrix);
+		this.ignoreNaN = ignoreNaN;
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		try {
-			long var1 = coordinates[ROW];
-			long var2 = coordinates[COLUMN];
-			double[] sample1 = new double[(int) getSource().getRowCount()];
-			double[] sample2 = new double[(int) getSource().getRowCount()];
-			for (int r = 0; r < getSource().getRowCount(); r++) {
-				sample1[r] = getSource().getAsDouble(r, var1);
-				sample2[r] = getSource().getAsDouble(r, var2);
-			}
-			double pValue = TestUtils.pairedTTest(sample1, sample2);
-			return pValue;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+		if (center == null) {
+			center = getSource().calcNew(new Center(ignoreNaN, getDimension(), getSource()));
 		}
-	}
-
-	@Override
-	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		if (sigma == null) {
+			sigma = center.calcNew(new Std(getDimension(), ignoreNaN, center));
+		}
+		switch (getDimension()) {
+		case ALL:
+			return center.getAsDouble(coordinates) / sigma.getAsDouble(0, 0);
+		case ROW:
+			return center.getAsDouble(coordinates) / sigma.getAsDouble(0, coordinates[COLUMN]);
+		case COLUMN:
+			return center.getAsDouble(coordinates) / sigma.getAsDouble(coordinates[ROW], 0);
+		}
+		return Double.NaN;
 	}
 
 }

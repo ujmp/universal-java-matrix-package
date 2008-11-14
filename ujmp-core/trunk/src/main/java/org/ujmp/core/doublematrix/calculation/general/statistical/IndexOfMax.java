@@ -21,41 +21,55 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import org.apache.commons.math.stat.inference.TestUtils;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class PairedTTest extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 9074733842439986005L;
+public class IndexOfMax extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 2656643557116576004L;
 
-	public PairedTTest(Matrix matrix) {
-		super(matrix);
+	public IndexOfMax(int dimension, Matrix matrix) {
+		super(dimension, matrix);
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		try {
-			long var1 = coordinates[ROW];
-			long var2 = coordinates[COLUMN];
-			double[] sample1 = new double[(int) getSource().getRowCount()];
-			double[] sample2 = new double[(int) getSource().getRowCount()];
-			for (int r = 0; r < getSource().getRowCount(); r++) {
-				sample1[r] = getSource().getAsDouble(r, var1);
-				sample2[r] = getSource().getAsDouble(r, var2);
+		double max = -Double.MAX_VALUE;
+		long index = -1;
+		switch (getDimension()) {
+		case ROW:
+			for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
+				double v = getSource().getAsDouble(r, coordinates[COLUMN]);
+				if (v > max) {
+					max = v;
+					index = r;
+				}
 			}
-			double pValue = TestUtils.pairedTTest(sample1, sample2);
-			return pValue;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+			return index;
+		case COLUMN:
+			for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
+				double v = getSource().getAsDouble(coordinates[ROW], c);
+				if (v > max) {
+					max = v;
+					index = c;
+				}
+			}
+			return index;
 		}
+		return 0.0;
 	}
 
 	@Override
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		switch (getDimension()) {
+		case ROW:
+			return new long[] { 1, getSource().getSize()[COLUMN] };
+		case COLUMN:
+			return new long[] { getSource().getSize()[ROW], 1 };
+		}
+		return null;
 	}
 
 }

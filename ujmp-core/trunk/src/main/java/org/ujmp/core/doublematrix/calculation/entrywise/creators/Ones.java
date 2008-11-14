@@ -21,30 +21,43 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.actions;
+package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
-
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
-public class ReplaceByMeanAction extends MatrixAction {
-	private static final long serialVersionUID = -7820090923370035750L;
+public class Ones extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 2547827499345834225L;
 
-	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
+	public Ones(Matrix matrix) {
+		super(matrix);
 	}
 
 	@Override
-	public Object call() throws MatrixException {
-		return getMatrixObject().getMatrix().calc(new ImputeMean(getDimension(), getMatrixObject().getMatrix()),
-				Ret.ORIG);
+	public double getDouble(long... coordinates) {
+		return 1.0;
 	}
 
+	public static Matrix calc(Matrix source) throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(source.getSize());
+		for (long[] c : source.allCoordinates()) {
+			ret.setAsDouble(1.0, c);
+		}
+		return ret;
+	}
+
+	public static Matrix calc(long... size) throws MatrixException {
+		return calc(ValueType.DOUBLE, size);
+	}
+
+	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
+		Matrix ret = MatrixFactory.zeros(valueType, size);
+		for (long[] c : ret.allCoordinates()) {
+			ret.setAsDouble(1.0, c);
+		}
+		return ret;
+	}
 }

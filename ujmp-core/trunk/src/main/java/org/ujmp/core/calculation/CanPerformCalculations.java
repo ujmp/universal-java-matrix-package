@@ -26,10 +26,10 @@ package org.ujmp.core.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublecalculation.DoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectcalculation.ObjectCalculations;
-import org.ujmp.core.stringcalculation.StringCalculations;
+import org.ujmp.core.objectmatrix.calculation.ObjectCalculations;
+import org.ujmp.core.stringmatrix.calculation.StringCalculations;
 
 /**
  * <p>

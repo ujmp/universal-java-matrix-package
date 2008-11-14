@@ -21,41 +21,53 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.doublematrix.calculation.general.solving;
 
-import org.apache.commons.math.stat.inference.TestUtils;
+import java.lang.reflect.Constructor;
+
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class PairedTTest extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 9074733842439986005L;
+public class Inv extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 7886298456216056038L;
 
-	public PairedTTest(Matrix matrix) {
+	private Matrix inv = null;
+
+	public Inv(Matrix matrix) {
 		super(matrix);
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		try {
-			long var1 = coordinates[ROW];
-			long var2 = coordinates[COLUMN];
-			double[] sample1 = new double[(int) getSource().getRowCount()];
-			double[] sample2 = new double[(int) getSource().getRowCount()];
-			for (int r = 0; r < getSource().getRowCount(); r++) {
-				sample1[r] = getSource().getAsDouble(r, var1);
-				sample2[r] = getSource().getAsDouble(r, var2);
+		if (inv == null) {
+			try {
+
+				Matrix m = getSource();
+
+				try {
+					Class<?> c = Class.forName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
+					Constructor<?> con = c.getConstructor(Matrix.class);
+					m = (Matrix) con.newInstance(m);
+				} catch (ClassNotFoundException e) {
+					Class<?> c = Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
+					Constructor<?> con = c.getConstructor(Matrix.class);
+					m = (Matrix) con.newInstance(m);
+				}
+
+				inv = m.inv();
+
+			} catch (Exception e) {
+				throw new MatrixException(e);
 			}
-			double pValue = TestUtils.pairedTTest(sample1, sample2);
-			return pValue;
-		} catch (Exception e) {
-			throw new MatrixException(e);
 		}
+		return inv.getAsDouble(coordinates);
 	}
 
 	@Override
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		return Coordinates.transpose(getSource().getSize());
 	}
 
 }

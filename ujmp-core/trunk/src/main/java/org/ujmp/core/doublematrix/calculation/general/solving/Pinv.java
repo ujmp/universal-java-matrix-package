@@ -21,41 +21,48 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.doublematrix.calculation.general.solving;
 
-import org.apache.commons.math.stat.inference.TestUtils;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.UJMPSettings;
 
-public class PairedTTest extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 9074733842439986005L;
+public class Pinv extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 7886298456216056038L;
 
-	public PairedTTest(Matrix matrix) {
+	private Matrix pinv = null;
+
+	public Pinv(Matrix matrix) {
 		super(matrix);
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		try {
-			long var1 = coordinates[ROW];
-			long var2 = coordinates[COLUMN];
-			double[] sample1 = new double[(int) getSource().getRowCount()];
-			double[] sample2 = new double[(int) getSource().getRowCount()];
-			for (int r = 0; r < getSource().getRowCount(); r++) {
-				sample1[r] = getSource().getAsDouble(r, var1);
-				sample2[r] = getSource().getAsDouble(r, var2);
+		if (pinv == null) {
+
+			Matrix[] ms = getSource().svd();
+			Matrix u = ms[0];
+			Matrix s = ms[1];
+			Matrix v = ms[2];
+
+			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
+				double d = s.getAsDouble(i, i);
+				if (Math.abs(d) > UJMPSettings.getTolerance()) {
+					s.setAsDouble(1.0 / d, i, i);
+				}
 			}
-			double pValue = TestUtils.pairedTTest(sample1, sample2);
-			return pValue;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+
+			pinv = v.mtimes(s.transpose()).mtimes(u.transpose());
+
 		}
+		return pinv.getAsDouble(coordinates);
 	}
 
 	@Override
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		return Coordinates.transpose(getSource().getSize());
 	}
 
 }

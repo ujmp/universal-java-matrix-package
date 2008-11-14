@@ -21,30 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.actions;
+package org.ujmp.core.objectmatrix.calculation;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
-public class ReplaceByMeanAction extends MatrixAction {
-	private static final long serialVersionUID = -7820090923370035750L;
+public class Shuffle extends AbstractObjectCalculation {
+	private static final long serialVersionUID = -6935375114060680121L;
 
-	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
+	private Matrix selection = null;
+
+	public Shuffle(Matrix m) {
+		super(m);
 	}
 
 	@Override
-	public Object call() throws MatrixException {
-		return getMatrixObject().getMatrix().calc(new ImputeMean(getDimension(), getMatrixObject().getMatrix()),
-				Ret.ORIG);
+	public Object getObject(long... coordinates) throws MatrixException {
+		if (selection == null) {
+			List<Integer> rows = new ArrayList<Integer>();
+			for (int i = 0; i < getSource().getRowCount(); i++) {
+				rows.add(i);
+			}
+			Collections.shuffle(rows);
+			selection = getSource().selectRows(Ret.LINK, rows);
+		}
+		return selection.getObject(coordinates);
 	}
 
 }

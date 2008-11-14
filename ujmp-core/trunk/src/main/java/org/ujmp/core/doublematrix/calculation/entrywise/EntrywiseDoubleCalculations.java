@@ -21,30 +21,17 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.actions;
+package org.ujmp.core.doublematrix.calculation.entrywise;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
+import org.ujmp.core.doublematrix.calculation.entrywise.basic.BasicEntrywiseDoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.CreatorDoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.HyperbolicDoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.entrywise.misc.MiscEntrywiseDoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.entrywise.rounding.RoundingDoubleCalculations;
+import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.TrigonometricDoubleCalculations;
 
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
-
-public class ReplaceByMeanAction extends MatrixAction {
-	private static final long serialVersionUID = -7820090923370035750L;
-
-	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
-	}
-
-	@Override
-	public Object call() throws MatrixException {
-		return getMatrixObject().getMatrix().calc(new ImputeMean(getDimension(), getMatrixObject().getMatrix()),
-				Ret.ORIG);
-	}
+public interface EntrywiseDoubleCalculations extends BasicEntrywiseDoubleCalculations,
+		RoundingDoubleCalculations, HyperbolicDoubleCalculations, TrigonometricDoubleCalculations,
+		CreatorDoubleCalculations, MiscEntrywiseDoubleCalculations {
 
 }

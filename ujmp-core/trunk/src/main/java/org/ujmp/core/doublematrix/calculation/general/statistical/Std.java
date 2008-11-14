@@ -21,30 +21,43 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.actions;
+package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
-
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
 
-public class ReplaceByMeanAction extends MatrixAction {
-	private static final long serialVersionUID = -7820090923370035750L;
+public class Std extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 6318655294298955306L;
 
-	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
+	private Matrix variance = null;
+
+	private boolean ignoreNaN = false;
+
+	public Std(int dimension, boolean ignoreNaN, Matrix matrix) {
+		super(dimension, matrix);
+		this.ignoreNaN = ignoreNaN;
 	}
 
 	@Override
-	public Object call() throws MatrixException {
-		return getMatrixObject().getMatrix().calc(new ImputeMean(getDimension(), getMatrixObject().getMatrix()),
-				Ret.ORIG);
+	public double getDouble(long... coordinates) throws MatrixException {
+		if (variance == null) {
+			variance = getSource().calcNew(new Var(getDimension(), ignoreNaN, getSource()));
+		}
+		return Math.sqrt(variance.getAsDouble(coordinates));
+	}
+
+	@Override
+	public long[] getSize() {
+		switch (getDimension()) {
+		case ROW:
+			return new long[] { 1, getSource().getSize()[COLUMN] };
+		case COLUMN:
+			return new long[] { getSource().getSize()[ROW], 1 };
+		case ALL:
+			return new long[] { 1, 1 };
+		}
+		return null;
 	}
 
 }

@@ -21,41 +21,56 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 
-import org.apache.commons.math.stat.inference.TestUtils;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
-public class PairedTTest extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 9074733842439986005L;
+public class CountMissing extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = -8720603522373221865L;
 
-	public PairedTTest(Matrix matrix) {
-		super(matrix);
+	public CountMissing(int dimension, Matrix matrix) {
+		super(dimension, matrix);
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		try {
-			long var1 = coordinates[ROW];
-			long var2 = coordinates[COLUMN];
-			double[] sample1 = new double[(int) getSource().getRowCount()];
-			double[] sample2 = new double[(int) getSource().getRowCount()];
-			for (int r = 0; r < getSource().getRowCount(); r++) {
-				sample1[r] = getSource().getAsDouble(r, var1);
-				sample2[r] = getSource().getAsDouble(r, var2);
+		double sum = 0;
+		switch (getDimension()) {
+		case ROW:
+			for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
+				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, coordinates[COLUMN])) ? 1 : 0;
 			}
-			double pValue = TestUtils.pairedTTest(sample1, sample2);
-			return pValue;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+			return sum;
+		case COLUMN:
+			for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
+				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(coordinates[ROW], c)) ? 1 : 0;
+			}
+			return sum;
+		case ALL:
+			for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
+				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
+					sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, c)) ? 1 : 0;
+				}
+			}
+			return sum;
 		}
+		return 0.0;
 	}
 
 	@Override
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		switch (getDimension()) {
+		case ROW:
+			return new long[] { 1, getSource().getSize()[COLUMN] };
+		case COLUMN:
+			return new long[] { getSource().getSize()[ROW], 1 };
+		case ALL:
+			return new long[] { 1, 1 };
+		}
+		return null;
 	}
 
 }

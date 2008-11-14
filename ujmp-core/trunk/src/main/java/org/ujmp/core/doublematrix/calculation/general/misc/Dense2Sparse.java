@@ -21,30 +21,44 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.actions;
+package org.ujmp.core.doublematrix.calculation.general.misc;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.gui.matrix.MatrixGUIObject;
+public class Dense2Sparse {
 
-public class ReplaceByMeanAction extends MatrixAction {
-	private static final long serialVersionUID = -7820090923370035750L;
+	public static Matrix calc(Matrix indices) {
+		Matrix m = MatrixFactory.sparse(1, 1);
 
-	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
-	}
+		long mrow = 1;
+		long mcol = 1;
 
-	@Override
-	public Object call() throws MatrixException {
-		return getMatrixObject().getMatrix().calc(new ImputeMean(getDimension(), getMatrixObject().getMatrix()),
-				Ret.ORIG);
+		for (int r = 0; r < indices.getRowCount(); r++) {
+
+			if (r % 1000 == 0) {
+				System.out.println("Row: " + r);
+			}
+
+			long row = (long) indices.getAsDouble(r, 0);
+			long col = (long) indices.getAsDouble(r, 1);
+			double val = indices.getAsDouble(r, 2);
+
+			if (row >= mrow) {
+				mrow = row + 1;
+				m.setSize(mrow, mcol);
+			}
+
+			if (col >= mcol) {
+				mcol = col + 1;
+				m.setSize(mrow, mcol);
+			}
+
+			m.setAsDouble(val, row, col);
+
+		}
+
+		return m;
 	}
 
 }

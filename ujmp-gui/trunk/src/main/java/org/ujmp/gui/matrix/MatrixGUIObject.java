@@ -363,7 +363,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel, Ha
 			int WIDTH = table.getColumnModel().getColumn(0).getWidth() - 1;
 			int HEIGHT = table.getRowHeight(0) - 1;
 
-			Class<?> cl = Class.forName("org.jdmp.gui.matrix.MatrixRenderer");
+			Class<?> cl = Class.forName("org.ujmp.gui.matrix.MatrixRenderer");
 			DefaultTableCellRenderer mr = (DefaultTableCellRenderer) cl.newInstance();
 			Component c = mr.getTableCellRendererComponent(table, this, false, false, 0, 0);
 			BufferedImage bi = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

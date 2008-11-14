@@ -34,7 +34,7 @@ public class AboutAction extends ObjectAction {
 	public AboutAction(JComponent c, GUIObject o) {
 		super(c, o);
 		putValue(Action.NAME, "About");
-		putValue(Action.SHORT_DESCRIPTION, "Info about JDMP");
+		putValue(Action.SHORT_DESCRIPTION, "Info about UJMP");
 	}
 
 	@Override

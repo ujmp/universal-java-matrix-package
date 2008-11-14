@@ -26,14 +26,11 @@ package org.ujmp.core.genericmatrix;
 import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.DefaultMatrixList;
-import org.ujmp.core.collections.MatrixList;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasSourceMatrix;
 
-public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> implements HasSourceMatrix {
+public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> {
 	private static final long serialVersionUID = -4298270756453090584L;
 
 	private Matrix source = null;
@@ -132,21 +129,8 @@ public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> implements HasSo
 		source.setObject(value, getOldCoordinates(coordinates));
 	}
 
-	public MatrixList getSourceMatrices() {
-		MatrixList matrices = new DefaultMatrixList();
-		if (getSourceMatrix() instanceof HasSourceMatrix) {
-			matrices.addAll(((HasSourceMatrix) getSourceMatrix()).getSourceMatrices());
-		}
-		matrices.add(getSourceMatrix());
-		return matrices;
-	}
-
-	public Matrix getSourceMatrix() {
-		return source;
-	}
-
 	public ValueType getValueType() {
-		return getSourceMatrix().getValueType();
+		return source.getValueType();
 	}
 
 }

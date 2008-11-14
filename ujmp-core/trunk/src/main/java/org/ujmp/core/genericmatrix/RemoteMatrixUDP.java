@@ -33,10 +33,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.logging.Level;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 	private static final long serialVersionUID = 3889079475875267966L;
@@ -144,23 +141,6 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not send packet", e);
 		}
-	}
-
-	public static void main(String[] args) throws MatrixException {
-
-		Matrix m = MatrixFactory.zeros(10, 10);
-		ServerMatrixUDP sm = new ServerMatrixUDP(m, 19000);
-
-		RemoteMatrixUDP rm = new RemoteMatrixUDP("localhost", 19000);
-
-		rm.setAsDouble(10.0, 4, 3);
-		rm.setAsDouble(10.0, 3, 3);
-		rm.setAsDouble(10.0, 2, 3);
-
-		System.out.println("m:" + m.getAsDouble(4, 3));
-		System.out.println("server:" + sm.getAsDouble(4, 3));
-
-		System.out.println(rm.toString());
 	}
 
 	public boolean contains(long... coordinates) {

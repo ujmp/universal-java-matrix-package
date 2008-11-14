@@ -28,7 +28,7 @@ import org.ujmp.core.collections.MatrixList;
 
 public interface HasSourceMatrix {
 
-	public Matrix getSourceMatrix();
+	public Matrix getSourceMatrix2();
 
-	public MatrixList getSourceMatrices();
+	public MatrixList getSourceMatrices2();
 }

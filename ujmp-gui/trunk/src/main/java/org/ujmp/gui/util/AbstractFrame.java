@@ -47,7 +47,7 @@ import org.ujmp.gui.matrix.MatrixGUIObject;
 public abstract class AbstractFrame extends JFrame {
 	private static final long serialVersionUID = -4656308453503586700L;
 
-	private static Image image = Toolkit.getDefaultToolkit().getImage("jdmp16.png");
+	private static Image image = Toolkit.getDefaultToolkit().getImage("ujmp16.png");
 
 	private GUIObject object = null;
 
@@ -114,8 +114,8 @@ public abstract class AbstractFrame extends JFrame {
 			Icon icon = null;
 			int initialValue = 0;
 			String[] options = new String[] { "Exit", "Close", "Restore" };
-			int ret = JOptionPane.showOptionDialog(parentComponent, message, title, 0, messageType,
-					icon, options, initialValue);
+			int ret = JOptionPane.showOptionDialog(parentComponent, message, title, 0, messageType, icon, options,
+					initialValue);
 
 			if (ret == 0) {
 				System.exit(0);

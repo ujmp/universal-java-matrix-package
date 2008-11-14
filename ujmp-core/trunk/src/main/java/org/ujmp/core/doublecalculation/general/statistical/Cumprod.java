@@ -65,10 +65,4 @@ public class Cumprod extends AbstractDoubleCalculation {
 		cumprod = m;
 	}
 
-	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.rand(5, 5);
-		System.out.println(m);
-		System.out.println(m.cumprod(true));
-	}
-
 }

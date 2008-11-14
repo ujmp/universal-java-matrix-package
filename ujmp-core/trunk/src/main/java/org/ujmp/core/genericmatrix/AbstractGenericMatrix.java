@@ -111,7 +111,6 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasLabel;
-import org.ujmp.core.interfaces.HasSourceMatrix;
 import org.ujmp.core.io.ExportMatrix;
 import org.ujmp.core.objectcalculation.Bootstrap;
 import org.ujmp.core.objectcalculation.Convert;
@@ -659,9 +658,6 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	}
 
 	public final void notifyGUIObject() {
-		if (this instanceof HasSourceMatrix) {
-			((HasSourceMatrix) this).getSourceMatrix().notifyGUIObject();
-		}
 		if (guiObject != null) {
 			guiObject.fireValueChanged();
 		}

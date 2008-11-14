@@ -152,13 +152,4 @@ public class ColorMapper {
 		return index;
 	}
 
-	public static void main(String[] args) {
-		ColorMapper cm = new ColorMapper(-200, 50);
-		System.out.println(cm.getIndex(-300));
-		System.out.println(cm.getIndex(-200));
-		System.out.println(cm.getIndex(0));
-		System.out.println(cm.getIndex(50));
-
-	}
-
 }

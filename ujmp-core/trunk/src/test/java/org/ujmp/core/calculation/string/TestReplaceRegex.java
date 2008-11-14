@@ -81,9 +81,4 @@ public class TestReplaceRegex extends TestCase {
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
-	public static void main(String[] args) throws MatrixException {
-		TestReplaceRegex test = new TestReplaceRegex();
-		test.testConstructor1();
-	}
-
 }

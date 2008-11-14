@@ -31,14 +31,11 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.DefaultMatrixList;
-import org.ujmp.core.collections.MatrixList;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
-import org.ujmp.core.interfaces.HasSourceMatrix;
 
-public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flushable, HasSourceMatrix {
+public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flushable {
 	private static final long serialVersionUID = 7750549087897737457L;
 
 	private Matrix inputBuffer = null;
@@ -162,19 +159,6 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 	@Override
 	public boolean isReadOnly() {
 		return original.isReadOnly();
-	}
-
-	public Matrix getSourceMatrix() {
-		return original;
-	}
-
-	public MatrixList getSourceMatrices() {
-		MatrixList matrices = new DefaultMatrixList();
-		if (getSourceMatrix() instanceof HasSourceMatrix) {
-			matrices.addAll(((HasSourceMatrix) getSourceMatrix()).getSourceMatrices());
-		}
-		matrices.add(getSourceMatrix());
-		return matrices;
 	}
 
 }

@@ -45,7 +45,7 @@ public class ExportPDF {
 
 	public static final void save(File file, Component component) {
 		try {
-			Class<?> c = Class.forName("org.jdmp.itext.ExportPDF");
+			Class<?> c = Class.forName("org.ujmp.itext.ExportPDF");
 			Method method = c.getMethod("save", new Class[] { File.class, Component.class });
 			method.invoke(null, new Object[] { file, component });
 		} catch (Exception e) {

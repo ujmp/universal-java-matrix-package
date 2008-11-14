@@ -92,7 +92,7 @@ public class UJMPSignalHandler implements SignalHandler {
 	public void signalAction(Signal signal) {
 		logger.log(Level.INFO, "trying to open GUI");
 		try {
-			Class<?> c = Class.forName("org.jdmp.gui.util.FrameManager");
+			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
 			Method method = c.getMethod("showFrame");
 			method.invoke(null);
 		} catch (Exception e) {

@@ -129,8 +129,8 @@ import org.ujmp.core.util.MathUtil;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
- * create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
+ * to create empty matrices.
  * 
  * 
  * 

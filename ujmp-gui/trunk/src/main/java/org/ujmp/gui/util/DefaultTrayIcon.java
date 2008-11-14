@@ -35,11 +35,11 @@ import java.awt.event.MouseListener;
 
 public class DefaultTrayIcon extends TrayIcon implements ActionListener {
 
-	private static Image image = Toolkit.getDefaultToolkit().getImage("jdmp16.png");
+	private static Image image = Toolkit.getDefaultToolkit().getImage("ujmp16.png");
 
 	public DefaultTrayIcon() {
 		super(image);
-		setToolTip("JDMP");
+		setToolTip("UJMP");
 
 		TaskQueue.addActionListener(this);
 

@@ -68,11 +68,11 @@ public abstract class ObjectAction implements Action, Callable<Object>, Serializ
 	public ObjectAction(JComponent c, GUIObject o) {
 		setObject(o);
 		this.component = c;
-		icon = UIManager.getIcon("JDMP.icon." + getClass().getSimpleName());
-		// putValue(Action.MNEMONIC_KEY, UIManager.get("JDMP.mnemonicKey." +
+		icon = UIManager.getIcon("UJMP.icon." + getClass().getSimpleName());
+		// putValue(Action.MNEMONIC_KEY, UIManager.get("UJMP.mnemonicKey." +
 		// getClass().getName()));
 		// putValue(Action.ACCELERATOR_KEY,
-		// UIManager.get("JDMP.acceleratorKey." + getClass().getName()));
+		// UIManager.get("UJMP.acceleratorKey." + getClass().getName()));
 	}
 
 	public final void setComponent(JComponent component) {

@@ -24,14 +24,10 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.DefaultMatrixList;
-import org.ujmp.core.collections.MatrixList;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasSourceMatrix;
 
-public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> implements
-		HasSourceMatrix {
+public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> {
 	private static final long serialVersionUID = -4456493053286654056L;
 
 	private Matrix matrix = null;
@@ -82,19 +78,6 @@ public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> imple
 	@Override
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public Matrix getSourceMatrix() {
-		return matrix;
-	}
-
-	public MatrixList getSourceMatrices() {
-		MatrixList matrices = new DefaultMatrixList();
-		if (getSourceMatrix() instanceof HasSourceMatrix) {
-			matrices.addAll(((HasSourceMatrix) getSourceMatrix()).getSourceMatrices());
-		}
-		matrices.add(getSourceMatrix());
-		return matrices;
 	}
 
 	public ValueType getValueType() {

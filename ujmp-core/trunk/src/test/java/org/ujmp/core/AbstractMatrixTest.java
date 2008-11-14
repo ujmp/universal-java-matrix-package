@@ -32,7 +32,6 @@ import junit.framework.TestCase;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDoubleMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest extends TestCase {
@@ -469,11 +468,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.3788, m2.getAsDouble(0, 2), 0.001);
 		assertEquals(getLabel(), -0.0152, m2.getAsDouble(1, 2), 0.001);
 		assertEquals(getLabel(), -0.1061, m2.getAsDouble(2, 2), 0.001);
-	}
-
-	public static void main(String[] args) throws MatrixException {
-		Matrix m = MatrixFactory.randn(5, 5);
-		m.inv();
 	}
 
 }

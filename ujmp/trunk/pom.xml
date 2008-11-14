@@ -79,6 +79,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-itext</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
 				<artifactId>ujmp-jama</artifactId>
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>

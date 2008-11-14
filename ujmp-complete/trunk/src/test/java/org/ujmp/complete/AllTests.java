@@ -39,6 +39,7 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.jackcess.AllTests.suite());
 		suite.addTest(org.ujmp.jexcelapi.AllTests.suite());
 		suite.addTest(org.ujmp.jmatio.AllTests.suite());
+		suite.addTest(org.ujmp.itext.AllTests.suite());
 		return suite;
 	}
 

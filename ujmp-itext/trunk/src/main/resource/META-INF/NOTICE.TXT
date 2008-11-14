@@ -20,17 +20,3 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA  02110-1301  USA
  */
-
-package org.ujmp.itext;
-
-import junit.framework.TestSuite;
-
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(org.ujmp.itext.TestExportPDF.class);
-		return suite;
-	}
-
-}

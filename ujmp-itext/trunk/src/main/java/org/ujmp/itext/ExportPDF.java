@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 import org.ujmp.core.util.io.UJMPFileFilter;
-import org.ujmp.gui.util.CanRenderGraph;
+import org.ujmp.gui.interfaces.CanRenderGraph;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.pdf.DefaultFontMapper;

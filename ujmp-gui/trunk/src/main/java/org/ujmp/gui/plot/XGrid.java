@@ -21,28 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.plot;
+package org.ujmp.gui.plot;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class XAxis {
+public class XGrid {
 
 	private PlotSettings plotSettings = null;
 
-	public XAxis(PlotSettings plotSettings) {
+	public XGrid(PlotSettings plotSettings) {
 		this.plotSettings = plotSettings;
 	}
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		int x1 = 0;
 		int y1 = plotSettings.getHeight() - 1;
-		int x2 = plotSettings.getWidth() - 1;
-		int y2 = y1;
-		g2d.setStroke(plotSettings.getAxisStroke());
-		g2d.setColor(plotSettings.getAxisColor());
-		g2d.drawLine(x1, y1, x2, y2);
+		int y2 = 0;
+		g2d.setStroke(plotSettings.getXGridStroke());
+		g2d.setColor(plotSettings.getXGridColor());
+		double xf = plotSettings.getXFactor();
+		double xgs = plotSettings.getXGridStepSize();
+		for (double x = plotSettings.getMinXValue(); x < plotSettings.getMaxXValue(); x += xgs) {
+			int x1 = (int) (x * xf);
+			int x2 = x1;
+			g2d.drawLine(x1, y1, x2, y2);
+		}
 	}
 
 }

@@ -21,27 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.plot;
+package org.ujmp.gui.plot;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class PlotBackground {
+public class YAxis {
 
 	private PlotSettings plotSettings = null;
 
-	public PlotBackground(PlotSettings plotSettings) {
+	public YAxis(PlotSettings plotSettings) {
 		this.plotSettings = plotSettings;
 	}
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		int x1 = 0;
-		int y1 = 0;
-		int width = plotSettings.getWidth() - 1;
-		int height = plotSettings.getHeight() - 1;
-		g2d.setColor(plotSettings.getPlotBackGroundColor());
-		g2d.fillRect(x1, y1, width, height);
+		int y1 = plotSettings.getHeight() - 1;
+		int x2 = 0;
+		int y2 = 0;
+		g2d.setStroke(plotSettings.getAxisStroke());
+		g2d.setColor(plotSettings.getAxisColor());
+		g2d.drawLine(x1, y1, x2, y2);
 	}
 
 }

@@ -21,10 +21,16 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.interfaces;
 
-public interface CanBeRepainted {
+import org.ujmp.gui.util.UpdateListener;
 
-	public void repaintUI();
+public interface CanBeUpdated {
+
+	public void addUpdateListener(UpdateListener l);
+
+	public void removeUpdateListener(UpdateListener l);
+
+	public void fireUpdated();
 
 }

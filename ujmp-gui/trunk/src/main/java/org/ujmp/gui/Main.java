@@ -23,37 +23,14 @@
 
 package org.ujmp.gui;
 
-import java.net.URL;
-
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 
 public class Main {
 
 	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		final JEditorPane editor = new JEditorPane();
-		editor.setContentType("text/html");
-		editor
-				.setText("<html><h1>Universal Java Matrix Package (UJMP)</h1><a href=http://www.ujmp.org>Homepage</a></html>");
-
-		editor.setEditable(false);
-		editor.addHyperlinkListener(new HyperlinkListener() {
-			public void hyperlinkUpdate(HyperlinkEvent r) {
-				try {
-					if (r.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
-						editor.setPage(new URL("http://www.ujmp.org"));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		f.setContentPane(editor);
-		f.setVisible(true);
+		Matrix m = MatrixFactory.eye(10, 10);
+		m.showGUI();
 	}
 
 }

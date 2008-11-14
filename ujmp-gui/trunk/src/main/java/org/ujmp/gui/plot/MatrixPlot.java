@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.plot;
+package org.ujmp.gui.plot;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -38,8 +38,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.gui.interfaces.CanBeUpdated;
 import org.ujmp.gui.matrix.MatrixGUIObject;
-import org.ujmp.gui.util.CanBeUpdated;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 import org.ujmp.gui.util.UpdateListener;

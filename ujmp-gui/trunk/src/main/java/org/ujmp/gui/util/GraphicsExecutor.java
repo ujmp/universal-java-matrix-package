@@ -41,6 +41,8 @@ import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.ujmp.gui.interfaces.CanBeRepainted;
+
 public class GraphicsExecutor {
 
 	private static final int count = Runtime.getRuntime().availableProcessors();

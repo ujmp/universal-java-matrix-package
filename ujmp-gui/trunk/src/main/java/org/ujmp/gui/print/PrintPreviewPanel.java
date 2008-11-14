@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.print;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

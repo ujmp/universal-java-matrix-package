@@ -21,13 +21,14 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.print;
 
 import java.awt.Dimension;
 import java.awt.Frame;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+
 
 public class PrintPreviewDialog extends JDialog {
 	private static final long serialVersionUID = -6511289081075236107L;

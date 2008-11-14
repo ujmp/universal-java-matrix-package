@@ -25,6 +25,8 @@ package org.ujmp.gui.util;
 
 import java.awt.Color;
 
+import org.ujmp.gui.colormap.ColorMap;
+
 public abstract class ColorUtil {
 	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow,
 			Color.cyan };

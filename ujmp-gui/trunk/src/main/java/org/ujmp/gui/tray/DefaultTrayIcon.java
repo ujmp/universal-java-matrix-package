@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.tray;
 
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -32,6 +32,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import org.ujmp.gui.util.TaskQueue;
 
 public class DefaultTrayIcon extends TrayIcon implements ActionListener {
 

@@ -21,48 +21,30 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.plot;
+package org.ujmp.gui.plot;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.ListSelectionModel;
-
-public class Selection {
+public class ZeroAxis {
 
 	private PlotSettings plotSettings = null;
 
-	public Selection(PlotSettings plotSettings) {
+	public ZeroAxis(PlotSettings plotSettings) {
 		this.plotSettings = plotSettings;
 	}
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
+		double yf = plotSettings.getYFactor();
+		int x1 = 0;
+		int x2 = plotSettings.getWidth() - 1;
+		int y1 = (int) (plotSettings.getHeight() - 1 + plotSettings.getMinYValue() * yf);
+		int y2 = y1;
 
-		ListSelectionModel lsm = plotSettings.getMatrixGUIObject().getRowSelectionModel();
-		int min = lsm.getMinSelectionIndex();
-		int max = lsm.getMaxSelectionIndex();
-
-		if (min != -1 && max != -1) {
-			double xf = plotSettings.getXFactor();
-
-			int y1 = 0;
-			int y2 = plotSettings.getHeight() - 1;
-			int h = y2 - y1;
-
-			int x1 = (int) (min * xf);
-			int x2 = (int) (max * xf);
-			int w = x2 - x1;
-
-			g2d.setColor(plotSettings.getSelectionLineColor());
-			g2d.drawLine(x1, y1, x1, y2);
-			g2d.drawLine(x2, y1, x2, y2);
-			g2d.setColor(plotSettings.getSelectionColor());
-			if (w != 0) {
-				g2d.fillRect(x1, y1, w, h);
-			}
-		}
-
+		g2d.setStroke(plotSettings.getZeroAxisStroke());
+		g2d.setColor(plotSettings.getZeroAxisColor());
+		g2d.drawLine(x1, y1, x2, y2);
 	}
 
 }

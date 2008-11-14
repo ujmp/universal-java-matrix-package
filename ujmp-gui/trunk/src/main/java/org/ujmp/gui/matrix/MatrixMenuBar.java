@@ -29,7 +29,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 
 import org.ujmp.gui.matrix.actions.MatrixActions;
-import org.ujmp.gui.util.DefaultMenuBar;
+import org.ujmp.gui.menu.DefaultMenuBar;
 
 public class MatrixMenuBar extends DefaultMenuBar {
 	private static final long serialVersionUID = 3773901616547266478L;

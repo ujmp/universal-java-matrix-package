@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -46,6 +46,7 @@ import org.ujmp.gui.matrix.MatrixSystemProperties;
 import org.ujmp.gui.matrix.MatrixSystemTime;
 import org.ujmp.gui.matrix.MatrixUIDefaults;
 import org.ujmp.gui.matrix.actions.ShowInFrameAction;
+import org.ujmp.gui.util.FrameManager;
 
 public class DefaultMenuBar extends JMenuBar {
 	private static final long serialVersionUID = -6115122804967308915L;

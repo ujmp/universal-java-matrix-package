@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -43,6 +43,10 @@ import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.matrix.MatrixGUIObject;
+import org.ujmp.gui.statusbar.StatusBar;
+import org.ujmp.gui.toolbar.DefaultToolbar;
+import org.ujmp.gui.util.FrameManager;
+import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
 	private static final long serialVersionUID = -4656308453503586700L;

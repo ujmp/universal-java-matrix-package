@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.statusbar;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.util.TaskQueue;
 
 public class StatusBar extends JPanel {
 	private static final long serialVersionUID = -92341245296146976L;

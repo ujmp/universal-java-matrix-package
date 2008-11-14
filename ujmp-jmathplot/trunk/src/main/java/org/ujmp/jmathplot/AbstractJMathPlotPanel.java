@@ -29,7 +29,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JPanel;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.gui.util.CanBeRepainted;
+import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.util.GraphicsExecutor;
 
 public abstract class AbstractJMathPlotPanel extends JPanel implements ComponentListener, CanBeRepainted {

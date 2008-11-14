@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix.plot;
+package org.ujmp.gui.plot;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

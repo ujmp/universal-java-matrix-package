@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.matrix.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -32,6 +32,12 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 
 import javax.swing.JPanel;
+
+import org.ujmp.gui.interfaces.CanBeRepainted;
+import org.ujmp.gui.interfaces.CanBeUpdated;
+import org.ujmp.gui.util.GraphicsExecutor;
+import org.ujmp.gui.util.UIDefaults;
+import org.ujmp.gui.util.UpdateListener;
 
 public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentListener, UpdateListener {
 	private static final long serialVersionUID = 7495571585267828933L;

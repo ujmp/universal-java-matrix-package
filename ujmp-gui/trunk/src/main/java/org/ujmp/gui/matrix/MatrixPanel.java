@@ -37,13 +37,13 @@ import org.ujmp.core.util.GnuPlot;
 import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
+import org.ujmp.gui.matrix.panels.AbstractPanel;
+import org.ujmp.gui.matrix.panels.BufferedPanel;
 import org.ujmp.gui.matrix.panels.GnuPlotPanel;
 import org.ujmp.gui.matrix.panels.MatlabPanel;
 import org.ujmp.gui.matrix.panels.OctavePanel;
 import org.ujmp.gui.matrix.panels.RPanel;
-import org.ujmp.gui.matrix.plot.MatrixPlot;
-import org.ujmp.gui.util.AbstractPanel;
-import org.ujmp.gui.util.BufferedPanel;
+import org.ujmp.gui.plot.MatrixPlot;
 
 public class MatrixPanel extends AbstractPanel {
 	private static final long serialVersionUID = 3912987239953510584L;

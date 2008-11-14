@@ -21,14 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.gui.plot;
 
-public interface CanBeUpdated {
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-	public void addUpdateListener(UpdateListener l);
+public class XAxis {
 
-	public void removeUpdateListener(UpdateListener l);
+	private PlotSettings plotSettings = null;
 
-	public void fireUpdated();
+	public XAxis(PlotSettings plotSettings) {
+		this.plotSettings = plotSettings;
+	}
+
+	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		int x1 = 0;
+		int y1 = plotSettings.getHeight() - 1;
+		int x2 = plotSettings.getWidth() - 1;
+		int y2 = y1;
+		g2d.setStroke(plotSettings.getAxisStroke());
+		g2d.setColor(plotSettings.getAxisColor());
+		g2d.drawLine(x1, y1, x2, y2);
+	}
 
 }

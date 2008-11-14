@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
 
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class AddMissingValuesAction extends MatrixAction {
@@ -37,7 +37,7 @@ public class AddMissingValuesAction extends MatrixAction {
 
 	private double percentMissing = 0.0;
 
-	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Add missing values...");
 		putValue(Action.SHORT_DESCRIPTION, "replaces a chosen percentage of the values with NaN");

@@ -28,8 +28,7 @@ import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.interfaces.HasMatrixList;
-import org.ujmp.core.util.MatrixListToMatrixWrapper;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.ObjectAction;
 
@@ -41,9 +40,9 @@ public abstract class MatrixAction extends ObjectAction {
 
 	public static final int ALL = Matrix.ALL;
 
-	private HasMatrixList variable = null;
+	private GUIObject variable = null;
 
-	public MatrixAction(JComponent c, MatrixGUIObject matrix, HasMatrixList v) {
+	public MatrixAction(JComponent c, MatrixGUIObject matrix, GUIObject v) {
 		super(c, matrix);
 		this.variable = v;
 	}
@@ -84,24 +83,26 @@ public abstract class MatrixAction extends ObjectAction {
 			}
 			return m;
 		} else {
-			int min = variable.getRowSelectionModel().getMinSelectionIndex();
-			int max = variable.getRowSelectionModel().getMaxSelectionIndex();
-			Matrix all = new MatrixListToMatrixWrapper(variable);
-
-			if (min >= 0 && max >= 0) {
-				Matrix selection = all.subMatrix(Ret.LINK, min, 0, max, all.getColumnCount() - 1);
-				return (MatrixGUIObject) selection.getGUIObject();
-			} else {
-				return (MatrixGUIObject) all.getGUIObject();
-			}
+			// int min = variable.getRowSelectionModel().getMinSelectionIndex();
+			// int max = variable.getRowSelectionModel().getMaxSelectionIndex();
+			// Matrix all = new MatrixListToMatrixWrapper(variable);
+			//
+			// if (min >= 0 && max >= 0) {
+			// Matrix selection = all.subMatrix(Ret.LINK, min, 0, max,
+			// all.getColumnCount() - 1);
+			// return (MatrixGUIObject) selection.getGUIObject();
+			// } else {
+			// return (MatrixGUIObject) all.getGUIObject();
+			// }
 		}
+		return null;
 	}
 
 	public void setMatrix(MatrixGUIObject m) {
 		setObject(m);
 	}
 
-	public HasMatrixList getVariable() {
+	public GUIObject getVariable() {
 		return variable;
 	}
 

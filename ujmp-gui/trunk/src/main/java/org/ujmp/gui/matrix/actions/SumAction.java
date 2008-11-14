@@ -29,14 +29,14 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class SumAction extends MatrixAction {
 
 	private static final long serialVersionUID = 5704836312852778524L;
 
-	public SumAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public SumAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sum");
 		putValue(Action.SHORT_DESCRIPTION, "Calculates the sum of the entries in this matrix");

@@ -29,13 +29,13 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class SortAction extends MatrixAction {
 	private static final long serialVersionUID = 6226680852162744489L;
 
-	public SortAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public SortAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sort");
 		putValue(Action.SHORT_DESCRIPTION, "Sorts the entries in the matrix");

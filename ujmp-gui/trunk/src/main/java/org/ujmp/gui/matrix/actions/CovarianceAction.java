@@ -29,17 +29,16 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class CovarianceAction extends MatrixAction {
 	private static final long serialVersionUID = 3782150550995513107L;
 
-	public CovarianceAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public CovarianceAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Covariance");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the covariance of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the covariance of the entries in this matrix");
 	}
 
 	@Override

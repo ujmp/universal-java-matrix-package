@@ -31,13 +31,13 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class StandardizeAction extends MatrixAction {
 	private static final long serialVersionUID = -1119142691820061993L;
 
-	public StandardizeAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public StandardizeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standardize");
 		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries to mean 0 and standard deviation 1");

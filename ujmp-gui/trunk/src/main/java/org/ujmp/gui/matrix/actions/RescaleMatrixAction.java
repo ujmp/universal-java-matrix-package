@@ -28,13 +28,13 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class RescaleMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = -4509186928254414609L;
 
-	public RescaleMatrixAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public RescaleMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Rescale Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "scales all entries to values between -1 and 1");

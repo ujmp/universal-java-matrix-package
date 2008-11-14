@@ -30,13 +30,13 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class FadeInAction extends MatrixAction {
 	private static final long serialVersionUID = -485768320588021515L;
 
-	public FadeInAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public FadeInAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fade In");
 		putValue(Action.SHORT_DESCRIPTION, "multiplies all entries with an increasing factor");

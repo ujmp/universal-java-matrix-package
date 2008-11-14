@@ -29,13 +29,13 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class ClearMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = 4460357277537577412L;
 
-	public ClearMatrixAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public ClearMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Clear");
 		putValue(Action.SHORT_DESCRIPTION, "Sets all entries to 0");

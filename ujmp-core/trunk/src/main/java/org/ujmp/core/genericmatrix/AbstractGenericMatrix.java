@@ -185,7 +185,7 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 	public final GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
-				Class<?> c = Class.forName("org.ujmp.gui.matrix.MatrixGUIObject");
+				Class<?> c = Class.forName("org.ujmp.gui.MatrixGUIObject");
 				Constructor<?> con = c.getConstructor(new Class<?>[] { Matrix.class });
 				guiObject = (GUIObject) con.newInstance(new Object[] { this });
 			} catch (Exception e) {

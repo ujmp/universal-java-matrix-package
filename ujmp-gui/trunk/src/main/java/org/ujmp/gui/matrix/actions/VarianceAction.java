@@ -29,13 +29,13 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class VarianceAction extends MatrixAction {
 	private static final long serialVersionUID = -2308191750274084929L;
 
-	public VarianceAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public VarianceAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Variance");
 		putValue(Action.SHORT_DESCRIPTION, "Calculates the variance of the entries in this matrix");

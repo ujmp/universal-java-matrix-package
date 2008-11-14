@@ -29,13 +29,13 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class MinAction extends MatrixAction {
 	private static final long serialVersionUID = -1016347929634747390L;
 
-	public MinAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public MinAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Min");
 		putValue(Action.SHORT_DESCRIPTION, "Calculates the min of the entries in this matrix");

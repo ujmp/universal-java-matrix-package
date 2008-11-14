@@ -30,13 +30,13 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class CopyMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = 6122103774731476379L;
 
-	public CopyMatrixAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public CopyMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Copy Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "copy the content of this matrix to a new matrix");

@@ -30,7 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class FillWithValueAction extends MatrixAction {
@@ -38,11 +38,11 @@ public class FillWithValueAction extends MatrixAction {
 
 	private String initialValue = "";
 
-	public FillWithValueAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		this(c, m, v, "");
 	}
 
-	public FillWithValueAction(JComponent c, MatrixGUIObject m, HasMatrixList v, String initialValue) {
+	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v, String initialValue) {
 		super(c, m, v);
 		this.initialValue = initialValue;
 		putValue(Action.NAME, "Fill with value");

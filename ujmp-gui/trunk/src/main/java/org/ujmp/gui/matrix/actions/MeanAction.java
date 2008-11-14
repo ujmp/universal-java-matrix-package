@@ -29,13 +29,13 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class MeanAction extends MatrixAction {
 	private static final long serialVersionUID = 9202273744246930760L;
 
-	public MeanAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public MeanAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Mean");
 		putValue(Action.SHORT_DESCRIPTION, "Calculates the mean of the entries in this matrix");

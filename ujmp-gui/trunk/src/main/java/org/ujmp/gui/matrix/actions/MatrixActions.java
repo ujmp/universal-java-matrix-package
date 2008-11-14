@@ -29,14 +29,14 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.ExitAction;
 
 public class MatrixActions extends ArrayList<JComponent> {
 	private static final long serialVersionUID = -8960033736161810590L;
 
-	public MatrixActions(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
 		this.add(new JMenuItem(new ClearMatrixAction(c, m, v)));
 		this.add(new JMenuItem(new ClearMatrixAction(c, m, v)));
 		this.add(new JMenuItem(new AddMissingValuesAction(c, m, v)));

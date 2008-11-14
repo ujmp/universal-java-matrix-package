@@ -29,13 +29,13 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class StandardDeviationAction extends MatrixAction {
 	private static final long serialVersionUID = -2467432732455863504L;
 
-	public StandardDeviationAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public StandardDeviationAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standard Deviation");
 		putValue(Action.SHORT_DESCRIPTION, "Calculates the standard deviation of the entries in this matrix");

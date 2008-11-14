@@ -30,13 +30,13 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class FillGaussianAction extends MatrixAction {
 	private static final long serialVersionUID = -8334744425028399100L;
 
-	public FillGaussianAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public FillGaussianAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fill Gaussian");
 		putValue(Action.SHORT_DESCRIPTION, "set entries to gaussian values with mean 0.0 and variance 1.0");

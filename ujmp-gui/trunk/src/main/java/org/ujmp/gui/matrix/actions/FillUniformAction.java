@@ -30,13 +30,13 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class FillUniformAction extends MatrixAction {
 	private static final long serialVersionUID = -2169147968755999187L;
 
-	public FillUniformAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public FillUniformAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fill Uniform");
 		putValue(Action.SHORT_DESCRIPTION, "set entries to random values between -1.0 and 1.0");

@@ -31,13 +31,13 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasMatrixList;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class TransposeMatrixAction extends MatrixAction {
 	private static final long serialVersionUID = -993725459831614912L;
 
-	public TransposeMatrixAction(JComponent c, MatrixGUIObject m, HasMatrixList v) {
+	public TransposeMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Transpose Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "transposes this matrix");

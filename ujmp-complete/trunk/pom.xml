@@ -70,6 +70,14 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-gui</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-itext</artifactId>
+		</dependency>
 	
 		<dependency>
 			<groupId>junit</groupId>
@@ -82,6 +90,8 @@
     <module>../ujmp-gui</module>
     <module>../ujmp-colt</module>
     <module>../ujmp-jackcess</module>
+    <module>../ujmp-itext</module>
+    <module>../ujmp-mail</module>
     <module>../ujmp-jama</module>
     <module>../ujmp-jdbc</module>
     <module>../ujmp-jexcelapi</module>

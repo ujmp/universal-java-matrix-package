@@ -21,28 +21,22 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.core.util.matrices;
 
-import java.util.List;
+import java.util.Map;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
+import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.actions.MatrixActions;
+public class MatrixSystemEnvironment extends AbstractMapMatrix {
+	private static final long serialVersionUID = -8952532238520266448L;
 
-public class MatrixMenuBar extends DefaultMenuBar {
-	private static final long serialVersionUID = 3773901616547266478L;
+	public MatrixSystemEnvironment() {
+		setLabel("System Environment");
+	}
 
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
-		super(component, o);
-		JMenu menu = new JMenu("Matrix");
-		List<JComponent> actions = new MatrixActions(component, o, null);
-		for (JComponent c : actions) {
-			menu.add(c);
-		}
-		add(menu);
-		init(component, o);
+	@Override
+	public Map getMap() {
+		return System.getenv();
 	}
 
 }

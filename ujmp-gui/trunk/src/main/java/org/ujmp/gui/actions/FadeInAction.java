@@ -21,28 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.util.List;
+import java.awt.event.KeyEvent;
 
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
+import javax.swing.KeyStroke;
 
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.actions.MatrixActions;
 
-public class MatrixMenuBar extends DefaultMenuBar {
-	private static final long serialVersionUID = 3773901616547266478L;
+public class FadeInAction extends MatrixAction {
+	private static final long serialVersionUID = -485768320588021515L;
 
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
-		super(component, o);
-		JMenu menu = new JMenu("Matrix");
-		List<JComponent> actions = new MatrixActions(component, o, null);
-		for (JComponent c : actions) {
-			menu.add(c);
-		}
-		add(menu);
-		init(component, o);
+	public FadeInAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Fade In");
+		putValue(Action.SHORT_DESCRIPTION, "multiplies all entries with an increasing factor");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_I);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_I, 0));
 	}
 
+	@Override
+	public Object call() throws MatrixException {
+		getMatrixObject().getMatrix().fadeIn_();
+		return getMatrixObject();
+	}
 }

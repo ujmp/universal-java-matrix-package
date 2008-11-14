@@ -21,28 +21,31 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.util.List;
-
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.actions.MatrixActions;
 
-public class MatrixMenuBar extends DefaultMenuBar {
-	private static final long serialVersionUID = 3773901616547266478L;
+public class MaxAction extends MatrixAction {
+	private static final long serialVersionUID = -5200384328905089317L;
 
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
-		super(component, o);
-		JMenu menu = new JMenu("Matrix");
-		List<JComponent> actions = new MatrixActions(component, o, null);
-		for (JComponent c : actions) {
-			menu.add(c);
-		}
-		add(menu);
-		init(component, o);
+	public MaxAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Max");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the max of the entries in this matrix");
+	}
+
+	@Override
+	public Object call() throws MatrixException {
+		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW, getDimension());
+		result.showGUI();
+		return result;
 	}
 
 }

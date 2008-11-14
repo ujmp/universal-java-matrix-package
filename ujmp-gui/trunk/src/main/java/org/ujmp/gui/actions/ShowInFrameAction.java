@@ -21,28 +21,31 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.util.List;
-
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
 
-import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.actions.MatrixActions;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.GUIObject;
 
-public class MatrixMenuBar extends DefaultMenuBar {
-	private static final long serialVersionUID = 3773901616547266478L;
+public class ShowInFrameAction extends ObjectAction {
+	private static final long serialVersionUID = -5025569936825456099L;
 
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
-		super(component, o);
-		JMenu menu = new JMenu("Matrix");
-		List<JComponent> actions = new MatrixActions(component, o, null);
-		for (JComponent c : actions) {
-			menu.add(c);
-		}
-		add(menu);
-		init(component, o);
+	public ShowInFrameAction(JComponent c, Matrix matrix) {
+		this(c, matrix.getGUIObject());
+	}
+
+	public ShowInFrameAction(JComponent c, GUIObject object) {
+		super(c, object);
+		putValue(Action.NAME, object.getLabel());
+		putValue(Action.SHORT_DESCRIPTION, "Show " + object.getLabel() + " in a new Window");
+	}
+
+	@Override
+	public Object call() {
+		getObject().showGUI();
+		return null;
 	}
 
 }

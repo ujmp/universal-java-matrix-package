@@ -21,28 +21,38 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.core.util.matrices;
 
-import java.util.List;
+import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
+public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
+	private static final long serialVersionUID = -3863745960302379726L;
 
-import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.actions.MatrixActions;
+	public MatrixMemoryUsage() {
+		setLabel("Memory Usage");
+	}
 
-public class MatrixMenuBar extends DefaultMenuBar {
-	private static final long serialVersionUID = 3773901616547266478L;
-
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
-		super(component, o);
-		JMenu menu = new JMenu("Matrix");
-		List<JComponent> actions = new MatrixActions(component, o, null);
-		for (JComponent c : actions) {
-			menu.add(c);
+	public double getDouble(long row, long column) {
+		switch ((int) row) {
+		case 0:
+			return Runtime.getRuntime().freeMemory();
+		case 1:
+			return Runtime.getRuntime().maxMemory();
+		default:
+			return Runtime.getRuntime().totalMemory();
 		}
-		add(menu);
-		init(component, o);
+	}
+
+	public long[] getSize() {
+		return new long[] { 3, 1 };
+	}
+
+	public void setDouble(double value, long row, long column) {
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return true;
 	}
 
 }

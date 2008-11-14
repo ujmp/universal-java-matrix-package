@@ -54,6 +54,9 @@ public class DefaultMenuBar extends JMenuBar {
 	public DefaultMenuBar(JComponent component, GUIObject o) {
 	}
 
+	public DefaultMenuBar(GUIObject o) {
+	}
+
 	class JMathLibAction extends AbstractAction {
 		private static final long serialVersionUID = 1895232937545702538L;
 
@@ -67,6 +70,10 @@ public class DefaultMenuBar extends JMenuBar {
 			JMathLib.showGUI();
 		}
 
+	}
+
+	public void init(GUIObject o) {
+		init(null, o);
 	}
 
 	public void init(JComponent component, GUIObject o) {

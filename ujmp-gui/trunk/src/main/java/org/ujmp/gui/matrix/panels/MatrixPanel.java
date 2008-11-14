@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.matrix.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -38,12 +38,6 @@ import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.matrix.panels.AbstractPanel;
-import org.ujmp.gui.matrix.panels.BufferedPanel;
-import org.ujmp.gui.matrix.panels.GnuPlotPanel;
-import org.ujmp.gui.matrix.panels.MatlabPanel;
-import org.ujmp.gui.matrix.panels.OctavePanel;
-import org.ujmp.gui.matrix.panels.RPanel;
 import org.ujmp.gui.plot.MatrixPlot;
 
 public class MatrixPanel extends AbstractPanel {

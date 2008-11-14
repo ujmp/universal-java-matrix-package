@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -126,7 +126,7 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setColor(getBackground());

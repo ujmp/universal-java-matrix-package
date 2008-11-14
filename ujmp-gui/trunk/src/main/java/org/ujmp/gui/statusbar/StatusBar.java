@@ -48,8 +48,6 @@ public class StatusBar extends JPanel {
 
 	private final JProgressBar jProgressBar = new JProgressBar();
 
-	private final JProgressBar memoryUsage = new JProgressBar();
-
 	// private Timer timer = null;
 
 	public StatusBar(GUIObject o) {
@@ -67,8 +65,8 @@ public class StatusBar extends JPanel {
 		add(taskStatus, new GridBagConstraints(2, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
 				new Insets(2, 2, 2, 2), 0, 0));
 
-		add(memoryUsage, new GridBagConstraints(3, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
-				new Insets(2, 2, 2, 2), 0, 0));
+		add(new MemoryUsage(), new GridBagConstraints(3, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST,
+				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
 
 		jProgressBar.setStringPainted(false);
 		jProgressBar.setMinimum(0);
@@ -79,9 +77,6 @@ public class StatusBar extends JPanel {
 		objectStatus.setBorder(BorderFactory.createEtchedBorder());
 		taskStatus.setBorder(BorderFactory.createEtchedBorder());
 		jProgressBar.setBorder(BorderFactory.createEtchedBorder());
-		memoryUsage.setBorder(BorderFactory.createEtchedBorder());
-
-		memoryUsage.setMinimumSize(new Dimension(50, 30));
 
 		add(jProgressBar, new GridBagConstraints(1, 0, 1, 1, 0.8, 1.0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
@@ -126,17 +121,6 @@ public class StatusBar extends JPanel {
 		}
 	}
 
-	public void updateMemoryUsage() {
-		int max = (int) Runtime.getRuntime().maxMemory() / 1048576;
-		int total = (int) Runtime.getRuntime().totalMemory() / 1048576;
-		int free = (int) Runtime.getRuntime().freeMemory() / 1048576;
-		int used = total - free;
-		memoryUsage.setMaximum(0);
-		memoryUsage.setMaximum(max);
-		memoryUsage.setValue(used);
-		memoryUsage.setToolTipText("" + used + "MB of " + max + "MB used");
-	}
-
 	public GUIObject getObject() {
 		return object;
 	}
@@ -155,7 +139,6 @@ public class StatusBar extends JPanel {
 			// statusBar.setToolTipText(getObject().getToolTipText());
 			statusBar.setObjectString("" + getObject());
 			statusBar.setProgress(TaskQueue.getProgress());
-			statusBar.updateMemoryUsage();
 		}
 
 	}

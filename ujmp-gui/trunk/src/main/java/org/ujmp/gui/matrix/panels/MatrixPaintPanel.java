@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.matrix.panels;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -61,6 +61,8 @@ import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.matrix.actions.MatrixActions;
+import org.ujmp.gui.menu.MatrixPopupMenu;
+import org.ujmp.gui.renderer.MatrixRenderer;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.TooltipUtil;
 

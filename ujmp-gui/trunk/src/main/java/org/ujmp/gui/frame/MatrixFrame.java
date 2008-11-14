@@ -21,18 +21,20 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.frame;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.frame.AbstractFrame;
+import org.ujmp.gui.matrix.panels.MatrixPanel;
+import org.ujmp.gui.menu.MatrixMenuBar;
 
 public class MatrixFrame extends AbstractFrame {
 	private static final long serialVersionUID = -3705093197648545721L;
 
 	public MatrixFrame(MatrixGUIObject m) throws MatrixException {
 		super(m, new MatrixPanel(m));
+		setJMenuBar(new MatrixMenuBar(null, m));
 	}
 
 	public MatrixFrame(Matrix m) throws MatrixException {

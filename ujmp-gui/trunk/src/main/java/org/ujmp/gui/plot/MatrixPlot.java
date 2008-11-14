@@ -40,12 +40,10 @@ import javax.swing.table.TableCellRenderer;
 import org.ujmp.core.Matrix;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeUpdated;
-import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 import org.ujmp.gui.util.UpdateListener;
 
-public class MatrixPlot extends JPanel implements TableCellRenderer,
-		CanBeUpdated, ListSelectionListener {
+public class MatrixPlot extends JPanel implements TableCellRenderer, CanBeUpdated, ListSelectionListener {
 	private static final long serialVersionUID = -3845070497558608841L;
 
 	private EventListenerList listenerList = null;
@@ -130,12 +128,9 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 			plotSettings.setHeight(getHeight());
 			plotSettings.setWidth(getWidth());
 			plotSettings.setMinXValue(0.0);
-			plotSettings.setMaxXValue(plotSettings.getMatrixGUIObject()
-					.getRowCount() - 1);
-			plotSettings.setMinYValue(plotSettings.getMatrixGUIObject()
-					.getEstimatedMinValue(100));
-			plotSettings.setMaxYValue(plotSettings.getMatrixGUIObject()
-					.getEstimatedMaxValue(100));
+			plotSettings.setMaxXValue(plotSettings.getMatrixGUIObject().getRowCount() - 1);
+			plotSettings.setMinYValue(plotSettings.getMatrixGUIObject().getEstimatedMinValue(100));
+			plotSettings.setMaxYValue(plotSettings.getMatrixGUIObject().getEstimatedMaxValue(100));
 
 			if (plotSettings.isShowPlotBackGround()) {
 				plotBackground.paintComponent(g);
@@ -171,8 +166,8 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 		}
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 		plotSettings.setMatrixGUIObject((MatrixGUIObject) value);
 
 		if (isSelected) {

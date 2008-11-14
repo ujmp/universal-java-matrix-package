@@ -21,45 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.menu;
 
-import java.awt.Component;
-import java.awt.Graphics;
+import java.util.List;
 
-import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
 
-import org.ujmp.core.Matrix;
+import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.matrix.actions.MatrixActions;
 
-public class MatrixIcon extends MatrixRenderer implements Icon {
-	private static final long serialVersionUID = -3351801048513775919L;
+public class MatrixMenuBar extends DefaultMenuBar {
+	private static final long serialVersionUID = 3773901616547266478L;
 
-	private Matrix matrix = null;
-
-	public MatrixIcon(Matrix matrix) {
-		this.matrix = matrix;
-	}
-
-	public int getIconHeight() {
-		return 16;
-	}
-
-	public int getIconWidth() {
-		return 16;
-	}
-
-	public void paintIcon(Component c, Graphics g, int x, int y) {
-		g.translate(x, y);
-		setSize(getIconWidth(), getIconHeight());
-		paintComponent(g);
-		g.translate(-x, -y);
-	}
-
-	public Matrix getMatrix() {
-		return matrix;
-	}
-
-	public void setMatrix(Matrix matrix) {
-		this.matrix = matrix;
+	public MatrixMenuBar(JComponent component, MatrixGUIObject o) {
+		super(component, o);
+		JMenu menu = new JMenu("Matrix");
+		List<JComponent> actions = new MatrixActions(component, o, null);
+		for (JComponent c : actions) {
+			menu.add(c);
+		}
+		add(menu);
+		init(component, o);
 	}
 
 }

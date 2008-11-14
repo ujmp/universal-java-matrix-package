@@ -44,9 +44,9 @@ import org.ujmp.gui.matrix.MatrixRunningThreads;
 import org.ujmp.gui.matrix.MatrixSystemEnvironment;
 import org.ujmp.gui.matrix.MatrixSystemProperties;
 import org.ujmp.gui.matrix.MatrixSystemTime;
-import org.ujmp.gui.matrix.MatrixUIDefaults;
 import org.ujmp.gui.matrix.actions.ShowInFrameAction;
 import org.ujmp.gui.util.FrameManager;
+import org.ujmp.gui.util.MatrixUIDefaults;
 
 public class DefaultMenuBar extends JMenuBar {
 	private static final long serialVersionUID = -6115122804967308915L;

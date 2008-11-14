@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.matrix;
+package org.ujmp.gui.matrix.panels;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -56,6 +56,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.editor.MatrixTableCellEditor;
+import org.ujmp.gui.menu.MatrixPopupMenu;
+import org.ujmp.gui.renderer.MatrixValueTableCellRenderer;
 
 public class MatrixTableEditorPanel extends JPanel implements TableModelListener, MouseListener, KeyListener,
 		ListSelectionListener {

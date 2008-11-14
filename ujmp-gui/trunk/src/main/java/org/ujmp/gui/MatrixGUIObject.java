@@ -46,7 +46,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
-import org.ujmp.gui.matrix.FastListSelectionModel;
+import org.ujmp.gui.util.FastListSelectionModel;
 
 public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	private static final long serialVersionUID = -5777110889052748093L;

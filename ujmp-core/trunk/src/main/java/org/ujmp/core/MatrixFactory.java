@@ -111,6 +111,7 @@ import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix;
 import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.DefaultSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;

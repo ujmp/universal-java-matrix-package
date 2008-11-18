@@ -23,6 +23,7 @@
 
 package org.ujmp.core.collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -34,7 +35,8 @@ import java.util.TreeSet;
 
 import org.ujmp.core.exceptions.MatrixException;
 
-public class SortedListSet<A> implements SortedSet<A>, List<A> {
+public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
+	private static final long serialVersionUID = -9069699328418816771L;
 
 	private SortedSet<A> set = new TreeSet<A>();
 

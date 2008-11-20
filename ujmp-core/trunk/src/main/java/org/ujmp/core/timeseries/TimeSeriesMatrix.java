@@ -192,4 +192,28 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return getAsDouble(row, column);
 	}
 
+	public long getTimestamp(long row) {
+		if (row < 0 | row >= timestampsListSet.size()) {
+			return 0;
+		} else {
+			return timestampsListSet.get((int) row);
+		}
+	}
+
+	public long getMinTimestamp() {
+		if (timestampsListSet.isEmpty()) {
+			return 0;
+		} else {
+			return timestampsListSet.first();
+		}
+	}
+
+	public long getMaxTimestamp() {
+		if (timestampsListSet.isEmpty()) {
+			return 0;
+		} else {
+			return timestampsListSet.last();
+		}
+	}
+
 }

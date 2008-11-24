@@ -30,6 +30,7 @@ import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -130,8 +131,8 @@ import org.ujmp.core.util.MathUtil;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
- * to create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
+ * create empty matrices.
  * 
  * 
  * 
@@ -1021,6 +1022,60 @@ public abstract class MatrixFactory {
 
 	public static final DefaultDenseDoubleMatrix2D linkToValue(double value) {
 		return new DefaultDenseDoubleMatrix2D(new double[][] { { value } });
+	}
+
+	public static final DefaultDenseIntMatrix2D linkToValue(int value) {
+		return new DefaultDenseIntMatrix2D(new int[][] { { value } });
+	}
+
+	public static final DefaultDenseCharMatrix2D linkToValue(char value) {
+		return new DefaultDenseCharMatrix2D(new char[][] { { value } });
+	}
+
+	public static final DefaultDenseDateMatrix2D linkToValue(Date value) {
+		return new DefaultDenseDateMatrix2D(new Date[][] { { value } });
+	}
+
+	public static final DefaultDenseBooleanMatrix2D linkToValue(boolean value) {
+		return new DefaultDenseBooleanMatrix2D(new boolean[][] { { value } });
+	}
+
+	public static final DefaultDenseByteMatrix2D linkToValue(byte value) {
+		return new DefaultDenseByteMatrix2D(new byte[][] { { value } });
+	}
+
+	public static final DefaultDenseShortMatrix2D linkToValue(short value) {
+		return new DefaultDenseShortMatrix2D(new short[][] { { value } });
+	}
+
+	public static final DefaultDenseStringMatrix2D linkToValue(String value) {
+		return new DefaultDenseStringMatrix2D(new String[][] { { value } });
+	}
+
+	public static final DefaultDenseLongMatrix2D linkToValue(long value) {
+		return new DefaultDenseLongMatrix2D(new long[][] { { value } });
+	}
+
+	public static final Matrix linkToValue(Object value) {
+		if (value instanceof Double) {
+			return new DefaultDenseDoubleMatrix2D(new double[][] { { (Double) value } });
+		} else if (value instanceof Integer) {
+			return new DefaultDenseIntMatrix2D(new int[][] { { (Integer) value } });
+		} else if (value instanceof Float) {
+			return new DefaultDenseFloatMatrix2D(new float[][] { { (Float) value } });
+		} else if (value instanceof String) {
+			return new DefaultDenseStringMatrix2D(new String[][] { { (String) value } });
+		} else if (value instanceof Short) {
+			return new DefaultDenseShortMatrix2D(new short[][] { { (Short) value } });
+		} else if (value instanceof Byte) {
+			return new DefaultDenseByteMatrix2D(new byte[][] { { (Byte) value } });
+		} else if (value instanceof Boolean) {
+			return new DefaultDenseBooleanMatrix2D(new boolean[][] { { (Boolean) value } });
+		} else if (value instanceof Long) {
+			return new DefaultDenseLongMatrix2D(new long[][] { { (Long) value } });
+		} else {
+			return new DefaultDenseObjectMatrix2D(new Object[][] { { value } });
+		}
 	}
 
 	public static Matrix zeros(ValueType valueType, long... size) throws MatrixException {

@@ -122,6 +122,14 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return new long[] { getEventCount(), getSeriesCount() + 1 };
 	}
 
+	public long getRowCount() {
+		return getEventCount();
+	}
+
+	public long getColumnCount() {
+		return getSeriesCount() + 1;
+	}
+
 	@Override
 	public double getDouble(long row, long column) {
 
@@ -175,7 +183,8 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public long getRowForTime(long time) {
-		for (long r = 0; r < getRowCount(); r++) {
+		long rows = getRowCount();
+		for (long r = 0; r < rows; r++) {
 			long t = getAsLong(r, 0);
 			if (t == time) {
 				return r;

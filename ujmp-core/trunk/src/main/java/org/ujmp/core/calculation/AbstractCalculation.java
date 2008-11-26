@@ -23,9 +23,6 @@
 
 package org.ujmp.core.calculation;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
@@ -63,8 +60,6 @@ import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 
 public abstract class AbstractCalculation implements Calculation {
-
-	protected static final Logger logger = Logger.getLogger(AbstractCalculation.class.getName());
 
 	private Matrix[] sources = null;
 
@@ -169,8 +164,7 @@ public abstract class AbstractCalculation implements Calculation {
 		case TANH:
 			return new Tanh(source0).calc(returnType);
 		default:
-			logger.log(Level.WARNING, "not implemented", new MatrixException("not implemented"));
-			return null;
+			throw new MatrixException("Calculation not implemented: " + calculation);
 		}
 	}
 

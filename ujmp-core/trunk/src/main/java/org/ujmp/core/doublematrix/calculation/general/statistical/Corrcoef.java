@@ -23,8 +23,6 @@
 
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import java.util.logging.Level;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
@@ -57,18 +55,16 @@ public class Corrcoef extends AbstractDoubleCalculation {
 		}
 
 		if (mean == null) {
-			try {
-				mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
-			} catch (MatrixException e) {
-				logger.log(Level.WARNING, "could not calculate Matrix", e);
-			}
+			mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
 		}
 
 		if (ignoreNaN) {
 
 			for (int i = 0; i < rows; i++) {
-				deltaX = getSource().getAsDouble(i, coordinates[ROW]) - mean.getAsDouble(0, coordinates[ROW]);
-				deltaY = getSource().getAsDouble(i, coordinates[COLUMN]) - mean.getAsDouble(0, coordinates[COLUMN]);
+				deltaX = getSource().getAsDouble(i, coordinates[ROW])
+						- mean.getAsDouble(0, coordinates[ROW]);
+				deltaY = getSource().getAsDouble(i, coordinates[COLUMN])
+						- mean.getAsDouble(0, coordinates[COLUMN]);
 
 				if (!MathUtil.isNaNOrInfinite(deltaX) && !MathUtil.isNaNOrInfinite(deltaY)) {
 					N++;
@@ -83,8 +79,10 @@ public class Corrcoef extends AbstractDoubleCalculation {
 
 			N = rows;
 			for (int i = 0; i < rows; i++) {
-				deltaX = getSource().getAsDouble(i, coordinates[ROW]) - mean.getAsDouble(0, coordinates[ROW]);
-				deltaY = getSource().getAsDouble(i, coordinates[COLUMN]) - mean.getAsDouble(0, coordinates[COLUMN]);
+				deltaX = getSource().getAsDouble(i, coordinates[ROW])
+						- mean.getAsDouble(0, coordinates[ROW]);
+				deltaY = getSource().getAsDouble(i, coordinates[COLUMN])
+						- mean.getAsDouble(0, coordinates[COLUMN]);
 				sumSqX += deltaX * deltaX;
 				sumSqY += deltaY * deltaY;
 				sumProd += deltaX * deltaY;

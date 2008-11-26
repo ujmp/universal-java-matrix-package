@@ -23,8 +23,6 @@
 
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import java.util.logging.Level;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
@@ -51,11 +49,7 @@ public class Cov extends AbstractDoubleCalculation {
 		double deltaY = 0.0;
 
 		if (mean == null) {
-			try {
-				mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
-			} catch (MatrixException e) {
-				logger.log(Level.WARNING, "could not calculate Matrix", e);
-			}
+			mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
 		}
 
 		if (ignoreNaN) {

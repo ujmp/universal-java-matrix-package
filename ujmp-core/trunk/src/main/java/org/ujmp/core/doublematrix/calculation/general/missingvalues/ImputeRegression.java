@@ -29,7 +29,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -91,14 +90,14 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 				long remainingCols = x.getColumnCount() - completedCols;
 				double colsPerMillisecond = (double) (completedCols + 1) / (double) elapsedTime;
 				long remainingTime = (long) (remainingCols / colsPerMillisecond / 1000.0);
-				System.out.println((completedCols * 1000 / x.getColumnCount() / 10.0) + "% completed (" + remainingTime
-						+ " seconds remaining)");
+				System.out.println((completedCols * 1000 / x.getColumnCount() / 10.0)
+						+ "% completed (" + remainingTime + " seconds remaining)");
 			}
 
 			executor.shutdown();
 
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "error", e);
+			throw new MatrixException(e);
 		}
 	}
 
@@ -120,7 +119,8 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 
 	}
 
-	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column) throws MatrixException {
+	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column)
+			throws MatrixException {
 
 		Matrix x = firstGuess.deleteColumns(Ret.NEW, column);
 		Matrix y = original.selectColumns(Ret.NEW, column);

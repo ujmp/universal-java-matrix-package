@@ -23,8 +23,6 @@
 
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import java.util.logging.Level;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
@@ -48,31 +46,26 @@ public class Mean extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (sum == null) {
-			try {
-				sum = getSource().calcNew(new Sum(getDimension(), ignoreNaN, getSource()));
-			} catch (MatrixException e) {
-				logger.log(Level.WARNING, "could not calculate Matrix", e);
-			}
+			sum = getSource().calcNew(new Sum(getDimension(), ignoreNaN, getSource()));
 		}
 		if (ignoreNaN && missingCount == null) {
-			try {
-				missingCount = getSource().calcNew(new CountMissing(getDimension(), getSource()));
-			} catch (MatrixException e) {
-				logger.log(Level.WARNING, "could not calculate Matrix", e);
-			}
+			missingCount = getSource().calcNew(new CountMissing(getDimension(), getSource()));
 		}
 
 		if (ignoreNaN) {
 			switch (getDimension()) {
 			case ALL:
 				return sum.getAsDouble(0, 0)
-						/ (Coordinates.product(getSource().getSize()) - missingCount.getAsDouble(0, 0));
+						/ (Coordinates.product(getSource().getSize()) - missingCount.getAsDouble(0,
+								0));
 			case ROW:
 				return sum.getAsDouble(0, coordinates[COLUMN])
-						/ (getSource().getRowCount() - missingCount.getAsDouble(0, coordinates[COLUMN]));
+						/ (getSource().getRowCount() - missingCount.getAsDouble(0,
+								coordinates[COLUMN]));
 			case COLUMN:
 				return sum.getAsDouble(coordinates[ROW], 0)
-						/ (getSource().getColumnCount() - missingCount.getAsDouble(coordinates[ROW], 0));
+						/ (getSource().getColumnCount() - missingCount.getAsDouble(
+								coordinates[ROW], 0));
 			default:
 				return Double.NaN;
 			}

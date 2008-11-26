@@ -23,8 +23,6 @@
 
 package org.ujmp.core.doublematrix.calculation.basic;
 
-import java.util.logging.Level;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
@@ -52,9 +50,9 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
 		if (m1.getColumnCount() != m2.getRowCount()) {
-			logger.log(Level.WARNING, "matrices have wrong size: " + Coordinates.toString(m1.getSize()) + " and "
-					+ Coordinates.toString(m2.getSize()), new Exception());
-			return null;
+			throw new MatrixException("Matrices have wrong size: "
+					+ Coordinates.toString(m1.getSize()) + " and "
+					+ Coordinates.toString(m2.getSize()));
 		}
 
 		int i, j, k;
@@ -66,7 +64,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 				for (j = ret[0].length; --j >= 0;) {
 					sum = 0.0;
 					for (k = (int) m1.getColumnCount(); --k >= 0;) {
-						sum += MathUtil.ignoreNaN(m1.getAsDouble(i, k)) * MathUtil.ignoreNaN(m2.getAsDouble(k, j));
+						sum += MathUtil.ignoreNaN(m1.getAsDouble(i, k))
+								* MathUtil.ignoreNaN(m2.getAsDouble(k, j));
 					}
 					ret[i][j] = sum;
 				}

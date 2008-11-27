@@ -209,9 +209,7 @@ public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
 	private void createList() {
 		if (list.size() != set.size()) {
 			list.clear();
-			for (A a : set) {
-				list.add(a);
-			}
+			list.addAll(set);
 		}
 	}
 

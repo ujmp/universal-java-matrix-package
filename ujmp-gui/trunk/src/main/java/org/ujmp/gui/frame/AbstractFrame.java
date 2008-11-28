@@ -29,6 +29,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.TimerTask;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -46,6 +47,7 @@ import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
 import org.ujmp.gui.toolbar.DefaultToolbar;
 import org.ujmp.gui.util.FrameManager;
+import org.ujmp.gui.util.GlobalTimer;
 import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
@@ -53,11 +55,15 @@ public abstract class AbstractFrame extends JFrame {
 
 	private static Image image = Toolkit.getDefaultToolkit().getImage("ujmp16.png");
 
+	private int modCount = -1;
+
 	private GUIObject object = null;
 
 	private StatusBar statusBar = null;
 
 	private static int frameCount = 0;
+
+	private TimerTask updateTask = null;
 
 	public AbstractFrame(GUIObject o, JComponent component) throws MatrixException {
 		UIDefaults.setDefaults();
@@ -90,6 +96,21 @@ public abstract class AbstractFrame extends JFrame {
 
 		DefaultToolbar toolbar = new DefaultToolbar(component, o);
 		getContentPane().add(toolbar, BorderLayout.NORTH);
+
+		final GUIObject go = object;
+		updateTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				if (modCount != go.getModCount()) {
+					modCount = go.getModCount();
+					repaint(1000);
+				}
+
+			}
+		};
+		GlobalTimer.getInstance().scheduleAtFixedRate(updateTask, 1000, 1000);
+
 	}
 
 	@Override

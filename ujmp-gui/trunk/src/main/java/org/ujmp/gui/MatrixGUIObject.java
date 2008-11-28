@@ -53,6 +53,8 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 
 	private Matrix matrix = null;
 
+	private int modCount = 0;
+
 	private transient String tooltipText = null;
 
 	private transient ListSelectionModel rowSelectionModel = null;
@@ -210,6 +212,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 			if (o instanceof TableModelListener)
 				((TableModelListener) o).tableChanged(new TableModelEvent(this));
 		}
+		modCount++;
 	}
 
 	public final void fireValueChanged(int row, int column, Object value) {

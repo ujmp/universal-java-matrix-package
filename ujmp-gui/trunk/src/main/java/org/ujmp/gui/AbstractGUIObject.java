@@ -49,6 +49,8 @@ public abstract class AbstractGUIObject implements GUIObject {
 
 	public static final int ALL = Matrix.ALL;
 
+	private int modCount = 0;
+
 	public AbstractGUIObject() {
 	}
 
@@ -66,6 +68,7 @@ public abstract class AbstractGUIObject implements GUIObject {
 	public abstract String toString();
 
 	public void fireValueChanged() {
+		modCount++;
 	}
 
 	public final JFrame showGUI() {
@@ -96,6 +99,10 @@ public abstract class AbstractGUIObject implements GUIObject {
 		s.append("</table>");
 		s.append("</html>");
 		return s.toString();
+	}
+
+	public int getModCount() {
+		return modCount;
 	}
 
 }

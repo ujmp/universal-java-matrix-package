@@ -390,4 +390,17 @@ public interface GettersAndSetters {
 	 */
 	public String[][] toStringArray() throws MatrixException;
 
+	/**
+	 * Returns a representation of the entry in the matrix that reflects the
+	 * true object best. E.g. if the entry is a String "-5.3", this method
+	 * returns a double with the equivalent value. For a String "text" the
+	 * string itself is returned.
+	 * 
+	 * @param coordinates
+	 *            location of the entry
+	 * @return object that represents the matrix entry best
+	 * @throws MatrixException
+	 */
+	public Object getPreferredObject(long... coordinates) throws MatrixException;
+
 }

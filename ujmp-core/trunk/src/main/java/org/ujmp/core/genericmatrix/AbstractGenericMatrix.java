@@ -149,6 +149,10 @@ public abstract class AbstractGenericMatrix<A> implements Matrix {
 
 	public abstract A getObject(long... coordinates) throws MatrixException;
 
+	public final Object getPreferredObject(long... coordinates) throws MatrixException {
+		return MathUtil.getPreferredObject(getObject(coordinates));
+	}
+
 	public final Object getMatrixAnnotation() {
 		return annotation == null ? null : annotation.getMatrixAnnotation();
 	}

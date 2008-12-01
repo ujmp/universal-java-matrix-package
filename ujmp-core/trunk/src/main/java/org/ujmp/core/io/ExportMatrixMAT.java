@@ -28,14 +28,17 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.constants.Constants;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ExportMatrixMAT {
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException, MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
+			MatrixException {
 		try {
-			Class<?> c = Class.forName("org.ujmp.jmatio.ExportMatrixMAT");
-			Method method = c.getMethod("toFile", new Class[] { File.class, Matrix.class, Object[].class });
+			Class<?> c = Class.forName(Constants.ExportMatrixMAT);
+			Method method = c.getMethod("toFile", new Class[] { File.class, Matrix.class,
+					Object[].class });
 			method.invoke(null, file, matrix, parameters);
 		} catch (Exception e) {
 			throw new MatrixException(e);

@@ -128,6 +128,13 @@ import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.DefaultSparseStringMatrix;
 import org.ujmp.core.stringmatrix.FileListMatrix;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
+import org.ujmp.core.util.matrices.MatrixMemoryUsage;
+import org.ujmp.core.util.matrices.MatrixRandomSeed;
+import org.ujmp.core.util.matrices.MatrixRunningThreads;
+import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
+import org.ujmp.core.util.matrices.MatrixSystemProperties;
+import org.ujmp.core.util.matrices.MatrixSystemTime;
 
 /**
  * This class provides a factory for matrix generation. Use
@@ -457,6 +464,34 @@ public abstract class MatrixFactory {
 					+ " instead.");
 		}
 		sparseFloatMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public static final Matrix systemTime() {
+		return new MatrixSystemTime();
+	}
+
+	public static final Matrix availableProcessors() {
+		return new MatrixAvailableProcessors();
+	}
+
+	public static final Matrix memoryUsage() {
+		return new MatrixMemoryUsage();
+	}
+
+	public static final Matrix randomSeed() {
+		return new MatrixRandomSeed();
+	}
+
+	public static final Matrix runningThreads() {
+		return new MatrixRunningThreads();
+	}
+
+	public static final Matrix systemEnvironment() {
+		return new MatrixSystemEnvironment();
+	}
+
+	public static final Matrix systemProperties() {
+		return new MatrixSystemProperties();
 	}
 
 	public static void setSparseFloatMatrixMultiDClassName(String className) throws Exception {

@@ -27,13 +27,14 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.constants.Constants;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class ExportMatrixMDB {
 
 	public static void toFile(File file, Matrix matrix, Object... parameters) {
 		try {
-			Class<?> c = Class.forName("org.ujmp.jackcess.ExportMatrixMDB");
+			Class<?> c = Class.forName(Constants.ExportMatrixMDB);
 			Method method = c.getMethod("toFile", new Class[] { File.class, Matrix.class,
 					Object[].class });
 			method.invoke(null, file, matrix, parameters);

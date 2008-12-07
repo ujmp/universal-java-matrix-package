@@ -96,13 +96,6 @@ public abstract class UJMPSettings {
 		// machine has only one cpu, only one thread is used. For more than one
 		// core, the number of threads is higher.
 		numberOfThreads = Runtime.getRuntime().availableProcessors();
-
-		/**
-		 * Registers handlers for the signals SIGCONT (18), SIGCHLD (17) and
-		 * SIGUSR2 (12). When one of these signals is sent to the application,
-		 * the graphical user interface will be displayed.
-		 */
-		UJMPSignalHandler.initialize();
 	}
 
 	public static void initialize() {

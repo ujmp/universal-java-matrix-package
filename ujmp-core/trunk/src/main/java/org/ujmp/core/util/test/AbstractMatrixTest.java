@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core;
+package org.ujmp.core.util.test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,9 +29,12 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDoubleMatrix;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest extends TestCase {
@@ -457,7 +460,32 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m1.setAsDouble(7.0, 1, 2);
 		m1.setAsDouble(1.0, 2, 2);
 
-		Matrix m2 = m1.inv();
+		boolean mtjAvailable = true;
+		boolean commonsMathAvailable = true;
+
+		try {
+			Class.forName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
+		} catch (ClassNotFoundException e) {
+			mtjAvailable = false;
+		}
+		try {
+			Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
+		} catch (ClassNotFoundException e) {
+			commonsMathAvailable = false;
+		}
+
+		Matrix m2 = null;
+
+		if (mtjAvailable || commonsMathAvailable) {
+			m2 = m1.inv();
+		} else {
+			try {
+				m2 = m1.inv();
+			} catch (MatrixException e) {
+				return;
+			}
+			throw new MatrixException("there should be an error");
+		}
 
 		assertEquals(getLabel(), -0.1970, m2.getAsDouble(0, 0), 0.001);
 		assertEquals(getLabel(), 0.2879, m2.getAsDouble(1, 0), 0.001);

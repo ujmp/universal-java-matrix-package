@@ -26,35 +26,26 @@ package org.ujmp.core.doublematrix;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.ujmp.core.exceptions.MatrixException;
 
-import com.sun.image.codec.jpeg.ImageFormatException;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
-
 public class ImageMatrix extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
-
-	private File file = null;
 
 	private BufferedImage bufferedImage = null;
 
 	private int[] pixels = null;
 
-	public ImageMatrix(String filename) throws ImageFormatException, IOException {
+	public ImageMatrix(String filename) throws IOException {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(File file) throws ImageFormatException, IOException {
-		this.file = file;
-		FileInputStream fis = new FileInputStream(file);
-		JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(fis);
-		bufferedImage = decoder.decodeAsBufferedImage();
+	public ImageMatrix(File file) throws IOException {
+		bufferedImage = ImageIO.read(file);
 		pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
-		fis.close();
 	}
 
 	public double getDouble(long row, long column) throws MatrixException {

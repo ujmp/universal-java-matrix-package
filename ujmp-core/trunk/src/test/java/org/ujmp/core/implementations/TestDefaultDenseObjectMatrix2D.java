@@ -23,10 +23,10 @@
 
 package org.ujmp.core.implementations;
 
-import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestDefaultDenseObjectMatrix2D extends AbstractMatrixTest {
 

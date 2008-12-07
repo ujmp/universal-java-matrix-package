@@ -31,7 +31,7 @@ public class Main {
 		System.out.println("UJMP is not a standalone program, but a Java library.");
 		System.out.println("You can use it for matrix calculations in your own applications.");
 		System.out.println("If you would like to find out more, please take a look at the");
-		System.out.println("UJMP homepage at http://www.ujmp.org");
+		System.out.println("homepage of UJMP at http://www.ujmp.org/");
 		System.out.println();
 	}
 

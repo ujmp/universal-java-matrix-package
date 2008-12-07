@@ -51,9 +51,19 @@ public class Inv extends AbstractDoubleCalculation {
 					Constructor<?> con = c.getConstructor(Matrix.class);
 					m = (Matrix) con.newInstance(m);
 				} catch (ClassNotFoundException e) {
-					Class<?> c = Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
-					Constructor<?> con = c.getConstructor(Matrix.class);
-					m = (Matrix) con.newInstance(m);
+				}
+				try {
+					if (m == null) {
+						Class<?> c = Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
+						Constructor<?> con = c.getConstructor(Matrix.class);
+						m = (Matrix) con.newInstance(m);
+					}
+				} catch (ClassNotFoundException e) {
+				}
+
+				if (m == null) {
+					throw new MatrixException(
+							"could neither find MTJ nor commons-math to calculate the inverse");
 				}
 
 				inv = m.inv();

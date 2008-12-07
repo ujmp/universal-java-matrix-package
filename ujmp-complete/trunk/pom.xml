@@ -6,19 +6,18 @@
 	<packaging>pom</packaging>
 	<name>ujmp-complete</name>
 
+	<properties>
+		<ujmp.version>0.1.2</ujmp.version>
+	</properties>
+
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>${ujmp.version}</version>
+		<version>0.1.2</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
-
-
 	<dependencies>
-
-		
-
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
@@ -84,7 +83,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
@@ -169,17 +168,24 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-		
-		
 	</dependencies>
-	<!-- -->
-		<modules> <module>../ujmp-core</module> <module>../ujmp-gui</module>
-		<module>../ujmp-colt</module> <module>../ujmp-jackcess</module>
-		<module>../ujmp-itext</module> <module>../ujmp-mail</module>
-		<module>../ujmp-jama</module> <module>../ujmp-jdbc</module>
-		<module>../ujmp-jexcelapi</module> <module>../ujmp-jmathplot</module>
-		<module>../ujmp-jmatio</module> <module>../ujmp-jmatrices</module>
-		<module>../ujmp-mtj</module> <module>../ujmp-vecmath</module>
-		</modules>
-	
+
+
+	<modules>
+		<module>../ujmp-core</module>
+		<module>../ujmp-gui</module>
+		<module>../ujmp-colt</module>
+		<module>../ujmp-jackcess</module>
+		<module>../ujmp-itext</module>
+		<module>../ujmp-mail</module>
+		<module>../ujmp-jama</module>
+		<module>../ujmp-jdbc</module>
+		<module>../ujmp-jexcelapi</module>
+		<module>../ujmp-jmathplot</module>
+		<module>../ujmp-jmatio</module>
+		<module>../ujmp-jmatrices</module>
+		<module>../ujmp-mtj</module>
+		<module>../ujmp-vecmath</module>
+	</modules>
+
 </project>

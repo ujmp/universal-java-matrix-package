@@ -5,10 +5,15 @@
   <artifactId>ujmp-jdbc</artifactId>
   <packaging>jar</packaging>
   <name>ujmp-jdbc</name>
+  
+  <properties>
+		<ujmp.version>0.1.2</ujmp.version>
+	</properties>
+  
   <parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>${ujmp.version}</version>
+		<version>0.1.2</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 	

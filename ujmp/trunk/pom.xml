@@ -9,7 +9,7 @@
 
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp</artifactId>
-	<version>${ujmp.version}</version>
+	<version>0.1.2</version>
 	<packaging>jar</packaging>
 	<url>http://www.ujmp.org</url>
 

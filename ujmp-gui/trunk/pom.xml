@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ujmp</groupId>
@@ -7,10 +6,14 @@
 	<packaging>jar</packaging>
 	<name>ujmp-gui</name>
 
+	<properties>
+		<ujmp.version>0.1.2</ujmp.version>
+	</properties>
+
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>${ujmp.version}</version>
+		<version>0.1.2</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
@@ -18,12 +21,12 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-		</dependency>		
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 </project>

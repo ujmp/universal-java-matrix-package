@@ -28,7 +28,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import no.uib.cipr.matrix.DenseMatrix;
-import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.SVD;
 
 import org.ujmp.core.Matrix;
@@ -57,14 +56,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public MTJDenseDoubleMatrix2D(long... size) {
 		this.matrix = new DenseMatrix((int) size[ROW], (int) size[COLUMN]);
-	}
-
-	@Override
-	public Matrix inv() {
-		DenseMatrix A = this.getWrappedObject();
-		DenseMatrix I = Matrices.identity((int) getColumnCount());
-		DenseMatrix AI = I.copy();
-		return new MTJDenseDoubleMatrix2D((DenseMatrix) A.solve(I, AI));
 	}
 
 	@Override

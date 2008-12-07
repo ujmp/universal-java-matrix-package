@@ -21,20 +21,19 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.general.solving;
+package org.ujmp.commonsmath;
 
-import java.lang.reflect.Constructor;
-
+import org.apache.commons.math.linear.RealMatrix;
+import org.apache.commons.math.linear.RealMatrixImpl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Inv extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 7886298456216056038L;
+	private static final long serialVersionUID = -5278906492203797020L;
 
-	private Matrix inv = null;
+	private RealMatrix inv = null;
 
 	public Inv(Matrix matrix) {
 		super(matrix);
@@ -43,42 +42,17 @@ public class Inv extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
-			try {
-
-				DoubleCalculation calc = null;
-
-				try {
-					Class<?> c = Class.forName("org.ujmp.mtj.Inv");
-					Constructor<?> con = c.getConstructor(Matrix.class);
-					calc = (DoubleCalculation) con.newInstance(getSource());
-				} catch (ClassNotFoundException e) {
-				}
-				try {
-					if (calc == null) {
-						Class<?> c = Class.forName("org.ujmp.commonsmath.Inv");
-						Constructor<?> con = c.getConstructor(Matrix.class);
-						calc = (DoubleCalculation) con.newInstance(getSource());
-					}
-				} catch (ClassNotFoundException e) {
-				}
-
-				if (calc == null) {
-					throw new MatrixException(
-							"could neither find MTJ nor commons-math to calculate the inverse");
-				}
-
-				inv = calc.calcNew();
-
-			} catch (Exception e) {
-				throw new MatrixException(e);
+			if (getSource() instanceof RealMatrix) {
+				inv = ((RealMatrixImpl) getSource()).inverse();
+			} else {
+				inv = new CommonsMathRealMatrix2D(getSource()).getWrappedObject().inverse();
 			}
 		}
-		return inv.getAsDouble(coordinates);
+		return inv.getEntry((int) coordinates[ROW], (int) coordinates[COLUMN]);
 	}
 
 	@Override
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}
-
 }

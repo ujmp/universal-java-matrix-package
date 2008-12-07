@@ -25,7 +25,6 @@ package org.ujmp.commonsmath;
 
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealMatrixImpl;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -76,11 +75,6 @@ public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public long[] getSize() {
 		return matrix == null ? Coordinates.ZERO2D
 				: new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
-	}
-
-	@Override
-	public Matrix inv() {
-		return new CommonsMathRealMatrix2D(matrix.inverse());
 	}
 
 }

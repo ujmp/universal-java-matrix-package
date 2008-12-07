@@ -23,8 +23,8 @@
 
 package org.ujmp.jmatio;
 
-import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestMLDoubleMatrix extends AbstractMatrixTest {
 

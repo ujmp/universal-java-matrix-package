@@ -23,9 +23,9 @@
 
 package org.ujmp.mtj;
 
-import org.ujmp.core.AbstractMatrixTest;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 

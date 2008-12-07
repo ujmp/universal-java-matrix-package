@@ -27,20 +27,24 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.ujmp.core.util.io.FileSelector;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.ImageOutputStream;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.ujmp.core.util.io.FileSelector;
 
 public abstract class ExportJPEG {
 
-	private static final Logger logger = Logger.getLogger(ExportJPEG.class.getName());
+	private static final Logger logger = Logger.getLogger(ExportJPEG.class
+			.getName());
 
 	public static final File selectFile() {
 		return selectFile(null);
@@ -72,19 +76,30 @@ public abstract class ExportJPEG {
 			return;
 		}
 		double factor = width / c.getWidth();
-		BufferedImage myImage = new BufferedImage((int) (c.getWidth() * factor), (int) (c.getHeight() * factor),
+		BufferedImage myImage = new BufferedImage(
+				(int) (c.getWidth() * factor), (int) (c.getHeight() * factor),
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = myImage.createGraphics();
 		g2.scale(factor, factor);
 		c.paint(g2);
 		try {
-			OutputStream out = new FileOutputStream(file);
-			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(myImage);
-			param.setQuality(1.0f, true);
-			encoder.setJPEGEncodeParam(param);
-			encoder.encode(myImage);
-			out.close();
+			ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg")
+					.next();
+
+			ImageOutputStream ios = ImageIO.createImageOutputStream(file);
+			writer.setOutput(ios);
+
+			ImageWriteParam iwparam = new JPEGImageWriteParam(Locale
+					.getDefault());
+			iwparam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			iwparam.setCompressionQuality(1.0f);
+
+			writer.write(null, new IIOImage(myImage, null, null), iwparam);
+
+			ios.flush();
+			writer.dispose();
+			ios.close();
+
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not save jpg image", e);
 		}

@@ -75,6 +75,12 @@ public class MatrixPanel extends AbstractPanel {
 		}
 
 		try {
+			Class.forName("org.ujmp.jung.MatrixGraphPanel");
+			tabbedPane.add("Graph", new GraphPanel(m.getMatrix()));
+		} catch (Exception e) {
+		}
+
+		try {
 			Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotLinePanel");
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());

@@ -78,6 +78,12 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-itext</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jung</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -164,6 +170,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-mail</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jung</artifactId>
 			<version>${ujmp.version}</version>
 			<classifier>tests</classifier>
 			<scope>test</scope>

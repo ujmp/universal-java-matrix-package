@@ -23,26 +23,14 @@
 
 package org.ujmp.complete;
 
-import junit.framework.TestSuite;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 
-public class AllTests extends TestSuite {
+public class Main {
 
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTest(org.ujmp.core.AllTests.suite());
-		suite.addTest(org.ujmp.commonsmath.AllTests.suite());
-		suite.addTest(org.ujmp.colt.AllTests.suite());
-		suite.addTest(org.ujmp.jama.AllTests.suite());
-		suite.addTest(org.ujmp.jmatrices.AllTests.suite());
-		suite.addTest(org.ujmp.mtj.AllTests.suite());
-		suite.addTest(org.ujmp.vecmath.AllTests.suite());
-		suite.addTest(org.ujmp.jackcess.AllTests.suite());
-		suite.addTest(org.ujmp.jung.AllTests.suite());
-		suite.addTest(org.ujmp.jexcelapi.AllTests.suite());
-		suite.addTest(org.ujmp.jmatio.AllTests.suite());
-		suite.addTest(org.ujmp.itext.AllTests.suite());
-		suite.addTest(org.ujmp.mail.AllTests.suite());
-		return suite;
+	public static void main(String[] args) {
+		Matrix m = MatrixFactory.eye(10, 10);
+		m.showGUI();
 	}
 
 }

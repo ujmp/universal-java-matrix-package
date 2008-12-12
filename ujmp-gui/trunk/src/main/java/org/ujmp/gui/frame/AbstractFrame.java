@@ -24,17 +24,14 @@
 package org.ujmp.gui.frame;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.TimerTask;
 
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
@@ -129,24 +126,6 @@ public abstract class AbstractFrame extends JFrame {
 		} else {
 			frameCount--;
 			statusBar.stop();
-		}
-
-		if (frameCount == 0) {
-			Component parentComponent = null;
-			String message = "Do you want to exit the program, close the window or restore it?";
-			String title = "Last Window Closed";
-			int messageType = JOptionPane.QUESTION_MESSAGE;
-			Icon icon = null;
-			int initialValue = 0;
-			String[] options = new String[] { "Exit", "Close", "Restore" };
-			int ret = JOptionPane.showOptionDialog(parentComponent, message, title, 0, messageType, icon, options,
-					initialValue);
-
-			if (ret == 0) {
-				System.exit(0);
-			} else if (ret == 2) {
-				setVisible(true);
-			}
 		}
 	}
 

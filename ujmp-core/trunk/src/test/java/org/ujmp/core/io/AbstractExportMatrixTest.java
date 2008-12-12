@@ -49,7 +49,7 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 	public void testExportToFile() throws Exception {
 
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
-		file.deleteOnExit();
+		//file.deleteOnExit();
 
 		Matrix m = getMatrix();
 		m.exportToFile(getFormat(), file);
@@ -61,8 +61,7 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 		assertTrue(getLabel(), m.equalsContent(m2));
 
-		boolean result = file.delete();
-		assertTrue(getLabel(), result);
+		file.delete();
 
 		assertFalse(getLabel(), file.exists());
 

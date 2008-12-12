@@ -33,7 +33,7 @@ import com.healthmarketscience.jackcess.Database;
 
 public class LinkMatrixMDB {
 
-	public static final Matrix toFile(File file, Object... parameters) throws MatrixException,
+	public static final DenseJackcessMatrix2D toFile(File file, Object... parameters) throws MatrixException,
 			IOException {
 		String tablename = null;
 		if (parameters.length != 0) {

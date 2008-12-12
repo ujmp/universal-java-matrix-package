@@ -34,8 +34,10 @@ public class ImportMatrixMDB {
 
 	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		Matrix m = LinkMatrixMDB.toFile(file, parameters);
-		return new DefaultDenseObjectMatrix2D(m);
+		DenseJackcessMatrix2D ma = LinkMatrixMDB.toFile(file, parameters);		
+		Matrix m = new DefaultDenseObjectMatrix2D(ma);
+		ma.close();
+		return m;
 	}
 
 }

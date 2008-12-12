@@ -21,39 +21,23 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+public abstract class AbstractSparseMatrix2D extends AbstractSparseMatrix implements
+		ObjectMatrix2D {
 
-public class DefaultTiledGenericMatrix2D<A> extends AbstractMapToTiledMatrix2DWrapper<A> {
-	private static final long serialVersionUID = 6745798685307431625L;
-
-	private Map<Coordinates, ObjectMatrix2D> values = null;
-
-	public DefaultTiledGenericMatrix2D(long... size) {
-		super(size);
+	public final Iterable<long[]> allCoordinates() {
+		return new CoordinateIterator2D(getSize());
 	}
 
-	public DefaultTiledGenericMatrix2D(Matrix source) {
-		super(source);
+	public final Object getObject(long... coordinates) {
+		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	@Override
-	public Map<Coordinates, ObjectMatrix2D> getMap() {
-		if (values == null) {
-			values = new HashMap<Coordinates, ObjectMatrix2D>();
-		}
-		return values;
-	}
-
-	@Override
-	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
-		this.values = map;
+	public final void setObject(Object value, long... coordinates) {
+		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
 }

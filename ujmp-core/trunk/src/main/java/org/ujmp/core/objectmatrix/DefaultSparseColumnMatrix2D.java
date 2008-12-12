@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +29,23 @@ import java.util.List;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> {
-	private static final long serialVersionUID = -5291604525500706427L;
+public class DefaultSparseColumnMatrix2D extends AbstractSparseMatrix2D {
+	private static final long serialVersionUID = -1943118812754494387L;
 
 	private long[] size = new long[] { 1, 1 };
 
-	private final List<Matrix> rows = new ArrayList<Matrix>();
+	private final List<Matrix> columns = new ArrayList<Matrix>();
 
-	public DefaultSparseRowMatrix2D(long... size) {
+	public DefaultSparseColumnMatrix2D(long... size) {
 		setSize(size);
 	}
 
-	public DefaultSparseRowMatrix2D(Matrix m) {
+	public DefaultSparseColumnMatrix2D(Matrix m) {
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getObject(c), c);
@@ -54,22 +53,18 @@ public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> 
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
-		Matrix m = rows.get((int) coordinates[ROW]);
-		return (A) m.getObject(0, coordinates[COLUMN]);
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public Object getObject(long row, long column) throws MatrixException {
+		Matrix m = columns.get((int) column);
+		return m.getObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
 	@Override
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
-		for (int r = 0; r < size[ROW]; r++) {
-			for (long[] c : rows.get(r).availableCoordinates()) {
-				coordinates.add(Coordinates.plus(c, new long[] { r, 0 }));
+		for (int i = 0; i < size[COLUMN]; i++) {
+			for (long[] c : columns.get(i).availableCoordinates()) {
+				coordinates.add(Coordinates.plus(c, new long[] { 0, i }));
 			}
 		}
 		return coordinates;
@@ -83,17 +78,10 @@ public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> 
 		}
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
-	}
-
-	public void setObject(Object o, long... coordinates) throws MatrixException {
-		Matrix m = rows.get((int) coordinates[ROW]);
-		m.setObject(o, 0, coordinates[COLUMN]);
+	@Override
+	public void setObject(Object o, long row, long column) throws MatrixException {
+		Matrix m = columns.get((int) column);
+		m.setObject(o, row, 0);
 	}
 
 	public ValueType getValueType() {
@@ -106,20 +94,20 @@ public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> 
 
 	@Override
 	public void setSize(long... size) {
-		while (rows.size() < size[ROW]) {
-			rows.add(new DefaultSparseGenericMatrix<A>(1l, size[COLUMN]));
+		while (columns.size() < size[COLUMN]) {
+			columns.add(new DefaultSparseGenericMatrix(size[ROW], 1l));
 		}
 
-		if (this.size[COLUMN] != size[COLUMN]) {
-			for (Matrix m : rows) {
-				m.setSize(1, size[COLUMN]);
+		if (this.size[ROW] != size[ROW]) {
+			for (Matrix m : columns) {
+				m.setSize(size[ROW], 1);
 			}
 		}
 		this.size = size;
 	}
 
-	public Matrix getRow(long row) {
-		return rows.get((int) row);
+	public Matrix getColumn(long column) {
+		return columns.get((int) column);
 	}
 
 	@Override
@@ -151,11 +139,11 @@ public class DefaultSparseRowMatrix2D<A> extends AbstractSparseGenericMatrix<A> 
 	}
 
 	@Override
-	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
-		if (returnType == Ret.LINK && rows.length == 1) {
-			return getRow(rows[0]);
+	public Matrix selectColumns(Ret returnType, long... columns) throws MatrixException {
+		if (returnType == Ret.LINK && columns.length == 1) {
+			return getColumn(columns[0]);
 		}
-		return super.selectRows(returnType, rows);
+		return super.selectColumns(returnType, columns);
 	}
 
 }

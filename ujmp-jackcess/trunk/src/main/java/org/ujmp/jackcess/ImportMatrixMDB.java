@@ -28,14 +28,14 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
 
 public class ImportMatrixMDB {
 
 	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
 			IOException {
 		DenseJackcessMatrix2D ma = LinkMatrixMDB.toFile(file, parameters);		
-		Matrix m = new DefaultDenseObjectMatrix2D(ma);
+		Matrix m = new DefaultDenseMatrix2D(ma);
 		ma.close();
 		return m;
 	}

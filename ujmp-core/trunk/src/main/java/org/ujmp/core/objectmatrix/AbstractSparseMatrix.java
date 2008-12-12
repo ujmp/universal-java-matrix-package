@@ -24,7 +24,8 @@
 package org.ujmp.core.objectmatrix;
 
 
-public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix {
+
+public abstract class AbstractSparseMatrix extends AbstractMatrix {
 
 	public final boolean isSparse() {
 		return true;

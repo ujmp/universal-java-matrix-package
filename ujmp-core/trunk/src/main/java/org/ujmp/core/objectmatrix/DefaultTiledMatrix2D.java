@@ -23,33 +23,36 @@
 
 package org.ujmp.core.objectmatrix;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
+import org.ujmp.core.coordinates.Coordinates;
 
-public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> {
-	private static final long serialVersionUID = -1130331544425728230L;
+public class DefaultTiledMatrix2D extends AbstractMapToTiledMatrix2DWrapper {
+	private static final long serialVersionUID = 6745798685307431625L;
 
-	public DefaultSparseObjectMatrix(Matrix m) throws MatrixException {
-		super(m, -1);
-	}
+	private Map<Coordinates, ObjectMatrix2D> values = null;
 
-	public DefaultSparseObjectMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
-		super(m, maximumNumberOfEntries);
-	}
-
-	public DefaultSparseObjectMatrix(long... size) {
+	public DefaultTiledMatrix2D(long... size) {
 		super(size);
 	}
 
-	public DefaultSparseObjectMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
+	public DefaultTiledMatrix2D(Matrix source) {
+		super(source);
 	}
 
 	@Override
-	public final ValueType getValueType() {
-		return ValueType.OBJECT;
+	public Map<Coordinates, ObjectMatrix2D> getMap() {
+		if (values == null) {
+			values = new HashMap<Coordinates, ObjectMatrix2D>();
+		}
+		return values;
+	}
+
+	@Override
+	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
+		this.values = map;
 	}
 
 }

@@ -25,7 +25,7 @@ package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMatrix implements ObjectMatrix2D {
+public abstract class AbstractDenseMatrix2D extends AbstractDenseMatrix implements ObjectMatrix2D {
 
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

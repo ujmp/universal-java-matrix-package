@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,7 +36,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
+public class ServerMatrixUDP extends AbstractMatrix {
 	private static final long serialVersionUID = 3907994158174208114L;
 
 	private static final int BUFFERSIZE = 512;
@@ -81,8 +81,8 @@ public class ServerMatrixUDP<A> extends AbstractGenericMatrix<A> {
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
-		return (A) matrix.getObject(coordinates);
+	public Object getObject(long... coordinates) throws MatrixException {
+		return matrix.getObject(coordinates);
 	}
 
 	@Override

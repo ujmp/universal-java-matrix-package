@@ -23,7 +23,9 @@
 
 package org.ujmp.core.objectmatrix;
 
-public interface ObjectMatrix2D extends ObjectMatrix {
+import org.ujmp.core.Matrix;
+
+public interface ObjectMatrix2D extends Matrix {
 
 	public Object getObject(long row, long column);
 

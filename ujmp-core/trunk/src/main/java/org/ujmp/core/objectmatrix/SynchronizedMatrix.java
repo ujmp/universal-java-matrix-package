@@ -21,18 +21,18 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> {
+public class SynchronizedMatrix extends AbstractMatrix {
 	private static final long serialVersionUID = -4456493053286654056L;
 
 	private Matrix matrix = null;
 
-	public SynchronizedGenericMatrix(Matrix source) {
+	public SynchronizedMatrix(Matrix source) {
 		this.matrix = source;
 		setAnnotation(source.getAnnotation());
 	}
@@ -63,8 +63,8 @@ public class SynchronizedGenericMatrix<A> extends AbstractGenericMatrix<A> {
 	}
 
 	@Override
-	public synchronized A getObject(long... c) throws MatrixException {
-		return (A) matrix.getObject(c);
+	public synchronized Object getObject(long... c) throws MatrixException {
+		return matrix.getObject(c);
 	}
 
 	public synchronized void setObject(Object value, long... c) throws MatrixException {

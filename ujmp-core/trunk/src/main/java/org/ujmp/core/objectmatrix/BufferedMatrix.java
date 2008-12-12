@@ -35,7 +35,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flushable {
+public class BufferedMatrix extends AbstractMatrix implements Flushable {
 	private static final long serialVersionUID = 7750549087897737457L;
 
 	private Matrix inputBuffer = null;
@@ -48,7 +48,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 
 	private Thread writeThread = null;
 
-	public BufferedObjectMatrix(Matrix original) {
+	public BufferedMatrix(Matrix original) {
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(Integer.MAX_VALUE);
@@ -56,13 +56,13 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		writeThread.start();
 	}
 
-	public BufferedObjectMatrix(Matrix original, int outputBufferSize) {
+	public BufferedMatrix(Matrix original, int outputBufferSize) {
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(outputBufferSize);
 	}
 
-	public BufferedObjectMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
+	public BufferedMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
 		this.original = original;
 		setInputBufferSize(inputBufferSize);
 		setOutputBufferSize(outputBufferSize);

@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.util.Map;
 
@@ -31,12 +31,10 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDenseGenericMatrix<A>
-		implements Wrapper<Map<Coordinates, ObjectMatrix2D>> {
+public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseMatrix implements
+		Wrapper<Map<Coordinates, ObjectMatrix2D>> {
 
 	private long tileSize = 100;
 
@@ -61,13 +59,13 @@ public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDense
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates) throws MatrixException {
 		Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
 		Matrix m = getMap().get(c);
 		if (m == null) {
 			return null;
 		} else {
-			return (A) m.getObject(coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
+			return m.getObject(coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
 		}
 	}
 
@@ -87,18 +85,6 @@ public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDense
 		return new CoordinateIterator2D(getSize());
 	}
 
-	@Override
-	public boolean contains(long... coordinates) {
-		if (Coordinates.isSmallerThan(coordinates, size)) {
-			Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN]
-					/ tileSize);
-			Matrix m = getMap().get(c);
-			return m != null;
-		} else {
-			return false;
-		}
-	}
-
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
@@ -111,7 +97,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper<A> extends AbstractDense
 		Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
-			m = new DefaultDenseObjectMatrix2D(tileSize, tileSize);
+			m = new DefaultDenseMatrix2D(tileSize, tileSize);
 		}
 		m.setObject(o, coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
 		getMap().put(c, m);

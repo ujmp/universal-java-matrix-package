@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.util.Iterator;
 
@@ -30,7 +30,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> {
+public class ReshapedMatrix extends AbstractMatrix {
 	private static final long serialVersionUID = -4298270756453090584L;
 
 	private Matrix source = null;
@@ -103,8 +103,8 @@ public class ReshapedMatrix<A> extends AbstractGenericMatrix<A> {
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
-		return (A) source.getObject(getOldCoordinates(coordinates));
+	public Object getObject(long... coordinates) throws MatrixException {
+		return source.getObject(getOldCoordinates(coordinates));
 	}
 
 	@Override

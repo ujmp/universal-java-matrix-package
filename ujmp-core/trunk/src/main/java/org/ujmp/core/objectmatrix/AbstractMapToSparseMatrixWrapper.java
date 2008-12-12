@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.util.Map;
 
@@ -34,10 +34,10 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToSparseMatrixWrapper<A> extends AbstractSparseGenericMatrix<A>
-		implements Wrapper<Map<Coordinates, Object>> {
+public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseMatrix implements
+		Wrapper<Map<Coordinates, Object>> {
 
-	private final A defaultValue = null;
+	private final Object defaultValue = null;
 
 	private int maximumNumberOfEntries = -1;
 
@@ -79,8 +79,8 @@ public abstract class AbstractMapToSparseMatrixWrapper<A> extends AbstractSparse
 	}
 
 	@Override
-	public final A getObject(long... coordinates) throws MatrixException {
-		A v = (A) getMap().get(new Coordinates(coordinates));
+	public final Object getObject(long... coordinates) throws MatrixException {
+		Object v = getMap().get(new Coordinates(coordinates));
 		return v == null ? defaultValue : v;
 	}
 

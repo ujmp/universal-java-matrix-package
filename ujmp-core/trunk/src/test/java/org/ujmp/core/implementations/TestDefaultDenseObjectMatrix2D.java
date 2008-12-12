@@ -25,19 +25,19 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
 import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestDefaultDenseObjectMatrix2D extends AbstractMatrixTest {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new DefaultDenseObjectMatrix2D(size);
+		return new DefaultDenseMatrix2D(size);
 	}
 
 	@Override
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new DefaultDenseObjectMatrix2D(source);
+		return new DefaultDenseMatrix2D(source);
 	}
 
 }

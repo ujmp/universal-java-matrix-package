@@ -23,22 +23,31 @@
 
 package org.ujmp.core.objectmatrix;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements
-		ObjectMatrix {
+public class DefaultSparseMatrix extends DefaultSparseGenericMatrix<Object> {
+	private static final long serialVersionUID = -1130331544425728230L;
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
+	public DefaultSparseMatrix(Matrix m) throws MatrixException {
+		super(m, -1);
 	}
 
-	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
-		setObject(v, coordinates);
+	public DefaultSparseMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+		super(m, maximumNumberOfEntries);
 	}
 
+	public DefaultSparseMatrix(long... size) {
+		super(size);
+	}
+
+	public DefaultSparseMatrix(int maximumNumberOfEntries, long... size) {
+		super(maximumNumberOfEntries, size);
+	}
+
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.objectmatrix;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ import java.util.logging.Level;
 
 import org.ujmp.core.enums.ValueType;
 
-public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
+public class RemoteMatrixUDP extends AbstractMatrix {
 	private static final long serialVersionUID = 3889079475875267966L;
 
 	private static final int BUFFERSIZE = 512;
@@ -148,7 +148,7 @@ public class RemoteMatrixUDP<A> extends AbstractGenericMatrix<A> {
 	}
 
 	@Override
-	public A getObject(long... coordinates) {
+	public Object getObject(long... coordinates) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -32,7 +32,7 @@ import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
+public class VolatileSparseObjectMatrix extends AbstractSparseMatrix {
 	private static final long serialVersionUID = 392817709394048419L;
 
 	private final Map<Coordinates, Object> values = new SoftHashMap<Coordinates, Object>();

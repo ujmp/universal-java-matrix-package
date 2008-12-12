@@ -24,9 +24,9 @@
 package org.ujmp.core.calculation;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.AbstractMatrix;
 
-public class CalculationMatrix extends AbstractObjectMatrix {
+public class CalculationMatrix extends AbstractMatrix {
 	private static final long serialVersionUID = -8345796002435936888L;
 
 	private AbstractCalculation calculation = null;

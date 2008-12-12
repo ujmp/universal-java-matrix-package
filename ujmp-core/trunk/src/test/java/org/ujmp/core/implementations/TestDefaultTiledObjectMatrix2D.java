@@ -24,19 +24,19 @@
 package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.genericmatrix.DefaultTiledGenericMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultTiledMatrix2D;
 import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestDefaultTiledObjectMatrix2D extends AbstractMatrixTest {
 
 	@Override
 	public Matrix createMatrix(long... size) throws Exception {
-		return new DefaultTiledGenericMatrix2D<Object>(size);
+		return new DefaultTiledMatrix2D(size);
 	}
 
 	@Override
 	public Matrix createMatrix(Matrix source) throws Exception {
-		return new DefaultTiledGenericMatrix2D<Object>(source);
+		return new DefaultTiledMatrix2D(source);
 	}
 
 }

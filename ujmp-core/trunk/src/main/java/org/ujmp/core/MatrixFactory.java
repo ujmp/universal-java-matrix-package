@@ -85,7 +85,6 @@ import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix;
 import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DefaultDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DefaultSparseFloatMatrix;
-import org.ujmp.core.genericmatrix.SynchronizedGenericMatrix;
 import org.ujmp.core.intmatrix.AbstractDenseIntMatrix;
 import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.AbstractSparseIntMatrix;
@@ -105,14 +104,15 @@ import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.DefaultSparseLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix;
-import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.AbstractDenseMatrix;
+import org.ujmp.core.objectmatrix.AbstractDenseMatrix2D;
+import org.ujmp.core.objectmatrix.AbstractSparseMatrix;
+import org.ujmp.core.objectmatrix.AbstractSparseMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultSparseMatrix;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.objectmatrix.SynchronizedMatrix;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;
@@ -138,8 +138,8 @@ import org.ujmp.core.util.matrices.MatrixSystemTime;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code>
- * to create empty matrices.
+ * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
+ * create empty matrices.
  * 
  * 
  * 
@@ -304,10 +304,10 @@ public abstract class MatrixFactory {
 			setSparseLongMatrix2DClassName(DefaultSparseLongMatrix.class.getName());
 			setSparseLongMatrixMultiDClassName(DefaultSparseLongMatrix.class.getName());
 
-			setDenseObjectMatrix2DClassName(DefaultDenseObjectMatrix2D.class.getName());
-			setDenseObjectMatrixMultiDClassName(DefaultSparseObjectMatrix.class.getName());
-			setSparseObjectMatrix2DClassName(DefaultSparseObjectMatrix.class.getName());
-			setSparseObjectMatrixMultiDClassName(DefaultSparseObjectMatrix.class.getName());
+			setDenseObjectMatrix2DClassName(DefaultDenseMatrix2D.class.getName());
+			setDenseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
+			setSparseObjectMatrix2DClassName(DefaultSparseMatrix.class.getName());
+			setSparseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
 
 			setDenseShortMatrix2DClassName(DefaultDenseShortMatrix2D.class.getName());
 			setDenseShortMatrixMultiDClassName(DefaultSparseShortMatrix.class.getName());
@@ -872,12 +872,12 @@ public abstract class MatrixFactory {
 	}
 
 	public static void setDenseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseObjectMatrix2D.class, className);
+		matrixClasses.put(AbstractDenseMatrix2D.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseObjectMatrix2D.class;
+			matrixClass = DefaultDenseMatrix2D.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -885,12 +885,12 @@ public abstract class MatrixFactory {
 	}
 
 	public static void setDenseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseObjectMatrix.class, className);
+		matrixClasses.put(AbstractDenseMatrix.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseObjectMatrix.class;
+			matrixClass = DefaultSparseMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -898,12 +898,12 @@ public abstract class MatrixFactory {
 	}
 
 	public static void setSparseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseObjectMatrix2D.class, className);
+		matrixClasses.put(AbstractSparseMatrix2D.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseObjectMatrix.class;
+			matrixClass = DefaultSparseMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -911,12 +911,12 @@ public abstract class MatrixFactory {
 	}
 
 	public static void setSparseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseObjectMatrix.class, className);
+		matrixClasses.put(AbstractSparseMatrix.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseObjectMatrix.class;
+			matrixClass = DefaultSparseMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -1112,7 +1112,7 @@ public abstract class MatrixFactory {
 		} else if (value instanceof Long) {
 			return new DefaultDenseLongMatrix2D(new long[][] { { (Long) value } });
 		} else {
-			return new DefaultDenseObjectMatrix2D(new Object[][] { { value } });
+			return new DefaultDenseMatrix2D(new Object[][] { { value } });
 		}
 	}
 
@@ -1218,8 +1218,8 @@ public abstract class MatrixFactory {
 		return matrix;
 	}
 
-	public static final DefaultDenseObjectMatrix2D linkToArray(Object[]... valueList) {
-		return new DefaultDenseObjectMatrix2D(valueList);
+	public static final DefaultDenseMatrix2D linkToArray(Object[]... valueList) {
+		return new DefaultDenseMatrix2D(valueList);
 	}
 
 	public static final FileListMatrix linkToDir(String dir) {
@@ -1268,8 +1268,8 @@ public abstract class MatrixFactory {
 	 *            the source Matrix
 	 * @return a synchronized Matrix
 	 */
-	public static final SynchronizedGenericMatrix<?> synchronizedMatrix(Matrix matrix) {
-		return new SynchronizedGenericMatrix(matrix);
+	public static final SynchronizedMatrix synchronizedMatrix(Matrix matrix) {
+		return new SynchronizedMatrix(matrix);
 	}
 
 	public static final DoubleMatrix linkToBinaryFile(String filename, int rowCount, int columnCount) {

@@ -149,7 +149,8 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 				s.append("</tr>");
 				s.append("<tr>");
 				s.append("<td><b>Size:</b></td>");
-				s.append("<td>" + getRowCount() + "x" + getColumnCount() + "</td>");
+				s.append("<td>" + getRowCount() + "x" + getColumnCount()
+						+ "</td>");
 				s.append("</tr>");
 				s.append("<tr>");
 				s.append("<td><b>Values:</b></td>");
@@ -161,7 +162,8 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 				// header
 				s.append("<tr>");
 				s.append("<th></th>");
-				for (int col = 0; col < columnCount && col < UJMPSettings.getMaxToolTipCols(); col++) {
+				for (int col = 0; col < columnCount
+						&& col < UJMPSettings.getMaxToolTipCols(); col++) {
 					s.append("<th>" + matrix.getColumnLabel(col) + "</th>");
 				}
 				if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
@@ -169,11 +171,15 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 				}
 				s.append("</tr>");
 
-				for (int row = 0; row < rowCount && row < UJMPSettings.getMaxToolTipRows(); row++) {
+				for (int row = 0; row < rowCount
+						&& row < UJMPSettings.getMaxToolTipRows(); row++) {
 					s.append("<tr>");
 					s.append("<th>" + matrix.getRowLabel(row) + "</th>");
-					for (int col = 0; col < columnCount && col < UJMPSettings.getMaxToolTipCols(); col++) {
-						s.append("<td align=right>" + StringUtil.format(matrix.getAsDouble(row, col)) + "</td>");
+					for (int col = 0; col < columnCount
+							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
+						s.append("<td align=right>"
+								+ StringUtil.format(matrix
+										.getAsDouble(row, col)) + "</td>");
 					}
 					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
 						s.append("<td align=right>...</td>");
@@ -183,7 +189,8 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 				if (getRowCount() > UJMPSettings.getMaxToolTipRows()) {
 					s.append("<tr>");
 					s.append("<td></td>");
-					for (int col = 0; col < getColumnCount() && col < UJMPSettings.getMaxToolTipCols(); col++) {
+					for (int col = 0; col < getColumnCount()
+							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
 						s.append("<td align=right>...</td>");
 					}
 					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
@@ -210,7 +217,8 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public final void fireValueChanged() {
 		for (Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener)
-				((TableModelListener) o).tableChanged(new TableModelEvent(this));
+				((TableModelListener) o)
+						.tableChanged(new TableModelEvent(this));
 		}
 		modCount++;
 	}
@@ -218,9 +226,10 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public final void fireValueChanged(int row, int column, Object value) {
 		for (Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener)
-				((TableModelListener) o).tableChanged(new TableModelEvent(this, row, row, column,
-						TableModelEvent.UPDATE));
+				((TableModelListener) o).tableChanged(new TableModelEvent(this,
+						row, row, column, TableModelEvent.UPDATE));
 		}
+		modCount++;
 	}
 
 	public final Class<?> getColumnClass(int columnIndex) {
@@ -298,11 +307,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		return matrix.isScalar();
 	}
 
-	public void setEntriesTo_(double value) throws MatrixException {
-		new Fill(matrix, value).calc(Ret.ORIG);
-		fireValueChanged();
-	}
-
 	public ListSelectionModel getColumnSelectionModel() {
 		if (columnSelectionModel == null) {
 			columnSelectionModel = new FastListSelectionModel();
@@ -327,16 +331,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 
 	public long[] getSize() {
 		return matrix.getSize();
-	}
-
-	public void setEntriesGaussian_(double mean, double variance) throws MatrixException {
-		new Randn(matrix).calc(Ret.ORIG);
-		fireValueChanged();
-	}
-
-	public void setEntriesUniform_(double min, double max) throws MatrixException {
-		new Rand(matrix).calc(Ret.ORIG);
-		fireValueChanged();
 	}
 
 	public final Icon getIcon() {
@@ -364,9 +358,12 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 			int HEIGHT = table.getRowHeight(0) - 1;
 
 			Class<?> cl = Class.forName("org.ujmp.gui.matrix.MatrixRenderer");
-			DefaultTableCellRenderer mr = (DefaultTableCellRenderer) cl.newInstance();
-			Component c = mr.getTableCellRendererComponent(table, this, false, false, 0, 0);
-			BufferedImage bi = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+			DefaultTableCellRenderer mr = (DefaultTableCellRenderer) cl
+					.newInstance();
+			Component c = mr.getTableCellRendererComponent(table, this, false,
+					false, 0, 0);
+			BufferedImage bi = new BufferedImage(WIDTH, HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
 			c.paint(bi.getGraphics());
 			return new ImageIcon(bi);
 
@@ -387,10 +384,12 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	@Override
 	public String toString() {
 		if (matrix.getLabel() != null) {
-			return "[" + Coordinates.toString(matrix.getSize()) + "] " + matrix.getClass().getSimpleName() + " ["
+			return "[" + Coordinates.toString(matrix.getSize()) + "] "
+					+ matrix.getClass().getSimpleName() + " ["
 					+ matrix.getLabel() + "]";
 		} else {
-			return "[" + Coordinates.toString(matrix.getSize()) + "] " + matrix.getClass().getSimpleName();
+			return "[" + Coordinates.toString(matrix.getSize()) + "] "
+					+ matrix.getClass().getSimpleName();
 		}
 	}
 }

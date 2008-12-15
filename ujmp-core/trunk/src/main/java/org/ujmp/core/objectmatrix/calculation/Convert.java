@@ -43,6 +43,16 @@ public class Convert extends AbstractCalculation {
 		return getSource().getAsDouble(coordinates);
 	}
 
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setObject(Object value, long... coordinates) throws MatrixException {
+	}
+
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setDouble(double value, long... coordinates) throws MatrixException {
+	}
+
 	public static Matrix calcNew(ValueType valueType, AnnotationTransfer annotationTransfer,
 			Matrix source) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());

@@ -677,7 +677,7 @@ public abstract class AbstractMatrix implements Matrix {
 		return calculation.calc(returnType);
 	}
 
-	public final void notifyGUIObject() {
+	public void notifyGUIObject() {
 		if (guiObject != null) {
 			guiObject.fireValueChanged();
 		}
@@ -957,20 +957,20 @@ public abstract class AbstractMatrix implements Matrix {
 		return getSize().length;
 	}
 
-	public final Matrix ones() throws MatrixException {
-		return Ones.calc(this);
+	public final Matrix ones(Ret ret) throws MatrixException {
+		return new Ones(this).calc(ret);
 	}
 
-	public final Matrix fill(double value) throws MatrixException {
-		return Fill.calc(this, value);
+	public final Matrix fill(Ret ret, Object value) throws MatrixException {
+		return new Fill(this, value).calc(ret);
 	}
 
-	public final Matrix zeros() throws MatrixException {
-		return Zeros.calc(this);
+	public final Matrix zeros(Ret ret) throws MatrixException {
+		return new Zeros(this).calc(ret);
 	}
 
-	public final Matrix eye() throws MatrixException {
-		return Eye.calc(this);
+	public final Matrix eye(Ret ret) throws MatrixException {
+		return new Eye(this).calc(ret);
 	}
 
 	public Matrix plus(double v) throws MatrixException {
@@ -1001,12 +1001,12 @@ public abstract class AbstractMatrix implements Matrix {
 		}
 	}
 
-	public final Matrix rand() throws MatrixException {
-		return Rand.calc(this);
+	public final Matrix rand(Ret ret) throws MatrixException {
+		return new Rand(this).calc(ret);
 	}
 
-	public final Matrix randn() throws MatrixException {
-		return Randn.calc(this);
+	public final Matrix randn(Ret ret) throws MatrixException {
+		return new Randn(this).calc(ret);
 	}
 
 	public final int compareTo(Matrix m) {

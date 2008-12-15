@@ -286,7 +286,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testCountMissingValues() throws Exception {
 		Matrix m = createMatrix(4, 4);
-		m = m.zeros();
+		m = m.zeros(Ret.ORIG);
 		m.setAsDouble(Double.NaN, 1, 0);
 		m.setAsDouble(Double.NaN, 3, 0);
 		m.setAsDouble(Double.NaN, 2, 1);

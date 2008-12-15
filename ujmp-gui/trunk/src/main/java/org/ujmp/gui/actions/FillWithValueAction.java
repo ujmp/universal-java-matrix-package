@@ -30,6 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
@@ -42,13 +43,15 @@ public class FillWithValueAction extends MatrixAction {
 		this(c, m, v, "");
 	}
 
-	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v, String initialValue) {
+	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v,
+			String initialValue) {
 		super(c, m, v);
 		this.initialValue = initialValue;
 		putValue(Action.NAME, "Fill with value");
 		putValue(Action.SHORT_DESCRIPTION, "sets all entries to the same value");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F,
+				0));
 	}
 
 	@Override
@@ -57,7 +60,7 @@ public class FillWithValueAction extends MatrixAction {
 		String s = JOptionPane.showInputDialog("Enter value:", initialValue);
 		try {
 			value = Double.parseDouble(s);
-			getMatrixObject().setEntriesTo_(value);
+			getMatrixObject().getMatrix().fill(Ret.ORIG, value);
 		} catch (Exception ex) {
 		}
 		return null;

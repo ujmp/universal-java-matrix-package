@@ -58,7 +58,15 @@ public class CalculationMatrix extends AbstractMatrix {
 		return calculation.getObject(coordinates);
 	}
 
-	public void setObject(Object o, long... coordinates) throws MatrixException {
+	public final void setObject(Object o, long... coordinates) throws MatrixException {
+		calculation.setObject(o, coordinates);
+	}
+
+	public void notifyGUIObject() {
+		super.notifyGUIObject();
+		if (calculation.getSource() != null) {
+			calculation.getSource().notifyGUIObject();
+		}
 	}
 
 	@Override

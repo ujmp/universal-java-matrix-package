@@ -85,4 +85,20 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
+	@Override
+	public void setObject(Object value, long... coordinates) throws MatrixException {
+		if (selection[ROW] != null && selection[COLUMN] != null) {
+			getSource().setObject(value, selection[ROW][(int) coordinates[ROW]],
+					selection[COLUMN][(int) coordinates[COLUMN]]);
+		} else {
+			if (selection[ROW] == null) {
+				getSource().setObject(value, coordinates[ROW],
+						selection[COLUMN][(int) coordinates[COLUMN]]);
+			} else {
+				getSource().setObject(value, selection[ROW][(int) coordinates[ROW]],
+						coordinates[COLUMN]);
+			}
+		}
+	}
+
 }

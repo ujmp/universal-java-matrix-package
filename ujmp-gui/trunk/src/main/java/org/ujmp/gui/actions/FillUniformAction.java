@@ -29,6 +29,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -39,15 +40,17 @@ public class FillUniformAction extends MatrixAction {
 	public FillUniformAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fill Uniform");
-		putValue(Action.SHORT_DESCRIPTION, "set entries to random values between -1.0 and 1.0");
+		putValue(Action.SHORT_DESCRIPTION,
+				"set entries to random values between -1.0 and 1.0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U,
+				0));
 	}
 
 	@Override
 	public Object call() throws MatrixException {
 		MatrixGUIObject m = getMatrixObject();
-		m.setEntriesUniform_(-1.0, 1.0);
+		m.getMatrix().rand(Ret.ORIG);
 		return m;
 	}
 }

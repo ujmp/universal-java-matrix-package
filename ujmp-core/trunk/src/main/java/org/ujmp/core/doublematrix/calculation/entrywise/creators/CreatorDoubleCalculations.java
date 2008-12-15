@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface CreatorDoubleCalculations {
@@ -33,14 +34,14 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with zeros.
 	 */
-	public Matrix zeros() throws MatrixException;
+	public Matrix zeros(Ret ret) throws MatrixException;
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to 1.0.
 	 * 
 	 * @return Matrix with ones.
 	 */
-	public Matrix ones() throws MatrixException;
+	public Matrix ones(Ret ret) throws MatrixException;
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to uniform
@@ -48,7 +49,7 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with uniformly distributed values.
 	 */
-	public Matrix rand() throws MatrixException;
+	public Matrix rand(Ret ret) throws MatrixException;
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to random
@@ -57,7 +58,7 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with normally distributed values.
 	 */
-	public Matrix randn() throws MatrixException;
+	public Matrix randn(Ret ret) throws MatrixException;
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to a desired
@@ -67,13 +68,13 @@ public interface CreatorDoubleCalculations {
 	 *            fill with this value
 	 * @return Matrix with ones.
 	 */
-	public Matrix fill(double value) throws MatrixException;
+	public Matrix fill(Ret ret, Object value) throws MatrixException;
 
 	/**
 	 * Returns a matrix with ones at the diagonal.
 	 * 
 	 * @return Eye matrix with ones at the diagonal
 	 */
-	public Matrix eye() throws MatrixException;
+	public Matrix eye(Ret ret) throws MatrixException;
 
 }

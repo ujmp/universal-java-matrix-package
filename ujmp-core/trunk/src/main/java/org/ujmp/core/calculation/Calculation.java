@@ -70,6 +70,10 @@ public interface Calculation extends Serializable {
 
 	public Object getObject(long... coordinates) throws MatrixException;
 
+	public void setObject(Object value, long... coordinates) throws MatrixException;
+
+	public void setDouble(double value, long... coordinates) throws MatrixException;
+
 	public String getString(long... coordinates) throws MatrixException;
 
 	public Annotation getAnnotation();

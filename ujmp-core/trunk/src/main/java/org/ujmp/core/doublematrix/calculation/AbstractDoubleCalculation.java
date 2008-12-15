@@ -68,7 +68,18 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsDouble(getDouble(c), c);
 		}
+		getSource().notifyGUIObject();
 		return getSource();
+	}
+
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setObject(Object value, long... coordinates) throws MatrixException {
+	}
+
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setDouble(double value, long... coordinates) throws MatrixException {
 	}
 
 	@Override

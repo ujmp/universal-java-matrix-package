@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
@@ -37,11 +38,19 @@ public class Plus extends AbstractDoubleCalculation {
 	public Plus(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
+		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
+			getSources()[1] = MatrixFactory.fill(m2.getEuklideanValue(), m1.getSize());
+		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
+			getSources()[0] = MatrixFactory.fill(m1.getEuklideanValue(), m2.getSize());
+		}
+	}
+
+	public Plus(Matrix m1, Matrix m2) {
+		this(true, m1, m2);
 	}
 
 	public Plus(boolean ignoreNaN, Matrix m1, double v2) throws MatrixException {
-		super(m1, MatrixFactory.fill(v2, m1.getSize()));
-		this.ignoreNaN = ignoreNaN;
+		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
 	@Override
@@ -53,10 +62,17 @@ public class Plus extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
+		if (m2.isScalar()) {
+			return calc(ignoreNaN, m1, m2.getEuklideanValue());
+		}
+		if (m1.isScalar()) {
+			return calc(ignoreNaN, m2, m1.getEuklideanValue());
+		}
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
 		if (ignoreNaN) {
 			for (long[] c : m2.availableCoordinates()) {
-				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c)) + MathUtil.ignoreNaN(m2.getAsDouble(c)), c);
+				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c))
+						+ MathUtil.ignoreNaN(m2.getAsDouble(c)), c);
 			}
 		} else {
 			for (long[] c : m2.availableCoordinates()) {

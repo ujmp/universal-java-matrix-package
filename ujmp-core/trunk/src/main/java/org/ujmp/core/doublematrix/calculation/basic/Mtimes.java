@@ -35,6 +35,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
+	private Matrix result = null;
+
 	public Mtimes(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
@@ -42,13 +44,17 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
-				* MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
-				.getAsDouble(coordinates)
-				* getSources()[1].getAsDouble(coordinates);
+		if (result == null) {
+			result = calc(ignoreNaN, getSources()[0], getSources()[1]);
+		}
+		return result.getAsDouble(coordinates);
 	}
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
+		if (m1.isScalar() || m2.isScalar()) {
+			return Times.calc(ignoreNaN, m1, m2);
+		}
+
 		if (m1.getColumnCount() != m2.getRowCount()) {
 			throw new MatrixException("Matrices have wrong size: "
 					+ Coordinates.toString(m1.getSize()) + " and "
@@ -83,6 +89,14 @@ public class Mtimes extends AbstractDoubleCalculation {
 		}
 
 		return new DefaultDenseDoubleMatrix2D(ret);
+	}
+
+	@Override
+	public long[] getSize() {
+		if (result == null) {
+			result = calc(ignoreNaN, getSources()[0], getSources()[1]);
+		}
+		return result.getSize();
 	}
 
 }

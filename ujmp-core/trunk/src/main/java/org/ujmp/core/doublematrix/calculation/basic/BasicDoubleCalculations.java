@@ -218,6 +218,42 @@ public interface BasicDoubleCalculations {
 	public Matrix mtimes(Matrix matrix) throws MatrixException;
 
 	/**
+	 * Performs a matrix multiplication on the two matrices. The matrices must
+	 * be 2-dimensional and have the correct size.
+	 * 
+	 * @param returnType
+	 *            Defines if a new Matrix or a link should be returned.
+	 * @param ignoreNaN
+	 *            should missing values be ignored
+	 * @param matrix
+	 *            the second matrix
+	 * @return Matrix product
+	 */
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException;
+
+	/**
+	 * Equal to times()
+	 * 
+	 * @param value
+	 *            the value
+	 * @return Matrix product
+	 */
+	public Matrix mtimes(double value) throws MatrixException;
+
+	/**
+	 * Equal to times()
+	 * 
+	 * @param returnType
+	 *            Defines if a new Matrix or a link should be returned.
+	 * @param ignoreNaN
+	 *            should missing values be ignored
+	 * @param value
+	 *            the value to multiply
+	 * @return Matrix product
+	 */
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value) throws MatrixException;
+
+	/**
 	 * Performs an averaging matrix multiplication on the two matrices. The
 	 * matrices must be 2-dimensional and have the correct size.
 	 * 

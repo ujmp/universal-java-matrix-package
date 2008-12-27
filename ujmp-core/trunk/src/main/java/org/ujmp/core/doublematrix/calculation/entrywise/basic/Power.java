@@ -25,23 +25,28 @@ package org.ujmp.core.doublematrix.calculation.entrywise.basic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Power extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -6766560469728046231L;
 
-	public Power(Matrix matrix, Matrix power) {
-		super(matrix, power);
+	public Power(Matrix m1, Matrix m2) {
+		super(m1, m2);
+		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
+			getSources()[1] = MatrixFactory.fill(m2.getEuklideanValue(), m1.getSize());
+		}
 	}
 
 	public Power(Matrix m1, double v2) throws MatrixException {
-		super(m1, MatrixFactory.fill(v2, m1.getSize()));
+		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		return Math.pow(getSource().getAsDouble(coordinates), getSources()[1].getAsDouble(coordinates));
+		return Math.pow(getSource().getAsDouble(coordinates), getSources()[1]
+				.getAsDouble(coordinates));
 	}
 
 	public static Matrix calc(Matrix source, Matrix power) throws MatrixException {

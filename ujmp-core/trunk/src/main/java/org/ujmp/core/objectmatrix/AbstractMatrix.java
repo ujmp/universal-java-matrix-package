@@ -687,6 +687,18 @@ public abstract class AbstractMatrix implements Matrix {
 		return Mtimes.calc(false, this, matrix);
 	}
 
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
+		return calc(new Mtimes(ignoreNaN, this, matrix), returnType);
+	}
+
+	public Matrix mtimes(double value) throws MatrixException {
+		return times(value);
+	}
+
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value) throws MatrixException {
+		return times(returnType, ignoreNaN, value);
+	}
+
 	public boolean getAsBoolean(long... coordinates) throws MatrixException {
 		return getAsDouble(coordinates) != 0.0;
 	}

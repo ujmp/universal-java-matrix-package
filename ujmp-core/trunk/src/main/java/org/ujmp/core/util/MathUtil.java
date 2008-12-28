@@ -35,6 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 
 public abstract class MathUtil {
 
@@ -195,6 +196,17 @@ public abstract class MathUtil {
 		return Double.valueOf(Double.NaN).equals(o)
 				|| Double.valueOf(Double.POSITIVE_INFINITY).equals(o)
 				|| Double.valueOf(Double.NEGATIVE_INFINITY).equals(o);
+	}
+
+	public static final Matrix getMatrix(Object o) {
+		if (o == null) {
+			return MatrixFactory.EMPTYMATRIX;
+		}
+		if (o instanceof Matrix) {
+			return (Matrix) o;
+		} else {
+			return MatrixFactory.linkToValue(o);
+		}
 	}
 
 	public static final double getDouble(Object o) {

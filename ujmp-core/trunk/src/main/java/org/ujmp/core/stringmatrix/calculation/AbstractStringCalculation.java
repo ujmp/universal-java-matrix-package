@@ -56,6 +56,16 @@ public abstract class AbstractStringCalculation extends AbstractCalculation {
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 	}
 
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+	}
+
+	@Override
+	public final boolean getBoolean(long... coordinates) throws MatrixException {
+		return MathUtil.getBoolean(getObject(coordinates));
+	}
+
 	@Override
 	public String getObject(long... coordinates) throws MatrixException {
 		return getString(coordinates);

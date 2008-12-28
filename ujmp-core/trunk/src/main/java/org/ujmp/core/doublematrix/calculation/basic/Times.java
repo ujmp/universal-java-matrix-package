@@ -39,9 +39,9 @@ public class Times extends AbstractDoubleCalculation {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = MatrixFactory.fill(m2.getEuklideanValue(), m1.getSize());
+			getSources()[1] = MatrixFactory.fill(m2.getAsDouble(0, 0), m1.getSize());
 		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = MatrixFactory.fill(m1.getEuklideanValue(), m2.getSize());
+			getSources()[0] = MatrixFactory.fill(m1.getAsDouble(0, 0), m2.getSize());
 		}
 	}
 
@@ -67,10 +67,10 @@ public class Times extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
 		if (m2.isScalar()) {
-			return calc(ignoreNaN, m1, m2.getEuklideanValue());
+			return calc(ignoreNaN, m1, m2.getAsDouble(0, 0));
 		}
 		if (m1.isScalar()) {
-			return calc(ignoreNaN, m2, m1.getEuklideanValue());
+			return calc(ignoreNaN, m2, m1.getAsDouble(0, 0));
 		}
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
 		if (ignoreNaN) {

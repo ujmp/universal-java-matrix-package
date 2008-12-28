@@ -34,7 +34,7 @@ import org.ujmp.core.exceptions.MatrixException;
  */
 public interface CoordinateFunctions {
 
-	public Iterable<long[]> nonZeroCoordinates();
+	public Iterable<long[]> nonZeroCoordinates() throws MatrixException;
 
 	/**
 	 * Returns an Iterator that goes over all coordinates in the Matrix. It goes
@@ -42,7 +42,7 @@ public interface CoordinateFunctions {
 	 * 
 	 * @return Iterable over all coordinates within a Matrix.
 	 */
-	public Iterable<long[]> allCoordinates();
+	public Iterable<long[]> allCoordinates() throws MatrixException;
 
 	/**
 	 * Returns an Iterator that only goes over the coordinates in the Matrix
@@ -51,7 +51,7 @@ public interface CoordinateFunctions {
 	 * 
 	 * @return Iterable over the saved entries in a Matrix.
 	 */
-	public Iterable<long[]> availableCoordinates();
+	public Iterable<long[]> availableCoordinates() throws MatrixException;
 
 	/**
 	 * Returns an Iterator that goes only over the Coordinates defined by the
@@ -64,7 +64,7 @@ public interface CoordinateFunctions {
 	 *            The String defining the selection of rows or columns
 	 * @return Iterable over the desired Coordinates
 	 */
-	public Iterable<long[]> selectedCoordinates(String selection);
+	public Iterable<long[]> selectedCoordinates(String selection) throws MatrixException;
 
 	/**
 	 * Returns an Iterator that goes only over the Coordinates defined by the
@@ -113,6 +113,6 @@ public interface CoordinateFunctions {
 	 *            The coordinates to check
 	 * @return a boolean stating if the coordinates are part of the Matrix
 	 */
-	public boolean contains(long... coordinates);
+	public boolean contains(long... coordinates) throws MatrixException;
 
 }

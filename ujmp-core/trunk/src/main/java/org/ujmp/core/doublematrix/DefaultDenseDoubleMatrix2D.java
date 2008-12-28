@@ -23,8 +23,6 @@
 
 package org.ujmp.core.doublematrix;
 
-import java.util.logging.Level;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -190,10 +188,9 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	@Override
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
 		if (values[0].length != matrix.getRowCount()) {
-			logger.log(Level.WARNING, "matrices have wrong size: "
+			throw new MatrixException("matrices have wrong size: "
 					+ Coordinates.toString(getSize()) + " and "
-					+ Coordinates.toString(matrix.getSize()), new Exception());
-			return null;
+					+ Coordinates.toString(matrix.getSize()));
 		}
 
 		int i, j, k;

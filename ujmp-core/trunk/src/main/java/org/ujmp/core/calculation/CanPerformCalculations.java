@@ -24,6 +24,7 @@
 package org.ujmp.core.calculation;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.booleanmatrix.calculation.BooleanCalculations;
 import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
@@ -42,9 +43,8 @@ import org.ujmp.core.stringmatrix.calculation.StringCalculations;
  * </ul>
  * </p>
  * 
- * </p>
- * Standard calculations are very easy to use, since these calculations can be
- * directly used by calling the methods explicitely. E.g. for calculating the
+ * </p> Standard calculations are very easy to use, since these calculations can
+ * be directly used by calling the methods explicitely. E.g. for calculating the
  * mean of a matrix, the method <code>mean</code> can be used. More advanced
  * calculations are available by using the <code>calc</code> methods. The
  * calculation to call can be either given by a String (containing the name of
@@ -60,10 +60,10 @@ import org.ujmp.core.stringmatrix.calculation.StringCalculations;
  * 
  * @see Calculation.Calc for available calculations
  * @author Holger Arndt
- *
+ * 
  */
-public interface CanPerformCalculations extends DoubleCalculations, StringCalculations,
-		ObjectCalculations {
+public interface CanPerformCalculations extends DoubleCalculations, BooleanCalculations,
+		StringCalculations, ObjectCalculations {
 
 	public Matrix calcNew(Calculation calculation) throws MatrixException;
 

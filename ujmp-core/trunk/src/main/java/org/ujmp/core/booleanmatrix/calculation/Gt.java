@@ -21,51 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.entrywise.basic;
+package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Power extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = -6766560469728046231L;
+public class Gt extends AbstractBooleanCalculation {
+	private static final long serialVersionUID = -1905235039441337140L;
 
-	public Power(Matrix m1, Matrix m2) {
+	public Gt(Matrix m1, Matrix m2) {
 		super(m1, m2);
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
 			getSources()[1] = MatrixFactory.fill(m2.getAsDouble(0, 0), m1.getSize());
+		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
+			getSources()[0] = MatrixFactory.fill(m1.getAsDouble(0, 0), m2.getSize());
 		}
 	}
 
-	public Power(Matrix m1, double v2) throws MatrixException {
+	public Gt(Matrix m1, double v2) throws MatrixException {
 		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
+	public Gt(double v1, Matrix m2) throws MatrixException {
+		this(MatrixFactory.fill(v1, m2.getSize()), m2);
+	}
+
 	@Override
-	public double getDouble(long... coordinates) throws MatrixException {
-		return Math.pow(getSource().getAsDouble(coordinates), getSources()[1]
-				.getAsDouble(coordinates));
+	public boolean getBoolean(long... coordinates) throws MatrixException {
+		return getSource().getAsDouble(coordinates) > getSources()[1].getAsDouble(coordinates);
 	}
-
-	public static Matrix calc(Matrix source, Matrix power) throws MatrixException {
-		if (power.isScalar() && !Coordinates.equals(source.getSize(), power.getSize())) {
-			power = MatrixFactory.fill(power.getAsDouble(0, 0), source.getSize());
-		}
-		Matrix ret = MatrixFactory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.pow(source.getAsDouble(c), power.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
-	public static Matrix calc(Matrix source, double power) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.pow(source.getAsDouble(c), power), c);
-		}
-		return ret;
-	}
-
 }

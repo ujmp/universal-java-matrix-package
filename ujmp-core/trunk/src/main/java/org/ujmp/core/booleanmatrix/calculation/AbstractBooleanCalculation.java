@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.objectmatrix.calculation;
+package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -29,27 +29,52 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractObjectCalculation extends AbstractCalculation {
+public abstract class AbstractBooleanCalculation extends AbstractCalculation implements
+		BooleanCalculation {
 
-	public AbstractObjectCalculation(Matrix... sources) {
+	public AbstractBooleanCalculation(Matrix... sources) {
 		super(sources);
 	}
 
-	public AbstractObjectCalculation(int dimension, Matrix... sources) {
+	public AbstractBooleanCalculation(int dimension, Matrix... sources) {
 		super(dimension, sources);
 	}
 
 	@Override
-	public final double getDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
+	public final Boolean getObject(long... coordinates) throws MatrixException {
+		return getBoolean(coordinates);
 	}
 
 	@Override
-	public final boolean getBoolean(long... coordinates) throws MatrixException {
-		return MathUtil.getBoolean(getObject(coordinates));
+	public final String getString(long... coordinates) throws MatrixException {
+		return "" + getBoolean(coordinates);
+	}
+
+	@Override
+	public final double getDouble(long... coordinates) throws MatrixException {
+		return getBoolean(coordinates) ? 1 : 0;
+	}
+
+	public final Matrix calcNew() throws MatrixException {
+		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
+		// TODO: copy annotation
+		for (long[] c : result.allCoordinates()) {
+			result.setAsBoolean(getBoolean(c), c);
+		}
+		return result;
+	}
+
+	public final Matrix calcOrig() throws MatrixException {
+		if (!Coordinates.equals(getSource().getSize(), getSize())) {
+			throw new MatrixException(
+					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
+		}
+		for (long[] c : getSource().allCoordinates()) {
+			getSource().setAsBoolean(getBoolean(c), c);
+		}
+		getSource().notifyGUIObject();
+		return getSource();
 	}
 
 	// this method is doing nothing, but it has to be there for submatrix or
@@ -68,44 +93,8 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation {
 	}
 
 	@Override
-	public final String getString(long... coordinates) throws MatrixException {
-		return StringUtil.convert(getObject(coordinates));
-	}
-
-	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
-		// TODO: copy annotation
-
-		switch (getValueType()) {
-		case DOUBLE:
-			for (long[] c : result.allCoordinates()) {
-				result.setAsDouble(getDouble(c), c);
-			}
-			break;
-		default:
-			for (long[] c : result.allCoordinates()) {
-				result.setObject(getObject(c), c);
-			}
-			break;
-		}
-		return result;
-	}
-
-	public final Matrix calcOrig() throws MatrixException {
-		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
-					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
-		}
-		for (long[] c : getSource().allCoordinates()) {
-			getSource().setObject(getObject(c), c);
-		}
-		getSource().notifyGUIObject();
-		return getSource();
-	}
-
-	@Override
 	public ValueType getValueType() {
-		return getSource().getValueType();
+		return ValueType.BOOLEAN;
 	}
 
 }

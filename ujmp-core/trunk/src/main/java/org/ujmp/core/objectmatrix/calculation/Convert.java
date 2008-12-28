@@ -30,6 +30,7 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public class Convert extends AbstractCalculation {
 	private static final long serialVersionUID = 6393277198816850597L;
@@ -51,6 +52,16 @@ public class Convert extends AbstractCalculation {
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
 	public void setDouble(double value, long... coordinates) throws MatrixException {
+	}
+
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+	}
+
+	@Override
+	public final boolean getBoolean(long... coordinates) throws MatrixException {
+		return MathUtil.getBoolean(getObject(coordinates));
 	}
 
 	public static Matrix calcNew(ValueType valueType, AnnotationTransfer annotationTransfer,

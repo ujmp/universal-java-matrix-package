@@ -50,6 +50,16 @@ public interface ObjectCalculations {
 	public Matrix toRowVector() throws MatrixException;
 
 	/**
+	 * Returns a matrix with equal size, where all entries are set to a desired
+	 * value.
+	 * 
+	 * @param value
+	 *            fill with this value
+	 * @return Matrix with ones.
+	 */
+	public Matrix fill(Ret ret, Object value) throws MatrixException;
+
+	/**
 	 * Replaces matching values in the matrix with another value
 	 * 
 	 * @param returnType

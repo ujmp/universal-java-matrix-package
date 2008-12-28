@@ -68,11 +68,15 @@ public interface Calculation extends Serializable {
 
 	public double getDouble(long... coordinates) throws MatrixException;
 
+	public boolean getBoolean(long... coordinates) throws MatrixException;
+
 	public Object getObject(long... coordinates) throws MatrixException;
 
 	public void setObject(Object value, long... coordinates) throws MatrixException;
 
 	public void setDouble(double value, long... coordinates) throws MatrixException;
+
+	public void setBoolean(boolean value, long... coordinates) throws MatrixException;
 
 	public String getString(long... coordinates) throws MatrixException;
 

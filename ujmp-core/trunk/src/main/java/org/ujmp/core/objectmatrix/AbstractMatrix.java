@@ -46,6 +46,12 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.booleanmatrix.calculation.Eq;
+import org.ujmp.core.booleanmatrix.calculation.Gt;
+import org.ujmp.core.booleanmatrix.calculation.Gteq;
+import org.ujmp.core.booleanmatrix.calculation.Lt;
+import org.ujmp.core.booleanmatrix.calculation.Lteq;
+import org.ujmp.core.booleanmatrix.calculation.Neq;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Calc;
@@ -64,7 +70,6 @@ import org.ujmp.core.doublematrix.calculation.entrywise.basic.Power;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Sign;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Sqrt;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Fill;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
@@ -117,6 +122,7 @@ import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
 import org.ujmp.core.objectmatrix.calculation.DiscretizeToColumns;
 import org.ujmp.core.objectmatrix.calculation.Distinct;
+import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
@@ -415,6 +421,54 @@ public abstract class AbstractMatrix implements Matrix {
 		return new Power(this, power).calc(returnType);
 	}
 
+	public final Matrix gt(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Gt(this, matrix).calc(returnType);
+	}
+
+	public final Matrix gt(Ret returnType, double value) throws MatrixException {
+		return new Gt(this, value).calc(returnType);
+	}
+
+	public final Matrix lt(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Lt(this, matrix).calc(returnType);
+	}
+
+	public final Matrix lt(Ret returnType, double value) throws MatrixException {
+		return new Lt(this, value).calc(returnType);
+	}
+
+	public final Matrix gteq(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Gteq(this, matrix).calc(returnType);
+	}
+
+	public final Matrix gteq(Ret returnType, double value) throws MatrixException {
+		return new Gteq(this, value).calc(returnType);
+	}
+
+	public final Matrix lteq(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Lteq(this, matrix).calc(returnType);
+	}
+
+	public final Matrix lteq(Ret returnType, double value) throws MatrixException {
+		return new Lteq(this, value).calc(returnType);
+	}
+
+	public final Matrix eq(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Eq(this, matrix).calc(returnType);
+	}
+
+	public final Matrix eq(Ret returnType, Object value) throws MatrixException {
+		return new Eq(this, value).calc(returnType);
+	}
+
+	public final Matrix neq(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Neq(this, matrix).calc(returnType);
+	}
+
+	public final Matrix neq(Ret returnType, Object value) throws MatrixException {
+		return new Neq(this, value).calc(returnType);
+	}
+
 	public long getValueCount() {
 		return Coordinates.product(getSize());
 	}
@@ -447,13 +501,8 @@ public abstract class AbstractMatrix implements Matrix {
 		return minc;
 	}
 
-	public Iterable<long[]> selectedCoordinates(String selection) {
-		try {
-			return select(Ret.LINK, selection).allCoordinates();
-		} catch (MatrixException e) {
-			logger.log(Level.WARNING, "could not select coordinates", e);
-			return null;
-		}
+	public Iterable<long[]> selectedCoordinates(String selection) throws MatrixException {
+		return select(Ret.LINK, selection).allCoordinates();
 	}
 
 	public Iterable<long[]> selectedCoordinates(long[]... selection) throws MatrixException {

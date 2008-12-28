@@ -46,6 +46,14 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		return getDouble(coordinates);
 	}
 
+	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+		setDouble(value ? 1.0 : 0.0, coordinates);
+	}
+
+	public boolean getBoolean(long... coordinates) throws MatrixException {
+		return getDouble(coordinates) != 0.0;
+	}
+
 	@Override
 	public final String getString(long... coordinates) throws MatrixException {
 		return "" + getDouble(coordinates);

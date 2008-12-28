@@ -23,13 +23,15 @@
 
 package org.ujmp.core.interfaces;
 
+import java.util.Date;
+
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicMatrixProperties {
 
 	public Iterable<Object> allValues();
-	
+
 	public ValueType getValueType();
 
 	public long getValueCount();
@@ -71,6 +73,24 @@ public interface BasicMatrixProperties {
 	public boolean containsMissingValues() throws MatrixException;
 
 	public double getDoubleValue() throws MatrixException;
+
+	public int getIntValue() throws MatrixException;
+
+	public long getLongValue() throws MatrixException;
+
+	public short getShortValue() throws MatrixException;
+
+	public byte getByteValue() throws MatrixException;
+
+	public boolean getBooleanValue() throws MatrixException;
+
+	public String getStringValue() throws MatrixException;
+
+	public Date getDateValue() throws MatrixException;
+
+	public char getCharValue() throws MatrixException;
+
+	public float getFloatValue() throws MatrixException;
 
 	public double getMinValue() throws MatrixException;
 

@@ -133,6 +133,7 @@ import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sort;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
+import org.ujmp.core.util.DateUtil;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -1758,7 +1759,73 @@ public abstract class AbstractMatrix implements Matrix {
 	}
 
 	public final double getDoubleValue() throws MatrixException {
-		return getEuklideanValue();
+		if (isScalar()) {
+			return getAsDouble(0, 0);
+		}
+		return getMeanValue();
+	}
+
+	public final int getIntValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsInt(0, 0);
+		}
+		return (int) getMeanValue();
+	}
+
+	public final byte getByteValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsByte(0, 0);
+		}
+		return (byte) getMeanValue();
+	}
+
+	public final char getCharValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsChar(0, 0);
+		}
+		return (char) getMeanValue();
+	}
+
+	public final float getFloatValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsFloat(0, 0);
+		}
+		return (float) getMeanValue();
+	}
+
+	public final long getLongValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsLong(0, 0);
+		}
+		return (long) getMeanValue();
+	}
+
+	public final short getShortValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsShort(0, 0);
+		}
+		return (short) getMeanValue();
+	}
+
+	public final Date getDateValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsDate(0, 0);
+		}
+		return DateUtil.fromObject(getMeanValue());
+	}
+
+	public final boolean getBooleanValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsBoolean(0, 0);
+		}
+		return getMeanValue() != 0;
+	}
+
+	public final String getStringValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsString(0, 0);
+		}
+		throw new MatrixException("too many entries, cannot return a single String");
 	}
 
 	public final double getRMS() throws MatrixException {

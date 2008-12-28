@@ -27,6 +27,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.ujmp.core.Matrix;
+
 public abstract class DateUtil {
 
 	private static DateFormat dateFormat = DateFormat.getDateInstance();
@@ -43,6 +45,9 @@ public abstract class DateUtil {
 		}
 		if (o instanceof String) {
 			return fromString((String) o);
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getDateValue();
 		}
 		return fromString(StringUtil.format(o));
 	}

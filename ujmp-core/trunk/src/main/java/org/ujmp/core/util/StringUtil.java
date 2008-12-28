@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class StringUtil {
@@ -58,6 +59,9 @@ public abstract class StringUtil {
 		}
 		if (o instanceof Number) {
 			return format(((Number) o).doubleValue());
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getStringValue();
 		}
 		return o.toString();
 	}

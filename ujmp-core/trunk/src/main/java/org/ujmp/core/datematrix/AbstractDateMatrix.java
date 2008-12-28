@@ -28,7 +28,7 @@ import java.util.Date;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.DateUtil;
 
 public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> implements DateMatrix {
 
@@ -39,7 +39,7 @@ public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> imp
 
 	@Override
 	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setDate(MathUtil.getDate(o), coordinates);
+		setDate(DateUtil.fromObject(o), coordinates);
 	}
 
 	@Override
@@ -62,6 +62,7 @@ public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> imp
 		setDate(new Date((long) value));
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.DATE;
 	}

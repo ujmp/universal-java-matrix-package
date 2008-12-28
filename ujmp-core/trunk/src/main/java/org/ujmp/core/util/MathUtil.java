@@ -25,8 +25,6 @@ package org.ujmp.core.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,6 +33,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.ujmp.core.Matrix;
 
 public abstract class MathUtil {
 
@@ -204,6 +204,8 @@ public abstract class MathUtil {
 			return (Double) o;
 		} else if (o instanceof Date) {
 			return ((Date) o).getTime();
+		} else if (o instanceof Matrix) {
+			return ((Matrix) o).getDoubleValue();
 		} else {
 			try {
 				return Double.parseDouble(o.toString());
@@ -448,7 +450,10 @@ public abstract class MathUtil {
 		if (o instanceof Number) {
 			return ((Number) o).doubleValue() != 0;
 		}
-		return true;
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getBooleanValue();
+		}
+		return false;
 	}
 
 	public static byte getByte(Object o) {
@@ -460,6 +465,9 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Number) {
 			return ((Number) o).byteValue();
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getByteValue();
 		}
 		return 0;
 	}
@@ -474,26 +482,10 @@ public abstract class MathUtil {
 		if (o instanceof Number) {
 			return (char) ((Number) o).byteValue();
 		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getCharValue();
+		}
 		return 0;
-	}
-
-	public static Date getDate(Object o) {
-		if (o == null) {
-			return null;
-		}
-		if (o instanceof Date) {
-			return (Date) o;
-		}
-		if (o instanceof String) {
-			try {
-				return DateFormat.getDateInstance().parse((String) o);
-			} catch (ParseException e) {
-			}
-		}
-		if (o instanceof Number) {
-			return new Date(((Number) o).longValue());
-		}
-		return null;
 	}
 
 	public static float getFloat(Object o) {
@@ -505,6 +497,9 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Number) {
 			return ((Number) o).floatValue();
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getFloatValue();
 		}
 		return 0;
 	}
@@ -519,6 +514,9 @@ public abstract class MathUtil {
 		if (o instanceof Number) {
 			return ((Number) o).intValue();
 		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getIntValue();
+		}
 		return 0;
 	}
 
@@ -532,6 +530,9 @@ public abstract class MathUtil {
 		if (o instanceof Number) {
 			return ((Number) o).longValue();
 		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getLongValue();
+		}
 		return 0;
 	}
 
@@ -544,6 +545,9 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Number) {
 			return ((Number) o).shortValue();
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getShortValue();
 		}
 		return 0;
 	}

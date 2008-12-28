@@ -27,32 +27,29 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
-public class Neq extends AbstractBooleanCalculation {
-	private static final long serialVersionUID = 845058714025562635L;
+public class And extends AbstractBooleanCalculation {
+	private static final long serialVersionUID = -2181584777964801120L;
 
-	public Neq(Matrix m1, Matrix m2) {
+	public And(Matrix m1, Matrix m2) {
 		super(m1, m2);
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = MatrixFactory.fill(m2.getObject(0, 0), m1.getSize());
+			getSources()[1] = MatrixFactory.fill(m2.getAsBoolean(0, 0), m1.getSize());
 		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = MatrixFactory.fill(m1.getObject(0, 0), m2.getSize());
+			getSources()[0] = MatrixFactory.fill(m1.getAsBoolean(0, 0), m2.getSize());
 		}
 	}
 
-	public Neq(Matrix m1, Object v2) throws MatrixException {
+	public And(Matrix m1, boolean v2) throws MatrixException {
 		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
-	public Neq(Object v1, Matrix m2) throws MatrixException {
+	public And(boolean v1, Matrix m2) throws MatrixException {
 		this(MatrixFactory.fill(v1, m2.getSize()), m2);
 	}
 
 	@Override
 	public boolean getBoolean(long... coordinates) throws MatrixException {
-		Object o1 = getSource().getObject(coordinates);
-		Object o2 = getSources()[1].getObject(coordinates);
-		return !MathUtil.equals(o1, o2);
+		return getSource().getAsBoolean(coordinates) && getSources()[1].getAsBoolean(coordinates);
 	}
 }

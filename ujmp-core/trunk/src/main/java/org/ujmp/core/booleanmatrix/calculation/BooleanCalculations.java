@@ -29,9 +29,9 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface BooleanCalculations {
 
-	public Matrix lteq(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix le(Ret returnType, Matrix matrix) throws MatrixException;
 
-	public Matrix gteq(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix ge(Ret returnType, Matrix matrix) throws MatrixException;
 
 	public Matrix gt(Ret returnType, Matrix matrix) throws MatrixException;
 
@@ -39,11 +39,19 @@ public interface BooleanCalculations {
 
 	public Matrix eq(Ret returnType, Matrix matrix) throws MatrixException;
 
-	public Matrix neq(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix ne(Ret returnType, Matrix matrix) throws MatrixException;
 
-	public Matrix lteq(Ret returnType, double value) throws MatrixException;
+	public Matrix and(Ret returnType, Matrix matrix) throws MatrixException;
 
-	public Matrix gteq(Ret returnType, double value) throws MatrixException;
+	public Matrix or(Ret returnType, Matrix matrix) throws MatrixException;
+
+	public Matrix xor(Ret returnType, Matrix matrix) throws MatrixException;
+
+	public Matrix not(Ret returnType) throws MatrixException;
+
+	public Matrix le(Ret returnType, double value) throws MatrixException;
+
+	public Matrix ge(Ret returnType, double value) throws MatrixException;
 
 	public Matrix gt(Ret returnType, double value) throws MatrixException;
 
@@ -51,6 +59,12 @@ public interface BooleanCalculations {
 
 	public Matrix eq(Ret returnType, Object value) throws MatrixException;
 
-	public Matrix neq(Ret returnType, Object value) throws MatrixException;
+	public Matrix ne(Ret returnType, Object value) throws MatrixException;
+
+	public Matrix and(Ret returnType, boolean value) throws MatrixException;
+
+	public Matrix or(Ret returnType, boolean value) throws MatrixException;
+
+	public Matrix xor(Ret returnType, boolean value) throws MatrixException;
 
 }

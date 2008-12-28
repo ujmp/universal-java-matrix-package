@@ -28,10 +28,10 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Lteq extends AbstractBooleanCalculation {
+public class Le extends AbstractBooleanCalculation {
 	private static final long serialVersionUID = 8486553525670337589L;
 
-	public Lteq(Matrix m1, Matrix m2) {
+	public Le(Matrix m1, Matrix m2) {
 		super(m1, m2);
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
 			getSources()[1] = MatrixFactory.fill(m2.getAsDouble(0, 0), m1.getSize());
@@ -40,11 +40,11 @@ public class Lteq extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Lteq(Matrix m1, double v2) throws MatrixException {
+	public Le(Matrix m1, double v2) throws MatrixException {
 		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
-	public Lteq(double v1, Matrix m2) throws MatrixException {
+	public Le(double v1, Matrix m2) throws MatrixException {
 		this(MatrixFactory.fill(v1, m2.getSize()), m2);
 	}
 

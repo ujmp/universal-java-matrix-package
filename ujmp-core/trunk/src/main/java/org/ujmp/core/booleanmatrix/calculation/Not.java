@@ -24,32 +24,17 @@
 package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Gteq extends AbstractBooleanCalculation {
-	private static final long serialVersionUID = 6844835787123352849L;
+public class Not extends AbstractBooleanCalculation {
+	private static final long serialVersionUID = -6064819896020842750L;
 
-	public Gteq(Matrix m1, Matrix m2) {
-		super(m1, m2);
-		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = MatrixFactory.fill(m2.getAsDouble(0, 0), m1.getSize());
-		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = MatrixFactory.fill(m1.getAsDouble(0, 0), m2.getSize());
-		}
-	}
-
-	public Gteq(Matrix m1, double v2) throws MatrixException {
-		this(m1, MatrixFactory.fill(v2, m1.getSize()));
-	}
-
-	public Gteq(double v1, Matrix m2) throws MatrixException {
-		this(MatrixFactory.fill(v1, m2.getSize()), m2);
+	public Not(Matrix m) {
+		super(m);
 	}
 
 	@Override
 	public boolean getBoolean(long... coordinates) throws MatrixException {
-		return getSource().getAsDouble(coordinates) >= getSources()[1].getAsDouble(coordinates);
+		return !getSource().getAsBoolean(coordinates);
 	}
 }

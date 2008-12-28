@@ -46,12 +46,16 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.booleanmatrix.calculation.And;
 import org.ujmp.core.booleanmatrix.calculation.Eq;
+import org.ujmp.core.booleanmatrix.calculation.Ge;
 import org.ujmp.core.booleanmatrix.calculation.Gt;
-import org.ujmp.core.booleanmatrix.calculation.Gteq;
+import org.ujmp.core.booleanmatrix.calculation.Le;
 import org.ujmp.core.booleanmatrix.calculation.Lt;
-import org.ujmp.core.booleanmatrix.calculation.Lteq;
-import org.ujmp.core.booleanmatrix.calculation.Neq;
+import org.ujmp.core.booleanmatrix.calculation.Ne;
+import org.ujmp.core.booleanmatrix.calculation.Not;
+import org.ujmp.core.booleanmatrix.calculation.Or;
+import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Calc;
@@ -429,6 +433,34 @@ public abstract class AbstractMatrix implements Matrix {
 		return new Gt(this, value).calc(returnType);
 	}
 
+	public final Matrix and(Ret returnType, Matrix matrix) throws MatrixException {
+		return new And(this, matrix).calc(returnType);
+	}
+
+	public final Matrix and(Ret returnType, boolean value) throws MatrixException {
+		return new And(this, value).calc(returnType);
+	}
+
+	public final Matrix or(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Or(this, matrix).calc(returnType);
+	}
+
+	public final Matrix or(Ret returnType, boolean value) throws MatrixException {
+		return new Or(this, value).calc(returnType);
+	}
+
+	public final Matrix xor(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Xor(this, matrix).calc(returnType);
+	}
+
+	public final Matrix xor(Ret returnType, boolean value) throws MatrixException {
+		return new Xor(this, value).calc(returnType);
+	}
+
+	public final Matrix not(Ret returnType) throws MatrixException {
+		return new Not(this).calc(returnType);
+	}
+
 	public final Matrix lt(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Lt(this, matrix).calc(returnType);
 	}
@@ -437,20 +469,20 @@ public abstract class AbstractMatrix implements Matrix {
 		return new Lt(this, value).calc(returnType);
 	}
 
-	public final Matrix gteq(Ret returnType, Matrix matrix) throws MatrixException {
-		return new Gteq(this, matrix).calc(returnType);
+	public final Matrix ge(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Ge(this, matrix).calc(returnType);
 	}
 
-	public final Matrix gteq(Ret returnType, double value) throws MatrixException {
-		return new Gteq(this, value).calc(returnType);
+	public final Matrix ge(Ret returnType, double value) throws MatrixException {
+		return new Ge(this, value).calc(returnType);
 	}
 
-	public final Matrix lteq(Ret returnType, Matrix matrix) throws MatrixException {
-		return new Lteq(this, matrix).calc(returnType);
+	public final Matrix le(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Le(this, matrix).calc(returnType);
 	}
 
-	public final Matrix lteq(Ret returnType, double value) throws MatrixException {
-		return new Lteq(this, value).calc(returnType);
+	public final Matrix le(Ret returnType, double value) throws MatrixException {
+		return new Le(this, value).calc(returnType);
 	}
 
 	public final Matrix eq(Ret returnType, Matrix matrix) throws MatrixException {
@@ -461,12 +493,12 @@ public abstract class AbstractMatrix implements Matrix {
 		return new Eq(this, value).calc(returnType);
 	}
 
-	public final Matrix neq(Ret returnType, Matrix matrix) throws MatrixException {
-		return new Neq(this, matrix).calc(returnType);
+	public final Matrix ne(Ret returnType, Matrix matrix) throws MatrixException {
+		return new Ne(this, matrix).calc(returnType);
 	}
 
-	public final Matrix neq(Ret returnType, Object value) throws MatrixException {
-		return new Neq(this, value).calc(returnType);
+	public final Matrix ne(Ret returnType, Object value) throws MatrixException {
+		return new Ne(this, value).calc(returnType);
 	}
 
 	public long getValueCount() {

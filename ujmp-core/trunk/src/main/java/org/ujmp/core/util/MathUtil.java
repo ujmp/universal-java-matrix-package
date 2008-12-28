@@ -79,6 +79,18 @@ public abstract class MathUtil {
 		return random;
 	}
 
+	public static final boolean xor(boolean b1, boolean b2) {
+		if (b1 == false && b2 == false) {
+			return false;
+		} else if (b1 == false && b2 == true) {
+			return true;
+		} else if (b1 == true && b2 == false) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static double[] logToProbs(double[] logs) {
 		double[] probs = new double[logs.length];
 		double sum = 0.0;

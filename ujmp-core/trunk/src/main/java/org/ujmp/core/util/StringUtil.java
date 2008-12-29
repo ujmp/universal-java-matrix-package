@@ -73,6 +73,9 @@ public abstract class StringUtil {
 		if (o instanceof String) {
 			return (String) o;
 		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).getStringValue();
+		}
 		if (o instanceof Number) {
 			return "" + (((Number) o).doubleValue());
 		}

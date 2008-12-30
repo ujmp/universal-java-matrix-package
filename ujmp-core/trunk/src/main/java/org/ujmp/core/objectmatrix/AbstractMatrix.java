@@ -1653,14 +1653,14 @@ public abstract class AbstractMatrix implements Matrix {
 	public final Matrix append(int dimension, Matrix m) throws MatrixException {
 		long[] newSize = Coordinates.copyOf(getSize());
 		newSize[dimension] += m.getSize()[dimension];
-		Matrix result = MatrixFactory.zeros(newSize);
+		Matrix result = MatrixFactory.zeros(getValueType(), newSize);
 		for (long[] c : allCoordinates()) {
-			result.setAsDouble(getAsDouble(c), c);
+			result.setObject(getObject(c), c);
 		}
 		for (long[] c : m.allCoordinates()) {
 			long[] newC = Coordinates.copyOf(c);
 			newC[dimension] += getSize()[dimension];
-			result.setAsDouble(m.getAsDouble(c), newC);
+			result.setObject(m.getObject(c), newC);
 		}
 		return result;
 	}

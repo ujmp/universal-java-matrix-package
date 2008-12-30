@@ -30,14 +30,16 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.SerializationUtil;
 
 public class SerializedObjectMap<K, V> implements Map<K, V> {
@@ -82,7 +84,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 	}
 
 	public synchronized void clear() {
-		logger.log(Level.WARNING, "not implemented");
+		throw new MatrixException("not implemented");
 	}
 
 	public FileNameConverter getFileNameConverter() {
@@ -105,13 +107,11 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 	}
 
 	public synchronized boolean containsValue(Object value) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		throw new MatrixException("not implemented");
 	}
 
 	public synchronized Set<java.util.Map.Entry<K, V>> entrySet() {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new MatrixException("not implemented");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -129,11 +129,13 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 			switch (method) {
 			case SERIALIZE:
-				o = SerializationUtil.deserialize(bi);
+				Object[] os = (Object[]) SerializationUtil.deserialize(bi);
+				o = os[1];
 				break;
 			case XMLENCODER:
 				XMLDecoder decoder = new XMLDecoder(bi);
-				o = decoder.readObject();
+				os = (Object[]) decoder.readObject();
+				o = os[1];
 				decoder.close();
 				break;
 			}
@@ -149,12 +151,30 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 	}
 
 	public synchronized boolean isEmpty() {
-		return false;
+		throw new MatrixException("not implemented");
 	}
 
 	public synchronized Set<K> keySet() {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		Set<K> set = new HashSet<K>();
+		File[] dirs = getPath().listFiles();
+		for (File d : dirs) {
+			if (d.isDirectory()) {
+				File[] files = d.listFiles();
+				for (File f : files) {
+					try {
+						FileInputStream fis = new FileInputStream(f);
+						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
+						K key = (K) os[0];
+						V value = (V) os[1];
+						fis.close();
+						set.add(key);
+					} catch (Exception e) {
+						throw new MatrixException(e);
+					}
+				}
+			}
+		}
+		return set;
 	}
 
 	public synchronized V put(K key, V value) {
@@ -180,11 +200,11 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 			switch (method) {
 			case SERIALIZE:
-				SerializationUtil.serialize((Serializable) value, bo);
+				SerializationUtil.serialize(new Object[] { key, value }, bo);
 				break;
 			case XMLENCODER:
 				XMLEncoder encoder = new XMLEncoder(bo);
-				encoder.writeObject(value);
+				encoder.writeObject(new Object[] { key, value });
 				encoder.close();
 				break;
 			}
@@ -210,7 +230,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 	}
 
 	public synchronized V remove(Object key) {
-		return null;
+		throw new MatrixException("not implemented");
 	}
 
 	public synchronized int size() {
@@ -237,8 +257,26 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 	}
 
 	public synchronized Collection<V> values() {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		List<V> set = new ArrayList<V>();
+		File[] dirs = getPath().listFiles();
+		for (File d : dirs) {
+			if (d.isDirectory()) {
+				File[] files = d.listFiles();
+				for (File f : files) {
+					try {
+						FileInputStream fis = new FileInputStream(f);
+						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
+						K key = (K) os[0];
+						V value = (V) os[1];
+						fis.close();
+						set.add(value);
+					} catch (Exception e) {
+						throw new MatrixException(e);
+					}
+				}
+			}
+		}
+		return set;
 	}
 
 	public void setFileNameConverter(FileNameConverter fileNameConverter) {

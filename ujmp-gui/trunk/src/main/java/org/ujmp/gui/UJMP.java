@@ -26,7 +26,9 @@ package org.ujmp.gui;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 
-public class Main {
+public class UJMP {
+
+	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
 	public static void main(String[] args) {
 		Matrix m = MatrixFactory.eye(10, 10);

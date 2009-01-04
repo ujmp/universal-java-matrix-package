@@ -91,8 +91,8 @@ public abstract class AbstractFrame extends JFrame {
 
 		getContentPane().add(component, BorderLayout.CENTER);
 
-		DefaultToolbar toolbar = new DefaultToolbar(component, o);
-		getContentPane().add(toolbar, BorderLayout.NORTH);
+//		DefaultToolbar toolbar = new DefaultToolbar(component, o);
+//		getContentPane().add(toolbar, BorderLayout.NORTH);
 
 		final GUIObject go = object;
 		updateTask = new TimerTask() {

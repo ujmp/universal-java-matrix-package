@@ -43,7 +43,6 @@ import org.ujmp.core.util.matrices.MatrixRunningThreads;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
-import org.ujmp.gui.actions.AboutAction;
 import org.ujmp.gui.actions.ShowInFrameAction;
 import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.MatrixUIDefaults;
@@ -105,12 +104,7 @@ public class DefaultMenuBar extends JMenuBar {
 		}
 		add(windowMenu);
 
-		JMenu helpMenu = new JMenu("Help");
-		helpMenu.setMnemonic(KeyEvent.VK_H);
-
-		helpMenu.add(new AboutAction(component, o));
-
-		add(helpMenu);
+		
 	}
 
 }

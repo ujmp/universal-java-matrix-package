@@ -43,24 +43,16 @@ import org.ujmp.gui.plot.MatrixPlot;
 public class MatrixPanel extends AbstractPanel {
 	private static final long serialVersionUID = 3912987239953510584L;
 
-	private final JSplitPane splitPane1 = new JSplitPane();
-
-	private final JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-
-	private MatrixPaintPanel matrixPaintPanel = null;
-
-	private MatrixPlot matrixPlot = null;
-
 	public MatrixPanel(MatrixGUIObject m) {
 		super(m);
+
+		JSplitPane splitPane1 = new JSplitPane();
+		JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setMinimumSize(new Dimension(10, 10));
 
-		matrixPlot = new MatrixPlot(m, true);
-
-		matrixPaintPanel = new MatrixPaintPanel(m, false);
-		tabbedPane.add("2D Visualization", matrixPaintPanel);
+		tabbedPane.add("2D Visualization", new MatrixPaintPanel(m, false));
 
 		if (false) {
 			try {
@@ -186,7 +178,7 @@ public class MatrixPanel extends AbstractPanel {
 			tabbedPane.add("R", rPanel);
 		}
 
-		splitPane2.setTopComponent(new BufferedPanel(matrixPlot));
+		splitPane2.setTopComponent(new BufferedPanel(new MatrixPlot(m, true)));
 		splitPane2.setBottomComponent(tabbedPane);
 		splitPane1.setLeftComponent(splitPane2);
 

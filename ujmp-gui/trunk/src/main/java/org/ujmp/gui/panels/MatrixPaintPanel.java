@@ -36,7 +36,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.logging.Logger;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -68,8 +67,6 @@ import org.ujmp.gui.util.TooltipUtil;
 public class MatrixPaintPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
 		MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
 	private static final long serialVersionUID = 843653796010276950L;
-
-	private static final Logger logger = Logger.getLogger(MatrixPaintPanel.class.getName());
 
 	private MatrixGUIObject matrix = null;
 

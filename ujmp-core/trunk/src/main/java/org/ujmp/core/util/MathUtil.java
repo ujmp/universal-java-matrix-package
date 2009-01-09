@@ -465,6 +465,12 @@ public abstract class MathUtil {
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getBooleanValue();
 		}
+		if (o instanceof String) {
+			try {
+				return Boolean.parseBoolean(((String) o));
+			} catch (Exception e) {
+			}
+		}
 		return false;
 	}
 
@@ -480,6 +486,12 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getByteValue();
+		}
+		if (o instanceof String) {
+			try {
+				return Byte.parseByte(((String) o));
+			} catch (Exception e) {
+			}
 		}
 		return 0;
 	}
@@ -497,6 +509,12 @@ public abstract class MathUtil {
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getCharValue();
 		}
+		if (o instanceof String) {
+			try {
+				return (char) Byte.parseByte(((String) o));
+			} catch (Exception e) {
+			}
+		}
 		return 0;
 	}
 
@@ -512,6 +530,12 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getFloatValue();
+		}
+		if (o instanceof String) {
+			try {
+				return Float.parseFloat(((String) o));
+			} catch (Exception e) {
+			}
 		}
 		return 0;
 	}
@@ -529,6 +553,12 @@ public abstract class MathUtil {
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getIntValue();
 		}
+		if (o instanceof String) {
+			try {
+				return Integer.parseInt(((String) o));
+			} catch (Exception e) {
+			}
+		}
 		return 0;
 	}
 
@@ -545,6 +575,12 @@ public abstract class MathUtil {
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getLongValue();
 		}
+		if (o instanceof String) {
+			try {
+				return Long.parseLong(((String) o));
+			} catch (Exception e) {
+			}
+		}
 		return 0;
 	}
 
@@ -560,6 +596,12 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).getShortValue();
+		}
+		if (o instanceof String) {
+			try {
+				return Short.parseShort(((String) o));
+			} catch (Exception e) {
+			}
 		}
 		return 0;
 	}

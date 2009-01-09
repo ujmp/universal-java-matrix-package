@@ -168,7 +168,11 @@ public class MatrixPlot extends JPanel implements TableCellRenderer, CanBeUpdate
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		plotSettings.setMatrixGUIObject((MatrixGUIObject) value);
+		if (value instanceof MatrixGUIObject) {
+			plotSettings.setMatrixGUIObject((MatrixGUIObject) value);
+		} else if (value instanceof Matrix) {
+			plotSettings.setMatrixGUIObject((MatrixGUIObject) ((Matrix) value).getGUIObject());
+		}
 
 		if (isSelected) {
 			plotSettings.setPlotBackGroundColor(table.getSelectionBackground());

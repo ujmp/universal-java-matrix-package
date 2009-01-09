@@ -28,10 +28,8 @@ import javax.swing.JToolBar;
 
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.actions.ClearAction;
-import org.ujmp.gui.actions.CopyAction;
 import org.ujmp.gui.actions.DeleteAction;
 import org.ujmp.gui.actions.ExportAction;
-import org.ujmp.gui.actions.PasteAction;
 import org.ujmp.gui.actions.PrintAction;
 
 public class DefaultToolbar extends JToolBar {
@@ -50,11 +48,6 @@ public class DefaultToolbar extends JToolBar {
 		addSeparator();
 
 		add(new PrintAction(c, o));
-
-		addSeparator();
-
-		add(new CopyAction(c, o));
-		add(new PasteAction(c, o));
 
 		addSeparator();
 		add(new DeleteAction(c, o));

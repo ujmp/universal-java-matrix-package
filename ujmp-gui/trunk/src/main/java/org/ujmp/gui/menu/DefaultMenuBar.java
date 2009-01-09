@@ -44,7 +44,6 @@ import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
 import org.ujmp.gui.actions.ShowInFrameAction;
-import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.MatrixUIDefaults;
 
 public class DefaultMenuBar extends JMenuBar {
@@ -76,35 +75,32 @@ public class DefaultMenuBar extends JMenuBar {
 	}
 
 	public void init(JComponent component, GUIObject o) {
-		JMenu optionsMenu = new JMenu("Tools");
-		optionsMenu.setMnemonic(KeyEvent.VK_T);
-		optionsMenu.add(new JSeparator());
-
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemProperties())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemEnvironment())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, MatrixUIDefaults.getInstance())));
-		optionsMenu.add(new JSeparator());
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixMemoryUsage())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRunningThreads())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemTime())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRandomSeed())));
-		optionsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixAvailableProcessors())));
-		optionsMenu.add(new JSeparator());
+		JMenu toolsMenu = new JMenu("Tools");
+		toolsMenu.setMnemonic(KeyEvent.VK_T);
+		// optionsMenu.add(new JSeparator());
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemProperties())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemEnvironment())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, MatrixUIDefaults.getInstance())));
+		toolsMenu.add(new JSeparator());
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixMemoryUsage())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRunningThreads())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemTime())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRandomSeed())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixAvailableProcessors())));
+		// toolsMenu.add(new JSeparator());
 
 		if (JMathLib.isAvailable()) {
-			optionsMenu.add(new JSeparator());
-			optionsMenu.add(new JMathLibAction());
+			toolsMenu.add(new JSeparator());
+			toolsMenu.add(new JMathLibAction());
 		}
-		add(optionsMenu);
+		add(toolsMenu);
 
-		JMenu windowMenu = new JMenu("Window");
-		windowMenu.setMnemonic(KeyEvent.VK_W);
-		for (JComponent a : FrameManager.getActions()) {
-			windowMenu.add(a);
-		}
-		add(windowMenu);
+		// JMenu windowMenu = new JMenu("Window");
+		// windowMenu.setMnemonic(KeyEvent.VK_W);
+		// for (JComponent a : FrameManager.getActions()) {
+		// windowMenu.add(a);
+		// }
+		// add(windowMenu);
 
-		
 	}
-
 }

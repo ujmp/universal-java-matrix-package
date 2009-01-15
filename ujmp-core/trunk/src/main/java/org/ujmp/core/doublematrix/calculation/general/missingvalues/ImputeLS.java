@@ -21,33 +21,31 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.general.solving;
+package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 
 import java.lang.reflect.Constructor;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Inv extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 7886298456216056038L;
+public class ImputeLS extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 6803633047911888483L;
 
-	private Matrix inv = null;
+	private Matrix imp = null;
 
-	public Inv(Matrix matrix) {
+	private ImputationMethod method = null;
+
+	public ImputeLS(Matrix matrix, ImputationMethod method) {
 		super(matrix);
+		this.method = method;
 	}
 
 	public static boolean isAvailable() {
 		try {
-			Class.forName("no.uib.cipr.matrix.DenseMatrix");
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-		try {
-			Class.forName("org.apache.commons.math.linear.RealMatrixImpl");
+			Class.forName("Impute");
 		} catch (ClassNotFoundException e) {
 			return false;
 		}
@@ -56,43 +54,32 @@ public class Inv extends AbstractDoubleCalculation {
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		if (inv == null) {
+		if (imp == null) {
 			try {
 
 				DoubleCalculation calc = null;
 
 				try {
-					Class<?> c = Class.forName("org.ujmp.mtj.Inv");
-					Constructor<?> con = c.getConstructor(Matrix.class);
-					calc = (DoubleCalculation) con.newInstance(getSource());
-				} catch (ClassNotFoundException e) {
-				}
-				try {
 					if (calc == null) {
-						Class<?> c = Class.forName("org.ujmp.commonsmath.Inv");
-						Constructor<?> con = c.getConstructor(Matrix.class);
-						calc = (DoubleCalculation) con.newInstance(getSource());
+						Class<?> c = Class.forName("org.ujmp.lsimpute.LSImpute");
+						Object[] o = c.getConstructors();
+						Constructor<?> con = c.getConstructor(Matrix.class, ImputationMethod.class);
+
+						calc = (DoubleCalculation) con.newInstance(getSource(), method);
 					}
 				} catch (ClassNotFoundException e) {
 				}
 
 				if (calc == null) {
-					throw new MatrixException(
-							"could neither find MTJ nor commons-math to calculate the inverse");
+					throw new MatrixException("could not find LSimpute.jar in your classpath");
 				}
 
-				inv = calc.calcNew();
+				imp = calc.calcNew();
 
 			} catch (Exception e) {
 				throw new MatrixException(e);
 			}
 		}
-		return inv.getAsDouble(coordinates);
+		return imp.getAsDouble(coordinates);
 	}
-
-	@Override
-	public long[] getSize() {
-		return Coordinates.transpose(getSource().getSize());
-	}
-
 }

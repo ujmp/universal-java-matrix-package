@@ -21,30 +21,39 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.complete;
+package org.ujmp.core.doublematrix.calculation.general.solving;
 
-import junit.framework.TestSuite;
+import java.lang.reflect.Constructor;
 
-public class AllTests extends TestSuite {
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTest(org.ujmp.core.AllTests.suite());
-		suite.addTest(org.ujmp.commonsmath.AllTests.suite());
-		suite.addTest(org.ujmp.bpca.AllTests.suite());
-		suite.addTest(org.ujmp.lsimpute.AllTests.suite());
-		suite.addTest(org.ujmp.colt.AllTests.suite());
-		suite.addTest(org.ujmp.jama.AllTests.suite());
-		suite.addTest(org.ujmp.jmatrices.AllTests.suite());
-		suite.addTest(org.ujmp.mtj.AllTests.suite());
-		suite.addTest(org.ujmp.vecmath.AllTests.suite());
-		suite.addTest(org.ujmp.jackcess.AllTests.suite());
-		suite.addTest(org.ujmp.jung.AllTests.suite());
-		suite.addTest(org.ujmp.jexcelapi.AllTests.suite());
-		suite.addTest(org.ujmp.jmatio.AllTests.suite());
-		suite.addTest(org.ujmp.itext.AllTests.suite());
-		suite.addTest(org.ujmp.mail.AllTests.suite());
-		return suite;
+public class SVD {
+
+	public static String CLASSNAME = "org.ujmp.mtj.MTJDenseDoubleMatrix2D";
+
+	public static boolean isAvailable() {
+		try {
+			Class.forName("no.uib.cipr.matrix.DenseMatrix");
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Matrix[] calcNew(Matrix m) throws MatrixException {
+		try {
+			Class<? extends Matrix> mtjc = (Class<? extends Matrix>) Class.forName(CLASSNAME);
+			Constructor<? extends Matrix> con = mtjc.getConstructor(Matrix.class);
+			Matrix mtjm = con.newInstance(m);
+
+			return mtjm.svd();
+		} catch (ClassNotFoundException e) {
+			throw new MatrixException("cannot calculate SVD: add ujmp-mtj to classpath");
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 }

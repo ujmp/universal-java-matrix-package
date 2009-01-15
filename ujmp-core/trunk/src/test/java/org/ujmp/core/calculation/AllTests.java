@@ -30,6 +30,7 @@ public class AllTests extends TestSuite {
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTest(org.ujmp.core.calculation.string.AllTests.suite());
+		suite.addTestSuite(TestMissingValueImputation.class);
 		return suite;
 	}
 

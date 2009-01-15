@@ -21,37 +21,60 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.general.solving;
+package org.ujmp.core.doublematrix.calculation.general.missingvalues;
+
+import java.lang.reflect.Constructor;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Princomp extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = -6137993493011004670L;
+public class ImputeBPCA extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 6803633047911888483L;
 
-	private Matrix pca = null;
+	private Matrix imp = null;
 
-	public Princomp(Matrix matrix) {
+	public ImputeBPCA(Matrix matrix) {
 		super(matrix);
 	}
 
 	public static boolean isAvailable() {
-		return SVD.isAvailable();
+		try {
+			Class.forName("JBPCAfill");
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		if (pca == null) {
+		if (imp == null) {
+			try {
 
-			Matrix[] usv;
-			usv = getSource().svd();
-			Matrix u = usv[0];
-			Matrix s = usv[1];
-			pca = u.mtimes(s);
+				DoubleCalculation calc = null;
 
+				try {
+					if (calc == null) {
+						Class<?> c = Class.forName("org.ujmp.bpca.ImputeBPCA");
+						Constructor<?> con = c.getConstructor(Matrix.class);
+						calc = (DoubleCalculation) con.newInstance(getSource());
+					}
+				} catch (ClassNotFoundException e) {
+				}
+
+				if (calc == null) {
+					throw new MatrixException("could not find JBPCAfill.jar in your classpath");
+				}
+
+				imp = calc.calcNew();
+
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
 		}
-		return pca.getAsDouble(coordinates);
+		return imp.getAsDouble(coordinates);
 	}
 
 }

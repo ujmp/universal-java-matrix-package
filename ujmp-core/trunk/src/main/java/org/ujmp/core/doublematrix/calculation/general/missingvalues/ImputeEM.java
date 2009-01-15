@@ -33,6 +33,7 @@ import java.util.concurrent.Future;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -88,7 +89,7 @@ public class ImputeEM extends AbstractDoubleCalculation {
 			System.out.println("============================================");
 
 			if (bestGuess == null) {
-				bestGuess = getSource().imputeMean(Ret.NEW, Matrix.ROW);
+				bestGuess = getSource().impute(Ret.NEW, ImputationMethod.RowMean);
 			}
 
 			int run = 0;

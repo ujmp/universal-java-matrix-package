@@ -153,6 +153,24 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-jung</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-bpca</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-lsimpute</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 
 			<dependency>
@@ -315,6 +333,18 @@
 				<groupId>jung</groupId>
 				<artifactId>jung</artifactId>
 				<version>1.7.6</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>LSimpute</groupId>
+				<artifactId>LSimpute</artifactId>
+				<version>0.0.1</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>JBPCAfill</groupId>
+				<artifactId>JBPCAfill</artifactId>
+				<version>1.0</version>
 				<scope>compile</scope>
 			</dependency>
 

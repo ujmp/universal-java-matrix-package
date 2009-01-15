@@ -81,8 +81,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jung</artifactId>
-			<version>${ujmp.version}</version>
-			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-bpca</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-lsimpute</artifactId>
 		</dependency>
 
 		<dependency>
@@ -181,22 +187,39 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-bpca</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-lsimpute</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
 	<modules>
 		<module>../ujmp-core</module>
 		<module>../ujmp-gui</module>
+		<module>../ujmp-bpca</module>
 		<module>../ujmp-colt</module>
 		<module>../ujmp-jackcess</module>
 		<module>../ujmp-itext</module>
 		<module>../ujmp-mail</module>
 		<module>../ujmp-jama</module>
+		<module>../ujmp-jung</module>
 		<module>../ujmp-jdbc</module>
 		<module>../ujmp-jexcelapi</module>
 		<module>../ujmp-jmathplot</module>
 		<module>../ujmp-jmatio</module>
 		<module>../ujmp-jmatrices</module>
+		<module>../ujmp-lsimpute</module>
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-vecmath</module>
 	</modules>

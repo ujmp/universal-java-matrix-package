@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface MissingValueDoubleCalculations {
@@ -59,78 +60,20 @@ public interface MissingValueDoubleCalculations {
 	public Matrix countMissing(Ret returnType, int dimension) throws MatrixException;
 
 	/**
-	 * Replaces missing values by row mean or column mean
+	 * Replaces missing values with various methods
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
 	 *            operation is performed on the original Matrix
-	 * @param dimension
-	 *            The axis along which to calculate
+	 * @param method
+	 *            the imputation method to use
+	 * @param parameters
+	 *            specify a set of parameters if needed
 	 * @return Matrix with missing values replaced
 	 * @throws MatrixException
 	 */
-	public Matrix imputeMean(Ret returnType, int dimension) throws MatrixException;
-
-	/**
-	 * Replaces missing values by zero
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
-	 */
-	public Matrix imputeZero(Ret returnType) throws MatrixException;
-
-	/**
-	 * Replaces missing values by the K nearest neighbors
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @param k
-	 *            number of neighbors to use
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
-	 */
-	public Matrix imputeKNN(Ret returnType, int k) throws MatrixException;
-
-	/**
-	 * Replaces missing values by regression on other variables
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
-	 */
-	public Matrix imputeRegression(Ret returnType) throws MatrixException;
-
-	/**
-	 * Replaces missing values by regression on other variables
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @param firstGuess
-	 *            initial guess to replace missing values, e.g. by mean
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
-	 */
-	public Matrix imputeRegression(Ret returnType, Matrix firstGuess) throws MatrixException;
-
-	/**
-	 * Replaces missing values by regression on other variables. Missing values
-	 * are initially replaced by mean. After that they are re-estimated several
-	 * times until the matrix does not change anymore.
-	 * 
-	 * @param returnType
-	 *            Select whether a new or a linked Matrix is returned, or if the
-	 *            operation is performed on the original Matrix
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
-	 */
-	public Matrix imputeEM(Ret returnType) throws MatrixException;
+	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters)
+			throws MatrixException;
 
 	public Matrix deleteColumnsWithMissingValues(Ret returnType) throws MatrixException;
 

@@ -91,14 +91,12 @@ import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeEM;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeKNN;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeRegression;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeZero;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.doublematrix.calculation.general.solving.Inv;
 import org.ujmp.core.doublematrix.calculation.general.solving.Pinv;
 import org.ujmp.core.doublematrix.calculation.general.solving.Princomp;
+import org.ujmp.core.doublematrix.calculation.general.solving.SVD;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Corrcoef;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Cov;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Cumprod;
@@ -283,42 +281,9 @@ public abstract class AbstractMatrix implements Matrix {
 		return select(returnType, null, columns);
 	}
 
-	public Matrix imputeKNN(Ret returnType, int k) throws MatrixException {
-		return new ImputeKNN(this, k).calc(returnType);
-	}
-
-	public Matrix imputeMean(Ret returnType, int dimension) throws MatrixException {
-		return new ImputeMean(dimension, this).calc(returnType);
-	}
-
-	// public Matrix imputeNeuralNetwork(Ret returnType, int k, double
-	// tolerance,
-	// double learningRate,
-	// int maxIterations) throws MatrixException {
-	// return new ImputeNeuralNetwork(this, k, tolerance, learningRate,
-	// maxIterations)
-	// .calc(returnType);
-	// }
-
-	public Matrix imputeRegression(Ret returnType) throws MatrixException {
-		return new ImputeRegression(this).calc(returnType);
-	}
-
-	public Matrix imputeRegression(Ret returnType, Matrix firstGuess) throws MatrixException {
-		return new ImputeRegression(this, firstGuess).calc(returnType);
-	}
-
-	public Matrix imputeEM(Ret returnType) throws MatrixException {
-		return new ImputeEM(this).calc(returnType);
-	}
-
-	// public Matrix imputeRescale(Ret returnType, int dimension) throws
-	// MatrixException {
-	// return new ImputeRescale(dimension, this).calc(returnType);
-	// }
-
-	public Matrix imputeZero(Ret returnType) throws MatrixException {
-		return new ImputeZero(this).calc(returnType);
+	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters)
+			throws MatrixException {
+		return new Impute(this, method, parameters).calc(returnType);
 	}
 
 	public Matrix indexOfMax(Ret returnType, int dimension) throws MatrixException {
@@ -1729,20 +1694,8 @@ public abstract class AbstractMatrix implements Matrix {
 		return ret;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Matrix[] svd() throws MatrixException {
-		try {
-			Class<? extends Matrix> mtjc = (Class<? extends Matrix>) Class
-					.forName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
-			Constructor<? extends Matrix> con = mtjc.getConstructor(Matrix.class);
-			Matrix mtjm = con.newInstance(this);
-
-			return mtjm.svd();
-		} catch (ClassNotFoundException e) {
-			throw new MatrixException("cannot calculate SVD: add ujmp-mtj to classpath");
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
+		return SVD.calcNew(this);
 	}
 
 	public String exportToString(FileFormat format, Object... parameters) throws MatrixException,

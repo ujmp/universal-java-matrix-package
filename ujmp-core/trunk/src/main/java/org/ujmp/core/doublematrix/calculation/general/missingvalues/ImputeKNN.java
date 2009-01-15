@@ -41,9 +41,11 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 
 	private int k = 1;
 
-	public ImputeKNN(Matrix matrix, int k) {
+	public ImputeKNN(Matrix matrix, Object... parameters) {
 		super(matrix);
-		this.k = k;
+		if (parameters.length != 0) {
+			k = MathUtil.getInt(parameters[0]);
+		}
 	}
 
 	private List<Integer> getCandidates(long... coordinates) {
@@ -60,7 +62,8 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 	}
 
 	private Matrix getDistanceMatrix() {
-		Matrix distanceMatrix = MatrixFactory.zeros(getSource().getRowCount(), getSource().getRowCount());
+		Matrix distanceMatrix = MatrixFactory.zeros(getSource().getRowCount(), getSource()
+				.getRowCount());
 		for (int r = 0; r < getSource().getRowCount(); r++) {
 			for (int c = 0; c < getSource().getRowCount(); c++) {
 				if (r != c) {

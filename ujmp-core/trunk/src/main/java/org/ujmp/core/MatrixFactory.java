@@ -33,39 +33,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix;
-import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix;
-import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.DefaultSparseBooleanMatrix;
-import org.ujmp.core.bytematrix.AbstractDenseByteMatrix;
-import org.ujmp.core.bytematrix.AbstractDenseByteMatrix2D;
-import org.ujmp.core.bytematrix.AbstractSparseByteMatrix;
-import org.ujmp.core.bytematrix.AbstractSparseByteMatrix2D;
 import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
-import org.ujmp.core.bytematrix.DefaultSparseByteMatrix;
-import org.ujmp.core.charmatrix.AbstractDenseCharMatrix;
-import org.ujmp.core.charmatrix.AbstractDenseCharMatrix2D;
-import org.ujmp.core.charmatrix.AbstractSparseCharMatrix;
-import org.ujmp.core.charmatrix.AbstractSparseCharMatrix2D;
 import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
-import org.ujmp.core.charmatrix.DefaultSparseCharMatrix;
-import org.ujmp.core.datematrix.AbstractDenseDateMatrix;
-import org.ujmp.core.datematrix.AbstractDenseDateMatrix2D;
-import org.ujmp.core.datematrix.AbstractSparseDateMatrix;
-import org.ujmp.core.datematrix.AbstractSparseDateMatrix2D;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
-import org.ujmp.core.datematrix.DefaultSparseDateMatrix;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix;
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
@@ -78,54 +52,24 @@ import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix;
-import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix;
-import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DefaultDenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.DefaultSparseFloatMatrix;
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix;
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
-import org.ujmp.core.intmatrix.AbstractSparseIntMatrix;
-import org.ujmp.core.intmatrix.AbstractSparseIntMatrix2D;
 import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
-import org.ujmp.core.intmatrix.DefaultSparseIntMatrix;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
 import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix;
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
-import org.ujmp.core.longmatrix.AbstractSparseLongMatrix;
-import org.ujmp.core.longmatrix.AbstractSparseLongMatrix2D;
 import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
-import org.ujmp.core.longmatrix.DefaultSparseLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix2D;
-import org.ujmp.core.objectmatrix.AbstractSparseMatrix;
-import org.ujmp.core.objectmatrix.AbstractSparseMatrix2D;
+import org.ujmp.core.mapper.MatrixMapper;
 import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultSparseMatrix;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.SynchronizedMatrix;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
-import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
-import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix;
-import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix2D;
 import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.DefaultSparseShortMatrix;
-import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix;
-import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.AbstractSparseStringMatrix;
-import org.ujmp.core.stringmatrix.AbstractSparseStringMatrix2D;
 import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.DefaultSparseStringMatrix;
 import org.ujmp.core.stringmatrix.FileListMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
@@ -150,8 +94,6 @@ public abstract class MatrixFactory {
 	protected transient static final Logger logger = Logger
 			.getLogger(MatrixFactory.class.getName());
 
-	private static final Class<?>[] LONGARRAY = new Class<?>[] { new long[] {}.getClass() };
-
 	public static final int ROW = Matrix.ROW;
 
 	public static final int COLUMN = Matrix.COLUMN;
@@ -168,303 +110,7 @@ public abstract class MatrixFactory {
 
 	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();
 
-	private static MapMatrix<Class<? extends Matrix>, String> matrixClasses = new DefaultMapMatrix<Class<? extends Matrix>, String>();
-
-	private static Constructor<?> denseBooleanMatrix2DConstructor = null;
-
-	private static Constructor<?> denseByteMatrix2DConstructor = null;
-
-	private static Constructor<?> denseCharMatrix2DConstructor = null;
-
-	private static Constructor<?> denseDateMatrix2DConstructor = null;
-
-	private static Constructor<?> denseDoubleMatrix2DConstructor = null;
-
-	private static Constructor<?> denseFloatMatrix2DConstructor = null;
-
-	private static Constructor<?> denseIntMatrix2DConstructor = null;
-
-	private static Constructor<?> denseLongMatrix2DConstructor = null;
-
-	private static Constructor<?> denseShortMatrix2DConstructor = null;
-
-	private static Constructor<?> denseObjectMatrix2DConstructor = null;
-
-	private static Constructor<?> denseStringMatrix2DConstructor = null;
-
-	private static Constructor<?> denseBooleanMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseByteMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseCharMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseDateMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseDoubleMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseFloatMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseIntMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseLongMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseShortMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseObjectMatrixMultiDConstructor = null;
-
-	private static Constructor<?> denseStringMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseBooleanMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseByteMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseCharMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseDateMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseDoubleMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseFloatMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseIntMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseLongMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseShortMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseObjectMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseStringMatrix2DConstructor = null;
-
-	private static Constructor<?> sparseBooleanMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseByteMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseCharMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseDateMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseDoubleMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseFloatMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseIntMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseLongMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseShortMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseObjectMatrixMultiDConstructor = null;
-
-	private static Constructor<?> sparseStringMatrixMultiDConstructor = null;
-
-	static {
-		findMatrixClasses();
-	}
-
-	private static void findMatrixClasses() {
-		try {
-			setDenseBooleanMatrix2DClassName(DefaultDenseBooleanMatrix2D.class.getName());
-			setDenseBooleanMatrixMultiDClassName(DefaultSparseBooleanMatrix.class.getName());
-			setSparseBooleanMatrix2DClassName(DefaultSparseBooleanMatrix.class.getName());
-			setSparseBooleanMatrixMultiDClassName(DefaultSparseBooleanMatrix.class.getName());
-
-			setDenseByteMatrix2DClassName(DefaultDenseByteMatrix2D.class.getName());
-			setDenseByteMatrixMultiDClassName(DefaultSparseByteMatrix.class.getName());
-			setSparseByteMatrix2DClassName(DefaultSparseByteMatrix.class.getName());
-			setSparseByteMatrixMultiDClassName(DefaultSparseByteMatrix.class.getName());
-
-			setDenseCharMatrix2DClassName(DefaultDenseCharMatrix2D.class.getName());
-			setDenseCharMatrixMultiDClassName(DefaultSparseCharMatrix.class.getName());
-			setSparseCharMatrix2DClassName(DefaultSparseCharMatrix.class.getName());
-			setSparseCharMatrixMultiDClassName(DefaultSparseCharMatrix.class.getName());
-
-			setDenseDateMatrix2DClassName(DefaultDenseDateMatrix2D.class.getName());
-			setDenseDateMatrixMultiDClassName(DefaultSparseDateMatrix.class.getName());
-			setSparseDateMatrix2DClassName(DefaultSparseDateMatrix.class.getName());
-			setSparseDateMatrixMultiDClassName(DefaultSparseDateMatrix.class.getName());
-
-			setDenseDoubleMatrix2DClassName(DefaultDenseDoubleMatrix2D.class.getName());
-			setDenseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
-			setSparseDoubleMatrix2DClassName(DefaultSparseDoubleMatrix.class.getName());
-			setSparseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
-
-			setDenseFloatMatrix2DClassName(DefaultDenseFloatMatrix2D.class.getName());
-			setDenseFloatMatrixMultiDClassName(DefaultSparseFloatMatrix.class.getName());
-			setSparseFloatMatrix2DClassName(DefaultSparseFloatMatrix.class.getName());
-			setSparseFloatMatrixMultiDClassName(DefaultSparseFloatMatrix.class.getName());
-
-			setDenseIntMatrix2DClassName(DefaultDenseIntMatrix2D.class.getName());
-			setDenseIntMatrixMultiDClassName(DefaultSparseIntMatrix.class.getName());
-			setSparseIntMatrix2DClassName(DefaultSparseIntMatrix.class.getName());
-			setSparseIntMatrixMultiDClassName(DefaultSparseIntMatrix.class.getName());
-
-			setDenseLongMatrix2DClassName(DefaultDenseLongMatrix2D.class.getName());
-			setDenseLongMatrixMultiDClassName(DefaultSparseLongMatrix.class.getName());
-			setSparseLongMatrix2DClassName(DefaultSparseLongMatrix.class.getName());
-			setSparseLongMatrixMultiDClassName(DefaultSparseLongMatrix.class.getName());
-
-			setDenseObjectMatrix2DClassName(DefaultDenseMatrix2D.class.getName());
-			setDenseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
-			setSparseObjectMatrix2DClassName(DefaultSparseMatrix.class.getName());
-			setSparseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
-
-			setDenseShortMatrix2DClassName(DefaultDenseShortMatrix2D.class.getName());
-			setDenseShortMatrixMultiDClassName(DefaultSparseShortMatrix.class.getName());
-			setSparseShortMatrix2DClassName(DefaultSparseShortMatrix.class.getName());
-			setSparseShortMatrixMultiDClassName(DefaultSparseShortMatrix.class.getName());
-
-			setDenseStringMatrix2DClassName(DefaultDenseStringMatrix2D.class.getName());
-			setDenseStringMatrixMultiDClassName(DefaultSparseStringMatrix.class.getName());
-			setSparseStringMatrix2DClassName(DefaultSparseStringMatrix.class.getName());
-			setSparseStringMatrixMultiDClassName(DefaultSparseStringMatrix.class.getName());
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Matrix classes not found, this should never happen");
-		}
-	}
-
-	public static void setDenseDoubleMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDoubleMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseDoubleMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDoubleMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseDoubleMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDoubleMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDoubleMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDoubleMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseDoubleMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseDoubleMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDoubleMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseDoubleMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseDoubleMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseDoubleMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDoubleMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseDoubleMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseBooleanMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseBooleanMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseBooleanMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseBooleanMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseBooleanMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseBooleanMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseBooleanMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseBooleanMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseBooleanMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseBooleanMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseBooleanMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseBooleanMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseBooleanMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseBooleanMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseBooleanMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseBooleanMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseFloatMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseFloatMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseFloatMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseFloatMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseFloatMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseFloatMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseFloatMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseFloatMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseFloatMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseFloatMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseFloatMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseFloatMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
+	private static MatrixMapper matrixMapper = MatrixMapper.getInstance();
 
 	public static final Matrix systemTime() {
 		return new MatrixSystemTime();
@@ -492,435 +138,6 @@ public abstract class MatrixFactory {
 
 	public static final Matrix systemProperties() {
 		return new MatrixSystemProperties();
-	}
-
-	public static void setSparseFloatMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseFloatMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseFloatMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseFloatMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseIntMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseIntMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseIntMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseIntMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseIntMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseIntMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseIntMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseIntMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseIntMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseIntMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseIntMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseIntMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseIntMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseIntMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseIntMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseIntMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseShortMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseShortMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseShortMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseShortMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseShortMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseShortMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseShortMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseShortMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseShortMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseShortMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseShortMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseShortMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseShortMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseShortMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseShortMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseShortMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseLongMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseLongMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseLongMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseLongMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseLongMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseLongMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseLongMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseLongMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseLongMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseLongMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseLongMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseLongMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseLongMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseLongMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseLongMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseLongMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseByteMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseByteMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseByteMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseByteMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseByteMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseByteMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseByteMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseByteMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseByteMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseByteMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseByteMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseByteMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseByteMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseByteMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseByteMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseByteMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseCharMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseCharMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseCharMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseCharMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseCharMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseCharMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseCharMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseCharMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseCharMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseCharMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseCharMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseCharMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseCharMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseCharMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseCharMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseCharMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseDateMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDateMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseDateMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDateMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseDateMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDateMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDateMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDateMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseDateMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseDateMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDateMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseDateMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseDateMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseDateMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDateMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseDateMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseStringMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseStringMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseStringMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseStringMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseStringMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseStringMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseStringMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseStringMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseStringMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseStringMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseStringMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseStringMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseStringMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseStringMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseStringMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseStringMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseObjectMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setDenseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseObjectMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseObjectMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public static void setSparseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		sparseObjectMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public static final Matrix horCat(Matrix... matrices) throws MatrixException {
@@ -1122,6 +339,8 @@ public abstract class MatrixFactory {
 
 	public static Matrix dense(ValueType valueType, long... size) throws MatrixException {
 		try {
+			Constructor<?> con = null;
+
 			switch (size.length) {
 			case 0:
 				throw new MatrixException("Size not defined");
@@ -1130,65 +349,94 @@ public abstract class MatrixFactory {
 			case 2:
 				switch (valueType) {
 				case BOOLEAN:
-					return (Matrix) denseBooleanMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseBooleanMatrix2DConstructor();
+					break;
 				case BYTE:
-					return (Matrix) denseByteMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseByteMatrix2DConstructor();
+					break;
 				case CHAR:
-					return (Matrix) denseCharMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseCharMatrix2DConstructor();
+					break;
 				case DATE:
-					return (Matrix) denseDateMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseDateMatrix2DConstructor();
+					break;
 				case DOUBLE:
-					return (Matrix) denseDoubleMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseDoubleMatrix2DConstructor();
+					break;
 				case FLOAT:
-					return (Matrix) denseFloatMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseFloatMatrix2DConstructor();
+					break;
 				case INT:
-					return (Matrix) denseIntMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseIntMatrix2DConstructor();
+					break;
 				case LONG:
-					return (Matrix) denseLongMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseLongMatrix2DConstructor();
+					break;
 				case OBJECT:
-					return (Matrix) denseObjectMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseObjectMatrix2DConstructor();
+					break;
 				case SHORT:
-					return (Matrix) denseShortMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseShortMatrix2DConstructor();
+					break;
 				case STRING:
-					return (Matrix) denseStringMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseStringMatrix2DConstructor();
+					break;
 				case GENERIC:
-					return (Matrix) denseObjectMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getDenseObjectMatrix2DConstructor();
+					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
+				break;
 			default:
 				switch (valueType) {
 				case BOOLEAN:
-					return (Matrix) denseBooleanMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseBooleanMatrixMultiDConstructor();
+					break;
 				case BYTE:
-					return (Matrix) denseByteMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseByteMatrixMultiDConstructor();
+					break;
 				case CHAR:
-					return (Matrix) denseCharMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseCharMatrixMultiDConstructor();
+					break;
 				case DATE:
-					return (Matrix) denseDateMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseDateMatrixMultiDConstructor();
+					break;
 				case DOUBLE:
-					return (Matrix) denseDoubleMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseDoubleMatrixMultiDConstructor();
+					break;
 				case FLOAT:
-					return (Matrix) denseFloatMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseFloatMatrixMultiDConstructor();
+					break;
 				case INT:
-					return (Matrix) denseIntMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseIntMatrixMultiDConstructor();
+					break;
 				case LONG:
-					return (Matrix) denseLongMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseLongMatrixMultiDConstructor();
+					break;
 				case OBJECT:
-					return (Matrix) denseObjectMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseObjectMatrixMultiDConstructor();
+					break;
 				case SHORT:
-					return (Matrix) denseShortMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseShortMatrixMultiDConstructor();
+					break;
 				case STRING:
-					return (Matrix) denseStringMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseStringMatrixMultiDConstructor();
+					break;
 				case GENERIC:
-					return (Matrix) denseObjectMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getDenseObjectMatrixMultiDConstructor();
+					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
 			}
+
+			return (Matrix) con.newInstance(size);
+
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
+
 	}
 
 	public static Matrix ones(long... size) throws MatrixException {
@@ -1308,6 +556,8 @@ public abstract class MatrixFactory {
 
 	public final static Matrix sparse(ValueType valueType, long... size) throws MatrixException {
 		try {
+			Constructor<?> con = null;
+
 			switch (size.length) {
 			case 0:
 				throw new MatrixException("Size not defined");
@@ -1316,62 +566,90 @@ public abstract class MatrixFactory {
 			case 2:
 				switch (valueType) {
 				case BOOLEAN:
-					return (Matrix) sparseBooleanMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseBooleanMatrix2DConstructor();
+					break;
 				case BYTE:
-					return (Matrix) sparseByteMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseByteMatrix2DConstructor();
+					break;
 				case CHAR:
-					return (Matrix) sparseCharMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseCharMatrix2DConstructor();
+					break;
 				case DATE:
-					return (Matrix) sparseDateMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseDateMatrix2DConstructor();
+					break;
 				case DOUBLE:
-					return (Matrix) sparseDoubleMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseDoubleMatrix2DConstructor();
+					break;
 				case FLOAT:
-					return (Matrix) sparseFloatMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseFloatMatrix2DConstructor();
+					break;
 				case INT:
-					return (Matrix) sparseIntMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseIntMatrix2DConstructor();
+					break;
 				case LONG:
-					return (Matrix) sparseLongMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseLongMatrix2DConstructor();
+					break;
 				case OBJECT:
-					return (Matrix) sparseObjectMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseObjectMatrix2DConstructor();
+					break;
 				case SHORT:
-					return (Matrix) sparseShortMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseShortMatrix2DConstructor();
+					break;
 				case STRING:
-					return (Matrix) sparseStringMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseStringMatrix2DConstructor();
+					break;
 				case GENERIC:
-					return (Matrix) sparseObjectMatrix2DConstructor.newInstance(size);
+					con = matrixMapper.getSparseObjectMatrix2DConstructor();
+					break;
 				default:
-					throw new MatrixException("entry type not yet supported: " + valueType);
+					throw new MatrixException("entry type not supported: " + valueType);
 				}
+				break;
 			default:
 				switch (valueType) {
 				case BOOLEAN:
-					return (Matrix) sparseBooleanMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseBooleanMatrixMultiDConstructor();
+					break;
 				case BYTE:
-					return (Matrix) sparseByteMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseByteMatrixMultiDConstructor();
+					break;
 				case CHAR:
-					return (Matrix) sparseCharMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseCharMatrixMultiDConstructor();
+					break;
 				case DATE:
-					return (Matrix) sparseDateMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseDateMatrixMultiDConstructor();
+					break;
 				case DOUBLE:
-					return (Matrix) sparseDoubleMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseDoubleMatrixMultiDConstructor();
+					break;
 				case FLOAT:
-					return (Matrix) sparseFloatMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseFloatMatrixMultiDConstructor();
+					break;
 				case INT:
-					return (Matrix) sparseIntMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseIntMatrixMultiDConstructor();
+					break;
 				case LONG:
-					return (Matrix) sparseLongMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseLongMatrixMultiDConstructor();
+					break;
 				case OBJECT:
-					return (Matrix) sparseObjectMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseObjectMatrixMultiDConstructor();
+					break;
 				case SHORT:
-					return (Matrix) sparseShortMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseShortMatrixMultiDConstructor();
+					break;
 				case STRING:
-					return (Matrix) sparseStringMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseStringMatrixMultiDConstructor();
+					break;
 				case GENERIC:
-					return (Matrix) sparseObjectMatrixMultiDConstructor.newInstance(size);
+					con = matrixMapper.getSparseObjectMatrixMultiDConstructor();
+					break;
 				default:
-					throw new MatrixException("entry type not yet supported: " + valueType);
+					throw new MatrixException("entry type not  supported: " + valueType);
 				}
 			}
+
+			return (Matrix) con.newInstance(size);
+
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
@@ -1383,16 +661,21 @@ public abstract class MatrixFactory {
 
 	public static Matrix dense(long... size) throws MatrixException {
 		try {
+			Constructor<?> con = null;
+
 			switch (size.length) {
 			case 0:
 				throw new MatrixException("Size not defined");
 			case 1:
 				throw new MatrixException("Size must be at least 2-dimensional");
 			case 2:
-				return (Matrix) denseDoubleMatrix2DConstructor.newInstance(size);
+				con = matrixMapper.getDenseDoubleMatrix2DConstructor();
 			default:
-				return (Matrix) denseDoubleMatrixMultiDConstructor.newInstance(size);
+				con = matrixMapper.getDenseDoubleMatrixMultiDConstructor();
 			}
+
+			return (Matrix) con.newInstance(size);
+
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
@@ -1454,6 +737,14 @@ public abstract class MatrixFactory {
 
 	public static final Matrix emptyMatrix() {
 		return EMPTYMATRIX;
+	}
+
+	public static MatrixMapper getMatrixMapper() {
+		return matrixMapper;
+	}
+
+	public static void setMatrixMapper(MatrixMapper matrixMapper) {
+		MatrixFactory.matrixMapper = matrixMapper;
 	}
 
 }

@@ -78,12 +78,12 @@ import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.DefaultSparseLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix2D;
-import org.ujmp.core.objectmatrix.AbstractSparseMatrix;
-import org.ujmp.core.objectmatrix.AbstractSparseMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultSparseMatrix;
+import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix;
+import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultSparseObjectMatrix;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
 import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix;
@@ -248,10 +248,10 @@ public class MatrixMapper implements ClassMapper {
 			setSparseLongMatrix2DClassName(DefaultSparseLongMatrix.class.getName());
 			setSparseLongMatrixMultiDClassName(DefaultSparseLongMatrix.class.getName());
 
-			setDenseObjectMatrix2DClassName(DefaultDenseMatrix2D.class.getName());
-			setDenseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
-			setSparseObjectMatrix2DClassName(DefaultSparseMatrix.class.getName());
-			setSparseObjectMatrixMultiDClassName(DefaultSparseMatrix.class.getName());
+			setDenseObjectMatrix2DClassName(DefaultDenseObjectMatrix2D.class.getName());
+			setDenseObjectMatrixMultiDClassName(DefaultSparseObjectMatrix.class.getName());
+			setSparseObjectMatrix2DClassName(DefaultSparseObjectMatrix.class.getName());
+			setSparseObjectMatrixMultiDClassName(DefaultSparseObjectMatrix.class.getName());
 
 			setDenseShortMatrix2DClassName(DefaultDenseShortMatrix2D.class.getName());
 			setDenseShortMatrixMultiDClassName(DefaultSparseShortMatrix.class.getName());
@@ -789,12 +789,12 @@ public class MatrixMapper implements ClassMapper {
 	}
 
 	public void setDenseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseMatrix2D.class, className);
+		matrixClasses.put(AbstractDenseObjectMatrix2D.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseMatrix2D.class;
+			matrixClass = DefaultDenseObjectMatrix2D.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -802,12 +802,12 @@ public class MatrixMapper implements ClassMapper {
 	}
 
 	public void setDenseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseMatrix.class, className);
+		matrixClasses.put(AbstractDenseObjectMatrix.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
+			matrixClass = DefaultSparseObjectMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -815,12 +815,12 @@ public class MatrixMapper implements ClassMapper {
 	}
 
 	public void setSparseObjectMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseMatrix2D.class, className);
+		matrixClasses.put(AbstractSparseObjectMatrix2D.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
+			matrixClass = DefaultSparseObjectMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -828,12 +828,12 @@ public class MatrixMapper implements ClassMapper {
 	}
 
 	public void setSparseObjectMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractSparseMatrix.class, className);
+		matrixClasses.put(AbstractSparseObjectMatrix.class, className);
 		Class<?> matrixClass = null;
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseMatrix.class;
+			matrixClass = DefaultSparseObjectMatrix.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}

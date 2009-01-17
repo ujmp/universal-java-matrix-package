@@ -28,6 +28,8 @@ import org.ujmp.core.coordinates.CoordinateIterator2D;
 public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMatrix implements
 		FloatMatrix2D {
 
+	private static final long serialVersionUID = 6828460129067551021L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}

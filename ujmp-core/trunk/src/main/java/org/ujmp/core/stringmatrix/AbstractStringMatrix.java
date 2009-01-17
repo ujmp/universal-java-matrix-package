@@ -32,6 +32,8 @@ import org.ujmp.core.util.StringUtil;
 public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String> implements
 		StringMatrix {
 
+	private static final long serialVersionUID = -8163097072559207L;
+
 	@Override
 	public final String getObject(long... coordinates) throws MatrixException {
 		return getAsString(coordinates);
@@ -41,10 +43,12 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		setAsString(StringUtil.convert(o), coordinates);
 	}
 
+	@Override
 	public final double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getAsString(coordinates));
 	}
 
+	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setAsString("" + value, coordinates);
 	}
@@ -59,6 +63,7 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		setString(string, coordinates);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

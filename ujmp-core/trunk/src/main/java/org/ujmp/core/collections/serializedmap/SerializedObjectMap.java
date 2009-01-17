@@ -154,6 +154,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 		throw new MatrixException("not implemented");
 	}
 
+	@SuppressWarnings("unchecked")
 	public synchronized Set<K> keySet() {
 		Set<K> set = new HashSet<K>();
 		File[] dirs = getPath().listFiles();
@@ -165,7 +166,6 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 						FileInputStream fis = new FileInputStream(f);
 						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
 						K key = (K) os[0];
-						V value = (V) os[1];
 						fis.close();
 						set.add(key);
 					} catch (Exception e) {
@@ -256,6 +256,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 		return file;
 	}
 
+	@SuppressWarnings("unchecked")
 	public synchronized Collection<V> values() {
 		List<V> set = new ArrayList<V>();
 		File[] dirs = getPath().listFiles();
@@ -266,7 +267,6 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 					try {
 						FileInputStream fis = new FileInputStream(f);
 						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
-						K key = (K) os[0];
 						V value = (V) os[1];
 						fis.close();
 						set.add(value);

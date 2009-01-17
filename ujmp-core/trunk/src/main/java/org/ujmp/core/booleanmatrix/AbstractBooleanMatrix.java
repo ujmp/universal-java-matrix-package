@@ -31,6 +31,8 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolean> implements
 		BooleanMatrix {
 
+	private static final long serialVersionUID = -6190735100426536876L;
+
 	@Override
 	public final Boolean getObject(long... coordinates) throws MatrixException {
 		return getBoolean(coordinates);
@@ -61,6 +63,7 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		setBoolean(value != 0, coordinates);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}

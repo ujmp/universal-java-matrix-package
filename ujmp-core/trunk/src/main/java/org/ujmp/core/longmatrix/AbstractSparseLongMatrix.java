@@ -25,6 +25,8 @@ package org.ujmp.core.longmatrix;
 
 public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix {
 
+	private static final long serialVersionUID = 5682519172871817291L;
+
 	public final boolean isSparse() {
 		return true;
 	}

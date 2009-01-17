@@ -29,6 +29,8 @@ import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix<A>
 		implements GenericMatrix2D<A>, ObjectMatrix2D {
 
+	private static final long serialVersionUID = -1725502819645296844L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}

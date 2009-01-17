@@ -62,10 +62,10 @@ import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
-import org.ujmp.core.objectmatrix.DefaultDenseMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
-import org.ujmp.core.objectmatrix.SynchronizedMatrix;
+import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
@@ -329,7 +329,7 @@ public abstract class MatrixFactory {
 		} else if (value instanceof Long) {
 			return new DefaultDenseLongMatrix2D(new long[][] { { (Long) value } });
 		} else {
-			return new DefaultDenseMatrix2D(new Object[][] { { value } });
+			return new DefaultDenseObjectMatrix2D(new Object[][] { { value } });
 		}
 	}
 
@@ -466,14 +466,15 @@ public abstract class MatrixFactory {
 		return matrix;
 	}
 
-	public static final DefaultDenseMatrix2D linkToArray(Object[]... valueList) {
-		return new DefaultDenseMatrix2D(valueList);
+	public static final DefaultDenseObjectMatrix2D linkToArray(Object[]... valueList) {
+		return new DefaultDenseObjectMatrix2D(valueList);
 	}
 
 	public static final FileListMatrix linkToDir(String dir) {
 		return new FileListMatrix(dir);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static final Matrix linkToMap(Map<?, ?> map) {
 		if (map instanceof Matrix) {
 			return (Matrix) map;
@@ -516,8 +517,8 @@ public abstract class MatrixFactory {
 	 *            the source Matrix
 	 * @return a synchronized Matrix
 	 */
-	public static final SynchronizedMatrix synchronizedMatrix(Matrix matrix) {
-		return new SynchronizedMatrix(matrix);
+	public static final SynchronizedObjectMatrix synchronizedMatrix(Matrix matrix) {
+		return new SynchronizedObjectMatrix(matrix);
 	}
 
 	public static final DoubleMatrix linkToBinaryFile(String filename, int rowCount, int columnCount) {

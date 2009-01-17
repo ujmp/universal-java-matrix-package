@@ -24,6 +24,7 @@
 package org.ujmp.core.exceptions;
 
 public abstract class UJMPException extends RuntimeException {
+	private static final long serialVersionUID = 3298619773181832722L;
 
 	public UJMPException(String message) {
 		super(message);

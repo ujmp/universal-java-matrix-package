@@ -30,6 +30,8 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
 
+	private static final long serialVersionUID = -5153569448031492210L;
+
 	@Override
 	public final Integer getObject(long... coordinates) throws MatrixException {
 		return getInt(coordinates);
@@ -59,6 +61,7 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 		setInt((int) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}

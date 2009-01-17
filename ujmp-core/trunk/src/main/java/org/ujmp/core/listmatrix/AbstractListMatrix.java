@@ -36,6 +36,8 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D<A> implements
 		ListMatrix<A> {
 
+	private static final long serialVersionUID = -6776628601679785451L;
+
 	public abstract List<A> getList();
 
 	public final long[] getSize() {
@@ -159,14 +161,17 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().toArray(a);
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

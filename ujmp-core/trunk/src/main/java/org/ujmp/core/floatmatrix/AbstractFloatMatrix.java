@@ -31,6 +31,8 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> implements
 		FloatMatrix {
 
+	private static final long serialVersionUID = -6051872055791093546L;
+
 	@Override
 	public final Float getObject(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
@@ -61,6 +63,7 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 		setFloat((float) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

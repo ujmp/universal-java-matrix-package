@@ -33,8 +33,10 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseMatrix implements
+public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObjectMatrix implements
 		Wrapper<Map<Coordinates, ObjectMatrix2D>> {
+
+	private static final long serialVersionUID = -7464578359102479614L;
 
 	private long tileSize = 100;
 
@@ -85,10 +87,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseMat
 		return new CoordinateIterator2D(getSize());
 	}
 
+	@Override
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
 		setObject(v, coordinates);
 	}
@@ -97,12 +101,13 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseMat
 		Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
-			m = new DefaultDenseMatrix2D(tileSize, tileSize);
+			m = new DefaultDenseObjectMatrix2D(tileSize, tileSize);
 		}
 		m.setObject(o, coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
 		getMap().put(c, m);
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

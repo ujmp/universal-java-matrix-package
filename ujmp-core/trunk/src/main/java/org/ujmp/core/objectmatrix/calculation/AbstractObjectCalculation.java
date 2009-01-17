@@ -33,6 +33,7 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractObjectCalculation extends AbstractCalculation {
+	private static final long serialVersionUID = 6012424636486559650L;
 
 	public AbstractObjectCalculation(Matrix... sources) {
 		super(sources);

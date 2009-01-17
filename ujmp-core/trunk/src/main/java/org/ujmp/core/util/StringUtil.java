@@ -61,7 +61,7 @@ public abstract class StringUtil {
 			return format(((Number) o).doubleValue());
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getStringValue();
+			return ((Matrix) o).stringValue();
 		}
 		return o.toString();
 	}
@@ -74,7 +74,7 @@ public abstract class StringUtil {
 			return (String) o;
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getStringValue();
+			return ((Matrix) o).stringValue();
 		}
 		if (o instanceof Number) {
 			return "" + (((Number) o).doubleValue());

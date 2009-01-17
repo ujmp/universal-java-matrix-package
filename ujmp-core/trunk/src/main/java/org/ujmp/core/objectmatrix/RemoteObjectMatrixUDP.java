@@ -35,7 +35,7 @@ import java.util.logging.Level;
 
 import org.ujmp.core.enums.ValueType;
 
-public class RemoteMatrixUDP extends AbstractMatrix {
+public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
 	private static final long serialVersionUID = 3889079475875267966L;
 
 	private static final int BUFFERSIZE = 512;
@@ -48,7 +48,7 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 
 	private SocketAddress destination = null;
 
-	public RemoteMatrixUDP(String server, int port) {
+	public RemoteObjectMatrixUDP(String server, int port) {
 		try {
 			socket = new DatagramSocket();
 			socket.setSoTimeout(TIMEOUT);
@@ -68,7 +68,7 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeInt(ServerMatrixUDP.GETDIMENSIONCOUNT);
+			oos.writeInt(ServerObjectMatrixUDP.GETDIMENSIONCOUNT);
 			// oos.writeInt(dimension);
 			oos.flush();
 			oos.close();
@@ -79,10 +79,9 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
 					.getData()));
 			int command = ois.readInt();
-			if (command != ServerMatrixUDP.GETDIMENSIONCOUNT) {
+			if (command != ServerObjectMatrixUDP.GETDIMENSIONCOUNT) {
 				logger.log(Level.WARNING, "could not set value");
 			}
-			int result = ois.readInt();
 			ois.close();
 			return null;
 		} catch (Exception e) {
@@ -91,11 +90,12 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 		}
 	}
 
+	@Override
 	public synchronized double getAsDouble(long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeInt(ServerMatrixUDP.GETDOUBLEVALUE);
+			oos.writeInt(ServerObjectMatrixUDP.GETDOUBLEVALUE);
 			oos.writeObject(coordinates);
 			oos.flush();
 			oos.close();
@@ -106,7 +106,7 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
 					.getData()));
 			int command = ois.readInt();
-			if (command != ServerMatrixUDP.GETDOUBLEVALUE) {
+			if (command != ServerObjectMatrixUDP.GETDOUBLEVALUE) {
 				logger.log(Level.WARNING, "could not get value");
 			}
 			double result = ois.readDouble();
@@ -118,11 +118,12 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 		}
 	}
 
+	@Override
 	public synchronized void setAsDouble(double value, long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeInt(ServerMatrixUDP.SETDOUBLEVALUE);
+			oos.writeInt(ServerObjectMatrixUDP.SETDOUBLEVALUE);
 			oos.writeObject(coordinates);
 			oos.writeDouble(value);
 			oos.flush();
@@ -135,7 +136,7 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 					.getData()));
 			int command = ois.readInt();
 			ois.close();
-			if (command != ServerMatrixUDP.SETDOUBLEVALUE) {
+			if (command != ServerObjectMatrixUDP.SETDOUBLEVALUE) {
 				logger.log(Level.WARNING, "could not set value");
 			}
 		} catch (Exception e) {
@@ -162,6 +163,7 @@ public class RemoteMatrixUDP extends AbstractMatrix {
 		return false;
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

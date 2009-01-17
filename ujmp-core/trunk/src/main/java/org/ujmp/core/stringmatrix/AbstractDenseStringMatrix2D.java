@@ -25,7 +25,10 @@ package org.ujmp.core.stringmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMatrix implements StringMatrix2D {
+public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMatrix implements
+		StringMatrix2D {
+
+	private static final long serialVersionUID = -8819833075778572302L;
 
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

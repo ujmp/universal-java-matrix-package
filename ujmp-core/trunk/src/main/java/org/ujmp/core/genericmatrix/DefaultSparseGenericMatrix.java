@@ -83,6 +83,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return values.size();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setObject(Object value, long... coordinates) {
 		while (maximumNumberOfEntries > 0 && values.size() > maximumNumberOfEntries) {
 			values.remove(values.keySet().iterator().next());
@@ -105,14 +106,17 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return values.containsKey(new Coordinates(coordinates));
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

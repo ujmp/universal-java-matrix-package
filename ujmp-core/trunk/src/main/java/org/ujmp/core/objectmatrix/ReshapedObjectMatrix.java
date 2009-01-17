@@ -30,7 +30,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class ReshapedMatrix extends AbstractMatrix {
+public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 	private static final long serialVersionUID = -4298270756453090584L;
 
 	private Matrix source = null;
@@ -39,7 +39,7 @@ public class ReshapedMatrix extends AbstractMatrix {
 
 	private long[] oldSize = null;
 
-	public ReshapedMatrix(Matrix source, long... newSize) {
+	public ReshapedObjectMatrix(Matrix source, long... newSize) {
 		this.source = source;
 		this.newSize = newSize;
 		this.oldSize = source.getSize();

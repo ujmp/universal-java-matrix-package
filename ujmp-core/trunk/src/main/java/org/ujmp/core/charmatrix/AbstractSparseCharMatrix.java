@@ -24,6 +24,7 @@
 package org.ujmp.core.charmatrix;
 
 public abstract class AbstractSparseCharMatrix extends AbstractCharMatrix {
+	private static final long serialVersionUID = 3907833890262323770L;
 
 	public final boolean isSparse() {
 		return true;

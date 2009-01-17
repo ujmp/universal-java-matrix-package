@@ -33,6 +33,8 @@ import org.ujmp.core.exceptions.MatrixException;
 public abstract class AbstractBooleanCalculation extends AbstractCalculation implements
 		BooleanCalculation {
 
+	private static final long serialVersionUID = 1357508932960938265L;
+
 	public AbstractBooleanCalculation(Matrix... sources) {
 		super(sources);
 	}

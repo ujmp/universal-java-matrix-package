@@ -34,8 +34,10 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseMatrix implements
+public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObjectMatrix implements
 		Wrapper<Map<Coordinates, Object>> {
+
+	private static final long serialVersionUID = -6292034262789053069L;
 
 	private final Object defaultValue = null;
 
@@ -92,10 +94,12 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseMat
 		return getMap().containsKey(new Coordinates(coordinates));
 	}
 
+	@Override
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
 		setObject(v, coordinates);
 	}
@@ -109,6 +113,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseMat
 		}
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

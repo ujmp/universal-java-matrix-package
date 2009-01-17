@@ -29,9 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix2D;
+import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
-public abstract class AbstractMapMatrix<K, V> extends AbstractDenseMatrix2D implements MapMatrix<K, V> {
+public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements
+		MapMatrix<K, V> {
+	private static final long serialVersionUID = 5571429371462164416L;
 
 	public abstract Map<K, V> getMap();
 
@@ -55,6 +57,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseMatrix2D impl
 	}
 
 	// TODO: concurrentmodification exceptions can come from here
+	@SuppressWarnings("unchecked")
 	private final Object getKey(int index) {
 		if (getMap() instanceof List) {
 			return ((List) getMap()).get(index);

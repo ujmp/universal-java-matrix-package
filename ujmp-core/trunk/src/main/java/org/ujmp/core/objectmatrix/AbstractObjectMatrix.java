@@ -138,7 +138,8 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 
-public abstract class AbstractMatrix implements Matrix {
+public abstract class AbstractObjectMatrix extends Number implements Matrix {
+	private static final long serialVersionUID = -2861884195413889506L;
 
 	/**
 	 * A logger used for <code>Matrix</code> and all subclasses
@@ -1074,7 +1075,7 @@ public abstract class AbstractMatrix implements Matrix {
 
 	public final int compareTo(Matrix m) {
 		try {
-			return new Double(getDoubleValue()).compareTo(m.getDoubleValue());
+			return new Double(doubleValue()).compareTo(m.doubleValue());
 		} catch (MatrixException e) {
 			logger.log(Level.WARNING, "could not compare", e);
 			return Integer.MAX_VALUE;
@@ -1712,73 +1713,63 @@ public abstract class AbstractMatrix implements Matrix {
 	}
 
 	public final Matrix reshape(long... newSize) {
-		return new ReshapedMatrix(this, newSize);
+		return new ReshapedObjectMatrix(this, newSize);
 	}
 
-	public final double getDoubleValue() throws MatrixException {
+	@Override
+	public final double doubleValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsDouble(0, 0);
 		}
 		return getMeanValue();
 	}
 
-	public final int getIntValue() throws MatrixException {
+	@Override
+	public final int intValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsInt(0, 0);
 		}
 		return (int) getMeanValue();
 	}
 
-	public final byte getByteValue() throws MatrixException {
-		if (isScalar()) {
-			return getAsByte(0, 0);
-		}
-		return (byte) getMeanValue();
-	}
-
-	public final char getCharValue() throws MatrixException {
+	public final char charValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsChar(0, 0);
 		}
 		return (char) getMeanValue();
 	}
 
-	public final float getFloatValue() throws MatrixException {
+	@Override
+	public final float floatValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsFloat(0, 0);
 		}
 		return (float) getMeanValue();
 	}
 
-	public final long getLongValue() throws MatrixException {
+	@Override
+	public final long longValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsLong(0, 0);
 		}
 		return (long) getMeanValue();
 	}
 
-	public final short getShortValue() throws MatrixException {
-		if (isScalar()) {
-			return getAsShort(0, 0);
-		}
-		return (short) getMeanValue();
-	}
-
-	public final Date getDateValue() throws MatrixException {
+	public final Date dateValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsDate(0, 0);
 		}
 		return DateUtil.fromObject(getMeanValue());
 	}
 
-	public final boolean getBooleanValue() throws MatrixException {
+	public final boolean booleanValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBoolean(0, 0);
 		}
 		return getMeanValue() != 0;
 	}
 
-	public final String getStringValue() throws MatrixException {
+	public final String stringValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsString(0, 0);
 		}
@@ -1908,7 +1899,7 @@ public abstract class AbstractMatrix implements Matrix {
 	}
 
 	public static void setCalculationMapper(CalculationMapper calculationMapper) {
-		AbstractMatrix.calculationMapper = calculationMapper;
+		AbstractObjectMatrix.calculationMapper = calculationMapper;
 	}
 
 }

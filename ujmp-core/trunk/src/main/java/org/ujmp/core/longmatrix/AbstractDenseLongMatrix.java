@@ -26,6 +26,7 @@ package org.ujmp.core.longmatrix;
 import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractDenseLongMatrix extends AbstractLongMatrix {
+	private static final long serialVersionUID = -2604308460484616556L;
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

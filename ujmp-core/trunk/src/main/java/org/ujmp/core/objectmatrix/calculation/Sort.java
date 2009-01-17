@@ -89,6 +89,7 @@ public class Sort extends AbstractObjectCalculation {
 	// }
 	// this.index = indexMatrix;
 	// }
+	@SuppressWarnings("unchecked")
 	private void createSortIndex() {
 		Matrix m = getSource();
 		List<Sortable> rows = new ArrayList<Sortable>();

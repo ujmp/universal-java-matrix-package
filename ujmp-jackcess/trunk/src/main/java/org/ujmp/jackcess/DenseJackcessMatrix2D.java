@@ -33,7 +33,7 @@ import java.util.List;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractDenseMatrix2D;
+import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
 import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.ColumnBuilder;
@@ -42,7 +42,7 @@ import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 import com.healthmarketscience.jackcess.TableBuilder;
 
-public class DenseJackcessMatrix2D extends AbstractDenseMatrix2D implements Closeable {
+public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -6342663672866315180L;
 
 	private Database database = null;

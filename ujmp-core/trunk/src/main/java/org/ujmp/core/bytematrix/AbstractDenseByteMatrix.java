@@ -26,6 +26,7 @@ package org.ujmp.core.bytematrix;
 import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix {
+	private static final long serialVersionUID = -3579091070306434169L;
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

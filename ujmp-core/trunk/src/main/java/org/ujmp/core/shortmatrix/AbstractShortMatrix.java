@@ -30,6 +30,7 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> implements
 		ShortMatrix {
+	private static final long serialVersionUID = 34811716349836913L;
 
 	@Override
 	public final Short getObject(long... coordinates) throws MatrixException {
@@ -60,6 +61,7 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		setShort((short) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

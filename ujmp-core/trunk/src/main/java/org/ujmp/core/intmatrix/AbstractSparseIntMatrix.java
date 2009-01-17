@@ -25,6 +25,8 @@ package org.ujmp.core.intmatrix;
 
 public abstract class AbstractSparseIntMatrix extends AbstractIntMatrix {
 
+	private static final long serialVersionUID = 5391576722782755001L;
+
 	public final boolean isSparse() {
 		return true;
 	}

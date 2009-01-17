@@ -57,6 +57,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		return values.length == 0 ? 0 : values[0].length;
 	}
 
+	@SuppressWarnings("unchecked")
 	public A getObject(long row, long column) {
 		return (A) values[(int) row][(int) column];
 	}
@@ -65,16 +66,19 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		values[(int) row][(int) column] = value;
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

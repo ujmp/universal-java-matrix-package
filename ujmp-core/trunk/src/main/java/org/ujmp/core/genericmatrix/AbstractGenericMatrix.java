@@ -24,10 +24,14 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractMatrix;
+import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
 
-public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements GenericMatrix<A> {
+public abstract class AbstractGenericMatrix<A> extends AbstractObjectMatrix implements
+		GenericMatrix<A> {
 
+	private static final long serialVersionUID = -7498575238134186845L;
+
+	@Override
 	public abstract A getObject(long... coordinates) throws MatrixException;
 
 }

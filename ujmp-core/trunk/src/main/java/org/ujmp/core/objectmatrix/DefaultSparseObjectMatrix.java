@@ -23,21 +23,33 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public abstract class AbstractSparseMatrix2D extends AbstractSparseMatrix implements
-		ObjectMatrix2D {
+public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> {
+	private static final long serialVersionUID = -1130331544425728230L;
 
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public DefaultSparseObjectMatrix(Matrix m) throws MatrixException {
+		super(m, -1);
 	}
 
-	public final Object getObject(long... coordinates) {
-		return getObject(coordinates[ROW], coordinates[COLUMN]);
+	public DefaultSparseObjectMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+		super(m, maximumNumberOfEntries);
 	}
 
-	public final void setObject(Object value, long... coordinates) {
-		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	public DefaultSparseObjectMatrix(long... size) {
+		super(size);
+	}
+
+	public DefaultSparseObjectMatrix(int maximumNumberOfEntries, long... size) {
+		super(maximumNumberOfEntries, size);
+	}
+
+	@Override
+	public final ValueType getValueType() {
+		return ValueType.OBJECT;
 	}
 
 }

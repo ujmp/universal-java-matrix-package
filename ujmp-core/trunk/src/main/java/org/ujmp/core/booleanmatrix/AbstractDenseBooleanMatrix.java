@@ -27,6 +27,8 @@ import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix {
 
+	private static final long serialVersionUID = 1884839957291665282L;
+
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}

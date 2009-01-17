@@ -23,16 +23,22 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.coordinates.CoordinateIterator2D;
 
-public abstract class AbstractDenseMatrix extends AbstractMatrix {
+public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMatrix implements ObjectMatrix2D {
+	private static final long serialVersionUID = -4318215251761676880L;
 
-	public final boolean contains(long... coordinates) {
-		return Coordinates.isSmallerThan(coordinates, getSize());
+	public Iterable<long[]> allCoordinates() {
+		return new CoordinateIterator2D(getSize());
 	}
 
-	public final boolean isSparse() {
-		return false;
+	@Override
+	public final Object getObject(long... coordinates) {
+		return getObject(coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public final void setObject(Object value, long... coordinates) {
+		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
 }

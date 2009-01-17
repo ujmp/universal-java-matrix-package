@@ -28,6 +28,8 @@ import org.ujmp.core.coordinates.CoordinateIterator2D;
 public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix implements
 		CharMatrix2D {
 
+	private static final long serialVersionUID = -261545946520505256L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}

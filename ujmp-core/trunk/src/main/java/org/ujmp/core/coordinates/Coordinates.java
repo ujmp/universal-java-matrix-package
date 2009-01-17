@@ -26,7 +26,6 @@ package org.ujmp.core.coordinates;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.util.StringUtil;
 
 public class Coordinates implements Serializable {
 	private static final long serialVersionUID = 8361257560328772093L;
@@ -91,6 +90,7 @@ public class Coordinates implements Serializable {
 		return product;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("[");

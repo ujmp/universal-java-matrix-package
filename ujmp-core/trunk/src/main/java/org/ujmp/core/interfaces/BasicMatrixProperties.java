@@ -72,25 +72,25 @@ public interface BasicMatrixProperties {
 
 	public boolean containsMissingValues() throws MatrixException;
 
-	public double getDoubleValue() throws MatrixException;
+	public double doubleValue() throws MatrixException;
 
-	public int getIntValue() throws MatrixException;
+	public int intValue() throws MatrixException;
 
-	public long getLongValue() throws MatrixException;
+	public long longValue() throws MatrixException;
 
-	public short getShortValue() throws MatrixException;
+	public short shortValue() throws MatrixException;
 
-	public byte getByteValue() throws MatrixException;
+	public byte byteValue() throws MatrixException;
 
-	public boolean getBooleanValue() throws MatrixException;
+	public boolean booleanValue() throws MatrixException;
 
-	public String getStringValue() throws MatrixException;
+	public String stringValue() throws MatrixException;
 
-	public Date getDateValue() throws MatrixException;
+	public Date dateValue() throws MatrixException;
 
-	public char getCharValue() throws MatrixException;
+	public char charValue() throws MatrixException;
 
-	public float getFloatValue() throws MatrixException;
+	public float floatValue() throws MatrixException;
 
 	public double getMinValue() throws MatrixException;
 

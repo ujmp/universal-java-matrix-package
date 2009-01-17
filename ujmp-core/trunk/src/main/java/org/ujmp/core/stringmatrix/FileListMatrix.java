@@ -28,11 +28,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-
 public class FileListMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = -2627484975560893624L;
-
-	private File path = null;
 
 	private List<File> files = null;
 
@@ -41,7 +38,6 @@ public class FileListMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public FileListMatrix(File path) {
-		this.path = path;
 		this.files = Arrays.asList(path.listFiles());
 		Collections.sort(files);
 		setMatrixAnnotation(path);

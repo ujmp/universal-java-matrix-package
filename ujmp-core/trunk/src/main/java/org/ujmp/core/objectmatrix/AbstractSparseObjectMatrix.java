@@ -23,33 +23,11 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
+public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix {
+	private static final long serialVersionUID = -8252625246356993341L;
 
-public class DefaultSparseMatrix extends DefaultSparseGenericMatrix<Object> {
-	private static final long serialVersionUID = -1130331544425728230L;
-
-	public DefaultSparseMatrix(Matrix m) throws MatrixException {
-		super(m, -1);
-	}
-
-	public DefaultSparseMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
-		super(m, maximumNumberOfEntries);
-	}
-
-	public DefaultSparseMatrix(long... size) {
-		super(size);
-	}
-
-	public DefaultSparseMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
-	@Override
-	public final ValueType getValueType() {
-		return ValueType.OBJECT;
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

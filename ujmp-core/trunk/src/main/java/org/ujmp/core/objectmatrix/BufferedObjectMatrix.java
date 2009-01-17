@@ -33,9 +33,8 @@ import java.util.logging.Level;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public class BufferedMatrix extends AbstractMatrix implements Flushable {
+public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flushable {
 	private static final long serialVersionUID = 7750549087897737457L;
 
 	private Matrix inputBuffer = null;
@@ -48,7 +47,7 @@ public class BufferedMatrix extends AbstractMatrix implements Flushable {
 
 	private Thread writeThread = null;
 
-	public BufferedMatrix(Matrix original) {
+	public BufferedObjectMatrix(Matrix original) {
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(Integer.MAX_VALUE);
@@ -56,13 +55,13 @@ public class BufferedMatrix extends AbstractMatrix implements Flushable {
 		writeThread.start();
 	}
 
-	public BufferedMatrix(Matrix original, int outputBufferSize) {
+	public BufferedObjectMatrix(Matrix original, int outputBufferSize) {
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(outputBufferSize);
 	}
 
-	public BufferedMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
+	public BufferedObjectMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
 		this.original = original;
 		setInputBufferSize(inputBufferSize);
 		setOutputBufferSize(outputBufferSize);
@@ -105,7 +104,7 @@ public class BufferedMatrix extends AbstractMatrix implements Flushable {
 		if (numElements < 1) {
 			inputBuffer = new VolatileSparseObjectMatrix(original.getSize());
 		} else {
-			inputBuffer = new DefaultSparseGenericMatrix(numElements, original.getSize());
+			inputBuffer = new DefaultSparseObjectMatrix(numElements, original.getSize());
 		}
 	}
 

@@ -217,7 +217,7 @@ public abstract class MathUtil {
 		} else if (o instanceof Date) {
 			return ((Date) o).getTime();
 		} else if (o instanceof Matrix) {
-			return ((Matrix) o).getDoubleValue();
+			return ((Matrix) o).doubleValue();
 		} else {
 			try {
 				return Double.parseDouble(o.toString());
@@ -463,7 +463,7 @@ public abstract class MathUtil {
 			return ((Number) o).doubleValue() != 0;
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getBooleanValue();
+			return ((Matrix) o).booleanValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -485,7 +485,7 @@ public abstract class MathUtil {
 			return ((Number) o).byteValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getByteValue();
+			return ((Matrix) o).byteValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -507,7 +507,7 @@ public abstract class MathUtil {
 			return (char) ((Number) o).byteValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getCharValue();
+			return ((Matrix) o).charValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -529,7 +529,7 @@ public abstract class MathUtil {
 			return ((Number) o).floatValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getFloatValue();
+			return ((Matrix) o).floatValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -551,7 +551,7 @@ public abstract class MathUtil {
 			return ((Number) o).intValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getIntValue();
+			return ((Matrix) o).intValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -573,7 +573,7 @@ public abstract class MathUtil {
 			return ((Number) o).longValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getLongValue();
+			return ((Matrix) o).longValue();
 		}
 		if (o instanceof String) {
 			try {
@@ -595,7 +595,7 @@ public abstract class MathUtil {
 			return ((Number) o).shortValue();
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getShortValue();
+			return ((Matrix) o).shortValue();
 		}
 		if (o instanceof String) {
 			try {

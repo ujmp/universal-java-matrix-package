@@ -33,6 +33,8 @@ import org.ujmp.core.exceptions.MatrixException;
 public abstract class AbstractDoubleCalculation extends AbstractCalculation implements
 		DoubleCalculation {
 
+	private static final long serialVersionUID = -7509806754731040687L;
+
 	public AbstractDoubleCalculation(Matrix... sources) {
 		super(sources);
 	}

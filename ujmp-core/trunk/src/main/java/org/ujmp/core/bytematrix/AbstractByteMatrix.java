@@ -29,6 +29,7 @@ import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> implements ByteMatrix {
+	private static final long serialVersionUID = 701344082157040644L;
 
 	@Override
 	public final Byte getObject(long... coordinates) throws MatrixException {
@@ -60,6 +61,7 @@ public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> imp
 		setByte((byte) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

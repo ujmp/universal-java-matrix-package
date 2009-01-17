@@ -29,6 +29,7 @@ import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
+	private static final long serialVersionUID = -47058946507188869L;
 
 	@Override
 	public final Long getObject(long... coordinates) throws MatrixException {
@@ -59,6 +60,7 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		setLong((int) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

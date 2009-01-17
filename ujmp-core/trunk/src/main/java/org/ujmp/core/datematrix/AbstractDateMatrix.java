@@ -31,6 +31,7 @@ import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.DateUtil;
 
 public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> implements DateMatrix {
+	private static final long serialVersionUID = -7141035755618677879L;
 
 	@Override
 	public final Date getObject(long... coordinates) throws MatrixException {

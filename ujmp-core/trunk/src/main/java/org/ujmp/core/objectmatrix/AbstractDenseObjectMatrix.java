@@ -23,12 +23,17 @@
 
 package org.ujmp.core.objectmatrix;
 
+import org.ujmp.core.coordinates.Coordinates;
 
+public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix {
+	private static final long serialVersionUID = -4546702335648155424L;
 
-public abstract class AbstractSparseMatrix extends AbstractMatrix {
+	public final boolean contains(long... coordinates) {
+		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
 
 	public final boolean isSparse() {
-		return true;
+		return false;
 	}
 
 }

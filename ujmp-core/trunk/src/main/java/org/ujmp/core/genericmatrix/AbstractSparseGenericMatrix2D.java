@@ -30,6 +30,8 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
 		implements GenericMatrix2D<A> {
 
+	private static final long serialVersionUID = 5833681469274664616L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
@@ -43,10 +45,12 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

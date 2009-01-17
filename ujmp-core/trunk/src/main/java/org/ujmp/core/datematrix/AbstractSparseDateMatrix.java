@@ -24,6 +24,7 @@
 package org.ujmp.core.datematrix;
 
 public abstract class AbstractSparseDateMatrix extends AbstractDateMatrix {
+	private static final long serialVersionUID = 960775559298514193L;
 
 	public final boolean isSparse() {
 		return true;

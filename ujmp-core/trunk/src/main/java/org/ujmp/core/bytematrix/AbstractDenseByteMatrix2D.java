@@ -28,6 +28,8 @@ import org.ujmp.core.coordinates.CoordinateIterator2D;
 public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix implements
 		ByteMatrix2D {
 
+	private static final long serialVersionUID = -9072937987755366928L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}

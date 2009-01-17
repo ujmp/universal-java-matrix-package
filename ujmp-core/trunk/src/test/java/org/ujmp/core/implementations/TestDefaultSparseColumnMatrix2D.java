@@ -25,19 +25,19 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.DefaultSparseColumnMatrix2D;
+import org.ujmp.core.objectmatrix.DefaultSparseColumnObjectMatrix2D;
 import org.ujmp.core.util.test.AbstractMatrixTest;
 
 public class TestDefaultSparseColumnMatrix2D extends AbstractMatrixTest {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new DefaultSparseColumnMatrix2D(size);
+		return new DefaultSparseColumnObjectMatrix2D(size);
 	}
 
 	@Override
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new DefaultSparseColumnMatrix2D(source);
+		return new DefaultSparseColumnObjectMatrix2D(source);
 	}
 
 }

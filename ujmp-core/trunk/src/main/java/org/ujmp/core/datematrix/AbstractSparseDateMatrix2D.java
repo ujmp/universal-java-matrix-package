@@ -29,6 +29,7 @@ import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractSparseDateMatrix2D extends AbstractSparseDateMatrix implements
 		DateMatrix2D {
+	private static final long serialVersionUID = 2181329606929093563L;
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

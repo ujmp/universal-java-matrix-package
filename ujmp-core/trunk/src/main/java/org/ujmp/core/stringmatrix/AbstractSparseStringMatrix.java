@@ -25,6 +25,8 @@ package org.ujmp.core.stringmatrix;
 
 public abstract class AbstractSparseStringMatrix extends AbstractStringMatrix {
 
+	private static final long serialVersionUID = -7749735785708631991L;
+
 	public final boolean isSparse() {
 		return true;
 	}

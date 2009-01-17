@@ -32,20 +32,19 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
-public class DefaultSparseRowMatrix2D extends AbstractSparseMatrix2D {
-	private static final long serialVersionUID = -5291604525500706427L;
+public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatrix2D {
+	private static final long serialVersionUID = -1943118812754494387L;
 
 	private long[] size = new long[] { 1, 1 };
 
-	private final List<Matrix> rows = new ArrayList<Matrix>();
+	private final List<Matrix> columns = new ArrayList<Matrix>();
 
-	public DefaultSparseRowMatrix2D(long... size) {
+	public DefaultSparseColumnObjectMatrix2D(long... size) {
 		setSize(size);
 	}
 
-	public DefaultSparseRowMatrix2D(Matrix m) {
+	public DefaultSparseColumnObjectMatrix2D(Matrix m) {
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getObject(c), c);
@@ -54,17 +53,17 @@ public class DefaultSparseRowMatrix2D extends AbstractSparseMatrix2D {
 
 	@Override
 	public Object getObject(long row, long column) throws MatrixException {
-		Matrix m = rows.get((int) row);
-		return m.getObject(0, column);
+		Matrix m = columns.get((int) column);
+		return m.getObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
 	@Override
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
-		for (int r = 0; r < size[ROW]; r++) {
-			for (long[] c : rows.get(r).availableCoordinates()) {
-				coordinates.add(Coordinates.plus(c, new long[] { r, 0 }));
+		for (int i = 0; i < size[COLUMN]; i++) {
+			for (long[] c : columns.get(i).availableCoordinates()) {
+				coordinates.add(Coordinates.plus(c, new long[] { 0, i }));
 			}
 		}
 		return coordinates;
@@ -78,19 +77,13 @@ public class DefaultSparseRowMatrix2D extends AbstractSparseMatrix2D {
 		}
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
-	}
-
+	@Override
 	public void setObject(Object o, long row, long column) throws MatrixException {
-		Matrix m = rows.get((int) row);
-		m.setObject(o, 0, column);
+		Matrix m = columns.get((int) column);
+		m.setObject(o, row, 0);
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}
@@ -101,20 +94,20 @@ public class DefaultSparseRowMatrix2D extends AbstractSparseMatrix2D {
 
 	@Override
 	public void setSize(long... size) {
-		while (rows.size() < size[ROW]) {
-			rows.add(new DefaultSparseMatrix(1l, size[COLUMN]));
+		while (columns.size() < size[COLUMN]) {
+			columns.add(new DefaultSparseObjectMatrix(size[ROW], 1l));
 		}
 
-		if (this.size[COLUMN] != size[COLUMN]) {
-			for (Matrix m : rows) {
-				m.setSize(1, size[COLUMN]);
+		if (this.size[ROW] != size[ROW]) {
+			for (Matrix m : columns) {
+				m.setSize(size[ROW], 1);
 			}
 		}
 		this.size = size;
 	}
 
-	public Matrix getRow(long row) {
-		return rows.get((int) row);
+	public Matrix getColumn(long column) {
+		return columns.get((int) column);
 	}
 
 	@Override
@@ -146,11 +139,11 @@ public class DefaultSparseRowMatrix2D extends AbstractSparseMatrix2D {
 	}
 
 	@Override
-	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
-		if (returnType == Ret.LINK && rows.length == 1) {
-			return getRow(rows[0]);
+	public Matrix selectColumns(Ret returnType, long... columns) throws MatrixException {
+		if (returnType == Ret.LINK && columns.length == 1) {
+			return getColumn(columns[0]);
 		}
-		return super.selectRows(returnType, rows);
+		return super.selectColumns(returnType, columns);
 	}
 
 }

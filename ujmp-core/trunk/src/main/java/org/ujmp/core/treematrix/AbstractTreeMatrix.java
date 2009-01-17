@@ -36,6 +36,8 @@ import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix;
 
 public abstract class AbstractTreeMatrix<A> extends AbstractSparseDoubleMatrix implements TreeModel {
 
+	private static final long serialVersionUID = 7731771819651651188L;
+
 	public boolean contains(long... coordinates) {
 		return false;
 	}

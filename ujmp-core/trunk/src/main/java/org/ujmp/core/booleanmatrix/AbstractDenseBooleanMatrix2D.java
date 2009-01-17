@@ -28,6 +28,8 @@ import org.ujmp.core.coordinates.CoordinateIterator2D;
 public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix implements
 		BooleanMatrix2D {
 
+	private static final long serialVersionUID = 1382622388004356999L;
+
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}

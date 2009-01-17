@@ -27,6 +27,8 @@ import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix {
 
+	private static final long serialVersionUID = 2417103022320228350L;
+
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}

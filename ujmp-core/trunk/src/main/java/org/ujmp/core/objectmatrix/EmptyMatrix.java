@@ -2,7 +2,7 @@ package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public class EmptyMatrix extends AbstractDenseMatrix2D {
+public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
 	private static final long serialVersionUID = 1226331953770561766L;
 
 	@Override

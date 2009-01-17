@@ -23,21 +23,36 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class AbstractDenseMatrix2D extends AbstractDenseMatrix implements ObjectMatrix2D {
+import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+public class DefaultTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper {
+	private static final long serialVersionUID = 6745798685307431625L;
+
+	private Map<Coordinates, ObjectMatrix2D> values = null;
+
+	public DefaultTiledObjectMatrix2D(long... size) {
+		super(size);
+	}
+
+	public DefaultTiledObjectMatrix2D(Matrix source) {
+		super(source);
 	}
 
 	@Override
-	public final Object getObject(long... coordinates) {
-		return getObject(coordinates[ROW], coordinates[COLUMN]);
+	public Map<Coordinates, ObjectMatrix2D> getMap() {
+		if (values == null) {
+			values = new HashMap<Coordinates, ObjectMatrix2D>();
+		}
+		return values;
 	}
 
-	public final void setObject(Object value, long... coordinates) {
-		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	@Override
+	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
+		this.values = map;
 	}
 
 }

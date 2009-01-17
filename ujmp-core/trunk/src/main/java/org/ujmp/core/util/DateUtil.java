@@ -47,7 +47,7 @@ public abstract class DateUtil {
 			return fromString((String) o);
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).getDateValue();
+			return ((Matrix) o).dateValue();
 		}
 		return fromString(StringUtil.format(o));
 	}

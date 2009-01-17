@@ -62,7 +62,6 @@ public class ImputeLS extends AbstractDoubleCalculation {
 				try {
 					if (calc == null) {
 						Class<?> c = Class.forName("org.ujmp.lsimpute.LSImpute");
-						Object[] o = c.getConstructors();
 						Constructor<?> con = c.getConstructor(Matrix.class, ImputationMethod.class);
 
 						calc = (DoubleCalculation) con.newInstance(getSource(), method);

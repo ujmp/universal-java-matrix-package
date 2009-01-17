@@ -25,6 +25,8 @@ package org.ujmp.core.bytematrix;
 
 public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix {
 
+	private static final long serialVersionUID = 1233020617561440217L;
+
 	public final boolean isSparse() {
 		return true;
 	}

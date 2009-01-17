@@ -23,8 +23,9 @@
 
 package org.ujmp.core.genericmatrix;
 
-
 public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> {
+
+	private static final long serialVersionUID = 805145571160206604L;
 
 	public final boolean isSparse() {
 		return true;

@@ -25,6 +25,8 @@ package org.ujmp.core.floatmatrix;
 
 public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix {
 
+	private static final long serialVersionUID = -344661054715207894L;
+
 	public final boolean isSparse() {
 		return true;
 	}

@@ -36,7 +36,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class ServerMatrixUDP extends AbstractMatrix {
+public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 	private static final long serialVersionUID = 3907994158174208114L;
 
 	private static final int BUFFERSIZE = 512;
@@ -55,7 +55,7 @@ public class ServerMatrixUDP extends AbstractMatrix {
 
 	private ServerThread thread = null;
 
-	public ServerMatrixUDP(Matrix matrix, int port) {
+	public ServerObjectMatrixUDP(Matrix matrix, int port) {
 		this.matrix = matrix;
 
 		try {

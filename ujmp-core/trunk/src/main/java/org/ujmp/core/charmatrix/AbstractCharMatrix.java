@@ -31,6 +31,8 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character> implements
 		CharMatrix {
 
+	private static final long serialVersionUID = 1967840166659276033L;
+
 	@Override
 	public final Character getObject(long... coordinates) throws MatrixException {
 		return getChar(coordinates);
@@ -61,6 +63,7 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 		setChar((char) value);
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}

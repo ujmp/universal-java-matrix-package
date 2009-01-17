@@ -58,6 +58,7 @@ import org.ujmp.core.booleanmatrix.calculation.Or;
 import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.calculation.Calculation;
+import org.ujmp.core.calculation.CalculationFactory;
 import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
@@ -119,6 +120,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.io.ExportMatrix;
+import org.ujmp.core.mapper.CalculationMapper;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
@@ -142,6 +144,8 @@ public abstract class AbstractMatrix implements Matrix {
 	 * A logger used for <code>Matrix</code> and all subclasses
 	 */
 	protected transient static final Logger logger = Logger.getLogger(Matrix.class.getName());
+
+	private static CalculationMapper calculationMapper = CalculationMapper.getInstance();
 
 	static {
 		UJMPSettings.initialize();
@@ -872,7 +876,7 @@ public abstract class AbstractMatrix implements Matrix {
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
-		return calc(new Plus(ignoreNaN, this, m), returnType);
+		return CalculationFactory.plus(returnType, ignoreNaN, this, m);
 	}
 
 	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
@@ -1070,7 +1074,7 @@ public abstract class AbstractMatrix implements Matrix {
 
 	public final int compareTo(Matrix m) {
 		try {
-			return new Double(getEuklideanValue()).compareTo(m.getEuklideanValue());
+			return new Double(getDoubleValue()).compareTo(m.getDoubleValue());
 		} catch (MatrixException e) {
 			logger.log(Level.WARNING, "could not compare", e);
 			return Integer.MAX_VALUE;
@@ -1897,6 +1901,14 @@ public abstract class AbstractMatrix implements Matrix {
 			return false;
 		}
 
+	}
+
+	public static CalculationMapper getCalculationMapper() {
+		return calculationMapper;
+	}
+
+	public static void setCalculationMapper(CalculationMapper calculationMapper) {
+		AbstractMatrix.calculationMapper = calculationMapper;
 	}
 
 }

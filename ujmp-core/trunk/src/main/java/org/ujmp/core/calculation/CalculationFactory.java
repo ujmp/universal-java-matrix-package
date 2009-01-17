@@ -21,8 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.mapper;
+package org.ujmp.core.calculation;
 
-public interface ClassMapper {
+import java.lang.reflect.Constructor;
+
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.mapper.CalculationMapper;
+
+public abstract class CalculationFactory {
+
+	private static CalculationMapper mapper = CalculationMapper.getInstance();
+
+	public static Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m1, Matrix m2)
+			throws MatrixException {
+		try {
+			Constructor<?> con = mapper.getPlusDenseDoubleCalculation2DConstructor();
+			Calculation calc = (Calculation) con.newInstance(ignoreNaN, m1, m2);
+			return calc.calc(returnType);
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
 
 }

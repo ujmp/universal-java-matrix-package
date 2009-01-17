@@ -31,14 +31,14 @@ import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Clearable;
 import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.DistanceMeasures;
+import org.ujmp.core.interfaces.GettersAndSetters;
 import org.ujmp.core.interfaces.HasGUIObject;
 import org.ujmp.core.interfaces.HasLabel;
-import org.ujmp.core.interfaces.GettersAndSetters;
 import org.ujmp.core.io.ExportMatrixInterface;
 
 /**
- * <code>Matrix</code> is the main class for storing any type of data. You
- * have to choose the suitable implementation for your needs, e.g.
+ * <code>Matrix</code> is the main class for storing any type of data. You have
+ * to choose the suitable implementation for your needs, e.g.
  * <code>DefaultDenseDoubleMatrix2D</code> to store double values or
  * DefaultGenericMatrix if you want to specify the object type.
  * 
@@ -51,9 +51,8 @@ import org.ujmp.core.io.ExportMatrixInterface;
  * 
  */
 public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateFunctions,
-		GettersAndSetters, BasicMatrixProperties, CanPerformCalculations,
-		DistanceMeasures, Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel,
-		HasGUIObject {
+		GettersAndSetters, BasicMatrixProperties, CanPerformCalculations, DistanceMeasures,
+		Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel, HasGUIObject {
 
 	public static final int Y = 0;
 

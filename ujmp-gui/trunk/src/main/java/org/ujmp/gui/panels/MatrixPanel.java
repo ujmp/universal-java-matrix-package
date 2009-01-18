@@ -70,7 +70,7 @@ public class MatrixPanel extends AbstractPanel {
 			Class.forName("org.ujmp.jung.MatrixGraphPanel");
 			Class.forName("edu.uci.ics.jung.graph.Graph");
 			tabbedPane.add("Graph", new GraphPanel(m.getMatrix()));
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -79,7 +79,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Line Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -88,7 +88,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("XY Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -97,7 +97,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Scatter Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -106,7 +106,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Bar Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -115,7 +115,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Histogram", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -124,7 +124,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Staircase Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -133,7 +133,7 @@ public class MatrixPanel extends AbstractPanel {
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Grid Plot", panel);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -144,7 +144,7 @@ public class MatrixPanel extends AbstractPanel {
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Bar Plot 3D", panel);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -154,7 +154,7 @@ public class MatrixPanel extends AbstractPanel {
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Scatter Plot 3D", panel);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		try {
@@ -165,7 +165,7 @@ public class MatrixPanel extends AbstractPanel {
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Line Plot 3D", panel);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		if (GnuPlot.isAvailable()) {

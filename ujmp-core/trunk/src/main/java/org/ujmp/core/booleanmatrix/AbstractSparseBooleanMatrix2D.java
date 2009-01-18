@@ -24,9 +24,11 @@
 package org.ujmp.core.booleanmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBooleanMatrix implements
-		BooleanMatrix2D {
+		SparseBooleanMatrix2D {
 
 	private static final long serialVersionUID = -1162771712274772327L;
 
@@ -40,6 +42,14 @@ public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBoolea
 
 	public final void setBoolean(boolean value, long... coordinates) {
 		setBoolean(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public final Boolean getObject(long row, long column) throws MatrixException {
+		return getBoolean(row, column);
+	}
+
+	public final void setObject(Object o, long row, long column) throws MatrixException {
+		setBoolean(MathUtil.getBoolean(o), row, column);
 	}
 
 }

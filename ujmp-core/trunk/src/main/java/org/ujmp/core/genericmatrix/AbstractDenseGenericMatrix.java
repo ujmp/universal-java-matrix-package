@@ -25,7 +25,8 @@ package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> {
+public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
+		DenseGenericMatrix<A> {
 
 	private static final long serialVersionUID = 5734205405544264050L;
 

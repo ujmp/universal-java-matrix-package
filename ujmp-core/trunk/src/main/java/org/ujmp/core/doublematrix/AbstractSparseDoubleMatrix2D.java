@@ -24,9 +24,13 @@
 package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
-		DoubleMatrix2D {
+		SparseDoubleMatrix2D {
+
+	private static final long serialVersionUID = 2930732801501704674L;
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -38,6 +42,14 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 
 	public final void setDouble(double value, long... coordinates) {
 		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public final Double getObject(long row, long column) throws MatrixException {
+		return getDouble(row, column);
+	}
+
+	public final void setObject(Object o, long row, long column) throws MatrixException {
+		setDouble(MathUtil.getDouble(o), row, column);
 	}
 
 }

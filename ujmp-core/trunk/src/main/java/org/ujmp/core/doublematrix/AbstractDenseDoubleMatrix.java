@@ -25,7 +25,9 @@ package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseDoubleMatrix extends AbstractDoubleMatrix {
+public abstract class AbstractDenseDoubleMatrix extends AbstractDoubleMatrix implements
+		DenseDoubleMatrix {
+	private static final long serialVersionUID = -7916316088335979360L;
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

@@ -26,7 +26,7 @@ package org.ujmp.core.shortmatrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractSparseShortMatrix2D extends AbstractSparseShortMatrix implements
-		ShortMatrix2D {
+		SparseShortMatrix2D {
 	private static final long serialVersionUID = 6786095600309951623L;
 
 	public final Iterable<long[]> allCoordinates() {

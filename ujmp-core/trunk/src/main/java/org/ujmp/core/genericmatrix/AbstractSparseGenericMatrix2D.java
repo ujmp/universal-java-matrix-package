@@ -28,7 +28,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
-		implements GenericMatrix2D<A> {
+		implements SparseGenericMatrix2D<A> {
 
 	private static final long serialVersionUID = 5833681469274664616L;
 

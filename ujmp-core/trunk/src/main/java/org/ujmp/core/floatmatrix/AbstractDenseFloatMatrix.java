@@ -25,7 +25,8 @@ package org.ujmp.core.floatmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix {
+public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix implements
+		DenseFloatMatrix {
 
 	private static final long serialVersionUID = -2069841946241388853L;
 

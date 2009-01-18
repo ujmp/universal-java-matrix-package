@@ -23,7 +23,8 @@
 
 package org.ujmp.core.booleanmatrix;
 
-public abstract class AbstractSparseBooleanMatrix extends AbstractBooleanMatrix {
+public abstract class AbstractSparseBooleanMatrix extends AbstractBooleanMatrix implements
+		SparseBooleanMatrix {
 	private static final long serialVersionUID = 921125319412028934L;
 
 	public final boolean isSparse() {

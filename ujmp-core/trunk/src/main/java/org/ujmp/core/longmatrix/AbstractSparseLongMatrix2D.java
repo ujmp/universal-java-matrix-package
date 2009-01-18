@@ -26,7 +26,7 @@ package org.ujmp.core.longmatrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractSparseLongMatrix2D extends AbstractSparseLongMatrix implements
-		LongMatrix2D {
+		SparseLongMatrix2D {
 
 	private static final long serialVersionUID = 2049985263080338327L;
 

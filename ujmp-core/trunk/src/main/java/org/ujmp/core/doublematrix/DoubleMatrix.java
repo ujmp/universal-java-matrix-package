@@ -23,10 +23,10 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface DoubleMatrix extends Matrix {
+public interface DoubleMatrix extends GenericMatrix<Double> {
 
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored

@@ -23,7 +23,8 @@
 
 package org.ujmp.core.objectmatrix;
 
-public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix {
+public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix implements
+		SparseObjectMatrix {
 	private static final long serialVersionUID = -8252625246356993341L;
 
 	public final boolean isSparse() {

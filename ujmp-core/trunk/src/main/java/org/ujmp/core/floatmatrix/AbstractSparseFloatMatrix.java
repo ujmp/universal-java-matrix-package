@@ -23,7 +23,8 @@
 
 package org.ujmp.core.floatmatrix;
 
-public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix {
+public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix implements
+		SparseFloatMatrix {
 
 	private static final long serialVersionUID = -344661054715207894L;
 

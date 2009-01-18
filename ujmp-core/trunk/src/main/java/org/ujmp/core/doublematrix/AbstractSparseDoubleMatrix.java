@@ -23,8 +23,10 @@
 
 package org.ujmp.core.doublematrix;
 
+public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix implements
+		SparseDoubleMatrix {
 
-public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix {
+	private static final long serialVersionUID = 3204626510806761165L;
 
 	public final boolean isSparse() {
 		return true;

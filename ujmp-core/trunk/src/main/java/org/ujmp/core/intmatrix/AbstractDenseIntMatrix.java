@@ -25,7 +25,7 @@ package org.ujmp.core.intmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix {
+public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix implements DenseIntMatrix {
 	private static final long serialVersionUID = 8649917347029363622L;
 
 	public final boolean contains(long... coordinates) {

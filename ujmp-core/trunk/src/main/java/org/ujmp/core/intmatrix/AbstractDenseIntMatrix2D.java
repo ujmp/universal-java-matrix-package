@@ -26,7 +26,7 @@ package org.ujmp.core.intmatrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractDenseIntMatrix2D extends AbstractDenseIntMatrix implements
-		IntMatrix2D {
+		DenseIntMatrix2D {
 	private static final long serialVersionUID = -8351776461068550919L;
 
 	public final Iterable<long[]> allCoordinates() {

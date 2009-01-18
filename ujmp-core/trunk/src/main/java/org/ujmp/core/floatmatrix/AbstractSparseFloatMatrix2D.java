@@ -26,7 +26,7 @@ package org.ujmp.core.floatmatrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMatrix implements
-		FloatMatrix2D {
+		SparseFloatMatrix2D {
 
 	private static final long serialVersionUID = 6828460129067551021L;
 

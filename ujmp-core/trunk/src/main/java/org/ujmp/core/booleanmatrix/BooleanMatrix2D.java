@@ -23,7 +23,9 @@
 
 package org.ujmp.core.booleanmatrix;
 
-public interface BooleanMatrix2D extends BooleanMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface BooleanMatrix2D extends BooleanMatrix, GenericMatrix2D<Boolean> {
 
 	public boolean getBoolean(long row, long column);
 

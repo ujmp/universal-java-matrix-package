@@ -23,7 +23,8 @@
 
 package org.ujmp.core.shortmatrix;
 
-public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix {
+public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix implements
+		SparseShortMatrix {
 
 	private static final long serialVersionUID = -8028091062602474600L;
 

@@ -23,7 +23,8 @@
 
 package org.ujmp.core.bytematrix;
 
-public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix {
+public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix implements
+		SparseByteMatrix {
 
 	private static final long serialVersionUID = 1233020617561440217L;
 

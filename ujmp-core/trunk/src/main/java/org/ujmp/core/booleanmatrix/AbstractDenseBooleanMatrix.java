@@ -25,7 +25,8 @@ package org.ujmp.core.booleanmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix {
+public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix implements
+		DenseBooleanMatrix {
 
 	private static final long serialVersionUID = 1884839957291665282L;
 

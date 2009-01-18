@@ -26,7 +26,7 @@ package org.ujmp.core.floatmatrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractDenseFloatMatrix2D extends AbstractDenseFloatMatrix implements
-		FloatMatrix2D {
+		DenseFloatMatrix2D {
 
 	private static final long serialVersionUID = 4140127470234900713L;
 

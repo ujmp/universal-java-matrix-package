@@ -23,7 +23,8 @@
 
 package org.ujmp.core.genericmatrix;
 
-public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> {
+public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
+		SparseGenericMatrix<A> {
 
 	private static final long serialVersionUID = 805145571160206604L;
 

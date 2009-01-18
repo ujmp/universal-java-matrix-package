@@ -25,7 +25,7 @@ package org.ujmp.core.charmatrix;
 
 import org.ujmp.core.coordinates.Coordinates;
 
-public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix {
+public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix implements DenseCharMatrix {
 
 	private static final long serialVersionUID = 2417103022320228350L;
 

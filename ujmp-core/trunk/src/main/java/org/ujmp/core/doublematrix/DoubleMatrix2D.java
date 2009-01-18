@@ -23,7 +23,9 @@
 
 package org.ujmp.core.doublematrix;
 
-public interface DoubleMatrix2D extends DoubleMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
 
 	public double getDouble(long row, long column);
 

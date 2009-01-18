@@ -364,6 +364,23 @@
 					<links>
 						<link>http://java.sun.com/javase/6/docs/api/</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-core/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-gui/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-bpca/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-colt/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-commonsmath/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-itext/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jackcess/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jama/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jdbc/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jexcelapi/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmathplot/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmatio/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmatrices/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jung/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-lsimpute/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mail/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mtj/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-vecmath/apidocs</link>
 					</links>
 				</configuration>
 			</plugin>

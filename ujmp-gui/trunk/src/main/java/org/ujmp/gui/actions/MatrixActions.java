@@ -37,19 +37,16 @@ public class MatrixActions extends ArrayList<JComponent> {
 
 	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
 		this.add(new JMenuItem(new ClearMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new ClearMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new AddMissingValuesAction(c, m, v)));
-		this.add(new JMenuItem(new ReplaceByMeanAction(c, m, v)));
-		this.add(new JMenuItem(new ReplaceByNearestNeighborAction(c, m, v)));
+		this.add(new JMenuItem(new CopyMatrixAction(c, m, v)));
+		this.add(new JMenuItem(new LinkMatrixAction(c, m, v)));
+		this.add(new JSeparator());
+		this.add(new JMenuItem(new TransposeMatrixAction(c, m, v)));
+		this.add(new JMenuItem(new SortAction(c, m, v)));
+		this.add(new JSeparator());
 		this.add(new JMenuItem(new FillGaussianAction(c, m, v)));
 		this.add(new JMenuItem(new FillUniformAction(c, m, v)));
 		this.add(new JMenuItem(new FillWithValueAction(c, m, v)));
-		this.add(new JMenuItem(new CopyMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new LinkMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new TransposeMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new RescaleMatrixAction(c, m, v)));
-		this.add(new JMenuItem(new FadeInAction(c, m, v)));
-		this.add(new JMenuItem(new FadeOutAction(c, m, v)));
+		this.add(new JSeparator());
 		this.add(new JMenuItem(new MinAction(c, m, v)));
 		this.add(new JMenuItem(new MaxAction(c, m, v)));
 		this.add(new JMenuItem(new SumAction(c, m, v)));
@@ -57,10 +54,9 @@ public class MatrixActions extends ArrayList<JComponent> {
 		this.add(new JMenuItem(new VarianceAction(c, m, v)));
 		this.add(new JMenuItem(new CovarianceAction(c, m, v)));
 		this.add(new JMenuItem(new StandardDeviationAction(c, m, v)));
+		this.add(new JSeparator());
 		this.add(new JMenuItem(new CenterAction(c, m, v)));
 		this.add(new JMenuItem(new StandardizeAction(c, m, v)));
-		this.add(new JMenuItem(new SortAction(c, m, v)));
-
 		this.add(new JSeparator());
 		this.add(new JMenuItem(new ExitAction(c, m)));
 	}

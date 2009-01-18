@@ -83,6 +83,16 @@ public interface ObjectCalculations {
 	public Matrix transpose() throws MatrixException;
 
 	/**
+	 * Returns the transpose of the Matrix, where rows and columns are
+	 * exchanged. This works also if the Matrix has more than two dimensions.
+	 * 
+	 * @param returnType
+	 *            Defines if a new Matrix or a link should be returned.
+	 * @return transposed Matrix.
+	 */
+	public Matrix transpose(Ret returnType) throws MatrixException;
+
+	/**
 	 * Creates a copy of the matrix. Annotation is linked by default.
 	 * 
 	 * @return Matrix with the same entries

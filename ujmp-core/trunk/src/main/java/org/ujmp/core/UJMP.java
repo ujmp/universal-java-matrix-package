@@ -25,7 +25,7 @@ package org.ujmp.core;
 
 public class UJMP {
 
-	public static final String UJMPVERSION = "0.1.2";
+	public static final String UJMPVERSION = "0.2.0";
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Universal Java Matrix Package (UJMP)");

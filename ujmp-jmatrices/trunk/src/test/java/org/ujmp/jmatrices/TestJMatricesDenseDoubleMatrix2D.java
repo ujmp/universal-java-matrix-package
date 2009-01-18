@@ -25,7 +25,7 @@ package org.ujmp.jmatrices;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.test.AbstractMatrixTest;
+import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestJMatricesDenseDoubleMatrix2D extends AbstractMatrixTest {
 

@@ -28,10 +28,9 @@ import java.util.Iterator;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Transpose extends AbstractDoubleCalculation {
+public class Transpose extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2749226948849267413L;
 
 	private int swap1 = ROW;
@@ -49,8 +48,8 @@ public class Transpose extends AbstractDoubleCalculation {
 	}
 
 	@Override
-	public double getDouble(long... coordinates) throws MatrixException {
-		return getSource().getAsDouble(Coordinates.transpose(coordinates, swap1, swap2));
+	public Object getObject(long... coordinates) throws MatrixException {
+		return getSource().getObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
 	@Override

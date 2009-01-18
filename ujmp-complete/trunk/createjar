@@ -1,6 +1,6 @@
 DIR="/home/arndt/workspace/ujmp-complete"
-VERSION="0.1.1"
-PACKAGES="ujmp-core ujmp-gui ujmp-colt ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmatio ujmp-jmathplot ujmp-jmatrices ujmp-mtj ujmp-vecmath"
+VERSION="0.2.0"
+PACKAGES="ujmp-core ujmp-gui ujmp-bpca ujmp-colt ujmp-commonsmath ujmp-itext ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmatio ujmp-jmathplot ujmp-jmatrices ujmp-jung ujmp-lsimpute ujmp-mail ujmp-mtj ujmp-vecmath"
 
 cd $DIR
 rm -rf target

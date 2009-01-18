@@ -25,4 +25,9 @@ package org.ujmp.jackcess;
 
 public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
 
+	public void testMatrix() throws Exception {
+		// nothing to do for now
+		return;
+	}
+
 }

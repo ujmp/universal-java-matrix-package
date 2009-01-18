@@ -25,13 +25,41 @@ package org.ujmp.gui;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.ValueType;
 
 public class UJMP {
 
 	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
 	public static void main(String[] args) {
-		Matrix m = MatrixFactory.eye(10, 10);
+
+		Matrix m = MatrixFactory.zeros(ValueType.OBJECT, 13, 9);
+
+		m.setLabel("Welcome to UJMP");
+
+		m.setObject("Please visit", 2, 3);
+		m.setObject("http://www.ujmp.org/", 2, 4);
+		m.setObject("for more info", 2, 5);
+
+		m.setObject("Welcome", 3, 1);
+		m.setObject("to the", 3, 2);
+		m.setObject("Universal", 3, 3);
+		m.setObject("Java", 3, 4);
+		m.setObject("Matrix", 3, 5);
+		m.setObject("Package", 3, 6);
+		m.setObject("UJMP", 3, 7);
+
+		m.setObject(100, 5, 2);
+		m.setObject(100, 5, 6);
+
+		m.setObject(1, 7, 4);
+
+		m.setObject(-1, 9, 2);
+		m.setObject(-1, 9, 6);
+		m.setObject(-1, 10, 3);
+		m.setObject(-1, 10, 4);
+		m.setObject(-1, 10, 5);
+
 		m.showGUI();
 	}
 

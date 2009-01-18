@@ -30,6 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -47,7 +48,7 @@ public class TransposeMatrixAction extends MatrixAction {
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix m = getMatrixObject().getMatrix().transpose();
+		Matrix m = getMatrixObject().getMatrix().transpose(Ret.NEW);
 		m.showGUI();
 		return m;
 	}

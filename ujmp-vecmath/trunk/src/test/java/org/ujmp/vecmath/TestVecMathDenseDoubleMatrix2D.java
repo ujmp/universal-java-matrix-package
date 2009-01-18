@@ -25,7 +25,7 @@ package org.ujmp.vecmath;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.test.AbstractMatrixTest;
+import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 

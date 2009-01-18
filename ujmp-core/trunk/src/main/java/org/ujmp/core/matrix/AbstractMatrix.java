@@ -944,6 +944,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Transpose.calc(this);
 	}
 
+	public Matrix transpose(Ret returnType) throws MatrixException {
+		return new Transpose(this).calc(returnType);
+	}
+
 	public Matrix mean(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Mean(dimension, ignoreNaN, this).calc(returnType);
 	}

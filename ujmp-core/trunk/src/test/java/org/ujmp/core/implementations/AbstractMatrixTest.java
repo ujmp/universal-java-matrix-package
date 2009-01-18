@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util.test;
+package org.ujmp.core.implementations;
 
 import java.util.ArrayList;
 import java.util.Iterator;

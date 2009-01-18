@@ -208,6 +208,7 @@
 		<module>../ujmp-core</module>
 		<module>../ujmp-gui</module>
 		<module>../ujmp-bpca</module>
+		<module>../ujmp-commonsmath</module>
 		<module>../ujmp-colt</module>
 		<module>../ujmp-jackcess</module>
 		<module>../ujmp-itext</module>

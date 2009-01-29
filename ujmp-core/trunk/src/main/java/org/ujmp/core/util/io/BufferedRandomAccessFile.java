@@ -41,13 +41,14 @@ public class BufferedRandomAccessFile extends RandomAccessFile {
 		super(file, mode);
 	}
 
-	public BufferedRandomAccessFile(File file, String mode, int bufferSize) throws FileNotFoundException {
+	public BufferedRandomAccessFile(File file, String mode, int bufferSize)
+			throws FileNotFoundException {
 		super(file, mode);
 		this.bufferSize = bufferSize;
 	}
 
 	@Override
-	public int read() throws IOException {
+	public synchronized int read() throws IOException {
 		byte[] b = new byte[1];
 		read(b);
 		seek(getFilePointer() + 1);
@@ -56,19 +57,19 @@ public class BufferedRandomAccessFile extends RandomAccessFile {
 	}
 
 	@Override
-	public void seek(long pos) throws IOException {
+	public synchronized void seek(long pos) throws IOException {
 		new IOException("don't use this method").printStackTrace();
 		super.seek(pos);
 
 	}
 
 	@Override
-	public int read(byte[] b) throws IOException {
+	public synchronized int read(byte[] b) throws IOException {
 		new IOException("don't use this method").printStackTrace();
 		return super.read(b);
 	}
 
-	public int read(long seek, byte b[]) throws IOException {
+	public synchronized int read(long seek, byte b[]) throws IOException {
 		if (b.length > bufferSize) {
 			throw (new IOException("cannot read more than buffersize"));
 		}
@@ -100,6 +101,54 @@ public class BufferedRandomAccessFile extends RandomAccessFile {
 		}
 		return b.length;
 
+	}
+
+	public synchronized void writeByte(long seek, byte value) throws IOException {
+		super.seek(seek);
+		super.writeByte(value);
+		buffer.clear();
+	}
+
+	public synchronized void writeChar(long seek, char value) throws IOException {
+		super.seek(seek);
+		super.writeChar(value);
+		buffer.clear();
+	}
+
+	public synchronized void writeDouble(long seek, double value) throws IOException {
+		super.seek(seek);
+		super.writeDouble(value);
+		buffer.clear();
+	}
+
+	public synchronized void writeFloat(long seek, float value) throws IOException {
+		super.seek(seek);
+		super.writeFloat(value);
+		buffer.clear();
+	}
+
+	public synchronized void writeShort(long seek, short value) throws IOException {
+		super.seek(seek);
+		super.writeShort(value);
+		buffer.clear();
+	}
+
+	public synchronized void write(long seek, byte[] array) throws IOException {
+		super.seek(seek);
+		super.write(array);
+		buffer.clear();
+	}
+
+	public synchronized void writeInt(long seek, int value) throws IOException {
+		super.seek(seek);
+		super.writeInt(value);
+		buffer.clear();
+	}
+
+	public synchronized void writeLong(long seek, long value) throws IOException {
+		super.seek(seek);
+		super.writeLong(value);
+		buffer.clear();
 	}
 
 }

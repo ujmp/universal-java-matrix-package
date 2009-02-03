@@ -671,6 +671,7 @@ public abstract class MatrixFactory {
 				throw new MatrixException("Size must be at least 2-dimensional");
 			case 2:
 				con = matrixMapper.getDenseDoubleMatrix2DConstructor();
+				break;
 			default:
 				con = matrixMapper.getDenseDoubleMatrixMultiDConstructor();
 			}

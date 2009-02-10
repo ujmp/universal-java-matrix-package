@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<properties>
-		<ujmp.version>0.2.0</ujmp.version>
+		<ujmp.version>0.2.1</ujmp.version>
 	</properties>
 
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<packaging>jar</packaging>
 	<url>http://www.ujmp.org</url>
 
@@ -168,6 +168,12 @@
 			<dependency>
 				<groupId>org.ujmp</groupId>
 				<artifactId>ujmp-lsimpute</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-sst</artifactId>
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
@@ -353,6 +359,12 @@
 				<version>1.0</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>sst</groupId>
+				<artifactId>sst</artifactId>
+				<version>1.07</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -387,6 +399,7 @@
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mail/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mtj/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-vecmath/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-sst/apidocs</link>
 					</links>
 				</configuration>
 			</plugin>

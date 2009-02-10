@@ -37,7 +37,8 @@ import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix> {
+public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
+		implements Wrapper<DenseMatrix> {
 	private static final long serialVersionUID = -2386081646062313108L;
 
 	private transient DenseMatrix matrix = null;
@@ -91,7 +92,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix transpose() {
 		// TODO: maybe this can be made faster using System.arraycopy()
-		DenseMatrix ret = new DenseMatrix((int) getColumnCount(), (int) getRowCount());
+		DenseMatrix ret = new DenseMatrix((int) getColumnCount(),
+				(int) getRowCount());
 		return new MTJDenseDoubleMatrix2D((DenseMatrix) matrix.transpose(ret));
 	}
 
@@ -103,13 +105,15 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		this.matrix = object;
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException,
+			ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] values = (double[][]) s.readObject();
 		matrix = new DenseMatrix(values);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException,
+			MatrixException {
 		s.defaultWriteObject();
 		s.writeObject(this.toDoubleArray());
 	}
@@ -130,8 +134,10 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix plus(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
+					.numColumns());
+			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
+					.getData().length);
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 			for (int i = a.getData().length; --i >= 0;) {
 				a.getData()[i] += b.getData()[i];
@@ -145,8 +151,10 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix times(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
+					.numColumns());
+			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
+					.getData().length);
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 			for (int i = a.getData().length; --i >= 0;) {
 				a.getData()[i] *= b.getData()[i];
@@ -160,8 +168,10 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix minus(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
+					.numColumns());
+			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
+					.getData().length);
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 			for (int i = a.getData().length; --i >= 0;) {
 				a.getData()[i] -= b.getData()[i];
@@ -173,7 +183,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	}
 
 	@Override
-	public Matrix plus(Ret returnType, boolean ignoreNaN, double value) throws MatrixException {
+	public Matrix plus(Ret returnType, boolean ignoreNaN, double value)
+			throws MatrixException {
 		if (ignoreNaN) {
 			switch (returnType) {
 			case ORIG:
@@ -196,7 +207,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	}
 
 	@Override
-	public Matrix minus(Ret returnType, boolean ignoreNaN, double value) throws MatrixException {
+	public Matrix minus(Ret returnType, boolean ignoreNaN, double value)
+			throws MatrixException {
 		if (ignoreNaN) {
 			switch (returnType) {
 			case ORIG:
@@ -219,7 +231,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	}
 
 	@Override
-	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m2) throws MatrixException {
+	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m2)
+			throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 
@@ -250,7 +263,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	}
 
 	@Override
-	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m2) throws MatrixException {
+	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m2)
+			throws MatrixException {
 		if (ignoreNaN) {
 			switch (returnType) {
 			case ORIG:
@@ -275,7 +289,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix minus(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
+				matrix.getData().length);
 		for (int i = a.getData().length; --i >= 0;) {
 			a.getData()[i] -= f;
 		}
@@ -285,7 +300,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix plus(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
+				matrix.getData().length);
 		for (int i = a.getData().length; --i >= 0;) {
 			a.getData()[i] += f;
 		}
@@ -295,7 +311,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix times(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
+				matrix.getData().length);
 		for (int i = a.getData().length; --i >= 0;) {
 			a.getData()[i] *= f;
 		}
@@ -305,7 +322,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	@Override
 	public Matrix divide(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix.getData().length);
+		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
+				matrix.getData().length);
 		for (int i = a.getData().length; --i >= 0;) {
 			a.getData()[i] /= f;
 		}
@@ -314,7 +332,11 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	@Override
 	public Matrix copy() {
-		return new MTJDenseDoubleMatrix2D(matrix.copy());
+		Matrix m = new MTJDenseDoubleMatrix2D(matrix.copy());
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 	public boolean containsNaN() {

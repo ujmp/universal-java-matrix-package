@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
@@ -94,7 +94,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		return new CoordinateIterator(getSize());
 	}
 
 	@Override

@@ -605,4 +605,20 @@ public abstract class MathUtil {
 		}
 		return 0;
 	}
+
+	public static int[] toIntArray(long... coordinates) {
+		int[] result = new int[coordinates.length];
+		for (int i = coordinates.length; --i != -1;) {
+			result[i] = (int) coordinates[i];
+		}
+		return result;
+	}
+
+	public static long[] toLongArray(int... coordinates) {
+		long[] result = new long[coordinates.length];
+		for (int i = coordinates.length; --i != -1;) {
+			result[i] = coordinates[i];
+		}
+		return result;
+	}
 }

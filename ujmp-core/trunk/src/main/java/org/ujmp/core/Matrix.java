@@ -68,6 +68,4 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 
 	public static final int NONE = -1;
 
-	public Matrix clone();
-
 }

@@ -7,13 +7,13 @@
 	<name>ujmp-complete</name>
 
 	<properties>
-		<ujmp.version>0.2.0</ujmp.version>
+		<ujmp.version>0.2.1</ujmp.version>
 	</properties>
 
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.2.0</version>
+		<version>0.2.1</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
@@ -89,6 +89,10 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-lsimpute</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-sst</artifactId>
 		</dependency>
 
 		<dependency>
@@ -201,6 +205,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-sst</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -223,6 +234,7 @@
 		<module>../ujmp-lsimpute</module>
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-vecmath</module>
+		<module>../ujmp-sst</module>
 	</modules>
 
 </project>

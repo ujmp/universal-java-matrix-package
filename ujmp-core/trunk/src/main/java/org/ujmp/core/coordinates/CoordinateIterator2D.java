@@ -54,13 +54,19 @@ public class CoordinateIterator2D implements Iterable<long[]> {
 
 			long rowCount = size[ROW];
 
+			long rowMinus1 = rowCount - 1;
+
+			long columnMinus1 = columnCount - 1;
+
+			boolean isNotEmpty = columnCount != 0 && rowCount != 0;
+
 			public boolean hasNext() {
-				return (cursor[ROW] != rowCount - 1 || cursor[COLUMN] != columnCount - 1) && columnCount != 0
-						&& rowCount != 0;
+				return (cursor[ROW] != rowMinus1 || cursor[COLUMN] != columnMinus1) && isNotEmpty;
 			}
 
 			public long[] next() {
-				return ++cursor[COLUMN] == columnCount && (cursor[COLUMN] = 0) == ++cursor[ROW] ? cursor : cursor;
+				return ++cursor[COLUMN] == columnCount && (cursor[COLUMN] = 0) == ++cursor[ROW] ? cursor
+						: cursor;
 			}
 
 			public void remove() {

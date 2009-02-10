@@ -25,7 +25,7 @@ package org.ujmp.core.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.basic.Divide;
 import org.ujmp.core.doublematrix.calculation.basic.Minus;
@@ -89,7 +89,7 @@ public abstract class AbstractCalculation implements Calculation {
 	}
 
 	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		return new CoordinateIterator(getSize());
 	}
 
 	public boolean contains(long... coordinates) {

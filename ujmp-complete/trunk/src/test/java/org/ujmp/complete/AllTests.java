@@ -44,6 +44,7 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.jmatio.AllTests.suite());
 		suite.addTest(org.ujmp.itext.AllTests.suite());
 		suite.addTest(org.ujmp.mail.AllTests.suite());
+		suite.addTest(org.ujmp.sst.AllTests.suite());
 		return suite;
 	}
 

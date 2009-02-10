@@ -257,7 +257,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAxisAnnotation(Matrix.ROW, 1, "row1");
 		m.setAxisAnnotation(Matrix.COLUMN, 0, "column0");
 		m.setAxisAnnotation(Matrix.COLUMN, 1, "column1");
-		Matrix m2 = m.clone();
+		Matrix m2 = m.copy();
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
 	}

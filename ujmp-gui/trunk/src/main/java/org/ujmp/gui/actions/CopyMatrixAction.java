@@ -39,14 +39,16 @@ public class CopyMatrixAction extends MatrixAction {
 	public CopyMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Copy Matrix");
-		putValue(Action.SHORT_DESCRIPTION, "copy the content of this matrix to a new matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"copy the content of this matrix to a new matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				0));
 	}
 
 	@Override
 	public Object call() {
-		Matrix m = getMatrixObject().getMatrix().clone();
+		Matrix m = getMatrixObject().getMatrix().copy();
 		m.showGUI();
 		return m;
 	}

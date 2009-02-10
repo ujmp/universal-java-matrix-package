@@ -245,7 +245,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	@Override
-	public final Matrix clone() {
+	public final Matrix clone() throws CloneNotSupportedException {
 		try {
 			return copy(AnnotationTransfer.COPY);
 		} catch (MatrixException e) {
@@ -322,7 +322,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix copy() throws MatrixException {
-		return copy(AnnotationTransfer.LINK);
+		return copy(AnnotationTransfer.COPY);
 	}
 
 	public Matrix copy(AnnotationTransfer annotationTransfer) throws MatrixException {

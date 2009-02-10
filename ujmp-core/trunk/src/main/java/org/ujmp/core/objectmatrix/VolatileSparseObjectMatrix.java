@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.SoftHashMap;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -74,7 +74,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	}
 
 	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		return new CoordinateIterator(getSize());
 	}
 
 	public Iterable<long[]> entries() {

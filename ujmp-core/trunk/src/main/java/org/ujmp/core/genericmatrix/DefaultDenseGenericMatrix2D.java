@@ -39,6 +39,10 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		}
 	}
 
+	public DefaultDenseGenericMatrix2D(A[][] values) throws MatrixException {
+		this.values = values;
+	}
+
 	public DefaultDenseGenericMatrix2D(long... size) {
 		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
 	}
@@ -64,18 +68,6 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 
 	public void setObject(Object value, long row, long column) {
 		values[(int) row][(int) column] = value;
-	}
-
-	@Override
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

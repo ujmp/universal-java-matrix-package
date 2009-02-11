@@ -23,10 +23,10 @@
 
 package org.ujmp.core.bytematrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface ByteMatrix extends Matrix {
+public interface ByteMatrix extends GenericMatrix<Byte> {
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value

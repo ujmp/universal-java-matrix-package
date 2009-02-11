@@ -23,10 +23,10 @@
 
 package org.ujmp.core.floatmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface FloatMatrix extends Matrix {
+public interface FloatMatrix extends GenericMatrix<Float> {
 
 	/**
 	 * Returns a float representation of an entry in the matrix. The stored

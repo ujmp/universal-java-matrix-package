@@ -23,7 +23,9 @@
 
 package org.ujmp.core.bytematrix;
 
-public interface ByteMatrix2D extends ByteMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface ByteMatrix2D extends ByteMatrix, GenericMatrix2D<Byte> {
 
 	public byte getByte(long row, long column);
 

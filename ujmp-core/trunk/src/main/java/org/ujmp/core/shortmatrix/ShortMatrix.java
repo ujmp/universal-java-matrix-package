@@ -23,10 +23,10 @@
 
 package org.ujmp.core.shortmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface ShortMatrix extends Matrix {
+public interface ShortMatrix extends GenericMatrix<Short> {
 
 	/**
 	 * Returns a short representation of an entry in the matrix. The stored

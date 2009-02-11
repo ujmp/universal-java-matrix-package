@@ -23,6 +23,8 @@
 
 package org.ujmp.core.genericmatrix;
 
-public interface DenseGenericMatrix<A> extends GenericMatrix<A> {
+import org.ujmp.core.matrix.DenseMatrix;
+
+public interface DenseGenericMatrix<A> extends GenericMatrix<A>, DenseMatrix {
 
 }

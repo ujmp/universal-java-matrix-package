@@ -21,10 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.genericmatrix;
+package org.ujmp.core.matrix;
 
-import org.ujmp.core.matrix.SparseMatrix;
+import org.ujmp.core.Matrix;
 
-public interface SparseGenericMatrix<A> extends GenericMatrix<A>, SparseMatrix {
+public interface Matrix2D extends Matrix {
 
 }

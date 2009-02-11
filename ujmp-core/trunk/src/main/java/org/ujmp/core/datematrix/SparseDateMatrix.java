@@ -23,6 +23,8 @@
 
 package org.ujmp.core.datematrix;
 
-public interface SparseDateMatrix extends DateMatrix {
+import org.ujmp.core.matrix.SparseMatrix;
+
+public interface SparseDateMatrix extends DateMatrix, SparseMatrix {
 
 }

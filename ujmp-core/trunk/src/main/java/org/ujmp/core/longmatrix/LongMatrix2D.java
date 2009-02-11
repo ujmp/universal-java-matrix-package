@@ -23,7 +23,9 @@
 
 package org.ujmp.core.longmatrix;
 
-public interface LongMatrix2D extends LongMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface LongMatrix2D extends LongMatrix, GenericMatrix2D<Long> {
 
 	public long getLong(long row, long column);
 

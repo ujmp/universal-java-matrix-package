@@ -23,10 +23,10 @@
 
 package org.ujmp.core.intmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface IntMatrix extends Matrix {
+public interface IntMatrix extends GenericMatrix<Integer> {
 
 	/**
 	 * Returns an int representation of an entry in the matrix. The stored value

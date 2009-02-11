@@ -23,6 +23,8 @@
 
 package org.ujmp.core.charmatrix;
 
-public interface SparseCharMatrix extends CharMatrix {
+import org.ujmp.core.matrix.SparseMatrix;
+
+public interface SparseCharMatrix extends CharMatrix, SparseMatrix {
 
 }

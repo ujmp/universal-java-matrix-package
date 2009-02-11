@@ -23,6 +23,8 @@
 
 package org.ujmp.core.datematrix;
 
-public interface DenseDateMatrix extends DateMatrix {
+import org.ujmp.core.matrix.DenseMatrix;
+
+public interface DenseDateMatrix extends DateMatrix, DenseMatrix {
 
 }

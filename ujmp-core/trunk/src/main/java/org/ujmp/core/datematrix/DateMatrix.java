@@ -25,10 +25,10 @@ package org.ujmp.core.datematrix;
 
 import java.util.Date;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface DateMatrix extends Matrix {
+public interface DateMatrix extends GenericMatrix<Date> {
 
 	/**
 	 * Returns a Date representation of an entry in the matrix. The stored value

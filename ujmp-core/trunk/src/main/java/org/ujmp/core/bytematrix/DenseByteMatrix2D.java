@@ -23,6 +23,8 @@
 
 package org.ujmp.core.bytematrix;
 
-public interface DenseByteMatrix2D extends ByteMatrix2D, DenseByteMatrix {
+import org.ujmp.core.matrix.DenseMatrix2D;
+
+public interface DenseByteMatrix2D extends ByteMatrix2D, DenseByteMatrix, DenseMatrix2D {
 
 }

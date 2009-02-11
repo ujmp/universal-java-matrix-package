@@ -23,7 +23,9 @@
 
 package org.ujmp.core.charmatrix;
 
-public interface CharMatrix2D extends CharMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface CharMatrix2D extends CharMatrix, GenericMatrix2D<Character> {
 
 	public char getChar(long row, long column);
 

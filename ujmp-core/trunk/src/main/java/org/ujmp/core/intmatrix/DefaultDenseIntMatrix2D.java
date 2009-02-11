@@ -227,4 +227,5 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		}
 		return false;
 	}
+
 }

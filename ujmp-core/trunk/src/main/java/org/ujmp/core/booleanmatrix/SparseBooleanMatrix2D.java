@@ -23,6 +23,8 @@
 
 package org.ujmp.core.booleanmatrix;
 
-public interface SparseBooleanMatrix2D extends BooleanMatrix2D, SparseBooleanMatrix {
+import org.ujmp.core.matrix.SparseMatrix2D;
+
+public interface SparseBooleanMatrix2D extends BooleanMatrix2D, SparseBooleanMatrix, SparseMatrix2D {
 
 }

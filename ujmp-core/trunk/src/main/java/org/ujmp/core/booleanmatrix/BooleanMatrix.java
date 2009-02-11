@@ -23,10 +23,10 @@
 
 package org.ujmp.core.booleanmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface BooleanMatrix extends Matrix {
+public interface BooleanMatrix extends GenericMatrix<Boolean> {
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value

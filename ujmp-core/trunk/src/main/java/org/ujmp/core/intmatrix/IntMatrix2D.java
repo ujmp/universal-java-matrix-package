@@ -23,7 +23,9 @@
 
 package org.ujmp.core.intmatrix;
 
-public interface IntMatrix2D extends IntMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface IntMatrix2D extends IntMatrix, GenericMatrix2D<Integer> {
 
 	public int getInt(long row, long column);
 

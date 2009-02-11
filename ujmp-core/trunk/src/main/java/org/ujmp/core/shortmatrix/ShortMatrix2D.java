@@ -23,7 +23,9 @@
 
 package org.ujmp.core.shortmatrix;
 
-public interface ShortMatrix2D extends ShortMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface ShortMatrix2D extends ShortMatrix, GenericMatrix2D<Short> {
 
 	public short getShort(long row, long column);
 

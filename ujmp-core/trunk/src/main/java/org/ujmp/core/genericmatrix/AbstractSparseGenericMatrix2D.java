@@ -25,7 +25,6 @@ package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
 		implements SparseGenericMatrix2D<A> {
@@ -43,16 +42,6 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 
 	public final void setObject(Object value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
-	}
-
-	@Override
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	@Override
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
 	}
 
 }

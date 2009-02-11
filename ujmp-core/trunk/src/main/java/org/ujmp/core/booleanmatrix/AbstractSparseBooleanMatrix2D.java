@@ -51,4 +51,12 @@ public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBoolea
 		setBoolean(o, row, column);
 	}
 
+	public final Boolean getObject(int row, int column) throws MatrixException {
+		return getBoolean(row, column);
+	}
+
+	public final void setObject(Boolean o, int row, int column) throws MatrixException {
+		setBoolean(o, row, column);
+	}
+
 }

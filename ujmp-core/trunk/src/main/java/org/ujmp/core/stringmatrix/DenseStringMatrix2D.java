@@ -23,6 +23,8 @@
 
 package org.ujmp.core.stringmatrix;
 
-public interface DenseStringMatrix2D extends StringMatrix2D, DenseStringMatrix {
+import org.ujmp.core.matrix.DenseMatrix2D;
+
+public interface DenseStringMatrix2D extends StringMatrix2D, DenseStringMatrix, DenseMatrix2D {
 
 }

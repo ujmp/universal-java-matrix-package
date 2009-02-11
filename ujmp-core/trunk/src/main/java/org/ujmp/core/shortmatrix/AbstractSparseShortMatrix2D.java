@@ -41,4 +41,23 @@ public abstract class AbstractSparseShortMatrix2D extends AbstractSparseShortMat
 		setShort(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	@Override
+	public final Short getObject(long row, long column) {
+		return getShort(row, column);
+	}
+
+	@Override
+	public final Short getObject(int row, int column) {
+		return getShort(row, column);
+	}
+
+	@Override
+	public final void setObject(Short value, long row, long column) {
+		setShort(value, row, column);
+	}
+
+	@Override
+	public final void setObject(Short value, int row, int column) {
+		setShort(value, row, column);
+	}
 }

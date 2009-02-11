@@ -23,6 +23,8 @@
 
 package org.ujmp.core.longmatrix;
 
-public interface DenseLongMatrix2D extends LongMatrix2D, DenseLongMatrix {
+import org.ujmp.core.matrix.DenseMatrix2D;
+
+public interface DenseLongMatrix2D extends LongMatrix2D, DenseLongMatrix, DenseMatrix2D {
 
 }

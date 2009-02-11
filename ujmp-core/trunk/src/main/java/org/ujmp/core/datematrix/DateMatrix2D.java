@@ -25,7 +25,9 @@ package org.ujmp.core.datematrix;
 
 import java.util.Date;
 
-public interface DateMatrix2D extends DateMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface DateMatrix2D extends DateMatrix, GenericMatrix2D<Date> {
 
 	public Date getDate(long row, long column);
 

@@ -23,10 +23,10 @@
 
 package org.ujmp.core.charmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface CharMatrix extends Matrix {
+public interface CharMatrix extends GenericMatrix<Character> {
 
 	/**
 	 * Returns a char representation of an entry in the matrix. The stored value

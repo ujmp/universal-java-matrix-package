@@ -42,4 +42,24 @@ public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix 
 		setChar(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	@Override
+	public final Character getObject(long row, long column) {
+		return getChar(row, column);
+	}
+
+	@Override
+	public final Character getObject(int row, int column) {
+		return getChar(row, column);
+	}
+
+	@Override
+	public final void setObject(Character value, long row, long column) {
+		setChar(value, row, column);
+	}
+
+	@Override
+	public final void setObject(Character value, int row, int column) {
+		setChar(value, row, column);
+	}
+
 }

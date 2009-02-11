@@ -23,7 +23,9 @@
 
 package org.ujmp.core.stringmatrix;
 
-public interface StringMatrix2D extends StringMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface StringMatrix2D extends StringMatrix, GenericMatrix2D<String> {
 
 	public String getString(long row, long column);
 

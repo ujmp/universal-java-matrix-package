@@ -23,7 +23,9 @@
 
 package org.ujmp.core.floatmatrix;
 
-public interface FloatMatrix2D extends FloatMatrix {
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+
+public interface FloatMatrix2D extends FloatMatrix, GenericMatrix2D<Float> {
 
 	public float getFloat(long row, long column);
 

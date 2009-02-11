@@ -23,10 +23,10 @@
 
 package org.ujmp.core.stringmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface StringMatrix extends Matrix {
+public interface StringMatrix extends GenericMatrix<String> {
 
 	/**
 	 * Returns a String representation of an entry in the matrix. The stored

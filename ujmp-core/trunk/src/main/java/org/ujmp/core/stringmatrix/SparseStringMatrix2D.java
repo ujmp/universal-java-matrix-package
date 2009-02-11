@@ -23,6 +23,8 @@
 
 package org.ujmp.core.stringmatrix;
 
-public interface SparseStringMatrix2D extends StringMatrix2D, SparseStringMatrix {
+import org.ujmp.core.matrix.SparseMatrix2D;
+
+public interface SparseStringMatrix2D extends StringMatrix2D, SparseStringMatrix, SparseMatrix2D {
 
 }

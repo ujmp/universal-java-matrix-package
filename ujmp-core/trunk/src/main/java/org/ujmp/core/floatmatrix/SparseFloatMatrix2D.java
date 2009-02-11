@@ -23,6 +23,8 @@
 
 package org.ujmp.core.floatmatrix;
 
-public interface SparseFloatMatrix2D extends FloatMatrix2D, SparseFloatMatrix {
+import org.ujmp.core.matrix.SparseMatrix2D;
+
+public interface SparseFloatMatrix2D extends FloatMatrix2D, SparseFloatMatrix, SparseMatrix2D {
 
 }

@@ -41,4 +41,24 @@ public abstract class AbstractDenseLongMatrix2D extends AbstractDenseLongMatrix 
 	public final void setLong(long value, long... coordinates) {
 		setLong(value, coordinates[ROW], coordinates[COLUMN]);
 	}
+
+	@Override
+	public final Long getObject(long row, long column) {
+		return getLong(row, column);
+	}
+
+	@Override
+	public final Long getObject(int row, int column) {
+		return getLong(row, column);
+	}
+
+	@Override
+	public final void setObject(Long value, long row, long column) {
+		setLong(value, row, column);
+	}
+
+	@Override
+	public final void setObject(Long value, int row, int column) {
+		setLong(value, row, column);
+	}
 }

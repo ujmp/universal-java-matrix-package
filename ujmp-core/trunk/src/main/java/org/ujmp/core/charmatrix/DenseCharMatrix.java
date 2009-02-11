@@ -23,6 +23,8 @@
 
 package org.ujmp.core.charmatrix;
 
-public interface DenseCharMatrix extends CharMatrix {
+import org.ujmp.core.matrix.DenseMatrix;
+
+public interface DenseCharMatrix extends CharMatrix, DenseMatrix {
 
 }

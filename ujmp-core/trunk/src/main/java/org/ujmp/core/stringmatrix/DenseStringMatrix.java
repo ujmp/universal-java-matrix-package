@@ -23,6 +23,8 @@
 
 package org.ujmp.core.stringmatrix;
 
-public interface DenseStringMatrix extends StringMatrix {
+import org.ujmp.core.matrix.DenseMatrix;
+
+public interface DenseStringMatrix extends StringMatrix, DenseMatrix {
 
 }

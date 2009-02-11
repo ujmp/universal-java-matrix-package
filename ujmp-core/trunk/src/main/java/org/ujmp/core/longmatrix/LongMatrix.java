@@ -23,10 +23,10 @@
 
 package org.ujmp.core.longmatrix;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface LongMatrix extends Matrix {
+public interface LongMatrix extends GenericMatrix<Long> {
 
 	/**
 	 * Returns a long representation of an entry in the matrix. The stored value

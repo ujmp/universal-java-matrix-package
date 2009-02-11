@@ -23,6 +23,8 @@
 
 package org.ujmp.core.booleanmatrix;
 
-public interface DenseBooleanMatrix2D extends BooleanMatrix2D, DenseBooleanMatrix {
+import org.ujmp.core.matrix.DenseMatrix2D;
+
+public interface DenseBooleanMatrix2D extends BooleanMatrix2D, DenseBooleanMatrix, DenseMatrix2D {
 
 }

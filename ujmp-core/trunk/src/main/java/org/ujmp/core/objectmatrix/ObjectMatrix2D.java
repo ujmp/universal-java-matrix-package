@@ -28,4 +28,8 @@ public interface ObjectMatrix2D extends ObjectMatrix {
 	public Object getObject(long row, long column);
 
 	public void setObject(Object value, long row, long column);
+
+	public Object getObject(int row, int column);
+
+	public void setObject(Object value, int row, int column);
 }

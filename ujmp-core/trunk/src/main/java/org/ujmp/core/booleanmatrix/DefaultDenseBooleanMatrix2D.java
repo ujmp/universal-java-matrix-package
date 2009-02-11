@@ -85,6 +85,14 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public boolean getBoolean(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setBoolean(boolean value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		boolean[][] result = new boolean[values[0].length][values.length];

@@ -29,7 +29,8 @@ import java.util.List;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.genericmatrix.AbstractSparseGenericMatrix2D;
 
-public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements GraphMatrix<N, E> {
+public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements
+		GraphMatrix<N, E> {
 	private static final long serialVersionUID = -4939918585100574441L;
 
 	public boolean contains(long... coordinates) {
@@ -153,6 +154,10 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	}
 
 	public E getObject(long row, long column) {
+		return getEdgeValue(row, column);
+	}
+
+	public E getObject(int row, int column) {
 		return getEdgeValue(row, column);
 	}
 

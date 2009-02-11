@@ -78,6 +78,14 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public long getLong(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setLong(long value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		long[][] result = new long[values[0].length][values.length];

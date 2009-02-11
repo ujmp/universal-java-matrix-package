@@ -45,4 +45,12 @@ public class MatrixRandomSeed extends AbstractDenseDoubleMatrix2D {
 		MathUtil.setSeed((long) value);
 	}
 
+	public double getDouble(int row, int column) {
+		return MathUtil.getSeed();
+	}
+
+	public void setDouble(double value, int row, int column) {
+		MathUtil.setSeed((long) value);
+	}
+
 }

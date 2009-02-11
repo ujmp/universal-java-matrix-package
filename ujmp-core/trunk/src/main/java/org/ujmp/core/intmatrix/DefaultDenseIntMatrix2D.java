@@ -86,6 +86,14 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public int getInt(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setInt(int value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final IntMatrix transpose() {
 		int[][] result = new int[values[0].length][values.length];

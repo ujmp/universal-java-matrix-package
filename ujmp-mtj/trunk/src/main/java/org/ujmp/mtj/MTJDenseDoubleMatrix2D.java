@@ -81,12 +81,20 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix.getData()[(int) (row + column * matrix.numRows())];
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.getData()[(row + column * matrix.numRows())];
+	}
+
 	public long[] getSize() {
 		return new long[] { matrix.numRows(), matrix.numColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		matrix.getData()[(int) (row + column * matrix.numRows())] = value;
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.getData()[(row + column * matrix.numRows())] = value;
 	}
 
 	@Override

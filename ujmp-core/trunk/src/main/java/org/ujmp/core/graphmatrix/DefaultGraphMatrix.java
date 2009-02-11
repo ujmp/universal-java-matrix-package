@@ -172,6 +172,10 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		throw new MatrixException("not implemented!");
 	}
 
+	public void setObject(Object o, int row, int column) throws MatrixException {
+		throw new MatrixException("not implemented!");
+	}
+
 	public void addEdge(N node1, N node2) {
 		throw new MatrixException("not implemented!");
 	}
@@ -213,16 +217,7 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		throw new MatrixException("not implemented!");
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		// TODO Auto-generated method stub
-
-	}
-
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

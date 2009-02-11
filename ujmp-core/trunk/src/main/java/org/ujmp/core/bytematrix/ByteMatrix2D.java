@@ -28,4 +28,8 @@ public interface ByteMatrix2D extends ByteMatrix {
 	public byte getByte(long row, long column);
 
 	public void setByte(byte value, long row, long column);
+
+	public byte getByte(int row, int column);
+
+	public void setByte(byte value, int row, int column);
 }

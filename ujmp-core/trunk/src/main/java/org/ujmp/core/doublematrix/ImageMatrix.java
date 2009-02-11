@@ -48,6 +48,14 @@ public class ImageMatrix extends AbstractDenseDoubleMatrix2D {
 		pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 	}
 
+	public double getDouble(int row, int column) {
+		return getDouble((long) row, (long) column);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		setDouble(value, (long) row, (long) column);
+	}
+
 	public double getDouble(long row, long column) throws MatrixException {
 		int pos = (int) (row * bufferedImage.getWidth() + column);
 		return pixels[pos];

@@ -30,4 +30,8 @@ public interface DateMatrix2D extends DateMatrix {
 	public Date getDate(long row, long column);
 
 	public void setDate(Date value, long row, long column);
+
+	public Date getDate(int row, int column);
+
+	public void setDate(Date value, int row, int column);
 }

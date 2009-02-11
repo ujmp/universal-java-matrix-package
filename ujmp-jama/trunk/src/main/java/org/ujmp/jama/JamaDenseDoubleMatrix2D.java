@@ -29,7 +29,8 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import Jama.Matrix;
 
-public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Jama.Matrix> {
+public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
+		implements Wrapper<Jama.Matrix> {
 	private static final long serialVersionUID = -6065454603299978242L;
 
 	private Jama.Matrix matrix = null;
@@ -38,7 +39,8 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		matrix = new Jama.Matrix((int) size[ROW], (int) size[COLUMN]);
 	}
 
-	public JamaDenseDoubleMatrix2D(org.ujmp.core.Matrix source) throws MatrixException {
+	public JamaDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
+			throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
@@ -49,12 +51,21 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		return matrix.get((int) row, (int) column);
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.get(row, column);
+	}
+
 	public long[] getSize() {
-		return new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
+		return new long[] { matrix.getRowDimension(),
+				matrix.getColumnDimension() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		matrix.set((int) row, (int) column, value);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.set(row, column, value);
 	}
 
 	public Matrix getWrappedObject() {

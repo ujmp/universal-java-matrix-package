@@ -52,4 +52,12 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 		setDouble(MathUtil.getDouble(o), row, column);
 	}
 
+	public final Double getObject(int row, int column) throws MatrixException {
+		return getDouble(row, column);
+	}
+
+	public final void setObject(Object o, int row, int column) throws MatrixException {
+		setDouble(MathUtil.getDouble(o), row, column);
+	}
+
 }

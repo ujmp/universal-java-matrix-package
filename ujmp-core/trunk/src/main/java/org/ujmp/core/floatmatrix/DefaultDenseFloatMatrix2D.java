@@ -85,6 +85,14 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public float getFloat(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setFloat(float value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		float[][] result = new float[values[0].length][values.length];

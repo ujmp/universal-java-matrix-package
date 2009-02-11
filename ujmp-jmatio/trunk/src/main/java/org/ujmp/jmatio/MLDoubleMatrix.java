@@ -73,6 +73,14 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapp
 		matrix.set(value, (int) row, (int) column);
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.get(row, column);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.set(value, row, column);
+	}
+
 	public MLDouble getWrappedObject() {
 		return matrix;
 	}

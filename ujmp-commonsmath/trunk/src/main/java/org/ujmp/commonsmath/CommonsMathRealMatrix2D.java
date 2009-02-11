@@ -30,7 +30,8 @@ import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<RealMatrixImpl> {
+public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D
+		implements Wrapper<RealMatrixImpl> {
 	private static final long serialVersionUID = -1161807620507675926L;
 
 	private RealMatrixImpl matrix = null;
@@ -41,7 +42,8 @@ public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		}
 	}
 
-	public CommonsMathRealMatrix2D(org.ujmp.core.Matrix source) throws MatrixException {
+	public CommonsMathRealMatrix2D(org.ujmp.core.Matrix source)
+			throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
@@ -68,13 +70,23 @@ public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		return matrix.getEntry((int) row, (int) column);
 	}
 
-	public void setDouble(double value, long row, long column) throws MatrixException {
+	public double getDouble(int row, int column) throws MatrixException {
+		return matrix.getEntry(row, column);
+	}
+
+	public void setDouble(double value, long row, long column)
+			throws MatrixException {
 		matrix.getDataRef()[(int) row][(int) column] = value;
 	}
 
+	public void setDouble(double value, int row, int column)
+			throws MatrixException {
+		matrix.getDataRef()[row][column] = value;
+	}
+
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D
-				: new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] {
+				matrix.getRowDimension(), matrix.getColumnDimension() };
 	}
 
 }

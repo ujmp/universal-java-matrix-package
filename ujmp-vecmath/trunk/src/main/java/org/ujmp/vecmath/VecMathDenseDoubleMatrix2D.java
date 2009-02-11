@@ -30,7 +30,8 @@ import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<GMatrix> {
+public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
+		implements Wrapper<GMatrix> {
 	private static final long serialVersionUID = 3792684800581150214L;
 
 	private GMatrix matrix = null;
@@ -60,12 +61,20 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return matrix.getElement((int) row, (int) column);
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.getElement(row, column);
+	}
+
 	public long[] getSize() {
 		return new long[] { matrix.getNumRow(), matrix.getNumCol() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		matrix.setElement((int) row, (int) column, value);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.setElement(row, column, value);
 	}
 
 	public GMatrix getWrappedObject() {

@@ -15,6 +15,15 @@ public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
 	}
 
 	@Override
+	public Object getObject(int row, int column) {
+		return null;
+	}
+
+	@Override
+	public void setObject(Object value, int row, int column) {
+	}
+
+	@Override
 	public long[] getSize() {
 		return Coordinates.ZERO2D;
 	}

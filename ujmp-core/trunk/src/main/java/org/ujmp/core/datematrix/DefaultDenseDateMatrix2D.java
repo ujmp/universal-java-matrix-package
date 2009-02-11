@@ -87,6 +87,14 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public Date getDate(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setDate(Date value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		Date[][] result = new Date[values[0].length][values.length];

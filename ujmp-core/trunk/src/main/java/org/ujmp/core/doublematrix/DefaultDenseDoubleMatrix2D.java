@@ -86,6 +86,14 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public double getDouble(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setDouble(double value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		double[][] result = new double[values[0].length][values.length];

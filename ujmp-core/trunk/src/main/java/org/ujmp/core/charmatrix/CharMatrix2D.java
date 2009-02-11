@@ -28,4 +28,8 @@ public interface CharMatrix2D extends CharMatrix {
 	public char getChar(long row, long column);
 
 	public void setChar(char value, long row, long column);
+
+	public char getChar(int row, int column);
+
+	public void setChar(char value, int row, int column);
 }

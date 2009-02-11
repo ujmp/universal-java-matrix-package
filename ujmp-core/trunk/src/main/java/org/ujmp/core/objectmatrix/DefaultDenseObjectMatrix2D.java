@@ -78,4 +78,12 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public Object getObject(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setObject(Object value, int row, int column) {
+		values[row][column] = value;
+	}
+
 }

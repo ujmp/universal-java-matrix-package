@@ -147,9 +147,20 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return a;
 	}
 
+	public A getObject(int row, int column) {
+		A a = getList().get(row);
+		return a;
+	}
+
 	@SuppressWarnings("unchecked")
 	public void setObject(Object value, long row, long column) {
 		getList().set((int) row, (A) value);
+		notifyGUIObject();
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setObject(Object value, int row, int column) {
+		getList().set(row, (A) value);
 		notifyGUIObject();
 	}
 

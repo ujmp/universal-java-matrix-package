@@ -70,6 +70,15 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		values[(int) row][(int) column] = value;
 	}
 
+	@SuppressWarnings("unchecked")
+	public A getObject(int row, int column) {
+		return (A) values[row][column];
+	}
+
+	public void setObject(Object value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;

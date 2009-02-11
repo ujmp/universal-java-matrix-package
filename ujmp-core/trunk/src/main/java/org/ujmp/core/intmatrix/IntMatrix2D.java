@@ -28,4 +28,8 @@ public interface IntMatrix2D extends IntMatrix {
 	public int getInt(long row, long column);
 
 	public void setInt(int value, long row, long column);
+
+	public int getInt(int row, int column);
+
+	public void setInt(int value, int row, int column);
 }

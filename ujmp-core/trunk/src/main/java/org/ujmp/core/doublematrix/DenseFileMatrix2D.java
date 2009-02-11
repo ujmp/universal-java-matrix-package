@@ -251,6 +251,10 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		return dataType;
 	}
 
+	public synchronized double getDouble(int row, int column) {
+		return getDouble((long) row, (long) column);
+	}
+
 	public synchronized double getDouble(long row, long column) {
 		if (randomAccessFile != null) {
 			try {
@@ -361,6 +365,10 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 			b = (byte) (b | 0x80);
 		}
 		return b;
+	}
+
+	public synchronized void setDouble(double value, int row, int column) {
+		setDouble(value, (long) row, (long) column);
 	}
 
 	public synchronized void setDouble(double value, long row, long column) {

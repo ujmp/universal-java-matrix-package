@@ -57,6 +57,12 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return m.getObject(row, 0);
 	}
 
+	@Override
+	public Object getObject(int row, int column) throws MatrixException {
+		Matrix m = columns.get(column);
+		return m.getObject(row, 0);
+	}
+
 	// TODO: this is certainly not the optimal way to do it!
 	@Override
 	public Iterable<long[]> availableCoordinates() {
@@ -80,6 +86,12 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 	@Override
 	public void setObject(Object o, long row, long column) throws MatrixException {
 		Matrix m = columns.get((int) column);
+		m.setObject(o, row, 0);
+	}
+
+	@Override
+	public void setObject(Object o, int row, int column) throws MatrixException {
+		Matrix m = columns.get(column);
 		m.setObject(o, row, 0);
 	}
 

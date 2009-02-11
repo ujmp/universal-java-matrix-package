@@ -45,11 +45,11 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	private Interpolation defaultInterpolation = Interpolation.NONE;
 
-	private Map<Integer, Interpolation> seriesInterpolations = new HashMap<Integer, Interpolation>();
+	private final Map<Integer, Interpolation> seriesInterpolations = new HashMap<Integer, Interpolation>();
 
-	private List<SortedMap<Long, Double>> series = new ArrayList<SortedMap<Long, Double>>();
+	private final List<SortedMap<Long, Double>> series = new ArrayList<SortedMap<Long, Double>>();
 
-	private SortedListSet<Long> timestampsListSet = new SortedListSet<Long>();
+	private final SortedListSet<Long> timestampsListSet = new SortedListSet<Long>();
 
 	public void addEvent(long timestamp, Matrix value) {
 		if (value.getRowCount() != 1) {
@@ -122,23 +122,29 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return new long[] { getEventCount(), getSeriesCount() + 1 };
 	}
 
+	@Override
 	public long getRowCount() {
 		return getEventCount();
 	}
 
+	@Override
 	public long getColumnCount() {
 		return getSeriesCount() + 1;
 	}
 
-	@Override
 	public double getDouble(long row, long column) {
+		return getDouble((int) row, (int) column);
+	}
+
+	@Override
+	public double getDouble(int row, int column) {
 
 		if (row < 0 || column >= getColumnCount()) {
 			return Double.NaN;
 		}
 
-		int seriesId = (int) column - 1;
-		long timestamp = timestampsListSet.get((int) row);
+		int seriesId = column - 1;
+		long timestamp = timestampsListSet.get(row);
 		if (column == 0) {
 			return timestamp;
 		} else {
@@ -174,6 +180,11 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	@Override
 	public void setDouble(double value, long row, long column) {
+		throw new MatrixException("please use addEvent() for making changes");
+	}
+
+	@Override
+	public void setDouble(double value, int row, int column) {
 		throw new MatrixException("please use addEvent() for making changes");
 	}
 

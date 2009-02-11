@@ -30,4 +30,8 @@ public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
 	public double getDouble(long row, long column);
 
 	public void setDouble(double value, long row, long column);
+
+	public double getDouble(int row, int column);
+
+	public void setDouble(double value, int row, int column);
 }

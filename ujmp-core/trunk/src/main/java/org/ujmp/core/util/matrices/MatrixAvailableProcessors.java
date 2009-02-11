@@ -43,6 +43,13 @@ public class MatrixAvailableProcessors extends AbstractDenseDoubleMatrix2D {
 	public void setDouble(double value, long row, long column) {
 	}
 
+	public double getDouble(int row, int column) {
+		return Runtime.getRuntime().availableProcessors();
+	}
+
+	public void setDouble(double value, int row, int column) {
+	}
+
 	@Override
 	public boolean isReadOnly() {
 		return true;

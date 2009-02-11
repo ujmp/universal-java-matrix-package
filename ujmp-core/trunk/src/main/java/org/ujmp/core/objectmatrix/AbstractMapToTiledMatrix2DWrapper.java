@@ -33,8 +33,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObjectMatrix implements
-		Wrapper<Map<Coordinates, ObjectMatrix2D>> {
+public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObjectMatrix2D
+		implements ObjectMatrix2D, Wrapper<Map<Coordinates, ObjectMatrix2D>> {
 
 	private static final long serialVersionUID = -7464578359102479614L;
 
@@ -60,14 +60,17 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		this.size = Coordinates.copyOf(size);
 	}
 
-	@Override
-	public Object getObject(long... coordinates) throws MatrixException {
-		Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
+	public Object getObject(int row, int column) throws MatrixException {
+		return getObject((long) row, (long) column);
+	}
+
+	public Object getObject(long row, long column) throws MatrixException {
+		Coordinates c = new Coordinates(row / tileSize, column / tileSize);
 		Matrix m = getMap().get(c);
 		if (m == null) {
 			return null;
 		} else {
-			return m.getObject(coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
+			return m.getObject(row % tileSize, column % tileSize);
 		}
 	}
 
@@ -83,6 +86,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	public abstract void setMap(Map<Coordinates, ObjectMatrix2D> map);
 
+	@Override
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
@@ -97,13 +101,17 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		setObject(v, coordinates);
 	}
 
-	public void setObject(Object o, long... coordinates) throws MatrixException {
-		Coordinates c = new Coordinates(coordinates[ROW] / tileSize, coordinates[COLUMN] / tileSize);
+	public void setObject(Object o, int row, int column) throws MatrixException {
+		setObject(o, (long) row, (long) column);
+	}
+
+	public void setObject(Object o, long row, long column) throws MatrixException {
+		Coordinates c = new Coordinates(row / tileSize, column / tileSize);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
 			m = new DefaultDenseObjectMatrix2D(tileSize, tileSize);
 		}
-		m.setObject(o, coordinates[ROW] % tileSize, coordinates[COLUMN] % tileSize);
+		m.setObject(o, row % tileSize, column % tileSize);
 		getMap().put(c, m);
 	}
 

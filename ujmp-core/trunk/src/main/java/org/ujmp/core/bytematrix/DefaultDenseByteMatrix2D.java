@@ -85,6 +85,14 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public byte getByte(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setByte(byte value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		byte[][] result = new byte[values[0].length][values.length];

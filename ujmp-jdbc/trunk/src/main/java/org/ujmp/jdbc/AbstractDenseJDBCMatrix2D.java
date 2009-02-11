@@ -38,7 +38,8 @@ import org.ujmp.core.collections.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
-public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
+public abstract class AbstractDenseJDBCMatrix2D extends
+		AbstractDenseObjectMatrix2D implements Closeable {
 
 	private final Map<Integer, Connection> connections = new HashMap<Integer, Connection>();
 
@@ -62,7 +63,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	private int statementId = 0;
 
-	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement, String username, String password) {
+	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement,
+			String username, String password) {
 		this.url = url;
 		this.username = username;
 		this.password = password;
@@ -75,9 +77,14 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	@Override
 	public synchronized Object getObject(long row, long column) {
+		return getObject((int) row, (int) column);
+	}
+
+	@Override
+	public synchronized Object getObject(int row, int column) {
 		try {
 			ResultSet rs = getResultSet(row);
-			return rs.getObject((int) column + 1);
+			return rs.getObject(column + 1);
 		} catch (SQLException e) {
 			if ("S1009".equals(e.getSQLState())) {
 				// ignore Value '0000-00-00' can not be represented
@@ -93,6 +100,10 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	@Override
 	public synchronized void setObject(Object value, long row, long column) {
+	}
+
+	@Override
+	public synchronized void setObject(Object value, int row, int column) {
 	}
 
 	@Override
@@ -149,11 +160,13 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 		return resultSet;
 	}
 
-	public synchronized PreparedStatement getSelectStatement() throws SQLException {
+	public synchronized PreparedStatement getSelectStatement()
+			throws SQLException {
 		PreparedStatement selectStatement = selectStatements.get(statementId);
 		if (selectStatement == null) {
-			selectStatement = getConnection(statementId).prepareStatement(getSelectString(),
-					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			selectStatement = getConnection(statementId).prepareStatement(
+					getSelectString(), ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
 		}
 		statementId = ++statementId > connectionCount ? 0 : statementId;
 		return selectStatement;
@@ -162,7 +175,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 	public synchronized Connection getConnection(int id) throws SQLException {
 		Connection connection = connections.get(id);
 		if (connection == null) {
-			connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
+			connection = DriverManager.getConnection(getUrl(), getUsername(),
+					getPassword());
 			// DatabaseMetaData dbm = connection.getMetaData();
 			// dbm = null;
 			// ResultSet rs = dbm.getTables(null, null, "%", null);

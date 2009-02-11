@@ -85,6 +85,14 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
+	public char getChar(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setChar(char value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	@Override
 	public final Matrix transpose() {
 		char[][] result = new char[values[0].length][values.length];

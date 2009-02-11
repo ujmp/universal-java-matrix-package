@@ -30,13 +30,15 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 
-public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseDoubleMatrix2D> {
+public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
+		implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private DenseDoubleMatrix2D matrix = null;
 
 	public ColtDenseDoubleMatrix2D(long... size) {
-		this.matrix = new DenseDoubleMatrix2D((int) size[ROW], (int) size[COLUMN]);
+		this.matrix = new DenseDoubleMatrix2D((int) size[ROW],
+				(int) size[COLUMN]);
 	}
 
 	public ColtDenseDoubleMatrix2D(DenseDoubleMatrix2D m) {
@@ -54,12 +56,20 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		return matrix.getQuick((int) row, (int) column);
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.getQuick(row, column);
+	}
+
 	public long[] getSize() {
 		return new long[] { matrix.rows(), matrix.columns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		matrix.setQuick((int) row, (int) column, value);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.setQuick(row, column, value);
 	}
 
 	public DenseDoubleMatrix2D getWrappedObject() {

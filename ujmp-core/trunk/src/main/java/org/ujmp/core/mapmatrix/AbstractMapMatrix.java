@@ -42,7 +42,11 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final Object getObject(long row, long column) {
-		Object mapKey = getKey((int) row);
+		return getObject((int) row, (int) column);
+	}
+
+	public final Object getObject(int row, int column) {
+		Object mapKey = getKey(row);
 		if (column == 0) {
 			return mapKey;
 		} else if (column == 1) {
@@ -50,10 +54,12 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		} else {
 			return null;
 		}
-
 	}
 
 	public final void setObject(Object key, long row, long column) {
+	}
+
+	public final void setObject(Object key, int row, int column) {
 	}
 
 	// TODO: concurrentmodification exceptions can come from here

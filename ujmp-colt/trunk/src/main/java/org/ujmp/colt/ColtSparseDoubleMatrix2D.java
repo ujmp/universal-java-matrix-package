@@ -36,13 +36,15 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 
-public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements Wrapper<SparseDoubleMatrix2D> {
+public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
+		implements Wrapper<SparseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private SparseDoubleMatrix2D matrix = null;
 
 	public ColtSparseDoubleMatrix2D(long... size) {
-		this.matrix = new SparseDoubleMatrix2D((int) size[ROW], (int) size[COLUMN]);
+		this.matrix = new SparseDoubleMatrix2D((int) size[ROW],
+				(int) size[COLUMN]);
 	}
 
 	public ColtSparseDoubleMatrix2D(SparseDoubleMatrix2D m) {
@@ -60,12 +62,20 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		return matrix.getQuick((int) row, (int) column);
 	}
 
+	public double getDouble(int row, int column) {
+		return matrix.getQuick(row, column);
+	}
+
 	public long[] getSize() {
 		return new long[] { matrix.rows(), matrix.columns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		matrix.setQuick((int) row, (int) column, value);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		matrix.setQuick(row, column, value);
 	}
 
 	public SparseDoubleMatrix2D getWrappedObject() {

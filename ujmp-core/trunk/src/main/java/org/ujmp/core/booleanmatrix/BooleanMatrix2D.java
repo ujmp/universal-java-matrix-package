@@ -30,4 +30,8 @@ public interface BooleanMatrix2D extends BooleanMatrix, GenericMatrix2D<Boolean>
 	public boolean getBoolean(long row, long column);
 
 	public void setBoolean(boolean value, long row, long column);
+
+	public boolean getBoolean(int row, int column);
+
+	public void setBoolean(boolean value, int row, int column);
 }

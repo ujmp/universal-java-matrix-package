@@ -28,4 +28,8 @@ public interface FloatMatrix2D extends FloatMatrix {
 	public float getFloat(long row, long column);
 
 	public void setFloat(float value, long row, long column);
+
+	public float getFloat(int row, int column);
+
+	public void setFloat(float value, int row, int column);
 }

@@ -100,15 +100,19 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 		}
 	}
 
-	@Override
 	public synchronized Object getObject(long row, long column) throws MatrixException {
+		return getObject((int) row, (int) column);
+	}
+
+	@Override
+	public synchronized Object getObject(int row, int column) throws MatrixException {
 		if (columns == null || cursor == null) {
 			return null;
 		}
 		try {
-			Column c = columns.get((int) column);
+			Column c = columns.get(column);
 			cursor.reset();
-			cursor.moveNextRows((int) row + 1);
+			cursor.moveNextRows(row + 1);
 			return cursor.getCurrentRowValue(c);
 		} catch (IOException e) {
 			throw new MatrixException(e);
@@ -117,6 +121,10 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 
 	@Override
 	public void setObject(Object value, long row, long column) {
+	}
+
+	@Override
+	public void setObject(Object value, int row, int column) {
 	}
 
 	@Override

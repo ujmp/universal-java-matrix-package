@@ -94,6 +94,10 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 	}
 
 	public A getObject(long row, long column) {
+		return getObject((int) row, (int) column);
+	}
+
+	public A getObject(int row, int column) {
 		Iterator<A> it = getSet().iterator();
 		for (int i = 0; i < row && it.hasNext(); i++) {
 			it.next();
@@ -109,6 +113,10 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		throw new MatrixException("modifications are only allowed over Set<?> interface");
 	}
 
+	public void setObject(Object value, int row, int column) {
+		throw new MatrixException("modifications are only allowed over Set<?> interface");
+	}
+
 	public Object[] toArray() {
 		return getSet().toArray();
 	}
@@ -117,14 +125,17 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		return getSet().toArray(a);
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.GENERIC;
 	}

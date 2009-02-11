@@ -32,6 +32,17 @@ public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
 		setLabel("Memory Usage");
 	}
 
+	public double getDouble(int row, int column) {
+		switch (row) {
+		case 0:
+			return Runtime.getRuntime().freeMemory();
+		case 1:
+			return Runtime.getRuntime().maxMemory();
+		default:
+			return Runtime.getRuntime().totalMemory();
+		}
+	}
+
 	public double getDouble(long row, long column) {
 		switch ((int) row) {
 		case 0:
@@ -48,6 +59,9 @@ public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public void setDouble(double value, long row, long column) {
+	}
+
+	public void setDouble(double value, int row, int column) {
 	}
 
 	@Override

@@ -52,4 +52,12 @@ public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanM
 		setBoolean(MathUtil.getBoolean(o), row, column);
 	}
 
+	public final Boolean getObject(int row, int column) throws MatrixException {
+		return getBoolean(row, column);
+	}
+
+	public final void setObject(Object o, int row, int column) throws MatrixException {
+		setBoolean(MathUtil.getBoolean(o), row, column);
+	}
+
 }

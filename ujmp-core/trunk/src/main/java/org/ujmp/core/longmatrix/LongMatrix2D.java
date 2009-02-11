@@ -28,4 +28,8 @@ public interface LongMatrix2D extends LongMatrix {
 	public long getLong(long row, long column);
 
 	public void setLong(long value, long row, long column);
+
+	public long getLong(int row, int column);
+
+	public void setLong(long value, int row, int column);
 }

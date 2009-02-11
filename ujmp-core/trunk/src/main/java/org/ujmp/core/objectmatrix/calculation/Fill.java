@@ -46,7 +46,7 @@ public class Fill extends AbstractObjectCalculation {
 	public static Matrix calc(Matrix source, Object fill) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(source.getValueType(), source.getSize());
 		for (long[] c : source.allCoordinates()) {
-			ret.setObject(fill, c);
+			ret.setAsObject(fill, c);
 		}
 		return ret;
 	}
@@ -61,7 +61,7 @@ public class Fill extends AbstractObjectCalculation {
 			ret = MatrixFactory.zeros(ValueType.OBJECT, size);
 		}
 		for (long[] c : ret.allCoordinates()) {
-			ret.setObject(fill, c);
+			ret.setAsObject(fill, c);
 		}
 		return ret;
 	}

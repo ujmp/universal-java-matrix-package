@@ -130,12 +130,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix m = getTestMatrix();
 
 		Matrix mTest = createMatrix(2, 3);
-		mTest.setObject(mTest.getObject(0, 0), 0, 0);
-		mTest.setObject(mTest.getObject(0, 1), 0, 1);
-		mTest.setObject(mTest.getObject(0, 2), 0, 2);
-		mTest.setObject(mTest.getObject(1, 0), 1, 0);
-		mTest.setObject(mTest.getObject(1, 1), 1, 1);
-		mTest.setObject(mTest.getObject(1, 2), 1, 2);
+		mTest.setAsObject(mTest.getAsObject(0, 0), 0, 0);
+		mTest.setAsObject(mTest.getAsObject(0, 1), 0, 1);
+		mTest.setAsObject(mTest.getAsObject(0, 2), 0, 2);
+		mTest.setAsObject(mTest.getAsObject(1, 0), 1, 0);
+		mTest.setAsObject(mTest.getAsObject(1, 1), 1, 1);
+		mTest.setAsObject(mTest.getAsObject(1, 2), 1, 2);
 
 		List<Coordinates> clist = new ArrayList<Coordinates>();
 
@@ -157,12 +157,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix m = getTestMatrix();
 
 		Matrix mTest = createMatrix(2, 3);
-		mTest.setObject(mTest.getObject(0, 0), 0, 0);
-		mTest.setObject(mTest.getObject(0, 1), 0, 1);
-		mTest.setObject(mTest.getObject(0, 2), 0, 2);
-		mTest.setObject(mTest.getObject(1, 0), 1, 0);
-		mTest.setObject(mTest.getObject(1, 1), 1, 1);
-		mTest.setObject(mTest.getObject(1, 2), 1, 2);
+		mTest.setAsObject(mTest.getAsObject(0, 0), 0, 0);
+		mTest.setAsObject(mTest.getAsObject(0, 1), 0, 1);
+		mTest.setAsObject(mTest.getAsObject(0, 2), 0, 2);
+		mTest.setAsObject(mTest.getAsObject(1, 0), 1, 0);
+		mTest.setAsObject(mTest.getAsObject(1, 1), 1, 1);
+		mTest.setAsObject(mTest.getAsObject(1, 2), 1, 2);
 
 		Iterator<long[]> ci = m.selectedCoordinates(new long[] { 0, 1 }, new long[] { 0, 1, 2 })
 				.iterator();
@@ -410,10 +410,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 0));
 			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 1));
 		} else {
-			assertEquals(getLabel(), null, m.getObject(0, 0));
-			assertEquals(getLabel(), null, m.getObject(0, 1));
-			assertEquals(getLabel(), null, m.getObject(1, 0));
-			assertEquals(getLabel(), null, m.getObject(1, 1));
+			assertEquals(getLabel(), null, m.getAsObject(0, 0));
+			assertEquals(getLabel(), null, m.getAsObject(0, 1));
+			assertEquals(getLabel(), null, m.getAsObject(1, 0));
+			assertEquals(getLabel(), null, m.getAsObject(1, 1));
 		}
 	}
 

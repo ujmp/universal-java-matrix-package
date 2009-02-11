@@ -23,15 +23,56 @@
 
 package org.ujmp.core.genericmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
+import org.ujmp.core.matrix.AbstractMatrix;
+import org.ujmp.core.util.DateUtil;
+import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractGenericMatrix<A> extends AbstractObjectMatrix implements
-		GenericMatrix<A> {
-
+public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements GenericMatrix<A> {
 	private static final long serialVersionUID = -7498575238134186845L;
 
-	@Override
-	public abstract A getObject(long... coordinates) throws MatrixException;
+	public final Object getAsObject(long... coordinates) {
+		return getObject(coordinates);
+	}
+
+	@SuppressWarnings("unchecked")
+	public final void setAsObject(Object o, long... coordinates) {
+		switch (getValueType()) {
+		case BOOLEAN:
+			setAsBoolean(MathUtil.getBoolean(o), coordinates);
+			break;
+		case BYTE:
+			setAsByte(MathUtil.getByte(o), coordinates);
+			break;
+		case CHAR:
+			setAsChar(MathUtil.getChar(o), coordinates);
+			break;
+		case DATE:
+			setAsDate(DateUtil.fromObject(o), coordinates);
+			break;
+		case DOUBLE:
+			setAsDouble(MathUtil.getDouble(o), coordinates);
+			break;
+		case FLOAT:
+			setAsFloat(MathUtil.getFloat(o), coordinates);
+			break;
+		case INT:
+			setAsInt(MathUtil.getInt(o), coordinates);
+			break;
+		case LONG:
+			setAsLong(MathUtil.getLong(o), coordinates);
+			break;
+		case OBJECT:
+			setObject((A) o, coordinates);
+			break;
+		case SHORT:
+			setAsShort(MathUtil.getShort(o), coordinates);
+			break;
+		case STRING:
+			setAsString(StringUtil.convert(o), coordinates);
+			break;
+		}
+
+	}
 
 }

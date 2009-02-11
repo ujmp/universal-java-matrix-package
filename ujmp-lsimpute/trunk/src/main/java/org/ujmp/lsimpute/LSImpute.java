@@ -66,7 +66,8 @@ public class LSImpute extends AbstractDoubleCalculation {
 			method = 6;
 			break;
 		default:
-			throw new MatrixException("Imputation method is not supported: " + impMethod);
+			throw new MatrixException("Imputation method is not supported: "
+					+ impMethod);
 		}
 
 	}
@@ -94,7 +95,7 @@ public class LSImpute extends AbstractDoubleCalculation {
 			for (int r = 0; r < m.getRowCount(); r++) {
 				fw.write("Row" + r + "\t");
 				for (int c = 0; c < m.getColumnCount(); c++) {
-					fw.write("" + m.getObject(r, c));
+					fw.write("" + m.getAsObject(r, c));
 					fw.write("\t");
 				}
 				fw.write("\n");
@@ -102,7 +103,8 @@ public class LSImpute extends AbstractDoubleCalculation {
 			fw.close();
 			Class<?> c = Class.forName("Impute");
 			Method me = c.getMethod("main", String[].class);
-			me.invoke(null, new Object[] { new String[] { file1.toString(), file2.toString(), "" + method } });
+			me.invoke(null, new Object[] { new String[] { file1.toString(),
+					file2.toString(), "" + method } });
 			m = MatrixFactory.importFromFile(FileFormat.CSV, file2, "\t");
 			m = m.deleteRows(Ret.NEW, 0);
 			m = m.deleteColumns(Ret.NEW, 0);

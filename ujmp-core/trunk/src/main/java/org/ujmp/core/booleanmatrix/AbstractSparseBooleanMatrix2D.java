@@ -25,7 +25,6 @@ package org.ujmp.core.booleanmatrix;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBooleanMatrix implements
 		SparseBooleanMatrix2D {
@@ -48,8 +47,8 @@ public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBoolea
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Object o, long row, long column) throws MatrixException {
-		setBoolean(MathUtil.getBoolean(o), row, column);
+	public final void setObject(Boolean o, long row, long column) throws MatrixException {
+		setBoolean(o, row, column);
 	}
 
 }

@@ -56,7 +56,7 @@ public class Bootstrap extends AbstractObjectCalculation {
 			}
 			selection = getSource().selectRows(Ret.LINK, rows);
 		}
-		return selection.getObject(coordinates);
+		return selection.getAsObject(coordinates);
 	}
 
 }

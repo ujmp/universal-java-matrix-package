@@ -59,14 +59,14 @@ public class Selection extends AbstractObjectCalculation {
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
-			return getSource().getObject(selection[ROW][(int) coordinates[ROW]],
+			return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);
 		} else {
 			if (selection[ROW] == null) {
-				return getSource().getObject(coordinates[ROW],
+				return getSource().getAsObject(coordinates[ROW],
 						selection[COLUMN][(int) coordinates[COLUMN]]);
 			} else {
-				return getSource().getObject(selection[ROW][(int) coordinates[ROW]],
+				return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 						coordinates[COLUMN]);
 			}
 		}
@@ -88,14 +88,14 @@ public class Selection extends AbstractObjectCalculation {
 	@Override
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
-			getSource().setObject(value, selection[ROW][(int) coordinates[ROW]],
+			getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);
 		} else {
 			if (selection[ROW] == null) {
-				getSource().setObject(value, coordinates[ROW],
+				getSource().setAsObject(value, coordinates[ROW],
 						selection[COLUMN][(int) coordinates[COLUMN]]);
 			} else {
-				getSource().setObject(value, selection[ROW][(int) coordinates[ROW]],
+				getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],
 						coordinates[COLUMN]);
 			}
 		}

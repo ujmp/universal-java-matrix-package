@@ -33,8 +33,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.logging.Level;
 
-import org.ujmp.core.enums.ValueType;
-
 public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
 	private static final long serialVersionUID = 3889079475875267966L;
 
@@ -161,11 +159,6 @@ public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
 
 	public boolean isSparse() {
 		return false;
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return ValueType.GENERIC;
 	}
 
 }

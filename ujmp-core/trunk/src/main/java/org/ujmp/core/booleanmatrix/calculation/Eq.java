@@ -35,9 +35,9 @@ public class Eq extends AbstractBooleanCalculation {
 	public Eq(Matrix m1, Matrix m2) {
 		super(m1, m2);
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = MatrixFactory.fill(m2.getObject(0, 0), m1.getSize());
+			getSources()[1] = MatrixFactory.fill(m2.getAsObject(0, 0), m1.getSize());
 		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = MatrixFactory.fill(m1.getObject(0, 0), m2.getSize());
+			getSources()[0] = MatrixFactory.fill(m1.getAsObject(0, 0), m2.getSize());
 		}
 	}
 
@@ -51,8 +51,8 @@ public class Eq extends AbstractBooleanCalculation {
 
 	@Override
 	public boolean getBoolean(long... coordinates) throws MatrixException {
-		Object o1 = getSource().getObject(coordinates);
-		Object o2 = getSources()[1].getObject(coordinates);
+		Object o1 = getSource().getAsObject(coordinates);
+		Object o2 = getSources()[1].getAsObject(coordinates);
 		return MathUtil.equals(o1, o2);
 	}
 }

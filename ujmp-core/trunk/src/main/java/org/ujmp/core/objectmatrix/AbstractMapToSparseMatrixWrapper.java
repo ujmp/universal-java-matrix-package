@@ -29,7 +29,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
@@ -48,7 +47,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 	public AbstractMapToSparseMatrixWrapper(Matrix m) {
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
@@ -56,7 +55,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		this.size = Coordinates.copyOf(m.getSize());
 		setMaximumNumberOfEntries(maximumNumberOfEntries);
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
@@ -111,11 +110,6 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		if (Coordinates.isSmallerThan(coordinates, getSize())) {
 			getMap().put(new Coordinates(coordinates), o);
 		}
-	}
-
-	@Override
-	public final ValueType getValueType() {
-		return ValueType.GENERIC;
 	}
 
 	public final int getMaximumNumberOfEntries() {

@@ -74,10 +74,10 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 	@Override
 	public synchronized Object getObject(long... coordinates) throws MatrixException {
 		Object o = null;
-		o = inputBuffer.getObject(coordinates);
+		o = inputBuffer.getAsObject(coordinates);
 		if (o == null) {
-			o = original.getObject(coordinates);
-			inputBuffer.setObject(o, coordinates);
+			o = original.getAsObject(coordinates);
+			inputBuffer.setAsObject(o, coordinates);
 		}
 		return o;
 	}
@@ -96,7 +96,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 	}
 
 	public synchronized void setObject(Object value, long... coordinates) throws MatrixException {
-		inputBuffer.setObject(value, coordinates);
+		inputBuffer.setAsObject(value, coordinates);
 		outputBuffer.add(new Coordinates(coordinates));
 	}
 

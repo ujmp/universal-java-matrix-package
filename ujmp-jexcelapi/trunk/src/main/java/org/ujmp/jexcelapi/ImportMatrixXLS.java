@@ -40,13 +40,15 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrixXLS {
 
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException, IOException {
+	public static final Matrix fromFile(File file, Object... parameters)
+			throws MatrixException, IOException {
 		try {
 			Workbook workbook = Workbook.getWorkbook(file);
 			Sheet sheet = workbook.getSheet(0);
 			int rows = sheet.getRows();
 			int columns = sheet.getColumns();
-			Matrix matrix = MatrixFactory.zeros(ValueType.OBJECT, rows, columns);
+			Matrix matrix = MatrixFactory
+					.zeros(ValueType.OBJECT, rows, columns);
 			for (int row = 0; row < rows; row++) {
 				for (int column = 0; column < columns; column++) {
 					Cell c = sheet.getCell(column, row);
@@ -56,7 +58,7 @@ public abstract class ImportMatrixXLS {
 					} else {
 						o = c.getContents();
 					}
-					matrix.setObject(o, row, column);
+					matrix.setAsObject(o, row, column);
 				}
 			}
 			workbook.close();
@@ -66,14 +68,15 @@ public abstract class ImportMatrixXLS {
 		}
 	}
 
-	public static final Matrix fromStream(InputStream inputStream, Object... parameters) throws IOException,
-			MatrixException {
+	public static final Matrix fromStream(InputStream inputStream,
+			Object... parameters) throws IOException, MatrixException {
 		try {
 			Workbook workbook = Workbook.getWorkbook(inputStream);
 			Sheet sheet = workbook.getSheet(0);
 			int rows = sheet.getRows();
 			int columns = sheet.getColumns();
-			Matrix matrix = MatrixFactory.zeros(ValueType.OBJECT, rows, columns);
+			Matrix matrix = MatrixFactory
+					.zeros(ValueType.OBJECT, rows, columns);
 			for (int row = 0; row < rows; row++) {
 				for (int column = 0; column < columns; column++) {
 					Cell c = sheet.getCell(column, row);
@@ -83,7 +86,7 @@ public abstract class ImportMatrixXLS {
 					} else {
 						o = c.getContents();
 					}
-					matrix.setObject(o, row, column);
+					matrix.setAsObject(o, row, column);
 				}
 			}
 			workbook.close();

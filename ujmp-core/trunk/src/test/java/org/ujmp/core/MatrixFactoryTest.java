@@ -54,33 +54,27 @@ public class MatrixFactoryTest extends TestCase {
 	public void testZerosConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.zeros(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 
 	public void testZerosConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.zeros(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 
 	public void testZerosConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.zeros(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.zeros(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 
@@ -107,33 +101,27 @@ public class MatrixFactoryTest extends TestCase {
 	public void testSparseConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.sparse(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 
 	public void testSparseConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.sparse(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 
 	public void testSparseConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {
-			if (!ValueType.GENERIC.equals(e)) {
-				Matrix m = MatrixFactory.sparse(e, size);
-				assertEquals(e.name(), e, m.getValueType());
-				assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
-			}
+			Matrix m = MatrixFactory.sparse(e, size);
+			assertEquals(e.name(), e, m.getValueType());
+			assertTrue(e.name(), Coordinates.equals(size, m.getSize()));
 		}
 	}
 }

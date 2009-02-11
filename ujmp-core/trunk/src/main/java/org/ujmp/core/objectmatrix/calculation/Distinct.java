@@ -30,12 +30,11 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class Distinct extends AbstractObjectCalculation {
 	private static final long serialVersionUID = 9160233290884903745L;
 
-	private ObjectMatrix2D distinctObjects = null;
+	private ListMatrix<Object> distinctObjects = null;
 
 	public Distinct(Matrix m) {
 		super(m);
@@ -49,6 +48,7 @@ public class Distinct extends AbstractObjectCalculation {
 		return distinctObjects.getObject(coordinates);
 	}
 
+	@Override
 	public long[] getSize() {
 		if (distinctObjects == null) {
 			createDistinctObjectMatrix();
@@ -60,7 +60,7 @@ public class Distinct extends AbstractObjectCalculation {
 		Set<Object> objects = new HashSet<Object>();
 		Matrix m = getSource();
 		for (long[] c : m.availableCoordinates()) {
-			objects.add(m.getObject(c));
+			objects.add(m.getAsObject(c));
 		}
 		ListMatrix<Object> obj = new DefaultListMatrix<Object>(objects);
 		distinctObjects = obj;

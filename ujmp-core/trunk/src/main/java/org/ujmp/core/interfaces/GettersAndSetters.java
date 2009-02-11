@@ -72,7 +72,7 @@ public interface GettersAndSetters {
 	 * @return entry object
 	 * @throws MatrixException
 	 */
-	public Object getObject(long... coordinates) throws MatrixException;
+	public Object getAsObject(long... coordinates) throws MatrixException;
 
 	/**
 	 * Sets an entry in the matrix to an object. If the matrix cannot store this
@@ -84,7 +84,7 @@ public interface GettersAndSetters {
 	 *            location of the entry
 	 * @throws MatrixException
 	 */
-	public void setObject(Object o, long... coordinates) throws MatrixException;
+	public void setAsObject(Object o, long... coordinates) throws MatrixException;
 
 	/**
 	 * Returns a String representation of an entry in the matrix. The stored

@@ -26,7 +26,6 @@ package org.ujmp.core.intmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
 
@@ -37,8 +36,8 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 		return getInt(coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setInt(MathUtil.getInt(o), coordinates);
+	public final void setObject(Integer o, long... coordinates) throws MatrixException {
+		setInt(o, coordinates);
 	}
 
 	@Override

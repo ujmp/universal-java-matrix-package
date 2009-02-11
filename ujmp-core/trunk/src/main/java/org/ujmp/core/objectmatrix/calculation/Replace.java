@@ -41,7 +41,7 @@ public class Replace extends AbstractObjectCalculation {
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		Object src = getSource().getObject(coordinates);
+		Object src = getSource().getAsObject(coordinates);
 
 		if (search == null) {
 			if (src == null) {

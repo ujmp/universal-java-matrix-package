@@ -42,13 +42,15 @@ public class ExportMatrixTEX {
 		w.close();
 	}
 
-	public static final void toStream(OutputStream out, Matrix m, Object... parameters) throws IOException {
+	public static final void toStream(OutputStream out, Matrix m, Object... parameters)
+			throws IOException {
 		OutputStreamWriter w = new OutputStreamWriter(out);
 		toWriter(w, m, parameters);
 		w.close();
 	}
 
-	public static void toWriter(Writer w, Matrix m, Object... parameters) throws IOException, MatrixException {
+	public static void toWriter(Writer w, Matrix m, Object... parameters) throws IOException,
+			MatrixException {
 		String EOL = System.getProperty("line.separator");
 
 		long rowCount = m.getRowCount();
@@ -71,7 +73,7 @@ public class ExportMatrixTEX {
 
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
-				w.write(StringUtil.format(m.getObject(row, col)));
+				w.write(StringUtil.format(m.getAsObject(row, col)));
 
 				if (col < colCount - 1) {
 					w.write(" & ");

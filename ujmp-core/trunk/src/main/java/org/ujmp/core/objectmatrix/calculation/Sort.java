@@ -61,7 +61,7 @@ public class Sort extends AbstractObjectCalculation {
 		if (index == null) {
 			createSortIndex();
 		}
-		return getSource().getObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
+		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Sort extends AbstractObjectCalculation {
 		List<Sortable> rows = new ArrayList<Sortable>();
 
 		for (long r = 0; r < m.getRowCount(); r++) {
-			Comparable<?> c = (Comparable<?>) m.getObject(r, column);
+			Comparable<?> c = (Comparable<?>) m.getAsObject(r, column);
 			Sortable s = new Sortable(c, r, true);
 			rows.add(s);
 		}

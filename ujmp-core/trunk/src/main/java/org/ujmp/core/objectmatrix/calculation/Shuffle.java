@@ -49,7 +49,7 @@ public class Shuffle extends AbstractObjectCalculation {
 			Collections.shuffle(rows);
 			selection = getSource().selectRows(Ret.LINK, rows);
 		}
-		return selection.getObject(coordinates);
+		return selection.getAsObject(coordinates);
 	}
 
 }

@@ -51,7 +51,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		this.size = Coordinates.copyOf(m.getSize());
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	@Override
 	public ValueType getValueType() {
-		return ValueType.GENERIC;
+		return ValueType.OBJECT;
 	}
 
 }

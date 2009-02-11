@@ -219,7 +219,7 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 
 	@Override
 	public ValueType getValueType() {
-		return ValueType.GENERIC;
+		return ValueType.OBJECT;
 	}
 
 }

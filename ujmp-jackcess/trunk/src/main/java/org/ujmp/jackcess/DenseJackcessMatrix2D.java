@@ -91,7 +91,7 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 			for (int r = 0; r < matrix.getRowCount(); r++) {
 				Object[] data = new Object[(int) matrix.getColumnCount()];
 				for (int c = 0; c < matrix.getColumnCount(); c++) {
-					data[c] = matrix.getObject(r, c);
+					data[c] = matrix.getAsObject(r, c);
 				}
 				table.addRow(data);
 			}

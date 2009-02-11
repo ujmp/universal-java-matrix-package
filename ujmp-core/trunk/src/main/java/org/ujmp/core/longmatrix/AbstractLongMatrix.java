@@ -26,7 +26,6 @@ package org.ujmp.core.longmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -47058946507188869L;
@@ -36,8 +35,8 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		return getLong(coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setLong(MathUtil.getLong(o), coordinates);
+	public final void setObject(Long o, long... coordinates) throws MatrixException {
+		setLong(o, coordinates);
 	}
 
 	@Override

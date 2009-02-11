@@ -24,10 +24,11 @@
 package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.matrix.AbstractMatrix;
+import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractObjectMatrix extends AbstractMatrix implements ObjectMatrix {
+public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements
+		ObjectMatrix {
 	private static final long serialVersionUID = -2861884195413889506L;
 
 	@Override
@@ -41,7 +42,7 @@ public abstract class AbstractObjectMatrix extends AbstractMatrix implements Obj
 	}
 
 	@Override
-	public ValueType getValueType() {
+	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 

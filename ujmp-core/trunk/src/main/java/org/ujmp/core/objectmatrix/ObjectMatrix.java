@@ -23,8 +23,8 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.Matrix;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 
-public interface ObjectMatrix extends Matrix {
+public interface ObjectMatrix extends GenericMatrix<Object> {
 
 }

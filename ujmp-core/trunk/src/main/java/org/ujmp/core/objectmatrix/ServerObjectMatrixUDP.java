@@ -33,7 +33,6 @@ import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
@@ -76,13 +75,14 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 		return matrix.getSize();
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return matrix.getAsDouble(coordinates);
 	}
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return matrix.getObject(coordinates);
+		return matrix.getAsObject(coordinates);
 	}
 
 	@Override
@@ -94,12 +94,13 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 		return matrix.isSparse();
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
 	}
 
 	public void setObject(Object o, long... coordinates) throws MatrixException {
-		matrix.setObject(o, coordinates);
+		matrix.setAsObject(o, coordinates);
 	}
 
 	class ServerThread extends Thread {
@@ -167,10 +168,6 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 	@Override
 	public boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public ValueType getValueType() {
-		return matrix.getValueType();
 	}
 
 }

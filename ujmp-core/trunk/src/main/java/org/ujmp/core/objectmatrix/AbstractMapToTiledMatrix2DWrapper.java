@@ -28,7 +28,6 @@ import java.util.Map;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
@@ -45,14 +44,14 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 	public AbstractMapToTiledMatrix2DWrapper(Matrix m) {
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
 	public AbstractMapToTiledMatrix2DWrapper(Matrix m, int maximumNumberOfEntries2) {
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
@@ -70,7 +69,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		if (m == null) {
 			return null;
 		} else {
-			return m.getObject(row % tileSize, column % tileSize);
+			return m.getAsObject(row % tileSize, column % tileSize);
 		}
 	}
 
@@ -113,11 +112,6 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		}
 		m.setObject(o, row % tileSize, column % tileSize);
 		getMap().put(c, m);
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return ValueType.GENERIC;
 	}
 
 	public long[] getSize() {

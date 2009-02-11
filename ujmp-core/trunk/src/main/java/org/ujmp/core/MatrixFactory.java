@@ -381,9 +381,6 @@ public abstract class MatrixFactory {
 				case STRING:
 					con = matrixMapper.getDenseStringMatrix2DConstructor();
 					break;
-				case GENERIC:
-					con = matrixMapper.getDenseObjectMatrix2DConstructor();
-					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
@@ -422,9 +419,6 @@ public abstract class MatrixFactory {
 					break;
 				case STRING:
 					con = matrixMapper.getDenseStringMatrixMultiDConstructor();
-					break;
-				case GENERIC:
-					con = matrixMapper.getDenseObjectMatrixMultiDConstructor();
 					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
@@ -599,9 +593,6 @@ public abstract class MatrixFactory {
 				case STRING:
 					con = matrixMapper.getSparseStringMatrix2DConstructor();
 					break;
-				case GENERIC:
-					con = matrixMapper.getSparseObjectMatrix2DConstructor();
-					break;
 				default:
 					throw new MatrixException("entry type not supported: " + valueType);
 				}
@@ -640,9 +631,6 @@ public abstract class MatrixFactory {
 					break;
 				case STRING:
 					con = matrixMapper.getSparseStringMatrixMultiDConstructor();
-					break;
-				case GENERIC:
-					con = matrixMapper.getSparseObjectMatrixMultiDConstructor();
 					break;
 				default:
 					throw new MatrixException("entry type not  supported: " + valueType);

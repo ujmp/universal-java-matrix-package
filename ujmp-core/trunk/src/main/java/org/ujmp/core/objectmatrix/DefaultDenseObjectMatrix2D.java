@@ -51,7 +51,7 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 		} else {
 			values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setObject(m.getObject(c), c);
+				setObject(m.getAsObject(c), c);
 			}
 		}
 	}

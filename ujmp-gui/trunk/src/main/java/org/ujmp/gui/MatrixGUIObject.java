@@ -38,12 +38,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.gui.util.FastListSelectionModel;
@@ -255,7 +251,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		try {
-			return matrix.getObject(rowIndex, columnIndex);
+			return matrix.getAsObject(rowIndex, columnIndex);
 		} catch (MatrixException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -269,7 +265,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		try {
-			matrix.setObject(aValue, rowIndex, columnIndex);
+			matrix.setAsObject(aValue, rowIndex, columnIndex);
 		} catch (MatrixException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

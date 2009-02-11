@@ -30,7 +30,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatrix2D {
@@ -47,20 +46,20 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 	public DefaultSparseColumnObjectMatrix2D(Matrix m) {
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
-			setObject(m.getObject(c), c);
+			setObject(m.getAsObject(c), c);
 		}
 	}
 
 	@Override
 	public Object getObject(long row, long column) throws MatrixException {
 		Matrix m = columns.get((int) column);
-		return m.getObject(row, 0);
+		return m.getAsObject(row, 0);
 	}
 
 	@Override
 	public Object getObject(int row, int column) throws MatrixException {
 		Matrix m = columns.get(column);
-		return m.getObject(row, 0);
+		return m.getAsObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
@@ -86,18 +85,13 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 	@Override
 	public void setObject(Object o, long row, long column) throws MatrixException {
 		Matrix m = columns.get((int) column);
-		m.setObject(o, row, 0);
+		m.setAsObject(o, row, 0);
 	}
 
 	@Override
 	public void setObject(Object o, int row, int column) throws MatrixException {
 		Matrix m = columns.get(column);
-		m.setObject(o, row, 0);
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return ValueType.GENERIC;
+		m.setAsObject(o, row, 0);
 	}
 
 	public long[] getSize() {

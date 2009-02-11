@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
@@ -45,6 +44,7 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.getSize();
 	}
 
+	@Override
 	public synchronized double getAsDouble(long... coordinates) throws MatrixException {
 		return matrix.getAsDouble(coordinates);
 	}
@@ -58,17 +58,18 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.isSparse();
 	}
 
+	@Override
 	public synchronized void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
 	}
 
 	@Override
 	public synchronized Object getObject(long... c) throws MatrixException {
-		return matrix.getObject(c);
+		return matrix.getAsObject(c);
 	}
 
 	public synchronized void setObject(Object value, long... c) throws MatrixException {
-		matrix.setObject(value, c);
+		matrix.setAsObject(value, c);
 	}
 
 	public synchronized boolean contains(long... coordinates) {
@@ -78,10 +79,6 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 	@Override
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public ValueType getValueType() {
-		return matrix.getValueType();
 	}
 
 }

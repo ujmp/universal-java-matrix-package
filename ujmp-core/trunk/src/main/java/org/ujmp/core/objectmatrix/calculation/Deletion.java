@@ -80,7 +80,7 @@ public class Deletion extends AbstractObjectCalculation {
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return getSource().getObject(selection[ROW][(int) coordinates[ROW]],
+		return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 				selection[COLUMN][(int) coordinates[COLUMN]]);
 	}
 

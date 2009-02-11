@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -64,12 +65,12 @@ public class DiscretizeToColumns extends AbstractObjectCalculation {
 	public Object getObject(long... coordinates) throws MatrixException {
 		countValues();
 		if (coordinates[COLUMN] < column) {
-			return getSource().getObject(coordinates);
+			return getSource().getAsObject(coordinates);
 		} else if (coordinates[COLUMN] >= column + values.size()) {
 			long col = coordinates[COLUMN] - values.size() + 1;
-			return getSource().getObject(coordinates[ROW], col);
+			return getSource().getAsObject(coordinates[ROW], col);
 		} else {
-			Object o = getSource().getObject(coordinates[ROW], column);
+			Object o = getSource().getAsObject(coordinates[ROW], column);
 			if (ignoreNaN) {
 				if (MathUtil.isNaNOrInfinite(o)) {
 					return 0.0;
@@ -103,7 +104,7 @@ public class DiscretizeToColumns extends AbstractObjectCalculation {
 		if (values == null) {
 			Set<Object> set = new HashSet<Object>();
 			for (long row = getSource().getRowCount(); --row >= 0;) {
-				Object o = getSource().getObject(row, column);
+				Object o = getSource().getAsObject(row, column);
 				if (ignoreNaN) {
 					if (MathUtil.isNaNOrInfinite(o)) {
 						set.add(Double.valueOf(0.0));
@@ -119,6 +120,11 @@ public class DiscretizeToColumns extends AbstractObjectCalculation {
 			}
 			values = new ArrayList<Object>(set);
 		}
+	}
+
+	@Override
+	public ValueType getValueType() {
+		return ValueType.DOUBLE;
 	}
 
 }

@@ -85,7 +85,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation {
 			break;
 		default:
 			for (long[] c : result.allCoordinates()) {
-				result.setObject(getObject(c), c);
+				result.setAsObject(getObject(c), c);
 			}
 			break;
 		}
@@ -98,7 +98,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation {
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
-			getSource().setObject(getObject(c), c);
+			getSource().setAsObject(getObject(c), c);
 		}
 		getSource().notifyGUIObject();
 		return getSource();

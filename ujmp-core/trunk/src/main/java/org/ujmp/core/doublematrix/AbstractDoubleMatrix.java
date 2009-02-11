@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double> implements
 		DoubleMatrix {
@@ -38,8 +37,8 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 		return getAsDouble(coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setAsDouble(MathUtil.getDouble(o), coordinates);
+	public final void setObject(Double o, long... coordinates) throws MatrixException {
+		setAsDouble(o, coordinates);
 	}
 
 	@Override

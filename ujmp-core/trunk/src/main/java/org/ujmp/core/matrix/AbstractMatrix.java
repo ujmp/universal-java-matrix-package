@@ -162,18 +162,16 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	private Annotation annotation = null;
 
-	public abstract Object getObject(long... coordinates) throws MatrixException;
-
 	public double getAsDouble(long... coordinates) {
-		return MathUtil.getDouble(getObject(coordinates));
+		return MathUtil.getDouble(getAsObject(coordinates));
 	}
 
 	public void setAsDouble(double v, long... coordinates) {
-		setObject(v, coordinates);
+		setAsObject(v, coordinates);
 	}
 
 	public final Object getPreferredObject(long... coordinates) throws MatrixException {
-		return MathUtil.getPreferredObject(getObject(coordinates));
+		return MathUtil.getPreferredObject(getAsObject(coordinates));
 	}
 
 	public final Object getMatrixAnnotation() {
@@ -543,7 +541,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		Object[][] values = new Object[r][c];
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
-				values[i][j] = getObject(i, j);
+				values[i][j] = getAsObject(i, j);
 			}
 		}
 		return values;
@@ -809,7 +807,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Date getAsDate(long... coordinates) throws MatrixException {
-		Object o = getObject(coordinates);
+		Object o = getAsObject(coordinates);
 		if (o == null) {
 			return null;
 		}
@@ -829,7 +827,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public void setAsDate(Date date, long... coordinates) throws MatrixException {
-		setObject(date, coordinates);
+		setAsObject(date, coordinates);
 	}
 
 	public final Matrix delete(Ret returnType, String selection) throws MatrixException {
@@ -1003,7 +1001,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			long columnCount = getColumnCount();
 			for (int row = 0; row < rowCount && row < UJMPSettings.getMaxRowsToPrint(); row++) {
 				for (int col = 0; col < columnCount && col < UJMPSettings.getMaxColumnsToPrint(); col++) {
-					Object o = getObject(row, col);
+					Object o = getAsObject(row, col);
 					String v = StringUtil.format(o);
 					while (v.length() < 10) {
 						v = " " + v;
@@ -1362,7 +1360,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public void setAsString(String string, long... coordinates) throws MatrixException {
-		setObject(string, coordinates);
+		setAsObject(string, coordinates);
 	}
 
 	public boolean isReadOnly() {
@@ -1370,7 +1368,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public String getAsString(long... coordinates) throws MatrixException {
-		Object o = getObject(coordinates);
+		Object o = getAsObject(coordinates);
 		if (o == null) {
 			return null;
 		}
@@ -1616,7 +1614,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Iterable<Object> allValues() {
 		List<Object> list = new ArrayList<Object>();
 		for (long[] c : availableCoordinates()) {
-			list.add(getObject(c));
+			list.add(getAsObject(c));
 		}
 		return list;
 	}
@@ -1630,12 +1628,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		newSize[dimension] += m.getSize()[dimension];
 		Matrix result = MatrixFactory.zeros(getValueType(), newSize);
 		for (long[] c : allCoordinates()) {
-			result.setObject(getObject(c), c);
+			result.setAsObject(getAsObject(c), c);
 		}
 		for (long[] c : m.allCoordinates()) {
 			long[] newC = Coordinates.copyOf(c);
 			newC[dimension] += getSize()[dimension];
-			result.setObject(m.getObject(c), newC);
+			result.setAsObject(m.getAsObject(c), newC);
 		}
 		return result;
 	}
@@ -1838,8 +1836,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 				}
 				if (isSparse() && m.isSparse()) {
 					for (long[] c : availableCoordinates()) {
-						Object o1 = getObject(c);
-						Object o2 = m.getObject(c);
+						Object o1 = getAsObject(c);
+						Object o2 = m.getAsObject(c);
 						if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
 							return false;
 						}
@@ -1852,8 +1850,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 						}
 					}
 					for (long[] c : m.availableCoordinates()) {
-						Object o1 = getObject(c);
-						Object o2 = m.getObject(c);
+						Object o1 = getAsObject(c);
+						Object o2 = m.getAsObject(c);
 						if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
 							return false;
 						}
@@ -1867,8 +1865,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 					}
 				} else {
 					for (long[] c : allCoordinates()) {
-						Object o1 = getObject(c);
-						Object o2 = m.getObject(c);
+						Object o1 = getAsObject(c);
+						Object o2 = m.getAsObject(c);
 						if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
 							return false;
 						}

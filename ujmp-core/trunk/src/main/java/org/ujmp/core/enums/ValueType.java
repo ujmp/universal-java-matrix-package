@@ -29,5 +29,5 @@ package org.ujmp.core.enums;
  * object types.
  */
 public enum ValueType {
-	GENERIC, BOOLEAN, BYTE, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
+	BOOLEAN, BYTE, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
 }

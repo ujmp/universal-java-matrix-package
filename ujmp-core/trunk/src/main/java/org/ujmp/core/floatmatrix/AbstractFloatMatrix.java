@@ -26,7 +26,6 @@ package org.ujmp.core.floatmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> implements
 		FloatMatrix {
@@ -39,8 +38,8 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 	}
 
 	@Override
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setFloat(MathUtil.getFloat(o), coordinates);
+	public final void setObject(Float o, long... coordinates) throws MatrixException {
+		setFloat(o, coordinates);
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public class Convert extends AbstractCalculation {
 			Matrix source) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			ret.setObject(source.getObject(c), c);
+			ret.setAsObject(source.getAsObject(c), c);
 		}
 		switch (annotationTransfer) {
 		case LINK:
@@ -98,7 +98,7 @@ public class Convert extends AbstractCalculation {
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return getSource().getObject(coordinates);
+		return getSource().getAsObject(coordinates);
 	}
 
 	@Override

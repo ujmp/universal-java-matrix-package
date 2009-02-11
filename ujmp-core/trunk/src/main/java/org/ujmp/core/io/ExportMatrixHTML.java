@@ -36,20 +36,22 @@ import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixHTML {
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException, MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
+			MatrixException {
 		IntelligentFileWriter writer = new IntelligentFileWriter(file);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
-	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException {
+	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters)
+			throws IOException, MatrixException {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
-	public static void toWriter(Writer out, Matrix m, Object... parameters) throws IOException, MatrixException {
+	public static void toWriter(Writer out, Matrix m, Object... parameters) throws IOException,
+			MatrixException {
 		String EOL = System.getProperty("line.separator");
 
 		long rowCount = m.getRowCount();
@@ -64,7 +66,7 @@ public class ExportMatrixHTML {
 			out.append("<tr>" + EOL);
 			for (int col = 0; col < colCount; col++) {
 				out.append("<td>");
-				out.append(StringUtil.convert(m.getObject(row, col)));
+				out.append(StringUtil.convert(m.getAsObject(row, col)));
 				out.append("</td>" + EOL);
 			}
 			out.append("</tr>" + EOL);

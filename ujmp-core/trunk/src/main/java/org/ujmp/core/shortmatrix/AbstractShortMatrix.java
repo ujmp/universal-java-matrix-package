@@ -26,7 +26,6 @@ package org.ujmp.core.shortmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> implements
 		ShortMatrix {
@@ -37,8 +36,8 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		return getShort(coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setShort(MathUtil.getShort(o), coordinates);
+	public final void setObject(Short o, long... coordinates) throws MatrixException {
+		setShort(o, coordinates);
 	}
 
 	@Override

@@ -46,10 +46,11 @@ public class SSTDenseObjectMatrix<A> extends AbstractDenseGenericMatrix<A>
 		data = new ObjectArray<A>(MathUtil.toIntArray(size));
 	}
 
+	@SuppressWarnings("unchecked")
 	public SSTDenseObjectMatrix(Matrix source) {
 		data = new ObjectArray<A>(MathUtil.toIntArray(source.getSize()));
 		for (long[] c : source.availableCoordinates()) {
-			setObject(source.getObject(c), c);
+			setObject((A) source.getAsObject(c), c);
 		}
 	}
 
@@ -58,9 +59,8 @@ public class SSTDenseObjectMatrix<A> extends AbstractDenseGenericMatrix<A>
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
 
-	public void setObject(Object value, long... coordinates)
-			throws MatrixException {
-		data.set((A) value, MathUtil.toIntArray(coordinates));
+	public void setObject(A value, long... coordinates) throws MatrixException {
+		data.set(value, MathUtil.toIntArray(coordinates));
 
 	}
 

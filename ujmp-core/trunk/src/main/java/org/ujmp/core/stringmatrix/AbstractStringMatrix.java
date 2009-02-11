@@ -27,7 +27,6 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String> implements
 		StringMatrix {
@@ -39,8 +38,8 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		return getAsString(coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setAsString(StringUtil.convert(o), coordinates);
+	public final void setObject(String o, long... coordinates) throws MatrixException {
+		setAsString(o, coordinates);
 	}
 
 	@Override

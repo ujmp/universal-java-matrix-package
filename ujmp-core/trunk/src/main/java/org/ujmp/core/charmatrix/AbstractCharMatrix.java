@@ -26,7 +26,6 @@ package org.ujmp.core.charmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character> implements
 		CharMatrix {
@@ -39,8 +38,8 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 	}
 
 	@Override
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setChar(MathUtil.getChar(o), coordinates);
+	public final void setObject(Character o, long... coordinates) throws MatrixException {
+		setChar(o, coordinates);
 	}
 
 	@Override

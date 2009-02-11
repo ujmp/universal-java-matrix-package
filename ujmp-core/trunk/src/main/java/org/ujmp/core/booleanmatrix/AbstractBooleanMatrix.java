@@ -26,7 +26,6 @@ package org.ujmp.core.booleanmatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractGenericMatrix;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolean> implements
 		BooleanMatrix {
@@ -39,8 +38,8 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 	}
 
 	@Override
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		setBoolean(MathUtil.getBoolean(o), coordinates);
+	public final void setObject(Boolean o, long... coordinates) throws MatrixException {
+		setBoolean(o, coordinates);
 	}
 
 	@Override

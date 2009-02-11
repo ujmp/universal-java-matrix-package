@@ -137,7 +137,7 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 
 	@Override
 	public ValueType getValueType() {
-		return ValueType.GENERIC;
+		return ValueType.OBJECT;
 	}
 
 }

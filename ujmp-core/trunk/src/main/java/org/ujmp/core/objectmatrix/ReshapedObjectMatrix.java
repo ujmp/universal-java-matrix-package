@@ -27,7 +27,6 @@ import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class ReshapedObjectMatrix extends AbstractObjectMatrix {
@@ -98,13 +97,14 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return newSize;
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return source.getAsDouble(getOldCoordinates(coordinates));
 	}
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return source.getObject(getOldCoordinates(coordinates));
+		return source.getAsObject(getOldCoordinates(coordinates));
 	}
 
 	@Override
@@ -121,16 +121,13 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return source.isSparse();
 	}
 
+	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		source.setAsDouble(value, getOldCoordinates(coordinates));
 	}
 
 	public void setObject(Object value, long... coordinates) throws MatrixException {
-		source.setObject(value, getOldCoordinates(coordinates));
-	}
-
-	public ValueType getValueType() {
-		return source.getValueType();
+		source.setAsObject(value, getOldCoordinates(coordinates));
 	}
 
 }

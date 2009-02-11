@@ -49,7 +49,7 @@ public class Transpose extends AbstractObjectCalculation {
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return getSource().getObject(Coordinates.transpose(coordinates, swap1, swap2));
+		return getSource().getAsObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
 	@Override

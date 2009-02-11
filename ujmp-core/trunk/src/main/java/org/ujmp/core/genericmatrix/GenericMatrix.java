@@ -23,11 +23,13 @@
 
 package org.ujmp.core.genericmatrix;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.ObjectMatrix;
 
-public interface GenericMatrix<A> extends ObjectMatrix {
+public interface GenericMatrix<A> extends Matrix {
 
 	public A getObject(long... coordinates) throws MatrixException;
+
+	public void setObject(A value, long... coordinates);
 
 }

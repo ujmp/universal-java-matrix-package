@@ -50,7 +50,7 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Object:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		Object o = matrix.getObject(coordinates);
+		Object o = matrix.getAsObject(coordinates);
 		if (o != null) {
 			toolTip += o.getClass();
 		} else {

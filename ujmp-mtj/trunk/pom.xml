@@ -29,32 +29,12 @@
 			<artifactId>mtj</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>arpack_util</groupId>
-			<artifactId>arpack_util</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>arpack</groupId>
 			<artifactId>arpack</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>blas</groupId>
-			<artifactId>blas</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>f2jutil</groupId>
-			<artifactId>f2jutil</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jlapack_jni</groupId>
-			<artifactId>jlapack_jni</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>lapack</groupId>
-			<artifactId>lapack</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>xerbla</groupId>
-			<artifactId>xerbla</artifactId>
+			<groupId>netlib-java</groupId>
+			<artifactId>netlib-java</artifactId>
 		</dependency>		
 		
 		<dependency>

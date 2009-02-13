@@ -236,51 +236,21 @@
 			<dependency>
 				<groupId>mtj</groupId>
 				<artifactId>mtj</artifactId>
-				<version>0.9.9</version>
+				<version>0.9.11</version>
 				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>arpack_util</groupId>
-				<artifactId>arpack_util</artifactId>
-				<version>070508</version>
-				<scope>compile</scope>
-			</dependency>
+			</dependency>		
 			<dependency>
 				<groupId>arpack</groupId>
 				<artifactId>arpack</artifactId>
-				<version>070508</version>
+				<version>0.1</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>blas</groupId>
-				<artifactId>blas</artifactId>
-				<version>0.8</version>
+				<groupId>netlib-java</groupId>
+				<artifactId>netlib-java</artifactId>
+				<version>0.9.1</version>
 				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>f2jutil</groupId>
-				<artifactId>f2jutil</artifactId>
-				<version>071114</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>jlapack_jni</groupId>
-				<artifactId>jlapack_jni</artifactId>
-				<version>071118</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>lapack</groupId>
-				<artifactId>lapack</artifactId>
-				<version>0.8</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>xerbla</groupId>
-				<artifactId>xerbla</artifactId>
-				<version>0.8</version>
-				<scope>compile</scope>
-			</dependency>
+			</dependency>				
 			<dependency>
 				<groupId>vecmath</groupId>
 				<artifactId>vecmath</artifactId>
@@ -308,19 +278,19 @@
 			<dependency>
 				<groupId>mysql-connector-java</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.6</version>
+				<version>5.1.7</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>8.3-603.jdbc4</version>
+				<version>8.3-604.jdbc4</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>derby</groupId>
 				<artifactId>derby</artifactId>
-				<version>10.4.1.3</version>
+				<version>10.4.2.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

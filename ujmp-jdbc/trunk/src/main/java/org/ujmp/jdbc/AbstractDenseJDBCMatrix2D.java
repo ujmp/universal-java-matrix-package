@@ -40,6 +40,7 @@ import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
 
 public abstract class AbstractDenseJDBCMatrix2D extends
 		AbstractDenseObjectMatrix2D implements Closeable {
+	private static final long serialVersionUID = -9077208839474846706L;
 
 	private final Map<Integer, Connection> connections = new HashMap<Integer, Connection>();
 

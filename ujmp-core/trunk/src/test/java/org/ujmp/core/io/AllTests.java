@@ -34,6 +34,7 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixHTML.class);
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixM.class);
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixMAT.class);
+		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixMDB.class);
 		return suite;
 	}
 

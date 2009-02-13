@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.objectmatrix.calculation;
+package org.ujmp.core.doublematrix.calculation.general.misc;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
-public class DiscretizeToColumns extends AbstractObjectCalculation {
+public class DiscretizeToColumns extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -3606534079672701424L;
 
 	private long column = 0;
@@ -62,13 +62,13 @@ public class DiscretizeToColumns extends AbstractObjectCalculation {
 	}
 
 	@Override
-	public Object getObject(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates) throws MatrixException {
 		countValues();
 		if (coordinates[COLUMN] < column) {
-			return getSource().getAsObject(coordinates);
+			return getSource().getAsDouble(coordinates);
 		} else if (coordinates[COLUMN] >= column + values.size()) {
 			long col = coordinates[COLUMN] - values.size() + 1;
-			return getSource().getAsObject(coordinates[ROW], col);
+			return getSource().getAsDouble(coordinates[ROW], col);
 		} else {
 			Object o = getSource().getAsObject(coordinates[ROW], column);
 			if (ignoreNaN) {
@@ -120,11 +120,6 @@ public class DiscretizeToColumns extends AbstractObjectCalculation {
 			}
 			values = new ArrayList<Object>(set);
 		}
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return ValueType.DOUBLE;
 	}
 
 }

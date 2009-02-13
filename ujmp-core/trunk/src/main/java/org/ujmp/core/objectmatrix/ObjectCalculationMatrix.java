@@ -21,17 +21,17 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.calculation;
+package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.calculation.ObjectCalculation;
 
-public class CalculationMatrix extends AbstractObjectMatrix {
-	private static final long serialVersionUID = -8345796002435936888L;
+public class ObjectCalculationMatrix extends AbstractObjectMatrix {
+	private static final long serialVersionUID = -2992446453080748754L;
 
-	private AbstractCalculation calculation = null;
+	private ObjectCalculation calculation = null;
 
-	public CalculationMatrix(AbstractCalculation calculation) {
+	public ObjectCalculationMatrix(ObjectCalculation calculation) {
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -54,14 +54,6 @@ public class CalculationMatrix extends AbstractObjectMatrix {
 	}
 
 	@Override
-	public Object getObject(long... coordinates) throws MatrixException {
-		return calculation.getObject(coordinates);
-	}
-
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
-		calculation.setObject(o, coordinates);
-	}
-
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -69,13 +61,18 @@ public class CalculationMatrix extends AbstractObjectMatrix {
 		}
 	}
 
-	@Override
-	public String getAsString(long... coordinates) throws MatrixException {
-		return calculation.getString(coordinates);
-	}
-
 	public boolean isSparse() {
 		return calculation.isSparse();
+	}
+
+	@Override
+	public Object getObject(long... coordinates) throws MatrixException {
+		return calculation.getObject(coordinates);
+	}
+
+	@Override
+	public void setObject(Object value, long... coordinates) throws MatrixException {
+		calculation.setObject(value, coordinates);
 	}
 
 }

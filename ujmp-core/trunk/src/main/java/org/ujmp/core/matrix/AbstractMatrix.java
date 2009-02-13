@@ -46,6 +46,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.booleanmatrix.calculation.And;
 import org.ujmp.core.booleanmatrix.calculation.Eq;
 import org.ujmp.core.booleanmatrix.calculation.Ge;
@@ -55,13 +56,20 @@ import org.ujmp.core.booleanmatrix.calculation.Lt;
 import org.ujmp.core.booleanmatrix.calculation.Ne;
 import org.ujmp.core.booleanmatrix.calculation.Not;
 import org.ujmp.core.booleanmatrix.calculation.Or;
+import org.ujmp.core.booleanmatrix.calculation.ToBooleanMatrix;
 import org.ujmp.core.booleanmatrix.calculation.Xor;
-import org.ujmp.core.calculation.AbstractCalculation;
+import org.ujmp.core.bytematrix.ByteMatrix;
+import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.CalculationFactory;
-import org.ujmp.core.calculation.Calculation.Calc;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.charmatrix.CharMatrix;
+import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.datematrix.DateMatrix;
+import org.ujmp.core.datematrix.calculation.ToDateMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.basic.Divide;
 import org.ujmp.core.doublematrix.calculation.basic.Minus;
 import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
@@ -89,6 +97,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
+import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
@@ -117,23 +126,34 @@ import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.floatmatrix.FloatMatrix;
+import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasLabel;
+import org.ujmp.core.intmatrix.IntMatrix;
+import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
 import org.ujmp.core.io.ExportMatrix;
+import org.ujmp.core.longmatrix.LongMatrix;
+import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapper.CalculationMapper;
+import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.ReshapedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
-import org.ujmp.core.objectmatrix.calculation.DiscretizeToColumns;
 import org.ujmp.core.objectmatrix.calculation.Distinct;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sort;
+import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
+import org.ujmp.core.shortmatrix.ShortMatrix;
+import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
+import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
+import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.util.DateUtil;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -683,51 +703,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public Matrix calcNew(String calculation, Matrix... matrices) throws MatrixException {
-		return calcNew(Calc.valueOf(calculation.toUpperCase()), matrices);
-	}
-
-	public Matrix calcNew(String calculation, int dimension, Matrix... matrices)
-			throws MatrixException {
-		return calcNew(Calc.valueOf(calculation.toUpperCase()), dimension, matrices);
-	}
-
-	public Matrix calc(String calculation, Ret returnType, Matrix... matrices)
-			throws MatrixException {
-		return calc(Calc.valueOf(calculation.toUpperCase()), returnType, NONE, matrices);
-	}
-
-	public Matrix calc(String calculation, Ret returnType, int dimension, Matrix... matrices)
-			throws MatrixException {
-		return calc(Calc.valueOf(calculation.toUpperCase()), returnType, dimension, matrices);
-	}
-
-	public Matrix calcNew(Calc calculation, Matrix... matrices) throws MatrixException {
-		return calc(calculation, Ret.NEW, NONE, matrices);
-	}
-
-	public Matrix calcNew(Calc calculation, int dimension, Matrix... matrices)
-			throws MatrixException {
-		return calc(calculation, Ret.NEW, dimension, matrices);
-	}
-
-	public Matrix calc(Calc calculation, Ret returnType, Matrix... matrices) throws MatrixException {
-		return calc(calculation, returnType, ALL, matrices);
-	}
-
-	public Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix... matrices)
-			throws MatrixException {
-		return AbstractCalculation.calc(calculation, returnType, dimension, this, matrices);
-	}
-
-	public Matrix calcNew(Calculation calculation) throws MatrixException {
-		return calc(calculation, Ret.NEW);
-	}
-
-	public Matrix calc(Calculation calculation, Ret returnType) throws MatrixException {
-		return calculation.calc(returnType);
-	}
-
 	public void notifyGUIObject() {
 		if (guiObject != null) {
 			guiObject.fireValueChanged();
@@ -739,7 +714,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
-		return calc(new Mtimes(ignoreNaN, this, matrix), returnType);
+		return new Mtimes(ignoreNaN, this, matrix).calc(returnType);
 	}
 
 	public Matrix mtimes(double value) throws MatrixException {
@@ -864,15 +839,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double v) throws MatrixException {
-		return calc(new Minus(ignoreNaN, this, v), returnType);
+		return new Minus(ignoreNaN, this, v).calc(returnType);
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
-		return calc(new Minus(ignoreNaN, this, m), returnType);
+		return new Minus(ignoreNaN, this, m).calc(returnType);
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, double v) throws MatrixException {
-		return calc(new Plus(ignoreNaN, this, v), returnType);
+		return new Plus(ignoreNaN, this, v).calc(returnType);
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
@@ -1057,15 +1032,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix link() throws MatrixException {
-		return calc(Calc.CLONE, Ret.LINK);
+		return toObjectMatrix();
 	}
 
 	public void clear() {
-		try {
-			calc(Calc.ZEROS, Ret.ORIG);
-		} catch (MatrixException e) {
-			logger.log(Level.WARNING, "could not clear Matrix", e);
-		}
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 	public final Matrix rand(Ret ret) throws MatrixException {
@@ -1368,17 +1339,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public String getAsString(long... coordinates) throws MatrixException {
-		Object o = getAsObject(coordinates);
-		if (o == null) {
-			return null;
-		}
-		if (o instanceof String) {
-			return (String) o;
-		}
-		if (o instanceof HasLabel) {
-			return ((HasLabel) o).getLabel();
-		}
-		return o.toString();
+		return StringUtil.convert(getAsObject(coordinates));
 	}
 
 	public final double getMaxValue() throws MatrixException {
@@ -1903,6 +1864,50 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public static void setCalculationMapper(CalculationMapper calculationMapper) {
 		AbstractMatrix.calculationMapper = calculationMapper;
+	}
+
+	public final BooleanMatrix toBooleanMatrix() {
+		return new ToBooleanMatrix(this).calcLink();
+	}
+
+	public final ByteMatrix toByteMatrix() {
+		return new ToByteMatrix(this).calcLink();
+	}
+
+	public final CharMatrix toCharMatrix() {
+		return new ToCharMatrix(this).calcLink();
+	}
+
+	public final DateMatrix toDateMatrix() {
+		return new ToDateMatrix(this).calcLink();
+	}
+
+	public final DoubleMatrix toDoubleMatrix() {
+		return new ToDoubleMatrix(this).calcLink();
+	}
+
+	public final FloatMatrix toFloatMatrix() {
+		return new ToFloatMatrix(this).calcLink();
+	}
+
+	public final IntMatrix toIntMatrix() {
+		return new ToIntMatrix(this).calcLink();
+	}
+
+	public final LongMatrix toLongMatrix() {
+		return new ToLongMatrix(this).calcLink();
+	}
+
+	public final ObjectMatrix toObjectMatrix() {
+		return new ToObjectMatrix(this).calcLink();
+	}
+
+	public final ShortMatrix toShortMatrix() {
+		return new ToShortMatrix(this).calcLink();
+	}
+
+	public final StringMatrix toStringMatrix() {
+		return new ToStringMatrix(this).calcLink();
 	}
 
 }

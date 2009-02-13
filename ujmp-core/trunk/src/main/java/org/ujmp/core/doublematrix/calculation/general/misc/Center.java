@@ -43,7 +43,7 @@ public class Center extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (mean == null) {
-			mean = getSource().calcNew(new Mean(getDimension(), ignoreNaN, getSource()));
+			mean = new Mean(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
 		switch (getDimension()) {
 		case ALL:

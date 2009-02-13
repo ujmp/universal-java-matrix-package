@@ -29,6 +29,7 @@ import org.ujmp.core.annotation.HasAnnotation;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Clearable;
+import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
@@ -52,7 +53,8 @@ import org.ujmp.core.io.ExportMatrixInterface;
  */
 public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateFunctions,
 		GettersAndSetters, BasicMatrixProperties, CanPerformCalculations, DistanceMeasures,
-		Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel, HasGUIObject {
+		Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel, HasGUIObject,
+		Conversions {
 
 	public static final int Y = 0;
 

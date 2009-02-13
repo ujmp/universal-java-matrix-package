@@ -27,11 +27,13 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DoubleCalculationMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractDoubleCalculation extends AbstractCalculation implements
-		DoubleCalculation {
+public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matrix, DoubleMatrix>
+		implements DoubleCalculation {
 
 	private static final long serialVersionUID = -7509806754731040687L;
 
@@ -43,26 +45,12 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	@Override
-	public final Double getObject(long... coordinates) throws MatrixException {
-		return getDouble(coordinates);
+	public final DoubleMatrix calcLink() throws MatrixException {
+		return new DoubleCalculationMatrix(this);
 	}
 
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
-		setDouble(value ? 1.0 : 0.0, coordinates);
-	}
-
-	public boolean getBoolean(long... coordinates) throws MatrixException {
-		return getDouble(coordinates) != 0.0;
-	}
-
-	@Override
-	public final String getString(long... coordinates) throws MatrixException {
-		return "" + getDouble(coordinates);
-	}
-
-	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
+	public final DoubleMatrix calcNew() throws MatrixException {
+		DoubleMatrix result = (DoubleMatrix) MatrixFactory.zeros(ValueType.DOUBLE, getSize());
 		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
@@ -84,16 +72,11 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 	}
 
 	@Override
-	public ValueType getValueType() {
+	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}
 

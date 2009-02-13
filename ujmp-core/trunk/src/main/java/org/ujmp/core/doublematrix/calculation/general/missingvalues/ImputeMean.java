@@ -41,7 +41,7 @@ public class ImputeMean extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (mean == null) {
-			mean = getSource().calcNew(new Mean(getDimension(), true, getSource()));
+			mean = new Mean(getDimension(), true, getSource()).calcNew();
 		}
 		double v = getSource().getAsDouble(coordinates);
 		if (MathUtil.isNaNOrInfinite(v)) {

@@ -23,12 +23,8 @@
 
 package org.ujmp.core.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.calculation.BooleanCalculations;
-import org.ujmp.core.calculation.Calculation.Calc;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.calculation.ObjectCalculations;
 import org.ujmp.core.stringmatrix.calculation.StringCalculations;
 
@@ -64,30 +60,5 @@ import org.ujmp.core.stringmatrix.calculation.StringCalculations;
  */
 public interface CanPerformCalculations extends DoubleCalculations, BooleanCalculations,
 		StringCalculations, ObjectCalculations {
-
-	public Matrix calcNew(Calculation calculation) throws MatrixException;
-
-	public Matrix calc(Calculation calculation, Ret returnType) throws MatrixException;
-
-	public Matrix calcNew(String calculation, Matrix... matrices) throws MatrixException;
-
-	public Matrix calcNew(String calculation, int dimension, Matrix... matrices)
-			throws MatrixException;
-
-	public Matrix calc(String calculation, Ret returnType, Matrix... matrices)
-			throws MatrixException;
-
-	public Matrix calc(String calculation, Ret returnType, int dimension, Matrix... matrices)
-			throws MatrixException;
-
-	public Matrix calcNew(Calc calculation, Matrix... matrices) throws MatrixException;
-
-	public Matrix calcNew(Calc calculation, int dimension, Matrix... matrices)
-			throws MatrixException;
-
-	public Matrix calc(Calc calculation, Ret returnType, Matrix... matrices) throws MatrixException;
-
-	public Matrix calc(Calc calculation, Ret returnType, int dimension, Matrix... matrices)
-			throws MatrixException;
 
 }

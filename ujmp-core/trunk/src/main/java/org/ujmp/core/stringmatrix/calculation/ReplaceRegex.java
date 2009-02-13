@@ -68,4 +68,5 @@ public class ReplaceRegex extends AbstractStringCalculation {
 			throws MatrixException {
 		return calc(source, Pattern.compile(searchString), replacement);
 	}
+
 }

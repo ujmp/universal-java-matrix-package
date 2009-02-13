@@ -45,10 +45,10 @@ public class Standardize extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (center == null) {
-			center = getSource().calcNew(new Center(ignoreNaN, getDimension(), getSource()));
+			center = new Center(ignoreNaN, getDimension(), getSource()).calcNew();
 		}
 		if (sigma == null) {
-			sigma = center.calcNew(new Std(getDimension(), ignoreNaN, center));
+			sigma = new Std(getDimension(), ignoreNaN, center).calcNew();
 		}
 		switch (getDimension()) {
 		case ALL:

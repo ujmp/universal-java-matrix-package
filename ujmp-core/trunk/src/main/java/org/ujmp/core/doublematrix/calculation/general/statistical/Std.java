@@ -42,7 +42,7 @@ public class Std extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (variance == null) {
-			variance = getSource().calcNew(new Var(getDimension(), ignoreNaN, getSource()));
+			variance = new Var(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
 		return Math.sqrt(variance.getAsDouble(coordinates));
 	}

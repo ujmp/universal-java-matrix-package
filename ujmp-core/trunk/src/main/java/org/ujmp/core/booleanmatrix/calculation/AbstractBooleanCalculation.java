@@ -25,14 +25,15 @@ package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.booleanmatrix.BooleanCalculationMatrix;
+import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractBooleanCalculation extends AbstractCalculation implements
-		BooleanCalculation {
-
+public abstract class AbstractBooleanCalculation extends AbstractCalculation<Matrix, BooleanMatrix>
+		implements BooleanCalculation {
 	private static final long serialVersionUID = 1357508932960938265L;
 
 	public AbstractBooleanCalculation(Matrix... sources) {
@@ -43,28 +44,17 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		super(dimension, sources);
 	}
 
-	@Override
-	public final Boolean getObject(long... coordinates) throws MatrixException {
-		return getBoolean(coordinates);
-	}
-
-	@Override
-	public final String getString(long... coordinates) throws MatrixException {
-		return "" + getBoolean(coordinates);
-	}
-
-	@Override
-	public final double getDouble(long... coordinates) throws MatrixException {
-		return getBoolean(coordinates) ? 1 : 0;
-	}
-
-	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
+	public final BooleanMatrix calcNew() throws MatrixException {
+		BooleanMatrix result = (BooleanMatrix) MatrixFactory.zeros(ValueType.BOOLEAN, getSize());
 		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBoolean(getBoolean(c), c);
 		}
 		return result;
+	}
+
+	public final BooleanMatrix calcLink() throws MatrixException {
+		return new BooleanCalculationMatrix(this);
 	}
 
 	public final Matrix calcOrig() throws MatrixException {
@@ -81,21 +71,11 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
 	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
 	}
 
 	@Override
-	public ValueType getValueType() {
+	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}
 

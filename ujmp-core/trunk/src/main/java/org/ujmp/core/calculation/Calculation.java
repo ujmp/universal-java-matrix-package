@@ -38,7 +38,7 @@ import org.ujmp.core.exceptions.MatrixException;
  * @author A. Naegele
  * @version $Revision$
  */
-public interface Calculation extends Serializable {
+public interface Calculation<S extends Matrix, T extends Matrix> extends Serializable {
 
 	public static final int ALL = Matrix.ALL;
 
@@ -52,33 +52,15 @@ public interface Calculation extends Serializable {
 		NEW, LINK, ORIG
 	};
 
-	public enum Calc {
-		CLONE, ZEROS, ONES, EYE, FILL, ROUND, CEIL, FLOOR, RAND, RANDN, ABS, LOG, MAX, MIN, MINUS, PLUS, SUM, TRANSPOSE, TIMES, MTIMES, DIVIDE, POWER, SIGN, SQRT, SIN, COS, TAN, SINH, COSH, TANH
-	};
-
 	public Matrix calc(Ret returnType) throws MatrixException;
 
-	public Matrix calcNew() throws MatrixException;
+	public T calcNew() throws MatrixException;
 
-	public Matrix calcLink() throws MatrixException;
+	public T calcLink() throws MatrixException;
 
-	public Matrix calcOrig() throws MatrixException;
+	public S calcOrig() throws MatrixException;
 
 	public boolean isSparse();
-
-	public double getDouble(long... coordinates) throws MatrixException;
-
-	public boolean getBoolean(long... coordinates) throws MatrixException;
-
-	public Object getObject(long... coordinates) throws MatrixException;
-
-	public void setObject(Object value, long... coordinates) throws MatrixException;
-
-	public void setDouble(double value, long... coordinates) throws MatrixException;
-
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException;
-
-	public String getString(long... coordinates) throws MatrixException;
 
 	public Annotation getAnnotation();
 
@@ -90,11 +72,11 @@ public interface Calculation extends Serializable {
 
 	public boolean contains(long... coordinates);
 
-	public Matrix getSource();
+	public S getSource();
 
-	public Matrix[] getSources();
+	public S[] getSources();
 
-	public void setSources(Matrix... sources);
+	public void setSources(S... sources);
 
 	public int getDimension();
 
@@ -102,8 +84,8 @@ public interface Calculation extends Serializable {
 
 	public long[] getSize();
 
-	public abstract ValueType getValueType();
+	public ValueType getValueType();
 
-	public Matrix[] calcMulti();
+	public T[] calcMulti();
 
 }

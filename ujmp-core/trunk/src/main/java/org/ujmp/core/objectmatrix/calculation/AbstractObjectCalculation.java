@@ -29,11 +29,12 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.objectmatrix.ObjectCalculationMatrix;
+import org.ujmp.core.objectmatrix.ObjectMatrix;
 
-public abstract class AbstractObjectCalculation extends AbstractCalculation {
-	private static final long serialVersionUID = 6012424636486559650L;
+public abstract class AbstractObjectCalculation extends AbstractCalculation<Matrix, ObjectMatrix>
+		implements ObjectCalculation {
+	private static final long serialVersionUID = 7767220107834181824L;
 
 	public AbstractObjectCalculation(Matrix... sources) {
 		super(sources);
@@ -43,51 +44,15 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation {
 		super(dimension, sources);
 	}
 
-	@Override
-	public final double getDouble(long... coordinates) throws MatrixException {
-		return MathUtil.getDouble(getObject(coordinates));
+	public final ObjectMatrix calcLink() throws MatrixException {
+		return new ObjectCalculationMatrix(this);
 	}
 
-	@Override
-	public final boolean getBoolean(long... coordinates) throws MatrixException {
-		return MathUtil.getBoolean(getObject(coordinates));
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public final String getString(long... coordinates) throws MatrixException {
-		return StringUtil.convert(getObject(coordinates));
-	}
-
-	public final Matrix calcNew() throws MatrixException {
-		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
+	public final ObjectMatrix calcNew() throws MatrixException {
+		ObjectMatrix result = (ObjectMatrix) MatrixFactory.zeros(ValueType.OBJECT, getSize());
 		// TODO: copy annotation
-
-		switch (getValueType()) {
-		case DOUBLE:
-			for (long[] c : result.allCoordinates()) {
-				result.setAsDouble(getDouble(c), c);
-			}
-			break;
-		default:
-			for (long[] c : result.allCoordinates()) {
-				result.setAsObject(getObject(c), c);
-			}
-			break;
+		for (long[] c : result.allCoordinates()) {
+			result.setAsObject(getObject(c), c);
 		}
 		return result;
 	}
@@ -104,9 +69,14 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation {
 		return getSource();
 	}
 
+	// this method is doing nothing, but it has to be there for submatrix or
+	// selection where it is overridden
+	public void setObject(Object value, long... coordinates) throws MatrixException {
+	}
+
 	@Override
-	public ValueType getValueType() {
-		return getSource().getValueType();
+	public final ValueType getValueType() {
+		return ValueType.OBJECT;
 	}
 
 }

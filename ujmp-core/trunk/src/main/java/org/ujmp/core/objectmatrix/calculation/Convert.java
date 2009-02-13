@@ -26,43 +26,12 @@ package org.ujmp.core.objectmatrix.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
 
-public class Convert extends AbstractCalculation {
+public class Convert {
 	private static final long serialVersionUID = 6393277198816850597L;
-
-	public Convert(Matrix matrix) {
-		super(matrix);
-	}
-
-	@Override
-	public double getDouble(long... coordinates) throws MatrixException {
-		return getSource().getAsDouble(coordinates);
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setObject(Object value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setDouble(double value, long... coordinates) throws MatrixException {
-	}
-
-	// this method is doing nothing, but it has to be there for submatrix or
-	// selection where it is overridden
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
-	}
-
-	@Override
-	public final boolean getBoolean(long... coordinates) throws MatrixException {
-		return MathUtil.getBoolean(getObject(coordinates));
-	}
 
 	public static Matrix calcNew(ValueType valueType, AnnotationTransfer annotationTransfer,
 			Matrix source) throws MatrixException {
@@ -89,29 +58,6 @@ public class Convert extends AbstractCalculation {
 	public static Matrix calcNew(AnnotationTransfer annotationTransfer, Matrix matrix)
 			throws MatrixException {
 		return calcNew(matrix.getValueType(), annotationTransfer, matrix);
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return getSource().getValueType();
-	}
-
-	@Override
-	public Object getObject(long... coordinates) throws MatrixException {
-		return getSource().getAsObject(coordinates);
-	}
-
-	@Override
-	public String getString(long... coordinates) throws MatrixException {
-		return getSource().getAsString(coordinates);
-	}
-
-	public Matrix calcNew() throws MatrixException {
-		return calcNew(AnnotationTransfer.LINK, getSource());
-	}
-
-	public Matrix calcOrig() throws MatrixException {
-		throw new MatrixException("not implemented");
 	}
 
 }

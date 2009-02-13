@@ -26,17 +26,21 @@ package org.ujmp.core.doublematrix;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
 public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 1754729146021609978L;
 
-	private BufferedRandomAccessFile randomAccessFile = null;
+	private transient BufferedRandomAccessFile randomAccessFile = null;
 
 	public static final int BYTE = 0;
 
@@ -97,7 +101,9 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		this.dataType = dataType;
 		this.bitsPerValue = getBitsPerValue(dataType);
 		this.readOnly = readOnly;
+	}
 
+	private void createFile() {
 		try {
 			if (readOnly) {
 				randomAccessFile = new BufferedRandomAccessFile(file, "r");
@@ -375,64 +381,71 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		if (isReadOnly())
 			return;
 
-		if (randomAccessFile != null) {
-			try {
-				double pos = getPos(row, column);
+		try {
 
-				long seek = (long) Math.floor(pos);
-
-				ByteBuffer bb = null;
-
-				switch (dataType) {
-				case BYTE:
-					randomAccessFile.writeByte(seek, (byte) value);
-					break;
-				case CHAR:
-					randomAccessFile.writeChar(seek, (char) value);
-					break;
-				case DOUBLE:
-					randomAccessFile.writeDouble(seek, value);
-					break;
-				case FLOAT:
-					randomAccessFile.writeFloat(seek, (float) value);
-					break;
-				case SHORT:
-					randomAccessFile.writeShort(seek, (short) value);
-					break;
-				case SHORTLITTLEENDIAN:
-					bb = ByteBuffer.allocate(2).order(byteOrder);
-					bb.putShort((short) value);
-					randomAccessFile.write(seek, bb.array());
-					break;
-				case INT:
-					randomAccessFile.writeInt(seek, (int) value);
-					break;
-				case INTLITTLEENDIAN:
-					bb = ByteBuffer.allocate(4).order(byteOrder);
-					bb.putInt((int) value);
-					randomAccessFile.write(seek, bb.array());
-					break;
-				case LONG:
-					randomAccessFile.writeLong(seek, (long) value);
-					break;
-				case LONGLITTLEENDIAN:
-					bb = ByteBuffer.allocate(8).order(byteOrder);
-					bb.putLong((long) value);
-					randomAccessFile.write(seek, bb.array());
-					break;
-				case UNSIGNEDBYTE:
-					randomAccessFile.writeByte(seek, (byte) value);
-					break;
-				case UNSIGNEDSHORT:
-					randomAccessFile.writeShort(seek, (short) value);
-					break;
-				case BOOLEAN:
-					throw new IOException("not supported");
-				}
-			} catch (Exception e) {
-				logger.log(Level.WARNING, "could not write value at coordinates " + row + ","
-						+ column, e);
+			if (file == null) {
+				file = File.createTempFile("matrix", null);
 			}
+
+			if (randomAccessFile == null) {
+				createFile();
+			}
+
+			double pos = getPos(row, column);
+
+			long seek = (long) Math.floor(pos);
+
+			ByteBuffer bb = null;
+
+			switch (dataType) {
+			case BYTE:
+				randomAccessFile.writeByte(seek, (byte) value);
+				break;
+			case CHAR:
+				randomAccessFile.writeChar(seek, (char) value);
+				break;
+			case DOUBLE:
+				randomAccessFile.writeDouble(seek, value);
+				break;
+			case FLOAT:
+				randomAccessFile.writeFloat(seek, (float) value);
+				break;
+			case SHORT:
+				randomAccessFile.writeShort(seek, (short) value);
+				break;
+			case SHORTLITTLEENDIAN:
+				bb = ByteBuffer.allocate(2).order(byteOrder);
+				bb.putShort((short) value);
+				randomAccessFile.write(seek, bb.array());
+				break;
+			case INT:
+				randomAccessFile.writeInt(seek, (int) value);
+				break;
+			case INTLITTLEENDIAN:
+				bb = ByteBuffer.allocate(4).order(byteOrder);
+				bb.putInt((int) value);
+				randomAccessFile.write(seek, bb.array());
+				break;
+			case LONG:
+				randomAccessFile.writeLong(seek, (long) value);
+				break;
+			case LONGLITTLEENDIAN:
+				bb = ByteBuffer.allocate(8).order(byteOrder);
+				bb.putLong((long) value);
+				randomAccessFile.write(seek, bb.array());
+				break;
+			case UNSIGNEDBYTE:
+				randomAccessFile.writeByte(seek, (byte) value);
+				break;
+			case UNSIGNEDSHORT:
+				randomAccessFile.writeShort(seek, (short) value);
+				break;
+			case BOOLEAN:
+				throw new IOException("not supported");
+			}
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "could not write value at coordinates " + row + "," + column,
+					e);
 		}
 	}
 
@@ -463,6 +476,27 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public static final int getIntLittleEndian(byte[] bytes) {
 		return ByteBuffer.wrap(bytes).order(byteOrder).getInt();
+	}
+
+	private void writeObject(ObjectOutputStream s) throws IOException {
+		s.defaultWriteObject();
+		for (long[] c : availableCoordinates()) {
+			s.writeObject(new Coordinates(c));
+			s.writeObject(getDouble(c));
+		}
+	}
+
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+		s.defaultReadObject();
+		while (true) {
+			try {
+				Coordinates c = (Coordinates) s.readObject();
+				Double o = (Double) s.readObject();
+				setDouble(o, c.dimensions);
+			} catch (OptionalDataException e) {
+				return;
+			}
+		}
 	}
 
 }

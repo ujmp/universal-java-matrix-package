@@ -46,10 +46,10 @@ public class Mean extends AbstractDoubleCalculation {
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (sum == null) {
-			sum = getSource().calcNew(new Sum(getDimension(), ignoreNaN, getSource()));
+			sum = new Sum(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
 		if (ignoreNaN && missingCount == null) {
-			missingCount = getSource().calcNew(new CountMissing(getDimension(), getSource()));
+			missingCount = new CountMissing(getDimension(), getSource()).calcNew();
 		}
 
 		if (ignoreNaN) {

@@ -38,7 +38,7 @@ public abstract class CalculationFactory {
 			throws MatrixException {
 		try {
 			Constructor<?> con = mapper.getPlusDenseDoubleCalculation2DConstructor();
-			Calculation calc = (Calculation) con.newInstance(ignoreNaN, m1, m2);
+			Calculation<?, ?> calc = (Calculation<?, ?>) con.newInstance(ignoreNaN, m1, m2);
 			return calc.calc(returnType);
 		} catch (Exception e) {
 			throw new MatrixException(e);

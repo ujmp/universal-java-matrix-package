@@ -74,8 +74,8 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Sortable) {
-			Sortable s = (Sortable) obj;
-			Comparable c = s.getComparable();
+			Sortable<?, ?> s = (Sortable<?, ?>) obj;
+			Comparable<?> c = s.getComparable();
 			Object o = s.getObject();
 			if (getComparable().equals(c)) {
 				return false;

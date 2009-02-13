@@ -32,7 +32,7 @@ import java.util.Map;
 
 import org.ujmp.core.collections.ArrayIndexList;
 
-public class ObjectTreeMatrix extends AbstractTreeMatrix {
+public class ObjectTreeMatrix extends AbstractTreeMatrix<Object> {
 	private static final long serialVersionUID = -7343649063964349539L;
 
 	private final List<Object> objects = new ArrayIndexList<Object>();
@@ -48,8 +48,9 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 	}
 
 	private void addSuperclass(String name, Object o) {
-		Class superclass = o.getClass().getSuperclass();
-		if (superclass != null && !Object.class.equals(superclass) && !Number.class.equals(superclass)) {
+		Class<?> superclass = o.getClass().getSuperclass();
+		if (superclass != null && !Object.class.equals(superclass)
+				&& !Number.class.equals(superclass)) {
 
 			addSuperclass("super", superclass);
 			addFields("super", superclass);

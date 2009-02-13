@@ -23,9 +23,9 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
 
-public class MatrixSystemTime extends AbstractDenseDoubleMatrix2D {
+public class MatrixSystemTime extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 8552917654861598011L;
 
 	public MatrixSystemTime() {
@@ -36,18 +36,18 @@ public class MatrixSystemTime extends AbstractDenseDoubleMatrix2D {
 		return new long[] { 1, 1 };
 	}
 
-	public double getDouble(long row, long column) {
+	public long getLong(long row, long column) {
 		return System.currentTimeMillis();
 	}
 
-	public void setDouble(double value, long row, long column) {
+	public void setLong(long value, long row, long column) {
 	}
 
-	public double getDouble(int row, int column) {
+	public long getLong(int row, int column) {
 		return System.currentTimeMillis();
 	}
 
-	public void setDouble(double value, int row, int column) {
+	public void setLong(long value, int row, int column) {
 	}
 
 	@Override

@@ -33,7 +33,7 @@ import java.util.Set;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-public class MatrixRunningThreads extends AbstractMapMatrix {
+public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -6988423129848472319L;
 
 	public MatrixRunningThreads() {
@@ -41,7 +41,7 @@ public class MatrixRunningThreads extends AbstractMapMatrix {
 	}
 
 	@Override
-	public Map getMap() {
+	public Map<Object, Object> getMap() {
 		return ThreadMap.getInstance();
 	}
 

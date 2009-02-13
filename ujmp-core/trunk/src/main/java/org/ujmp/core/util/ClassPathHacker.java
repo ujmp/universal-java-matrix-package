@@ -33,7 +33,7 @@ import java.net.URLClassLoader;
 
 public class ClassPathHacker {
 
-	private static final Class[] parameters = new Class[] { URL.class };
+	private static final Class<?>[] parameters = new Class[] { URL.class };
 
 	public static void addFile(String s) throws IOException {
 		File f = new File(s);

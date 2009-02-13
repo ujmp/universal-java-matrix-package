@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-public class MatrixSystemProperties extends AbstractMapMatrix {
+public class MatrixSystemProperties extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -5746939082111495919L;
 
 	public MatrixSystemProperties() {
@@ -35,7 +35,7 @@ public class MatrixSystemProperties extends AbstractMapMatrix {
 	}
 
 	@Override
-	public Map getMap() {
+	public Map<Object, Object> getMap() {
 		return System.getProperties();
 	}
 

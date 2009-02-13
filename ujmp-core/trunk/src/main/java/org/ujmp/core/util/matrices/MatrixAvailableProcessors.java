@@ -23,9 +23,9 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
 
-public class MatrixAvailableProcessors extends AbstractDenseDoubleMatrix2D {
+public class MatrixAvailableProcessors extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3768846722489359117L;
 
 	public MatrixAvailableProcessors() {
@@ -36,18 +36,18 @@ public class MatrixAvailableProcessors extends AbstractDenseDoubleMatrix2D {
 		return new long[] { 1, 1 };
 	}
 
-	public double getDouble(long row, long column) {
+	public int getInt(long row, long column) {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-	public void setDouble(double value, long row, long column) {
+	public void setInt(int value, long row, long column) {
 	}
 
-	public double getDouble(int row, int column) {
+	public int getInt(int row, int column) {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-	public void setDouble(double value, int row, int column) {
+	public void setInt(int value, int row, int column) {
 	}
 
 	@Override

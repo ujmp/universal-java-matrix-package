@@ -30,8 +30,8 @@ import org.ujmp.core.graphmatrix.DefaultGraphMatrix;
 
 public abstract class ImportMatrixGML {
 
-	public static final AbstractGraphMatrix fromFile(File file) {
-		DefaultGraphMatrix m = new DefaultGraphMatrix();
+	public static final AbstractGraphMatrix<Object, Object> fromFile(File file) {
+		DefaultGraphMatrix<Object, Object> m = new DefaultGraphMatrix<Object, Object>();
 		// m.importFromGML(file);
 		return m;
 	}

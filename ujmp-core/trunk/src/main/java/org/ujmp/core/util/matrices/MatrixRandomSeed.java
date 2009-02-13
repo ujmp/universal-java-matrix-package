@@ -23,10 +23,10 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
-public class MatrixRandomSeed extends AbstractDenseDoubleMatrix2D {
+public class MatrixRandomSeed extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 1950244958868637395L;
 
 	public MatrixRandomSeed() {
@@ -37,20 +37,20 @@ public class MatrixRandomSeed extends AbstractDenseDoubleMatrix2D {
 		return new long[] { 1, 1 };
 	}
 
-	public double getDouble(long row, long column) {
+	public long getLong(long row, long column) {
 		return MathUtil.getSeed();
 	}
 
-	public void setDouble(double value, long row, long column) {
-		MathUtil.setSeed((long) value);
+	public void setLong(long value, long row, long column) {
+		MathUtil.setSeed(value);
 	}
 
-	public double getDouble(int row, int column) {
+	public long getLong(int row, int column) {
 		return MathUtil.getSeed();
 	}
 
-	public void setDouble(double value, int row, int column) {
-		MathUtil.setSeed((long) value);
+	public void setLong(long value, int row, int column) {
+		MathUtil.setSeed(value);
 	}
 
 }

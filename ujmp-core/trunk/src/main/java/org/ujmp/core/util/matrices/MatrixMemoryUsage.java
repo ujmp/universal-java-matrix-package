@@ -23,16 +23,16 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
 
-public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
+public class MatrixMemoryUsage extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = -3863745960302379726L;
 
 	public MatrixMemoryUsage() {
 		setLabel("Memory Usage");
 	}
 
-	public double getDouble(int row, int column) {
+	public long getLong(int row, int column) {
 		switch (row) {
 		case 0:
 			return Runtime.getRuntime().freeMemory();
@@ -43,7 +43,7 @@ public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
-	public double getDouble(long row, long column) {
+	public long getLong(long row, long column) {
 		switch ((int) row) {
 		case 0:
 			return Runtime.getRuntime().freeMemory();
@@ -58,10 +58,10 @@ public class MatrixMemoryUsage extends AbstractDenseDoubleMatrix2D {
 		return new long[] { 3, 1 };
 	}
 
-	public void setDouble(double value, long row, long column) {
+	public void setLong(long value, long row, long column) {
 	}
 
-	public void setDouble(double value, int row, int column) {
+	public void setLong(long value, int row, int column) {
 	}
 
 	@Override

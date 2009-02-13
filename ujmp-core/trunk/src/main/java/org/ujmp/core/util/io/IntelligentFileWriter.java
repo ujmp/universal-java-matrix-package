@@ -78,7 +78,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 		} else if (file.getAbsolutePath().toLowerCase().endsWith(".7z")) {
 			try {
 				Class<?> c = Class.forName(SEVENZIPOUTPUTSTREAM);
-				Constructor con = c.getConstructor(new Class[] { FileOutputStream.class });
+				Constructor<?> con = c.getConstructor(new Class[] { FileOutputStream.class });
 				zip = (OutputStream) con.newInstance(new Object[] { new FileOutputStream(file,
 						append) });
 			} catch (ClassNotFoundException e) {

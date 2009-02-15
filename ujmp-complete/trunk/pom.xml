@@ -94,6 +94,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-sst</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-parallelcolt</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -212,6 +216,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-parallelcolt</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -235,6 +246,7 @@
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-vecmath</module>
 		<module>../ujmp-sst</module>
+		<module>../ujmp-parallelcolt</module>
 	</modules>
 
 </project>

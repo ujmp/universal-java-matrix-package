@@ -29,8 +29,8 @@
 			<artifactId>mtj</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>arpack</groupId>
-			<artifactId>arpack</artifactId>
+			<groupId>arpack-combo</groupId>
+			<artifactId>arpack-combo</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>netlib-java</groupId>

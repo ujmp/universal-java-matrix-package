@@ -29,6 +29,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
+import cern.jet.math.Functions;
 
 public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DenseDoubleMatrix2D> {
@@ -78,6 +79,16 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public void setWrappedObject(DenseDoubleMatrix2D object) {
 		this.matrix = object;
+	}
+
+	public Matrix plus(double value) {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
+				.assign(Functions.plus(value)));
+	}
+
+	public Matrix times(double value) {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
+				.assign(Functions.mult(value)));
 	}
 
 }

@@ -28,7 +28,7 @@ import java.util.Date;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 
 public abstract class AbstractDenseDateMatrix2D extends AbstractDenseDateMatrix implements
-		DateMatrix2D {
+		DenseDateMatrix2D {
 	private static final long serialVersionUID = -2706051207687879249L;
 
 	public final Iterable<long[]> allCoordinates() {

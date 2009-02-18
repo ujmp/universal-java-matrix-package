@@ -29,19 +29,23 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
+import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
@@ -53,25 +57,30 @@ import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.DefaultDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
 import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.DenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
 import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
+import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.FileListMatrix;
-import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
 import org.ujmp.core.util.matrices.MatrixMemoryUsage;
 import org.ujmp.core.util.matrices.MatrixRandomSeed;
@@ -90,9 +99,6 @@ import org.ujmp.core.util.matrices.MatrixSystemTime;
  * @author Holger Arndt
  */
 public abstract class MatrixFactory {
-
-	protected transient static final Logger logger = Logger
-			.getLogger(MatrixFactory.class.getName());
 
 	public static final int ROW = Matrix.ROW;
 
@@ -157,11 +163,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final Matrix concat(int dimension, Matrix... matrices) throws MatrixException {
-		List<Matrix> list = new ArrayList<Matrix>();
-		for (Matrix m : matrices) {
-			list.add(m);
-		}
-		return concat(dimension, list);
+		return concat(dimension, Arrays.asList(matrices));
 	}
 
 	// TODO: this should be done in a calculation
@@ -181,36 +183,136 @@ public abstract class MatrixFactory {
 		return result;
 	}
 
+	public static final Matrix importFromArray(boolean[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(byte[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(char[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(Date[]... values) {
+		return linkToArray(values).copy();
+	}
+
 	public static final Matrix importFromArray(double[]... values) {
-		int rows = values.length;
-		int columns = 0;
-		for (int i = values.length - 1; i >= 0; i--) {
-			columns = Math.max(columns, values[i].length);
-		}
-		Matrix m = MatrixFactory.zeros(rows, columns);
-		for (int i = rows - 1; i >= 0; i--) {
-			for (int j = values[i].length - 1; j >= 0; j--) {
-				m.setAsDouble(values[i][j], i, j);
-			}
-		}
-		return m;
+		return linkToArray(values).copy();
 	}
 
-	public static final DefaultDenseDoubleMatrix2D linkToArray(double[]... values) {
+	public static final Matrix importFromArray(float[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(int[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(long[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(Object[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(short[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final Matrix importFromArray(String[]... values) {
+		return linkToArray(values).copy();
+	}
+
+	public static final DenseBooleanMatrix2D linkToArray(boolean[]... values) {
+		return new DefaultDenseBooleanMatrix2D(values);
+	}
+
+	public static final DenseBooleanMatrix2D linkToArray(boolean... values) {
+		return new DefaultDenseBooleanMatrix2D(values);
+	}
+
+	public static final DenseByteMatrix2D linkToArray(byte[]... values) {
+		return new DefaultDenseByteMatrix2D(values);
+	}
+
+	public static final DenseByteMatrix2D linkToArray(byte... values) {
+		return new DefaultDenseByteMatrix2D(values);
+	}
+
+	public static final DenseCharMatrix2D linkToArray(char[]... values) {
+		return new DefaultDenseCharMatrix2D(values);
+	}
+
+	public static final DenseCharMatrix2D linkToArray(char... values) {
+		return new DefaultDenseCharMatrix2D(values);
+	}
+
+	public static final DenseDateMatrix2D linkToArray(Date[]... values) {
+		return new DefaultDenseDateMatrix2D(values);
+	}
+
+	public static final DenseDateMatrix2D linkToArray(Date... values) {
+		return new DefaultDenseDateMatrix2D(values);
+	}
+
+	public static final DenseDoubleMatrix2D linkToArray(double[]... values) {
 		return new DefaultDenseDoubleMatrix2D(values);
 	}
 
-	public static final DefaultDenseDoubleMatrix2D linkToArray(double... values) {
+	public static final DenseDoubleMatrix2D linkToArray(double... values) {
 		return new DefaultDenseDoubleMatrix2D(values);
 	}
 
-	public static final DefaultDenseIntMatrix2D linkToArray(int[]... values) {
+	public static final DenseFloatMatrix2D linkToArray(float[]... values) {
+		return new DefaultDenseFloatMatrix2D(values);
+	}
+
+	public static final DenseFloatMatrix2D linkToArray(float... values) {
+		return new DefaultDenseFloatMatrix2D(values);
+	}
+
+	public static final DenseIntMatrix2D linkToArray(int[]... values) {
 		return new DefaultDenseIntMatrix2D(values);
 	}
 
-	public static final DefaultDenseDoubleMatrix2D linkToArray(int... values) {
-		double[] doubleValues = MathUtil.toDoubleArray(values);
-		return new DefaultDenseDoubleMatrix2D(doubleValues);
+	public static final DenseIntMatrix2D linkToArray(int... values) {
+		return new DefaultDenseIntMatrix2D(values);
+	}
+
+	public static final DenseLongMatrix2D linkToArray(long[]... values) {
+		return new DefaultDenseLongMatrix2D(values);
+	}
+
+	public static final DenseLongMatrix2D linkToArray(long... values) {
+		return new DefaultDenseLongMatrix2D(values);
+	}
+
+	public static final DenseObjectMatrix2D linkToArray(Object[]... values) {
+		return new DefaultDenseObjectMatrix2D(values);
+	}
+
+	public static final DenseObjectMatrix2D linkToArray(Object... values) {
+		return new DefaultDenseObjectMatrix2D(values);
+	}
+
+	public static final DenseShortMatrix2D linkToArray(short[]... values) {
+		return new DefaultDenseShortMatrix2D(values);
+	}
+
+	public static final DenseShortMatrix2D linkToArray(short... values) {
+		return new DefaultDenseShortMatrix2D(values);
+	}
+
+	public static final DenseStringMatrix2D linkToArray(String[]... values) {
+		return new DefaultDenseStringMatrix2D(values);
+	}
+
+	public static final DenseStringMatrix2D linkToArray(String... values) {
+		return new DefaultDenseStringMatrix2D(values);
 	}
 
 	public static final Matrix copyFromMatrix(AnnotationTransfer annotationTransfer, Matrix matrix)
@@ -261,58 +363,46 @@ public abstract class MatrixFactory {
 		return ret;
 	}
 
-	public static final Matrix sharedMatrix(Matrix m) throws MatrixException {
-		try {
-			Class<?> c = Class.forName("org.jdmp.jgroups.ReplicatedSparseMatrix");
-			Constructor<?> constr = c.getConstructor(new Class[] { Matrix.class });
-			Matrix matrix = (Matrix) constr.newInstance(new Object[] { m });
-			return matrix;
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
-	}
-
-	public static final DefaultDenseDoubleMatrix2D linkToValue(double value) {
+	public static final DenseDoubleMatrix2D linkToValue(double value) {
 		return new DefaultDenseDoubleMatrix2D(new double[][] { { value } });
 	}
 
-	public static final DefaultDenseIntMatrix2D linkToValue(int value) {
+	public static final DenseIntMatrix2D linkToValue(int value) {
 		return new DefaultDenseIntMatrix2D(new int[][] { { value } });
 	}
 
-	public static final DefaultDenseCharMatrix2D linkToValue(char value) {
+	public static final DenseCharMatrix2D linkToValue(char value) {
 		return new DefaultDenseCharMatrix2D(new char[][] { { value } });
 	}
 
-	public static final DefaultDenseDateMatrix2D linkToValue(Date value) {
+	public static final DenseDateMatrix2D linkToValue(Date value) {
 		return new DefaultDenseDateMatrix2D(new Date[][] { { value } });
 	}
 
-	public static final DefaultDenseBooleanMatrix2D linkToValue(boolean value) {
+	public static final DenseBooleanMatrix2D linkToValue(boolean value) {
 		return new DefaultDenseBooleanMatrix2D(new boolean[][] { { value } });
 	}
 
-	public static final DefaultDenseByteMatrix2D linkToValue(byte value) {
+	public static final DenseByteMatrix2D linkToValue(byte value) {
 		return new DefaultDenseByteMatrix2D(new byte[][] { { value } });
 	}
 
-	public static final DefaultDenseShortMatrix2D linkToValue(short value) {
+	public static final DenseShortMatrix2D linkToValue(short value) {
 		return new DefaultDenseShortMatrix2D(new short[][] { { value } });
 	}
 
-	public static final DefaultDenseStringMatrix2D linkToValue(String value) {
+	public static final DenseStringMatrix2D linkToValue(String value) {
 		return new DefaultDenseStringMatrix2D(new String[][] { { value } });
 	}
 
-	public static final DefaultDenseLongMatrix2D linkToValue(long value) {
+	public static final DenseLongMatrix2D linkToValue(long value) {
 		return new DefaultDenseLongMatrix2D(new long[][] { { value } });
 	}
 
 	public static final Matrix linkToValue(Object value) {
 		if (value == null) {
 			return emptyMatrix();
-		}
-		if (value instanceof Double) {
+		} else if (value instanceof Double) {
 			return new DefaultDenseDoubleMatrix2D(new double[][] { { (Double) value } });
 		} else if (value instanceof Integer) {
 			return new DefaultDenseIntMatrix2D(new int[][] { { (Integer) value } });
@@ -460,10 +550,6 @@ public abstract class MatrixFactory {
 		return matrix;
 	}
 
-	public static final DefaultDenseObjectMatrix2D linkToArray(Object[]... valueList) {
-		return new DefaultDenseObjectMatrix2D(valueList);
-	}
-
 	public static final FileListMatrix linkToDir(String dir) {
 		return new FileListMatrix(dir);
 	}
@@ -475,10 +561,6 @@ public abstract class MatrixFactory {
 		} else {
 			return new DefaultMapMatrix(map);
 		}
-	}
-
-	public static final DefaultListMatrix<Object> linkToArray(Object... objects) {
-		return new DefaultListMatrix<Object>(objects);
 	}
 
 	public static final Matrix linkToCollection(Collection<?> list) {
@@ -515,7 +597,8 @@ public abstract class MatrixFactory {
 		return new SynchronizedObjectMatrix(matrix);
 	}
 
-	public static final DoubleMatrix linkToBinaryFile(String filename, int rowCount, int columnCount) {
+	public static final DenseDoubleMatrix2D linkToBinaryFile(String filename, int rowCount,
+			int columnCount) {
 		return new DenseFileMatrix2D(new File(filename), rowCount, columnCount);
 	}
 

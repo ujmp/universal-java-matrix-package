@@ -25,24 +25,25 @@ package org.ujmp.commonsmath;
 
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealMatrixImpl;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D
+public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<RealMatrixImpl> {
 	private static final long serialVersionUID = -1161807620507675926L;
 
 	private RealMatrixImpl matrix = null;
 
-	public CommonsMathRealMatrix2D(long... size) {
+	public CommonsMathDenseDoubleMatrix2D(long... size) {
 		if (size[ROW] > 0 && size[COLUMN] > 0) {
 			matrix = new RealMatrixImpl((int) size[ROW], (int) size[COLUMN]);
 		}
 	}
 
-	public CommonsMathRealMatrix2D(org.ujmp.core.Matrix source)
+	public CommonsMathDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
 			throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
@@ -50,7 +51,7 @@ public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public CommonsMathRealMatrix2D(RealMatrix matrix) {
+	public CommonsMathDenseDoubleMatrix2D(RealMatrix matrix) {
 		if (matrix instanceof RealMatrixImpl) {
 			this.matrix = (RealMatrixImpl) matrix;
 		} else {
@@ -87,6 +88,11 @@ public class CommonsMathRealMatrix2D extends AbstractDenseDoubleMatrix2D
 	public long[] getSize() {
 		return matrix == null ? Coordinates.ZERO2D : new long[] {
 				matrix.getRowDimension(), matrix.getColumnDimension() };
+	}
+
+	@Override
+	public Matrix transpose() {
+		return new CommonsMathDenseDoubleMatrix2D(matrix.transpose());
 	}
 
 }

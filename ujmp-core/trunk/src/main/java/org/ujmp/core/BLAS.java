@@ -21,22 +21,34 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.implementations.AbstractMatrixTest;
+import java.lang.reflect.Method;
 
-public class TestCommonsMathRealMatrix extends AbstractMatrixTest {
+public abstract class BLAS {
 
-	@Override
-	public Matrix createMatrix(long... size) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(size);
+	private static Method dgemm = null;
+
+	static {
+		try {
+			Class<?> c = Class.forName("org.netlib.blas.Dgemm");
+			dgemm = c.getMethod("dgemm", String.class, String.class, Integer.TYPE, Integer.TYPE,
+					Integer.TYPE, Double.TYPE, double[].class, Integer.TYPE, Integer.TYPE,
+					double[].class, Integer.TYPE, Integer.TYPE, Double.TYPE, double[].class,
+					Integer.TYPE, Integer.TYPE);
+		} catch (Exception e) {
+		}
 	}
 
-	@Override
-	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(source);
+	public static synchronized void dgemm(Object object, String string, String string2, int rows,
+			int retcols, int cols, int i, double[] values, int j, int rows2, double[] m2, int k,
+			int l, int m, double[] ret, int n, int rows3) {
+		try {
+			dgemm.invoke(object, string, string2, rows, retcols, cols, i, values, j, rows2, m2, k,
+					l, m, ret, n, rows3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

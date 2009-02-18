@@ -1,5 +1,29 @@
+/*
+ * Copyright (C) 2008-2009 Holger Arndt, A. Naegele and M. Bundschus
+ *
+ * This file is part of the Universal Java Matrix Package (UJMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * UJMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * UJMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with UJMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
 package org.ujmp.core.benchmark;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,40 +76,55 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private static final List<long[]> allSizes = Arrays.asList(new long[][] { size1000x10000 });
 
+	private static final List<long[][]> multSizes = Arrays.asList(new long[][][] {
+			{ size100x100, size100x100 }, { size1000x100, size100x1000 },
+			{ size10000x100, size100x10000 } });
+
 	public abstract Matrix createMatrix(long... size) throws MatrixException;
 
 	public abstract Matrix createMatrix(Matrix source) throws MatrixException;
 
-	public void run() throws Exception {
+	public List<Matrix> run() throws Exception {
 		System.out.println("===============================================================");
 		System.out.println(createMatrix(1, 1).getClass().getSimpleName());
 		System.out.println("===============================================================");
-		// init();
-		// runBenchmarkCreate();
-		runBenchmarkPlusScalarNew();
-		runBenchmarkPlusScalarOrig();
-		runBenchmarkTimesScalarNew();
-		runBenchmarkTransposeNew();
+
+		List<Matrix> result = new ArrayList<Matrix>();
+
+		init();
+		// result.add(runBenchmarkCreate());
+		// result.add(runBenchmarkCopy());
+		// result.add(runBenchmarkPlusScalarNew());
+		// result.add(runBenchmarkPlusScalarOrig());
+		// result.add(runBenchmarkTimesScalarNew());
+		// result.add(runBenchmarkTransposeNew());
+		result.add(runBenchmarkMtimesNew());
+
 		System.out.println();
+
+		return result;
 	}
 
-	public void init() {
+	public Matrix init() {
+		Matrix result = MatrixFactory.zeros(count, allSizes.size());
 		System.out.print("init: ");
+
 		for (int i = 0; i < count; i++) {
-			System.out.print(".");
-			try {
-				MatrixFactory.zeros(size10000x1000);
-			} catch (Exception e) {
-			}
-			try {
-				MatrixFactory.zeros(size100000x1000);
-			} catch (Exception e) {
+			for (int s = 0; s < allSizes.size(); s++) {
+				long[] size = allSizes.get(s);
+				long t = benchmarkCreate(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
 			}
 		}
+
 		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("init");
+		return m;
 	}
 
-	public void runBenchmarkCreate() {
+	public Matrix runBenchmarkCreate() {
 		Matrix result = MatrixFactory.zeros(count, allSizes.size());
 		System.out.print("create: ");
 
@@ -99,7 +138,9 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 
 		System.out.println();
-		System.out.println(result);
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("create");
+		return m;
 	}
 
 	public Matrix runBenchmarkPlusScalarNew() {
@@ -116,8 +157,28 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 
 		System.out.println();
-		System.out.println(result);
-		return result;
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("plus scalar (new matrix)");
+		return m;
+	}
+
+	public Matrix runBenchmarkCopy() {
+		Matrix result = MatrixFactory.zeros(count, allSizes.size());
+		System.out.print("copy: ");
+
+		for (int i = 0; i < count; i++) {
+			for (int s = 0; s < allSizes.size(); s++) {
+				long[] size = allSizes.get(s);
+				long t = benchmarkCopy(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("copy");
+		return m;
 	}
 
 	public Matrix runBenchmarkPlusScalarOrig() {
@@ -134,8 +195,9 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 
 		System.out.println();
-		System.out.println(result);
-		return result;
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("plus scalar (original matrix)");
+		return m;
 	}
 
 	public Matrix runBenchmarkTimesScalarNew() {
@@ -152,8 +214,9 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 
 		System.out.println();
-		System.out.println(result);
-		return result;
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("times scalar (new matrix)");
+		return m;
 	}
 
 	public Matrix runBenchmarkTransposeNew() {
@@ -170,8 +233,30 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 
 		System.out.println();
-		System.out.println(result);
-		return result;
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("transpose (new matrix)");
+		return m;
+	}
+
+	public Matrix runBenchmarkMtimesNew() {
+		Matrix result = MatrixFactory.zeros(count, multSizes.size());
+		System.out.print("mtimes (new matrix): ");
+
+		for (int i = 0; i < count; i++) {
+			for (int s = 0; s < multSizes.size(); s++) {
+				long[][] sizes = multSizes.get(s);
+				long[] size0 = sizes[0];
+				long[] size1 = sizes[1];
+				long t = benchmarkMtimesNew(size0, size1);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("mtimes (new matrix)");
+		return m;
 	}
 
 	public long benchmarkCreate(long... size) {
@@ -217,6 +302,22 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 	}
 
+	public long benchmarkCopy(long... size) {
+		Matrix m = null, r = null;
+		try {
+			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("copy") == null) {
+				return -1;
+			}
+			long t0 = System.currentTimeMillis();
+			r = m.copy();
+			long t1 = System.currentTimeMillis();
+			return t1 - t0;
+		} catch (Throwable e) {
+			return r == null ? -2 : -3;
+		}
+	}
+
 	public long benchmarkTimesScalarNew(long... size) {
 		Matrix m = null, r = null;
 		try {
@@ -242,6 +343,23 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			long t0 = System.currentTimeMillis();
 			r = m.transpose();
+			long t1 = System.currentTimeMillis();
+			return t1 - t0;
+		} catch (Throwable e) {
+			return r == null ? -2 : -3;
+		}
+	}
+
+	public long benchmarkMtimesNew(long[] size0, long[] size1) {
+		Matrix m0 = null, m1 = null, r = null;
+		try {
+			m0 = createMatrix(size0);
+			m1 = createMatrix(size1);
+			if (m0.getClass().getDeclaredMethod("mtimes", Matrix.class) == null) {
+				return -1;
+			}
+			long t0 = System.currentTimeMillis();
+			r = m0.mtimes(m1);
 			long t1 = System.currentTimeMillis();
 			return t1 - t0;
 		} catch (Throwable e) {

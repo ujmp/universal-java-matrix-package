@@ -21,22 +21,27 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.jama.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 
-public class TestCommonsMathRealMatrix extends AbstractMatrixTest {
+public class JamaDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(size);
+		return new JamaDenseDoubleMatrix2D(size);
 	}
 
 	@Override
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(source);
+		return new JamaDenseDoubleMatrix2D(source);
+	}
+
+	public static void main(String[] args) throws Exception {
+		new JamaDenseDoubleMatrix2DBenchmark().run();
 	}
 
 }

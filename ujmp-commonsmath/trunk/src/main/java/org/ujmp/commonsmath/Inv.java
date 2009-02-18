@@ -45,7 +45,7 @@ public class Inv extends AbstractDoubleCalculation {
 			if (getSource() instanceof RealMatrix) {
 				inv = ((RealMatrixImpl) getSource()).inverse();
 			} else {
-				inv = new CommonsMathRealMatrix2D(getSource()).getWrappedObject().inverse();
+				inv = new CommonsMathDenseDoubleMatrix2D(getSource()).getWrappedObject().inverse();
 			}
 		}
 		return inv.getEntry((int) coordinates[ROW], (int) coordinates[COLUMN]);

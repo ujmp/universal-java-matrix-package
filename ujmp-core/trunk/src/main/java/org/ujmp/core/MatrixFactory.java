@@ -43,7 +43,7 @@ import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
-import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
@@ -260,11 +260,11 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseDoubleMatrix2D linkToArray(double[]... values) {
-		return new DefaultDenseDoubleMatrix2D(values);
+		return new ArrayDenseDoubleMatrix2D(values);
 	}
 
 	public static final DenseDoubleMatrix2D linkToArray(double... values) {
-		return new DefaultDenseDoubleMatrix2D(values);
+		return new ArrayDenseDoubleMatrix2D(values);
 	}
 
 	public static final DenseFloatMatrix2D linkToArray(float[]... values) {
@@ -364,7 +364,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseDoubleMatrix2D linkToValue(double value) {
-		return new DefaultDenseDoubleMatrix2D(new double[][] { { value } });
+		return new ArrayDenseDoubleMatrix2D(new double[][] { { value } });
 	}
 
 	public static final DenseIntMatrix2D linkToValue(int value) {
@@ -403,7 +403,7 @@ public abstract class MatrixFactory {
 		if (value == null) {
 			return emptyMatrix();
 		} else if (value instanceof Double) {
-			return new DefaultDenseDoubleMatrix2D(new double[][] { { (Double) value } });
+			return new ArrayDenseDoubleMatrix2D(new double[][] { { (Double) value } });
 		} else if (value instanceof Integer) {
 			return new DefaultDenseIntMatrix2D(new int[][] { { (Integer) value } });
 		} else if (value instanceof Float) {

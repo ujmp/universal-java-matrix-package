@@ -23,16 +23,78 @@
 
 package org.ujmp.complete.benchmark;
 
-import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.ujmp.colt.benchmark.ColtSparseDoubleMatrix2DBenchmark;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.benchmark.DefaultSparseDoubleMatrixBenchmark;
+import org.ujmp.core.objectmatrix.EmptyMatrix;
+import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
+import org.ujmp.parallelcolt.benchmark.ParallelColtSparseDoubleMatrix2DBenchmark;
 
 public class MatrixBenchmark {
 
-	public static void main(String[] args) throws Exception {
-		new DefaultDenseDoubleMatrix2DBenchmark().run();
-		new ColtDenseDoubleMatrix2DBenchmark().run();
-		new ColtSparseDoubleMatrix2DBenchmark().run();
+	public static List<AbstractMatrix2DBenchmark> getDenseBenchmarks() {
+		List<AbstractMatrix2DBenchmark> list = new ArrayList<AbstractMatrix2DBenchmark>();
+		list.add(new DefaultDenseDoubleMatrix2DBenchmark());
+		list.add(new MTJDenseDoubleMatrix2DBenchmark());
+		// list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
+		// list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
+		// list.add(new ArrayDenseDoubleMatrix2DBenchmark());
+		// list.add(new SSTDenseDoubleMatrixBenchmark());
+		// list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		// list.add(new VecMathDenseDoubleMatrix2DBenchmark());
+		// list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
+		// list.add(new JamaDenseDoubleMatrix2DBenchmark());
+		Collections.reverse(list);
+		return list;
 	}
 
+	public static List<AbstractMatrix2DBenchmark> getSparseBenchmarks() {
+		List<AbstractMatrix2DBenchmark> list = new ArrayList<AbstractMatrix2DBenchmark>();
+		list.add(new ParallelColtSparseDoubleMatrix2DBenchmark());
+		list.add(new DefaultSparseDoubleMatrixBenchmark());
+		list.add(new ColtSparseDoubleMatrix2DBenchmark());
+		Collections.reverse(list);
+		return list;
+	}
+
+	public static void main(String[] args) throws Exception {
+		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
+
+		List<Matrix> results = new ArrayList<Matrix>();
+		for (int i = 0; i < 10; i++) {
+			results.add(MatrixFactory.emptyMatrix());
+		}
+
+		for (int j = 0; j < benchmarks.size(); j++) {
+			AbstractMatrix2DBenchmark benchmark = benchmarks.get(j);
+			List<Matrix> l = benchmark.run();
+			for (int i = 0; i < l.size(); i++) {
+				Matrix m = l.get(i).appendVertically(results.get(i));
+				m.setLabel(l.get(i).getLabel());
+				results.set(i, m);
+			}
+		}
+
+		for (int i = 0; i < results.size(); i++) {
+			Matrix m = results.get(i);
+			for (int j = 0; j < benchmarks.size(); j++) {
+				m.setRowLabel(benchmarks.size() - 1 - j, benchmarks.get(j).getClass()
+						.getSimpleName());
+			}
+		}
+
+		for (Matrix m : results) {
+			if (m != null && !(m instanceof EmptyMatrix)) {
+				m.showGUI();
+			}
+		}
+
+	}
 }

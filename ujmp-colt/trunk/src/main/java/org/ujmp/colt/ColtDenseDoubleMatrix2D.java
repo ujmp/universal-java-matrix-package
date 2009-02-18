@@ -81,14 +81,44 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
+	@Override
+	public Matrix transpose() {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
+				.viewDice().copy());
+	}
+
+	@Override
 	public Matrix plus(double value) {
 		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.plus(value)));
 	}
 
+	@Override
 	public Matrix times(double value) {
 		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.mult(value)));
+	}
+
+	@Override
+	public Matrix mtimes(Matrix m) {
+		if (m instanceof ColtDenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
+					(int) getRowCount(), (int) m.getColumnCount());
+			matrix.zMult(((ColtDenseDoubleMatrix2D) m).matrix, ret);
+			return new ColtDenseDoubleMatrix2D(ret);
+		} else {
+			return super.mtimes(m);
+		}
+	}
+
+	@Override
+	public Matrix copy() {
+		Matrix m = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
+				.copy());
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 }

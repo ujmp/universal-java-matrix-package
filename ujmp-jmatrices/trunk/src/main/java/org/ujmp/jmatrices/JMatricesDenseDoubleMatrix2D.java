@@ -24,6 +24,8 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.jmatrices.dbl.transformer.MatrixTransformer;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -81,6 +83,12 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public void setWrappedObject(org.jmatrices.dbl.Matrix object) {
 		this.matrix = object;
+	}
+
+	@Override
+	public Matrix transpose() {
+		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer
+				.transpose(matrix));
 	}
 
 }

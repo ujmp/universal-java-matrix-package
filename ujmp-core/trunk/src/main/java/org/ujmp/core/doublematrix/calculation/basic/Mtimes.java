@@ -25,7 +25,7 @@ package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
@@ -88,7 +88,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 			}
 		}
 
-		return new DefaultDenseDoubleMatrix2D(ret);
+		return new ArrayDenseDoubleMatrix2D(ret);
 	}
 
 	@Override

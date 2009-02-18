@@ -99,7 +99,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix transpose() {
-		// TODO: maybe this can be made faster using System.arraycopy()
 		DenseMatrix ret = new DenseMatrix((int) getColumnCount(),
 				(int) getRowCount());
 		return new MTJDenseDoubleMatrix2D((DenseMatrix) matrix.transpose(ret));

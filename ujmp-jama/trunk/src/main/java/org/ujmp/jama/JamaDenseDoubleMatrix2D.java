@@ -23,11 +23,10 @@
 
 package org.ujmp.jama;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-
-import Jama.Matrix;
 
 public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<Jama.Matrix> {
@@ -36,11 +35,14 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	private Jama.Matrix matrix = null;
 
 	public JamaDenseDoubleMatrix2D(long... size) {
-		matrix = new Jama.Matrix((int) size[ROW], (int) size[COLUMN]);
+		this.matrix = new Jama.Matrix((int) size[ROW], (int) size[COLUMN]);
 	}
 
-	public JamaDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
-			throws MatrixException {
+	public JamaDenseDoubleMatrix2D(Jama.Matrix matrix) {
+		this.matrix = matrix;
+	}
+
+	public JamaDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
@@ -68,12 +70,36 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix.set(row, column, value);
 	}
 
-	public Matrix getWrappedObject() {
+	public Jama.Matrix getWrappedObject() {
 		return matrix;
 	}
 
-	public void setWrappedObject(Matrix object) {
+	public void setWrappedObject(Jama.Matrix object) {
 		this.matrix = object;
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
+	}
+
+	@Override
+	public Matrix transpose() {
+		return new JamaDenseDoubleMatrix2D(matrix.transpose());
+	}
+
+	@Override
+	public Matrix times(double value) {
+		return new JamaDenseDoubleMatrix2D(matrix.times(value));
+	}
+
+	@Override
+	public Matrix divide(double value) {
+		return new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
 	}
 
 }

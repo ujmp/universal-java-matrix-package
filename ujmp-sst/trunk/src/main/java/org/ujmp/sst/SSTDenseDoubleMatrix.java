@@ -101,7 +101,7 @@ public class SSTDenseDoubleMatrix extends AbstractDenseDoubleMatrix implements
 
 	@Override
 	public Matrix transpose() {
-		return new SSTDenseDoubleMatrix(data.mTranspose());
+		return new SSTDenseDoubleMatrix(data.clone().mTranspose());
 	}
 
 	@Override
@@ -116,22 +116,22 @@ public class SSTDenseDoubleMatrix extends AbstractDenseDoubleMatrix implements
 
 	@Override
 	public Matrix plus(double v) {
-		return new SSTDenseDoubleMatrix(data.uAdd(v));
+		return new SSTDenseDoubleMatrix(data.clone().uAdd(v));
 	}
 
 	@Override
 	public Matrix minus(double v) {
-		return new SSTDenseDoubleMatrix(data.uAdd(-v));
+		return new SSTDenseDoubleMatrix(data.clone().uAdd(-v));
 	}
 
 	@Override
 	public Matrix times(double v) {
-		return new SSTDenseDoubleMatrix(data.uMul(v));
+		return new SSTDenseDoubleMatrix(data.clone().uMul(v));
 	}
 
 	@Override
 	public Matrix divide(double v) {
-		return new SSTDenseDoubleMatrix(data.uMul(1 / v));
+		return new SSTDenseDoubleMatrix(data.clone().uMul(1 / v));
 	}
 
 }

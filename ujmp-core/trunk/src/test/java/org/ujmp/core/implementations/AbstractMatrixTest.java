@@ -432,20 +432,24 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testMultiply() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
-		m1.setAsDouble(1.0, 0, 0);
+		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
-		m1.setAsDouble(3.0, 1, 0);
+		m1.setAsDouble(-3.0, 1, 0);
 		m1.setAsDouble(4.0, 1, 1);
-		Matrix m2 = createMatrix(2, 2);
+		Matrix m2 = createMatrix(2, 3);
 		m2.setAsDouble(1.0, 0, 0);
-		m2.setAsDouble(2.0, 0, 1);
-		m2.setAsDouble(3.0, 1, 0);
-		m2.setAsDouble(4.0, 1, 1);
+		m2.setAsDouble(-2.0, 0, 1);
+		m2.setAsDouble(3.0, 0, 2);
+		m2.setAsDouble(-4.0, 1, 0);
+		m2.setAsDouble(5.0, 1, 1);
+		m2.setAsDouble(-6.0, 1, 2);
 		Matrix m3 = m1.mtimes(m2);
-		assertEquals(getLabel(), 7.0, m3.getAsDouble(0, 0));
-		assertEquals(getLabel(), 10.0, m3.getAsDouble(0, 1));
-		assertEquals(getLabel(), 15.0, m3.getAsDouble(1, 0));
-		assertEquals(getLabel(), 22.0, m3.getAsDouble(1, 1));
+		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
+		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1));
+		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2));
+		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
+		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
+		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
 	}
 
 	public void testInverse() throws Exception {

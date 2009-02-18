@@ -21,22 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.parallelcolt.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 
-public class TestCommonsMathRealMatrix extends AbstractMatrixTest {
+public class ParallelColtDenseDoubleMatrix2DBenchmark extends
+		AbstractMatrix2DBenchmark {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(size);
+		return new ParallelColtDenseDoubleMatrix2D(size);
 	}
 
 	@Override
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(source);
+		return new ParallelColtDenseDoubleMatrix2D(source);
+	}
+
+	public static void main(String[] args) throws Exception {
+		new ParallelColtDenseDoubleMatrix2DBenchmark().run();
 	}
 
 }

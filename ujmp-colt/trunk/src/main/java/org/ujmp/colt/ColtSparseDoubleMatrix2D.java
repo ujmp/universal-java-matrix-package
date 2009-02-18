@@ -35,6 +35,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
+import cern.jet.math.Functions;
 
 public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		implements Wrapper<SparseDoubleMatrix2D> {
@@ -109,4 +110,45 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	public final boolean contains(long... coordinates) {
 		return getAsDouble(coordinates) != 0.0;
 	}
+
+	@Override
+	public Matrix transpose() {
+		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
+				.viewDice().copy());
+	}
+
+	@Override
+	public Matrix plus(double value) {
+		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
+				.copy().assign(Functions.plus(value)));
+	}
+
+	@Override
+	public Matrix times(double value) {
+		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
+				.copy().assign(Functions.mult(value)));
+	}
+
+	@Override
+	public Matrix copy() {
+		Matrix m = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
+				.copy());
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
+	}
+
+	@Override
+	public Matrix mtimes(Matrix m) {
+		if (m instanceof ColtSparseDoubleMatrix2D) {
+			SparseDoubleMatrix2D ret = new SparseDoubleMatrix2D(
+					(int) getRowCount(), (int) m.getColumnCount());
+			matrix.zMult(((ColtSparseDoubleMatrix2D) m).matrix, ret);
+			return new ColtSparseDoubleMatrix2D(ret);
+		} else {
+			return super.mtimes(m);
+		}
+	}
+
 }

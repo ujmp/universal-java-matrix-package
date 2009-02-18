@@ -93,6 +93,16 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
+	public Matrix mtimes(Matrix m) {
+		if (m instanceof JamaDenseDoubleMatrix2D) {
+			return new JamaDenseDoubleMatrix2D(matrix
+					.times(((JamaDenseDoubleMatrix2D) m).matrix));
+		} else {
+			return super.mtimes(m);
+		}
+	}
+
+	@Override
 	public Matrix times(double value) {
 		return new JamaDenseDoubleMatrix2D(matrix.times(value));
 	}

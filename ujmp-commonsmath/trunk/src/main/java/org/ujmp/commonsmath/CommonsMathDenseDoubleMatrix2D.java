@@ -95,4 +95,13 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new CommonsMathDenseDoubleMatrix2D(matrix.transpose());
 	}
 
+	@Override
+	public Matrix mtimes(Matrix m2) {
+		if (m2 instanceof CommonsMathDenseDoubleMatrix2D) {
+			return new CommonsMathDenseDoubleMatrix2D(matrix
+					.multiply(((CommonsMathDenseDoubleMatrix2D) m2).matrix));
+		} else {
+			return super.mtimes(m2);
+		}
+	}
 }

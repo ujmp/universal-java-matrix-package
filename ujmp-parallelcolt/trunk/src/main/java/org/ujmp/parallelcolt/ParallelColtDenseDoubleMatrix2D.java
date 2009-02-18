@@ -101,6 +101,18 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	@Override
+	public Matrix mtimes(Matrix m) {
+		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
+					(int) getRowCount(), (int) m.getColumnCount());
+			matrix.zMult(((ParallelColtDenseDoubleMatrix2D) m).matrix, ret);
+			return new ParallelColtDenseDoubleMatrix2D(ret);
+		} else {
+			return super.mtimes(m);
+		}
+	}
+
+	@Override
 	public Matrix copy() {
 		Matrix m = new ParallelColtDenseDoubleMatrix2D(
 				(DenseDoubleMatrix2D) matrix.copy());

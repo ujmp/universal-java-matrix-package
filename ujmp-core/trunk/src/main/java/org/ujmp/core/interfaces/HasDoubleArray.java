@@ -21,23 +21,9 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.implementations;
+package org.ujmp.core.interfaces;
 
-import junit.framework.TestSuite;
+public interface HasDoubleArray {
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestDenseFileMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestArrayDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseObjectMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseStringMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseRowMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseColumnMatrix2D.class);
-		suite.addTestSuite(TestDefaultTiledObjectMatrix2D.class);
-		return suite;
-	}
-
+	public double[] getDoubleArray();
 }

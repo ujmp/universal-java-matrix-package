@@ -27,15 +27,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.colt.benchmark.ColtSparseDoubleMatrix2DBenchmark;
+import org.ujmp.commonsmath.benchmark.CommonsMathDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultSparseDoubleMatrixBenchmark;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
+import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
+import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtSparseDoubleMatrix2DBenchmark;
+import org.ujmp.sst.benchmark.SSTDenseDoubleMatrixBenchmark;
+import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
 public class MatrixBenchmark {
 
@@ -43,14 +50,14 @@ public class MatrixBenchmark {
 		List<AbstractMatrix2DBenchmark> list = new ArrayList<AbstractMatrix2DBenchmark>();
 		list.add(new DefaultDenseDoubleMatrix2DBenchmark());
 		list.add(new MTJDenseDoubleMatrix2DBenchmark());
-		// list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
+		list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
 		// list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
-		// list.add(new ArrayDenseDoubleMatrix2DBenchmark());
-		// list.add(new SSTDenseDoubleMatrixBenchmark());
-		// list.add(new ColtDenseDoubleMatrix2DBenchmark());
-		// list.add(new VecMathDenseDoubleMatrix2DBenchmark());
-		// list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
-		// list.add(new JamaDenseDoubleMatrix2DBenchmark());
+		list.add(new ArrayDenseDoubleMatrix2DBenchmark());
+		list.add(new SSTDenseDoubleMatrixBenchmark());
+		list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		list.add(new VecMathDenseDoubleMatrix2DBenchmark());
+		list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
+		list.add(new JamaDenseDoubleMatrix2DBenchmark());
 		Collections.reverse(list);
 		return list;
 	}

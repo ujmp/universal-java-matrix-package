@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core;
+package org.ujmp.core.util;
 
 import java.lang.reflect.Method;
 
@@ -36,19 +36,24 @@ public abstract class BLAS {
 					Integer.TYPE, Double.TYPE, double[].class, Integer.TYPE, Integer.TYPE,
 					double[].class, Integer.TYPE, Integer.TYPE, Double.TYPE, double[].class,
 					Integer.TYPE, Integer.TYPE);
-		} catch (Exception e) {
+			dgemm = null;
+		} catch (Throwable e) {
+			System.out.println("arpack-combo.jar not found, cannot use BLAS");
 		}
 	}
 
-	public static synchronized void dgemm(Object object, String string, String string2, int rows,
-			int retcols, int cols, int i, double[] values, int j, int rows2, double[] m2, int k,
-			int l, int m, double[] ret, int n, int rows3) {
+	public static synchronized void dgemm(int rows, int retcols, int cols, int i, double[] values,
+			int j, int rows2, double[] m2, int k, int l, int m, double[] ret, int n, int rows3) {
 		try {
-			dgemm.invoke(object, string, string2, rows, retcols, cols, i, values, j, rows2, m2, k,
-					l, m, ret, n, rows3);
+			dgemm.invoke(null, "N", "N", rows, retcols, cols, i, values, j, rows2, m2, k, l, m,
+					ret, n, rows3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean isAvailable() {
+		return dgemm != null;
 	}
 
 }

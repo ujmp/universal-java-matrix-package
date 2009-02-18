@@ -77,8 +77,7 @@ public abstract class AbstractMatrix2DBenchmark {
 	private static final List<long[]> allSizes = Arrays.asList(new long[][] { size1000x10000 });
 
 	private static final List<long[][]> multSizes = Arrays.asList(new long[][][] {
-			{ size100x100, size100x100 }, { size1000x100, size100x1000 },
-			{ size10000x100, size100x10000 } });
+			{ size100x100, size100x100 }, { size1000x100, size100x1000 } });
 
 	public abstract Matrix createMatrix(long... size) throws MatrixException;
 

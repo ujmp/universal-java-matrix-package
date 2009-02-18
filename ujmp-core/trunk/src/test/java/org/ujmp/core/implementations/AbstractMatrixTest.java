@@ -390,16 +390,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	public void testTranspose() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrix(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
-		m.setAsDouble(3.0, 1, 0);
-		m.setAsDouble(4.0, 1, 1);
+		m.setAsDouble(3.0, 0, 2);
+		m.setAsDouble(4.0, 1, 0);
+		m.setAsDouble(5.0, 1, 1);
+		m.setAsDouble(6.0, 1, 2);
 		m = m.transpose();
 		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(0, 1));
 		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(2, 0));
+		assertEquals(getLabel(), 6.0, m.getAsDouble(2, 1));
 	}
 
 	public void testEmpty() throws Exception {

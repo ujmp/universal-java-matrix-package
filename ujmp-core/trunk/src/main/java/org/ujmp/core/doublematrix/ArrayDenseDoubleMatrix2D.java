@@ -26,8 +26,10 @@ package org.ujmp.core.doublematrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasDoubleArray2D;
 
-public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
+public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		HasDoubleArray2D {
 	private static final long serialVersionUID = 3132491298449205914L;
 
 	private double[][] values = null;
@@ -209,24 +211,29 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	@Override
-	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		if (values[0].length != matrix.getRowCount()) {
+	public Matrix mtimes(Matrix m) throws MatrixException {
+		int rowCount = values.length;
+		int columnCount = values[0].length;
+		int retColumnCount = (int) m.getColumnCount();
+
+		if (columnCount != m.getRowCount()) {
 			throw new MatrixException("matrices have wrong size: "
-					+ Coordinates.toString(getSize()) + " and "
-					+ Coordinates.toString(matrix.getSize()));
+					+ Coordinates.toString(getSize()) + " and " + Coordinates.toString(m.getSize()));
 		}
 
-		int i, j, k;
-		double sum;
-		double[][] ret = new double[values.length][(int) matrix.getColumnCount()];
-
-		for (i = values.length; --i != -1;) {
-			for (j = ret[0].length; --j != -1;) {
-				sum = 0.0;
-				for (k = values[0].length; --k != -1;) {
-					sum += values[i][k] * matrix.getAsDouble(k, j);
+		double[][] ret = new double[rowCount][retColumnCount];
+		double[] columns = new double[columnCount];
+		for (int c = retColumnCount; --c != -1;) {
+			for (int k = columnCount; --k != -1;) {
+				columns[k] = m.getAsDouble(k, c);
+			}
+			for (int r = rowCount; --r != -1;) {
+				double[] row = values[r];
+				double sum = 0;
+				for (int k = columnCount; --k != -1;) {
+					sum += row[k] * columns[k];
 				}
-				ret[i][j] = sum;
+				ret[r][c] = sum;
 			}
 		}
 
@@ -242,6 +249,11 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public double[][] getDoubleArray2D() {
+		return values;
 	}
 
 }

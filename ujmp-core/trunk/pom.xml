@@ -20,14 +20,6 @@
 	
 	
 	<dependencies>
-	<dependency>
-			<groupId>netlib-java</groupId>
-			<artifactId>netlib-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>arpack-combo</groupId>
-			<artifactId>arpack-combo</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

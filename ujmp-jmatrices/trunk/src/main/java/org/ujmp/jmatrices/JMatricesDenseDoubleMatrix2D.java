@@ -24,6 +24,7 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.jmatrices.dbl.operator.MatrixOperator;
 import org.jmatrices.dbl.transformer.MatrixTransformer;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
@@ -91,4 +92,13 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				.transpose(matrix));
 	}
 
+	@Override
+	public Matrix mtimes(Matrix m2) {
+		if (m2 instanceof JMatricesDenseDoubleMatrix2D) {
+			return new JMatricesDenseDoubleMatrix2D(MatrixOperator.multiply(
+					matrix, ((JMatricesDenseDoubleMatrix2D) m2).matrix));
+		} else {
+			return super.mtimes(m2);
+		}
+	}
 }

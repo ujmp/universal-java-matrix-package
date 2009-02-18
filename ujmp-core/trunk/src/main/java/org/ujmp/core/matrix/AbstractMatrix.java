@@ -710,7 +710,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		return Mtimes.calc(false, this, matrix);
+		return Mtimes.calc(this, matrix);
 	}
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {

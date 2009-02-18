@@ -23,12 +23,14 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.BLAS;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasDoubleArray;
+import org.ujmp.core.util.BLAS;
 
-public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
+public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		HasDoubleArray {
 	private static final long serialVersionUID = -3605416349143850650L;
 
 	private double[] values = null;
@@ -84,19 +86,19 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public double getDouble(long row, long column) {
-		return values[(int) (row * cols + column)];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setDouble(double value, long row, long column) {
-		values[(int) (row * cols + column)] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public double getDouble(int row, int column) {
-		return values[row * cols + column];
+		return values[column * rows + row];
 	}
 
 	public void setDouble(double value, int row, int column) {
-		values[row * cols + column] = value;
+		values[column * rows + row] = value;
 	}
 
 	@Override
@@ -148,52 +150,22 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	@Override
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		if (cols != matrix.getRowCount()) {
-			throw new MatrixException("matrices have wrong size: "
-					+ Coordinates.toString(getSize()) + " and "
-					+ Coordinates.toString(matrix.getSize()));
-		}
-
-		double sum;
-		int retcols = (int) matrix.getColumnCount();
-		double[] ret = new double[rows * retcols];
-		double[] retBlas = new double[rows * retcols];
-
-		if (matrix instanceof DefaultDenseDoubleMatrix2D) {
+		if (BLAS.isAvailable() && matrix instanceof DefaultDenseDoubleMatrix2D) {
+			if (cols != matrix.getRowCount()) {
+				throw new MatrixException("matrices have wrong size: "
+						+ Coordinates.toString(getSize()) + " and "
+						+ Coordinates.toString(matrix.getSize()));
+			}
+			int retcols = (int) matrix.getColumnCount();
+			double[] ret = new double[rows * retcols];
 			double[] m2 = ((DefaultDenseDoubleMatrix2D) matrix).values;
-			// try {
-			BLAS.dgemm(null, "N", "N", rows, retcols, cols, 1, values, 0, rows, m2, 0, (int) matrix
-					.getRowCount(), 1, retBlas, 0, rows);
-			// } catch (Exception e) {
-			for (int i = rows; --i != -1;) {
-				for (int j = retcols; --j != -1;) {
-					sum = 0.0;
-					for (int k = cols; --k != -1;) {
-						sum += values[i * cols + k] * m2[k * retcols + j];
-					}
-					ret[i * retcols + j] = sum;
-				}
-			}
-
-			// }
+			BLAS.dgemm(rows, retcols, cols, 1, values, 0, rows, m2, 0, (int) matrix.getRowCount(),
+					1, ret, 0, rows);
+			Matrix m1 = new DefaultDenseDoubleMatrix2D(ret, rows, retcols);
+			return m1;
 		} else {
-			for (int i = rows; --i != -1;) {
-				for (int j = retcols; --j != -1;) {
-					sum = 0.0;
-					for (int k = cols; --k != -1;) {
-						sum += values[i * cols + k] * matrix.getAsDouble(k, j);
-					}
-					ret[i * retcols + j] = sum;
-				}
-			}
+			return super.mtimes(matrix);
 		}
-
-		Matrix m1 = new DefaultDenseDoubleMatrix2D(ret, rows, retcols);
-		Matrix m2 = new DefaultDenseDoubleMatrix2D(retBlas, rows, retcols);
-
-		// System.out.println(m1.minus(m2).getRMS());
-
-		return m1;
 	}
 
 	@Override
@@ -201,10 +173,15 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		double[] result = new double[cols * rows];
 		for (int r = cols; --r != -1;) {
 			for (int c = rows; --c != -1;) {
-				result[r * rows + c] = values[c * cols + r];
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
 		return new DefaultDenseDoubleMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public double[] getDoubleArray() {
+		return values;
 	}
 
 }

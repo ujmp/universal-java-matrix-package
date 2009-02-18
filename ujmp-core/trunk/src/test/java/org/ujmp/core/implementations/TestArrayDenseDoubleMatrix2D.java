@@ -23,21 +23,20 @@
 
 package org.ujmp.core.implementations;
 
-import junit.framework.TestSuite;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
 
-public class AllTests extends TestSuite {
+public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestDenseFileMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestArrayDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseObjectMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseStringMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseRowMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseColumnMatrix2D.class);
-		suite.addTestSuite(TestDefaultTiledObjectMatrix2D.class);
-		return suite;
+	@Override
+	public Matrix createMatrix(long... size) throws MatrixException {
+		return new ArrayDenseDoubleMatrix2D(size);
+	}
+
+	@Override
+	public Matrix createMatrix(Matrix source) throws MatrixException {
+		return new ArrayDenseDoubleMatrix2D(source);
 	}
 
 }

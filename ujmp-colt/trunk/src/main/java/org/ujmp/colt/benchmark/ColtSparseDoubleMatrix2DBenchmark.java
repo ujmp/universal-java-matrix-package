@@ -21,17 +21,27 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.complete.benchmark;
+package org.ujmp.colt.benchmark;
 
-import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
-import org.ujmp.colt.benchmark.ColtSparseDoubleMatrix2DBenchmark;
-import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.colt.ColtSparseDoubleMatrix2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.exceptions.MatrixException;
 
-public class MatrixBenchmark {
+public class ColtSparseDoubleMatrix2DBenchmark extends
+		AbstractMatrix2DBenchmark {
+
+	@Override
+	public Matrix createMatrix(long... size) throws MatrixException {
+		return new ColtSparseDoubleMatrix2D(size);
+	}
+
+	@Override
+	public Matrix createMatrix(Matrix source) throws MatrixException {
+		return new ColtSparseDoubleMatrix2D(source);
+	}
 
 	public static void main(String[] args) throws Exception {
-		new DefaultDenseDoubleMatrix2DBenchmark().run();
-		new ColtDenseDoubleMatrix2DBenchmark().run();
 		new ColtSparseDoubleMatrix2DBenchmark().run();
 	}
 

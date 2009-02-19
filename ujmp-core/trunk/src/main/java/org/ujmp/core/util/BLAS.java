@@ -36,7 +36,6 @@ public abstract class BLAS {
 					Integer.TYPE, Double.TYPE, double[].class, Integer.TYPE, Integer.TYPE,
 					double[].class, Integer.TYPE, Integer.TYPE, Double.TYPE, double[].class,
 					Integer.TYPE, Integer.TYPE);
-			dgemm = null;
 		} catch (Throwable e) {
 			System.out.println("arpack-combo.jar not found, cannot use BLAS");
 		}

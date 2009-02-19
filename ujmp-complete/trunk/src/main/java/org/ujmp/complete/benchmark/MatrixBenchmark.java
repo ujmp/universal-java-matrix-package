@@ -38,6 +38,7 @@ import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultSparseDoubleMatrixBenchmark;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtSparseDoubleMatrix2DBenchmark;
@@ -51,7 +52,7 @@ public class MatrixBenchmark {
 		list.add(new DefaultDenseDoubleMatrix2DBenchmark());
 		list.add(new MTJDenseDoubleMatrix2DBenchmark());
 		list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
-		// list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
+		list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
 		list.add(new ArrayDenseDoubleMatrix2DBenchmark());
 		list.add(new SSTDenseDoubleMatrixBenchmark());
 		list.add(new ColtDenseDoubleMatrix2DBenchmark());

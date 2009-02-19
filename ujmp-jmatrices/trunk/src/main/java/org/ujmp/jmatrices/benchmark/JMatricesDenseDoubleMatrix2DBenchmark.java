@@ -25,6 +25,7 @@ package org.ujmp.jmatrices.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 
@@ -33,6 +34,9 @@ public class JMatricesDenseDoubleMatrix2DBenchmark extends
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
+		if (Coordinates.product(size) > 10000) {
+			throw new MatrixException("size too large, it will take forever");
+		}
 		return new JMatricesDenseDoubleMatrix2D(size);
 	}
 

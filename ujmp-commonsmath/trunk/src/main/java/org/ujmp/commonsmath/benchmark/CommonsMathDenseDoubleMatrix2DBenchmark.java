@@ -28,7 +28,8 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class CommonsMathDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
+public class CommonsMathDenseDoubleMatrix2DBenchmark extends
+		AbstractMatrix2DBenchmark {
 
 	@Override
 	public Matrix createMatrix(long... size) throws MatrixException {
@@ -41,7 +42,11 @@ public class CommonsMathDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBen
 	}
 
 	public static void main(String[] args) throws Exception {
-		new CommonsMathDenseDoubleMatrix2DBenchmark().run();
+		AbstractMatrix2DBenchmark benchmark = new CommonsMathDenseDoubleMatrix2DBenchmark();
+		long t0 = System.currentTimeMillis();
+		benchmark.run();
+		long t1 = System.currentTimeMillis();
+		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
 	}
 
 }

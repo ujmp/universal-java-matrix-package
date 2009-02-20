@@ -195,6 +195,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-jscience</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 
 			<dependency>
@@ -371,6 +377,12 @@
 				<version>7.2</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>jscience</groupId>
+				<artifactId>jscience</artifactId>
+				<version>4.3.1</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -409,6 +421,7 @@
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-parallelcolt/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-ojalgo/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mantissa/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jscience/apidocs</link>
 					</links>
 				</configuration>
 			</plugin>

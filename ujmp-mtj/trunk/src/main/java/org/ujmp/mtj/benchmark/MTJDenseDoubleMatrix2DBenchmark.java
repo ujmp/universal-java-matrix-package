@@ -41,7 +41,11 @@ public class MTJDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new MTJDenseDoubleMatrix2DBenchmark().run();
+		AbstractMatrix2DBenchmark benchmark = new MTJDenseDoubleMatrix2DBenchmark();
+		long t0 = System.currentTimeMillis();
+		benchmark.run();
+		long t1 = System.currentTimeMillis();
+		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
 	}
 
 }

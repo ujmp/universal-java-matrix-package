@@ -337,6 +337,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
+			m.randn(Ret.ORIG);
 			if (m.getClass().getDeclaredMethod("transpose") == null) {
 				return -1;
 			}
@@ -357,6 +358,8 @@ public abstract class AbstractMatrix2DBenchmark {
 			if (m0.getClass().getDeclaredMethod("mtimes", Matrix.class) == null) {
 				return -1;
 			}
+			m0.randn(Ret.ORIG);
+			m1.randn(Ret.ORIG);
 			long t0 = System.currentTimeMillis();
 			r = m0.mtimes(m1);
 			long t1 = System.currentTimeMillis();

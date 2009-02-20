@@ -47,6 +47,7 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.sst.AllTests.suite());
 		suite.addTest(org.ujmp.parallelcolt.AllTests.suite());
 		suite.addTest(org.ujmp.ojalgo.AllTests.suite());
+		suite.addTest(org.ujmp.mantissa.AllTests.suite());
 		return suite;
 	}
 

@@ -102,6 +102,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-ojalgo</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-mantissa</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -234,6 +238,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-mantissa</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -259,6 +270,7 @@
 		<module>../ujmp-sst</module>
 		<module>../ujmp-parallelcolt</module>
 		<module>../ujmp-ojalgo</module>
+		<module>../ujmp-mantissa</module>
 	</modules>
 
 </project>

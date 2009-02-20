@@ -183,6 +183,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-ojalgo</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 
 			<dependency>
@@ -347,6 +353,12 @@
 				<version>0.7</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>ojalgo</groupId>
+				<artifactId>ojalgo</artifactId>
+				<version>26.0</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -383,6 +395,7 @@
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-vecmath/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-sst/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-parallelcolt/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-ojalgo/apidocs</link>
 					</links>
 				</configuration>
 			</plugin>

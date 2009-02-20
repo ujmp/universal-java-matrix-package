@@ -96,7 +96,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		// result.add(runBenchmarkPlusScalarNew());
 		// result.add(runBenchmarkPlusScalarOrig());
 		// result.add(runBenchmarkTimesScalarNew());
-		// result.add(runBenchmarkTransposeNew());
+		result.add(runBenchmarkTransposeNew());
 		result.add(runBenchmarkMtimesNew());
 
 		System.out.println();

@@ -27,6 +27,7 @@ import javax.vecmath.GMatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
@@ -83,6 +84,13 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public void setWrappedObject(GMatrix object) {
 		this.matrix = object;
+	}
+
+	@Override
+	public DenseDoubleMatrix2D transpose() {
+		GMatrix m = (GMatrix) matrix.clone();
+		m.transpose();
+		return new VecMathDenseDoubleMatrix2D(m);
 	}
 
 }

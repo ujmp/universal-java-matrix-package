@@ -98,6 +98,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ojalgo</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -223,6 +227,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ojalgo</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -247,6 +258,7 @@
 		<module>../ujmp-vecmath</module>
 		<module>../ujmp-sst</module>
 		<module>../ujmp-parallelcolt</module>
+		<module>../ujmp-ojalgo</module>
 	</modules>
 
 </project>

@@ -156,12 +156,12 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 						+ Coordinates.toString(getSize()) + " and "
 						+ Coordinates.toString(matrix.getSize()));
 			}
-			int retcols = (int) matrix.getColumnCount();
-			double[] ret = new double[rows * retcols];
-			double[] m2 = ((DefaultDenseDoubleMatrix2D) matrix).values;
+			final int retcols = (int) matrix.getColumnCount();
+			final double[] ret = new double[rows * retcols];
+			final double[] m2 = ((DefaultDenseDoubleMatrix2D) matrix).values;
 			BLAS.dgemm(rows, retcols, cols, 1, values, 0, rows, m2, 0, (int) matrix.getRowCount(),
 					1, ret, 0, rows);
-			Matrix m1 = new DefaultDenseDoubleMatrix2D(ret, rows, retcols);
+			final Matrix m1 = new DefaultDenseDoubleMatrix2D(ret, rows, retcols);
 			return m1;
 		} else {
 			return super.mtimes(matrix);
@@ -170,7 +170,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	@Override
 	public final Matrix transpose() {
-		double[] result = new double[cols * rows];
+		final double[] result = new double[cols * rows];
 		for (int r = cols; --r != -1;) {
 			for (int c = rows; --c != -1;) {
 				result[c * cols + r] = values[r * rows + c];

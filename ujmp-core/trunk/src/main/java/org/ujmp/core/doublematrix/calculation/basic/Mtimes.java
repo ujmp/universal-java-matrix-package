@@ -69,7 +69,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 		int i, j, k;
 		double sum;
-		double[][] ret = new double[(int) m1.getRowCount()][(int) m2.getColumnCount()];
+		final double[][] ret = new double[(int) m1.getRowCount()][(int) m2.getColumnCount()];
 
 		if (ignoreNaN) {
 			for (i = (int) m1.getRowCount(); --i >= 0;) {
@@ -115,9 +115,9 @@ public class Mtimes extends AbstractDoubleCalculation {
 					.getColumnCount(), ((HasDoubleArray) m2).getDoubleArray(), (int) m2
 					.getRowCount(), (int) m2.getColumnCount());
 		} else {
-			int rowCount = (int) m1.getRowCount();
-			int columnCount = (int) m1.getColumnCount();
-			int retColumnCount = (int) m2.getColumnCount();
+			final int rowCount = (int) m1.getRowCount();
+			final int columnCount = (int) m1.getColumnCount();
+			final int retColumnCount = (int) m2.getColumnCount();
 
 			if (columnCount != m2.getRowCount()) {
 				throw new MatrixException("matrices have wrong size: "
@@ -125,8 +125,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 						+ Coordinates.toString(m2.getSize()));
 			}
 
-			double[][] ret = new double[rowCount][retColumnCount];
-			double[] columns = new double[columnCount];
+			final double[][] ret = new double[rowCount][retColumnCount];
+			final double[] columns = new double[columnCount];
 			for (int c = retColumnCount; --c != -1;) {
 				for (int k = columnCount; --k != -1;) {
 					columns[k] = m2.getDouble(k, c);
@@ -144,16 +144,16 @@ public class Mtimes extends AbstractDoubleCalculation {
 	}
 
 	public static DenseDoubleMatrix2D calc(double[][] m1, double[][] m2) {
-		int rowCount = m1.length;
-		int columnCount = m1[0].length;
-		int retColumnCount = m2[0].length;
+		final int rowCount = m1.length;
+		final int columnCount = m1[0].length;
+		final int retColumnCount = m2[0].length;
 
 		if (columnCount != m2.length) {
 			throw new MatrixException("matrices have wrong size");
 		}
 
-		double[][] ret = new double[rowCount][retColumnCount];
-		double[] columns = new double[columnCount];
+		final double[][] ret = new double[rowCount][retColumnCount];
+		final double[] columns = new double[columnCount];
 		for (int c = retColumnCount; --c != -1;) {
 			for (int k = columnCount; --k != -1;) {
 				columns[k] = m2[k][c];
@@ -176,8 +176,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 			throw new MatrixException("matrices have wrong size");
 		}
 
-		double[] ret = new double[m1RowCount * m2ColumnCount];
-		double[] columns = new double[m1ColumnCount];
+		final double[] ret = new double[m1RowCount * m2ColumnCount];
+		final double[] columns = new double[m1ColumnCount];
 		for (int c = m2ColumnCount; --c != -1;) {
 			for (int k = m1ColumnCount; --k != -1;) {
 				columns[k] = m2[c * m2RowCount + k];

@@ -110,6 +110,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jscience</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jsci</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -256,6 +260,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jsci</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -283,6 +294,7 @@
 		<module>../ujmp-ojalgo</module>
 		<module>../ujmp-mantissa</module>
 		<module>../ujmp-jscience</module>
+		<module>../ujmp-jsci</module>
 	</modules>
 
 </project>

@@ -201,6 +201,12 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-jsci</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 
 			<dependency>
@@ -383,6 +389,12 @@
 				<version>4.3.1</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>jsci-core</groupId>
+				<artifactId>jsci-core</artifactId>
+				<version>0.943</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -422,6 +434,7 @@
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-ojalgo/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mantissa/apidocs</link>
 						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jscience/apidocs</link>
+						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jsci/apidocs</link>
 					</links>
 				</configuration>
 			</plugin>

@@ -25,10 +25,10 @@ package org.ujmp.core;
 
 public class UJMP {
 
-	public static final String UJMPVERSION = "0.2.0";
+	public static final String UJMPVERSION = "0.2.1";
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to the Universal Java Matrix Package (UJMP)");
+		System.out.println("Welcome to the Universal Java Matrix Package (UJMP) v" + UJMPVERSION);
 		System.out.println();
 		System.out.println("UJMP is not a standalone program, but a Java library.");
 		System.out.println("You can use it for matrix calculations in your own applications.");

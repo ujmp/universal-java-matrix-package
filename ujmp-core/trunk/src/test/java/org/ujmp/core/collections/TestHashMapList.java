@@ -28,8 +28,8 @@ import java.util.Map;
 public class TestHashMapList extends AbstractMapTest {
 
 	@Override
-	public Map createMap() throws Exception {
-		return new HashMapList<String, String>();
+	public Map<Object, Object> createMap() throws Exception {
+		return new HashMapList<Object, Object>();
 	}
 
 }

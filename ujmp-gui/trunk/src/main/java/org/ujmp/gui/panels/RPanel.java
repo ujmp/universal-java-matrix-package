@@ -54,6 +54,7 @@ public class RPanel extends JPanel {
 	}
 
 	class ScatterPlotAction extends AbstractAction {
+		private static final long serialVersionUID = -5429144529799026446L;
 
 		public ScatterPlotAction() {
 			super("Scatter Plot");
@@ -69,6 +70,7 @@ public class RPanel extends JPanel {
 	}
 
 	class BoxPlotAction extends AbstractAction {
+		private static final long serialVersionUID = -3887385311081144648L;
 
 		public BoxPlotAction() {
 			super("Box Plot");
@@ -84,6 +86,7 @@ public class RPanel extends JPanel {
 	}
 
 	class PairsPlotAction extends AbstractAction {
+		private static final long serialVersionUID = -4346940332819549757L;
 
 		public PairsPlotAction() {
 			super("Pairs Plot");
@@ -91,7 +94,8 @@ public class RPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				R.getInstance().pairs(matrix.getMatrix(), "col=\"blue\",pch=16");
+				R.getInstance()
+						.pairs(matrix.getMatrix(), "col=\"blue\",pch=16");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -99,6 +103,7 @@ public class RPanel extends JPanel {
 	}
 
 	class QQNormAction extends AbstractAction {
+		private static final long serialVersionUID = -7646548720554325669L;
 
 		public QQNormAction() {
 			super("QQNorm");
@@ -106,7 +111,8 @@ public class RPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				R.getInstance().qqnorm(matrix.getMatrix(), "col=\"blue\",pch=16");
+				R.getInstance().qqnorm(matrix.getMatrix(),
+						"col=\"blue\",pch=16");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -114,6 +120,7 @@ public class RPanel extends JPanel {
 	}
 
 	class ImageAction extends AbstractAction {
+		private static final long serialVersionUID = 7429007259920214890L;
 
 		public ImageAction() {
 			super("Image");
@@ -129,6 +136,7 @@ public class RPanel extends JPanel {
 	}
 
 	class HistAction extends AbstractAction {
+		private static final long serialVersionUID = 8662123505287412855L;
 
 		public HistAction() {
 			super("Histogram");
@@ -144,6 +152,7 @@ public class RPanel extends JPanel {
 	}
 
 	class CloseLastFigureAction extends AbstractAction {
+		private static final long serialVersionUID = 200834911041935616L;
 
 		public CloseLastFigureAction() {
 			super("Close last Figure");

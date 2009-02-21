@@ -67,6 +67,7 @@ public class OctavePanel extends JPanel {
 	}
 
 	class XYPlotAction extends AbstractAction {
+		private static final long serialVersionUID = 4954900597400686518L;
 
 		public XYPlotAction() {
 			super("XY Plot");
@@ -74,7 +75,8 @@ public class OctavePanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Octave.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Octave.getInstance().plot(
+						matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1));
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -91,7 +93,8 @@ public class OctavePanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Octave.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Octave.getInstance().plot(
+						matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1), "x");
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -100,6 +103,7 @@ public class OctavePanel extends JPanel {
 	}
 
 	class HistogramPlotAction extends AbstractAction {
+		private static final long serialVersionUID = -1396238157254507002L;
 
 		public HistogramPlotAction() {
 			super("Histogram");

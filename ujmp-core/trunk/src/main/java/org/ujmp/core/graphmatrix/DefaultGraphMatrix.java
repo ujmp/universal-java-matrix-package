@@ -53,7 +53,6 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		this.nodes.addAll(nodes);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<long[]> getEdgeList() {
 		throw new MatrixException("not implemented!");
 		// return Collections.EMPTY_LIST;
@@ -132,11 +131,13 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return indices == null ? 0 : indices.size();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Long> getParentIndices(long index) {
 		List<Long> indices = parents.get(index);
 		return indices == null ? Collections.EMPTY_LIST : indices;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Long> getChildIndices(long index) {
 		List<Long> indices = children.get(index);
 		return indices == null ? Collections.EMPTY_LIST : indices;

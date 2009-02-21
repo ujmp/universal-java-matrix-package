@@ -66,7 +66,8 @@ public class MatlabPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Matlab.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Matlab.getInstance().plot(
+						matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1), "x");
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -99,7 +100,8 @@ public class MatlabPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Matlab.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Matlab.getInstance().plot(
+						matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1));
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -124,6 +126,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class SurfAction extends AbstractAction {
+		private static final long serialVersionUID = 1936056248662686441L;
 
 		public SurfAction() {
 			super("Surf");
@@ -139,6 +142,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class ImagescAction extends AbstractAction {
+		private static final long serialVersionUID = -69661897898443618L;
 
 		public ImagescAction() {
 			super("ImageSC");
@@ -154,6 +158,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class BarAction extends AbstractAction {
+		private static final long serialVersionUID = 2326046110179603901L;
 
 		public BarAction() {
 			super("Bar");
@@ -169,6 +174,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class BarhAction extends AbstractAction {
+		private static final long serialVersionUID = 1773781454473042057L;
 
 		public BarhAction() {
 			super("BarH");
@@ -184,6 +190,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class StemAction extends AbstractAction {
+		private static final long serialVersionUID = 8489278103292046885L;
 
 		public StemAction() {
 			super("Stem");
@@ -199,6 +206,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class PairsAction extends AbstractAction {
+		private static final long serialVersionUID = 5809558873714857141L;
 
 		public PairsAction() {
 			super("Pairs");
@@ -214,6 +222,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class PieAction extends AbstractAction {
+		private static final long serialVersionUID = -7468454385004258030L;
 
 		public PieAction() {
 			super("Pie Chart");
@@ -229,6 +238,7 @@ public class MatlabPanel extends JPanel {
 	}
 
 	class Pie3Action extends AbstractAction {
+		private static final long serialVersionUID = -6838327620135999067L;
 
 		public Pie3Action() {
 			super("3D Pie Chart");

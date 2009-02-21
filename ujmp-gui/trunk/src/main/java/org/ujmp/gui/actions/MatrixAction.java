@@ -32,6 +32,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public abstract class MatrixAction extends ObjectAction {
+	private static final long serialVersionUID = 7005218564058853146L;
 
 	public static final int ROW = Matrix.ROW;
 
@@ -57,9 +58,10 @@ public abstract class MatrixAction extends ObjectAction {
 			}
 		}
 		if (dimension == -1) {
-			int i = JOptionPane.showOptionDialog(getComponent(), "Dimension", "Select Dimension",
-					JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Row", "Column", "All" },
-					"Row");
+			int i = JOptionPane.showOptionDialog(getComponent(), "Dimension",
+					"Select Dimension", JOptionPane.OK_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, new String[] { "Row",
+							"Column", "All" }, "Row");
 			if (i == 2) {
 				dimension = ALL;
 			} else {
@@ -74,10 +76,13 @@ public abstract class MatrixAction extends ObjectAction {
 		if (m != null) {
 			int startRow = m.getRowSelectionModel().getMinSelectionIndex();
 			int endRow = m.getRowSelectionModel().getMaxSelectionIndex();
-			int startColumn = m.getColumnSelectionModel().getMinSelectionIndex();
+			int startColumn = m.getColumnSelectionModel()
+					.getMinSelectionIndex();
 			int endColumn = m.getColumnSelectionModel().getMaxSelectionIndex();
-			if (startRow != -1 && startColumn != -1 && (startRow != endRow || startColumn != endColumn)) {
-				m = (MatrixGUIObject) m.getMatrix().subMatrix(Ret.LINK, startRow, startColumn, endRow, endColumn)
+			if (startRow != -1 && startColumn != -1
+					&& (startRow != endRow || startColumn != endColumn)) {
+				m = (MatrixGUIObject) m.getMatrix().subMatrix(Ret.LINK,
+						startRow, startColumn, endRow, endColumn)
 						.getGUIObject();
 			}
 			return m;

@@ -106,6 +106,7 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public T[] calcMulti() throws MatrixException {
 		return (T[]) new Object[] { calcNew() };
 	}

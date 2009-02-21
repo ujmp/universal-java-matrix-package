@@ -79,26 +79,36 @@ public class JungGraphActions extends JPopupMenu {
 	};
 
 	public final Action iSomLayoutAction = new AbstractAction("ISOM Layout") {
+		private static final long serialVersionUID = 1862486279803190687L;
+
 		public void actionPerformed(ActionEvent e) {
 			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.ISOMLayout);
 		}
 	};
 
 	public final Action kkLayoutAction = new AbstractAction("KK Layout") {
+		private static final long serialVersionUID = 8756219332341323478L;
+
 		public void actionPerformed(ActionEvent e) {
 			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.KKLayout);
 		}
 	};
 
 	public final Action springLayoutAction = new AbstractAction("Spring Layout") {
+		private static final long serialVersionUID = -9129746911116351142L;
+
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.SpringLayout);
+			jungGraphPanel
+					.switchLayout(JungGraphPanel.GraphLayout.SpringLayout);
 		}
 	};
 
 	public final Action circleLayoutAction = new AbstractAction("Circle Layout") {
+		private static final long serialVersionUID = -3030980988050670381L;
+
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.CircleLayout);
+			jungGraphPanel
+					.switchLayout(JungGraphPanel.GraphLayout.CircleLayout);
 		}
 	};
 
@@ -110,7 +120,8 @@ public class JungGraphActions extends JPopupMenu {
 		}
 	};
 
-	public final Action exportToPdfAction = new AbstractAction("Export to PDF...", UIManager.getIcon("JDMP.icon.pdf")) {
+	public final Action exportToPdfAction = new AbstractAction(
+			"Export to PDF...", UIManager.getIcon("JDMP.icon.pdf")) {
 		private static final long serialVersionUID = -7413294854080175036L;
 
 		public void actionPerformed(ActionEvent e) {
@@ -118,7 +129,8 @@ public class JungGraphActions extends JPopupMenu {
 		}
 	};
 
-	public final Action exportToJpgAction = new AbstractAction("Export to JPG...", UIManager.getIcon("JDMP.icon.image")) {
+	public final Action exportToJpgAction = new AbstractAction(
+			"Export to JPG...", UIManager.getIcon("JDMP.icon.image")) {
 		private static final long serialVersionUID = 2903870037000412488L;
 
 		public void actionPerformed(ActionEvent e) {
@@ -134,19 +146,23 @@ public class JungGraphActions extends JPopupMenu {
 		}
 	};
 
-	public final Action toggleEdgeLabelsAction = new AbstractAction("Toggle Edge Labels") {
+	public final Action toggleEdgeLabelsAction = new AbstractAction(
+			"Toggle Edge Labels") {
 		private static final long serialVersionUID = 5043606502712307760L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.setShowEdgeLabels(!jungGraphPanel.isShowEdgeLabels());
+			jungGraphPanel
+					.setShowEdgeLabels(!jungGraphPanel.isShowEdgeLabels());
 		}
 	};
 
-	public final Action toggleVertexLabelsAction = new AbstractAction("Toggle Vertex Labels") {
+	public final Action toggleVertexLabelsAction = new AbstractAction(
+			"Toggle Vertex Labels") {
 		private static final long serialVersionUID = -8736147166116311565L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.setShowVertexLabels(!jungGraphPanel.isShowVertexLabels());
+			jungGraphPanel.setShowVertexLabels(!jungGraphPanel
+					.isShowVertexLabels());
 		}
 	};
 

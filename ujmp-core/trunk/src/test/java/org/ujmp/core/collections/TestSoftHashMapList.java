@@ -28,8 +28,8 @@ import java.util.Map;
 public class TestSoftHashMapList extends AbstractMapTest {
 
 	@Override
-	public Map createMap() throws Exception {
-		return new SoftHashMapList<String, String>();
+	public Map<Object, Object> createMap() throws Exception {
+		return new SoftHashMapList<Object, Object>();
 	}
 
 }

@@ -70,15 +70,15 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private static final long[] size100000x100000 = new long[] { 100000, 100000 };
 
-	private static final List<long[]> allSizes1 = Arrays
+	public static final List<long[]> allSizes1 = Arrays
 			.asList(new long[][] { size100x100, size100x1000, size100x10000, size100x100000,
 					size1000x100, size1000x1000, size1000x10000, size1000x100000, size10000x100,
 					size10000x1000, size10000x10000, size10000x100000, size100000x100,
 					size100000x1000, size100000x10000, size100000x100000 });
 
-	private static final List<long[]> allSizes = Arrays.asList(new long[][] { size5000x5000 });
+	public static final List<long[]> allSizes = Arrays.asList(new long[][] { size5000x5000 });
 
-	private static final List<long[][]> multSizes = Arrays.asList(new long[][][] { { size1000x1000,
+	public static final List<long[][]> multSizes = Arrays.asList(new long[][][] { { size1000x1000,
 			size1000x1000 } });
 
 	public abstract Matrix createMatrix(long... size) throws MatrixException;

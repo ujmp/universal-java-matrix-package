@@ -43,9 +43,12 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
-public abstract class ObjectAction implements Action, Callable<Object>, Serializable {
+public abstract class ObjectAction implements Action, Callable<Object>,
+		Serializable {
+	private static final long serialVersionUID = -118767390543995981L;
 
-	protected static final Logger logger = Logger.getLogger(ObjectAction.class.getName());
+	protected static final Logger logger = Logger.getLogger(ObjectAction.class
+			.getName());
 
 	public static final int ROW = Matrix.ROW;
 
@@ -89,7 +92,8 @@ public abstract class ObjectAction implements Action, Callable<Object>, Serializ
 
 	@Override
 	public final String toString() {
-		return (String) getValue(Action.NAME) + " (" + getValue(Action.SHORT_DESCRIPTION) + ")";
+		return (String) getValue(Action.NAME) + " ("
+				+ getValue(Action.SHORT_DESCRIPTION) + ")";
 	}
 
 	public final GUIObject getObject() {
@@ -148,8 +152,11 @@ public abstract class ObjectAction implements Action, Callable<Object>, Serializ
 		return enabled;
 	}
 
-	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		if (changeSupport == null || (oldValue != null && newValue != null && oldValue.equals(newValue))) {
+	protected void firePropertyChange(String propertyName, Object oldValue,
+			Object newValue) {
+		if (changeSupport == null
+				|| (oldValue != null && newValue != null && oldValue
+						.equals(newValue))) {
 			return;
 		}
 		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
@@ -178,14 +185,16 @@ public abstract class ObjectAction implements Action, Callable<Object>, Serializ
 		firePropertyChange(key, oldValue, newValue);
 	}
 
-	public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+	public synchronized void addPropertyChangeListener(
+			PropertyChangeListener listener) {
 		if (changeSupport == null) {
 			changeSupport = new SwingPropertyChangeSupport(this);
 		}
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
-	public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+	public synchronized void removePropertyChangeListener(
+			PropertyChangeListener listener) {
 		if (changeSupport == null) {
 			return;
 		}

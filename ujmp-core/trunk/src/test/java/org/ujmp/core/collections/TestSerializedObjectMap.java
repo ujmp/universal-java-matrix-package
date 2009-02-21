@@ -30,8 +30,8 @@ import org.ujmp.core.collections.serializedmap.SerializedObjectMap;
 public class TestSerializedObjectMap extends AbstractMapTest {
 
 	@Override
-	public Map createMap() throws Exception {
-		return new SerializedObjectMap<String, String>();
+	public Map<Object, Object> createMap() throws Exception {
+		return new SerializedObjectMap<Object, Object>();
 	}
 
 }

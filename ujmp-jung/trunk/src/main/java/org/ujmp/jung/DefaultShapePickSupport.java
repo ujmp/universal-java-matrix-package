@@ -47,13 +47,14 @@ public class DefaultShapePickSupport extends ShapePickSupport {
 		// so we
 		// make a small rectangular pickArea around the point and check if the
 		// edgeshape.intersects(pickArea)
-		Rectangle2D pickArea = new Rectangle2D.Float((float) x - pickSize / 2, (float) y - pickSize / 2, pickSize,
-				pickSize);
+		Rectangle2D pickArea = new Rectangle2D.Float((float) x - pickSize / 2,
+				(float) y - pickSize / 2, pickSize, pickSize);
 		Edge closest = null;
 		double minDistance = Double.MAX_VALUE;
 		while (true) {
 			try {
-				for (Iterator iter = layout.getGraph().getEdges().iterator(); iter.hasNext();) {
+				for (Iterator<?> iter = layout.getGraph().getEdges().iterator(); iter
+						.hasNext();) {
 
 					if (hasShapeFunctions != null) {
 						Edge e = (Edge) iter.next();
@@ -61,8 +62,10 @@ public class DefaultShapePickSupport extends ShapePickSupport {
 						Vertex v1 = (Vertex) pair.getFirst();
 						Vertex v2 = (Vertex) pair.getSecond();
 						boolean isLoop = v1.equals(v2);
-						Point2D p1 = layoutTransformer.layoutTransform(layout.getLocation(v1));
-						Point2D p2 = layoutTransformer.layoutTransform(layout.getLocation(v2));
+						Point2D p1 = layoutTransformer.layoutTransform(layout
+								.getLocation(v1));
+						Point2D p2 = layoutTransformer.layoutTransform(layout
+								.getLocation(v2));
 						if (p1 == null || p2 == null)
 							continue;
 						float x1 = (float) p1.getX();
@@ -71,18 +74,23 @@ public class DefaultShapePickSupport extends ShapePickSupport {
 						float y2 = (float) p2.getY();
 
 						// translate the edge to the starting vertex
-						AffineTransform xform = AffineTransform.getTranslateInstance(x1, y1);
+						AffineTransform xform = AffineTransform
+								.getTranslateInstance(x1, y1);
 
-						Shape edgeShape = hasShapeFunctions.getEdgeShapeFunction().getShape(e);
+						Shape edgeShape = hasShapeFunctions
+								.getEdgeShapeFunction().getShape(e);
 						if (isLoop) {
 							// make the loops proportional to the size of the
 							// vertex
-							Shape s2 = hasShapeFunctions.getVertexShapeFunction().getShape(v2);
+							Shape s2 = hasShapeFunctions
+									.getVertexShapeFunction().getShape(v2);
 							Rectangle2D s2Bounds = s2.getBounds2D();
-							xform.scale(s2Bounds.getWidth(), s2Bounds.getHeight());
+							xform.scale(s2Bounds.getWidth(), s2Bounds
+									.getHeight());
 							// move the loop so that the nadir is centered in
 							// the vertex
-							xform.translate(0, -edgeShape.getBounds2D().getHeight() / 2);
+							xform.translate(0, -edgeShape.getBounds2D()
+									.getHeight() / 2);
 						} else {
 							float dx = x2 - x1;
 							float dy = y2 - y1;

@@ -26,14 +26,11 @@ package org.ujmp.core.collections;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
-
-	private static final Logger logger = Logger.getLogger(CachedMap.class.getName());
 
 	private Map<K, V> source = null;
 
@@ -69,8 +66,7 @@ public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
 	}
 
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		logger.log(Level.WARNING, "cannot get entries");
-		return null;
+		throw new MatrixException("not implemented");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -115,8 +111,7 @@ public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
 	}
 
 	public Collection<V> values() {
-		logger.log(Level.WARNING, "cannot get entries");
-		return null;
+		throw new MatrixException("not implemented");
 	}
 
 	public Map<K, V> getWrappedObject() {

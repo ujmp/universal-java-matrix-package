@@ -56,6 +56,8 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private static final long[] size10000x1000 = new long[] { 10000, 1000 };
 
+	private static final long[] size5000x5000 = new long[] { 5000, 5000 };
+
 	private static final long[] size10000x10000 = new long[] { 10000, 10000 };
 
 	private static final long[] size10000x100000 = new long[] { 10000, 100000 };
@@ -68,40 +70,16 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private static final long[] size100000x100000 = new long[] { 100000, 100000 };
 
-	private static final long[] size949x949 = new long[] { 949, 949 };
-
-	private static final long[] size895x894 = new long[] { 894, 895 };
-
-	private static final long[] size837x836 = new long[] { 836, 837 };
-
-	private static final long[] size775x774 = new long[] { 774, 775 };
-
-	private static final long[] size707x707 = new long[] { 707, 707 };
-
-	private static final long[] size633x632 = new long[] { 632, 633 };
-
-	private static final long[] size548x547 = new long[] { 547, 548 };
-
-	private static final long[] size447x447 = new long[] { 447, 447 };
-
-	private static final long[] size316x316 = new long[] { 316, 316 };
-
 	private static final List<long[]> allSizes1 = Arrays
 			.asList(new long[][] { size100x100, size100x1000, size100x10000, size100x100000,
 					size1000x100, size1000x1000, size1000x10000, size1000x100000, size10000x100,
 					size10000x1000, size10000x10000, size10000x100000, size100000x100,
 					size100000x1000, size100000x10000, size100000x100000 });
 
-	private static final List<long[]> allSizes = Arrays.asList(new long[][] { size316x316,
-			size447x447, size548x547, size633x632, size707x707, size775x774, size837x836,
-			size895x894, size949x949, size1000x1000 });
+	private static final List<long[]> allSizes = Arrays.asList(new long[][] { size5000x5000 });
 
-	private static final List<long[][]> multSizes = Arrays.asList(new long[][][] {
-			{ size316x316, size316x316 }, { size447x447, size447x447 },
-			{ size548x547, size548x547 }, { size633x632, size633x632 },
-			{ size707x707, size707x707 }, { size775x774, size775x774 },
-			{ size837x836, size837x836 }, { size895x894, size895x894 },
-			{ size949x949, size949x949 }, { size1000x1000, size1000x1000 } });
+	private static final List<long[][]> multSizes = Arrays.asList(new long[][][] { { size1000x1000,
+			size1000x1000 } });
 
 	public abstract Matrix createMatrix(long... size) throws MatrixException;
 

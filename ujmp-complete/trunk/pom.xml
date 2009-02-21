@@ -114,6 +114,10 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jsci</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-lucene</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -267,6 +271,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-lucene</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 
@@ -295,6 +306,7 @@
 		<module>../ujmp-mantissa</module>
 		<module>../ujmp-jscience</module>
 		<module>../ujmp-jsci</module>
+		<module>../ujmp-lucene</module>
 	</modules>
 
 </project>

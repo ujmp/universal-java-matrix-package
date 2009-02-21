@@ -37,7 +37,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	private static final long serialVersionUID = -7464578359102479614L;
 
-	private long tileSize = 100;
+	private long[] tileSize = new long[] { 100, 100 };
 
 	private long[] size = null;
 
@@ -64,12 +64,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 	}
 
 	public Object getObject(long row, long column) throws MatrixException {
-		Coordinates c = new Coordinates(row / tileSize, column / tileSize);
+		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
 		Matrix m = getMap().get(c);
 		if (m == null) {
 			return null;
 		} else {
-			return m.getAsObject(row % tileSize, column % tileSize);
+			return m.getAsObject(row % tileSize[ROW], column % tileSize[COLUMN]);
 		}
 	}
 
@@ -105,12 +105,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 	}
 
 	public void setObject(Object o, long row, long column) throws MatrixException {
-		Coordinates c = new Coordinates(row / tileSize, column / tileSize);
+		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
-			m = new DefaultDenseObjectMatrix2D(tileSize, tileSize);
+			m = new DefaultDenseObjectMatrix2D(tileSize[ROW], tileSize[COLUMN]);
 		}
-		m.setObject(o, row % tileSize, column % tileSize);
+		m.setObject(o, row % tileSize[ROW], column % tileSize[COLUMN]);
 		getMap().put(c, m);
 	}
 
@@ -118,11 +118,11 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		return size;
 	}
 
-	public long getTileSize() {
+	public long[] getTileSize() {
 		return tileSize;
 	}
 
-	public void setTileSize(long tileSize) {
+	public void setTileSize(long... tileSize) {
 		this.tileSize = tileSize;
 	}
 

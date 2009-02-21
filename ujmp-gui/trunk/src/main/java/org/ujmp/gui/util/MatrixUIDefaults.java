@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-public class MatrixUIDefaults extends AbstractMapMatrix {
+public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 6721967669100263805L;
 
 	private static MatrixUIDefaults matrix = null;
@@ -44,7 +44,7 @@ public class MatrixUIDefaults extends AbstractMapMatrix {
 	}
 
 	@Override
-	public Map getMap() {
+	public Map<Object, Object> getMap() {
 		return UIManager.getDefaults();
 	}
 

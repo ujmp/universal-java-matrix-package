@@ -24,10 +24,8 @@
 package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.util.BLAS;
 
 public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasDoubleArray {
@@ -146,26 +144,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
-	}
-
-	@Override
-	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		if (BLAS.isAvailable() && matrix instanceof DefaultDenseDoubleMatrix2D) {
-			if (cols != matrix.getRowCount()) {
-				throw new MatrixException("matrices have wrong size: "
-						+ Coordinates.toString(getSize()) + " and "
-						+ Coordinates.toString(matrix.getSize()));
-			}
-			final int retcols = (int) matrix.getColumnCount();
-			final double[] ret = new double[rows * retcols];
-			final double[] m2 = ((DefaultDenseDoubleMatrix2D) matrix).values;
-			BLAS.dgemm(rows, retcols, cols, 1, values, 0, rows, m2, 0, (int) matrix.getRowCount(),
-					1, ret, 0, rows);
-			final Matrix m1 = new DefaultDenseDoubleMatrix2D(ret, rows, retcols);
-			return m1;
-		} else {
-			return super.mtimes(matrix);
-		}
 	}
 
 	@Override

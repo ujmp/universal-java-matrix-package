@@ -25,6 +25,11 @@ package org.ujmp.core.util;
 
 import java.lang.reflect.Method;
 
+import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
+
 public abstract class BLAS {
 
 	private static Method dgemm = null;
@@ -53,6 +58,28 @@ public abstract class BLAS {
 
 	public static boolean isAvailable() {
 		return dgemm != null;
+	}
+
+	public static final DenseDoubleMatrix2D mtimes(DefaultDenseDoubleMatrix2D A,
+			DefaultDenseDoubleMatrix2D B) {
+		if (A.getColumnCount() != B.getRowCount()) {
+			throw new MatrixException("matrices have wrong size: "
+					+ Coordinates.toString(A.getSize()) + " and "
+					+ Coordinates.toString(B.getSize()));
+		}
+		final int alpha = 1;
+		final int beta = 1;
+		final int acols = (int) A.getColumnCount();
+		final int arows = (int) A.getRowCount();
+		final int bcols = (int) B.getColumnCount();
+		final int brows = (int) B.getRowCount();
+		final double[] avalues = A.getDoubleArray();
+		final double[] bvalues = B.getDoubleArray();
+		final double[] cvalues = new double[arows * bcols];
+		BLAS.dgemm(arows, bcols, acols, alpha, avalues, 0, arows, bvalues, 0, brows, beta, cvalues,
+				0, arows);
+		final DefaultDenseDoubleMatrix2D c = new DefaultDenseDoubleMatrix2D(cvalues, arows, bcols);
+		return c;
 	}
 
 }

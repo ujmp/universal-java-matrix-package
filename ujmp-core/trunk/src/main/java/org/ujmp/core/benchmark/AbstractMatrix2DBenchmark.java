@@ -357,9 +357,6 @@ public abstract class AbstractMatrix2DBenchmark {
 		try {
 			m0 = createMatrix(size0);
 			m1 = createMatrix(size1);
-			if (m0.getClass().getDeclaredMethod("mtimes", Matrix.class) == null) {
-				return -1;
-			}
 			m0.randn(Ret.ORIG);
 			m1.randn(Ret.ORIG);
 			long t0 = System.currentTimeMillis();

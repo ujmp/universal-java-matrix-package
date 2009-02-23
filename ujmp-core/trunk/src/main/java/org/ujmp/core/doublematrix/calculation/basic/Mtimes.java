@@ -193,6 +193,25 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(ret, m1RowCount, m2ColumnCount);
 	}
 
+	public static DenseDoubleMatrix2D calc2(final double[] A, final int m1RowCount,
+			final int m1ColumnCount, final double[] B, final int m2RowCount, final int m2ColumnCount) {
+		if (m1ColumnCount != m2RowCount) {
+			throw new MatrixException("matrices have wrong size");
+		}
+		final double[] C = new double[m1RowCount * m2ColumnCount];
+		for (int j = m2ColumnCount; --j >= 0;) {
+			final int jTimesM2RowCount = j * m2RowCount;
+			for (int l = m1RowCount; --l >= 0;) {
+				final int lTimesM1RowCount = l * m1RowCount;
+				final double temp = B[l + jTimesM2RowCount];
+				for (int i = m1ColumnCount; --i >= 0;) {
+					C[jTimesM2RowCount + i] += A[lTimesM1RowCount + i] * temp;
+				}
+			}
+		}
+		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+	}
+
 	public static Matrix calc(Matrix m1, Matrix m2) {
 		if (m1 instanceof DoubleMatrix2D && m2 instanceof DoubleMatrix2D) {
 			return calc((DoubleMatrix2D) m1, (DoubleMatrix2D) m2);

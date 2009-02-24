@@ -34,7 +34,7 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractMatrix2DBenchmark {
 
-	private static final int count = 10;
+	private static final int count = 3;
 
 	private static final long[] size100x100 = new long[] { 100, 100 };
 
@@ -340,9 +340,6 @@ public abstract class AbstractMatrix2DBenchmark {
 		try {
 			m = createMatrix(size);
 			m.randn(Ret.ORIG);
-			if (m.getClass().getDeclaredMethod("transpose") == null) {
-				return -1;
-			}
 			long t0 = System.currentTimeMillis();
 			r = m.transpose();
 			long t1 = System.currentTimeMillis();

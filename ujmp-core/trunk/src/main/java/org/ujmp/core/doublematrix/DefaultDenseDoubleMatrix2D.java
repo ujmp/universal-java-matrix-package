@@ -50,7 +50,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		} else {
 			this.values = new double[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsDouble(m.getAsDouble(c), c);
+				setDouble(m.getAsDouble(c), c);
 			}
 		}
 	}
@@ -149,8 +149,8 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	@Override
 	public final Matrix transpose() {
 		final double[] result = new double[cols * rows];
-		for (int r = cols; --r != -1;) {
-			for (int c = rows; --c != -1;) {
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
 				result[c * cols + r] = values[r * rows + c];
 			}
 		}

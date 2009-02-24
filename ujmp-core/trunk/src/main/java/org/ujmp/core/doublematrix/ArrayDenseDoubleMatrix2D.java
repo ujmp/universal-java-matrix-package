@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
 
@@ -98,9 +97,11 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	@Override
 	public final Matrix transpose() {
-		double[][] result = new double[values[0].length][values.length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
+		final int retcols = values.length;
+		final int retrows = values[0].length;
+		double[][] result = new double[retrows][retcols];
+		for (int r = retrows; --r != -1;) {
+			for (int c = retcols; --c != -1;) {
 				result[r][c] = values[c][r];
 			}
 		}
@@ -208,36 +209,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			}
 		}
 		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	@Override
-	public Matrix mtimes(Matrix m) throws MatrixException {
-		int rowCount = values.length;
-		int columnCount = values[0].length;
-		int retColumnCount = (int) m.getColumnCount();
-
-		if (columnCount != m.getRowCount()) {
-			throw new MatrixException("matrices have wrong size: "
-					+ Coordinates.toString(getSize()) + " and " + Coordinates.toString(m.getSize()));
-		}
-
-		double[][] ret = new double[rowCount][retColumnCount];
-		double[] columns = new double[columnCount];
-		for (int c = retColumnCount; --c != -1;) {
-			for (int k = columnCount; --k != -1;) {
-				columns[k] = m.getAsDouble(k, c);
-			}
-			for (int r = rowCount; --r != -1;) {
-				double[] row = values[r];
-				double sum = 0;
-				for (int k = columnCount; --k != -1;) {
-					sum += row[k] * columns[k];
-				}
-				ret[r][c] = sum;
-			}
-		}
-
-		return new ArrayDenseDoubleMatrix2D(ret);
 	}
 
 	public boolean containsNaN() {

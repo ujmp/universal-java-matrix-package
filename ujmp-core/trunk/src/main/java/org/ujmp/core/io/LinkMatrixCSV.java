@@ -34,7 +34,7 @@ public class LinkMatrixCSV {
 
 	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		return new CSVMatrix(file);
+		return new CSVMatrix(file, parameters);
 	}
 
 }

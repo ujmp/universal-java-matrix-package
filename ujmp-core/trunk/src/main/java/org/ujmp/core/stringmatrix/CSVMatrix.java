@@ -33,21 +33,27 @@ import org.ujmp.core.util.io.SeekableLineInputStream;
 public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = 6025235663309962730L;
 
-	private final String separator = "\t";
+	private String fieldDelimiter = "\t";
 
 	private int columnCount = 0;
 
 	private SeekableLineInputStream sli = null;
 
-	public CSVMatrix(String file) throws IOException {
-		this(new File(file));
+	public CSVMatrix(String file, Object... parameters) throws IOException {
+		this(new File(file), parameters);
 	}
 
-	public CSVMatrix(File file) throws IOException {
+	public CSVMatrix(File file, Object... parameters) throws IOException {
+		if (parameters.length != 0 && parameters[0] instanceof String) {
+			this.fieldDelimiter = (String) parameters[0];
+		}
+
 		sli = new SeekableLineInputStream(file);
+
+		// check 100 random lines to find maximum number of columns
 		for (int i = 0; i < 100; i++) {
 			String line = sli.readLine(MathUtil.nextInteger(0, sli.getLineCount()));
-			int c = line.split(separator).length;
+			int c = line.split(fieldDelimiter).length;
 			if (c > columnCount) {
 				columnCount = c;
 			}
@@ -61,7 +67,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	public String getString(long row, long column) throws MatrixException {
 		try {
 			String line = sli.readLine((int) row);
-			String fields[] = line.split(separator);
+			String fields[] = line.split(fieldDelimiter);
 			if (fields.length > columnCount) {
 				columnCount = fields.length;
 			}

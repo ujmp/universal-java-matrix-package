@@ -175,7 +175,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (mem < 133234688) {
 			logger.log(Level.WARNING, "Available memory is very low: " + (mem / 1024 / 1024) + "M");
 			logger.log(Level.WARNING,
-					"Invoke Java with the parameter -Xmx512M to increase the available memory");
+					"Invoke Java with the parameter -Xmx512M to increase available memory");
 		}
 	}
 

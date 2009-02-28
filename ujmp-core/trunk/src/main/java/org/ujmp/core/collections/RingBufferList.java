@@ -23,12 +23,14 @@
 
 package org.ujmp.core.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class RingBufferList<A> implements List<A> {
+public class RingBufferList<A> implements List<A>, Serializable {
+	private static final long serialVersionUID = 7887830184838493458L;
 
 	private int start = -1;
 

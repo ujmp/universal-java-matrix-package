@@ -189,7 +189,7 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 					Color col = ColorUtil.fromObject(matrix.getValueAt(0, 0));
 					g2d.setColor(ColorUtil.contrastBW(col));
 					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
-							GraphicsUtil.ALIGNCENTER, StringUtil.format(matrix.getDoubleValueAt(0, 0)));
+							GraphicsUtil.ALIGNCENTER, StringUtil.format(matrix.getValueAt(0, 0)));
 				}
 
 			} else {

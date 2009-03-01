@@ -39,6 +39,7 @@ import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
@@ -50,6 +51,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.DB;
@@ -128,6 +130,14 @@ public abstract class MatrixFactory {
 
 	public static final Matrix memoryUsage() {
 		return new MatrixMemoryUsage();
+	}
+
+	public static final Matrix range(double start, double stepSize, double end) {
+		return new Range(null, start, stepSize, end).calc(Ret.LINK);
+	}
+
+	public static final Matrix range(double start, double end) {
+		return range(start, 1.0, end);
 	}
 
 	public static final Matrix randomSeed() {

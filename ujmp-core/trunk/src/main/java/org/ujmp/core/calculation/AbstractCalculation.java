@@ -68,7 +68,7 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 	}
 
 	public Annotation getAnnotation() {
-		return sources == null ? null : sources[0].getAnnotation();
+		return sources == null || sources[0] == null ? null : sources[0].getAnnotation();
 	}
 
 	public final S getSource() {

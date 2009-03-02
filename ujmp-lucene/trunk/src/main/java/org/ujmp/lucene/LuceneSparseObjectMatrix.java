@@ -31,10 +31,11 @@ import java.util.Map;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.AbstractMapToSparseMatrixWrapper;
 
 public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
-		implements Flushable, Closeable {
+		implements Flushable, Closeable, Erasable {
 	private static final long serialVersionUID = -5164282058414257917L;
 
 	private LuceneMap<Coordinates, Object> map = null;
@@ -72,6 +73,12 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 	@Override
 	public void close() throws IOException {
 		map.close();
+	}
+
+	@Override
+	public void erase() throws IOException {
+		map.close();
+		map.erase();
 	}
 
 }

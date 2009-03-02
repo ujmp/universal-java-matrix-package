@@ -57,10 +57,12 @@ import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.io.FileUtil;
 
 public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
-		Serializable {
+		Erasable, Serializable {
 	private static final long serialVersionUID = 8998898900190996038L;
 
 	private static final String KEYSTRING = "KS";
@@ -423,6 +425,12 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		}
 		s.append("}");
 		return s.toString();
+	}
+
+	@Override
+	public synchronized void erase() throws IOException {
+		close();
+		FileUtil.deleteRecursive(path);
 	}
 
 }

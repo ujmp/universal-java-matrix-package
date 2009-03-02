@@ -1737,8 +1737,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public final String stringValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsString(0, 0);
+		} else {
+			return toString();
 		}
-		throw new MatrixException("too many entries, cannot return a single String");
 	}
 
 	public final double getRMS() throws MatrixException {

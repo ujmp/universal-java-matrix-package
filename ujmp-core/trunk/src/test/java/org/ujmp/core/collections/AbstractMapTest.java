@@ -60,9 +60,7 @@ public abstract class AbstractMapTest extends TestCase {
 			Map<Object, Object> m2 = (Map<Object, Object>) SerializationUtil.deserialize(data);
 			assertEquals(getLabel(), m, m2);
 		}
-		if (m instanceof Erasable) {
-			((Erasable) m).erase();
-		}
+
 	}
 
 }

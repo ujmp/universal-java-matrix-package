@@ -24,8 +24,12 @@
 package org.ujmp.core.intmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.intmatrix.factory.DefaultIntMatrix2DFactory;
+import org.ujmp.core.intmatrix.factory.IntMatrix2DFactory;
 
 public interface IntMatrix2D extends IntMatrix, GenericMatrix2D<Integer> {
+
+	public static IntMatrix2DFactory factory = new DefaultIntMatrix2DFactory();
 
 	public int getInt(long row, long column);
 

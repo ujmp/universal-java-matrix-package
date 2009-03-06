@@ -24,8 +24,12 @@
 package org.ujmp.core.stringmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
+import org.ujmp.core.stringmatrix.factory.StringMatrix2DFactory;
 
 public interface StringMatrix2D extends StringMatrix, GenericMatrix2D<String> {
+
+	public static StringMatrix2DFactory factory = new DefaultStringMatrix2DFactory();
 
 	public String getString(long row, long column);
 

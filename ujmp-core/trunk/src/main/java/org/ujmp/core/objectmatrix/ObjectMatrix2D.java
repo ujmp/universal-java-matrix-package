@@ -24,8 +24,12 @@
 package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DefaultObjectMatrix2DFactory;
+import org.ujmp.core.objectmatrix.factory.ObjectMatrix2DFactory;
 
 public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
+
+	public static ObjectMatrix2DFactory factory = new DefaultObjectMatrix2DFactory();
 
 	public Object getObject(long row, long column);
 

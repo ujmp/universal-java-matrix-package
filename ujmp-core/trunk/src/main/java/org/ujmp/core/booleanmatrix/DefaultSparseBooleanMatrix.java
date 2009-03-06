@@ -27,8 +27,10 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
+import org.ujmp.core.util.MathUtil;
 
-public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boolean> {
+public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boolean> implements
+		BooleanMatrix {
 	private static final long serialVersionUID = 8467706530550022243L;
 
 	public DefaultSparseBooleanMatrix(Matrix m) throws MatrixException {
@@ -50,6 +52,16 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 	@Override
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
+	}
+
+	@Override
+	public boolean getBoolean(long... coordinates) throws MatrixException {
+		return MathUtil.getBoolean(getObject(coordinates));
+	}
+
+	@Override
+	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+		setObject(value, coordinates);
 	}
 
 }

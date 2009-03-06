@@ -23,9 +23,13 @@
 
 package org.ujmp.core.floatmatrix;
 
+import org.ujmp.core.floatmatrix.factory.DefaultFloatMatrix2DFactory;
+import org.ujmp.core.floatmatrix.factory.FloatMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface FloatMatrix2D extends FloatMatrix, GenericMatrix2D<Float> {
+
+	public static FloatMatrix2DFactory factory = new DefaultFloatMatrix2DFactory();
 
 	public float getFloat(long row, long column);
 

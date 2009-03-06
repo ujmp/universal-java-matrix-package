@@ -23,9 +23,13 @@
 
 package org.ujmp.core.bytematrix;
 
+import org.ujmp.core.bytematrix.factory.ByteMatrix2DFactory;
+import org.ujmp.core.bytematrix.factory.DefaultByteMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface ByteMatrix2D extends ByteMatrix, GenericMatrix2D<Byte> {
+
+	public static ByteMatrix2DFactory factory = new DefaultByteMatrix2DFactory();
 
 	public byte getByte(long row, long column);
 

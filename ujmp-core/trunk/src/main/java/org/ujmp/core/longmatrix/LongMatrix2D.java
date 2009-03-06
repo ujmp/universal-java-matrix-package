@@ -24,8 +24,12 @@
 package org.ujmp.core.longmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.longmatrix.factory.DefaultLongMatrix2DFactory;
+import org.ujmp.core.longmatrix.factory.LongMatrix2DFactory;
 
 public interface LongMatrix2D extends LongMatrix, GenericMatrix2D<Long> {
+
+	public static LongMatrix2DFactory factory = new DefaultLongMatrix2DFactory();
 
 	public long getLong(long row, long column);
 

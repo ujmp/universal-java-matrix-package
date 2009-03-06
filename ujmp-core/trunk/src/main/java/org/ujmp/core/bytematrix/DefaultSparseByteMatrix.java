@@ -27,8 +27,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
+import org.ujmp.core.util.MathUtil;
 
-public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Boolean> {
+public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 765072872179964518L;
 
 	public DefaultSparseByteMatrix(Matrix m) throws MatrixException {
@@ -50,6 +51,16 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Boolean>
 	@Override
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
+	}
+
+	@Override
+	public byte getByte(long... coordinates) throws MatrixException {
+		return MathUtil.getByte(getObject(coordinates));
+	}
+
+	@Override
+	public void setByte(byte value, long... coordinates) throws MatrixException {
+		setObject(value, coordinates);
 	}
 
 }

@@ -27,8 +27,10 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
+import org.ujmp.core.util.MathUtil;
 
-public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> {
+public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> implements
+		DoubleMatrix {
 	private static final long serialVersionUID = -1168427818140098524L;
 
 	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {
@@ -50,6 +52,16 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 	@Override
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
+	}
+
+	@Override
+	public double getDouble(long... coordinates) throws MatrixException {
+		return MathUtil.getDouble(getObject(coordinates));
+	}
+
+	@Override
+	public void setDouble(double value, long... coordinates) throws MatrixException {
+		setObject(value, coordinates);
 	}
 
 }

@@ -36,14 +36,15 @@ public abstract class UJMPSettings {
 
 	private static int systemErrBufferSize = 1024 * 1024;
 
-	private static String datasetFolder = System.getProperty("user.home") + File.separator + "datasets";
+	private static String datasetFolder = System.getProperty("user.home") + File.separator
+			+ "datasets";
 
 	private static int numberOfThreads = 1;
 
 	/**
-	 * How many rows should be returned maximally for <code>toString()</code>
-	 * If the <code>Matrix</code> is bigger, three dots (<code>...</code>)
-	 * will be returned for the remaining rows.
+	 * How many rows should be returned maximally for <code>toString()</code> If
+	 * the <code>Matrix</code> is bigger, three dots (<code>...</code>) will be
+	 * returned for the remaining rows.
 	 * 
 	 * 
 	 * @default 1000
@@ -51,8 +52,8 @@ public abstract class UJMPSettings {
 	private static long maxRowsToPrint = 1000;
 
 	/**
-	 * How many columns should be returned maximally for <code>toString()</code>.
-	 * If the <code>Matrix</code> is bigger, three dots (<code>...</code>)
+	 * How many columns should be returned maximally for <code>toString()</code>
+	 * . If the <code>Matrix</code> is bigger, three dots (<code>...</code>)
 	 * will be returned for the remaining columns.
 	 * 
 	 * 
@@ -63,8 +64,7 @@ public abstract class UJMPSettings {
 	/**
 	 * How many rows should be returned maximally for
 	 * <code>getToolTipText()</code>. If the <code>Matrix</code> is bigger,
-	 * three dots (<code>...</code>) will be returned for the remaining
-	 * rows.
+	 * three dots (<code>...</code>) will be returned for the remaining rows.
 	 * 
 	 * 
 	 * @default 10
@@ -74,8 +74,7 @@ public abstract class UJMPSettings {
 	/**
 	 * How many columns should be returned maximally for
 	 * <code>getToolTipText()</code>. If the <code>Matrix</code> is bigger,
-	 * three dots (<code>...</code>) will be returned for the remaining
-	 * columns.
+	 * three dots (<code>...</code>) will be returned for the remaining columns.
 	 * 
 	 * @default 10
 	 */

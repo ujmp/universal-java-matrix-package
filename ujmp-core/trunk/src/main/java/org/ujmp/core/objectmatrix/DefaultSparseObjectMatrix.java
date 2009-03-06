@@ -28,7 +28,8 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.DefaultSparseGenericMatrix;
 
-public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> {
+public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> implements
+		ObjectMatrix {
 	private static final long serialVersionUID = -1130331544425728230L;
 
 	public DefaultSparseObjectMatrix(Matrix m) throws MatrixException {

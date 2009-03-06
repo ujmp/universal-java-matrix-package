@@ -86,7 +86,7 @@ public class R {
 
 	private synchronized String getFromR() throws Exception {
 		boolean lfSeen = false;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < MAXPOLLS; i++) {
 			if (!input.ready()) {

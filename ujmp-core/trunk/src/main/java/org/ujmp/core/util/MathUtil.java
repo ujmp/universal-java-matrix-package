@@ -53,7 +53,7 @@ public abstract class MathUtil {
 
 	public static String getMD5Sum(String text) {
 		MessageDigest mdAlgorithm;
-		StringBuffer hexString = new StringBuffer();
+		StringBuilder hexString = new StringBuilder();
 
 		try {
 			mdAlgorithm = MessageDigest.getInstance("MD5");

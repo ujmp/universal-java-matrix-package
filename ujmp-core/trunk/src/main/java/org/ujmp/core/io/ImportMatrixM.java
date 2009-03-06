@@ -80,7 +80,7 @@ public abstract class ImportMatrixM {
 
 	public static Matrix fromReader(Reader reader, Object... parameters) throws IOException {
 		String EOL = System.getProperty("line.separator");
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		LineNumberReader lr = new LineNumberReader(reader);
 		String line = null;
 		while ((line = lr.readLine()) != null) {

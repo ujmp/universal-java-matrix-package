@@ -969,7 +969,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		try {
 			final String EOL = System.getProperty("line.separator");
 

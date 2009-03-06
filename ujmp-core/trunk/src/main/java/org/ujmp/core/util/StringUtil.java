@@ -181,7 +181,7 @@ public abstract class StringUtil {
 	}
 
 	public static String duration(long time) {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 
 		int days = (int) (time / (24 * 60 * 60 * 1000));
 		time = time % (24 * 60 * 60 * 1000);

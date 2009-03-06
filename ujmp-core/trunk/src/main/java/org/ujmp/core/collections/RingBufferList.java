@@ -79,7 +79,7 @@ public class RingBufferList<A> implements List<A>, Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < size(); i++) {
 			s.append(get(i));
 			if (i < size() - 1) {

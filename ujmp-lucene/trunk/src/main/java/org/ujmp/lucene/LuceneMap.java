@@ -417,7 +417,7 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("{ ");
 		for (Object k : keySet()) {
 			Object v = get(k);

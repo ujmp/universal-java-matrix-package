@@ -75,7 +75,7 @@ public class RingBufferOutputStream extends OutputStream {
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < size(); i++) {
 			s.append((char) get(i));
 		}

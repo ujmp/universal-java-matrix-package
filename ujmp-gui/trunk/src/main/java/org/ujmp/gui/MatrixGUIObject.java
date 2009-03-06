@@ -133,7 +133,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public final String getToolTipText() {
 		try {
 			if (tooltipText == null) {
-				StringBuffer s = new StringBuffer();
+				StringBuilder s = new StringBuilder();
 				s.append("<html>");
 				s.append("<table>");
 				s.append("<tr>");

@@ -67,7 +67,7 @@ public abstract class ImportMatrixSTRING {
 
 	public static final Matrix fromReader(Reader reader, Object... parameters)
 			throws MatrixException {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 
 		try {
 			IntelligentFileReader lr = new IntelligentFileReader(reader);

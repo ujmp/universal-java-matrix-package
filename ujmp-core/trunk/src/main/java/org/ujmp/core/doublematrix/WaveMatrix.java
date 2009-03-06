@@ -60,7 +60,7 @@ public class WaveMatrix extends DenseFileMatrix2D {
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("RIFF Tag:         " + getRIFFTag() + "\n");
 		s.append("WAVE Tag:         " + getWAVETag() + "\n");
 		s.append("fmt  Tag:         " + getFmtTag() + "\n");

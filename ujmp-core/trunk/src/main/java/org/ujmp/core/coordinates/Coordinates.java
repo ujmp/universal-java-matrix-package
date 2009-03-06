@@ -92,7 +92,7 @@ public class Coordinates implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("[");
 		for (int i = 0; i < dimensions.length; i++) {
 			s.append(dimensions[i]);

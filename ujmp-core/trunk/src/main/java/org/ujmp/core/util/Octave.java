@@ -86,7 +86,7 @@ public class Octave {
 	private synchronized String getFromOctave() throws Exception {
 		boolean colonSeen = false;
 		boolean numberSeen = false;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < MAXPOLLS; i++) {
 			if (!input.ready()) {

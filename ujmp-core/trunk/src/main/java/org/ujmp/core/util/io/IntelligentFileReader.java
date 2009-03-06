@@ -143,7 +143,7 @@ public class IntelligentFileReader extends Reader {
 	}
 
 	public static String load(String filename) {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		IntelligentFileReader fr = new IntelligentFileReader(filename);
 		String line = null;
 		while ((line = fr.readLine()) != null) {

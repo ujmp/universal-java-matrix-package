@@ -100,7 +100,7 @@ public class GnuPlot {
 
 	private synchronized String getFromGnuPlot() throws Exception {
 		boolean endSeen = false;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		while (true) {
 			while (!input.ready()) {

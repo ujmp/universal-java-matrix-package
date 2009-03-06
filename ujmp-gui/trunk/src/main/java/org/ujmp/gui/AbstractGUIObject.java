@@ -35,7 +35,8 @@ import org.ujmp.core.interfaces.GUIObject;
 public abstract class AbstractGUIObject implements GUIObject {
 	private static final long serialVersionUID = -2271465024665498798L;
 
-	protected static final Logger logger = Logger.getLogger(AbstractGUIObject.class.getName());
+	protected static final Logger logger = Logger
+			.getLogger(AbstractGUIObject.class.getName());
 
 	public static final int X = Matrix.X;
 
@@ -74,7 +75,8 @@ public abstract class AbstractGUIObject implements GUIObject {
 	public final JFrame showGUI() {
 		try {
 			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
-			Method method = c.getMethod("showFrame", new Class[] { GUIObject.class });
+			Method method = c.getMethod("showFrame",
+					new Class[] { GUIObject.class });
 			return (JFrame) method.invoke(null, new Object[] { this });
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "cannot show frame", e);
@@ -83,11 +85,12 @@ public abstract class AbstractGUIObject implements GUIObject {
 	}
 
 	public String getToolTipText() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("<html>");
 		s.append("<table>");
 		s.append("<tr>");
-		s.append("<td colspan=2><h3>" + getClass().getSimpleName() + "</h3></td>");
+		s.append("<td colspan=2><h3>" + getClass().getSimpleName()
+				+ "</h3></td>");
 		s.append("</tr>");
 		s.append("<tr>");
 		s.append("<td><b>Label:</b></td>");

@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
-		</dependency>		
+		</dependency>			
 	</dependencies>
 
 

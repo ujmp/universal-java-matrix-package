@@ -35,6 +35,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.AbstractDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest extends TestCase {
@@ -86,6 +87,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		long[] c9 = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c9, new long[] { 2, 2 }));
 		assertFalse(getLabel(), ci.hasNext());
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testZeroSize() throws Exception {
@@ -93,6 +97,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertTrue(getLabel(), Coordinates.equals(m.getSize(), new long[] { 0, 0 }));
 		assertEquals(getLabel(), 0, m.getRowCount());
 		assertEquals(getLabel(), 0, m.getColumnCount());
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testAvailableCoordinateIterator2D() throws Exception {
@@ -124,6 +131,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 			assertTrue(getLabel(), clist.contains(new Coordinates(2, 2)));
 		}
 
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+
 	}
 
 	public void testSelectedCoordinatesString() throws Exception {
@@ -151,6 +162,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertTrue(getLabel(), clist.contains(new Coordinates(1, 1)));
 		assertTrue(getLabel(), clist.contains(new Coordinates(1, 2)));
 
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testSelectedCoordinates() throws Exception {
@@ -179,6 +193,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		c = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 1, 2 }));
 		assertFalse(getLabel(), ci.hasNext());
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testGetCoordinatesOfMaximum() throws Exception {
@@ -193,6 +211,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(Double.NaN, 1, 1);
 		c = m.getCoordinatesOfMaximum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { -1, -1 }));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testGetCoordinatesOfMininim() throws Exception {
@@ -207,6 +229,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(Double.NaN, 1, 1);
 		c = m.getCoordinatesOfMaximum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { -1, -1 }));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testContains() throws Exception {
@@ -236,12 +262,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		else
 			assertTrue(m.contains(2, 2));
 		assertFalse(m.contains(7, 7));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testSize() throws Exception {
 		Matrix m = createMatrix(20, 10);
 		assertEquals(getLabel(), 20, m.getRowCount());
 		assertEquals(getLabel(), 10, m.getColumnCount());
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testClone() throws Exception {
@@ -260,6 +294,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix m2 = m.copy();
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testAnnotation() throws Exception {
@@ -282,6 +320,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), "row1", m.getAxisAnnotation(Matrix.ROW, 1));
 		assertEquals(getLabel(), "column0", m.getAxisAnnotation(Matrix.COLUMN, 0));
 		assertEquals(getLabel(), "column1", m.getAxisAnnotation(Matrix.COLUMN, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testCountMissingValues() throws Exception {
@@ -309,6 +351,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 2.0, m2.getAsDouble(3, 0));
 
 		assertEquals(getLabel(), 6.0, m3.getAsDouble(0, 0));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testLink() throws Exception {
@@ -333,6 +379,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(-9.0, 1, 1);
 
 		assertEquals(getLabel(), m, m2);
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testSerialize() throws Exception {
@@ -349,6 +399,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		} else {
 			assertEquals(getLabel(), m, m2);
 		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testToDoubleArray() throws Exception {
@@ -362,6 +416,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 2.0, values[0][1]);
 		assertEquals(getLabel(), 3.0, values[1][0]);
 		assertEquals(getLabel(), 4.0, values[1][1]);
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testSetAndGet() throws Exception {
@@ -374,6 +432,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
 		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
 		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testPlus() throws Exception {
@@ -387,6 +449,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 1));
 		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
 		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testTranspose() throws Exception {
@@ -404,6 +470,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
 		assertEquals(getLabel(), 3.0, m.getAsDouble(2, 0));
 		assertEquals(getLabel(), 6.0, m.getAsDouble(2, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testEmpty() throws Exception {
@@ -419,6 +489,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 			assertEquals(getLabel(), null, m.getAsObject(1, 0));
 			assertEquals(getLabel(), null, m.getAsObject(1, 1));
 		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testMinus() throws Exception {
@@ -432,6 +506,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 1));
 		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
 		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	public void testMultiply() throws Exception {
@@ -454,6 +532,14 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
 		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
 		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
 	}
 
 	public void testInverse() throws Exception {
@@ -504,6 +590,14 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.3788, m2.getAsDouble(0, 2), 0.001);
 		assertEquals(getLabel(), -0.0152, m2.getAsDouble(1, 2), 0.001);
 		assertEquals(getLabel(), -0.1061, m2.getAsDouble(2, 2), 0.001);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
 	}
 
 }

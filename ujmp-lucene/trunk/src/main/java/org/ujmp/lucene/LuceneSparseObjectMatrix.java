@@ -67,18 +67,24 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 
 	@Override
 	public void flush() throws IOException {
-		map.flush();
+		if (map != null) {
+			map.flush();
+		}
 	}
 
 	@Override
 	public void close() throws IOException {
-		map.close();
+		if (map != null) {
+			map.close();
+		}
 	}
 
 	@Override
 	public void erase() throws IOException {
-		map.close();
-		map.erase();
+		if (map != null) {
+			map.close();
+			map.erase();
+		}
 	}
 
 }

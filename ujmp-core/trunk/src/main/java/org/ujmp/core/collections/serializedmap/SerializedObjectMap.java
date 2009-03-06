@@ -30,21 +30,20 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.io.FileUtil;
 
-public class SerializedObjectMap<K, V> implements Map<K, V> {
-
-	private static final Logger logger = Logger.getLogger(SerializedObjectMap.class.getName());
+public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 
 	public static final int SERIALIZE = 0;
 
@@ -58,28 +57,24 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 	private int method = SERIALIZE;
 
-	public SerializedObjectMap() {
+	public SerializedObjectMap() throws IOException {
 		this((File) null);
 	}
 
-	public SerializedObjectMap(String path) {
+	public SerializedObjectMap(String path) throws IOException {
 		this(new File(path));
 	}
 
-	public SerializedObjectMap(File path) {
-		try {
-			if (path == null) {
-				path = File.createTempFile("serializedmap" + System.nanoTime(), "");
-				path.delete();
-				path.deleteOnExit();
-				temporary = true;
-			}
-			this.path = path;
-			if (!path.exists()) {
-				path.mkdirs();
-			}
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not create serialized map", e);
+	public SerializedObjectMap(File path) throws IOException {
+		if (path == null) {
+			path = File.createTempFile("serializedmap" + System.nanoTime(), "");
+			path.delete();
+			path.deleteOnExit();
+			temporary = true;
+		}
+		this.path = path;
+		if (!path.exists()) {
+			path.mkdirs();
 		}
 	}
 
@@ -145,8 +140,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 			return (V) o;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not get object " + key, e);
-			return null;
+			throw new MatrixException("could not get object " + key, e);
 		}
 	}
 
@@ -218,8 +212,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 			return null;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not put object " + key, e);
-			return null;
+			throw new MatrixException("could not put object " + key, e);
 		}
 	}
 
@@ -289,6 +282,11 @@ public class SerializedObjectMap<K, V> implements Map<K, V> {
 
 	public void setMethod(int method) {
 		this.method = method;
+	}
+
+	@Override
+	public void erase() throws IOException {
+		FileUtil.deleteRecursive(path);
 	}
 
 }

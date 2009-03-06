@@ -28,6 +28,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMapTest extends TestCase {
@@ -44,6 +45,9 @@ public abstract class AbstractMapTest extends TestCase {
 		m.put("b", "test2");
 		assertEquals(getLabel(), "test1", m.get("a"));
 		assertEquals(getLabel(), "test2", m.get("b"));
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,6 +59,9 @@ public abstract class AbstractMapTest extends TestCase {
 			byte[] data = SerializationUtil.serialize((Serializable) m);
 			Map<Object, Object> m2 = (Map<Object, Object>) SerializationUtil.deserialize(data);
 			assertEquals(getLabel(), m, m2);
+		}
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
 		}
 	}
 

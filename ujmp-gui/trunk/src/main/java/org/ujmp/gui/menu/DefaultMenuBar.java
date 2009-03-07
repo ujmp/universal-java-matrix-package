@@ -43,11 +43,15 @@ import org.ujmp.core.util.matrices.MatrixRunningThreads;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
+import org.ujmp.gui.actions.MandelbrotMatrixAction;
 import org.ujmp.gui.actions.ShowInFrameAction;
+import org.ujmp.gui.actions.SunSpotDataMatrixAction;
 import org.ujmp.gui.util.MatrixUIDefaults;
 
 public class DefaultMenuBar extends JMenuBar {
 	private static final long serialVersionUID = -6115122804967308915L;
+
+	protected JMenu examplesMenu = new JMenu("Examples");
 
 	public DefaultMenuBar(JComponent component, GUIObject o) {
 	}
@@ -78,15 +82,23 @@ public class DefaultMenuBar extends JMenuBar {
 		JMenu toolsMenu = new JMenu("Tools");
 		toolsMenu.setMnemonic(KeyEvent.VK_T);
 		// optionsMenu.add(new JSeparator());
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemProperties())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemEnvironment())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, MatrixUIDefaults.getInstance())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixSystemProperties())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixSystemEnvironment())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				MatrixUIDefaults.getInstance())));
 		toolsMenu.add(new JSeparator());
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixMemoryUsage())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRunningThreads())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixSystemTime())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixRandomSeed())));
-		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, new MatrixAvailableProcessors())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixMemoryUsage())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixRunningThreads())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixSystemTime())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixRandomSeed())));
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new MatrixAvailableProcessors())));
 		// toolsMenu.add(new JSeparator());
 
 		if (JMathLib.isAvailable()) {
@@ -94,6 +106,13 @@ public class DefaultMenuBar extends JMenuBar {
 			toolsMenu.add(new JMathLibAction());
 		}
 		add(toolsMenu);
+
+		examplesMenu.setMnemonic(KeyEvent.VK_E);
+		examplesMenu.add(new JMenuItem(new MandelbrotMatrixAction(this, null,
+				null)));
+		examplesMenu.add(new JMenuItem(new SunSpotDataMatrixAction(this, null,
+				null)));
+		add(examplesMenu);
 
 		// JMenu windowMenu = new JMenu("Window");
 		// windowMenu.setMnemonic(KeyEvent.VK_W);

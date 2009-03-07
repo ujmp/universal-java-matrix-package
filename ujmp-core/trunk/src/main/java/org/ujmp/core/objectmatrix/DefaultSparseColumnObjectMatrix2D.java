@@ -24,7 +24,9 @@
 package org.ujmp.core.objectmatrix;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -37,7 +39,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	private long[] size = new long[] { 1, 1 };
 
-	private final List<Matrix> columns = new ArrayList<Matrix>();
+	private final Map<Long, Matrix> columns = new HashMap<Long, Matrix>();
 
 	public DefaultSparseColumnObjectMatrix2D(long... size) {
 		setSize(size);
@@ -52,22 +54,23 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	@Override
 	public Object getObject(long row, long column) throws MatrixException {
-		Matrix m = columns.get((int) column);
-		return m.getAsObject(row, 0);
+		Matrix m = columns.get(column);
+		return m == null ? null : m.getAsObject(row, 0);
 	}
 
 	@Override
 	public Object getObject(int row, int column) throws MatrixException {
 		Matrix m = columns.get(column);
-		return m.getAsObject(row, 0);
+		return m == null ? null : m.getAsObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
 	@Override
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
-		for (int i = 0; i < size[COLUMN]; i++) {
-			for (long[] c : columns.get(i).availableCoordinates()) {
+		for (Long i : columns.keySet()) {
+			Matrix m = columns.get(i);
+			for (long[] c : m.availableCoordinates()) {
 				coordinates.add(Coordinates.plus(c, new long[] { 0, i }));
 			}
 		}
@@ -84,7 +87,12 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	@Override
 	public void setObject(Object o, long row, long column) throws MatrixException {
-		Matrix m = columns.get((int) column);
+		Matrix m = columns.get(column);
+		if (m == null) {
+			// TODO: there should be a faster implementation than this:
+			m = new DefaultSparseObjectMatrix(getRowCount(), 1);
+			columns.put(column, m);
+		}
 		m.setAsObject(o, row, 0);
 	}
 
@@ -100,12 +108,8 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	@Override
 	public void setSize(long... size) {
-		while (columns.size() < size[COLUMN]) {
-			columns.add(new DefaultSparseObjectMatrix(size[ROW], 1l));
-		}
-
 		if (this.size[ROW] != size[ROW]) {
-			for (Matrix m : columns) {
+			for (Matrix m : columns.values()) {
 				m.setSize(size[ROW], 1);
 			}
 		}

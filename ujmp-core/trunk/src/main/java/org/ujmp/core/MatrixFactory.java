@@ -132,7 +132,7 @@ public abstract class MatrixFactory {
 		return new MatrixMemoryUsage();
 	}
 
-	public static final Matrix range(double start, double stepSize, double end) {
+	public static final Matrix range(double start, double end, double stepSize) {
 		return new Range(null, start, stepSize, end).calc(Ret.LINK);
 	}
 

@@ -7,13 +7,13 @@
 	<name>ujmp-jung</name>
 
 	<properties>
-		<ujmp.version>0.2.1</ujmp.version>
+		<ujmp.version>0.2.2</ujmp.version>
 	</properties>
 
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.2.1</version>
+		<version>0.2.2</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 

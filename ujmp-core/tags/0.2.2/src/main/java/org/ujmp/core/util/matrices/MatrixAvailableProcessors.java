@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2008-2009 Holger Arndt, A. Naegele and M. Bundschus
+ *
+ * This file is part of the Universal Java Matrix Package (UJMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * UJMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * UJMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with UJMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
+package org.ujmp.core.util.matrices;
+
+import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
+
+public class MatrixAvailableProcessors extends AbstractDenseIntMatrix2D {
+	private static final long serialVersionUID = -3768846722489359117L;
+
+	public MatrixAvailableProcessors() {
+		setLabel("Available Processors");
+	}
+
+	public long[] getSize() {
+		return new long[] { 1, 1 };
+	}
+
+	public int getInt(long row, long column) {
+		return Runtime.getRuntime().availableProcessors();
+	}
+
+	public void setInt(int value, long row, long column) {
+	}
+
+	public int getInt(int row, int column) {
+		return Runtime.getRuntime().availableProcessors();
+	}
+
+	public void setInt(int value, int row, int column) {
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return true;
+	}
+
+}

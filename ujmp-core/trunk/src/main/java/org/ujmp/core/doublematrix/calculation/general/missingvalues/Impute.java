@@ -32,7 +32,7 @@ public class Impute extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -8899889992449926887L;
 
 	public enum ImputationMethod {
-		Zero, KNN, EM, Regression, BPCA, ColumnMean, RowMean, EMimputeGene, EMimputeArray, LSimputeGene, LSimputeArray, LSimputeCombined, LSimputeAdaptive
+		Zero, RowMean, ColumnMean, Regression, KNN, EM, BPCA, EMimputeGene, EMimputeArray, LSimputeGene, LSimputeArray, LSimputeCombined, LSimputeAdaptive
 	};
 
 	private Matrix imp = null;

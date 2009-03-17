@@ -42,6 +42,7 @@ import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
@@ -760,7 +761,8 @@ public abstract class MatrixFactory {
 			return (Matrix) con.newInstance(size);
 
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("could not create matrix with size ["
+					+ Coordinates.toString(size).replaceAll(",", "x") + "]", e);
 		}
 	}
 

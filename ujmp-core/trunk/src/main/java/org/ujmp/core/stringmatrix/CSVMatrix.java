@@ -25,7 +25,9 @@ package org.ujmp.core.stringmatrix;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
+import org.ujmp.core.collections.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -38,6 +40,8 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	private int columnCount = 0;
 
 	private SeekableLineInputStream sli = null;
+
+	private Map<Long, String[]> rows = new SoftHashMap<Long, String[]>();
 
 	public CSVMatrix(String file, Object... parameters) throws IOException {
 		this(new File(file), parameters);
@@ -67,7 +71,13 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	public String getString(long row, long column) throws MatrixException {
 		try {
 			String line = sli.readLine((int) row);
-			String fields[] = line.split(fieldDelimiter);
+
+			String fields[] = null;
+			fields = rows.get(row);
+			if (fields == null) {
+				fields = line.split(fieldDelimiter);
+				rows.put(row, fields);
+			}
 			if (fields.length > columnCount) {
 				columnCount = fields.length;
 			}

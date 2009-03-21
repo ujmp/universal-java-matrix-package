@@ -32,7 +32,7 @@ import java.util.List;
 
 public class SeekableLineInputStream extends InputStream {
 
-	private final int bufferSize = 65536;
+	private int bufferSize = 65536;
 
 	private BufferedRandomAccessFile in = null;
 
@@ -44,6 +44,8 @@ public class SeekableLineInputStream extends InputStream {
 
 	public SeekableLineInputStream(File file) throws IOException {
 		in = new BufferedRandomAccessFile(file, "r", bufferSize);
+		long maxLength = 0;
+		long last = -1;
 		byte[] bytes = new byte[bufferSize];
 		for (long pos = 0; pos < in.length(); pos += bufferSize) {
 			Arrays.fill(bytes, (byte) 0);
@@ -52,11 +54,25 @@ public class SeekableLineInputStream extends InputStream {
 			for (int i = 0; i < bufferSize; i++) {
 				byte b = bytes[i];
 				if (b == 10) {
+					long length = pos + i - last;
+					if (length > maxLength) {
+						maxLength = length;
+					}
 					lineEnds.add(pos + i);
+					last = pos + i;
 				}
+
 			}
 		}
-		System.out.println(getLineCount() + " lines");
+
+		System.out.println("This stream has " + getLineCount() + " lines");
+
+		// if initial buffer size was too small, we have to increase it now
+		if (maxLength + 1 > bufferSize) {
+			bufferSize = (int) maxLength + 1;
+			in.close();
+			in = new BufferedRandomAccessFile(file, "r", bufferSize);
+		}
 	}
 
 	@Override

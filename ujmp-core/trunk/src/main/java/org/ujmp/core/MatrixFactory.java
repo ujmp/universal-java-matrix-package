@@ -77,6 +77,7 @@ import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
+import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
@@ -180,6 +181,8 @@ public abstract class MatrixFactory {
 	// TODO: this should be done in a calculation
 	public static final Matrix concat(int dimension, Collection<Matrix> matrices)
 			throws MatrixException {
+		if (true)
+			return new Concatenation(dimension, matrices).calc(Ret.LINK);
 		// only use non-empty matrices
 		List<Matrix> list = new ArrayList<Matrix>();
 		for (Matrix m : matrices) {

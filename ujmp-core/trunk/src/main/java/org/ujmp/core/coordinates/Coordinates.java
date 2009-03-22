@@ -161,6 +161,26 @@ public class Coordinates implements Serializable {
 		return co;
 	}
 
+	public static final long[] max(long[] c1, long[] c2) {
+		long[] co = copyOf(c1);
+		for (int i = co.length - 1; i != -1; i--) {
+			if (c2[i] > co[i]) {
+				co[i] = c2[i];
+			}
+		}
+		return co;
+	}
+
+	public static final long[] min(long[] c1, long[] c2) {
+		long[] co = copyOf(c1);
+		for (int i = co.length - 1; i != -1; i--) {
+			if (c2[i] < co[i]) {
+				co[i] = c2[i];
+			}
+		}
+		return co;
+	}
+
 	public static long[] fromString(String s) {
 		String[] fields = s.split(",");
 		long[] dims = new long[fields.length];

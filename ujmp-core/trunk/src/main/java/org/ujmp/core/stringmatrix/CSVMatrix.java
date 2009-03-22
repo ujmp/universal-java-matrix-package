@@ -56,7 +56,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 
 		// check 100 random lines to find maximum number of columns
 		for (int i = 0; i < 100; i++) {
-			String line = sli.readLine(MathUtil.nextInteger(0, sli.getLineCount()));
+			String line = sli.readLine(MathUtil.nextInteger(0, sli.getLineCount() - 1));
 			int c = line.split(fieldDelimiter).length;
 			if (c > columnCount) {
 				columnCount = c;
@@ -70,11 +70,10 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 
 	public String getString(long row, long column) throws MatrixException {
 		try {
-			String line = sli.readLine((int) row);
-
 			String fields[] = null;
 			fields = rows.get(row);
 			if (fields == null) {
+				String line = sli.readLine((int) row);
 				fields = line.split(fieldDelimiter);
 				rows.put(row, fields);
 			}

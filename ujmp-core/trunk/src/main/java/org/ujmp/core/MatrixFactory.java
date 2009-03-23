@@ -178,23 +178,9 @@ public abstract class MatrixFactory {
 		return concat(dimension, Arrays.asList(matrices));
 	}
 
-	// TODO: this should be done in a calculation
 	public static final Matrix concat(int dimension, Collection<Matrix> matrices)
 			throws MatrixException {
-		if (true)
-			return new Concatenation(dimension, matrices).calc(Ret.LINK);
-		// only use non-empty matrices
-		List<Matrix> list = new ArrayList<Matrix>();
-		for (Matrix m : matrices) {
-			if (m.getRowCount() != 0 && m.getColumnCount() != 0) {
-				list.add(m);
-			}
-		}
-		Matrix result = MatrixFactory.copyFromMatrix(AnnotationTransfer.COPY, list.get(0));
-		for (int i = 1; i < list.size(); i++) {
-			result = result.append(dimension, list.get(i));
-		}
-		return result;
+		return new Concatenation(dimension, matrices).calc(Ret.LINK);
 	}
 
 	public static final Matrix importFromArray(boolean[]... values) {

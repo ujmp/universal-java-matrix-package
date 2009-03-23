@@ -31,6 +31,7 @@ public class AllTests extends TestSuite {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTest(org.ujmp.core.calculation.string.AllTests.suite());
 		suite.addTestSuite(TestMissingValueImputation.class);
+		suite.addTestSuite(TestConcatenation.class);
 		suite.addTestSuite(TestMtimes.class);
 		return suite;
 	}

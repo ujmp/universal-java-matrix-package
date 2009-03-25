@@ -8,13 +8,13 @@
 	<name>ujmp-bpca</name>
 		
 	<properties>
-		<ujmp.version>0.2.2</ujmp.version>
+		<ujmp.version>0.2.3</ujmp.version>
 	</properties>
 		
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.2.2</version>
+		<version>0.2.3</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 	

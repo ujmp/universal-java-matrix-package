@@ -727,7 +727,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public boolean getAsBoolean(long... coordinates) throws MatrixException {
-		return getAsDouble(coordinates) != 0.0;
+		return MathUtil.getBoolean(getAsObject(coordinates));
 	}
 
 	public void setAsBoolean(boolean value, long... coordinates) throws MatrixException {

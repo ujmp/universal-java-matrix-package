@@ -60,6 +60,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 	}
 
 	// this is old and slower, maybe delete?
+	@Deprecated
 	private static Matrix calcOld(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
 		if (m1.isScalar() || m2.isScalar()) {
 			return Times.calc(ignoreNaN, m1, m2);

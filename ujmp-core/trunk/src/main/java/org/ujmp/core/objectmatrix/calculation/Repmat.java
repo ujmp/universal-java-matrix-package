@@ -30,19 +30,16 @@ import org.ujmp.core.exceptions.MatrixException;
 public class Repmat extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -7603784696235009832L;
 
-	private long[] count = null;
-
 	private long[] size = null;
 
 	public Repmat(Matrix matrix, long... count) {
 		super(matrix);
-		this.count = count;
 		size = Coordinates.multiply(matrix.getSize(), count);
 	}
 
 	@Override
 	public Object getObject(long... coordinates) throws MatrixException {
-		return getSource().getAsObject(Coordinates.modulo(coordinates, count));
+		return getSource().getAsObject(Coordinates.modulo(coordinates, getSource().getSize()));
 	}
 
 	@Override

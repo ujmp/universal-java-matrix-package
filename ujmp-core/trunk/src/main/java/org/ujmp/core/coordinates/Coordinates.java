@@ -153,6 +153,22 @@ public class Coordinates implements Serializable {
 		return co;
 	}
 
+	public static final long[] multiply(long[] c1, long[] c2) {
+		long[] co = copyOf(c1);
+		for (int i = co.length - 1; i != -1; i--) {
+			co[i] *= c2[i];
+		}
+		return co;
+	}
+
+	public static final long[] modulo(long[] c1, long[] c2) {
+		long[] co = new long[c1.length];
+		for (int i = co.length - 1; i != -1; i--) {
+			co[i] = c1[i] % c2[i];
+		}
+		return co;
+	}
+
 	public static final long[] minus(long[] c1, long[] c2) {
 		long[] co = copyOf(c1);
 		for (int i = co.length - 1; i != -1; i--) {

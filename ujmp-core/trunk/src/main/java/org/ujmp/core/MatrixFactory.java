@@ -28,11 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
@@ -80,11 +78,13 @@ import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
+import org.ujmp.core.objectmatrix.calculation.Repmat;
 import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.FileListMatrix;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
 import org.ujmp.core.util.matrices.MatrixMemoryUsage;
 import org.ujmp.core.util.matrices.MatrixRandomSeed;
@@ -819,6 +819,10 @@ public abstract class MatrixFactory {
 
 	public static void setMatrixMapper(MatrixMapper matrixMapper) {
 		MatrixFactory.matrixMapper = matrixMapper;
+	}
+
+	public static Matrix repmat(Matrix matrix, long... count) {
+		return new Repmat(matrix, count).calc(Ret.LINK);
 	}
 
 }

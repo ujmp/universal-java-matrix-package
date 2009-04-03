@@ -32,6 +32,8 @@ public interface Annotation extends Serializable {
 
 	public Map<Integer, Map<Long, Object>> getAxisAnnotation();
 
+	public Map<Integer, Map<Object, Long>> getAxisPositions();
+
 	public void setAxisAnnotation(int axis, long positionOnAxis, Object value);
 
 	public Object getAxisAnnotation(int axis, long positionOnAxis);
@@ -47,5 +49,7 @@ public interface Annotation extends Serializable {
 	public Annotation clone();
 
 	public boolean equals(Annotation a);
+
+	public long getPositionForLabel(int dimension, Object object);
 
 }

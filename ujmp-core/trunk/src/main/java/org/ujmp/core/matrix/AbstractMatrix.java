@@ -1383,6 +1383,18 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return StringUtil.format(getAxisAnnotation(ROW, row));
 	}
 
+	public final long getRowForLabel(Object object) {
+		return getPositionForLabel(ROW, object);
+	}
+
+	public final long getColumnForLabel(Object object) {
+		return getPositionForLabel(COLUMN, object);
+	}
+
+	public final long getPositionForLabel(int dimension, Object object) {
+		return annotation == null ? -1 : annotation.getPositionForLabel(dimension, object);
+	}
+
 	public final Object getRowObject(long row) {
 		return getAxisAnnotation(ROW, row);
 	}

@@ -33,16 +33,20 @@ public class DefaultAnnotation implements Annotation {
 
 	protected Map<Integer, Map<Long, Object>> axisAnnotation = null;
 
+	protected Map<Integer, Map<Object, Long>> axisPositions = null;
+
 	protected Map<Integer, Object> axisLabelAnnotation = null;
 
 	public DefaultAnnotation() {
 		axisAnnotation = new HashMap<Integer, Map<Long, Object>>();
+		axisPositions = new HashMap<Integer, Map<Object, Long>>();
 		axisLabelAnnotation = new HashMap<Integer, Object>(2);
 	}
 
 	public DefaultAnnotation(Annotation annotation) {
 		this.matrixAnnotation = annotation.getMatrixAnnotation();
 		axisAnnotation = new HashMap<Integer, Map<Long, Object>>();
+		axisPositions = new HashMap<Integer, Map<Object, Long>>();
 		axisLabelAnnotation = new HashMap<Integer, Object>(2);
 		axisLabelAnnotation.putAll(annotation.getAxisLabelAnnotation());
 		for (int i : annotation.getAxisAnnotation().keySet()) {
@@ -51,15 +55,27 @@ public class DefaultAnnotation implements Annotation {
 			mnew.putAll(m);
 			axisAnnotation.put(i, mnew);
 		}
+		for (int i : annotation.getAxisPositions().keySet()) {
+			Map<Object, Long> m = annotation.getAxisPositions().get(i);
+			Map<Object, Long> mnew = new HashMap<Object, Long>();
+			mnew.putAll(m);
+			axisPositions.put(i, mnew);
+		}
 	}
 
 	public void setAxisAnnotation(int axis, long positionOnAxis, Object value) {
 		Map<Long, Object> axisMap = axisAnnotation.get(axis);
+		Map<Object, Long> positionMap = axisPositions.get(axis);
 		if (axisMap == null) {
 			axisMap = new HashMap<Long, Object>(2);
 			axisAnnotation.put(axis, axisMap);
 		}
+		if (positionMap == null) {
+			positionMap = new HashMap<Object, Long>(2);
+			axisPositions.put(axis, positionMap);
+		}
 		axisMap.put(positionOnAxis, value);
+		positionMap.put(value, positionOnAxis);
 	}
 
 	public Object getAxisAnnotation(int axis, long positionOnAxis) {
@@ -68,6 +84,15 @@ public class DefaultAnnotation implements Annotation {
 			return axisMap.get(positionOnAxis);
 		}
 		return null;
+	}
+
+	public final long getPositionForLabel(int dimension, Object object) {
+		Map<Object, Long> axisMap = axisPositions.get(dimension);
+		if (axisMap != null) {
+			Long pos = axisMap.get(object);
+			return pos == null ? -1 : pos;
+		}
+		return -1;
 	}
 
 	public Object getAxisAnnotation(int axis) {
@@ -100,19 +125,25 @@ public class DefaultAnnotation implements Annotation {
 		return axisAnnotation;
 	}
 
+	public Map<Integer, Map<Object, Long>> getAxisPositions() {
+		return axisPositions;
+	}
+
 	public boolean equals(Annotation a) {
 		if (a == null) {
 			return false;
 		}
 		if (matrixAnnotation != null && !matrixAnnotation.equals(a.getMatrixAnnotation())) {
 			return false;
-		} else if (a.getMatrixAnnotation() != null && !a.getMatrixAnnotation().equals(matrixAnnotation)) {
+		} else if (a.getMatrixAnnotation() != null
+				&& !a.getMatrixAnnotation().equals(matrixAnnotation)) {
 			return false;
 		}
 		if (axisLabelAnnotation != null && !axisLabelAnnotation.equals(a.getAxisLabelAnnotation())) {
 			return false;
 		} else {
-			if (a.getAxisLabelAnnotation() != null && !a.getAxisLabelAnnotation().equals(axisLabelAnnotation)) {
+			if (a.getAxisLabelAnnotation() != null
+					&& !a.getAxisLabelAnnotation().equals(axisLabelAnnotation)) {
 				return false;
 			}
 		}

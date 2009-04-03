@@ -21,22 +21,29 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core;
+package org.ujmp.core.annotation;
 
-import junit.framework.TestSuite;
+import junit.framework.TestCase;
 
-public class AllTests extends TestSuite {
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(MatrixFactoryTest.class);
-		suite.addTest(org.ujmp.core.calculation.AllTests.suite());
-		suite.addTest(org.ujmp.core.collections.AllTests.suite());
-		suite.addTest(org.ujmp.core.implementations.AllTests.suite());
-		suite.addTest(org.ujmp.core.io.AllTests.suite());
-		suite.addTest(org.ujmp.core.util.AllTests.suite());
-		suite.addTest(org.ujmp.core.annotation.AllTests.suite());
-		return suite;
+public class TestAnnotation extends TestCase {
+
+	public void testReverseAnnotation() throws Exception {
+		Matrix m = MatrixFactory.dense(10, 10);
+		m.setColumnLabel(3, "col3");
+		m.setRowLabel(3, "row3");
+		m.setColumnLabel(5, "col5");
+		m.setRowLabel(5, "row5");
+
+		assertEquals(3, m.getRowForLabel("row3"));
+		assertEquals(3, m.getColumnForLabel("col3"));
+		assertEquals(5, m.getRowForLabel("row5"));
+		assertEquals(5, m.getColumnForLabel("col5"));
+		assertEquals(-1, m.getColumnForLabel("col1"));
+		assertEquals(-1, m.getRowForLabel("col1"));
+
 	}
 
 }

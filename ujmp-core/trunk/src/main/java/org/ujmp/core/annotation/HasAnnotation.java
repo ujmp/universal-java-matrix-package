@@ -57,4 +57,10 @@ public interface HasAnnotation {
 
 	public void setColumnObject(long col, Object o);
 
+	public long getRowForLabel(Object object);
+
+	public long getColumnForLabel(Object object);
+
+	public long getPositionForLabel(int dimension, Object object);
+
 }

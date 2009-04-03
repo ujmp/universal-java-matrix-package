@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core;
+package org.ujmp.core.annotation;
 
 import junit.framework.TestSuite;
 
@@ -29,13 +29,7 @@ public class AllTests extends TestSuite {
 
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(MatrixFactoryTest.class);
-		suite.addTest(org.ujmp.core.calculation.AllTests.suite());
-		suite.addTest(org.ujmp.core.collections.AllTests.suite());
-		suite.addTest(org.ujmp.core.implementations.AllTests.suite());
-		suite.addTest(org.ujmp.core.io.AllTests.suite());
-		suite.addTest(org.ujmp.core.util.AllTests.suite());
-		suite.addTest(org.ujmp.core.annotation.AllTests.suite());
+		suite.addTestSuite(TestAnnotation.class);
 		return suite;
 	}
 

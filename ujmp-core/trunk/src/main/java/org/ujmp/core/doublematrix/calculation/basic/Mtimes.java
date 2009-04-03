@@ -40,23 +40,34 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
-	private Matrix result = null;
+	private long[] size = null;
 
 	public Mtimes(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
+		this.size = new long[] { m1.getRowCount(), m2.getColumnCount() };
 	}
 
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
-		if (result == null) {
-			if (ignoreNaN) {
-				result = calc(ignoreNaN, getSources()[0], getSources()[1]);
-			} else {
-				calc(getSources()[0], getSources()[1]);
+		Matrix m1 = getSources()[0];
+		Matrix m2 = getSources()[1];
+		long row = coordinates[ROW];
+		long col = coordinates[COLUMN];
+
+		double sum = 0.0;
+		if (ignoreNaN) {
+			for (long k = m1.getColumnCount(); --k >= 0;) {
+				sum += MathUtil.ignoreNaN(m1.getAsDouble(row, k))
+						* MathUtil.ignoreNaN(m2.getAsDouble(k, col));
+			}
+		} else {
+			for (long k = m1.getColumnCount(); --k >= 0;) {
+				sum += m1.getAsDouble(row, k) * m2.getAsDouble(k, col);
 			}
 		}
-		return result.getAsDouble(coordinates);
+
+		return sum;
 	}
 
 	// this is old and slower, maybe delete?
@@ -104,10 +115,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	@Override
 	public long[] getSize() {
-		if (result == null) {
-			result = calc(ignoreNaN, getSources()[0], getSources()[1]);
-		}
-		return result.getSize();
+		return size;
 	}
 
 	public static Matrix calc(boolean ignoreNaN, DoubleMatrix2D m1, DoubleMatrix2D m2) {
@@ -196,6 +204,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new ArrayDenseDoubleMatrix2D(ret);
 	}
 
+	@Deprecated
 	private static DenseDoubleMatrix2D calcOld(double[] m1, int m1RowCount, int m1ColumnCount,
 			double[] m2, int m2RowCount, int m2ColumnCount) {
 		if (m1ColumnCount != m2RowCount) {

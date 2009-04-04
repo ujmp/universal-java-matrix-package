@@ -63,7 +63,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		}
 		i--;
 		Matrix m = getSources()[i];
-		long[] c = coordinates.clone();
+		long[] c = Coordinates.copyOf(coordinates);
 		c[getDimension()] = c[getDimension()] - positions[i];
 		return m.getAsObject(c);
 	}

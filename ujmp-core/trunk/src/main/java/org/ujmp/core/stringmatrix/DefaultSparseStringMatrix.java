@@ -63,5 +63,15 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 	public void setString(String string, long... coordinates) throws MatrixException {
 		setObject(string, coordinates);
 	}
+	
+	@Override
+	public String getAsString(long... coordinates) throws MatrixException {
+		return StringUtil.convert(getObject(coordinates));
+	}
+
+	@Override
+	public void setAsString(String string, long... coordinates) throws MatrixException {
+		setObject(string, coordinates);
+	}
 
 }

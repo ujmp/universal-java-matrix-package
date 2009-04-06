@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
@@ -52,6 +53,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 	public double getDouble(long... coordinates) throws MatrixException {
 		Matrix m1 = getSources()[0];
 		Matrix m2 = getSources()[1];
+
 		long row = coordinates[ROW];
 		long col = coordinates[COLUMN];
 
@@ -260,56 +262,142 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
+	public static DenseDoubleMatrix2D gemm(final double alpha, final Matrix A, final double beta,
+			final Matrix B, boolean ignoreNaN) {
+		if (ignoreNaN) {
+			return gemmIgnoreNaN(alpha, A, beta, B);
+		} else {
+			return gemmNaN(alpha, A, beta, B);
+		}
+	}
+
+	public static DenseDoubleMatrix2D gemmNaN(final double alpha, final Matrix A,
+			final double beta, final Matrix B) {
+		final int m1RowCount = (int) A.getRowCount();
+		final int m1ColumnCount = (int) A.getColumnCount();
+		final int m2RowCount = (int) B.getRowCount();
+		final int m2ColumnCount = (int) B.getColumnCount();
+
+		if (m1ColumnCount != m2RowCount) {
+			throw new MatrixException("matrices have wrong size");
+		}
+
+		final double[] C = new double[m1RowCount * m2ColumnCount];
+
+		if (alpha == 0 || beta == 0) {
+			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+		}
+
+		for (int jcol = 0; jcol < m2ColumnCount; ++jcol) {
+			final int jcolTimesM1RowCount = jcol * m1RowCount;
+			if (beta != 1.0) {
+				for (int irow = 0; irow < m1RowCount; ++irow) {
+					C[irow + jcolTimesM1RowCount] *= beta;
+				}
+			}
+			for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+				double temp = alpha * B.getAsDouble(lcol, jcol);
+				if (temp != 0.0) {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C[irow + jcolTimesM1RowCount] += A.getAsDouble(irow, lcol) * temp;
+					}
+				}
+			}
+		}
+		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+	}
+
+	public static DenseDoubleMatrix2D gemmIgnoreNaN(final double alpha, final Matrix A,
+			final double beta, final Matrix B) {
+		final int m1RowCount = (int) A.getRowCount();
+		final int m1ColumnCount = (int) A.getColumnCount();
+		final int m2RowCount = (int) B.getRowCount();
+		final int m2ColumnCount = (int) B.getColumnCount();
+
+		if (m1ColumnCount != m2RowCount) {
+			throw new MatrixException("matrices have wrong size");
+		}
+
+		final double[] C = new double[m1RowCount * m2ColumnCount];
+
+		if (alpha == 0 || beta == 0) {
+			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+		}
+
+		for (int jcol = 0; jcol < m2ColumnCount; ++jcol) {
+			final int jcolTimesM1RowCount = jcol * m1RowCount;
+			for (int irow = 0; irow < m1RowCount; ++irow) {
+				C[irow + jcolTimesM1RowCount] *= beta;
+			}
+			for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+				double temp = alpha * MathUtil.ignoreNaN(B.getAsDouble(lcol, jcol));
+				if (temp != 0.0) {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C[irow + jcolTimesM1RowCount] += MathUtil.ignoreNaN(A.getAsDouble(irow,
+								lcol))
+								* temp;
+					}
+				}
+			}
+		}
+		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+	}
+
 	public static Matrix calc(Matrix m1, Matrix m2) {
 		return calc(false, m1, m2);
+	}
+
+	@Deprecated
+	private static Matrix calcMatrix(boolean ignoreNaN, Matrix m1, Matrix m2) {
+		final int rowCount = (int) m1.getRowCount();
+		final int columnCount = (int) m1.getColumnCount();
+		final int retColumnCount = (int) m2.getColumnCount();
+
+		if (columnCount != m2.getRowCount()) {
+			throw new MatrixException("matrices have wrong size: "
+					+ Coordinates.toString(m1.getSize()) + " and "
+					+ Coordinates.toString(m2.getSize()));
+		}
+
+		final double[][] ret = new double[rowCount][retColumnCount];
+		final double[] columns = new double[columnCount];
+
+		if (ignoreNaN) {
+			for (int c = retColumnCount; --c != -1;) {
+				for (int k = columnCount; --k != -1;) {
+					columns[k] = MathUtil.ignoreNaN(m2.getAsDouble(k, c));
+				}
+				for (int r = rowCount; --r != -1;) {
+					double sum = 0;
+					for (int k = columnCount; --k != -1;) {
+						sum += MathUtil.ignoreNaN(m1.getAsDouble(r, k)) * columns[k];
+					}
+					ret[r][c] = sum;
+				}
+			}
+		} else {
+			for (int c = retColumnCount; --c != -1;) {
+				for (int k = columnCount; --k != -1;) {
+					columns[k] = m2.getAsDouble(k, c);
+				}
+				for (int r = rowCount; --r != -1;) {
+					double sum = 0;
+					for (int k = columnCount; --k != -1;) {
+						sum += m1.getAsDouble(r, k) * columns[k];
+					}
+					ret[r][c] = sum;
+				}
+			}
+		}
+
+		return new ArrayDenseDoubleMatrix2D(ret);
 	}
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		if (m1 instanceof DoubleMatrix2D && m2 instanceof DoubleMatrix2D) {
 			return calc(ignoreNaN, (DoubleMatrix2D) m1, (DoubleMatrix2D) m2);
 		} else {
-			final int rowCount = (int) m1.getRowCount();
-			final int columnCount = (int) m1.getColumnCount();
-			final int retColumnCount = (int) m2.getColumnCount();
-
-			if (columnCount != m2.getRowCount()) {
-				throw new MatrixException("matrices have wrong size: "
-						+ Coordinates.toString(m1.getSize()) + " and "
-						+ Coordinates.toString(m2.getSize()));
-			}
-
-			final double[][] ret = new double[rowCount][retColumnCount];
-			final double[] columns = new double[columnCount];
-
-			if (ignoreNaN) {
-				for (int c = retColumnCount; --c != -1;) {
-					for (int k = columnCount; --k != -1;) {
-						columns[k] = MathUtil.ignoreNaN(m2.getAsDouble(k, c));
-					}
-					for (int r = rowCount; --r != -1;) {
-						double sum = 0;
-						for (int k = columnCount; --k != -1;) {
-							sum += MathUtil.ignoreNaN(m1.getAsDouble(r, k)) * columns[k];
-						}
-						ret[r][c] = sum;
-					}
-				}
-			} else {
-				for (int c = retColumnCount; --c != -1;) {
-					for (int k = columnCount; --k != -1;) {
-						columns[k] = m2.getAsDouble(k, c);
-					}
-					for (int r = rowCount; --r != -1;) {
-						double sum = 0;
-						for (int k = columnCount; --k != -1;) {
-							sum += m1.getAsDouble(r, k) * columns[k];
-						}
-						ret[r][c] = sum;
-					}
-				}
-			}
-
-			return new ArrayDenseDoubleMatrix2D(ret);
+			return gemm(1.0, m1, 1.0, m2, ignoreNaN);
 		}
 	}
 

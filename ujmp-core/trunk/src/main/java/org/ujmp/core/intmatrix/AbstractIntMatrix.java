@@ -57,7 +57,7 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 
 	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setInt((int) value);
+		setInt((int) value, coordinates);
 	}
 
 	@Override

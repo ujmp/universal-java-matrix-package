@@ -59,7 +59,7 @@ public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> imp
 
 	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setDate(new Date((long) value));
+		setDate(new Date((long) value), coordinates);
 	}
 
 	@Override

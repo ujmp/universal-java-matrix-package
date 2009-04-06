@@ -59,7 +59,7 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 
 	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setChar((char) value);
+		setChar((char) value, coordinates);
 	}
 
 	@Override

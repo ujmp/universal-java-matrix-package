@@ -59,7 +59,7 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 
 	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setFloat((float) value);
+		setFloat((float) value, coordinates);
 	}
 
 	@Override

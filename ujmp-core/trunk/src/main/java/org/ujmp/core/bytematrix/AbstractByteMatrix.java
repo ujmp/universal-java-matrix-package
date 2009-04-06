@@ -57,7 +57,7 @@ public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> imp
 
 	@Override
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setByte((byte) value);
+		setByte((byte) value, coordinates);
 	}
 
 	@Override

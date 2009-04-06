@@ -24,7 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;

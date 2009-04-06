@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
-import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
@@ -236,11 +236,11 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseByteMatrix2D linkToArray(byte[]... values) {
-		return new DefaultDenseByteMatrix2D(values);
+		return new ArrayDenseByteMatrix2D(values);
 	}
 
 	public static final DenseByteMatrix2D linkToArray(byte... values) {
-		return new DefaultDenseByteMatrix2D(values);
+		return new ArrayDenseByteMatrix2D(values);
 	}
 
 	public static final DenseCharMatrix2D linkToArray(char[]... values) {
@@ -384,7 +384,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseByteMatrix2D linkToValue(byte value) {
-		return new DefaultDenseByteMatrix2D(new byte[][] { { value } });
+		return new ArrayDenseByteMatrix2D(new byte[][] { { value } });
 	}
 
 	public static final DenseShortMatrix2D linkToValue(short value) {
@@ -413,7 +413,7 @@ public abstract class MatrixFactory {
 		} else if (value instanceof Short) {
 			return new DefaultDenseShortMatrix2D(new short[][] { { (Short) value } });
 		} else if (value instanceof Byte) {
-			return new DefaultDenseByteMatrix2D(new byte[][] { { (Byte) value } });
+			return new ArrayDenseByteMatrix2D(new byte[][] { { (Byte) value } });
 		} else if (value instanceof Boolean) {
 			return new DefaultDenseBooleanMatrix2D(new boolean[][] { { (Boolean) value } });
 		} else if (value instanceof Long) {

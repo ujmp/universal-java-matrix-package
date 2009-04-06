@@ -24,84 +24,142 @@
 package org.ujmp.core.bytematrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasByteArray;
 
-public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
-	private static final long serialVersionUID = 1111734188254187991L;
+public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements HasByteArray {
+	private static final long serialVersionUID = -7637602510970244322L;
 
-	private byte[][] values = null;
+	private byte[] values = null;
+
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseByteMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseByteMatrix2D) {
-			byte[][] v = ((DefaultDenseByteMatrix2D) m).values;
-			this.values = new byte[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			byte[] v = ((DefaultDenseByteMatrix2D) m).values;
+			this.values = new byte[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new byte[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new byte[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsByte(m.getAsByte(c), c);
+				setByte(m.getAsByte(c), c);
 			}
 		}
-	}
-
-	public DefaultDenseByteMatrix2D(byte[]... v) {
-		this.values = v;
 	}
 
 	public DefaultDenseByteMatrix2D(long... size) {
-		values = new byte[(int) size[ROW]][(int) size[COLUMN]];
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new byte[rows * cols];
 	}
 
-	public DefaultDenseByteMatrix2D(byte[] v) {
-		this.values = new byte[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public DefaultDenseByteMatrix2D(byte[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public byte getByte(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setByte(byte value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public byte getByte(int row, int column) {
-		return values[row][column];
+		return values[column * rows + row];
 	}
 
 	public void setByte(byte value, int row, int column) {
-		values[row][column] = value;
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix plus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] + v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix minus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] - v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix times(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] * v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix divide(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] / v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		byte[] result = new byte[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseByteMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		byte[][] result = new byte[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
+		final byte[] result = new byte[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseByteMatrix2D(result);
+		return new DefaultDenseByteMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public byte[] getByteArray() {
+		return values;
 	}
 
 }

@@ -38,7 +38,7 @@ import org.ujmp.core.bytematrix.AbstractDenseByteMatrix;
 import org.ujmp.core.bytematrix.AbstractDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.AbstractSparseByteMatrix;
 import org.ujmp.core.bytematrix.AbstractSparseByteMatrix2D;
-import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.DefaultSparseByteMatrix;
 import org.ujmp.core.charmatrix.AbstractDenseCharMatrix;
 import org.ujmp.core.charmatrix.AbstractDenseCharMatrix2D;
@@ -213,7 +213,7 @@ public class MatrixMapper implements ClassMapper {
 			setSparseBooleanMatrix2DClassName(DefaultSparseBooleanMatrix.class.getName());
 			setSparseBooleanMatrixMultiDClassName(DefaultSparseBooleanMatrix.class.getName());
 
-			setDenseByteMatrix2DClassName(DefaultDenseByteMatrix2D.class.getName());
+			setDenseByteMatrix2DClassName(ArrayDenseByteMatrix2D.class.getName());
 			setDenseByteMatrixMultiDClassName(DefaultSparseByteMatrix.class.getName());
 			setSparseByteMatrix2DClassName(DefaultSparseByteMatrix.class.getName());
 			setSparseByteMatrixMultiDClassName(DefaultSparseByteMatrix.class.getName());
@@ -586,7 +586,7 @@ public class MatrixMapper implements ClassMapper {
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseByteMatrix2D.class;
+			matrixClass = ArrayDenseByteMatrix2D.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}

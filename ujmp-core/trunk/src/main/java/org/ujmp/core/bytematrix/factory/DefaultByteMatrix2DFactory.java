@@ -24,7 +24,7 @@
 package org.ujmp.core.bytematrix.factory;
 
 import org.ujmp.core.bytematrix.ByteMatrix2D;
-import org.ujmp.core.bytematrix.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultByteMatrix2DFactory extends AbstractByteMatrix2DFactory {
@@ -32,7 +32,7 @@ public class DefaultByteMatrix2DFactory extends AbstractByteMatrix2DFactory {
 
 	@Override
 	public ByteMatrix2D dense(long rows, long columns) throws MatrixException {
-		return new DefaultDenseByteMatrix2D(rows, columns);
+		return new ArrayDenseByteMatrix2D(rows, columns);
 	}
 
 }

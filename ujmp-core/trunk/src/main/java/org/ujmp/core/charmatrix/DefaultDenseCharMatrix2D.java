@@ -24,84 +24,142 @@
 package org.ujmp.core.charmatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasCharArray;
 
-public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
-	private static final long serialVersionUID = -172129670809500830L;
+public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implements HasCharArray {
+	private static final long serialVersionUID = 5579846181111172177L;
 
-	private char[][] values = null;
+	private char[] values = null;
+
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseCharMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseCharMatrix2D) {
-			char[][] v = ((DefaultDenseCharMatrix2D) m).values;
-			this.values = new char[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			char[] v = ((DefaultDenseCharMatrix2D) m).values;
+			this.values = new char[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new char[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new char[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsChar(m.getAsChar(c), c);
+				setChar(m.getAsChar(c), c);
 			}
 		}
-	}
-
-	public DefaultDenseCharMatrix2D(char[]... v) {
-		this.values = v;
 	}
 
 	public DefaultDenseCharMatrix2D(long... size) {
-		values = new char[(int) size[ROW]][(int) size[COLUMN]];
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new char[rows * cols];
 	}
 
-	public DefaultDenseCharMatrix2D(char[] v) {
-		this.values = new char[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public DefaultDenseCharMatrix2D(char[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public char getChar(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setChar(char value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public char getChar(int row, int column) {
-		return values[row][column];
+		return values[column * rows + row];
 	}
 
 	public void setChar(char value, int row, int column) {
-		values[row][column] = value;
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix plus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] + v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix minus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] - v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix times(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] * v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix divide(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] / v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		char[] result = new char[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseCharMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		char[][] result = new char[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
+		final char[] result = new char[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseCharMatrix2D(result);
+		return new DefaultDenseCharMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public char[] getCharArray() {
+		return values;
 	}
 
 }

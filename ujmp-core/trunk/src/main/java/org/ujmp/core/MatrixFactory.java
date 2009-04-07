@@ -38,7 +38,7 @@ import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
@@ -57,7 +57,7 @@ import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.DefaultDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
@@ -244,11 +244,11 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseCharMatrix2D linkToArray(char[]... values) {
-		return new DefaultDenseCharMatrix2D(values);
+		return new ArrayDenseCharMatrix2D(values);
 	}
 
 	public static final DenseCharMatrix2D linkToArray(char... values) {
-		return new DefaultDenseCharMatrix2D(values);
+		return new ArrayDenseCharMatrix2D(values);
 	}
 
 	public static final DenseDateMatrix2D linkToArray(Date[]... values) {
@@ -268,11 +268,11 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseFloatMatrix2D linkToArray(float[]... values) {
-		return new DefaultDenseFloatMatrix2D(values);
+		return new ArrayDenseFloatMatrix2D(values);
 	}
 
 	public static final DenseFloatMatrix2D linkToArray(float... values) {
-		return new DefaultDenseFloatMatrix2D(values);
+		return new ArrayDenseFloatMatrix2D(values);
 	}
 
 	public static final DenseIntMatrix2D linkToArray(int[]... values) {
@@ -372,7 +372,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseCharMatrix2D linkToValue(char value) {
-		return new DefaultDenseCharMatrix2D(new char[][] { { value } });
+		return new ArrayDenseCharMatrix2D(new char[][] { { value } });
 	}
 
 	public static final DenseDateMatrix2D linkToValue(Date value) {
@@ -407,7 +407,7 @@ public abstract class MatrixFactory {
 		} else if (value instanceof Integer) {
 			return new DefaultDenseIntMatrix2D(new int[][] { { (Integer) value } });
 		} else if (value instanceof Float) {
-			return new DefaultDenseFloatMatrix2D(new float[][] { { (Float) value } });
+			return new ArrayDenseFloatMatrix2D(new float[][] { { (Float) value } });
 		} else if (value instanceof String) {
 			return new DefaultDenseStringMatrix2D(new String[][] { { (String) value } });
 		} else if (value instanceof Short) {

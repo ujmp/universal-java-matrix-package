@@ -21,18 +21,9 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.floatmatrix.factory;
+package org.ujmp.core.interfaces;
 
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.FloatMatrix2D;
+public interface HasCharArray {
 
-public class DefaultFloatMatrix2DFactory extends AbstractFloatMatrix2DFactory {
-	private static final long serialVersionUID = 4813771827445313121L;
-
-	@Override
-	public FloatMatrix2D dense(long rows, long columns) throws MatrixException {
-		return new ArrayDenseFloatMatrix2D(rows, columns);
-	}
-
+	public char[] getCharArray();
 }

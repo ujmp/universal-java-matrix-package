@@ -24,84 +24,142 @@
 package org.ujmp.core.floatmatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasFloatArray;
 
-public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
-	private static final long serialVersionUID = 6599658021180126741L;
+public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implements HasFloatArray {
+	private static final long serialVersionUID = -5449462775185759895L;
 
-	private float[][] values = null;
+	private float[] values = null;
+
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseFloatMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseFloatMatrix2D) {
-			float[][] v = ((DefaultDenseFloatMatrix2D) m).values;
-			this.values = new float[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			float[] v = ((DefaultDenseFloatMatrix2D) m).values;
+			this.values = new float[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new float[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new float[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsFloat(m.getAsFloat(c), c);
+				setFloat(m.getAsFloat(c), c);
 			}
 		}
-	}
-
-	public DefaultDenseFloatMatrix2D(float[]... v) {
-		this.values = v;
 	}
 
 	public DefaultDenseFloatMatrix2D(long... size) {
-		values = new float[(int) size[ROW]][(int) size[COLUMN]];
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new float[rows * cols];
 	}
 
-	public DefaultDenseFloatMatrix2D(float[] v) {
-		this.values = new float[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public DefaultDenseFloatMatrix2D(float[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public float getFloat(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setFloat(float value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public float getFloat(int row, int column) {
-		return values[row][column];
+		return values[column * rows + row];
 	}
 
 	public void setFloat(float value, int row, int column) {
-		values[row][column] = value;
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix plus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] + v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix minus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] - v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix times(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] * v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix divide(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] / v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		float[] result = new float[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseFloatMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		float[][] result = new float[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
+		final float[] result = new float[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseFloatMatrix2D(result);
+		return new DefaultDenseFloatMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public float[] getFloatArray() {
+		return values;
 	}
 
 }

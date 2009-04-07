@@ -44,7 +44,7 @@ import org.ujmp.core.charmatrix.AbstractDenseCharMatrix;
 import org.ujmp.core.charmatrix.AbstractDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.AbstractSparseCharMatrix;
 import org.ujmp.core.charmatrix.AbstractSparseCharMatrix2D;
-import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DefaultSparseCharMatrix;
 import org.ujmp.core.datematrix.AbstractDenseDateMatrix;
 import org.ujmp.core.datematrix.AbstractDenseDateMatrix2D;
@@ -62,7 +62,7 @@ import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix;
 import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix;
 import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.DefaultDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DefaultSparseFloatMatrix;
 import org.ujmp.core.intmatrix.AbstractDenseIntMatrix;
 import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
@@ -218,7 +218,7 @@ public class MatrixMapper implements ClassMapper {
 			setSparseByteMatrix2DClassName(DefaultSparseByteMatrix.class.getName());
 			setSparseByteMatrixMultiDClassName(DefaultSparseByteMatrix.class.getName());
 
-			setDenseCharMatrix2DClassName(DefaultDenseCharMatrix2D.class.getName());
+			setDenseCharMatrix2DClassName(ArrayDenseCharMatrix2D.class.getName());
 			setDenseCharMatrixMultiDClassName(DefaultSparseCharMatrix.class.getName());
 			setSparseCharMatrix2DClassName(DefaultSparseCharMatrix.class.getName());
 			setSparseCharMatrixMultiDClassName(DefaultSparseCharMatrix.class.getName());
@@ -233,7 +233,7 @@ public class MatrixMapper implements ClassMapper {
 			setSparseDoubleMatrix2DClassName(DefaultSparseDoubleMatrix.class.getName());
 			setSparseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
 
-			setDenseFloatMatrix2DClassName(DefaultDenseFloatMatrix2D.class.getName());
+			setDenseFloatMatrix2DClassName(ArrayDenseFloatMatrix2D.class.getName());
 			setDenseFloatMatrixMultiDClassName(DefaultSparseFloatMatrix.class.getName());
 			setSparseFloatMatrix2DClassName(DefaultSparseFloatMatrix.class.getName());
 			setSparseFloatMatrixMultiDClassName(DefaultSparseFloatMatrix.class.getName());
@@ -378,7 +378,7 @@ public class MatrixMapper implements ClassMapper {
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseFloatMatrix2D.class;
+			matrixClass = ArrayDenseFloatMatrix2D.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}
@@ -638,7 +638,7 @@ public class MatrixMapper implements ClassMapper {
 		try {
 			matrixClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseCharMatrix2D.class;
+			matrixClass = ArrayDenseCharMatrix2D.class;
 			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
 					+ " instead.");
 		}

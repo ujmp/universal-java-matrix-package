@@ -24,7 +24,7 @@
 package org.ujmp.core.charmatrix.factory;
 
 import org.ujmp.core.charmatrix.CharMatrix2D;
-import org.ujmp.core.charmatrix.DefaultDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultCharMatrix2DFactory extends AbstractCharMatrix2DFactory {
@@ -32,7 +32,7 @@ public class DefaultCharMatrix2DFactory extends AbstractCharMatrix2DFactory {
 
 	@Override
 	public CharMatrix2D dense(long rows, long columns) throws MatrixException {
-		return new DefaultDenseCharMatrix2D(rows, columns);
+		return new ArrayDenseCharMatrix2D(rows, columns);
 	}
 
 }

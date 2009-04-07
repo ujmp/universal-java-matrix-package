@@ -25,37 +25,22 @@ package org.ujmp.core.treematrix;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.event.TreeModelListener;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix;
+import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix2D;
 
-public abstract class AbstractTreeMatrix<A> extends AbstractSparseDoubleMatrix implements TreeModel {
-
+public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D implements TreeMatrix {
 	private static final long serialVersionUID = 7731771819651651188L;
 
 	public boolean contains(long... coordinates) {
 		return false;
 	}
 
-	public abstract Collection<Object> getObjectList();
-
 	public final boolean isChild(Object parent, Object child) {
 		return getChildren(parent).contains(child);
-	}
-
-	@SuppressWarnings("unchecked")
-	public final int getIndexOf(Object object) {
-		if (getObjectList() instanceof List) {
-			return ((List) getObjectList()).indexOf(object);
-		} else {
-			// TODO: improve
-			return new ArrayList(getObjectList()).indexOf(object);
-		}
 	}
 
 	public final boolean isChild(int parentId, int childId) {
@@ -74,23 +59,23 @@ public abstract class AbstractTreeMatrix<A> extends AbstractSparseDoubleMatrix i
 		}
 	}
 
-	public abstract List<Object> getChildren(Object o);
-
-	public Iterable<long[]> allCoordinates() {
-		return Collections.emptyList();
+	@Override
+	public void addChildren(Object parent, Collection<? extends Object> children) {
+		for (Object child : children) {
+			addChild(parent, child);
+		}
 	}
 
 	public final long[] getSize() {
 		return new long[] { getObjectList().size(), getObjectList().size() };
 	}
 
-	public final double getDouble(long... coordinates) {
-		return isChild(coordinates[ROW], coordinates[COLUMN]) ? 1.0 : 0.0;
+	public final double getDouble(int row, int column) {
+		return isChild(row, column) ? 1.0 : 0.0;
 	}
 
-	@Override
-	public long getValueCount() {
-		return 0;
+	public final double getDouble(long row, long column) {
+		return getDouble((int) row, (int) column);
 	}
 
 	public final void addChild(Object parent, Object child) {
@@ -106,9 +91,13 @@ public abstract class AbstractTreeMatrix<A> extends AbstractSparseDoubleMatrix i
 		notifyGUIObject();
 	}
 
-	public void setDouble(double value, long... coordinates) {
-		Object parent = getObject((int) coordinates[ROW]);
-		Object child = getObject((int) coordinates[COLUMN]);
+	public final void setDouble(double value, long row, long column) {
+		setDouble(value, (int) row, (int) column);
+	}
+
+	public void setDouble(double value, int row, int column) {
+		Object parent = getObject(row);
+		Object child = getObject(column);
 		if (value == 0.0) {
 			removeChild(parent, child);
 		} else {
@@ -130,10 +119,6 @@ public abstract class AbstractTreeMatrix<A> extends AbstractSparseDoubleMatrix i
 	public final int getIndexOfChild(Object parent, Object child) {
 		return getChildren(parent).indexOf(child);
 	}
-
-	public abstract Object getRoot();
-
-	public abstract void setRoot(Object o);
 
 	public final boolean isLeaf(Object node) {
 		return getChildren(node).size() == 0;

@@ -23,8 +23,10 @@
 
 package org.ujmp.core.treematrix;
 
-import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import javax.swing.tree.TreeModel;
 
-public interface TreeMatrix<A> extends GenericMatrix2D<A>, Tree<A> {
+import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
+
+public interface TreeMatrix extends SparseDoubleMatrix2D, Tree, TreeModel {
 
 }

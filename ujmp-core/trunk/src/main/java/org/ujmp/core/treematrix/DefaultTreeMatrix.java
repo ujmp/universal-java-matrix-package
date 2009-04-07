@@ -23,6 +23,7 @@
 
 package org.ujmp.core.treematrix;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 import org.ujmp.core.collections.ArrayIndexList;
 
-public class DefaultTreeMatrix extends AbstractTreeMatrix<Object> {
+public class DefaultTreeMatrix extends AbstractTreeMatrix {
 	private static final long serialVersionUID = -6752285310555819432L;
 
 	private final List<Object> objects = new ArrayIndexList<Object>();

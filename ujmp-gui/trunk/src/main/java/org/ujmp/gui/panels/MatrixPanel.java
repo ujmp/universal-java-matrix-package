@@ -52,6 +52,10 @@ public class MatrixPanel extends AbstractPanel {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setMinimumSize(new Dimension(10, 10));
 
+		if (m.getMatrix() instanceof TreeModel) {
+			tabbedPane.add("Tree View", new MatrixTreePanel(m));
+		}
+
 		tabbedPane.add("2D Visualization", new MatrixPaintPanel(m, false));
 
 		if (false) {
@@ -60,10 +64,6 @@ public class MatrixPanel extends AbstractPanel {
 				// false));
 			} catch (Throwable t) {
 			}
-		}
-
-		if (m.getMatrix() instanceof TreeModel) {
-			tabbedPane.add("Tree View", new MatrixTreePanel(m));
 		}
 
 		try {
@@ -93,7 +93,8 @@ public class MatrixPanel extends AbstractPanel {
 
 		try {
 			Class.forName("org.math.plot.PlotPanel");
-			Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotScatterPanel");
+			Class<?> c = Class
+					.forName("org.ujmp.jmathplot.JMathPlotScatterPanel");
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Scatter Plot", panel);
@@ -111,7 +112,8 @@ public class MatrixPanel extends AbstractPanel {
 
 		try {
 			Class.forName("org.math.plot.PlotPanel");
-			Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotHistogramPanel");
+			Class<?> c = Class
+					.forName("org.ujmp.jmathplot.JMathPlotHistogramPanel");
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Histogram", panel);
@@ -120,7 +122,8 @@ public class MatrixPanel extends AbstractPanel {
 
 		try {
 			Class.forName("org.math.plot.PlotPanel");
-			Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotStaircasePanel");
+			Class<?> c = Class
+					.forName("org.ujmp.jmathplot.JMathPlotStaircasePanel");
 			Constructor<?> con = c.getConstructor(Matrix.class);
 			JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 			tabbedPane.add("Staircase Plot", panel);
@@ -139,7 +142,8 @@ public class MatrixPanel extends AbstractPanel {
 		try {
 			if (m.getColumnCount() >= 3) {
 				Class.forName("org.math.plot.PlotPanel");
-				Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotBar3DPanel");
+				Class<?> c = Class
+						.forName("org.ujmp.jmathplot.JMathPlotBar3DPanel");
 				Constructor<?> con = c.getConstructor(Matrix.class);
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Bar Plot 3D", panel);
@@ -149,7 +153,8 @@ public class MatrixPanel extends AbstractPanel {
 
 		try {
 			if (m.getColumnCount() >= 3) {
-				Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotScatter3DPanel");
+				Class<?> c = Class
+						.forName("org.ujmp.jmathplot.JMathPlotScatter3DPanel");
 				Constructor<?> con = c.getConstructor(Matrix.class);
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Scatter Plot 3D", panel);
@@ -160,7 +165,8 @@ public class MatrixPanel extends AbstractPanel {
 		try {
 			if (m.getColumnCount() >= 3) {
 				Class.forName("org.math.plot.PlotPanel");
-				Class<?> c = Class.forName("org.ujmp.jmathplot.JMathPlotLine3DPanel");
+				Class<?> c = Class
+						.forName("org.ujmp.jmathplot.JMathPlotLine3DPanel");
 				Constructor<?> con = c.getConstructor(Matrix.class);
 				JPanel panel = (JPanel) con.newInstance(m.getMatrix());
 				tabbedPane.add("Line Plot 3D", panel);

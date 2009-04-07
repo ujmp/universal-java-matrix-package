@@ -32,7 +32,7 @@ import java.util.Map;
 
 import org.ujmp.core.collections.ArrayIndexList;
 
-public class ObjectTreeMatrix extends AbstractTreeMatrix<Object> {
+public class ObjectTreeMatrix extends AbstractTreeMatrix {
 	private static final long serialVersionUID = -7343649063964349539L;
 
 	private final List<Object> objects = new ArrayIndexList<Object>();

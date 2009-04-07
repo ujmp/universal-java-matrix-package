@@ -23,6 +23,31 @@
 
 package org.ujmp.core.treematrix;
 
-public interface Tree<A> {
+import java.util.Collection;
+import java.util.List;
+
+public interface Tree {
+
+	public void setRoot(Object o);
+
+	public List<Object> getChildren(Object o);
+
+	public Collection<Object> getObjectList();
+
+	public boolean isChild(Object parent, Object child);
+
+	public boolean isChild(int parentId, int childId);
+
+	public Object getObject(int index);
+
+	public void addChild(Object parent, Object child);
+
+	public void addChildren(Object parent, Collection<? extends Object> children);
+
+	public void removeChild(Object parent, Object child);
+
+	public void addObject(Object o);
+
+	public int getNumberOfObjects();
 
 }

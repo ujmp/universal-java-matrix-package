@@ -23,8 +23,8 @@
 
 package org.ujmp.core.treematrix;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public class DefaultTreeMatrix extends AbstractTreeMatrix {
 	public List<Object> getChildren(Object o) {
 		List<Object> children = childrenMap.get(o);
 		if (children == null) {
-			children = new LinkedList<Object>();
+			children = new ArrayList<Object>();
 			childrenMap.put(o, children);
 		}
 		return children;

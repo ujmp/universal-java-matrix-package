@@ -24,69 +24,142 @@
 package org.ujmp.core.shortmatrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasShortArray;
 
-public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
-	private static final long serialVersionUID = 4034565357457805099L;
+public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implements HasShortArray {
+	private static final long serialVersionUID = 3387495964006716189L;
 
-	private short[][] values = null;
+	private short[] values = null;
+
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseShortMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseShortMatrix2D) {
-			short[][] v = ((DefaultDenseShortMatrix2D) m).values;
-			this.values = new short[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			short[] v = ((DefaultDenseShortMatrix2D) m).values;
+			this.values = new short[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new short[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new short[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsShort(m.getAsShort(c), c);
+				setShort(m.getAsShort(c), c);
 			}
 		}
 	}
 
-	public DefaultDenseShortMatrix2D(short[]... v) {
+	public DefaultDenseShortMatrix2D(long... size) {
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new short[rows * cols];
+	}
+
+	public DefaultDenseShortMatrix2D(short[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
 		this.values = v;
 	}
 
-	public DefaultDenseShortMatrix2D(long... size) {
-		values = new short[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public short getShort(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setShort(short value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
+	}
+
+	public short getShort(int row, int column) {
+		return values[column * rows + row];
+	}
+
+	public void setShort(short value, int row, int column) {
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix plus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] + v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix minus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] - v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix times(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] * v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix divide(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] / v;
+		}
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		short[] result = new short[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseShortMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
 	}
 
 	@Override
 	public final Matrix transpose() {
-		short[][] result = new short[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
+		final short[] result = new short[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseShortMatrix2D(result);
+		return new DefaultDenseShortMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public short[] getShortArray() {
+		return values;
 	}
 
 }

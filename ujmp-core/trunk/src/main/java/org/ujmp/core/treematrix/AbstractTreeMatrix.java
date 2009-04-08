@@ -78,11 +78,11 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		return getDouble((int) row, (int) column);
 	}
 
-	public final void addChild(Object parent, Object child) {
-		getChildren(parent).add(child);
+	public final void addChild(Object parent, Object child) {		
 		if (!getObjectList().contains(child)) {
 			getObjectList().add(child);
 		}
+		getChildren(parent).add(child);
 		notifyGUIObject();
 	}
 

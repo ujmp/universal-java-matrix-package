@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
@@ -232,6 +231,38 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	public static DenseDoubleMatrix2D gemm(final double alpha, final double[] A,
 			final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
+			final int m2RowCount, final int m2ColumnCount) {
+		if (m1ColumnCount != m2RowCount) {
+			throw new MatrixException("matrices have wrong size");
+		}
+
+		final double[] C = new double[m1RowCount * m2ColumnCount];
+
+		if (alpha == 0 || beta == 0) {
+			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+		}
+
+		for (int jcol = 0; jcol < m2ColumnCount; ++jcol) {
+			final int jcolTimesM1RowCount = jcol * m1RowCount;
+			final int jcolTimesM1ColumnCount = jcol * m1ColumnCount;
+			for (int irow = 0; irow < m1RowCount; ++irow) {
+				C[irow + jcolTimesM1RowCount] *= beta;
+			}
+			for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+				double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+				if (temp != 0.0) {
+					final int lcolTimesM1RowCount = lcol * m1RowCount;
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount] * temp;
+					}
+				}
+			}
+		}
+		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
+	}
+
+	public static DenseDoubleMatrix2D gemm(final double alpha, final byte[] A,
+			final int m1RowCount, final int m1ColumnCount, final double beta, final byte[] B,
 			final int m2RowCount, final int m2ColumnCount) {
 		if (m1ColumnCount != m2RowCount) {
 			throw new MatrixException("matrices have wrong size");

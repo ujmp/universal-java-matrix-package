@@ -25,65 +25,105 @@ package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasObjectArray;
 
-public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
-	private static final long serialVersionUID = 7405594663844848420L;
+public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D implements
+		HasObjectArray {
+	private static final long serialVersionUID = 8929799323811301397L;
 
-	private Object[][] values = null;
+	private Object[] values = null;
 
-	public DefaultDenseObjectMatrix2D(Object[]... values) {
-		this.values = values;
-	}
+	private long[] size = null;
 
-	public DefaultDenseObjectMatrix2D(long... size) {
-		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
-	}
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseObjectMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseObjectMatrix2D) {
-			Object[][] v = ((DefaultDenseObjectMatrix2D) m).values;
-			this.values = new Object[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			Object[] v = ((DefaultDenseObjectMatrix2D) m).values;
+			this.values = new Object[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new Object[rows * cols];
 			for (long[] c : m.allCoordinates()) {
 				setObject(m.getAsObject(c), c);
 			}
 		}
 	}
 
+	public DefaultDenseObjectMatrix2D(long... size) {
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new Object[rows * cols];
+	}
+
+	public DefaultDenseObjectMatrix2D(Object[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
+	}
+
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public Object getObject(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setObject(Object value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public Object getObject(int row, int column) {
-		return values[row][column];
+		return values[column * rows + row];
 	}
 
 	public void setObject(Object value, int row, int column) {
-		values[row][column] = value;
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		Object[] result = new Object[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseObjectMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
+	}
+
+	@Override
+	public final Matrix transpose() {
+		final Object[] result = new Object[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
+			}
+		}
+		return new DefaultDenseObjectMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public Object[] getObjectArray() {
+		return values;
 	}
 
 }

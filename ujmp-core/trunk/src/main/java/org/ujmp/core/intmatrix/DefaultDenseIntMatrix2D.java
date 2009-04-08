@@ -24,208 +24,142 @@
 package org.ujmp.core.intmatrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasIntArray;
 
-public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
-	private static final long serialVersionUID = 3132491298449205914L;
+public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements HasIntArray {
+	private static final long serialVersionUID = 2911903176935762073L;
 
-	private int[][] values = null;
+	private int[] values = null;
+
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
 
 	public DefaultDenseIntMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseIntMatrix2D) {
-			int[][] v = ((DefaultDenseIntMatrix2D) m).values;
-			this.values = new int[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
+			int[] v = ((DefaultDenseIntMatrix2D) m).values;
+			this.values = new int[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
 		} else {
-			values = new int[(int) m.getRowCount()][(int) m.getColumnCount()];
+			this.values = new int[rows * cols];
 			for (long[] c : m.allCoordinates()) {
-				setAsDouble(m.getAsDouble(c), c);
+				setInt(m.getAsInt(c), c);
 			}
 		}
-	}
-
-	public DefaultDenseIntMatrix2D(int[]... v) {
-		this.values = v;
 	}
 
 	public DefaultDenseIntMatrix2D(long... size) {
-		values = new int[(int) size[ROW]][(int) size[COLUMN]];
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new int[rows * cols];
 	}
 
-	public DefaultDenseIntMatrix2D(int[] v) {
-		this.values = new int[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public DefaultDenseIntMatrix2D(int[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public int getInt(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setInt(int value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
 	}
 
 	public int getInt(int row, int column) {
-		return values[row][column];
+		return values[column * rows + row];
 	}
 
 	public void setInt(int value, int row, int column) {
-		values[row][column] = value;
+		values[column * rows + row] = value;
 	}
 
 	@Override
-	public final IntMatrix transpose() {
-		int[][] result = new int[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
-			}
+	public final Matrix plus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] + v;
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
 	@Override
-	public final IntMatrix plus(double v) {
-		int vInt = (int) v;
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] + vInt;
-			}
+	public final Matrix minus(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] - v;
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
 	@Override
-	public final IntMatrix minus(double v) {
-		int vInt = (int) v;
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] - vInt;
-			}
+	public final Matrix times(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] * v;
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
 	@Override
-	public final IntMatrix times(double v) {
-		int vInt = (int) v;
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] * vInt;
-			}
+	public final Matrix divide(double v) {
+		double[] result = new double[values.length];
+		for (int i = result.length; --i != -1;) {
+			result[i] = values[i] / v;
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
 	@Override
-	public final IntMatrix divide(double v) {
-		int vInt = (int) v;
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] / vInt;
-			}
+	public final Matrix copy() throws MatrixException {
+		int[] result = new int[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseIntMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return m;
 	}
 
-	public final IntMatrix plus(IntMatrix m2) throws MatrixException {
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] + m2.getAsInt(r, c);
+	@Override
+	public final Matrix transpose() {
+		final int[] result = new int[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseIntMatrix2D(result);
+		return new DefaultDenseIntMatrix2D(result, cols, rows);
 	}
 
-	public final IntMatrix minus(IntMatrix m2) throws MatrixException {
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] - m2.getAsInt(r, c);
-			}
-		}
-		return new DefaultDenseIntMatrix2D(result);
-	}
-
-	public final IntMatrix times(IntMatrix m2) throws MatrixException {
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] * m2.getAsInt(r, c);
-			}
-		}
-		return new DefaultDenseIntMatrix2D(result);
-	}
-
-	public final IntMatrix divide(IntMatrix m2) throws MatrixException {
-		int[][] result = new int[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] / m2.getAsInt(r, c);
-			}
-		}
-		return new DefaultDenseIntMatrix2D(result);
-	}
-
-	public IntMatrix mtimes(IntMatrix matrix) throws MatrixException {
-		if (values[0].length != matrix.getRowCount()) {
-			throw new MatrixException("matrices have wrong size: "
-					+ Coordinates.toString(getSize()) + " and "
-					+ Coordinates.toString(matrix.getSize()));
-		}
-
-		int i, j, k;
-		int sum;
-		int[][] ret = new int[values.length][(int) matrix.getColumnCount()];
-
-		for (i = values.length; --i >= 0;) {
-			for (j = ret[0].length; --j >= 0;) {
-				sum = 0;
-				for (k = values[0].length; --k >= 0;) {
-					sum += values[i][k] * matrix.getAsDouble(k, j);
-				}
-				ret[i][j] = sum;
-			}
-		}
-
-		return new DefaultDenseIntMatrix2D(ret);
-	}
-
-	public boolean containsNaN() {
-		for (int r = values.length; --r >= 0;) {
-			for (int c = values[0].length; --c >= 0;) {
-				if (Double.isNaN(values[r][c])) {
-					return true;
-				}
-			}
-		}
-		return false;
+	@Override
+	public int[] getIntArray() {
+		return values;
 	}
 
 }

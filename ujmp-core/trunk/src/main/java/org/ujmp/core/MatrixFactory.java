@@ -41,8 +41,8 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
+import org.ujmp.core.datematrix.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DenseFileMatrix2D;
@@ -59,8 +59,8 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
-import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
+import org.ujmp.core.intmatrix.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
 import org.ujmp.core.io.LinkMatrix;
@@ -68,23 +68,23 @@ import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
+import org.ujmp.core.longmatrix.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.objectmatrix.SimpleDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Repmat;
-import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
-import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
+import org.ujmp.core.shortmatrix.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.FileListMatrix;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.stringmatrix.SimpleDenseStringMatrix2D;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
 import org.ujmp.core.util.matrices.MatrixMemoryUsage;
 import org.ujmp.core.util.matrices.MatrixRandomSeed;
@@ -95,7 +95,7 @@ import org.ujmp.core.util.matrices.MatrixSystemTime;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>zeros(rows, columns)</code> or <code>sparse(rows, columns)</code> to
+ * <code>dense(rows, columns)</code> or <code>sparse(rows, columns)</code> to
  * create empty matrices.
  * 
  * 
@@ -252,11 +252,11 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseDateMatrix2D linkToArray(Date[]... values) {
-		return new DefaultDenseDateMatrix2D(values);
+		return new SimpleDenseDateMatrix2D(values);
 	}
 
 	public static final DenseDateMatrix2D linkToArray(Date... values) {
-		return new DefaultDenseDateMatrix2D(values);
+		return new SimpleDenseDateMatrix2D(values);
 	}
 
 	public static final DenseDoubleMatrix2D linkToArray(double[]... values) {
@@ -276,15 +276,15 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseIntMatrix2D linkToArray(int[]... values) {
-		return new DefaultDenseIntMatrix2D(values);
+		return new SimpleDenseIntMatrix2D(values);
 	}
 
 	public static final DenseIntMatrix2D linkToArray(int... values) {
-		return new DefaultDenseIntMatrix2D(values);
+		return new SimpleDenseIntMatrix2D(values);
 	}
 
 	public static final DenseLongMatrix2D linkToArray(long[]... values) {
-		return new DefaultDenseLongMatrix2D(values);
+		return new SimpleDenseLongMatrix2D(values);
 	}
 
 	public static final DenseLongMatrix2D linkToArray(long... values) {
@@ -292,27 +292,27 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseObjectMatrix2D linkToArray(Object[]... values) {
-		return new DefaultDenseObjectMatrix2D(values);
+		return new SimpleDenseObjectMatrix2D(values);
 	}
 
 	public static final DenseObjectMatrix2D linkToArray(Object... values) {
-		return new DefaultDenseObjectMatrix2D(values);
+		return new SimpleDenseObjectMatrix2D(values);
 	}
 
 	public static final DenseShortMatrix2D linkToArray(short[]... values) {
-		return new DefaultDenseShortMatrix2D(values);
+		return new SimpleDenseShortMatrix2D(values);
 	}
 
 	public static final DenseShortMatrix2D linkToArray(short... values) {
-		return new DefaultDenseShortMatrix2D(values);
+		return new SimpleDenseShortMatrix2D(values);
 	}
 
 	public static final DenseStringMatrix2D linkToArray(String[]... values) {
-		return new DefaultDenseStringMatrix2D(values);
+		return new SimpleDenseStringMatrix2D(values);
 	}
 
 	public static final DenseStringMatrix2D linkToArray(String... values) {
-		return new DefaultDenseStringMatrix2D(values);
+		return new SimpleDenseStringMatrix2D(values);
 	}
 
 	public static final Matrix copyFromMatrix(AnnotationTransfer annotationTransfer, Matrix matrix)
@@ -368,7 +368,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseIntMatrix2D linkToValue(int value) {
-		return new DefaultDenseIntMatrix2D(new int[][] { { value } });
+		return new SimpleDenseIntMatrix2D(new int[][] { { value } });
 	}
 
 	public static final DenseCharMatrix2D linkToValue(char value) {
@@ -376,7 +376,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseDateMatrix2D linkToValue(Date value) {
-		return new DefaultDenseDateMatrix2D(new Date[][] { { value } });
+		return new SimpleDenseDateMatrix2D(new Date[][] { { value } });
 	}
 
 	public static final DenseBooleanMatrix2D linkToValue(boolean value) {
@@ -388,15 +388,15 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseShortMatrix2D linkToValue(short value) {
-		return new DefaultDenseShortMatrix2D(new short[][] { { value } });
+		return new SimpleDenseShortMatrix2D(new short[][] { { value } });
 	}
 
 	public static final DenseStringMatrix2D linkToValue(String value) {
-		return new DefaultDenseStringMatrix2D(new String[][] { { value } });
+		return new SimpleDenseStringMatrix2D(new String[][] { { value } });
 	}
 
 	public static final DenseLongMatrix2D linkToValue(long value) {
-		return new DefaultDenseLongMatrix2D(new long[][] { { value } });
+		return new SimpleDenseLongMatrix2D(new long[][] { { value } });
 	}
 
 	public static final Matrix linkToValue(Object value) {
@@ -405,21 +405,21 @@ public abstract class MatrixFactory {
 		} else if (value instanceof Double) {
 			return new ArrayDenseDoubleMatrix2D(new double[][] { { (Double) value } });
 		} else if (value instanceof Integer) {
-			return new DefaultDenseIntMatrix2D(new int[][] { { (Integer) value } });
+			return new SimpleDenseIntMatrix2D(new int[][] { { (Integer) value } });
 		} else if (value instanceof Float) {
 			return new ArrayDenseFloatMatrix2D(new float[][] { { (Float) value } });
 		} else if (value instanceof String) {
-			return new DefaultDenseStringMatrix2D(new String[][] { { (String) value } });
+			return new SimpleDenseStringMatrix2D(new String[][] { { (String) value } });
 		} else if (value instanceof Short) {
-			return new DefaultDenseShortMatrix2D(new short[][] { { (Short) value } });
+			return new SimpleDenseShortMatrix2D(new short[][] { { (Short) value } });
 		} else if (value instanceof Byte) {
 			return new ArrayDenseByteMatrix2D(new byte[][] { { (Byte) value } });
 		} else if (value instanceof Boolean) {
 			return new DefaultDenseBooleanMatrix2D(new boolean[][] { { (Boolean) value } });
 		} else if (value instanceof Long) {
-			return new DefaultDenseLongMatrix2D(new long[][] { { (Long) value } });
+			return new SimpleDenseLongMatrix2D(new long[][] { { (Long) value } });
 		} else {
-			return new DefaultDenseObjectMatrix2D(new Object[][] { { value } });
+			return new SimpleDenseObjectMatrix2D(new Object[][] { { value } });
 		}
 	}
 

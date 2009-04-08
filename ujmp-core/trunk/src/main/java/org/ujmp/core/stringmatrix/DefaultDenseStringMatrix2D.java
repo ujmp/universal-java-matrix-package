@@ -25,61 +25,104 @@ package org.ujmp.core.stringmatrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.interfaces.HasStringArray;
 
-public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
-	private static final long serialVersionUID = -4292004796378125964L;
+public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D implements
+		HasStringArray {
 
-	private String[][] values = null;
+	private String[] values = null;
 
-	public DefaultDenseStringMatrix2D(String string) {
-		string = string.replaceAll(StringUtil.BRACKETS, "");
-		String[] rows = string.split(StringUtil.SEMICOLONORNEWLINE);
-		String[] cols = rows[0].split(StringUtil.COLONORSPACES);
-		values = new String[rows.length][cols.length];
-		for (int r = 0; r < rows.length; r++) {
-			cols = rows[r].split(StringUtil.COLONORSPACES);
-			for (int c = 0; c < cols.length; c++) {
-				values[r][c] = cols[c];
+	private long[] size = null;
+
+	private int rows = 0;
+
+	private int cols = 0;
+
+	public DefaultDenseStringMatrix2D(Matrix m) throws MatrixException {
+		this.rows = (int) m.getRowCount();
+		this.cols = (int) m.getColumnCount();
+		this.size = new long[] { rows, cols };
+		if (m instanceof DefaultDenseStringMatrix2D) {
+			String[] v = ((DefaultDenseStringMatrix2D) m).values;
+			this.values = new String[v.length];
+			System.arraycopy(v, 0, this.values, 0, v.length);
+		} else {
+			this.values = new String[rows * cols];
+			for (long[] c : m.allCoordinates()) {
+				setString(m.getAsString(c), c);
 			}
 		}
 	}
 
-	public DefaultDenseStringMatrix2D(Matrix source) throws MatrixException {
-		this(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			setAsString(source.getAsString(c), c);
-		}
-	}
-
 	public DefaultDenseStringMatrix2D(long... size) {
-		values = new String[(int) size[ROW]][(int) size[COLUMN]];
+		this.rows = (int) size[ROW];
+		this.cols = (int) size[COLUMN];
+		this.size = new long[] { rows, cols };
+		this.values = new String[rows * cols];
 	}
 
-	public DefaultDenseStringMatrix2D(String[]... values) {
-		this.values = values;
+	public DefaultDenseStringMatrix2D(String[] v, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.size = new long[] { rows, cols };
+		this.values = v;
 	}
 
 	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
+		return size;
 	}
 
 	@Override
 	public long getRowCount() {
-		return values.length;
+		return rows;
 	}
 
 	@Override
 	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
+		return cols;
 	}
 
 	public String getString(long row, long column) {
-		return values[(int) row][(int) column];
+		return values[(int) (column * rows + row)];
 	}
 
 	public void setString(String value, long row, long column) {
-		values[(int) row][(int) column] = value;
+		values[(int) (column * rows + row)] = value;
+	}
+
+	public String getString(int row, int column) {
+		return values[column * rows + row];
+	}
+
+	public void setString(String value, int row, int column) {
+		values[column * rows + row] = value;
+	}
+
+	@Override
+	public final Matrix copy() throws MatrixException {
+		String[] result = new String[values.length];
+		System.arraycopy(values, 0, result, 0, values.length);
+		Matrix m = new DefaultDenseStringMatrix2D(result, rows, cols);
+		if (getAnnotation() != null) {
+			m.setAnnotation(getAnnotation().clone());
+		}
+		return m;
+	}
+
+	@Override
+	public final Matrix transpose() {
+		final String[] result = new String[cols * rows];
+		for (int c = rows; --c != -1;) {
+			for (int r = cols; --r != -1;) {
+				result[c * cols + r] = values[r * rows + c];
+			}
+		}
+		return new DefaultDenseStringMatrix2D(result, cols, rows);
+	}
+
+	@Override
+	public String[] getStringArray() {
+		return values;
 	}
 
 }

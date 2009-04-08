@@ -39,6 +39,8 @@ public class MatrixTreePanel extends JPanel {
 		JTree tree = new JTree((TreeModel) m.getMatrix());
 		setLayout(new BorderLayout());
 		add(new JScrollPane(tree), BorderLayout.CENTER);
+		// this is necessary, so that the tree will be displayed correctly:
+		tree.expandRow(0);
 	}
 
 }

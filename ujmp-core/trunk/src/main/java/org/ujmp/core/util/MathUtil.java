@@ -219,6 +219,12 @@ public abstract class MathUtil {
 		} else if (o instanceof Matrix) {
 			return ((Matrix) o).doubleValue();
 		} else {
+			if ("true".equalsIgnoreCase(o.toString())) {
+				return 1.0;
+			}
+			if ("false".equalsIgnoreCase(o.toString())) {
+				return 0.0;
+			}
 			try {
 				return Double.parseDouble(o.toString());
 			} catch (Exception e) {

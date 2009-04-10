@@ -40,7 +40,7 @@ public class TestMtimes extends TestCase {
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
 		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calc(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);
@@ -52,7 +52,7 @@ public class TestMtimes extends TestCase {
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
 		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calc(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);
@@ -64,7 +64,7 @@ public class TestMtimes extends TestCase {
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
 		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calc(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);

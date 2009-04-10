@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.basic;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.bytematrix.ByteMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
@@ -31,6 +32,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasByteArray;
 import org.ujmp.core.interfaces.HasDoubleArray;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
 import org.ujmp.core.util.MathUtil;
@@ -119,12 +121,22 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return size;
 	}
 
-	public static Matrix calc(boolean ignoreNaN, DoubleMatrix2D m1, DoubleMatrix2D m2) {
+	public static Matrix calcByteMatrix2D(boolean ignoreNaN, ByteMatrix2D m1, ByteMatrix2D m2) {
+		if (m1 instanceof HasByteArray && m2 instanceof HasByteArray) {
+			return calcByteArray(((HasByteArray) m1).getByteArray(), (int) m1.getRowCount(), (int) m1
+					.getColumnCount(), ((HasByteArray) m2).getByteArray(), (int) m2.getRowCount(),
+					(int) m2.getColumnCount());
+		} else {
+			return gemmMatrix(1.0, m1, 1.0, m2, ignoreNaN);
+		}
+	}
+
+	public static Matrix calcDoubleMatrix2D(boolean ignoreNaN, DoubleMatrix2D m1, DoubleMatrix2D m2) {
 		if (m1 instanceof HasDoubleArray2D && m2 instanceof HasDoubleArray2D) {
-			return calc(((HasDoubleArray2D) m1).getDoubleArray2D(), ((HasDoubleArray2D) m2)
+			return calcDoubleArray2D(((HasDoubleArray2D) m1).getDoubleArray2D(), ((HasDoubleArray2D) m2)
 					.getDoubleArray2D());
 		} else if (m1 instanceof HasDoubleArray && m2 instanceof HasDoubleArray) {
-			return calc(((HasDoubleArray) m1).getDoubleArray(), (int) m1.getRowCount(), (int) m1
+			return calcDoubleArray(((HasDoubleArray) m1).getDoubleArray(), (int) m1.getRowCount(), (int) m1
 					.getColumnCount(), ((HasDoubleArray) m2).getDoubleArray(), (int) m2
 					.getRowCount(), (int) m2.getColumnCount());
 		} else {
@@ -173,12 +185,17 @@ public class Mtimes extends AbstractDoubleCalculation {
 		}
 	}
 
-	public static Matrix calc(double[] A, int m1RowCount, int m1ColumnCount, double[] B,
+	public static Matrix calcDoubleArray(double[] A, int m1RowCount, int m1ColumnCount, double[] B,
 			int m2RowCount, int m2ColumnCount) {
-		return gemm(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount, m2ColumnCount);
+		return gemmDoubleArray(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount, m2ColumnCount);
 	}
 
-	public static DenseDoubleMatrix2D calc(double[][] m1, double[][] m2) {
+	public static Matrix calcByteArray(byte[] A, int m1RowCount, int m1ColumnCount, byte[] B,
+			int m2RowCount, int m2ColumnCount) {
+		return gemmByteArray(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount, m2ColumnCount);
+	}
+
+	public static DenseDoubleMatrix2D calcDoubleArray2D(double[][] m1, double[][] m2) {
 		final int rowCount = m1.length;
 		final int columnCount = m1[0].length;
 		final int retColumnCount = m2[0].length;
@@ -229,7 +246,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(ret, m1RowCount, m2ColumnCount);
 	}
 
-	public static DenseDoubleMatrix2D gemm(final double alpha, final double[] A,
+	public static DenseDoubleMatrix2D gemmDoubleArray(final double alpha, final double[] A,
 			final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
 			final int m2RowCount, final int m2ColumnCount) {
 		if (m1ColumnCount != m2RowCount) {
@@ -261,7 +278,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
-	public static DenseDoubleMatrix2D gemm(final double alpha, final byte[] A,
+	public static DenseDoubleMatrix2D gemmByteArray(final double alpha, final byte[] A,
 			final int m1RowCount, final int m1ColumnCount, final double beta, final byte[] B,
 			final int m2RowCount, final int m2ColumnCount) {
 		if (m1ColumnCount != m2RowCount) {
@@ -293,16 +310,16 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
-	public static DenseDoubleMatrix2D gemm(final double alpha, final Matrix A, final double beta,
+	public static DenseDoubleMatrix2D gemmMatrix(final double alpha, final Matrix A, final double beta,
 			final Matrix B, boolean ignoreNaN) {
 		if (ignoreNaN) {
-			return gemmIgnoreNaN(alpha, A, beta, B);
+			return gemmMatrixIgnoreNaN(alpha, A, beta, B);
 		} else {
-			return gemmNaN(alpha, A, beta, B);
+			return gemmMatrixNaN(alpha, A, beta, B);
 		}
 	}
 
-	public static DenseDoubleMatrix2D gemmNaN(final double alpha, final Matrix A,
+	public static DenseDoubleMatrix2D gemmMatrixNaN(final double alpha, final Matrix A,
 			final double beta, final Matrix B) {
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
@@ -338,7 +355,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
-	public static DenseDoubleMatrix2D gemmIgnoreNaN(final double alpha, final Matrix A,
+	public static DenseDoubleMatrix2D gemmMatrixIgnoreNaN(final double alpha, final Matrix A,
 			final double beta, final Matrix B) {
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
@@ -379,7 +396,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 	}
 
 	@Deprecated
-	private static Matrix calcMatrix(boolean ignoreNaN, Matrix m1, Matrix m2) {
+	private static Matrix calcMatrixOld(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		final int rowCount = (int) m1.getRowCount();
 		final int columnCount = (int) m1.getColumnCount();
 		final int retColumnCount = (int) m2.getColumnCount();
@@ -426,10 +443,11 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		if (m1 instanceof DoubleMatrix2D && m2 instanceof DoubleMatrix2D) {
-			return calc(ignoreNaN, (DoubleMatrix2D) m1, (DoubleMatrix2D) m2);
+			return calcDoubleMatrix2D(ignoreNaN, (DoubleMatrix2D) m1, (DoubleMatrix2D) m2);
+		} else if (m1 instanceof ByteMatrix2D && m2 instanceof ByteMatrix2D) {
+			return calcByteMatrix2D(ignoreNaN, (ByteMatrix2D) m1, (ByteMatrix2D) m2);
 		} else {
-			return gemm(1.0, m1, 1.0, m2, ignoreNaN);
+			return gemmMatrix(1.0, m1, 1.0, m2, ignoreNaN);
 		}
 	}
-
 }

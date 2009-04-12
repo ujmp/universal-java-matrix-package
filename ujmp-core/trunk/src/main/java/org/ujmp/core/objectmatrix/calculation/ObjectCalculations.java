@@ -45,6 +45,8 @@ public interface ObjectCalculations {
 
 	public Matrix reshape(long... newSize) throws MatrixException;
 
+	public Matrix unique(Ret returnType) throws MatrixException;
+
 	public Matrix toColumnVector() throws MatrixException;
 
 	public Matrix toRowVector() throws MatrixException;

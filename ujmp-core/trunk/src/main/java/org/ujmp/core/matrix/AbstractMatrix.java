@@ -149,6 +149,7 @@ import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sort;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
+import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
@@ -1260,6 +1261,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix bootstrap(Ret returnType) throws MatrixException {
 		return new Bootstrap(this).calc(returnType);
+	}
+
+	public Matrix unique(Ret returnType) throws MatrixException {
+		return new Unique(this).calc(returnType);
 	}
 
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException {

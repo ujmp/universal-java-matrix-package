@@ -45,6 +45,7 @@ public class Max extends AbstractDoubleCalculation {
 					max = v;
 				}
 			}
+			max = max == -Double.MAX_VALUE ? Double.NaN : max;
 			return max;
 		case COLUMN:
 			for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
@@ -53,6 +54,7 @@ public class Max extends AbstractDoubleCalculation {
 					max = v;
 				}
 			}
+			max = max == -Double.MAX_VALUE ? Double.NaN : max;
 			return max;
 		case ALL:
 			for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
@@ -63,6 +65,7 @@ public class Max extends AbstractDoubleCalculation {
 					}
 				}
 			}
+			max = max == -Double.MAX_VALUE ? Double.NaN : max;
 			return max;
 		}
 		return 0.0;
@@ -85,6 +88,7 @@ public class Max extends AbstractDoubleCalculation {
 		for (long[] c : m.availableCoordinates()) {
 			max = (v = m.getAsDouble(c)) > max ? v : max;
 		}
+		max = max == -Double.MAX_VALUE ? Double.NaN : max;
 		return max;
 	}
 }

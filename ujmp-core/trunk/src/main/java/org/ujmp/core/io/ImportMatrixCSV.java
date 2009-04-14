@@ -102,8 +102,7 @@ public abstract class ImportMatrixCSV {
 			for (String l : rowData) {
 				String[] fields = p.split(l);
 				for (int c = fields.length - 1; c != -1; c--) {
-					String s = StringUtil.deleteChar(fields[c], ',', 0);
-					m.setAsString(s, r, c);
+					m.setAsString(fields[c], r, c);
 				}
 				r++;
 			}

@@ -41,10 +41,16 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 
 	private final Map<Object, List<Object>> childrenMap = new HashMap<Object, List<Object>>();
 
+	private final Map<Object, Object> parentMap = new HashMap<Object, Object>();
+
 	public ObjectTreeMatrix(Object o) {
 		root = new NameAndValue("Root", o);
 		addSuperclass("Root", o);
 		addFields("Root", o);
+	}
+
+	public Map<Object, Object> getParentMap() {
+		return parentMap;
 	}
 
 	private void addSuperclass(String name, Object o) {

@@ -60,6 +60,11 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 	}
 
 	@Override
+	public Object getParent(Object o) {
+		return getParentMap().get(o);
+	}
+
+	@Override
 	public void addChildren(Object parent, Collection<? extends Object> children) {
 		for (Object child : children) {
 			addChild(parent, child);
@@ -78,16 +83,21 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		return getDouble((int) row, (int) column);
 	}
 
-	public final void addChild(Object parent, Object child) {		
+	public final void addChild(Object parent, Object child) {
 		if (!getObjectList().contains(child)) {
 			getObjectList().add(child);
 		}
 		getChildren(parent).add(child);
+		getParentMap().put(child, parent);
 		notifyGUIObject();
 	}
 
 	public final void removeChild(Object parent, Object child) {
 		getChildren(parent).remove(child);
+		Object oldParent = getParentMap().get(child);
+		if (parent.equals(oldParent)) {
+			getParentMap().remove(child);
+		}
 		notifyGUIObject();
 	}
 

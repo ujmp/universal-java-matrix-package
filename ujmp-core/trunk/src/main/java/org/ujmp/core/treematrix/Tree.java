@@ -25,12 +25,17 @@ package org.ujmp.core.treematrix;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface Tree {
+
+	public Map<Object, Object> getParentMap();
 
 	public void setRoot(Object o);
 
 	public List<Object> getChildren(Object o);
+
+	public Object getParent(Object o);
 
 	public Collection<Object> getObjectList();
 

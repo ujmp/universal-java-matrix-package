@@ -39,6 +39,8 @@ public class DefaultTreeMatrix extends AbstractTreeMatrix {
 
 	private final Map<Object, List<Object>> childrenMap = new HashMap<Object, List<Object>>();
 
+	private final Map<Object, Object> parentMap = new HashMap<Object, Object>();
+
 	@Override
 	public List<Object> getChildren(Object o) {
 		List<Object> children = childrenMap.get(o);
@@ -47,6 +49,10 @@ public class DefaultTreeMatrix extends AbstractTreeMatrix {
 			childrenMap.put(o, children);
 		}
 		return children;
+	}
+
+	public Map<Object, Object> getParentMap() {
+		return parentMap;
 	}
 
 	@Override

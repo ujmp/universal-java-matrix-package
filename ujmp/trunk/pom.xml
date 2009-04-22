@@ -407,6 +407,12 @@
 				<version>2.4.0</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>hadoop</groupId>
+				<artifactId>hadoop-core</artifactId>
+				<version>0.20.0</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>

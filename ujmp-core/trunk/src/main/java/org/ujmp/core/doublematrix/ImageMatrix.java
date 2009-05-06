@@ -24,9 +24,11 @@
 package org.ujmp.core.doublematrix;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -37,15 +39,30 @@ public class ImageMatrix extends AbstractDenseDoubleMatrix2D {
 
 	private BufferedImage bufferedImage = null;
 
-	private int[] pixels = null;
+	private int[] pixelsInt = null;
 
-	public ImageMatrix(String filename) throws IOException {
+	private byte[] pixelsByte = null;
+
+	public ImageMatrix(String filename, Object... parameters) throws IOException {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(File file) throws IOException {
+	public ImageMatrix(File file, Object... parameters) throws IOException {
 		bufferedImage = ImageIO.read(file);
-		pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+		if (bufferedImage.getRaster().getDataBuffer() instanceof DataBufferInt) {
+			pixelsInt = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+		} else {
+			pixelsByte = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
+		}
+	}
+
+	public ImageMatrix(InputStream stream, Object... parameters) throws IOException {
+		bufferedImage = ImageIO.read(stream);
+		if (bufferedImage.getRaster().getDataBuffer() instanceof DataBufferInt) {
+			pixelsInt = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+		} else {
+			pixelsByte = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
+		}
 	}
 
 	public double getDouble(int row, int column) {
@@ -57,13 +74,23 @@ public class ImageMatrix extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public double getDouble(long row, long column) throws MatrixException {
-		int pos = (int) (row * bufferedImage.getWidth() + column);
-		return pixels[pos];
+		if (pixelsInt != null) {
+			int pos = (int) (row * bufferedImage.getWidth() + column);
+			return pixelsInt[pos];
+		} else {
+			int pos = (int) (row * 3 * bufferedImage.getWidth() + column);
+			return 256 * 256 * pixelsByte[pos] + 256 * pixelsByte[pos + 1] + pixelsByte[pos + 2];
+		}
 	}
 
 	public void setDouble(double value, long row, long column) throws MatrixException {
-		int pos = (int) (row * bufferedImage.getWidth() + column);
-		pixels[pos] = (int) value;
+		if (pixelsInt != null) {
+			int pos = (int) (row * bufferedImage.getWidth() + column);
+			pixelsInt[pos] = (int) value;
+		} else {
+			int pos = (int) (row * 3 * bufferedImage.getWidth() + column);
+			pixelsByte[pos] = (byte) value;
+		}
 	}
 
 	public long[] getSize() {

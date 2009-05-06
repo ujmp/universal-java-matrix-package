@@ -118,6 +118,14 @@
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-lucene</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-hadoop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-pdfbox</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

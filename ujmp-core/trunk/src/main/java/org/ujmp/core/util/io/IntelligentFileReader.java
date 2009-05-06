@@ -153,4 +153,37 @@ public class IntelligentFileReader extends Reader {
 		return s.toString();
 	}
 
+	public static String load(File filename) {
+		StringBuilder s = new StringBuilder();
+		IntelligentFileReader fr = new IntelligentFileReader(filename);
+		String line = null;
+		while ((line = fr.readLine()) != null) {
+			s.append(line + "\n");
+		}
+		fr.close();
+		return s.toString();
+	}
+
+	public static String load(InputStream stream) {
+		StringBuilder s = new StringBuilder();
+		IntelligentFileReader fr = new IntelligentFileReader(stream);
+		String line = null;
+		while ((line = fr.readLine()) != null) {
+			s.append(line + "\n");
+		}
+		fr.close();
+		return s.toString();
+	}
+
+	public static String load(Reader reader) {
+		StringBuilder s = new StringBuilder();
+		IntelligentFileReader fr = new IntelligentFileReader(reader);
+		String line = null;
+		while ((line = fr.readLine()) != null) {
+			s.append(line + "\n");
+		}
+		fr.close();
+		return s.toString();
+	}
+
 }

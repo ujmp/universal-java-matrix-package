@@ -66,7 +66,11 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		if (width < 25) {
 			label.setText("");
 		} else {
-			label.setText(StringUtil.format(value));
+			String s = StringUtil.format(value);
+			if (s != null && s.length() > 25) {
+				s = s.substring(0, 25) + "...";
+			}
+			label.setText(s);
 		}
 		label.setForeground(ColorUtil.contrastBW(c));
 		label.setBackground(c);

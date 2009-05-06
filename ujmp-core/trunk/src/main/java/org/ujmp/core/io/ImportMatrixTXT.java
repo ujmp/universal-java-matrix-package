@@ -23,6 +23,31 @@
 
 package org.ujmp.core.io;
 
-public abstract class ImportMatrixTXT extends ImportMatrixCSV {
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.io.IntelligentFileReader;
+
+public abstract class ImportMatrixTXT {
+
+	public static final Matrix fromStream(InputStream stream, Object... parameters)
+			throws MatrixException, IOException {
+		return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
+	}
+
+	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
+			IOException {
+		return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
+	}
+
+	public static final Matrix fromReader(Reader reader, Object... parameters)
+			throws MatrixException {
+		return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
+	}
 
 }

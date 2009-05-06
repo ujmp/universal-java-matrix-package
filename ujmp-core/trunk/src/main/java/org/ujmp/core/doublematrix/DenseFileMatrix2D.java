@@ -88,6 +88,10 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		this(file, rowCount, columnCount, 0, DOUBLE, false);
 	}
 
+	public DenseFileMatrix2D(File file) {
+		this(file, file.length(), 1, 0, BYTE, true);
+	}
+
 	public DenseFileMatrix2D(File file, long rowCount, long columnCount, int dataType) {
 		this(file, rowCount, columnCount, 0, dataType, false);
 	}
@@ -262,6 +266,9 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public synchronized double getDouble(long row, long column) {
+		if (randomAccessFile == null) {
+			createFile();
+		}
 		if (randomAccessFile != null) {
 			try {
 				double pos = getPos(row, column);

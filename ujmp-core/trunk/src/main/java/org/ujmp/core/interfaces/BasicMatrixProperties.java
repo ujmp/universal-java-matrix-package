@@ -23,6 +23,8 @@
 
 package org.ujmp.core.interfaces;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.ujmp.core.enums.ValueType;
@@ -89,6 +91,10 @@ public interface BasicMatrixProperties {
 	public Date dateValue() throws MatrixException;
 
 	public char charValue() throws MatrixException;
+
+	public BigInteger bigIntegerValue() throws MatrixException;
+
+	public BigDecimal bigDecimalValue() throws MatrixException;
 
 	public float floatValue() throws MatrixException;
 

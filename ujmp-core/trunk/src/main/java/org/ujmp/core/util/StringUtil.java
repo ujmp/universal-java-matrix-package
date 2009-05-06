@@ -57,11 +57,15 @@ public abstract class StringUtil {
 		if (o instanceof String) {
 			return (String) o;
 		}
+		if (o instanceof Matrix) {
+			if (((Matrix) o).isScalar()) {
+				return format(((Matrix) o).getAsObject(0, 0));
+			} else {
+				return "[Matrix]";
+			}
+		}
 		if (o instanceof Number) {
 			return format(((Number) o).doubleValue());
-		}
-		if (o instanceof Matrix) {
-			return ((Matrix) o).stringValue();
 		}
 		return o.toString();
 	}

@@ -25,11 +25,12 @@ package org.ujmp.gui.util;
 
 import java.awt.Color;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
-	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow,
-			Color.cyan };
+	public static final Color[] TRACECOLORS = { Color.blue, Color.green,
+			Color.red, Color.black, Color.yellow, Color.cyan };
 
 	public static final Color contrastBW(Color c) {
 		if ((c.getRed() + c.getGreen() + c.getBlue()) > 200.0) {
@@ -51,13 +52,15 @@ public abstract class ColorUtil {
 		else if (Double.isInfinite(v))
 			return (Color.CYAN);
 		else if (v > 1.0)
-			return (ColorMap.colorGreenToYellow[(int) (255.0 * Math.tanh((v - 1.0) / 10.0))]);
+			return (ColorMap.colorGreenToYellow[(int) (255.0 * Math
+					.tanh((v - 1.0) / 10.0))]);
 		else if (v > 0.0)
 			return (ColorMap.colorBlackToGreen[(int) (255.0 * v)]);
 		else if (v > -1.0)
 			return (ColorMap.colorRedToBlack[(int) (255.0 * (v + 1.0))]);
 		else
-			return (ColorMap.colorRedToMagenta[(int) (255.0 * Math.tanh((-v - 1.0) / 10.0))]);
+			return (ColorMap.colorRedToMagenta[(int) (255.0 * Math
+					.tanh((-v - 1.0) / 10.0))]);
 	}
 
 	private static Color fromString(String s) {
@@ -69,7 +72,8 @@ public abstract class ColorUtil {
 		int g = 192 + (hc % 256) / 4;
 		hc = hc / 256;
 		int b = 192 + (hc % 256) / 4;
-		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255 : b);
+		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255
+				: b);
 	}
 
 	public static Color fromObject(Object v) {
@@ -78,6 +82,11 @@ public abstract class ColorUtil {
 		}
 		if (v instanceof Double) {
 			return fromDouble((Double) v);
+		}
+		if (v instanceof Matrix) {
+			if (((Matrix) v).isScalar()) {
+				return fromObject(((Matrix) v).getAsObject(0, 0));
+			}
 		}
 		try {
 			double d = Double.parseDouble(v.toString());

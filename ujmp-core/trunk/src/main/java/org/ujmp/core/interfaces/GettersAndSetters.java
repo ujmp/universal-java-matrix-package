@@ -23,6 +23,8 @@
 
 package org.ujmp.core.interfaces;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.ujmp.core.exceptions.MatrixException;
@@ -150,6 +152,10 @@ public interface GettersAndSetters {
 	 */
 	public boolean[][] toBooleanArray() throws MatrixException;
 
+	public BigDecimal[][] toBigDecimalArray() throws MatrixException;
+
+	public BigInteger[][] toBigIntegerArray() throws MatrixException;
+
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of byte
 	 * values.
@@ -170,6 +176,10 @@ public interface GettersAndSetters {
 	 */
 	public boolean getAsBoolean(long... coordinates) throws MatrixException;
 
+	public BigInteger getAsBigInteger(long... coordinates) throws MatrixException;
+
+	public BigDecimal getAsBigDecimal(long... coordinates) throws MatrixException;
+
 	/**
 	 * Sets an entry in the matrix to a boolean value. If the matrix cannot
 	 * store byte values, the value will be represented as good as possible.
@@ -181,6 +191,10 @@ public interface GettersAndSetters {
 	 * @throws MatrixException
 	 */
 	public void setAsBoolean(boolean value, long... coordinates) throws MatrixException;
+
+	public void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException;
+
+	public void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException;
 
 	/**
 	 * Returns a char representation of an entry in the matrix. The stored value

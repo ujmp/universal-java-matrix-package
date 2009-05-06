@@ -23,9 +23,28 @@
 
 package org.ujmp.core.enums;
 
+import java.io.File;
+
 /**
  * Import and export formats that are supported.
  */
 public enum FileFormat {
-	CSV, TXT, M, MAT, MDB, R, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF, STRING, SPARSECSV, RAW
+	CSV, TXT, M, MAT, GIF, FILE, MDB, R, JPG, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF, STRING, SPARSECSV, RAW;
+
+	public static FileFormat guess(File file) {
+		String name = file.getName().toLowerCase();
+		if (name.endsWith(".pdf")) {
+			return FileFormat.PDF;
+		}
+		if (name.endsWith(".png")) {
+			return FileFormat.PNG;
+		}
+		if (name.endsWith(".gif")) {
+			return FileFormat.GIF;
+		}
+		if (name.endsWith(".jpg")) {
+			return FileFormat.JPG;
+		}
+		return FileFormat.TXT;
+	}
 }

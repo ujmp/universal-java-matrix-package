@@ -41,6 +41,12 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 		case BOOLEAN:
 			setAsBoolean(MathUtil.getBoolean(o), coordinates);
 			break;
+		case BIGINTEGER:
+			setAsBigInteger(MathUtil.getBigInteger(o), coordinates);
+			break;
+		//case BIGDECIMAL:
+		//	setAsBigDecimal(MathUtil.getBigDecimal(o), coordinates);
+		//	break;
 		case BYTE:
 			setAsByte(MathUtil.getByte(o), coordinates);
 			break;

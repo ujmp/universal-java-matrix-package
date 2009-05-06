@@ -64,7 +64,11 @@ public abstract class TooltipUtil {
 		toolTip += "<b>String:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += matrix.getAsString(coordinates);
+		String s = matrix.getAsString(coordinates);
+		if (s != null && s.length() > 25) {
+			s = s.substring(0, 25);
+		}
+		toolTip += s;
 		toolTip += "</td>";
 		toolTip += "</tr>";
 

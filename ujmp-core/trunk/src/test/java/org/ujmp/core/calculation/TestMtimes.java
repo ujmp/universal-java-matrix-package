@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
 
 public class TestMtimes extends TestCase {
@@ -39,8 +40,9 @@ public class TestMtimes extends TestCase {
 				.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
-		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c1 = DoubleCalculations.mtimes.calc(a, b);
+		Matrix c2 = DoubleCalculations.mtimes.calcDoubleArray2D(a.toDoubleArray(), b
+				.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);
@@ -51,8 +53,9 @@ public class TestMtimes extends TestCase {
 		Matrix b = MatrixFactory.linkToArray(new double[][] { { 1, 2 }, { 4, 5 }, { 7, 8 } });
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
-		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c1 = DoubleCalculations.mtimes.calc(a, b);
+		Matrix c2 = DoubleCalculations.mtimes.calcDoubleArray2D(a.toDoubleArray(), b
+				.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);
@@ -63,8 +66,9 @@ public class TestMtimes extends TestCase {
 		Matrix b = MatrixFactory.linkToArray(new double[][] { { 4, 5, 6 }, { 7, 8, 9 } });
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
-		Matrix c1 = Mtimes.calc(a, b);
-		Matrix c2 = Mtimes.calcDoubleArray2D(a.toDoubleArray(), b.toDoubleArray());
+		Matrix c1 = DoubleCalculations.mtimes.calc(a, b);
+		Matrix c2 = DoubleCalculations.mtimes.calcDoubleArray2D(a.toDoubleArray(), b
+				.toDoubleArray());
 
 		assertEquals(c_correct, c1);
 		assertEquals(c_correct, c2);

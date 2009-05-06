@@ -57,6 +57,10 @@ public class Divide extends AbstractDoubleCalculation {
 		this(ignoreNaN, m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
+	public Divide() {
+		super();
+	}
+
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))

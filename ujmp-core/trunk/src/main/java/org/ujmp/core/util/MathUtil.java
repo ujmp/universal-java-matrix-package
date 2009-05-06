@@ -23,6 +23,8 @@
 
 package org.ujmp.core.util;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -203,7 +205,12 @@ public abstract class MathUtil {
 			return MatrixFactory.EMPTYMATRIX;
 		}
 		if (o instanceof Matrix) {
-			return (Matrix) o;
+			Matrix m = (Matrix) o;
+			if (m.isScalar() && m.getAsObject(0, 0) instanceof Matrix) {
+				return getMatrix(m.getAsObject(0, 0));
+			} else {
+				return m;
+			}
 		} else {
 			return MatrixFactory.linkToValue(o);
 		}
@@ -500,6 +507,44 @@ public abstract class MathUtil {
 			}
 		}
 		return 0;
+	}
+
+	public static BigInteger getBigInteger(Object o) {
+		if (o == null) {
+			return BigInteger.ZERO;
+		}
+		if (o instanceof BigInteger) {
+			return (BigInteger) o;
+		}
+		if (o instanceof Number) {
+			return BigInteger.valueOf(((Number) o).longValue());
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).bigIntegerValue();
+		}
+		if (o instanceof String) {
+			return new BigInteger((String) o);
+		}
+		return BigInteger.ZERO;
+	}
+
+	public static BigDecimal getBigDecimal(Object o) {
+		if (o == null) {
+			return BigDecimal.ZERO;
+		}
+		if (o instanceof BigDecimal) {
+			return (BigDecimal) o;
+		}
+		if (o instanceof Number) {
+			return BigDecimal.valueOf(((Number) o).doubleValue());
+		}
+		if (o instanceof Matrix) {
+			return ((Matrix) o).bigDecimalValue();
+		}
+		if (o instanceof String) {
+			return new BigDecimal((String) o);
+		}
+		return BigDecimal.ZERO;
 	}
 
 	public static char getChar(Object o) {

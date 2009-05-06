@@ -25,12 +25,15 @@ package org.ujmp.core.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
 
 public abstract class LinkMatrix {
 
@@ -42,7 +45,11 @@ public abstract class LinkMatrix {
 			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			try {
+				return new DelayedContentMatrix(format, file, parameters);
+			} catch (ClassCastException ex) {
+				throw new MatrixException("format not supported: " + format, e);
+			}
 		} catch (NoSuchMethodException e) {
 			throw new MatrixException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
@@ -50,6 +57,64 @@ public abstract class LinkMatrix {
 		} catch (InvocationTargetException e) {
 			throw new MatrixException("could not import", e);
 		}
+	}
+}
+
+class DelayedContentMatrix extends AbstractObjectMatrix {
+	private static final long serialVersionUID = -2594340094573426876L;
+
+	private SoftReference<Matrix> matrix = null;
+
+	private FileFormat fileformat = null;
+	private File file = null;
+	private Object[] parameters = null;
+
+	public DelayedContentMatrix(FileFormat fileformat, File file, Object... parameters) {
+		this.fileformat = fileformat;
+		this.file = file;
+		this.parameters = parameters;
+	}
+
+	@Override
+	public Object getObject(long... coordinates) throws MatrixException {
+		return getMatrix().getAsObject(coordinates);
+	}
+
+	private Matrix getMatrix() {
+		if (matrix == null || matrix.get() == null) {
+			try {
+				matrix = new SoftReference<Matrix>(MatrixFactory.importFromFile(fileformat, file,
+						parameters));
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		}
+		return matrix.get();
+	}
+
+	@Override
+	public void setObject(Object value, long... coordinates) {
+		getMatrix().setAsObject(value, coordinates);
+	}
+
+	@Override
+	public Iterable<long[]> allCoordinates() throws MatrixException {
+		return getMatrix().allCoordinates();
+	}
+
+	@Override
+	public boolean contains(long... coordinates) throws MatrixException {
+		return getMatrix().contains(coordinates);
+	}
+
+	@Override
+	public long[] getSize() {
+		return getMatrix().getSize();
+	}
+
+	@Override
+	public boolean isSparse() {
+		return getMatrix().isSparse();
 	}
 
 }

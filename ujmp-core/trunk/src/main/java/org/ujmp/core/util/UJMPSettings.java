@@ -49,7 +49,7 @@ public abstract class UJMPSettings {
 	 * 
 	 * @default 1000
 	 */
-	private static long maxRowsToPrint = 1000;
+	private static long maxRowsToPrint = 100;
 
 	/**
 	 * How many columns should be returned maximally for <code>toString()</code>
@@ -59,7 +59,7 @@ public abstract class UJMPSettings {
 	 * 
 	 * @default 1000
 	 */
-	private static long maxColumnsToPrint = 1000;
+	private static long maxColumnsToPrint = 100;
 
 	/**
 	 * How many rows should be returned maximally for

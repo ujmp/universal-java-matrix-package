@@ -29,6 +29,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.calculation.ToDateMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.basic.Divide;
 import org.ujmp.core.doublematrix.calculation.basic.Minus;
@@ -677,6 +680,30 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	public BigDecimal[][] toBigDecimalArray() throws MatrixException {
+		int r = (int) getRowCount();
+		int c = (int) getColumnCount();
+		BigDecimal[][] values = new BigDecimal[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				values[i][j] = getAsBigDecimal(i, j);
+			}
+		}
+		return values;
+	}
+
+	public BigInteger[][] toBigIntegerArray() throws MatrixException {
+		int r = (int) getRowCount();
+		int c = (int) getColumnCount();
+		BigInteger[][] values = new BigInteger[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				values[i][j] = getAsBigInteger(i, j);
+			}
+		}
+		return values;
+	}
+
 	public final Matrix sqrt(Ret returnType) throws MatrixException {
 		return new Sqrt(this).calc(returnType);
 	}
@@ -712,7 +739,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		return Mtimes.calc(this, matrix);
+		return DoubleCalculations.mtimes.calc(this, matrix);
 	}
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
@@ -755,8 +782,32 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return (char) getAsDouble(coordinates);
 	}
 
+	public BigInteger getAsBigInteger(long... coordinates) throws MatrixException {
+		return MathUtil.getBigInteger(getAsObject(coordinates));
+	}
+
+	public BigDecimal getAsBigDecimal(long... coordinates) throws MatrixException {
+		return MathUtil.getBigDecimal(getAsObject(coordinates));
+	}
+
 	public void setAsChar(char value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
+	}
+
+	public void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
+		if (value == null) {
+			setAsDouble(0, coordinates);
+		} else {
+			setAsDouble(value.doubleValue(), coordinates);
+		}
+	}
+
+	public void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
+		if (value == null) {
+			setAsLong(0, coordinates);
+		} else {
+			setAsLong(value.longValue(), coordinates);
+		}
 	}
 
 	public float getAsFloat(long... coordinates) throws MatrixException {
@@ -1719,6 +1770,20 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			return getAsChar(0, 0);
 		}
 		return (char) getMeanValue();
+	}
+
+	public final BigInteger bigIntegerValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsBigInteger(0, 0);
+		}
+		return BigInteger.valueOf((long) getMeanValue());
+	}
+
+	public final BigDecimal bigDecimalValue() throws MatrixException {
+		if (isScalar()) {
+			return getAsBigDecimal(0, 0);
+		}
+		return BigDecimal.valueOf(getMeanValue());
 	}
 
 	@Override

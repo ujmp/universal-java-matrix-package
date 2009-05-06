@@ -28,6 +28,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.bigintegermatrix.AbstractDenseBigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.AbstractDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.AbstractSparseBigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.AbstractSparseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.DefaultDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.DefaultSparseBigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix;
 import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix;
@@ -149,6 +155,8 @@ public class MatrixMapper implements ClassMapper {
 
 	private Constructor<?> denseStringMatrixMultiDConstructor = null;
 
+	private Constructor<?> denseBigIntegerMatrixMultiDConstructor = null;
+
 	private Constructor<?> sparseBooleanMatrix2DConstructor = null;
 
 	private Constructor<?> sparseByteMatrix2DConstructor = null;
@@ -192,6 +200,12 @@ public class MatrixMapper implements ClassMapper {
 	private Constructor<?> sparseObjectMatrixMultiDConstructor = null;
 
 	private Constructor<?> sparseStringMatrixMultiDConstructor = null;
+
+	private Constructor<?> sparseBigIntegerMatrixMultiDConstructor = null;
+
+	private Constructor<?> sparseBigIntegerMatrix2DConstructor = null;
+
+	private Constructor<?> denseBigIntegerMatrix2DConstructor = null;
 
 	private static MatrixMapper instance = null;
 
@@ -262,6 +276,12 @@ public class MatrixMapper implements ClassMapper {
 			setDenseStringMatrixMultiDClassName(DefaultSparseStringMatrix.class.getName());
 			setSparseStringMatrix2DClassName(DefaultSparseStringMatrix.class.getName());
 			setSparseStringMatrixMultiDClassName(DefaultSparseStringMatrix.class.getName());
+
+			setDenseBigIntegerMatrix2DClassName(DefaultDenseBigIntegerMatrix2D.class.getName());
+			setDenseBigIntegerMatrixMultiDClassName(DefaultSparseBigIntegerMatrix.class.getName());
+			setSparseBigIntegerMatrix2DClassName(DefaultSparseBigIntegerMatrix.class.getName());
+			setSparseBigIntegerMatrixMultiDClassName(DefaultSparseBigIntegerMatrix.class.getName());
+
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Default Matrix classes not found, this should never happen",
 					e);
@@ -749,6 +769,19 @@ public class MatrixMapper implements ClassMapper {
 		denseStringMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
+	public void setDenseBigIntegerMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBigIntegerMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultDenseBigIntegerMatrix2D.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBigIntegerMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
 	public void setDenseStringMatrixMultiDClassName(String className) throws Exception {
 		matrixClasses.put(AbstractDenseStringMatrix.class, className);
 		Class<?> matrixClass = null;
@@ -760,6 +793,19 @@ public class MatrixMapper implements ClassMapper {
 					+ " instead.");
 		}
 		denseStringMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public void setDenseBigIntegerMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBigIntegerMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigIntegerMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBigIntegerMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public void setSparseStringMatrix2DClassName(String className) throws Exception {
@@ -775,6 +821,19 @@ public class MatrixMapper implements ClassMapper {
 		sparseStringMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
+	public void setSparseBigIntegerMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractSparseBigIntegerMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigIntegerMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBigIntegerMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
 	public void setSparseStringMatrixMultiDClassName(String className) throws Exception {
 		matrixClasses.put(AbstractSparseStringMatrix.class, className);
 		Class<?> matrixClass = null;
@@ -786,6 +845,19 @@ public class MatrixMapper implements ClassMapper {
 					+ " instead.");
 		}
 		sparseStringMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public void setSparseBigIntegerMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractSparseBigIntegerMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigIntegerMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBigIntegerMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public void setDenseObjectMatrix2DClassName(String className) throws Exception {
@@ -932,6 +1004,10 @@ public class MatrixMapper implements ClassMapper {
 		return denseStringMatrixMultiDConstructor;
 	}
 
+	public Constructor<?> getDenseBigIntegerMatrixMultiDConstructor() {
+		return denseBigIntegerMatrixMultiDConstructor;
+	}
+
 	public Constructor<?> getSparseBooleanMatrix2DConstructor() {
 		return sparseBooleanMatrix2DConstructor;
 	}
@@ -1018,6 +1094,18 @@ public class MatrixMapper implements ClassMapper {
 
 	public Constructor<?> getSparseStringMatrixMultiDConstructor() {
 		return sparseStringMatrixMultiDConstructor;
+	}
+
+	public Constructor<?> getSparseBigIntegerMatrixMultiDConstructor() {
+		return sparseBigIntegerMatrixMultiDConstructor;
+	}
+
+	public Constructor<?> getSparseBigIntegerMatrix2DConstructor() {
+		return sparseBigIntegerMatrix2DConstructor;
+	}
+
+	public Constructor<?> getDenseBigIntegerMatrix2DConstructor() {
+		return denseBigIntegerMatrix2DConstructor;
 	}
 
 }

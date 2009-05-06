@@ -57,6 +57,10 @@ public class Times extends AbstractDoubleCalculation {
 		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
+	public Times() {
+		super();
+	}
+
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))

@@ -38,7 +38,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class ImportMatrixCSV {

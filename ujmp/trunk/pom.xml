@@ -213,6 +213,18 @@
 				<version>${ujmp.version}</version>
 				<scope>compile</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-hadoop</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.ujmp</groupId>
+				<artifactId>ujmp-pdfbox</artifactId>
+				<version>${ujmp.version}</version>
+				<scope>compile</scope>
+			</dependency>
 
 
 			<dependency>
@@ -274,7 +286,7 @@
 				<artifactId>mtj</artifactId>
 				<version>0.9.11</version>
 				<scope>compile</scope>
-			</dependency>		
+			</dependency>
 			<dependency>
 				<groupId>arpack-combo</groupId>
 				<artifactId>arpack-combo</artifactId>
@@ -286,7 +298,7 @@
 				<artifactId>netlib-java</artifactId>
 				<version>0.9.1</version>
 				<scope>compile</scope>
-			</dependency>				
+			</dependency>
 			<dependency>
 				<groupId>vecmath</groupId>
 				<artifactId>vecmath</artifactId>
@@ -411,6 +423,24 @@
 				<groupId>hadoop</groupId>
 				<artifactId>hadoop-core</artifactId>
 				<version>0.20.0</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>0.8.0</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>bcprov</groupId>
+				<artifactId>bcprov</artifactId>
+				<version>jdk14-132</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>FontBox</groupId>
+				<artifactId>FontBox</artifactId>
+				<version>0.2.0-dev</version>
 				<scope>compile</scope>
 			</dependency>
 

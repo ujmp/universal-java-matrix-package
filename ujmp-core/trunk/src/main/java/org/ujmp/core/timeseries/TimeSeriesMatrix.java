@@ -139,7 +139,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	@Override
 	public double getDouble(int row, int column) {
 
-		if (row < 0 || column >= getColumnCount()) {
+		if (row < 0 || column >= getColumnCount() || row >= getRowCount()) {
 			return Double.NaN;
 		}
 

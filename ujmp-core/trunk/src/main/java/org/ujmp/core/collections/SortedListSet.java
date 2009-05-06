@@ -76,19 +76,19 @@ public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
 	}
 
 	@Override
-	public boolean add(A e) {
+	public synchronized boolean add(A e) {
 		list.clear();
 		return set.add(e);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends A> c) {
+	public synchronized boolean addAll(Collection<? extends A> c) {
 		list.clear();
 		return set.addAll(c);
 	}
 
 	@Override
-	public void clear() {
+	public synchronized void clear() {
 		list.clear();
 		set.clear();
 	}
@@ -114,19 +114,19 @@ public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public synchronized boolean remove(Object o) {
 		list.clear();
 		return set.remove(o);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public synchronized boolean removeAll(Collection<?> c) {
 		list.clear();
 		return set.removeAll(c);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public synchronized boolean retainAll(Collection<?> c) {
 		list.clear();
 		return set.retainAll(c);
 	}
@@ -157,37 +157,37 @@ public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
 	}
 
 	@Override
-	public A get(int index) {
+	public synchronized A get(int index) {
 		createList();
 		return list.get(index);
 	}
 
 	@Override
-	public int indexOf(Object o) {
+	public synchronized int indexOf(Object o) {
 		createList();
 		return list.indexOf(o);
 	}
 
 	@Override
-	public int lastIndexOf(Object o) {
+	public synchronized int lastIndexOf(Object o) {
 		createList();
 		return list.lastIndexOf(o);
 	}
 
 	@Override
-	public ListIterator<A> listIterator() {
+	public synchronized ListIterator<A> listIterator() {
 		createList();
 		return list.listIterator();
 	}
 
 	@Override
-	public ListIterator<A> listIterator(int index) {
+	public synchronized ListIterator<A> listIterator(int index) {
 		createList();
 		return list.listIterator(index);
 	}
 
 	@Override
-	public A remove(int index) {
+	public synchronized A remove(int index) {
 		createList();
 		A o = list.remove(index);
 		list.clear();
@@ -201,7 +201,7 @@ public class SortedListSet<A> implements SortedSet<A>, List<A>, Serializable {
 	}
 
 	@Override
-	public List<A> subList(int fromIndex, int toIndex) {
+	public synchronized List<A> subList(int fromIndex, int toIndex) {
 		createList();
 		return list.subList(fromIndex, toIndex);
 	}

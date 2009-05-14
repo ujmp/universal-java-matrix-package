@@ -49,10 +49,8 @@ public class SVD {
 			Matrix mtjm = con.newInstance(m);
 
 			return mtjm.svd();
-		} catch (ClassNotFoundException e) {
-			throw new MatrixException("cannot calculate SVD: add ujmp-mtj to classpath");
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("cannot calculate SVD: add ujmp-mtj and mtj to classpath");
 		}
 	}
 

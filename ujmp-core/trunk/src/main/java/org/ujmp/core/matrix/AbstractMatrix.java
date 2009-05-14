@@ -822,6 +822,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return (short) getAsDouble(coordinates);
 	}
 
+	public Matrix getAsMatrix(long... coordinates) throws MatrixException {
+		return MathUtil.getMatrix(getAsObject(coordinates));
+	}
+
+	public void setAsMatrix(Matrix m, long... coordinates) throws MatrixException {
+		setAsObject(m, coordinates);
+	}
+
 	public void setAsShort(short value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}

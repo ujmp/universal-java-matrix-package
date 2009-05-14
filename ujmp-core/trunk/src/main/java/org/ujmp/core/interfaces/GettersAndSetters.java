@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
@@ -416,5 +417,9 @@ public interface GettersAndSetters {
 	 * @throws MatrixException
 	 */
 	public Object getPreferredObject(long... coordinates) throws MatrixException;
+
+	public Matrix getAsMatrix(long... coordinates) throws MatrixException;
+
+	public void setAsMatrix(Matrix m, long... coordinates) throws MatrixException;
 
 }

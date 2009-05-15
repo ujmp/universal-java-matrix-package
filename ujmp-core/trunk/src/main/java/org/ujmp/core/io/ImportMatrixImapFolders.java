@@ -25,17 +25,16 @@ package org.ujmp.core.io;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrixImapFolders {
 
-	public static Matrix fromURL(URL url, Object... parameters) throws IOException {
+	public static Matrix fromURL(String url, Object... parameters) throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.mail.ImportMatrixImapFolders");
-			Method method = c.getMethod("fromURL", new Class[] { URL.class, Object[].class });
+			Method method = c.getMethod("fromURL", new Class[] { String.class, Object[].class });
 			Matrix matrix = (Matrix) method.invoke(null, url, parameters);
 			return matrix;
 		} catch (Exception e) {

@@ -1049,6 +1049,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 			if (rowCount == 0 || columnCount == 0) {
 				s.append("[" + rowCount + "x" + columnCount + "]" + EOL);
+			} else if (rowCount > UJMPSettings.getMaxRowsToPrint()
+					|| columnCount > UJMPSettings.getMaxColumnsToPrint()) {
+				s.append("[...]");
 			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not execute toString()", e);

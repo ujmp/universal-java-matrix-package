@@ -587,6 +587,11 @@ public abstract class MatrixFactory {
 		return ImportMatrix.fromURL(format, url, parameters);
 	}
 
+	public static Matrix importFromURL(FileFormat format, String url, Object... parameters)
+			throws MatrixException, IOException {
+		return ImportMatrix.fromURL(format, url, parameters);
+	}
+
 	public static Matrix importFromString(FileFormat format, String string, Object... parameters)
 			throws MatrixException {
 		return ImportMatrix.fromString(format, string, parameters);

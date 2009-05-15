@@ -39,18 +39,19 @@ public abstract class ImportMatrixXLS {
 			Matrix matrix = (Matrix) method.invoke(null, file, parameters);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 
 	public static Matrix fromStream(InputStream stream, Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jexcelapi.ImportMatrixXLS");
-			Method method = c.getMethod("fromStream", new Class[] { InputStream.class, Object[].class });
+			Method method = c.getMethod("fromStream", new Class[] { InputStream.class,
+					Object[].class });
 			Matrix matrix = (Matrix) method.invoke(null, stream, parameters);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 

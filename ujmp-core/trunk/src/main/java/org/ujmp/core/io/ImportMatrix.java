@@ -89,15 +89,21 @@ public abstract class ImportMatrix {
 
 	public static Matrix fromURL(FileFormat format, URL url, Object... parameters)
 			throws MatrixException, IOException {
-		URLConnection connection = url.openConnection();
-		connection.setRequestProperty("User-Agent",
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-		connection.setUseCaches(false);
-		connection.setDoInput(true);
-		connection.setDoOutput(true);
-		connection.setConnectTimeout(3000);
-		Matrix m = fromStream(format, connection.getInputStream(), parameters);
-		return m;
+		if (FileFormat.ImapMessages.equals(format)) {
+			return ImportMatrixImapMessages.fromURL(url, parameters);
+		} else if (FileFormat.ImapFolders.equals(format)) {
+			return ImportMatrixImapFolders.fromURL(url, parameters);
+		} else {
+			URLConnection connection = url.openConnection();
+			connection.setRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setConnectTimeout(3000);
+			Matrix m = fromStream(format, connection.getInputStream(), parameters);
+			return m;
+		}
 	}
 
 	public static Matrix fromStream(FileFormat format, InputStream stream, Object parameters)

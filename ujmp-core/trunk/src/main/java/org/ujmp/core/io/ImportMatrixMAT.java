@@ -38,7 +38,7 @@ public abstract class ImportMatrixMAT {
 			Matrix matrix = (Matrix) method.invoke(null, file, parameters);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jmatio not found in classpath", e);
 		}
 	}
 

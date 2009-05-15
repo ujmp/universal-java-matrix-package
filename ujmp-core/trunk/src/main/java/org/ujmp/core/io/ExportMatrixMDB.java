@@ -39,7 +39,7 @@ public class ExportMatrixMDB {
 					Object[].class });
 			method.invoke(null, file, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jackcess not found in classpath", e);
 		}
 	}
 

@@ -29,7 +29,7 @@ import java.io.File;
  * Import and export formats that are supported.
  */
 public enum FileFormat {
-	CSV, TXT, M, MAT, GIF, FILE, MDB, R, JPG, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF, STRING, SPARSECSV, RAW;
+	CSV, TXT, M, MAT, GIF, FILE, MDB, R, JPG, HTML, MTX, XLS, SER, GraphML, TEX, WAV, BMP, TIFF, PLT, JPEG, PDF, PNG, XML, AML, ARFF, ATT, LOG, NET, XRFF, STRING, SPARSECSV, RAW, ImapMessages, ImapFolders;
 
 	public static FileFormat guess(File file) {
 		String name = file.getName().toLowerCase();

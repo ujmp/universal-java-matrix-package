@@ -35,20 +35,22 @@ public class ExportMatrixXLS {
 	public static void toFile(File file, Matrix matrix, Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
-			Method method = c.getMethod("toFile", new Class[] { File.class, Matrix.class, Object[].class });
+			Method method = c.getMethod("toFile", new Class[] { File.class, Matrix.class,
+					Object[].class });
 			method.invoke(null, file, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 
 	public static void toStream(OutputStream stream, Matrix matrix, Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
-			Method method = c.getMethod("toStream", new Class[] { OutputStream.class, Matrix.class, Object[].class });
+			Method method = c.getMethod("toStream", new Class[] { OutputStream.class, Matrix.class,
+					Object[].class });
 			method.invoke(null, stream, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 

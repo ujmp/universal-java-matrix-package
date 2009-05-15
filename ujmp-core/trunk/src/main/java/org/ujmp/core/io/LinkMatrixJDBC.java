@@ -41,7 +41,7 @@ public class LinkMatrixJDBC {
 					username, password);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jdbc not found in classpath", e);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class LinkMatrixJDBC {
 					database, sqlStatement, username, password);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jdbc not found in classpath", e);
 		}
 	}
 

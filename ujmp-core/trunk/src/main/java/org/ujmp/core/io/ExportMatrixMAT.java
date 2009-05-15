@@ -41,7 +41,7 @@ public abstract class ExportMatrixMAT {
 					Object[].class });
 			method.invoke(null, file, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new MatrixException("ujmp-jmatio not found in classpath", e);
 		}
 	}
 

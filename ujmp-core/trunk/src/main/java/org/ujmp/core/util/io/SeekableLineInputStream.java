@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This stream searches all line end characters (hex 0A) in a file. For Linux
+ * line splitting is OK, for Windows the character hex 0D has to be eliminated
+ * with String.trim()
+ */
 public class SeekableLineInputStream extends InputStream {
 
 	private int bufferSize = 65536;
@@ -44,10 +49,11 @@ public class SeekableLineInputStream extends InputStream {
 
 	public SeekableLineInputStream(File file) throws IOException {
 		in = new BufferedRandomAccessFile(file, "r", bufferSize);
+		long totalLength = in.length();
 		long maxLength = 0;
 		long last = -1;
 		byte[] bytes = new byte[bufferSize];
-		for (long pos = 0; pos < in.length(); pos += bufferSize) {
+		for (long pos = 0; pos < totalLength; pos += bufferSize) {
 			Arrays.fill(bytes, (byte) 0);
 			in.read(pos, bytes);
 
@@ -64,6 +70,9 @@ public class SeekableLineInputStream extends InputStream {
 
 			}
 		}
+
+		// remove last newline, if it the last byte in the file
+		lineEnds.remove(totalLength - 1);
 
 		System.out.println("This stream has " + getLineCount() + " lines");
 
@@ -105,7 +114,13 @@ public class SeekableLineInputStream extends InputStream {
 			int length = (int) (end - start);
 			byte[] bytes = new byte[length];
 			in.read(start, bytes);
-			line = new String(bytes);
+
+			// eliminate Windows line end
+			if (bytes[bytes.length - 1] == 13) {
+				line = new String(bytes, 0, bytes.length - 1);
+			} else {
+				line = new String(bytes);
+			}
 		}
 		return line;
 	}

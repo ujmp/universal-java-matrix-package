@@ -35,13 +35,19 @@ import org.ujmp.core.util.io.SeekableLineInputStream;
 public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = 6025235663309962730L;
 
-	private String fieldDelimiter = "\t";
+	private String fieldDelimiter = "[,;\t]";
 
 	private int columnCount = 0;
 
+	private final boolean trimFields = true;
+
+	private final boolean ignoreQuotationMarks = true;
+
+	private final String quotation = "\"";
+
 	private SeekableLineInputStream sli = null;
 
-	private Map<Long, String[]> rows = new SoftHashMap<Long, String[]>();
+	private final Map<Long, String[]> rows = new SoftHashMap<Long, String[]>();
 
 	public CSVMatrix(String file, Object... parameters) throws IOException {
 		this(new File(file), parameters);
@@ -50,7 +56,12 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	public CSVMatrix(File file, Object... parameters) throws IOException {
 		if (parameters.length != 0 && parameters[0] instanceof String) {
 			this.fieldDelimiter = (String) parameters[0];
+		} else {
+			System.out
+					.println("You should specify the column separator to make sure that the file is parsed correctly.");
+			System.out.println("Example: MatrixFactory.linkToFile(FileFormat.CSV, file, \";\")");
 		}
+		setLabel(file.getAbsolutePath());
 
 		sli = new SeekableLineInputStream(file);
 
@@ -75,6 +86,19 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 			if (fields == null) {
 				String line = sli.readLine((int) row);
 				fields = line.split(fieldDelimiter);
+				if (trimFields) {
+					for (int i = 0; i < fields.length; i++) {
+						fields[i] = fields[i].trim();
+					}
+				}
+				if (ignoreQuotationMarks) {
+					for (int i = 0; i < fields.length; i++) {
+						String s = fields[i];
+						if (s.length() > 1 && s.startsWith(quotation) && s.endsWith(quotation)) {
+							fields[i] = s.substring(1, s.length() - 2);
+						}
+					}
+				}
 				rows.put(row, fields);
 			}
 			if (fields.length > columnCount) {

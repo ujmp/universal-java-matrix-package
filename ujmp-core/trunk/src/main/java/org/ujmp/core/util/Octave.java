@@ -38,7 +38,7 @@ public class Octave {
 	public static final String[] SEARCH = new String[] { System.getProperty("Octave"),
 			"/usr/bin/octave", "/opt/octave/bin/octave" };
 
-	public static final int POLLINTERVAL = 10;
+	public static final int POLLINTERVAL = 50;
 
 	public static final int MAXPOLLS = 10;
 

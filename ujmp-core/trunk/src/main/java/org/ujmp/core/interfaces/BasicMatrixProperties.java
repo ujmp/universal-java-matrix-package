@@ -140,4 +140,12 @@ public interface BasicMatrixProperties {
 
 	public String toString();
 
+	public double norm1();
+
+	public double norm2();
+
+	public double normF();
+
+	public double normInf();
+
 }

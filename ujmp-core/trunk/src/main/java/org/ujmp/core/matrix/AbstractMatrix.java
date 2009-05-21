@@ -2005,4 +2005,59 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new ToStringMatrix(this).calcLink();
 	}
 
+	public double norm1() {
+		long rows = getRowCount();
+		long cols = getColumnCount();
+		double max = 0;
+		for (long c = 0; c < cols; c++) {
+			double sum = 0;
+			for (long r = 0; r < rows; r++) {
+				sum += Math.abs(getAsDouble(r, c));
+			}
+			max = Math.max(max, sum);
+		}
+		return max;
+	}
+
+	public double norm2() {
+		return svd()[1].getAsDouble(0, 0);
+	}
+
+	public double normInf() {
+		long rows = getRowCount();
+		long cols = getColumnCount();
+		double max = 0;
+		for (long r = 0; r < rows; r++) {
+			double sum = 0;
+			for (long c = 0; c < cols; c++) {
+				sum += Math.abs(getAsDouble(r, c));
+			}
+			max = Math.max(max, sum);
+		}
+		return max;
+	}
+
+	public double normF() {
+		long rows = getRowCount();
+		long cols = getColumnCount();
+		double result = 0;
+		for (long ro = 0; ro < rows; ro++) {
+			for (long c = 0; c < cols; c++) {
+				double b = getAsDouble(ro, c);
+				double temp = 0.0;
+				if (Math.abs(result) > Math.abs(b)) {
+					temp = b / result;
+					temp = Math.abs(result) * Math.sqrt(1 + temp * temp);
+				} else if (b != 0) {
+					temp = result / b;
+					temp = Math.abs(b) * Math.sqrt(1 + temp * temp);
+				} else {
+					temp = 0.0;
+				}
+				result = temp;
+			}
+		}
+		return result;
+	}
+
 }

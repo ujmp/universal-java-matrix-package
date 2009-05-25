@@ -49,6 +49,8 @@ public interface Annotation extends Serializable {
 	public Annotation clone();
 
 	public boolean equals(Annotation a);
+	
+	public void clear();
 
 	public long getPositionForLabel(int dimension, Object object);
 

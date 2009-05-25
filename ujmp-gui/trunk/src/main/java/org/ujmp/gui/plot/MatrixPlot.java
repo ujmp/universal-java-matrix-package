@@ -124,17 +124,20 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 	protected void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
+			MatrixGUIObject guiObject = plotSettings.getMatrixGUIObject();
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.addRenderingHints(UIDefaults.AALIAS);
+
+			if (guiObject == null) {
+				return;
+			}
+
 			plotSettings.setHeight(getHeight());
 			plotSettings.setWidth(getWidth());
 			plotSettings.setMinXValue(0.0);
-			plotSettings.setMaxXValue(plotSettings.getMatrixGUIObject()
-					.getRowCount() - 1);
-			plotSettings.setMinYValue(plotSettings.getMatrixGUIObject()
-					.getEstimatedMinValue(100));
-			plotSettings.setMaxYValue(plotSettings.getMatrixGUIObject()
-					.getEstimatedMaxValue(100));
+			plotSettings.setMaxXValue(guiObject.getRowCount() - 1);
+			plotSettings.setMinYValue(guiObject.getEstimatedMinValue(100));
+			plotSettings.setMaxYValue(guiObject.getEstimatedMaxValue(100));
 
 			if (plotSettings.isShowPlotBackGround()) {
 				plotBackground.paintComponent(g);

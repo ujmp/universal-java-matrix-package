@@ -34,6 +34,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.JMathLib;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
@@ -82,6 +83,8 @@ public class DefaultMenuBar extends JMenuBar {
 		JMenu toolsMenu = new JMenu("Tools");
 		toolsMenu.setMnemonic(KeyEvent.VK_T);
 		// optionsMenu.add(new JSeparator());
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, FileFormat
+				.getMatrix())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
 				new MatrixSystemProperties())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,

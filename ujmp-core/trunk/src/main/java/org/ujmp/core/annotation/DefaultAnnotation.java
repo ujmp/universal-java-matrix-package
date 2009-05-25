@@ -156,4 +156,10 @@ public class DefaultAnnotation implements Annotation {
 		}
 		return true;
 	}
+
+	public void clear() {
+		axisAnnotation.clear();
+		axisLabelAnnotation.clear();
+		axisPositions.clear();
+	}
 }

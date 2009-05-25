@@ -35,17 +35,17 @@ import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
 
-public class ExportAction extends ObjectAction {
-	private static final long serialVersionUID = -3132833245167910507L;
+public class ExportMatrixAction extends ObjectAction {
+	private static final long serialVersionUID = -212812956173346428L;
 
-	public ExportAction(JComponent c, GUIObject o) {
+	public ExportMatrixAction(JComponent c, GUIObject o) {
 		super(c, o);
 		putValue(Action.NAME, "Export...");
-		putValue(Action.SHORT_DESCRIPTION, "Export to file");
+		putValue(Action.SHORT_DESCRIPTION, "Export this Matrix");
 	}
 
 	@Override
-	public Object call() {
+	public Object call() throws Exception {
 		File file = null;
 		JFileChooser chooser = new JFileChooser();
 
@@ -82,4 +82,5 @@ public class ExportAction extends ObjectAction {
 
 		return null;
 	}
+
 }

@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
 public class StatusBar extends JPanel {
@@ -42,7 +43,7 @@ public class StatusBar extends JPanel {
 
 	private final JLabel taskStatus = new JLabel();
 
-	private final JLabel objectStatus = new JLabel();
+	private JLabel objectStatus = null;
 
 	private GUIObject object = null;
 
@@ -52,6 +53,11 @@ public class StatusBar extends JPanel {
 
 	public StatusBar(GUIObject o) {
 		this.object = o;
+		if (o instanceof MatrixGUIObject) {
+			this.objectStatus = new MatrixStatisticsBar((MatrixGUIObject) o);
+		} else {
+			this.objectStatus = new JLabel();
+		}
 		this.setPreferredSize(new Dimension(1000, 30));
 		this.setBorder(BorderFactory.createEtchedBorder());
 		this.setLayout(new GridBagLayout());
@@ -59,14 +65,17 @@ public class StatusBar extends JPanel {
 		taskStatus.setPreferredSize(new Dimension(200, 30));
 		taskStatus.setMinimumSize(new Dimension(200, 30));
 
-		add(objectStatus, new GridBagConstraints(0, 0, 1, 1, 0.2, 1.0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
+		add(objectStatus, new GridBagConstraints(0, 0, 1, 1, 0.2, 1.0,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(2,
+						2, 2, 2), 0, 0));
 
-		add(taskStatus, new GridBagConstraints(2, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
-				new Insets(2, 2, 2, 2), 0, 0));
+		add(taskStatus, new GridBagConstraints(2, 0, 1, 1, 0.0, 1.0,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(2,
+						2, 2, 2), 0, 0));
 
-		add(new MemoryUsage(), new GridBagConstraints(3, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
+		add(new MemoryUsage(), new GridBagConstraints(3, 0, 1, 1, 0.0, 1.0,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(2,
+						2, 2, 2), 0, 0));
 
 		jProgressBar.setStringPainted(false);
 		jProgressBar.setMinimum(0);
@@ -78,8 +87,9 @@ public class StatusBar extends JPanel {
 		taskStatus.setBorder(BorderFactory.createEtchedBorder());
 		jProgressBar.setBorder(BorderFactory.createEtchedBorder());
 
-		add(jProgressBar, new GridBagConstraints(1, 0, 1, 1, 0.8, 1.0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
+		add(jProgressBar, new GridBagConstraints(1, 0, 1, 1, 0.8, 1.0,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(2,
+						2, 2, 2), 0, 0));
 
 	}
 

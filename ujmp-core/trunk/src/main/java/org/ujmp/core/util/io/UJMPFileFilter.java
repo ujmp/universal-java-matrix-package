@@ -24,9 +24,6 @@
 package org.ujmp.core.util.io;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.filechooser.FileFilter;
 
@@ -34,38 +31,11 @@ public class UJMPFileFilter extends FileFilter {
 
 	private String label = null;
 
-	private String suffix = null;
+	private String[] suffix = null;
 
-	public static final UJMPFileFilter PDFFilter = new UJMPFileFilter("PDF Files", ".pdf");
-
-	public static final UJMPFileFilter PLTFilter = new UJMPFileFilter("PLT Files", ".plt");
-
-	public static final UJMPFileFilter PNGFilter = new UJMPFileFilter("PNG Files", ".png");
-
-	public static final UJMPFileFilter JPEGFilter = new UJMPFileFilter("JPEG Files", ".jpg");
-
-	public static final UJMPFileFilter XLSFilter = new UJMPFileFilter("XLS Files", ".xls");
-
-	public static final UJMPFileFilter XMLFilter = new UJMPFileFilter("XML Files", ".xls");
-
-	public static final UJMPFileFilter MatlabFilter = new UJMPFileFilter("Matlab Files", ".m");
-
-	public UJMPFileFilter(String label, String suffix) {
+	public UJMPFileFilter(String label, String... suffix) {
 		this.label = label;
 		this.suffix = suffix;
-	}
-
-	public static Collection<FileFilter> getChoosableFileFilters(Object o) {
-		List<FileFilter> filters = new LinkedList<FileFilter>();
-		filters.add(UJMPFileFilter.XMLFilter);
-		filters.add(UJMPFileFilter.MatlabFilter);
-		filters.add(UJMPFileFilter.PLTFilter);
-		filters.add(UJMPFileFilter.XLSFilter);
-		filters.add(UJMPFileFilter.PDFFilter);
-		filters.add(UJMPFileFilter.PNGFilter);
-		filters.add(UJMPFileFilter.JPEGFilter);
-
-		return filters;
 	}
 
 	@Override
@@ -74,25 +44,26 @@ public class UJMPFileFilter extends FileFilter {
 			return true;
 		}
 
-		if (f.getName().toLowerCase().endsWith(suffix)) {
-			return true;
-		} else {
-			return false;
+		for (String s : suffix) {
+			if (f.getName().toLowerCase().endsWith(s)) {
+				return true;
+			}
 		}
+		return false;
 	}
 
 	@Override
 	public String getDescription() {
-		return label;
+		return toString();
 	}
 
-	public String getSuffix() {
+	public String[] getSuffix() {
 		return suffix;
 	}
 
 	@Override
 	public String toString() {
-		return label + " (" + suffix + ")";
+		return label + " (." + suffix[0] + ")";
 	}
 
 }

@@ -37,6 +37,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 
 	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
 		this.add(new JMenuItem(new ClearMatrixAction(c, m, v)));
+		this.add(new JMenuItem(new ExportMatrixAction(c, m)));
 		this.add(new JMenuItem(new CopyMatrixAction(c, m, v)));
 		this.add(new JMenuItem(new LinkMatrixAction(c, m, v)));
 		this.add(new JSeparator());

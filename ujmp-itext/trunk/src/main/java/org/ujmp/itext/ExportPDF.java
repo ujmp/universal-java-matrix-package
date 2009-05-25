@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 
-import org.ujmp.core.util.io.UJMPFileFilter;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 
 import com.lowagie.text.Document;
@@ -43,7 +43,8 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public abstract class ExportPDF {
 
-	private static final Logger logger = Logger.getLogger(ExportPDF.class.getName());
+	private static final Logger logger = Logger.getLogger(ExportPDF.class
+			.getName());
 
 	public static final File selectFile() {
 		return selectFile(null);
@@ -51,7 +52,7 @@ public abstract class ExportPDF {
 
 	public static final File selectFile(Component c) {
 		JFileChooser chooser = new JFileChooser();
-		chooser.setFileFilter(UJMPFileFilter.PDFFilter);
+		chooser.setFileFilter(FileFormat.PDF.getFileFilter());
 		int returnVal = chooser.showOpenDialog(c);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
@@ -76,13 +77,16 @@ public abstract class ExportPDF {
 			return;
 		}
 		try {
-			Document document = new Document(new com.lowagie.text.Rectangle(width, height));
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
+			Document document = new Document(new com.lowagie.text.Rectangle(
+					width, height));
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream(file.getAbsolutePath()));
 			document.addAuthor("JDMP");
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
 			PdfTemplate tp = cb.createTemplate(width, height);
-			Graphics2D g2 = tp.createGraphics(width, height, new DefaultFontMapper());
+			Graphics2D g2 = tp.createGraphics(width, height,
+					new DefaultFontMapper());
 			if (c instanceof CanRenderGraph) {
 				((CanRenderGraph) c).renderGraph(g2);
 			} else {

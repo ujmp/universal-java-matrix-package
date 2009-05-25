@@ -80,6 +80,8 @@ public abstract class AbstractFrame extends JFrame {
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		if (d.getHeight() < 1024) {
+			setPreferredSize(new Dimension(800, 600));
+			setSize(new Dimension(800, 600));
 			setExtendedState(MAXIMIZED_BOTH);
 		} else {
 			setPreferredSize(new Dimension(1280, 800));

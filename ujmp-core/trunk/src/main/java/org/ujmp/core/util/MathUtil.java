@@ -672,4 +672,16 @@ public abstract class MathUtil {
 		}
 		return result;
 	}
+
+	public static boolean isNull(Object value) {
+		if (value == null) {
+			return true;
+		}
+		if (value instanceof Number) {
+			if (((Number) value).doubleValue() == 0.0) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

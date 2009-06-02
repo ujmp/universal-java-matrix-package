@@ -33,13 +33,15 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Wrapper;
 
-public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatrix2D {
+public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatrix2D implements
+		Wrapper<Map<Long, Matrix>> {
 	private static final long serialVersionUID = -1943118812754494387L;
 
 	private long[] size = new long[] { 1, 1 };
 
-	private final Map<Long, Matrix> columns = new HashMap<Long, Matrix>();
+	private Map<Long, Matrix> columns = new HashMap<Long, Matrix>();
 
 	public DefaultSparseColumnObjectMatrix2D(long... size) {
 		setSize(size);
@@ -98,8 +100,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	@Override
 	public void setObject(Object o, int row, int column) throws MatrixException {
-		Matrix m = columns.get(column);
-		m.setAsObject(o, row, 0);
+		setObject(o, (long) row, (long) column);
 	}
 
 	public long[] getSize() {
@@ -154,6 +155,16 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 			return getColumn(columns[0]);
 		}
 		return super.selectColumns(returnType, columns);
+	}
+
+	@Override
+	public Map<Long, Matrix> getWrappedObject() {
+		return columns;
+	}
+
+	@Override
+	public void setWrappedObject(Map<Long, Matrix> object) {
+		this.columns = object;
 	}
 
 }

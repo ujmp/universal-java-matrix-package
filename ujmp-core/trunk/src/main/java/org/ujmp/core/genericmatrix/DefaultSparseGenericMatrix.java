@@ -89,7 +89,11 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 			values.remove(values.keySet().iterator().next());
 		}
 		if (Coordinates.isSmallerThan(coordinates, size)) {
-			values.put(new Coordinates(coordinates), (A) value);
+			if (MathUtil.isNull(value)) {
+				values.remove(new Coordinates(coordinates));
+			} else {
+				values.put(new Coordinates(coordinates), (A) value);
+			}
 		}
 	}
 

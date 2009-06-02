@@ -100,12 +100,12 @@ public class Transpose extends AbstractObjectCalculation {
 	public static Matrix calc(Matrix m) throws MatrixException {
 		Matrix ret = null;
 		if (m.isSparse()) {
-			ret = MatrixFactory.sparse(Coordinates.transpose(m.getSize()));
+			ret = MatrixFactory.sparse(m.getValueType(), Coordinates.transpose(m.getSize()));
 		} else {
-			ret = MatrixFactory.zeros(Coordinates.transpose(m.getSize()));
+			ret = MatrixFactory.zeros(m.getValueType(), Coordinates.transpose(m.getSize()));
 		}
 		for (long[] c : m.availableCoordinates()) {
-			ret.setAsDouble(m.getAsDouble(c), Coordinates.transpose(c));
+			ret.setAsObject(m.getAsObject(c), Coordinates.transpose(c));
 		}
 		return ret;
 	}

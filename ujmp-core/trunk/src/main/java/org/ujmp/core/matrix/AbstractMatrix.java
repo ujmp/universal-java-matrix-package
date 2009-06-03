@@ -136,8 +136,12 @@ import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
 import org.ujmp.core.io.ExportMatrix;
+import org.ujmp.core.listmatrix.DefaultListMatrix;
+import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.mapper.CalculationMapper;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.ReshapedObjectMatrix;
@@ -153,6 +157,8 @@ import org.ujmp.core.objectmatrix.calculation.Sort;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.objectmatrix.calculation.Unique;
+import org.ujmp.core.setmatrix.DefaultSetMatrix;
+import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
@@ -2058,6 +2064,42 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 		}
 		return result;
+	}
+
+	public ListMatrix<?> toListMatrix() {
+		if (this instanceof ListMatrix<?>) {
+			return (ListMatrix<?>) this;
+		} else {
+			ListMatrix<Object> list = new DefaultListMatrix<Object>();
+			for (int row = 0; row < getRowCount(); row++) {
+				list.add(getAsObject(row, 0));
+			}
+			return list;
+		}
+	}
+
+	public SetMatrix<?> toSetMatrix() {
+		if (this instanceof SetMatrix<?>) {
+			return (SetMatrix<?>) this;
+		} else {
+			SetMatrix<Object> set = new DefaultSetMatrix<Object>();
+			for (int row = 0; row < getRowCount(); row++) {
+				set.add(getAsObject(row, 0));
+			}
+			return set;
+		}
+	}
+
+	public MapMatrix<?, ?> toMapMatrix() {
+		if (this instanceof MapMatrix<?, ?>) {
+			return (MapMatrix<?, ?>) this;
+		} else {
+			MapMatrix<Object, Object> map = new DefaultMapMatrix<Object, Object>();
+			for (int row = 0; row < getRowCount(); row++) {
+				map.put(getAsObject(row, 0), getAsObject(row, 1));
+			}
+			return map;
+		}
 	}
 
 }

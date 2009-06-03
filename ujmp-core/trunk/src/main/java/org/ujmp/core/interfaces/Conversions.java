@@ -30,8 +30,11 @@ import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
+import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
 
@@ -58,5 +61,11 @@ public interface Conversions {
 	public StringMatrix toStringMatrix();
 
 	public ObjectMatrix toObjectMatrix();
+
+	public ListMatrix<?> toListMatrix();
+
+	public SetMatrix<?> toSetMatrix();
+
+	public MapMatrix<?, ?> toMapMatrix();
 
 }

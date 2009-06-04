@@ -44,6 +44,7 @@ import org.ujmp.core.util.matrices.MatrixRunningThreads;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
+import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 import org.ujmp.gui.actions.MandelbrotMatrixAction;
 import org.ujmp.gui.actions.ShowInFrameAction;
 import org.ujmp.gui.actions.SunSpotDataMatrixAction;
@@ -83,6 +84,8 @@ public class DefaultMenuBar extends JMenuBar {
 		JMenu toolsMenu = new JMenu("Tools");
 		toolsMenu.setMnemonic(KeyEvent.VK_T);
 		// optionsMenu.add(new JSeparator());
+		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
+				new UJMPPluginsMatrix())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, FileFormat
 				.getMatrix())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,

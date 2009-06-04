@@ -42,7 +42,6 @@ import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
-import org.ujmp.gui.toolbar.DefaultToolbar;
 import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.GlobalTimer;
 import org.ujmp.gui.util.UIDefaults;
@@ -50,7 +49,8 @@ import org.ujmp.gui.util.UIDefaults;
 public abstract class AbstractFrame extends JFrame {
 	private static final long serialVersionUID = -4656308453503586700L;
 
-	private static Image image = Toolkit.getDefaultToolkit().getImage("ujmp16.png");
+	private static Image image = Toolkit.getDefaultToolkit().getImage(
+			"ujmp16.png");
 
 	private int modCount = -1;
 
@@ -62,7 +62,8 @@ public abstract class AbstractFrame extends JFrame {
 
 	private TimerTask updateTask = null;
 
-	public AbstractFrame(GUIObject o, JComponent component) throws MatrixException {
+	public AbstractFrame(GUIObject o, JComponent component)
+			throws MatrixException {
 		UIDefaults.setDefaults();
 		FrameManager.registerFrame(this);
 		this.object = o;
@@ -70,8 +71,10 @@ public abstract class AbstractFrame extends JFrame {
 		if (o instanceof MatrixGUIObject) {
 			MatrixGUIObject mgui = (MatrixGUIObject) o;
 			Matrix m = mgui.getMatrix();
-			String size = Coordinates.toString(m.getSize()).replaceAll(",", "x");
-			setTitle("[" + size + "] " + m.getClass().getSimpleName() + " [" + label + "]");
+			String size = Coordinates.toString(m.getSize())
+					.replaceAll(",", "x");
+			setTitle("[" + size + "] " + m.getClass().getSimpleName() + " ["
+					+ label + "]");
 		} else {
 			setTitle(o.toString());
 		}
@@ -79,9 +82,13 @@ public abstract class AbstractFrame extends JFrame {
 		setIconImage(image);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		if (d.getHeight() < 1024) {
-			setPreferredSize(new Dimension(800, 600));
-			setSize(new Dimension(800, 600));
+		if (d.getHeight() < 800) {
+			setPreferredSize(new Dimension(700, 500));
+			setSize(new Dimension(700, 500));
+			setExtendedState(MAXIMIZED_BOTH);
+		} else if (d.getHeight() < 1024) {
+			setPreferredSize(new Dimension(1000, 600));
+			setSize(new Dimension(1000, 600));
 			setExtendedState(MAXIMIZED_BOTH);
 		} else {
 			setPreferredSize(new Dimension(1280, 800));
@@ -93,8 +100,8 @@ public abstract class AbstractFrame extends JFrame {
 
 		getContentPane().add(component, BorderLayout.CENTER);
 
-//		DefaultToolbar toolbar = new DefaultToolbar(component, o);
-//		getContentPane().add(toolbar, BorderLayout.NORTH);
+		// DefaultToolbar toolbar = new DefaultToolbar(component, o);
+		// getContentPane().add(toolbar, BorderLayout.NORTH);
 
 		final GUIObject go = object;
 		updateTask = new TimerTask() {

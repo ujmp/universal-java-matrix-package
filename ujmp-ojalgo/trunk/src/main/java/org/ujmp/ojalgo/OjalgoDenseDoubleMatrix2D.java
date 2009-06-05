@@ -29,12 +29,9 @@ import java.io.ObjectOutputStream;
 
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
-import org.ojalgo.matrix.store.PrimitiveDenseStore;
-import org.ojalgo.matrix.store.TransposedStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.util.ReflectionUtil;
 
 public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<BasicMatrix> {
@@ -42,10 +39,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	private transient BasicMatrix matrix = null;
 
-	private transient PrimitiveDenseStore store = null;
-
 	public OjalgoDenseDoubleMatrix2D(long... size) {
-		this.matrix = PrimitiveMatrix.FACTORY.buildZero((int) size[ROW],
+		this.matrix = PrimitiveMatrix.FACTORY.makeZero((int) size[ROW],
 				(int) size[COLUMN]);
 	}
 
@@ -73,11 +68,11 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public void setDouble(double value, long row, long column) {
-		getStore().fillOne((int) row, (int) column, value);
+		matrix = matrix.set((int) row, (int) column, value);
 	}
 
 	public void setDouble(double value, int row, int column) {
-		getStore().fillOne(row, column, value);
+		matrix = matrix.set(row, column, value);
 	}
 
 	public BasicMatrix getWrappedObject() {
@@ -90,27 +85,18 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix transpose() {
-		TransposedStore<Double> ts = new TransposedStore<Double>(getStore());
-		return new OjalgoDenseDoubleMatrix2D(new PrimitiveMatrix(ts.copy()));
+		return new OjalgoDenseDoubleMatrix2D(matrix.transpose());
 	}
 
 	@Override
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
-			return new OjalgoDenseDoubleMatrix2D(matrix
-					.multiplyRight(((OjalgoDenseDoubleMatrix2D) m)
-							.getWrappedObject()));
+			BasicMatrix mo = ((OjalgoDenseDoubleMatrix2D) m).getWrappedObject();
+			BasicMatrix result = matrix.multiplyRight(mo);
+			return new OjalgoDenseDoubleMatrix2D(result);
 		} else {
 			return super.mtimes(m);
 		}
-	}
-
-	public PrimitiveDenseStore getStore() {
-		if (store == null) {
-			store = (PrimitiveDenseStore) ReflectionUtil.extractPrivateField(
-					PrimitiveMatrix.class.getSuperclass(), matrix, "myStore");
-		}
-		return store;
 	}
 
 	private void writeObject(ObjectOutputStream s) throws IOException {
@@ -122,7 +108,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] data = (double[][]) s.readObject();
-		this.matrix = PrimitiveMatrix.FACTORY.buildZero(data.length,
+		this.matrix = PrimitiveMatrix.FACTORY.makeZero(data.length,
 				data[0].length);
 		for (int r = data.length; --r != -1;) {
 			for (int c = data[0].length; --c != -1;) {

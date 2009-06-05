@@ -55,6 +55,8 @@ public class DefaultMenuBar extends JMenuBar {
 
 	protected JMenu examplesMenu = new JMenu("Examples");
 
+	protected JMenu toolsMenu = new JMenu("Tools");
+
 	public DefaultMenuBar(JComponent component, GUIObject o) {
 	}
 
@@ -81,11 +83,11 @@ public class DefaultMenuBar extends JMenuBar {
 	}
 
 	public void init(JComponent component, GUIObject o) {
-		JMenu toolsMenu = new JMenu("Tools");
 		toolsMenu.setMnemonic(KeyEvent.VK_T);
 		// optionsMenu.add(new JSeparator());
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
 				new UJMPPluginsMatrix())));
+		toolsMenu.add(new JSeparator());
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component, FileFormat
 				.getMatrix())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
@@ -105,7 +107,6 @@ public class DefaultMenuBar extends JMenuBar {
 				new MatrixRandomSeed())));
 		toolsMenu.add(new JMenuItem(new ShowInFrameAction(component,
 				new MatrixAvailableProcessors())));
-		// toolsMenu.add(new JSeparator());
 
 		if (JMathLib.isAvailable()) {
 			toolsMenu.add(new JSeparator());

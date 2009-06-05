@@ -54,7 +54,7 @@ public abstract class ImportMatrixCSV {
 			throws MatrixException {
 		StringReader sr = new StringReader(string);
 		IntelligentFileReader r = new IntelligentFileReader(sr);
-		Matrix m = fromReader(r);
+		Matrix m = fromReader(r, parameters);
 		r.close();
 		return m;
 	}

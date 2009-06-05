@@ -131,11 +131,15 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DenseMatrix a = matrix;
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 			DenseMatrix c = new DenseMatrix(a.numRows(), b.numColumns());
-			a.mult(b, c);
-			return new MTJDenseDoubleMatrix2D(c);
-		} else {
-			return super.mtimes(m2);
+			try {
+				a.mult(b, c);
+				return new MTJDenseDoubleMatrix2D(c);
+			} catch (Exception e) {
+				// sometimes BLAS cannot be found, in this case, we use the
+				// default method below
+			}
 		}
+		return super.mtimes(m2);
 	}
 
 	@Override

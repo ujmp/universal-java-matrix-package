@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2008-2009 Holger Arndt, A. Naegele and M. Bundschus
+ *
+ * This file is part of the Universal Java Matrix Package (UJMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * UJMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * UJMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with UJMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
 package org.ujmp.colt;
 
 import java.util.ArrayList;
@@ -8,17 +31,21 @@ import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	@Override
-	public Collection<String> getNeededClasses() {
-		List<String> list = new ArrayList<String>();
-		list.add("cern.colt.matrix.DoubleMatrix2D");
-		list.add("EDU.oswjego.cs.dl.util.concurrent.Callable");
-		return list;
+	private final List<Object> dependencies = new ArrayList<Object>();
+
+	private final List<String> neededClasses = new ArrayList<String>();
+
+	public Plugin() {
+		dependencies.add("ujmp-core");
+		dependencies.add("colt.jar");
+		dependencies.add("concurrent.jar");
+		neededClasses.add("cern.colt.matrix.DoubleMatrix2D");
+		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Interface to Colt matrices.";
+		return "interface to Colt matrices";
 	}
 
 	@Override
@@ -27,11 +54,12 @@ public class Plugin extends AbstractPlugin {
 
 	@Override
 	public Collection<Object> getDependencies() {
-		List<Object> list = new ArrayList<Object>();
-		list.add("ujmp-core");
-		list.add("colt.jar");
-		list.add("concurrent.jar");
-		return list;
+		return dependencies;
+	}
+
+	@Override
+	public Collection<String> getNeededClasses() {
+		return neededClasses;
 	}
 
 }

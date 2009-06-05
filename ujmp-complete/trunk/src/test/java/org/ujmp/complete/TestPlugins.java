@@ -21,41 +21,22 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.complete;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import junit.framework.TestCase;
 
-import org.ujmp.core.util.AbstractPlugin;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
-public class Plugin extends AbstractPlugin {
+public class TestPlugins extends TestCase {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
-	public Plugin() {
-		dependencies.add("ujmp-core");
-	}
-
-	@Override
-	public String getDescription() {
-		return "basic visualization module for matrices";
-	}
-
-	@Override
-	public void setDescription(String description) {
-	}
-
-	@Override
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	@Override
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
+	public void testPlugins() {
+		Matrix m = new UJMPPluginsMatrix();
+		for (int r = 0; r < m.getRowCount(); r++) {
+			String name = m.getAsString(r, 0);
+			String status = m.getAsString(r, 4);
+			assertEquals(name, "ok", status);
+		}
 	}
 
 }

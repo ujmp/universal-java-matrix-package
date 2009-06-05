@@ -21,41 +21,15 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jmathplot;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import junit.framework.TestSuite;
 
-import org.ujmp.core.util.AbstractPlugin;
+public class AllTests extends TestSuite {
 
-public class Plugin extends AbstractPlugin {
-
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
-	public Plugin() {
-		dependencies.add("ujmp-core");
-	}
-
-	@Override
-	public String getDescription() {
-		return "basic visualization module for matrices";
-	}
-
-	@Override
-	public void setDescription(String description) {
-	}
-
-	@Override
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	@Override
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
+	public static TestSuite suite() {
+		TestSuite suite = new TestSuite(AllTests.class.getName());
+		return suite;
 	}
 
 }

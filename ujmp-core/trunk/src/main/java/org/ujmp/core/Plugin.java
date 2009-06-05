@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,12 +36,12 @@ public class Plugin extends AbstractPlugin {
 	private final List<String> neededClasses = new ArrayList<String>();
 
 	public Plugin() {
-		dependencies.add("ujmp-core");
+		dependencies.add("none");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "main package containing most matrix implementations and calculations";
 	}
 
 	@Override

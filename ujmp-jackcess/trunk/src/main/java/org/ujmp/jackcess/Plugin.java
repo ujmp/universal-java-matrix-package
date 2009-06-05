@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jackcess;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,17 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("jackcess.jar");
+		dependencies.add("commons-logging.jar");
+		dependencies.add("commons-lang.jar");
+		neededClasses.add("com.healthmarketscience.jackcess.Database");
+		neededClasses.add("org.apache.commons.logging.Log");
+		neededClasses.add("org.apache.commons.lang.ClassUtils");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "import and export filters for mdb files (MS Access databases)";
 	}
 
 	@Override

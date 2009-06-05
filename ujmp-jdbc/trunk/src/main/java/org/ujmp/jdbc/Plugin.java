@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jdbc;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,19 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("mysql-connector-java.jar");
+		dependencies.add("postgresql.jar");
+		dependencies.add("derby.jar");
+		dependencies.add("hsqldb.jar");
+		neededClasses.add("com.mysql.jdbc.Driver");
+		neededClasses.add("org.postgresql.Driver");
+		neededClasses.add("org.apache.derby.database.Database");
+		neededClasses.add("org.hsqldb.Database");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "provides import functionalities for JDBC databases";
 	}
 
 	@Override

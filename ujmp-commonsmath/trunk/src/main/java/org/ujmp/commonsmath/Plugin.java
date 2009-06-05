@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.commonsmath;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,13 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("commons-math.jar");
+		neededClasses.add("org.apache.commons.math.MathException");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "interface to Apache commons mathemathics library";
 	}
 
 	@Override

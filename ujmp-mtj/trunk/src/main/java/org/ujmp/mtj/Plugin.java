@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.mtj;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,17 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("mtj.jar");
+		dependencies.add("arpack-combo.jar");
+		dependencies.add("netlib-java.jar");
+		neededClasses.add("no.uib.cipr.matrix.AbstractMatrix");
+		neededClasses.add("org.netlib.arpack.Svout");
+		neededClasses.add("org.netlib.blas.JBLAS");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "interface to Matrix Toolkits for Java";
 	}
 
 	@Override

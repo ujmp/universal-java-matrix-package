@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.hadoop;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,15 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("hadoop-core.jar");
+		dependencies.add("commons-logging.jar");
+		neededClasses.add("org.apache.hadoop.conf.Configuration");
+		neededClasses.add("org.apache.commons.logging.Log");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "library for parallel computing in a Hadoop cluster";
 	}
 
 	@Override

@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jexcelapi;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,13 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("jxl.jar");
+		neededClasses.add("jxl.Sheet");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "import and export filters for xls files (MS Excel)";
 	}
 
 	@Override

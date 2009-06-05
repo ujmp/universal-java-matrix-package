@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jmathplot;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,15 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("ujmp-gui");
+		dependencies.add("jmathplot.jar");
+		neededClasses.add("org.ujmp.gui.Plugin");
+		neededClasses.add("org.math.plot.PlotPanel");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "visualize matrices as line plot, scatter plot, histogram, etc.";
 	}
 
 	@Override

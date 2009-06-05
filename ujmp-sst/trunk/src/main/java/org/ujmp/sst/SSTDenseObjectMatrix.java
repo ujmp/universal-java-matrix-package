@@ -32,34 +32,35 @@ import org.ujmp.core.util.MathUtil;
 
 import shared.array.ObjectArray;
 
-public class SSTDenseObjectMatrix<A> extends AbstractDenseGenericMatrix<A>
-		implements Wrapper<ObjectArray<A>> {
+public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
+		implements Wrapper<ObjectArray<Object>> {
 	private static final long serialVersionUID = 2319673263310965476L;
 
-	private transient ObjectArray<A> data = null;
+	private transient ObjectArray<Object> data = null;
 
-	public SSTDenseObjectMatrix(ObjectArray<A> data) {
+	public SSTDenseObjectMatrix(ObjectArray<Object> data) {
 		this.data = data;
 	}
 
 	public SSTDenseObjectMatrix(long... size) {
-		data = new ObjectArray<A>(MathUtil.toIntArray(size));
+		data = new ObjectArray<Object>(Object.class, MathUtil.toIntArray(size));
 	}
 
-	@SuppressWarnings("unchecked")
 	public SSTDenseObjectMatrix(Matrix source) {
-		data = new ObjectArray<A>(MathUtil.toIntArray(source.getSize()));
+		data = new ObjectArray<Object>(Object.class, MathUtil.toIntArray(source
+				.getSize()));
 		for (long[] c : source.availableCoordinates()) {
-			setObject((A) source.getAsObject(c), c);
+			setObject(source.getAsObject(c), c);
 		}
 	}
 
 	@Override
-	public A getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates) throws MatrixException {
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
 
-	public void setObject(A value, long... coordinates) throws MatrixException {
+	public void setObject(Object value, long... coordinates)
+			throws MatrixException {
 		data.set(value, MathUtil.toIntArray(coordinates));
 
 	}
@@ -74,12 +75,12 @@ public class SSTDenseObjectMatrix<A> extends AbstractDenseGenericMatrix<A>
 	}
 
 	@Override
-	public ObjectArray<A> getWrappedObject() {
+	public ObjectArray<Object> getWrappedObject() {
 		return data;
 	}
 
 	@Override
-	public void setWrappedObject(ObjectArray<A> object) {
+	public void setWrappedObject(ObjectArray<Object> object) {
 		this.data = object;
 	}
 

@@ -67,8 +67,8 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 			label.setText("");
 		} else {
 			String s = StringUtil.format(value);
-			if (s != null && s.length() > 25) {
-				s = s.substring(0, 25) + "...";
+			if (s != null && s.length() > 100) {
+				s = s.substring(0, 100) + "...";
 			}
 			label.setText(s);
 		}

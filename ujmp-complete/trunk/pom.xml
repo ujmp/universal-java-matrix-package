@@ -64,6 +64,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmathplot</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 		</dependency>
 		<dependency>
@@ -163,6 +167,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatrices</artifactId>
+			<version>${ujmp.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmathplot</artifactId>
 			<version>${ujmp.version}</version>
 			<classifier>tests</classifier>
 			<scope>test</scope>

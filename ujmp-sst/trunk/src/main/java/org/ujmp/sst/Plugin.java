@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.sst;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,13 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("sst.jar");
+		neededClasses.add("shared.array.Array");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "interface to the Shared Scientific Toolbox";
 	}
 
 	@Override

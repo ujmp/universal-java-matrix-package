@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.jung;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,20 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("ujmp-gui");
+		dependencies.add("jung.jar");
+		dependencies.add("commons-collections.jar");
+		dependencies.add("colt.jar");
+		dependencies.add("concurrent.jar");
+		neededClasses.add("org.ujmp.gui.Plugin");
+		neededClasses.add("edu.uci.ics.jung.graph.Graph");
+		neededClasses.add("cern.colt.matrix.DoubleMatrix2D");
+		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "library for plotting graphs";
 	}
 
 	@Override

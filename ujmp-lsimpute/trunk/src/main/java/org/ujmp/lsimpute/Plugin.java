@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.lsimpute;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,14 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("LSimpute.jar");
+		neededClasses.add("edu.uci.ics.jung.graph.Graph");
+		neededClasses.add("findp");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "library for imputing missing values using the least sqaures method";
 	}
 
 	@Override

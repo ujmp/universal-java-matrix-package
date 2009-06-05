@@ -23,87 +23,114 @@
 
 package org.ujmp.core.util.matrices;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix2D;
+import org.ujmp.core.util.AbstractPlugin;
 
 public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = 9076856922668700140L;
 
-	private List<String> classes = new ArrayList<String>();
+	private final List<String> classes = new ArrayList<String>();
+
+	private Matrix matrix = null;
 
 	public UJMPPluginsMatrix() {
 		setLabel("UJMP Plugins");
 		setColumnLabel(0, "Name");
-		setColumnLabel(1, "Is Available");
+		setColumnLabel(1, "Available");
 		setColumnLabel(2, "Description");
 		setColumnLabel(3, "Dependencies");
 		setColumnLabel(4, "Status");
 		addClass("ujmp-gui");
+		addClass("ujmp-bpca");
 		addClass("ujmp-colt");
+		addClass("ujmp-core");
 		addClass("ujmp-commonsmath");
+		addClass("ujmp-complete");
+		addClass("ujmp-hadoop");
+		addClass("ujmp-itext");
+		addClass("ujmp-jackcess");
 		addClass("ujmp-jama");
+		addClass("ujmp-jdbc");
+		addClass("ujmp-jexcelapi");
+		addClass("ujmp-jmathplot");
+		addClass("ujmp-jmatio");
+		addClass("ujmp-jmatrices");
+		addClass("ujmp-jsci");
+		addClass("ujmp-jscience");
+		addClass("ujmp-jung");
+		addClass("ujmp-lsimpute");
+		addClass("ujmp-lucene");
+		addClass("ujmp-mail");
+		addClass("ujmp-mantissa");
+		addClass("ujmp-mtj");
+		addClass("ujmp-ojalgo");
+		addClass("ujmp-parallelcolt");
+		addClass("ujmp-sst");
+		addClass("ujmp-vecmath");
+
+		refresh();
+	}
+
+	public void refresh() {
+		matrix = MatrixFactory.dense(ValueType.STRING, classes.size(), 5);
+
+		int r = 0;
+
+		for (String s : classes) {
+
+			matrix.setAsString(s, r, 0);
+
+			Class<?> cl = null;
+			if (s.startsWith("ujmp")) {
+				try {
+					cl = Class.forName("org.ujmp." + s.substring(5) + ".Plugin");
+				} catch (ClassNotFoundException e) {
+				}
+			} else {
+				try {
+					cl = Class.forName("org.jdmp." + s.substring(5) + ".Plugin");
+				} catch (ClassNotFoundException e) {
+				}
+			}
+
+			AbstractPlugin o = null;
+			if (cl != null) {
+				try {
+					o = (AbstractPlugin) cl.newInstance();
+				} catch (Exception e) {
+				}
+			}
+
+			if (o != null) {
+				matrix.setAsString("yes", r, 1);
+				matrix.setAsString(o.getDescription(), r, 2);
+				matrix.setAsString("" + o.getDependencies(), r, 3);
+				matrix.setAsString(o.getStatus(), r, 4);
+			} else {
+				matrix.setAsString("no", r, 1);
+				matrix.setAsString("n/a", r, 2);
+				matrix.setAsString("n/a", r, 3);
+				matrix.setAsString("n/a", r, 4);
+			}
+
+			r++;
+
+		}
 	}
 
 	protected void addClass(String c) {
 		classes.add(c);
 	}
 
-	protected Class<?> getClass(String c) throws ClassNotFoundException {
-		if (c.startsWith("ujmp")) {
-			return Class.forName("org.ujmp." + c.substring(5) + ".Plugin");
-		} else {
-			return Class.forName("org.jdmp." + c.substring(5) + ".Plugin");
-		}
-	}
-
 	@Override
 	public String getString(long row, long column) {
-		String c = classes.get((int) row);
-		switch ((int) column) {
-		case 0:
-			return c;
-		case 1:
-			try {
-				getClass(c);
-				return "yes";
-			} catch (Exception e) {
-				return "no";
-			}
-		case 2:
-			try {
-				Class<?> cl = getClass(c);
-				Object o = cl.newInstance();
-				Method m = cl.getMethod("getDescription");
-				String s = (String) m.invoke(o);
-				return s;
-			} catch (Exception e) {
-				return "n/a";
-			}
-		case 3:
-			try {
-				Class<?> cl = getClass(c);
-				Object o = cl.newInstance();
-				Method m = cl.getMethod("getDependencies");
-				String s = "" + m.invoke(o);
-				return s;
-			} catch (Exception e) {
-				return "n/a";
-			}
-		case 4:
-			try {
-				Class<?> cl = getClass(c);
-				Object o = cl.newInstance();
-				Method m = cl.getMethod("getStatus");
-				String s = (String) m.invoke(o);
-				return s;
-			} catch (Exception e) {
-				return "n/a";
-			}
-		}
-		return null;
+		return matrix.getAsString(row, column);
 	}
 
 	@Override
@@ -112,7 +139,7 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 
 	@Override
 	public long[] getSize() {
-		return new long[] { classes.size(), 5 };
+		return matrix.getSize();
 	}
 
 }

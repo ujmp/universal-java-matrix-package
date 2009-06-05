@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui;
+package org.ujmp.itext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +37,15 @@ public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
 		dependencies.add("ujmp-core");
+		dependencies.add("ujmp-gui");
+		dependencies.add("iText.jar");
+		neededClasses.add("org.ujmp.gui.Plugin");
+		neededClasses.add("com.lowagie.text.Document");
 	}
 
 	@Override
 	public String getDescription() {
-		return "basic visualization module for matrices";
+		return "interface for PDF export";
 	}
 
 	@Override

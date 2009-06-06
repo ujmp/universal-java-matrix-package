@@ -21,24 +21,28 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.frame;
+package org.ujmp.gui.menu;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
+import java.awt.event.KeyEvent;
+import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.menu.MatrixMenuBar;
-import org.ujmp.gui.panels.MatrixPanel;
+import org.ujmp.gui.actions.MatrixActions;
 
-public class MatrixFrame extends AbstractFrame {
-	private static final long serialVersionUID = -3705093197648545721L;
+public class MatrixMenu extends JMenu {
+	private static final long serialVersionUID = 2922736280384984505L;
 
-	public MatrixFrame(MatrixGUIObject m) throws MatrixException {
-		super(m, new MatrixPanel(m));
-		setJMenuBar(new MatrixMenuBar(null, m, null));
-	}
-
-	public MatrixFrame(Matrix m) throws MatrixException {
-		this((MatrixGUIObject) m.getGUIObject());
+	public MatrixMenu(JComponent component, MatrixGUIObject o, GUIObject owner) {
+		super("Matrix");
+		setMnemonic(KeyEvent.VK_M);
+		List<JComponent> actions = new MatrixActions(component, o, owner);
+		for (JComponent c : actions) {
+			add(c);
+		}
 	}
 
 }

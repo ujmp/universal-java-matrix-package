@@ -42,6 +42,7 @@ import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
+import org.ujmp.gui.toolbar.DefaultToolbar;
 import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.GlobalTimer;
 import org.ujmp.gui.util.UIDefaults;

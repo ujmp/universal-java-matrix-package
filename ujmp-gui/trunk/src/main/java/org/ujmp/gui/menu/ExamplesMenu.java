@@ -21,24 +21,25 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.frame;
+package org.ujmp.gui.menu;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.menu.MatrixMenuBar;
-import org.ujmp.gui.panels.MatrixPanel;
+import java.awt.event.KeyEvent;
 
-public class MatrixFrame extends AbstractFrame {
-	private static final long serialVersionUID = -3705093197648545721L;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
-	public MatrixFrame(MatrixGUIObject m) throws MatrixException {
-		super(m, new MatrixPanel(m));
-		setJMenuBar(new MatrixMenuBar(null, m, null));
-	}
+import org.ujmp.gui.actions.MandelbrotMatrixAction;
+import org.ujmp.gui.actions.SunSpotDataMatrixAction;
 
-	public MatrixFrame(Matrix m) throws MatrixException {
-		this((MatrixGUIObject) m.getGUIObject());
+public class ExamplesMenu extends JMenu {
+	private static final long serialVersionUID = -7279072623034811310L;
+
+	public ExamplesMenu(JComponent component) {
+		super("Examples");
+		setMnemonic(KeyEvent.VK_E);
+		add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
+		add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
 	}
 
 }

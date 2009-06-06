@@ -63,7 +63,6 @@ import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.calculation.CalculationFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
@@ -142,7 +141,6 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.mapper.CalculationMapper;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.ReshapedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
@@ -176,8 +174,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	 * A logger used for <code>Matrix</code> and all subclasses
 	 */
 	protected transient static final Logger logger = Logger.getLogger(Matrix.class.getName());
-
-	private static CalculationMapper calculationMapper = CalculationMapper.getInstance();
 
 	static {
 		UJMPSettings.initialize();
@@ -918,7 +914,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
-		return CalculationFactory.plus(returnType, ignoreNaN, this, m);
+		return new Plus(ignoreNaN, this, m).calc(returnType);
 	}
 
 	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
@@ -1957,14 +1953,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			return false;
 		}
 
-	}
-
-	public static CalculationMapper getCalculationMapper() {
-		return calculationMapper;
-	}
-
-	public static void setCalculationMapper(CalculationMapper calculationMapper) {
-		AbstractMatrix.calculationMapper = calculationMapper;
 	}
 
 	public final BooleanMatrix toBooleanMatrix() {

@@ -84,20 +84,25 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	private static ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-	public DenseFileMatrix2D(File file, long rowCount, long columnCount) {
+	public DenseFileMatrix2D(File file, long rowCount, long columnCount) throws IOException {
 		this(file, rowCount, columnCount, 0, DOUBLE, false);
 	}
 
-	public DenseFileMatrix2D(File file) {
+	public DenseFileMatrix2D(File file) throws IOException {
 		this(file, file.length(), 1, 0, BYTE, true);
 	}
 
-	public DenseFileMatrix2D(File file, long rowCount, long columnCount, int dataType) {
+	public DenseFileMatrix2D(File file, long rowCount, long columnCount, int dataType)
+			throws IOException {
 		this(file, rowCount, columnCount, 0, dataType, false);
 	}
 
 	public DenseFileMatrix2D(File file, long rowCount, long columnCount, long offset, int dataType,
-			boolean readOnly) {
+			boolean readOnly) throws IOException {
+		if (file == null) {
+			file = File.createTempFile("denseFileMatrix", "dat");
+			file.deleteOnExit();
+		}
 		this.file = file;
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
@@ -184,7 +189,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public DenseFileMatrix2D(long rowCount, long columnCount, int dataType) throws IOException {
-		this(File.createTempFile("matrix", null), rowCount, columnCount, dataType);
+		this(null, rowCount, columnCount, dataType);
 	}
 
 	public BufferedRandomAccessFile getRandomAccessFile() {

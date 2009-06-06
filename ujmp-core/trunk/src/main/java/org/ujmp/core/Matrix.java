@@ -56,6 +56,10 @@ public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateF
 		Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel, HasGUIObject,
 		Conversions {
 
+	public enum StorageType {
+		DENSE, SPARSE, LIST, SET, MAP, TREE, GRAPH
+	};
+
 	public static final int Y = 0;
 
 	public static final int X = 1;

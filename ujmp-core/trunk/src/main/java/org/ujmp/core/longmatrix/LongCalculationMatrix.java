@@ -61,10 +61,6 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public long getLong(long... coordinates) throws MatrixException {
 		return calculation.getLong(coordinates);
@@ -73,6 +69,11 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 	@Override
 	public void setLong(long value, long... coordinates) throws MatrixException {
 		calculation.setLong(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

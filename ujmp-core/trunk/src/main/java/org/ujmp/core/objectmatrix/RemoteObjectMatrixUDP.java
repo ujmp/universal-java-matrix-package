@@ -33,7 +33,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.logging.Level;
 
-public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
+public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = 3889079475875267966L;
 
 	private static final int BUFFERSIZE = 512;
@@ -142,10 +142,6 @@ public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
 		}
 	}
 
-	public boolean contains(long... coordinates) {
-		return false;
-	}
-
 	@Override
 	public Object getObject(long... coordinates) {
 		// TODO Auto-generated method stub
@@ -155,10 +151,6 @@ public class RemoteObjectMatrixUDP extends AbstractObjectMatrix {
 	public void setObject(Object o, long... coordinates) {
 		// TODO Auto-generated method stub
 
-	}
-
-	public boolean isSparse() {
-		return false;
 	}
 
 }

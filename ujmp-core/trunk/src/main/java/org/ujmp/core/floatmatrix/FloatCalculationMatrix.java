@@ -61,10 +61,6 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public float getFloat(long... coordinates) throws MatrixException {
 		return calculation.getFloat(coordinates);
@@ -73,6 +69,11 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 	@Override
 	public void setFloat(float value, long... coordinates) throws MatrixException {
 		calculation.setFloat(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

@@ -117,8 +117,9 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return source.isReadOnly();
 	}
 
-	public boolean isSparse() {
-		return source.isSparse();
+	@Override
+	public final StorageType getStorageType() {
+		return source.getStorageType();
 	}
 
 	@Override

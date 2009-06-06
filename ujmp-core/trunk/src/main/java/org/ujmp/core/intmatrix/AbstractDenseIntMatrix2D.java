@@ -60,4 +60,5 @@ public abstract class AbstractDenseIntMatrix2D extends AbstractDenseIntMatrix im
 	public final void setObject(Integer value, int row, int column) {
 		setInt(value, row, column);
 	}
+
 }

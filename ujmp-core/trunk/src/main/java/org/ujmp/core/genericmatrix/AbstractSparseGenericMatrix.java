@@ -28,7 +28,7 @@ public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatr
 
 	private static final long serialVersionUID = 805145571160206604L;
 
-	public final boolean isSparse() {
-		return true;
+	public StorageType getStorageType() {
+		return StorageType.SPARSE;
 	}
 }

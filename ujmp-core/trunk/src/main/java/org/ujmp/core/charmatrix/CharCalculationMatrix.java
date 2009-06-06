@@ -61,10 +61,6 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public char getChar(long... coordinates) throws MatrixException {
 		return calculation.getChar(coordinates);
@@ -73,6 +69,11 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 	@Override
 	public void setChar(char value, long... coordinates) throws MatrixException {
 		calculation.setChar(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

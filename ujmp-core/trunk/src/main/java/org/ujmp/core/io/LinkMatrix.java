@@ -113,8 +113,8 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 	}
 
 	@Override
-	public boolean isSparse() {
-		return getMatrix().isSparse();
+	public final StorageType getStorageType() {
+		return getMatrix().getStorageType();
 	}
 
 }

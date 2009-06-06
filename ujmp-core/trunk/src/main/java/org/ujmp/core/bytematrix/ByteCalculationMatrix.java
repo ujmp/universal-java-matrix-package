@@ -61,10 +61,6 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public byte getByte(long... coordinates) throws MatrixException {
 		return calculation.getByte(coordinates);
@@ -73,6 +69,11 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 	@Override
 	public void setByte(byte value, long... coordinates) throws MatrixException {
 		calculation.setByte(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

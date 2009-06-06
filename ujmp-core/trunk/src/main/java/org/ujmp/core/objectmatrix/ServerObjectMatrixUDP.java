@@ -90,8 +90,9 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 		return matrix.getValueCount();
 	}
 
-	public boolean isSparse() {
-		return matrix.isSparse();
+	@Override
+	public final StorageType getStorageType() {
+		return matrix.getStorageType();
 	}
 
 	@Override

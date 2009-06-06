@@ -63,10 +63,6 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
 		return calculation.getBigInteger(coordinates);
@@ -75,6 +71,11 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 	@Override
 	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		calculation.setBigInteger(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

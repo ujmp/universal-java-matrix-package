@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.ujmp.core.util.StringUtil;
 
@@ -34,15 +35,15 @@ public class WaveMatrix extends DenseFileMatrix2D {
 
 	private final boolean ignoreHeader = true;
 
-	public WaveMatrix(String filename) {
+	public WaveMatrix(String filename) throws IOException {
 		this(new File(filename));
 	}
 
-	public WaveMatrix(File file) {
+	public WaveMatrix(File file) throws IOException {
 		this(file, false);
 	}
 
-	public WaveMatrix(File file, boolean readOnly) {
+	public WaveMatrix(File file, boolean readOnly) throws IOException {
 		super(file, 1, 1, 44, SHORTLITTLEENDIAN, readOnly);
 		setRowCount((int) (getDataLength() / (getBitsPerSample() / 8) / getChannels()));
 		setColumnCount(getChannels());

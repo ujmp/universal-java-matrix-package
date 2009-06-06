@@ -61,8 +61,9 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 	@Override

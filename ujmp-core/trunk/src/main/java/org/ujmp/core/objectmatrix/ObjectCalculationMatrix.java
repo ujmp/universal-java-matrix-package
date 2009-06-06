@@ -61,8 +61,9 @@ public class ObjectCalculationMatrix extends AbstractObjectMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 	@Override

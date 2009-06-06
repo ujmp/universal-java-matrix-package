@@ -187,4 +187,9 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return ValueType.OBJECT;
 	}
 
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.LIST;
+	}
+
 }

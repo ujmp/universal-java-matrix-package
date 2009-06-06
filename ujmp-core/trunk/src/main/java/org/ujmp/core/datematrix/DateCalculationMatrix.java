@@ -63,10 +63,6 @@ public class DateCalculationMatrix extends AbstractDateMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public Date getDate(long... coordinates) throws MatrixException {
 		return calculation.getDate(coordinates);
@@ -75,6 +71,11 @@ public class DateCalculationMatrix extends AbstractDateMatrix {
 	@Override
 	public void setDate(Date value, long... coordinates) throws MatrixException {
 		calculation.setDate(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

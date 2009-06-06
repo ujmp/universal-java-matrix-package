@@ -125,4 +125,9 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return ValueType.OBJECT;
 	}
 
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.SPARSE;
+	}
+
 }

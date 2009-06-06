@@ -2090,4 +2090,24 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	public final boolean isSparse() {
+		switch (getStorageType()) {
+		case DENSE:
+			return false;
+		case SET:
+			return false;
+		case TREE:
+			return true;
+		case MAP:
+			return false;
+		case LIST:
+			return false;
+		case SPARSE:
+			return true;
+		case GRAPH:
+			return true;
+		default:
+			throw new MatrixException("unknown storage type: " + getStorageType());
+		}
+	}
 }

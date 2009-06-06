@@ -213,4 +213,10 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 
 	@Override
 	public abstract void clear();
+
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.GRAPH;
+	}
+
 }

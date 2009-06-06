@@ -61,10 +61,6 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		return calculation.getDouble(coordinates);
@@ -73,6 +69,11 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 	@Override
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 		calculation.setDouble(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

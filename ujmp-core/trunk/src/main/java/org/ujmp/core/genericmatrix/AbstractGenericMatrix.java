@@ -44,9 +44,9 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 		case BIGINTEGER:
 			setAsBigInteger(MathUtil.getBigInteger(o), coordinates);
 			break;
-		//case BIGDECIMAL:
-		//	setAsBigDecimal(MathUtil.getBigDecimal(o), coordinates);
-		//	break;
+		// case BIGDECIMAL:
+		// setAsBigDecimal(MathUtil.getBigDecimal(o), coordinates);
+		// break;
 		case BYTE:
 			setAsByte(MathUtil.getByte(o), coordinates);
 			break;
@@ -78,7 +78,6 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 			setAsString(StringUtil.convert(o), coordinates);
 			break;
 		}
-
 	}
 
 }

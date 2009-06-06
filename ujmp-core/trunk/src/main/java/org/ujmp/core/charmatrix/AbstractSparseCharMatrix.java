@@ -27,8 +27,9 @@ public abstract class AbstractSparseCharMatrix extends AbstractCharMatrix implem
 		SparseCharMatrix {
 	private static final long serialVersionUID = 3907833890262323770L;
 
-	public final boolean isSparse() {
-		return true;
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.DENSE;
 	}
 
 }

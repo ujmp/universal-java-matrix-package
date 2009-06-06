@@ -61,10 +61,6 @@ public class StringCalculationMatrix extends AbstractStringMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public String getString(long... coordinates) throws MatrixException {
 		return calculation.getString(coordinates);
@@ -73,6 +69,11 @@ public class StringCalculationMatrix extends AbstractStringMatrix {
 	@Override
 	public void setString(String value, long... coordinates) throws MatrixException {
 		calculation.setString(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

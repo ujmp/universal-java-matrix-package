@@ -148,4 +148,9 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		getObjectList().add(o);
 	}
 
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.TREE;
+	}
+
 }

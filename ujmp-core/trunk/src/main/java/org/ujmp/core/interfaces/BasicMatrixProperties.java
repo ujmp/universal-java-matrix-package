@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -147,5 +148,7 @@ public interface BasicMatrixProperties {
 	public double normF();
 
 	public double normInf();
+
+	public StorageType getStorageType();
 
 }

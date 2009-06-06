@@ -609,7 +609,7 @@ public abstract class MatrixFactory {
 	}
 
 	public static final DenseDoubleMatrix2D linkToBinaryFile(String filename, int rowCount,
-			int columnCount) {
+			int columnCount) throws IOException {
 		return new DenseFileMatrix2D(new File(filename), rowCount, columnCount);
 	}
 

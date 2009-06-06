@@ -54,10 +54,6 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.getValueCount();
 	}
 
-	public synchronized boolean isSparse() {
-		return matrix.isSparse();
-	}
-
 	@Override
 	public synchronized void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
@@ -79,6 +75,11 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 	@Override
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return matrix.getStorageType();
 	}
 
 }

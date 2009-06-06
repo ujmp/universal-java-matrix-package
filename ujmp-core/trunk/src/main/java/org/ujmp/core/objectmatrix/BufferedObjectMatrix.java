@@ -87,8 +87,9 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		return original.getValueCount();
 	}
 
-	public synchronized boolean isSparse() {
-		return inputBuffer.isSparse();
+	@Override
+	public final StorageType getStorageType() {
+		return inputBuffer.getStorageType();
 	}
 
 	public synchronized Iterable<long[]> allCoordinates() {

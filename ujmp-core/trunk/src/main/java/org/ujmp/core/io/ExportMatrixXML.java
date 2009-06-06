@@ -28,27 +28,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Date;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartDocument;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.UJMP;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixXML {
 
 	private static boolean createXMLHeader = true;
+
+	private static boolean createInfo = true;
 
 	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
 			MatrixException, XMLStreamException {
@@ -62,10 +63,6 @@ public class ExportMatrixXML {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		toWriter(writer, matrix, parameters);
 		writer.close();
-	}
-
-	private static void writeDense(XMLEventWriter eventWriter, Matrix matrix) {
-
 	}
 
 	public static void toWriter(Writer writer, Matrix matrix, Object... parameters)
@@ -90,20 +87,43 @@ public class ExportMatrixXML {
 		StartElement matrixStart = eventFactory.createStartElement("", "", "matrix");
 		eventWriter.add(matrixStart);
 
-		String st = null;
-		if (matrix.isSparse()) {
-			st = "sparse";
-		} else {
-			st = "dense";
-		}
-		Attribute storageType = eventFactory.createAttribute("storageType", st);
-		eventWriter.add(storageType);
+		String size = Coordinates.toString(matrix.getSize());
+		eventWriter.add(eventFactory.createAttribute("size", size));
 
-		String vt = matrix.getValueType().name().toLowerCase();
-		Attribute valueType = eventFactory.createAttribute("valueType", vt);
-		eventWriter.add(valueType);
+		String st = matrix.getStorageType().name();
+		eventWriter.add(eventFactory.createAttribute("storageType", st));
+
+		String vt = matrix.getValueType().name();
+		eventWriter.add(eventFactory.createAttribute("valueType", vt));
 
 		eventWriter.add(newline);
+
+		if (createInfo == true) {
+			eventWriter.add(eventFactory.createStartElement("", "", "info"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createStartElement("", "", "creator"));
+			eventWriter.add(eventFactory.createCharacters("UJMP"));
+			eventWriter.add(eventFactory.createEndElement("", "", "creator"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createStartElement("", "", "version"));
+			eventWriter.add(eventFactory.createCharacters(UJMP.UJMPVERSION));
+			eventWriter.add(eventFactory.createEndElement("", "", "version"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createStartElement("", "", "os"));
+			eventWriter.add(eventFactory.createCharacters(System.getProperty("os.name")));
+			eventWriter.add(eventFactory.createEndElement("", "", "os"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createStartElement("", "", "java"));
+			eventWriter.add(eventFactory.createCharacters(System.getProperty("java.version")));
+			eventWriter.add(eventFactory.createEndElement("", "", "java"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createStartElement("", "", "date"));
+			eventWriter.add(eventFactory.createCharacters(new Date().toString()));
+			eventWriter.add(eventFactory.createEndElement("", "", "date"));
+			eventWriter.add(newline);
+			eventWriter.add(eventFactory.createEndElement("", "", "info"));
+			eventWriter.add(newline);
+		}
 
 		Annotation annotation = matrix.getAnnotation();
 		if (annotation != null) {
@@ -124,6 +144,11 @@ public class ExportMatrixXML {
 
 		for (long[] c : matrix.availableCoordinates()) {
 			eventWriter.add(eventFactory.createStartElement("", "", "cell"));
+			String pos = Coordinates.toString(c);
+			eventWriter.add(eventFactory.createAttribute("pos", pos));
+
+			eventWriter.add(eventFactory.createCharacters("" + matrix.getAsObject(c)));
+
 			eventWriter.add(eventFactory.createEndElement("", "", "cell"));
 			eventWriter.add(newline);
 		}
@@ -132,31 +157,6 @@ public class ExportMatrixXML {
 		eventWriter.add(newline);
 		eventWriter.add(eventFactory.createEndDocument());
 		eventWriter.close();
-	}
-
-	private static void createNode(XMLEventWriter eventWriter, String name, String value)
-			throws XMLStreamException {
-
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		XMLEvent tab = eventFactory.createDTD("\t");
-		// Create Start node
-		StartElement sElement = eventFactory.createStartElement("", "", name);
-		eventWriter.add(tab);
-		eventWriter.add(sElement);
-		// Create Content
-		Characters characters = eventFactory.createCharacters(value);
-		eventWriter.add(characters);
-		// Create End node
-		EndElement eElement = eventFactory.createEndElement("", "", name);
-		eventWriter.add(eElement);
-		eventWriter.add(end);
-	}
-
-	public static void main(String[] args) throws Exception {
-		Matrix matrix = MatrixFactory.randn(3, 4);
-		matrix.setLabel("test");
-		toStream(System.out, matrix);
 	}
 
 }

@@ -61,10 +61,6 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public int getInt(long... coordinates) throws MatrixException {
 		return calculation.getInt(coordinates);
@@ -73,6 +69,11 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 	@Override
 	public void setInt(int value, long... coordinates) throws MatrixException {
 		calculation.setInt(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

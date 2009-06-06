@@ -21,19 +21,14 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.bytematrix;
+package org.ujmp.core.io;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.FileFormat;
 
-public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix implements DenseByteMatrix {
-	private static final long serialVersionUID = -3579091070306434169L;
-
-	public final boolean contains(long... coordinates) {
-		return Coordinates.isSmallerThan(coordinates, getSize());
-	}
+public class TestExportMatrixXML extends AbstractExportMatrixTest {
 
 	@Override
-	public final StorageType getStorageType() {
-		return StorageType.DENSE;
+	public FileFormat getFormat() {
+		return FileFormat.XML;
 	}
 }

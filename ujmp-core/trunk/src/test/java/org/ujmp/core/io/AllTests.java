@@ -30,6 +30,7 @@ public class AllTests extends TestSuite {
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixCSV.class);
+		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixXML.class);
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixSPARSECSV.class);
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixXLS.class);
 		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixHTML.class);

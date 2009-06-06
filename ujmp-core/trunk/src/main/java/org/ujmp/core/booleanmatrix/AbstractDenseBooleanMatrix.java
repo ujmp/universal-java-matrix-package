@@ -34,8 +34,9 @@ public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix i
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public final boolean isSparse() {
-		return false;
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.DENSE;
 	}
 
 }

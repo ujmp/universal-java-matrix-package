@@ -28,8 +28,8 @@ public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix impl
 
 	private static final long serialVersionUID = -8028091062602474600L;
 
-	public final boolean isSparse() {
-		return true;
+	public final StorageType getStorageType() {
+		return StorageType.SPARSE;
 	}
 
 }

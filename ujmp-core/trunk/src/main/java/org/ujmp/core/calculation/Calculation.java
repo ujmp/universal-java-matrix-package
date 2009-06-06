@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -87,5 +88,7 @@ public interface Calculation<S extends Matrix, T extends Matrix> extends Seriali
 	public ValueType getValueType();
 
 	public T[] calcMulti();
+
+	public StorageType getStorageType();
 
 }

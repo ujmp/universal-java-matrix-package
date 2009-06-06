@@ -61,10 +61,6 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 		}
 	}
 
-	public boolean isSparse() {
-		return calculation.isSparse();
-	}
-
 	@Override
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return calculation.getBoolean(coordinates);
@@ -73,6 +69,11 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 	@Override
 	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
 		calculation.setBoolean(value, coordinates);
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return calculation.getStorageType();
 	}
 
 }

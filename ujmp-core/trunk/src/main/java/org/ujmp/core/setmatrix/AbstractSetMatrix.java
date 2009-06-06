@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.AbstractDenseGenericMatrix2D;
@@ -138,6 +139,11 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 	@Override
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.SET;
 	}
 
 }

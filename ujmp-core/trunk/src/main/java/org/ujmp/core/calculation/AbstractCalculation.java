@@ -24,6 +24,7 @@
 package org.ujmp.core.calculation;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.Coordinates;
@@ -109,6 +110,11 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 	@SuppressWarnings("unchecked")
 	public T[] calcMulti() throws MatrixException {
 		return (T[]) new Object[] { calcNew() };
+	}
+
+	@Override
+	public final StorageType getStorageType() {
+		return getSource().getStorageType();
 	}
 
 }

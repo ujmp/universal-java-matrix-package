@@ -27,8 +27,9 @@ public abstract class AbstractSparseBigIntegerMatrix extends AbstractBigIntegerM
 		SparseBigIntegerMatrix {
 	private static final long serialVersionUID = -8859258493587027853L;
 
-	public final boolean isSparse() {
-		return true;
+	@Override
+	public final StorageType getStorageType() {
+		return StorageType.SPARSE;
 	}
 
 }

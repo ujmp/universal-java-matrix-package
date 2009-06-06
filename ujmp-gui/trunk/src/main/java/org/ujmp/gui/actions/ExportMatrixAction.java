@@ -34,6 +34,7 @@ import javax.swing.filechooser.FileFilter;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class ExportMatrixAction extends ObjectAction {
 	private static final long serialVersionUID = -212812956173346428L;
@@ -65,7 +66,7 @@ public class ExportMatrixAction extends ObjectAction {
 
 			String suffix = ((UJMPFileFilter) filter).getSuffix()[0];
 			if (!file.getAbsolutePath().toLowerCase().endsWith(suffix)) {
-				file = new File(file.getAbsolutePath() + suffix);
+				file = new File(file.getAbsolutePath() + "." + suffix);
 			}
 		}
 
@@ -78,6 +79,16 @@ public class ExportMatrixAction extends ObjectAction {
 					JOptionPane.YES_NO_OPTION);
 			if (result != JOptionPane.YES_OPTION)
 				return null;
+		}
+
+		GUIObject o = getObject();
+
+		if (o instanceof MatrixGUIObject) {
+			MatrixGUIObject m = (MatrixGUIObject) o;
+			try {
+				m.getMatrix().exportToFile(file);
+			} catch (Exception e) {
+			}
 		}
 
 		return null;

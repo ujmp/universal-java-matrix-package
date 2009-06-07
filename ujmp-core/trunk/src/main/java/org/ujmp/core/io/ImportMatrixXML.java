@@ -30,13 +30,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Iterator;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -170,11 +168,26 @@ public class ImportMatrixXML {
 			skipInfo();
 			skipCharacters();
 
+			if (currentEvent.getEventType() == XMLEvent.START_ELEMENT
+					&& "data".equals(currentEvent.asStartElement().getName().getLocalPart())) {
+				currentEvent = eventReader.nextEvent();
+				skipCharacters();
+			} else {
+				throw new MatrixException("xml does not have excected format: " + currentEvent);
+			}
+
 			while (currentEvent.getEventType() == XMLEvent.START_ELEMENT
 					&& "cell".equals(currentEvent.asStartElement().getName().getLocalPart())) {
 				addCell(matrix);
 				skipCharacters();
 			}
+
+			if (!"data".equals(currentEvent.asEndElement().getName().getLocalPart())) {
+				throw new MatrixException("xml does not have excected format: " + currentEvent);
+			}
+
+			currentEvent = eventReader.nextEvent();
+			skipCharacters();
 
 			if (!"matrix".equals(currentEvent.asEndElement().getName().getLocalPart())) {
 				throw new MatrixException("xml does not have excected format: " + currentEvent);

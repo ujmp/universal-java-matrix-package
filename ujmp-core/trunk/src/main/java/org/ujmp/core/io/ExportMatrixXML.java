@@ -141,6 +141,9 @@ public class ExportMatrixXML {
 			eventWriter.add(eventFactory.createEndElement("", "", "annotation"));
 			eventWriter.add(newline);
 		}
+		
+		eventWriter.add(eventFactory.createStartElement("", "", "data"));
+		eventWriter.add(newline);
 
 		for (long[] c : matrix.availableCoordinates()) {
 			eventWriter.add(eventFactory.createStartElement("", "", "cell"));
@@ -152,6 +155,9 @@ public class ExportMatrixXML {
 			eventWriter.add(eventFactory.createEndElement("", "", "cell"));
 			eventWriter.add(newline);
 		}
+		
+		eventWriter.add(eventFactory.createEndElement("", "", "data"));
+		eventWriter.add(newline);
 
 		eventWriter.add(eventFactory.createEndElement("", "", "matrix"));
 		eventWriter.add(newline);

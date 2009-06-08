@@ -31,12 +31,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
@@ -48,6 +52,8 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	public static final int SERIALIZE = 0;
 
 	public static final int XMLENCODER = 1;
+
+	private boolean useCompression = true;
 
 	private FileNameConverter fileNameConverter = null;
 
@@ -120,7 +126,10 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 			Object o = null;
 
 			FileInputStream fi = new FileInputStream(file);
-			BufferedInputStream bi = new BufferedInputStream(fi);
+			InputStream bi = new BufferedInputStream(fi);
+			if (useCompression) {
+				bi = new GZIPInputStream(bi);
+			}
 
 			switch (method) {
 			case SERIALIZE:
@@ -190,7 +199,11 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 			}
 
 			FileOutputStream fo = new FileOutputStream(file);
-			BufferedOutputStream bo = new BufferedOutputStream(fo);
+
+			OutputStream bo = new BufferedOutputStream(fo);
+			if (useCompression) {
+				bo = new GZIPOutputStream(bo);
+			}
 
 			switch (method) {
 			case SERIALIZE:

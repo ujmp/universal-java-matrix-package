@@ -29,8 +29,8 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.FloatCalculationMatrix;
 import org.ujmp.core.floatmatrix.FloatMatrix;
+import org.ujmp.core.floatmatrix.impl.FloatCalculationMatrix;
 
 public abstract class AbstractFloatCalculation extends AbstractCalculation<Matrix, FloatMatrix>
 		implements FloatCalculation {

@@ -25,7 +25,7 @@ package org.ujmp.jsci;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 

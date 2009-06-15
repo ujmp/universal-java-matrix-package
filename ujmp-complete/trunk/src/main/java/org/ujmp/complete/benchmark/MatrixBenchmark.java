@@ -36,7 +36,7 @@ import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultSparseDoubleMatrixBenchmark;
-import org.ujmp.core.objectmatrix.EmptyMatrix;
+import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jsci.benchmark.JSciDenseDoubleMatrix2DBenchmark;

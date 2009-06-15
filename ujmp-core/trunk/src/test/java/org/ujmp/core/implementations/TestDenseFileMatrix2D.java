@@ -3,7 +3,7 @@ package org.ujmp.core.implementations;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DenseFileMatrix2D;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestDenseFileMatrix2D extends AbstractMatrixTest {

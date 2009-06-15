@@ -27,7 +27,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.io.UJMPFileFilter;
 
 /**

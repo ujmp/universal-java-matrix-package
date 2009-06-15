@@ -24,7 +24,7 @@
 package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.DefaultTiledObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultTiledObjectMatrix2D;
 
 public class TestDefaultTiledObjectMatrix2D extends AbstractMatrixTest {
 

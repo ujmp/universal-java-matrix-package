@@ -24,7 +24,7 @@
 package org.ujmp.core.bytematrix.factory;
 
 import org.ujmp.core.bytematrix.ByteMatrix2D;
-import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultByteMatrix2DFactory extends AbstractByteMatrix2DFactory {

@@ -26,7 +26,7 @@ package org.ujmp.sst;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.AbstractDenseGenericMatrix;
+import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 

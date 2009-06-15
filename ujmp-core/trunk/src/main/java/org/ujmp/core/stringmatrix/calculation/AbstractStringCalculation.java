@@ -29,8 +29,8 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.stringmatrix.StringCalculationMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
+import org.ujmp.core.stringmatrix.impl.StringCalculationMatrix;
 
 public abstract class AbstractStringCalculation extends AbstractCalculation<Matrix, StringMatrix>
 		implements StringCalculation {

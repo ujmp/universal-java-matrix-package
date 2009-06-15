@@ -24,7 +24,7 @@
 package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {

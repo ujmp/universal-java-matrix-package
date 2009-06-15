@@ -23,7 +23,7 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 
 public class MatrixMemoryUsage extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = -3863745960302379726L;

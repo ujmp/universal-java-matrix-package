@@ -24,7 +24,7 @@
 package org.ujmp.core.bigintegermatrix.factory;
 
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
-import org.ujmp.core.bigintegermatrix.DefaultDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.impl.DefaultDenseBigIntegerMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultBigIntegerMatrix2DFactory extends AbstractBigIntegerMatrix2DFactory {

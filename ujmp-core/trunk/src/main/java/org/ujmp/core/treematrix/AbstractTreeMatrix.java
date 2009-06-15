@@ -30,7 +30,7 @@ import java.util.List;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
 
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 
 public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D implements TreeMatrix {
 	private static final long serialVersionUID = 7731771819651651188L;

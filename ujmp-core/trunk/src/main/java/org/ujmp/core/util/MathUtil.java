@@ -536,7 +536,8 @@ public abstract class MathUtil {
 			return (BigDecimal) o;
 		}
 		if (o instanceof Number) {
-			return BigDecimal.valueOf(((Number) o).doubleValue());
+			double val = ((Number) o).doubleValue();
+			return MathUtil.isNaNOrInfinite(val) ? null : BigDecimal.valueOf(val);
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).bigDecimalValue();

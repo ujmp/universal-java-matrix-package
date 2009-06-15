@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.WaveMatrix;
+import org.ujmp.core.doublematrix.impl.WaveMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixWAV {

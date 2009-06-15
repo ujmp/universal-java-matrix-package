@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements
 		MapMatrix<K, V> {

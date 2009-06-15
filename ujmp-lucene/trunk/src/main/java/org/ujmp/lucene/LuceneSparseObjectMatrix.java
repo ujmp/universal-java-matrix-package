@@ -32,7 +32,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.objectmatrix.AbstractMapToSparseMatrixWrapper;
+import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
 public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 		implements Flushable, Closeable, Erasable {

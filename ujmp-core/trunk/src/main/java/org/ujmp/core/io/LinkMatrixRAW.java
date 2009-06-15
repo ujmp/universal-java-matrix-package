@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DenseFileMatrix2D;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixRAW {

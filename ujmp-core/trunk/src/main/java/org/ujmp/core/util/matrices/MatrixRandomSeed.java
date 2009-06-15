@@ -23,7 +23,7 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class MatrixRandomSeed extends AbstractDenseLongMatrix2D {

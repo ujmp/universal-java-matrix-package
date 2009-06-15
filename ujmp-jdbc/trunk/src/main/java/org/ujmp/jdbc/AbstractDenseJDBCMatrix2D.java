@@ -36,7 +36,7 @@ import java.util.Map;
 
 import org.ujmp.core.collections.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public abstract class AbstractDenseJDBCMatrix2D extends
 		AbstractDenseObjectMatrix2D implements Closeable {

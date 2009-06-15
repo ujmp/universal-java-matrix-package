@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.genericmatrix.AbstractSparseGenericMatrix2D;
+import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
 
 public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements
 		GraphMatrix<N, E> {

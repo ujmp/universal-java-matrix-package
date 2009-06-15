@@ -31,7 +31,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix;
+import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix;
 import org.ujmp.core.util.MathUtil;
 
 import shared.array.IntegerArray;

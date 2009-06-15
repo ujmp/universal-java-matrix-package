@@ -30,7 +30,7 @@ import java.util.ListIterator;
 
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.genericmatrix.AbstractDenseGenericMatrix2D;
+import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D<A> implements

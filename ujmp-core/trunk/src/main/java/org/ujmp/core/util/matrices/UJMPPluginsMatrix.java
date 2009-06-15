@@ -29,7 +29,7 @@ import java.util.List;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.AbstractPlugin;
 
 public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {

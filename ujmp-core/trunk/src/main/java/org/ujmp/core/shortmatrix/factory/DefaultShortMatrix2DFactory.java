@@ -24,8 +24,8 @@
 package org.ujmp.core.shortmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.ShortMatrix2D;
+import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
 
 public class DefaultShortMatrix2DFactory extends AbstractShortMatrix2DFactory {
 	private static final long serialVersionUID = 5813129367595413668L;

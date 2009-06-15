@@ -30,7 +30,7 @@ import java.io.ObjectOutputStream;
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D

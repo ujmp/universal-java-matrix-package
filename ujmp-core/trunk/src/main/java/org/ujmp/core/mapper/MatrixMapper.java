@@ -28,80 +28,86 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bigintegermatrix.AbstractDenseBigIntegerMatrix;
-import org.ujmp.core.bigintegermatrix.AbstractDenseBigIntegerMatrix2D;
-import org.ujmp.core.bigintegermatrix.AbstractSparseBigIntegerMatrix;
-import org.ujmp.core.bigintegermatrix.AbstractSparseBigIntegerMatrix2D;
-import org.ujmp.core.bigintegermatrix.DefaultDenseBigIntegerMatrix2D;
-import org.ujmp.core.bigintegermatrix.DefaultSparseBigIntegerMatrix;
-import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix;
-import org.ujmp.core.booleanmatrix.AbstractDenseBooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix;
-import org.ujmp.core.booleanmatrix.AbstractSparseBooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.DefaultSparseBooleanMatrix;
-import org.ujmp.core.bytematrix.AbstractDenseByteMatrix;
-import org.ujmp.core.bytematrix.AbstractDenseByteMatrix2D;
-import org.ujmp.core.bytematrix.AbstractSparseByteMatrix;
-import org.ujmp.core.bytematrix.AbstractSparseByteMatrix2D;
-import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
-import org.ujmp.core.bytematrix.DefaultSparseByteMatrix;
-import org.ujmp.core.charmatrix.AbstractDenseCharMatrix;
-import org.ujmp.core.charmatrix.AbstractDenseCharMatrix2D;
-import org.ujmp.core.charmatrix.AbstractSparseCharMatrix;
-import org.ujmp.core.charmatrix.AbstractSparseCharMatrix2D;
-import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
-import org.ujmp.core.charmatrix.DefaultSparseCharMatrix;
-import org.ujmp.core.datematrix.AbstractDenseDateMatrix;
-import org.ujmp.core.datematrix.AbstractDenseDateMatrix2D;
-import org.ujmp.core.datematrix.AbstractSparseDateMatrix;
-import org.ujmp.core.datematrix.AbstractSparseDateMatrix2D;
-import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
-import org.ujmp.core.datematrix.DefaultSparseDateMatrix;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix;
-import org.ujmp.core.doublematrix.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DefaultSparseDoubleMatrix;
-import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix;
-import org.ujmp.core.floatmatrix.AbstractDenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix;
-import org.ujmp.core.floatmatrix.AbstractSparseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.DefaultSparseFloatMatrix;
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix;
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
-import org.ujmp.core.intmatrix.AbstractSparseIntMatrix;
-import org.ujmp.core.intmatrix.AbstractSparseIntMatrix2D;
-import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
-import org.ujmp.core.intmatrix.DefaultSparseIntMatrix;
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix;
-import org.ujmp.core.longmatrix.AbstractDenseLongMatrix2D;
-import org.ujmp.core.longmatrix.AbstractSparseLongMatrix;
-import org.ujmp.core.longmatrix.AbstractSparseLongMatrix2D;
-import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
-import org.ujmp.core.longmatrix.DefaultSparseLongMatrix;
+import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
+import org.ujmp.core.bigdecimalmatrix.impl.DefaultSparseBigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
+import org.ujmp.core.bigdecimalmatrix.stub.AbstractSparseBigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.stub.AbstractSparseBigDecimalMatrix2D;
+import org.ujmp.core.bigintegermatrix.impl.DefaultDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.impl.DefaultSparseBigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.stub.AbstractSparseBigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.stub.AbstractSparseBigIntegerMatrix2D;
+import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.impl.DefaultSparseBooleanMatrix;
+import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix;
+import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.stub.AbstractSparseBooleanMatrix;
+import org.ujmp.core.booleanmatrix.stub.AbstractSparseBooleanMatrix2D;
+import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.impl.DefaultSparseByteMatrix;
+import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix;
+import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.stub.AbstractSparseByteMatrix;
+import org.ujmp.core.bytematrix.stub.AbstractSparseByteMatrix2D;
+import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.impl.DefaultSparseCharMatrix;
+import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix;
+import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.stub.AbstractSparseCharMatrix;
+import org.ujmp.core.charmatrix.stub.AbstractSparseCharMatrix2D;
+import org.ujmp.core.datematrix.impl.DefaultDenseDateMatrix2D;
+import org.ujmp.core.datematrix.impl.DefaultSparseDateMatrix;
+import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix;
+import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
+import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix;
+import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
+import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.impl.DefaultSparseFloatMatrix;
+import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix;
+import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.stub.AbstractSparseFloatMatrix;
+import org.ujmp.core.floatmatrix.stub.AbstractSparseFloatMatrix2D;
+import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.impl.DefaultSparseIntMatrix;
+import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix;
+import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.stub.AbstractSparseIntMatrix;
+import org.ujmp.core.intmatrix.stub.AbstractSparseIntMatrix2D;
+import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.impl.DefaultSparseLongMatrix;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.stub.AbstractSparseLongMatrix;
+import org.ujmp.core.longmatrix.stub.AbstractSparseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix;
-import org.ujmp.core.objectmatrix.AbstractDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix;
-import org.ujmp.core.objectmatrix.AbstractSparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.DefaultSparseObjectMatrix;
-import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix;
-import org.ujmp.core.shortmatrix.AbstractDenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix;
-import org.ujmp.core.shortmatrix.AbstractSparseShortMatrix2D;
-import org.ujmp.core.shortmatrix.DefaultDenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.DefaultSparseShortMatrix;
-import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix;
-import org.ujmp.core.stringmatrix.AbstractDenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.AbstractSparseStringMatrix;
-import org.ujmp.core.stringmatrix.AbstractSparseStringMatrix2D;
-import org.ujmp.core.stringmatrix.DefaultDenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.DefaultSparseStringMatrix;
+import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
+import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
+import org.ujmp.core.shortmatrix.impl.DefaultSparseShortMatrix;
+import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix;
+import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
+import org.ujmp.core.shortmatrix.stub.AbstractSparseShortMatrix;
+import org.ujmp.core.shortmatrix.stub.AbstractSparseShortMatrix2D;
+import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.impl.DefaultSparseStringMatrix;
+import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix;
+import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.stub.AbstractSparseStringMatrix;
+import org.ujmp.core.stringmatrix.stub.AbstractSparseStringMatrix2D;
 
 public class MatrixMapper implements ClassMapper {
 
@@ -157,6 +163,8 @@ public class MatrixMapper implements ClassMapper {
 
 	private Constructor<?> denseBigIntegerMatrixMultiDConstructor = null;
 
+	private Constructor<?> denseBigDecimalMatrixMultiDConstructor = null;
+
 	private Constructor<?> sparseBooleanMatrix2DConstructor = null;
 
 	private Constructor<?> sparseByteMatrix2DConstructor = null;
@@ -206,6 +214,12 @@ public class MatrixMapper implements ClassMapper {
 	private Constructor<?> sparseBigIntegerMatrix2DConstructor = null;
 
 	private Constructor<?> denseBigIntegerMatrix2DConstructor = null;
+
+	private Constructor<?> sparseBigDecimalMatrixMultiDConstructor = null;
+
+	private Constructor<?> sparseBigDecimalMatrix2DConstructor = null;
+
+	private Constructor<?> denseBigDecimalMatrix2DConstructor = null;
 
 	private static MatrixMapper instance = null;
 
@@ -281,6 +295,11 @@ public class MatrixMapper implements ClassMapper {
 			setDenseBigIntegerMatrixMultiDClassName(DefaultSparseBigIntegerMatrix.class.getName());
 			setSparseBigIntegerMatrix2DClassName(DefaultSparseBigIntegerMatrix.class.getName());
 			setSparseBigIntegerMatrixMultiDClassName(DefaultSparseBigIntegerMatrix.class.getName());
+
+			setDenseBigDecimalMatrix2DClassName(DefaultDenseBigDecimalMatrix2D.class.getName());
+			setDenseBigDecimalMatrixMultiDClassName(DefaultSparseBigDecimalMatrix.class.getName());
+			setSparseBigDecimalMatrix2DClassName(DefaultSparseBigDecimalMatrix.class.getName());
+			setSparseBigDecimalMatrixMultiDClassName(DefaultSparseBigDecimalMatrix.class.getName());
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Default Matrix classes not found, this should never happen",
@@ -782,6 +801,19 @@ public class MatrixMapper implements ClassMapper {
 		denseBigIntegerMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
+	public void setDenseBigDecimalMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBigDecimalMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultDenseBigDecimalMatrix2D.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBigDecimalMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
 	public void setDenseStringMatrixMultiDClassName(String className) throws Exception {
 		matrixClasses.put(AbstractDenseStringMatrix.class, className);
 		Class<?> matrixClass = null;
@@ -806,6 +838,19 @@ public class MatrixMapper implements ClassMapper {
 					+ " instead.");
 		}
 		denseBigIntegerMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public void setDenseBigDecimalMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractDenseBigDecimalMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigDecimalMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		denseBigDecimalMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public void setSparseStringMatrix2DClassName(String className) throws Exception {
@@ -834,6 +879,19 @@ public class MatrixMapper implements ClassMapper {
 		sparseBigIntegerMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
+	public void setSparseBigDecimalMatrix2DClassName(String className) throws Exception {
+		matrixClasses.put(AbstractSparseBigDecimalMatrix2D.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigDecimalMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBigDecimalMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
 	public void setSparseStringMatrixMultiDClassName(String className) throws Exception {
 		matrixClasses.put(AbstractSparseStringMatrix.class, className);
 		Class<?> matrixClass = null;
@@ -858,6 +916,19 @@ public class MatrixMapper implements ClassMapper {
 					+ " instead.");
 		}
 		sparseBigIntegerMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
+	}
+
+	public void setSparseBigDecimalMatrixMultiDClassName(String className) throws Exception {
+		matrixClasses.put(AbstractSparseBigDecimalMatrix.class, className);
+		Class<?> matrixClass = null;
+		try {
+			matrixClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			matrixClass = DefaultSparseBigDecimalMatrix.class;
+			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
+					+ " instead.");
+		}
+		sparseBigDecimalMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public void setDenseObjectMatrix2DClassName(String className) throws Exception {
@@ -1008,6 +1079,10 @@ public class MatrixMapper implements ClassMapper {
 		return denseBigIntegerMatrixMultiDConstructor;
 	}
 
+	public Constructor<?> getDenseBigDecimalMatrixMultiDConstructor() {
+		return denseBigDecimalMatrixMultiDConstructor;
+	}
+
 	public Constructor<?> getSparseBooleanMatrix2DConstructor() {
 		return sparseBooleanMatrix2DConstructor;
 	}
@@ -1100,12 +1175,24 @@ public class MatrixMapper implements ClassMapper {
 		return sparseBigIntegerMatrixMultiDConstructor;
 	}
 
+	public Constructor<?> getSparseBigDecimalMatrixMultiDConstructor() {
+		return sparseBigDecimalMatrixMultiDConstructor;
+	}
+
 	public Constructor<?> getSparseBigIntegerMatrix2DConstructor() {
 		return sparseBigIntegerMatrix2DConstructor;
 	}
 
+	public Constructor<?> getSparseBigDecimalMatrix2DConstructor() {
+		return sparseBigDecimalMatrix2DConstructor;
+	}
+
 	public Constructor<?> getDenseBigIntegerMatrix2DConstructor() {
 		return denseBigIntegerMatrix2DConstructor;
+	}
+
+	public Constructor<?> getDenseBigDecimalMatrix2DConstructor() {
+		return denseBigDecimalMatrix2DConstructor;
 	}
 
 }

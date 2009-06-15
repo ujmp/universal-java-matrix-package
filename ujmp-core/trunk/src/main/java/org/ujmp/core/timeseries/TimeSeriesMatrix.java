@@ -33,7 +33,7 @@ import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.SortedListSet;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {

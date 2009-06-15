@@ -33,7 +33,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 
 public abstract class LinkMatrix {
 

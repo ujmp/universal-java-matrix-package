@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.FileMatrix;
+import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
 public class LinkMatrixFILE {
 

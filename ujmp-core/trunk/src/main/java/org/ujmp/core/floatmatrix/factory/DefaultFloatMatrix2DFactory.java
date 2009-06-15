@@ -24,8 +24,8 @@
 package org.ujmp.core.floatmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
+import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 
 public class DefaultFloatMatrix2DFactory extends AbstractFloatMatrix2DFactory {
 	private static final long serialVersionUID = 4813771827445313121L;

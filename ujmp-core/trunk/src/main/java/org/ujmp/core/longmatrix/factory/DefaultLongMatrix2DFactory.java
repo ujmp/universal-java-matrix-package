@@ -24,8 +24,8 @@
 package org.ujmp.core.longmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.LongMatrix2D;
+import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 
 public class DefaultLongMatrix2DFactory extends AbstractLongMatrix2DFactory {
 	private static final long serialVersionUID = 7430273868074744639L;

@@ -24,7 +24,7 @@
 package org.ujmp.core.charmatrix.factory;
 
 import org.ujmp.core.charmatrix.CharMatrix2D;
-import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultCharMatrix2DFactory extends AbstractCharMatrix2DFactory {

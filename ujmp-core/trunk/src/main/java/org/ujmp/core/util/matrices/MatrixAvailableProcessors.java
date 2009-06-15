@@ -23,7 +23,7 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.intmatrix.AbstractDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 
 public class MatrixAvailableProcessors extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3768846722489359117L;

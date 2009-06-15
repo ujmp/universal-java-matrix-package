@@ -24,7 +24,7 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {

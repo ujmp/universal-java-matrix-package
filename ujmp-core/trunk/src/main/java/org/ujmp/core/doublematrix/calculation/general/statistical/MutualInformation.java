@@ -33,8 +33,8 @@ import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.intmatrix.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.IntMatrix2D;
+import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class MutualInformation extends AbstractDoubleCalculation {

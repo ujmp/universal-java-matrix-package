@@ -29,7 +29,7 @@ import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.CoordinateIterator;
-import org.ujmp.core.doublematrix.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;

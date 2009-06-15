@@ -24,7 +24,7 @@
 package org.ujmp.core.booleanmatrix.factory;
 
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultBooleanMatrix2DFactory extends AbstractBooleanMatrix2DFactory {

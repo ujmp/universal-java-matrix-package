@@ -24,7 +24,7 @@
 package org.ujmp.core.datematrix.factory;
 
 import org.ujmp.core.datematrix.DateMatrix2D;
-import org.ujmp.core.datematrix.DefaultDenseDateMatrix2D;
+import org.ujmp.core.datematrix.impl.DefaultDenseDateMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDataMatrix2DFactory extends AbstractDateMatrix2DFactory {

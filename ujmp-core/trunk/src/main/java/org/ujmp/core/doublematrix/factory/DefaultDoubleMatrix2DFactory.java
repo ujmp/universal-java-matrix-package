@@ -23,8 +23,8 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFactory {

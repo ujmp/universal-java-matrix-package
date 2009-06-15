@@ -33,58 +33,58 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import org.ujmp.core.booleanmatrix.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
-import org.ujmp.core.bytematrix.ArrayDenseByteMatrix2D;
+import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
+import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.charmatrix.ArrayDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
+import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
-import org.ujmp.core.datematrix.SimpleDenseDateMatrix2D;
-import org.ujmp.core.doublematrix.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DenseFileMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
+import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
 import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
-import org.ujmp.core.intmatrix.SimpleDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.impl.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
 import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
-import org.ujmp.core.longmatrix.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
-import org.ujmp.core.longmatrix.SimpleDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.EmptyMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
-import org.ujmp.core.objectmatrix.SimpleDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.SynchronizedObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Repmat;
+import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
+import org.ujmp.core.objectmatrix.impl.SimpleDenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.SynchronizedObjectMatrix;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.SimpleDenseShortMatrix2D;
+import org.ujmp.core.shortmatrix.impl.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.FileListMatrix;
-import org.ujmp.core.stringmatrix.SimpleDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.impl.FileListMatrix;
+import org.ujmp.core.stringmatrix.impl.SimpleDenseStringMatrix2D;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
 import org.ujmp.core.util.matrices.MatrixMemoryUsage;
 import org.ujmp.core.util.matrices.MatrixRandomSeed;
@@ -474,6 +474,9 @@ public abstract class MatrixFactory {
 				case BIGINTEGER:
 					con = matrixMapper.getDenseBigIntegerMatrix2DConstructor();
 					break;
+				case BIGDECIMAL:
+					con = matrixMapper.getDenseBigDecimalMatrix2DConstructor();
+					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
 				}
@@ -515,6 +518,9 @@ public abstract class MatrixFactory {
 					break;
 				case BIGINTEGER:
 					con = matrixMapper.getDenseBigIntegerMatrixMultiDConstructor();
+					break;
+				case BIGDECIMAL:
+					con = matrixMapper.getDenseBigDecimalMatrixMultiDConstructor();
 					break;
 				default:
 					throw new MatrixException("entry type not yet supported: " + valueType);
@@ -690,6 +696,9 @@ public abstract class MatrixFactory {
 				case BIGINTEGER:
 					con = matrixMapper.getSparseBigIntegerMatrix2DConstructor();
 					break;
+				case BIGDECIMAL:
+					con = matrixMapper.getSparseBigDecimalMatrix2DConstructor();
+					break;
 				default:
 					throw new MatrixException("entry type not supported: " + valueType);
 				}
@@ -731,6 +740,9 @@ public abstract class MatrixFactory {
 					break;
 				case BIGINTEGER:
 					con = matrixMapper.getSparseBigIntegerMatrixMultiDConstructor();
+					break;
+				case BIGDECIMAL:
+					con = matrixMapper.getSparseBigDecimalMatrixMultiDConstructor();
 					break;
 				default:
 					throw new MatrixException("entry type not  supported: " + valueType);

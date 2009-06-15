@@ -29,8 +29,8 @@ import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.shortmatrix.ShortCalculationMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
+import org.ujmp.core.shortmatrix.impl.ShortCalculationMatrix;
 
 public abstract class AbstractShortCalculation extends AbstractCalculation<Matrix, ShortMatrix>
 		implements ShortCalculation {

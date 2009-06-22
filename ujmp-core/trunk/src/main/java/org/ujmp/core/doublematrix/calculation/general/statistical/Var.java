@@ -56,7 +56,7 @@ public class Var extends AbstractDoubleCalculation {
 		double sum = 0;
 
 		if (ignoreNaN) {
-
+			double count = 0;
 			switch (getDimension()) {
 			case ROW:
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
@@ -64,18 +64,20 @@ public class Var extends AbstractDoubleCalculation {
 							coordinates[COLUMN]))
 							- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
 				}
-				return sum
-						/ (getSource().getRowCount() - missingCount.getAsDouble(0,
-								coordinates[COLUMN]));
+				count = getSource().getRowCount()
+						- missingCount.getAsDouble(0, coordinates[COLUMN]) - 1;
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			case COLUMN:
 				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
 					sum += Math.pow(MathUtil
 							.ignoreNaN(getSource().getAsDouble(coordinates[ROW], c))
 							- mean.getAsDouble(coordinates[ROW], 0), 2.0);
 				}
-				return sum
-						/ (getSource().getColumnCount() - missingCount.getAsDouble(
-								coordinates[ROW], 0));
+				count = getSource().getColumnCount()
+						- missingCount.getAsDouble(coordinates[ROW], 0) - 1;
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			case ALL:
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
 					for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
@@ -83,30 +85,32 @@ public class Var extends AbstractDoubleCalculation {
 								- mean.getAsDouble(0, 0), 2.0);
 					}
 				}
-				return sum
-						/ (Coordinates.product(getSource().getSize()) - missingCount.getAsDouble(0,
-								0));
+				count = (Coordinates.product(getSource().getSize())
+						- missingCount.getAsDouble(0, 0) - 1);
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			default:
 				return 0.0;
 			}
 		} else {
+			double count = 0;
 			switch (getDimension()) {
 			case ROW:
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
 					sum += Math.pow((getSource().getAsDouble(r, coordinates[COLUMN]))
 							- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
 				}
-				return sum
-						/ (getSource().getRowCount() - missingCount.getAsDouble(0,
-								coordinates[COLUMN]));
+				count = getSource().getRowCount() - 1;
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			case COLUMN:
 				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
 					sum += Math.pow((getSource().getAsDouble(coordinates[ROW], c))
 							- mean.getAsDouble(coordinates[ROW], 0), 2.0);
 				}
-				return sum
-						/ (getSource().getColumnCount() - missingCount.getAsDouble(
-								coordinates[ROW], 0));
+				count = getSource().getColumnCount() - 1;
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			case ALL:
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
 					for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
@@ -114,9 +118,9 @@ public class Var extends AbstractDoubleCalculation {
 								2.0);
 					}
 				}
-				return sum
-						/ (Coordinates.product(getSource().getSize()) - missingCount.getAsDouble(0,
-								0));
+				count = Coordinates.product(getSource().getSize()) - 1;
+				count = count == 0 ? 1 : count;
+				return sum / count;
 			default:
 				return 0.0;
 			}

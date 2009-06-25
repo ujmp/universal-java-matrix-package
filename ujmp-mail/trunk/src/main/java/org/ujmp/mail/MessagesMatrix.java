@@ -44,9 +44,6 @@ public class MessagesMatrix extends AbstractListMatrix<Matrix> implements
 	public void setObject(Matrix value, int row, int column) {
 	}
 
-	public void setObject(Matrix value, long... coordinates) {
-	}
-
 	@Override
 	public void close() throws IOException {
 		list.close();

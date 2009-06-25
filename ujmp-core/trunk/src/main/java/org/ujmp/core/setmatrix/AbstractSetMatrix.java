@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
@@ -110,11 +109,11 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		}
 	}
 
-	public void setObject(Object value, long row, long column) {
+	public void setObject(A value, long row, long column) {
 		throw new MatrixException("modifications are only allowed over Set<?> interface");
 	}
 
-	public void setObject(Object value, int row, int column) {
+	public void setObject(A value, int row, int column) {
 		throw new MatrixException("modifications are only allowed over Set<?> interface");
 	}
 
@@ -133,7 +132,7 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 
 	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
+		setAsObject(value, coordinates);
 	}
 
 	@Override
@@ -144,6 +143,10 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 	@Override
 	public final StorageType getStorageType() {
 		return StorageType.SET;
+	}
+
+	public final void clear() {
+		getSet().clear();
 	}
 
 }

@@ -40,7 +40,7 @@ public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGener
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final void setObject(Object value, long... coordinates) {
+	public final void setObject(A value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 

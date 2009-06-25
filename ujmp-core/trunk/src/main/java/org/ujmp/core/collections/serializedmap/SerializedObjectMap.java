@@ -166,11 +166,17 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 				File[] files = d.listFiles();
 				for (File f : files) {
 					try {
-						FileInputStream fis = new FileInputStream(f);
-						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
-						K key = (K) os[0];
-						fis.close();
-						set.add(key);
+						// FileInputStream fis = new FileInputStream(f);
+						// InputStream bi = new BufferedInputStream(fis);
+						// if (useCompression) {
+						// bi = new GZIPInputStream(bi);
+						// }
+						// Object[] os = (Object[])
+						// SerializationUtil.deserialize(bi);
+						// K key = (K) os[0];
+						// bi.close();
+						// fis.close();
+						set.add((K) f.getName());
 					} catch (Exception e) {
 						throw new MatrixException(e);
 					}

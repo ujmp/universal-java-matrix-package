@@ -44,6 +44,10 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return new long[] { size(), 1 };
 	}
 
+	public final void clear() {
+		getList().clear();
+	}
+
 	public boolean add(A e) {
 		boolean ret = getList().add(e);
 		notifyGUIObject();
@@ -152,15 +156,13 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return a;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setObject(Object value, long row, long column) {
-		getList().set((int) row, (A) value);
+	public void setObject(A value, long row, long column) {
+		getList().set((int) row, value);
 		notifyGUIObject();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setObject(Object value, int row, int column) {
-		getList().set(row, (A) value);
+	public void setObject(A value, int row, int column) {
+		getList().set(row, value);
 		notifyGUIObject();
 	}
 
@@ -179,7 +181,7 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 
 	@Override
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
-		setObject(value, coordinates);
+		setAsObject(value, coordinates);
 	}
 
 	@Override

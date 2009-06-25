@@ -36,7 +36,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 	public DefaultDenseGenericMatrix2D(Matrix m) throws MatrixException {
 		values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 		for (long[] c : m.allCoordinates()) {
-			setObject(m.getAsObject(c), c);
+			setAsObject(m.getAsObject(c), c);
 		}
 	}
 

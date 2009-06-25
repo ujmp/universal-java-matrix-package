@@ -130,4 +130,8 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return StorageType.MAP;
 	}
 
+	public final void clear() {
+		getMap().clear();
+	}
+
 }

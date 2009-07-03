@@ -36,8 +36,14 @@ import org.ujmp.core.enums.FileFormat;
 
 public class R {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("R"), "/usr/bin/R",
-			"/opt/R/bin/R" };
+	public static String[] SEARCH = new String[] {};
+
+	static {
+		try {
+			SEARCH = new String[] { System.getProperty("R"), "/usr/bin/R", "/opt/R/bin/R" };
+		} catch (Exception e) {
+		}
+	}
 
 	public static final int POLLINTERVAL = 100;
 

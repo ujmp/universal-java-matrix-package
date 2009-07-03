@@ -143,26 +143,25 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public synchronized Set<K> keySet() {
-		// TODO: this is not the best way to do it:
-		Set<K> set = new HashSet<K>();
-		File[] dirs = getPath().listFiles();
-		for (File d : dirs) {
-			if (d.isDirectory()) {
-				File[] files = d.listFiles();
-				for (File f : files) {
-					String s = f.getName();
-					Object o = s;
-					try {
-						o = Base64.decodeToObject(s);
-					} catch (Exception e) {
-						throw new MatrixException(e);
+	private void listFilesToSet(File path, Set<K> set) {
+		Boolean stringKey = null;
+		for (File f : path.listFiles()) {
+			if (f.isDirectory()) {
+				listFilesToSet(f, set);
+			} else {
+				String filename = f.getName();
+				Object o = filename;
+				try {
+					if ((stringKey == null || stringKey == false) && filename.length() >= 4) {
+						o = Base64.decodeToObject(filename);
+						stringKey = false;
 					}
-					set.add((K) o);
+				} catch (Exception e) {
+					stringKey = true;
 				}
+				set.add((K) o);
 			}
 		}
-		return set;
 	}
 
 	public synchronized V put(K key, V value) {
@@ -227,7 +226,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		return count;
 	}
 
-	public File getFileNameForKey(Object key) {
+	private File getFileNameForKey(Object key) {
 		String s = null;
 		if (key instanceof String) {
 			s = (String) key;
@@ -249,28 +248,13 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		return new File(result);
 	}
 
-	@SuppressWarnings("unchecked")
 	public synchronized Collection<V> values() {
 		// TODO: this is not the best way to do it:
-		List<V> set = new ArrayList<V>();
-		File[] dirs = getPath().listFiles();
-		for (File d : dirs) {
-			if (d.isDirectory()) {
-				File[] files = d.listFiles();
-				for (File f : files) {
-					try {
-						FileInputStream fis = new FileInputStream(f);
-						Object[] os = (Object[]) SerializationUtil.deserialize(fis);
-						V value = (V) os[1];
-						fis.close();
-						set.add(value);
-					} catch (Exception e) {
-						throw new MatrixException(e);
-					}
-				}
-			}
+		List<V> list = new ArrayList<V>();
+		for (K key : keySet()) {
+			list.add(get(key));
 		}
-		return set;
+		return list;
 	}
 
 	public void setPath(File path) {
@@ -280,6 +264,13 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	@Override
 	public void erase() throws IOException {
 		FileUtil.deleteRecursive(path);
+	}
+
+	@Override
+	public Set<K> keySet() {
+		Set<K> set = new HashSet<K>();
+		listFilesToSet(path, set);
+		return set;
 	}
 
 }

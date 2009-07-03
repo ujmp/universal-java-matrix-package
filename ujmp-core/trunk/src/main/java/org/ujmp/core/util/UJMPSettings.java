@@ -36,8 +36,14 @@ public abstract class UJMPSettings {
 
 	private static int systemErrBufferSize = 1024 * 1024;
 
-	private static String datasetFolder = System.getProperty("user.home") + File.separator
-			+ "datasets";
+	private static String datasetFolder = ".";
+
+	static {
+		try {
+			datasetFolder = System.getProperty("user.home") + File.separator + "datasets";
+		} catch (Exception e) {
+		}
+	}
 
 	private static int numberOfThreads = 1;
 
@@ -88,13 +94,19 @@ public abstract class UJMPSettings {
 		out = new RingBufferOutputStream(systemOutBufferSize);
 		err = new RingBufferOutputStream(systemErrBufferSize);
 
-		System.setOut(new TeeStream(System.out, out));
-		System.setErr(new TeeStream(System.err, err));
+		try {
+			System.setOut(new TeeStream(System.out, out));
+			System.setErr(new TeeStream(System.err, err));
+		} catch (Exception e) {
+		}
 
 		// Set the number of threads to use for expensive calculations. If the
 		// machine has only one cpu, only one thread is used. For more than one
 		// core, the number of threads is higher.
-		numberOfThreads = Runtime.getRuntime().availableProcessors();
+		try {
+			numberOfThreads = Runtime.getRuntime().availableProcessors();
+		} catch (Exception e) {
+		}
 	}
 
 	public static void initialize() {

@@ -23,16 +23,18 @@
 
 package org.ujmp.gui;
 
+import java.applet.Applet;
+
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 
-public class UJMP {
+public class UJMP extends Applet {
+	private static final long serialVersionUID = 9112777043274552132L;
 
 	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
 	public static void main(String[] args) {
-
 		Matrix m = MatrixFactory.zeros(ValueType.OBJECT, 13, 9);
 
 		m.setLabel("Welcome to UJMP");
@@ -61,6 +63,10 @@ public class UJMP {
 		m.setAsObject(-1, 10, 5);
 
 		m.showGUI();
+	}
+
+	public void init() {
+		main(new String[] {});
 	}
 
 }

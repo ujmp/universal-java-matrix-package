@@ -26,18 +26,14 @@ package org.ujmp.gui.util;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
 public class UIDefaults {
-	private transient static final Logger logger = Logger.getLogger(UIDefaults.class.getName());
-
-	public static final RenderingHints AALIAS = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-			RenderingHints.VALUE_ANTIALIAS_ON);
+	public static final RenderingHints AALIAS = new RenderingHints(
+			RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 	public static void setDefaults() {
 
@@ -47,14 +43,14 @@ public class UIDefaults {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "look and feel not found");
 		}
 
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 
-		Locale.setDefault(Locale.US);
-
-		ClassLoader cl = UIDefaults.class.getClassLoader();
+		try {
+			Locale.setDefault(Locale.US);
+		} catch (Exception e) {
+		}
 
 		UIManager.put("Table.rowHeight", 32);
 		UIManager.put("Table.iconWidth", 32);
@@ -64,37 +60,65 @@ public class UIDefaults {
 
 		UIManager.put("JDMP.defaultInsets", new Insets(5, 5, 5, 5));
 
+		ClassLoader cl = UIDefaults.class.getClassLoader();
+
 		// TODO no icons available
 		if (false) {
 
-			UIManager.put("JDMP.icon.Image", new ImageIcon(cl.getResource("icons/image.png")));
+			UIManager.put("JDMP.icon.Image", new ImageIcon(cl
+					.getResource("icons/image.png")));
 
-			UIManager.put("JDMP.icon.Variable", new ImageIcon("resources/icons/variable.png"));
-			UIManager.put("JDMP.icon.Module", new ImageIcon("resources/icons/module.png"));
-			UIManager.put("JDMP.icon.DataSet", new ImageIcon("resources/icons/dataset.png"));
-			UIManager.put("JDMP.icon.Algorithm", new ImageIcon("resources/icons/algorithm.png"));
-			UIManager.put("JDMP.icon.Sample", new ImageIcon("resources/icons/sample.png"));
+			UIManager.put("JDMP.icon.Variable", new ImageIcon(
+					"resources/icons/variable.png"));
+			UIManager.put("JDMP.icon.Module", new ImageIcon(
+					"resources/icons/module.png"));
+			UIManager.put("JDMP.icon.DataSet", new ImageIcon(
+					"resources/icons/dataset.png"));
+			UIManager.put("JDMP.icon.Algorithm", new ImageIcon(
+					"resources/icons/algorithm.png"));
+			UIManager.put("JDMP.icon.Sample", new ImageIcon(
+					"resources/icons/sample.png"));
 
-			UIManager.put("JDMP.icon.StartAction", new ImageIcon("resources/icons/start.png"));
-			UIManager.put("JDMP.icon.StopAction", new ImageIcon("resources/icons/stop.png"));
-			UIManager.put("JDMP.icon.AboutAction", new ImageIcon(cl.getResource("icons/about.png")));
-			UIManager.put("JDMP.icon.CalculateAction", new ImageIcon(cl.getResource("icons/calculate.png")));
-			UIManager.put("JDMP.icon.ClearAction", new ImageIcon(cl.getResource("icons/new.png")));
-			UIManager.put("JDMP.icon.CloseAction", new ImageIcon(cl.getResource("icons/close.png")));
-			UIManager.put("JDMP.icon.CopyAction", new ImageIcon(cl.getResource("icons/copy.png")));
-			UIManager.put("JDMP.icon.CutAction", new ImageIcon(cl.getResource("icons/cut.png")));
-			UIManager.put("JDMP.icon.DeleteAction", new ImageIcon(cl.getResource("icons/delete.png")));
-			UIManager.put("JDMP.icon.ExitAction", new ImageIcon(cl.getResource("icons/exit.png")));
-			UIManager.put("JDMP.icon.ExportAction", new ImageIcon(cl.getResource("icons/export.png")));
-			UIManager.put("JDMP.icon.NewAction", new ImageIcon(cl.getResource("icons/new.png")));
-			UIManager.put("JDMP.icon.NextAction", new ImageIcon(cl.getResource("icons/next.png")));
-			UIManager.put("JDMP.icon.PrintAction", new ImageIcon(cl.getResource("icons/print.png")));
-			UIManager.put("JDMP.icon.SaveAction", new ImageIcon(cl.getResource("icons/save.png")));
-			UIManager.put("JDMP.icon.SaveAsAction", new ImageIcon(cl.getResource("icons/saveas.png")));
-			UIManager.put("JDMP.icon.ShuffleAction", new ImageIcon(cl.getResource("icons/shuffle.png")));
-			UIManager.put("JDMP.icon.StartAction", new ImageIcon(cl.getResource("icons/start.png")));
-			UIManager.put("JDMP.icon.StopAction", new ImageIcon(cl.getResource("icons/stop.png")));
-			UIManager.put("JDMP.icon.PasteAction", new ImageIcon(cl.getResource("icons/paste.png")));
+			UIManager.put("JDMP.icon.StartAction", new ImageIcon(
+					"resources/icons/start.png"));
+			UIManager.put("JDMP.icon.StopAction", new ImageIcon(
+					"resources/icons/stop.png"));
+			UIManager.put("JDMP.icon.AboutAction", new ImageIcon(cl
+					.getResource("icons/about.png")));
+			UIManager.put("JDMP.icon.CalculateAction", new ImageIcon(cl
+					.getResource("icons/calculate.png")));
+			UIManager.put("JDMP.icon.ClearAction", new ImageIcon(cl
+					.getResource("icons/new.png")));
+			UIManager.put("JDMP.icon.CloseAction", new ImageIcon(cl
+					.getResource("icons/close.png")));
+			UIManager.put("JDMP.icon.CopyAction", new ImageIcon(cl
+					.getResource("icons/copy.png")));
+			UIManager.put("JDMP.icon.CutAction", new ImageIcon(cl
+					.getResource("icons/cut.png")));
+			UIManager.put("JDMP.icon.DeleteAction", new ImageIcon(cl
+					.getResource("icons/delete.png")));
+			UIManager.put("JDMP.icon.ExitAction", new ImageIcon(cl
+					.getResource("icons/exit.png")));
+			UIManager.put("JDMP.icon.ExportAction", new ImageIcon(cl
+					.getResource("icons/export.png")));
+			UIManager.put("JDMP.icon.NewAction", new ImageIcon(cl
+					.getResource("icons/new.png")));
+			UIManager.put("JDMP.icon.NextAction", new ImageIcon(cl
+					.getResource("icons/next.png")));
+			UIManager.put("JDMP.icon.PrintAction", new ImageIcon(cl
+					.getResource("icons/print.png")));
+			UIManager.put("JDMP.icon.SaveAction", new ImageIcon(cl
+					.getResource("icons/save.png")));
+			UIManager.put("JDMP.icon.SaveAsAction", new ImageIcon(cl
+					.getResource("icons/saveas.png")));
+			UIManager.put("JDMP.icon.ShuffleAction", new ImageIcon(cl
+					.getResource("icons/shuffle.png")));
+			UIManager.put("JDMP.icon.StartAction", new ImageIcon(cl
+					.getResource("icons/start.png")));
+			UIManager.put("JDMP.icon.StopAction", new ImageIcon(cl
+					.getResource("icons/stop.png")));
+			UIManager.put("JDMP.icon.PasteAction", new ImageIcon(cl
+					.getResource("icons/paste.png")));
 		}
 
 	}

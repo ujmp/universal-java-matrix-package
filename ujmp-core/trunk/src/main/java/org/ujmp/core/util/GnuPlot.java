@@ -34,8 +34,15 @@ import org.ujmp.core.enums.FileFormat;
 
 public class GnuPlot {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("GnuPlot"),
-			System.getProperty("user.home") + "/gnuplot/bin/gnuplot", "/usr/bin/gnuplot" };
+	public static String[] SEARCH = new String[] {};
+
+	static {
+		try {
+			SEARCH = new String[] { System.getProperty("GnuPlot"),
+					System.getProperty("user.home") + "/gnuplot/bin/gnuplot", "/usr/bin/gnuplot" };
+		} catch (Exception e) {
+		}
+	}
 
 	private static String pathToGnuPlot = null;
 

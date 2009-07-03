@@ -35,9 +35,16 @@ import org.ujmp.core.enums.FileFormat;
 
 public class Matlab {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("Matlab"),
-			System.getProperty("user.home") + "/matlab/bin/matlab", "/usr/bin/matlab",
-			"/opt/matlab/bin/matlab" };
+	public static String[] SEARCH = new String[] {};
+
+	static {
+		try {
+			SEARCH = new String[] { System.getProperty("Matlab"),
+					System.getProperty("user.home") + "/matlab/bin/matlab", "/usr/bin/matlab",
+					"/opt/matlab/bin/matlab" };
+		} catch (Exception e) {
+		}
+	}
 
 	public static final String MATLABPARAMETERS = "-nosplash -nojvm";
 

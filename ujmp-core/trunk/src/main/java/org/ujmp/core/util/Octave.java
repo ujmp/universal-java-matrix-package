@@ -35,8 +35,15 @@ import org.ujmp.core.enums.FileFormat;
 
 public class Octave {
 
-	public static final String[] SEARCH = new String[] { System.getProperty("Octave"),
-			"/usr/bin/octave", "/opt/octave/bin/octave" };
+	public static String[] SEARCH = new String[] {};
+
+	static {
+		try {
+			SEARCH = new String[] { System.getProperty("Octave"), "/usr/bin/octave",
+					"/opt/octave/bin/octave" };
+		} catch (Exception e) {
+		}
+	}
 
 	public static final int POLLINTERVAL = 50;
 

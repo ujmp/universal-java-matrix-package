@@ -28,14 +28,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.ujmp.core.interfaces.Wrapper;
 
 public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
-
-	private static final Logger logger = Logger.getLogger(MapToListWrapper.class.getName());
 
 	private Map<Integer, A> map = null;
 
@@ -55,7 +51,7 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public void add(int index, A element) {
-		logger.log(Level.WARNING, "not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean addAll(Collection<? extends A> c) {
@@ -66,8 +62,7 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public boolean addAll(int index, Collection<? extends A> c) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		throw new RuntimeException("not implemented");
 	}
 
 	public void clear() {
@@ -81,8 +76,7 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public boolean containsAll(Collection<?> c) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		throw new RuntimeException("not implemented");
 	}
 
 	public A get(int index) {
@@ -90,8 +84,7 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public int indexOf(Object o) {
-		logger.log(Level.WARNING, "not implemented");
-		return 0;
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean isEmpty() {
@@ -103,18 +96,15 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public int lastIndexOf(Object o) {
-		logger.log(Level.WARNING, "not implemented");
-		return 0;
+		throw new RuntimeException("not implemented");
 	}
 
 	public ListIterator<A> listIterator() {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public ListIterator<A> listIterator(int index) {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean remove(Object o) {
@@ -127,19 +117,17 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 			map.remove(start);
 			start++;
 		} else {
-			logger.log(Level.WARNING, "not implemented");
+			throw new RuntimeException("not implemented");
 		}
 		return null;
 	}
 
 	public boolean removeAll(Collection<?> c) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean retainAll(Collection<?> c) {
-		logger.log(Level.WARNING, "not implemented");
-		return false;
+		throw new RuntimeException("not implemented");
 	}
 
 	public A set(int index, A element) {
@@ -152,18 +140,15 @@ public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
 	}
 
 	public List<A> subList(int fromIndex, int toIndex) {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public Object[] toArray() {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public <T> T[] toArray(T[] a) {
-		logger.log(Level.WARNING, "not implemented");
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public Map<Integer, A> getWrappedObject() {

@@ -21,10 +21,8 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections.serializedmap;
+package org.ujmp.core.collections;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -33,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,39 +43,42 @@ import java.util.zip.GZIPOutputStream;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.util.Base64;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.io.FileUtil;
 
 public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 
-	public static final int SERIALIZE = 0;
-
-	public static final int XMLENCODER = 1;
-
-	private boolean useCompression = true;
-
-	private FileNameConverter fileNameConverter = null;
+	private boolean useGZip = true;
 
 	private File path = null;
 
-	private boolean temporary = false;
-
-	private int method = SERIALIZE;
-
 	public SerializedObjectMap() throws IOException {
-		this((File) null);
+		this((File) null, true);
 	}
 
 	public SerializedObjectMap(String path) throws IOException {
-		this(new File(path));
+		this(new File(path), true);
+	}
+
+	public SerializedObjectMap(boolean useGZip) throws IOException {
+		this((File) null, useGZip);
+	}
+
+	public SerializedObjectMap(String path, boolean useGZip) throws IOException {
+		this(new File(path), useGZip);
 	}
 
 	public SerializedObjectMap(File path) throws IOException {
+		this(path, true);
+	}
+
+	public SerializedObjectMap(File path, boolean useGZip) throws IOException {
+		this.useGZip = useGZip;
 		if (path == null) {
 			path = File.createTempFile("serializedmap" + System.nanoTime(), "");
 			path.delete();
 			path.deleteOnExit();
-			temporary = true;
 		}
 		this.path = path;
 		if (!path.exists()) {
@@ -86,13 +88,6 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 
 	public synchronized void clear() {
 		throw new MatrixException("not implemented");
-	}
-
-	public FileNameConverter getFileNameConverter() {
-		if (fileNameConverter == null) {
-			fileNameConverter = new DefaultFileNameConverter();
-		}
-		return fileNameConverter;
 	}
 
 	public File getPath() {
@@ -127,22 +122,12 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 
 			FileInputStream fi = new FileInputStream(file);
 			InputStream bi = new BufferedInputStream(fi);
-			if (useCompression) {
+			if (useGZip) {
 				bi = new GZIPInputStream(bi);
 			}
 
-			switch (method) {
-			case SERIALIZE:
-				Object[] os = (Object[]) SerializationUtil.deserialize(bi);
-				o = os[1];
-				break;
-			case XMLENCODER:
-				XMLDecoder decoder = new XMLDecoder(bi);
-				os = (Object[]) decoder.readObject();
-				o = os[1];
-				decoder.close();
-				break;
-			}
+			Object[] os = (Object[]) SerializationUtil.deserialize(bi);
+			o = os[1];
 
 			bi.close();
 			fi.close();
@@ -154,32 +139,26 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	}
 
 	public synchronized boolean isEmpty() {
-		throw new MatrixException("not implemented");
+		return size() == 0;
 	}
 
 	@SuppressWarnings("unchecked")
 	public synchronized Set<K> keySet() {
+		// TODO: this is not the best way to do it:
 		Set<K> set = new HashSet<K>();
 		File[] dirs = getPath().listFiles();
 		for (File d : dirs) {
 			if (d.isDirectory()) {
 				File[] files = d.listFiles();
 				for (File f : files) {
+					String s = f.getName();
+					Object o = s;
 					try {
-						// FileInputStream fis = new FileInputStream(f);
-						// InputStream bi = new BufferedInputStream(fis);
-						// if (useCompression) {
-						// bi = new GZIPInputStream(bi);
-						// }
-						// Object[] os = (Object[])
-						// SerializationUtil.deserialize(bi);
-						// K key = (K) os[0];
-						// bi.close();
-						// fis.close();
-						set.add((K) f.getName());
+						o = Base64.decodeToObject(s);
 					} catch (Exception e) {
 						throw new MatrixException(e);
 					}
+					set.add((K) o);
 				}
 			}
 		}
@@ -188,46 +167,27 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 
 	public synchronized V put(K key, V value) {
 		try {
-			if (value == null) {
+			if (value == null || key == null) {
 				return null;
 			}
 
 			File file = getFileNameForKey(key);
-			if (file == null) {
-				return null;
-			}
 
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();
-				if (temporary) {
-					file.getParentFile().deleteOnExit();
-				}
 			}
 
 			FileOutputStream fo = new FileOutputStream(file);
 
 			OutputStream bo = new BufferedOutputStream(fo);
-			if (useCompression) {
+			if (useGZip) {
 				bo = new GZIPOutputStream(bo);
 			}
 
-			switch (method) {
-			case SERIALIZE:
-				SerializationUtil.serialize(new Object[] { key, value }, bo);
-				break;
-			case XMLENCODER:
-				XMLEncoder encoder = new XMLEncoder(bo);
-				encoder.writeObject(new Object[] { key, value });
-				encoder.close();
-				break;
-			}
+			SerializationUtil.serialize(new Object[] { key, value }, bo);
 
 			bo.close();
 			fo.close();
-
-			if (temporary) {
-				file.deleteOnExit();
-			}
 
 			return null;
 		} catch (Exception e) {
@@ -242,34 +202,56 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	}
 
 	public synchronized V remove(Object key) {
-		throw new MatrixException("not implemented");
+		V v = get(key);
+		File file = getFileNameForKey(key);
+		if (file.exists()) {
+			file.delete();
+		}
+		return v;
 	}
 
 	public synchronized int size() {
+		return countFiles(path);
+	}
+
+	private static int countFiles(File path) {
 		int count = 0;
-		for (File dir : getAllDirs()) {
-			if (dir.exists()) {
-				count += dir.listFiles().length;
+		File[] files = path.listFiles();
+		for (File f : files) {
+			if (f.isDirectory()) {
+				count += countFiles(f);
+			} else {
+				count++;
 			}
 		}
 		return count;
 	}
 
-	public List<File> getAllDirs() {
-		return getFileNameConverter().getAllDirs(path);
-	}
-
 	public File getFileNameForKey(Object key) {
-		File file = getFileNameConverter().getFileNameForKey(key);
-		if (file == null) {
-			return null;
+		String s = null;
+		if (key instanceof String) {
+			s = (String) key;
+		} else {
+			try {
+				s = Base64.encodeObject((Serializable) key);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
-		file = new File(path + File.separator + file);
-		return file;
+		String result = path.getAbsolutePath() + File.separator;
+		for (int i = 0; i < s.length() - 1; i++) {
+			result += s.charAt(i) + File.separator;
+		}
+		result += s + ".dat";
+		if (useGZip) {
+			result += ".gz";
+		}
+		return new File(result);
 	}
 
 	@SuppressWarnings("unchecked")
 	public synchronized Collection<V> values() {
+		// TODO: this is not the best way to do it:
 		List<V> set = new ArrayList<V>();
 		File[] dirs = getPath().listFiles();
 		for (File d : dirs) {
@@ -291,16 +273,8 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		return set;
 	}
 
-	public void setFileNameConverter(FileNameConverter fileNameConverter) {
-		this.fileNameConverter = fileNameConverter;
-	}
-
 	public void setPath(File path) {
 		this.path = path;
-	}
-
-	public void setMethod(int method) {
-		this.method = method;
 	}
 
 	@Override

@@ -1,21 +1,21 @@
 DIR="/home/arndt/workspace/ujmp-complete"
-VERSION="0.2.3"
-PACKAGES="ujmp-core ujmp-gui ujmp-bpca ujmp-colt ujmp-commonsmath ujmp-hadoop ujmp-itext ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmathplot ujmp-jmatio ujmp-jmatrices ujmp-jsci ujmp-jscience ujmp-jung ujmp-lsimpute ujmp-lucene ujmp-mail ujmp-mantissa ujmp-mtj ujmp-ojalgo ujmp-parallelcolt ujmp-pdfbox ujmp-sst ujmp-vecmath"
+UJMPVERSION="0.2.3"
+UJMPPACKAGES="ujmp-core ujmp-gui ujmp-bpca ujmp-colt ujmp-commonsmath ujmp-hadoop ujmp-itext ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmathplot ujmp-jmatio ujmp-jmatrices ujmp-jsci ujmp-jscience ujmp-jung ujmp-lsimpute ujmp-lucene ujmp-mail ujmp-mantissa ujmp-mtj ujmp-ojalgo ujmp-parallelcolt ujmp-pdfbox ujmp-sst ujmp-vecmath"
 
 cd $DIR
 rm -rf target
 mkdir -p target
 
-for p in $PACKAGES
+for p in $UJMPPACKAGES
 do
-  cp ../$p/target/$p-$VERSION.jar target/$p-$VERSION.zip
+  cp ../$p/target/$p-$UJMPVERSION.jar target/$p-$UJMPVERSION.zip
 done
 
 cd target
 
-for p in $PACKAGES
+for p in $UJMPPACKAGES
 do
-  unzip -o $p-$VERSION.zip
+  unzip -o $p-$UJMPVERSION.zip
 done
 
 rm -rf *.zip
@@ -25,4 +25,4 @@ cat META-INF/MANIFEST.MF >> META-INF/MF.MF
 rm -f META-INF/MANIFEST.MF
 mv META-INF/MF.MF META-INF/MANIFEST.MF
 
-zip -r ujmp-complete-$VERSION.jar *
+zip -r ujmp-complete-$UJMPVERSION.jar *

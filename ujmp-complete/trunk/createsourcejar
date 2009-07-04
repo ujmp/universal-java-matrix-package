@@ -20,4 +20,9 @@ done
 
 rm -rf *.zip
 
+echo "Main-Class: org.ujmp.gui.UJMP" > META-INF/MF.MF
+cat META-INF/MANIFEST.MF >> META-INF/MF.MF
+rm -f META-INF/MANIFEST.MF
+mv META-INF/MF.MF META-INF/MANIFEST.MF
+
 zip -r ujmp-complete-$VERSION-sources.jar *

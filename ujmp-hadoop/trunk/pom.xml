@@ -4,7 +4,7 @@
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp-hadoop</artifactId>
 	<packaging>jar</packaging>
-	<name>ujmp-hdoop</name>
+	<name>ujmp-hadoop</name>
 
 	<properties>
 		<ujmp.version>0.2.3</ujmp.version>

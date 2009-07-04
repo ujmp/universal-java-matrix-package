@@ -559,12 +559,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		boolean commonsMathAvailable = true;
 
 		try {
-			Class.forName("org.ujmp.mtj.MTJDenseDoubleMatrix2D");
+			Class.forName("org.ujmp.mtj.Plugin");
 		} catch (ClassNotFoundException e) {
 			mtjAvailable = false;
 		}
 		try {
-			Class.forName("org.ujmp.commonsmath.CommonsMathRealMatrix2D");
+			Class.forName("org.ujmp.commonsmath.Plugin");
 		} catch (ClassNotFoundException e) {
 			commonsMathAvailable = false;
 		}

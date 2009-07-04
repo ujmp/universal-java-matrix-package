@@ -62,171 +62,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-core</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-commonsmath</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jackcess</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-colt</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-itext</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jama</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jmatrices</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-mtj</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-vecmath</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jexcelapi</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jmatio</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jmathplot</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jdbc</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-gui</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-mail</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jung</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-bpca</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-lsimpute</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-sst</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-parallelcolt</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-ojalgo</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-mantissa</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jscience</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-jsci</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-lucene</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-hadoop</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.ujmp</groupId>
-				<artifactId>ujmp-pdfbox</artifactId>
-				<version>${ujmp.version}</version>
-				<scope>compile</scope>
-			</dependency>
-
-
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -454,36 +289,38 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<inherited>true</inherited>
 				<configuration>
-					<outputDirectory>../ujmp/target/${project.version}/docs/${project.name}</outputDirectory>
-					<reportOutputDirectory>../ujmp/target/${project.version}/docs/${project.name}</reportOutputDirectory>
+					<outputDirectory>../ujmp/target/docs/${project.version}/${project.name}</outputDirectory>
+					<reportOutputDirectory>../ujmp/target/docs/${project.version}/${project.name}</reportOutputDirectory>
 					<linksource>true</linksource>
 					<links>
 						<link>http://java.sun.com/javase/6/docs/api/</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-core/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-gui/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-bpca/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-colt/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-commonsmath/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-itext/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jackcess/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jama/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jdbc/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jexcelapi/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmathplot/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmatio/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jmatrices/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jung/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-lsimpute/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mail/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mtj/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-vecmath/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-sst/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-parallelcolt/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-ojalgo/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-mantissa/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jscience/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-jsci/apidocs</link>
-						<link>http://www.ujmp.org/ujmp/${project.version}/docs/ujmp-lucene/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-core</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-gui</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-bpca</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-colt</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-commonsmath</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-hadoop</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-itext</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jackcess</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jama</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jdbc</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jexcelapi</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmathplot</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmatio</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmatrices</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jsci</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jscience</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jung</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-lsimpute</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-lucene</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-mail</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-mantissa</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-mtj</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-ojalgo</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-parallelcolt</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-pdfbox</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-sst</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-vecmath</link>
 					</links>
 				</configuration>
 			</plugin>
@@ -497,7 +334,5 @@
 			<url>file:/~/.m2/repository</url>
 		</repository>
 	</distributionManagement>
-
-
 
 </project>

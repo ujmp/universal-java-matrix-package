@@ -17,7 +17,6 @@
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -35,12 +34,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
 			<version>${ujmp.version}</version>
-			<classifier>tests</classifier>
+			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

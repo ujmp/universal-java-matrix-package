@@ -71,6 +71,7 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		addClass("ujmp-mtj");
 		addClass("ujmp-ojalgo");
 		addClass("ujmp-parallelcolt");
+		addClass("ujmp-pdfbox");
 		addClass("ujmp-sst");
 		addClass("ujmp-vecmath");
 		refresh();

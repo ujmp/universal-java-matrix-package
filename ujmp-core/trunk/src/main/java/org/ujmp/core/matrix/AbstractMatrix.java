@@ -2110,4 +2110,5 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			throw new MatrixException("unknown storage type: " + getStorageType());
 		}
 	}
+
 }

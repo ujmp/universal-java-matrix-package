@@ -31,6 +31,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 
 public class ExportMatrixSER {
 
@@ -40,10 +41,40 @@ public class ExportMatrixSER {
 		out.close();
 	}
 
-	public static final void toStream(OutputStream stream, Matrix m, Object... parameters) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(stream));
-		oos.writeObject(m);
-		oos.close();
+	public static final void toStream(OutputStream stream, Matrix m, Object... parameters)
+			throws IOException {
+		ObjectOutputStream s = new ObjectOutputStream(new BufferedOutputStream(stream));
+
+		long[] size = m.getSize();
+		int sizeLength = size.length;
+		ValueType valueType = m.getValueType();
+
+		s.writeObject(valueType);
+		s.writeBoolean(m.isSparse());
+		s.writeInt(sizeLength);
+		for (int i = 0; i < sizeLength; i++) {
+			s.writeLong(size[i]);
+		}
+
+		for (long[] c : m.availableCoordinates()) {
+			s.writeBoolean(true); // hasNext
+			for (int i = 0; i < sizeLength; i++) {
+				s.writeLong(c[i]);
+			}
+			switch (valueType) {
+			case DOUBLE:
+				s.writeDouble(m.getAsDouble(c));
+				break;
+			case INT:
+				s.writeInt(m.getAsInt(c));
+				break;
+			default:
+				s.writeObject(m.getAsObject(c));
+				break;
+			}
+		}
+		s.writeBoolean(false); // hasNext
+		s.close();
 	}
 
 }

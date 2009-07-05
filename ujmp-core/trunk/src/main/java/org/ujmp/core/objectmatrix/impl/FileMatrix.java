@@ -68,6 +68,8 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 
 	public static final String EXTENSION = "Extension";
 
+	public static final String FILEFORMAT = "FileFormat";
+
 	private Map<Object, Object> map = null;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
@@ -126,6 +128,7 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 			map.put(ISFILE, file.isFile());
 			map.put(LASTMODIFIED, file.lastModified());
 			map.put(SIZE, file.length());
+			map.put(FILEFORMAT, this.fileformat);
 		}
 
 		@Override

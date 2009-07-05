@@ -86,7 +86,7 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 				matrix = new SoftReference<Matrix>(MatrixFactory.importFromFile(fileformat, file,
 						parameters));
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				return MatrixFactory.emptyMatrix();
 			}
 		}
 		return matrix.get();

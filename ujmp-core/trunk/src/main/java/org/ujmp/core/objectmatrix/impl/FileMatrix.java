@@ -33,12 +33,11 @@ import java.util.Set;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-public class FileMatrix extends AbstractMapMatrix<String, Object> {
+public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
 
 	public static final String CONTENT = "Content";
@@ -69,36 +68,45 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	public static final String EXTENSION = "Extension";
 
-	private Map<String, Object> map = null;
-
-	private FileFormat fileformat = null;
+	private Map<Object, Object> map = null;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
-		if (parameters.length > 0) {
-			if (parameters[0] instanceof FileFormat) {
-				this.fileformat = (FileFormat) parameters[0];
-			}
-		} else {
-			fileformat = FileFormat.guess(file);
-		}
-		map = new FileMap(file);
+		map = new FileMap(file, parameters);
+	}
+
+	public FileMatrix(FileFormat fileFormat, File file, Object... parameters) throws IOException {
+		map = new FileMap(fileFormat, file, parameters);
 	}
 
 	@Override
-	public Map<String, Object> getMap() {
+	public Map<Object, Object> getMap() {
 		return map;
 	}
 
-	class FileMap implements Map<String, Object> {
+	class FileMap implements Map<Object, Object> {
 		private File file = null;
 
-		private Map<String, Object> map = null;
+		private Map<Object, Object> map = null;
 
 		private SoftReference<Matrix> content = null;
 
-		public FileMap(File file) throws IOException {
+		private FileFormat fileformat = null;
+
+		private Object[] parameters = null;
+
+		public FileMap(File file, Object... paramegters) throws IOException {
+			this(null, file, paramegters);
+		}
+
+		public FileMap(FileFormat fileFormat, File file, Object... paramegters) throws IOException {
+			if (fileFormat == null) {
+				this.fileformat = FileFormat.guess(file);
+			} else {
+				this.fileformat = fileFormat;
+			}
+			this.parameters = paramegters;
 			this.file = file;
-			this.map = new HashMap<String, Object>();
+			this.map = new HashMap<Object, Object>();
 			this.content = new SoftReference<Matrix>(null);
 			map.put(CONTENT, content);
 			map.put(PATH, file.getPath());
@@ -136,7 +144,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		}
 
 		@Override
-		public Set<java.util.Map.Entry<String, Object>> entrySet() {
+		public Set<java.util.Map.Entry<Object, Object>> entrySet() {
 			throw new MatrixException("not implemented");
 		}
 
@@ -149,7 +157,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 				Matrix m = null;
 				if (content == null || content.get() == null) {
 					try {
-						m = MatrixFactory.linkToFile(fileformat, file);
+						m = MatrixFactory.linkToFile(fileformat, file, parameters);
 						content = new SoftReference<Matrix>(m);
 					} catch (Exception e) {
 						throw new MatrixException(e);
@@ -166,17 +174,17 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		}
 
 		@Override
-		public Set<String> keySet() {
+		public Set<Object> keySet() {
 			return map.keySet();
 		}
 
 		@Override
-		public Object put(String key, Object value) {
+		public Object put(Object key, Object value) {
 			return map.put(key, value);
 		}
 
 		@Override
-		public void putAll(Map<? extends String, ? extends Object> m) {
+		public void putAll(Map<? extends Object, ? extends Object> m) {
 			map.putAll(m);
 		}
 
@@ -196,4 +204,5 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		}
 
 	}
+
 }

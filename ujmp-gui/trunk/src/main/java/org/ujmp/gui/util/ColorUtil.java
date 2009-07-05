@@ -40,6 +40,10 @@ public abstract class ColorUtil {
 		}
 	}
 
+	public static final Color fromRGB(int v) {
+		return new Color(v);
+	}
+
 	public static final Color fromDouble(double v) {
 		// inf = 255 255 0 yellow
 		// 1 = 0 255 0 green
@@ -82,6 +86,9 @@ public abstract class ColorUtil {
 		}
 		if (v instanceof Double) {
 			return fromDouble((Double) v);
+		}
+		if (v instanceof Integer) {
+			return fromRGB((Integer) v);
 		}
 		if (v instanceof Matrix) {
 			if (((Matrix) v).isScalar()) {

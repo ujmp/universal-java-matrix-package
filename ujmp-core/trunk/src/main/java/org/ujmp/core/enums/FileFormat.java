@@ -42,6 +42,8 @@ public enum FileFormat {
 	FILE("Text Files", "*"), //
 	MDB("Microsoft Access Files", "mdb"), //
 	R("R Files", "r"), //
+	RSS("RSS Feed", "rss", "rdf", "xml"), //
+	ATOM("Atom Feed", "atom", "xml"), //
 	JPG("JPG Image Files", "jpg", "jpeg"), //
 	HTML("HTML Files", "html", "htm"), //
 	MTX("Matrix Data Format", "mtx"), //

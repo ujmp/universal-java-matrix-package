@@ -27,22 +27,15 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.ExitAction;
 
-public class UJMPFileMenu extends JMenu {
-	private static final long serialVersionUID = 4107960658732322305L;
+public class LinkMatrixMenu extends JMenu {
+	private static final long serialVersionUID = 2167931436790620147L;
 
-	public UJMPFileMenu(JComponent component, GUIObject object) {
-		super("File");
-		setMnemonic(KeyEvent.VK_F);
-		add(new UJMPNewMenu(component, object));
-		add(new UJMPImportMenu(component, object));
-		add(new UJMPLinkMenu(component, object));
-		add(new JSeparator());
-		add(new JMenuItem(new ExitAction(component, object)));
+	public LinkMatrixMenu(JComponent c, GUIObject o) {
+		super("Matrix");
+		setMnemonic(KeyEvent.VK_M);
 	}
+
 }

@@ -72,7 +72,7 @@ public abstract class StringUtil {
 
 	public static final String convert(Object o) {
 		if (o == null) {
-			return "";
+			return null;
 		}
 		if (o instanceof String) {
 			return (String) o;

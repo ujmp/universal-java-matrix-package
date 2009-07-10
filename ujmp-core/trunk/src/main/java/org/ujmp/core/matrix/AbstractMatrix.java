@@ -1445,11 +1445,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getColumnLabel(long col) {
-		return StringUtil.format(getAxisAnnotation(COLUMN, col));
+		return StringUtil.convert(getAxisAnnotation(COLUMN, col));
 	}
 
 	public final String getRowLabel(long row) {
-		return StringUtil.format(getAxisAnnotation(ROW, row));
+		return StringUtil.convert(getAxisAnnotation(ROW, row));
 	}
 
 	public final long getRowForLabel(Object object) {

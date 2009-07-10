@@ -51,23 +51,26 @@ public class ImportMatrixRSS {
 		Document doc = dBuilder.parse(stream);
 
 		NodeList items = doc.getElementsByTagName("item");
-		m = MatrixFactory.dense(ValueType.OBJECT, items.getLength(), 4);
-		m.setColumnLabel(0, "Label");
-		m.setColumnLabel(1, "Link");
-		m.setColumnLabel(2, "Description");
-		m.setColumnLabel(3, "Date");
+		m = MatrixFactory.dense(ValueType.OBJECT, items.getLength(), 5);
+		m.setColumnLabel(0, "Id");
+		m.setColumnLabel(1, "Label");
+		m.setColumnLabel(2, "Link");
+		m.setColumnLabel(3, "Description");
+		m.setColumnLabel(4, "Date");
 		for (int i = 0; i < items.getLength(); i++) {
 			Node item = items.item(i);
 			for (int c = 0; c < item.getChildNodes().getLength(); c++) {
 				Node n = item.getChildNodes().item(c);
-				if (n.getNodeName().equalsIgnoreCase("title")) {
+				if (n.getNodeName().equalsIgnoreCase("guid")) {
 					m.setAsObject(n.getTextContent(), i, 0);
-				} else if (n.getNodeName().equalsIgnoreCase("link")) {
+				} else if (n.getNodeName().equalsIgnoreCase("title")) {
 					m.setAsObject(n.getTextContent(), i, 1);
-				} else if (n.getNodeName().equalsIgnoreCase("description")) {
+				} else if (n.getNodeName().equalsIgnoreCase("link")) {
 					m.setAsObject(n.getTextContent(), i, 2);
-				} else if (n.getNodeName().equalsIgnoreCase("pubDate")) {
+				} else if (n.getNodeName().equalsIgnoreCase("description")) {
 					m.setAsObject(n.getTextContent(), i, 3);
+				} else if (n.getNodeName().equalsIgnoreCase("pubDate")) {
+					m.setAsObject(n.getTextContent(), i, 4);
 				}
 			}
 		}

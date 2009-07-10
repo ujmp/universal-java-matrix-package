@@ -198,7 +198,7 @@ public class Coordinates implements Serializable {
 	}
 
 	public static long[] parseString(String s) {
-		String[] fields = s.split(",");
+		String[] fields = s.split("[,;\tx]");
 		long[] dims = new long[fields.length];
 		for (int i = fields.length - 1; i != -1; i--) {
 			dims[i] = Long.parseLong(fields[i]);

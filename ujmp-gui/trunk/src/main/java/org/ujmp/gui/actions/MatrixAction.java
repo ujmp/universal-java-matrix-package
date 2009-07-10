@@ -72,7 +72,7 @@ public abstract class MatrixAction extends ObjectAction {
 	}
 
 	public MatrixGUIObject getMatrixObject() {
-		MatrixGUIObject m = (MatrixGUIObject) getObject();
+		MatrixGUIObject m = (MatrixGUIObject) getGUIObject();
 		if (m != null) {
 			int startRow = m.getRowSelectionModel().getMinSelectionIndex();
 			int endRow = m.getRowSelectionModel().getMaxSelectionIndex();
@@ -103,7 +103,7 @@ public abstract class MatrixAction extends ObjectAction {
 	}
 
 	public void setMatrix(MatrixGUIObject m) {
-		setObject(m);
+		setGUIObject(m);
 	}
 
 	public GUIObject getVariable() {

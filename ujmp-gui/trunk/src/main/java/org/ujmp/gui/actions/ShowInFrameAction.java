@@ -44,7 +44,7 @@ public class ShowInFrameAction extends ObjectAction {
 
 	@Override
 	public Object call() {
-		getObject().showGUI();
+		getGUIObject().showGUI();
 		return null;
 	}
 

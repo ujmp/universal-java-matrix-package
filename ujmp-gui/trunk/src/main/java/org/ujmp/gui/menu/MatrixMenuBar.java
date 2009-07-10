@@ -34,9 +34,10 @@ public class MatrixMenuBar extends JMenuBar {
 
 	public MatrixMenuBar(JComponent component, MatrixGUIObject o,
 			GUIObject owner) {
+		add(new UJMPFileMenu(component, o));
 		add(new MatrixMenu(component, o, owner));
 		add(new UJMPToolsMenu(component));
-		add(new ExamplesMenu(component));
+		add(new UJMPExamplesMenu(component));
 	}
 
 }

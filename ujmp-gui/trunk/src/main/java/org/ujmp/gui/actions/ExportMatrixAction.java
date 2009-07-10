@@ -81,7 +81,7 @@ public class ExportMatrixAction extends ObjectAction {
 				return null;
 		}
 
-		GUIObject o = getObject();
+		GUIObject o = getGUIObject();
 
 		if (o instanceof MatrixGUIObject) {
 			MatrixGUIObject m = (MatrixGUIObject) o;

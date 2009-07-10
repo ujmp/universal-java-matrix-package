@@ -24,8 +24,6 @@
 package org.ujmp.gui;
 
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
@@ -34,9 +32,6 @@ import org.ujmp.core.interfaces.GUIObject;
 
 public abstract class AbstractGUIObject implements GUIObject {
 	private static final long serialVersionUID = -2271465024665498798L;
-
-	protected static final Logger logger = Logger
-			.getLogger(AbstractGUIObject.class.getName());
 
 	public static final int X = Matrix.X;
 
@@ -79,7 +74,7 @@ public abstract class AbstractGUIObject implements GUIObject {
 					new Class[] { GUIObject.class });
 			return (JFrame) method.invoke(null, new Object[] { this });
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "cannot show frame", e);
+			e.printStackTrace();
 			return null;
 		}
 	}

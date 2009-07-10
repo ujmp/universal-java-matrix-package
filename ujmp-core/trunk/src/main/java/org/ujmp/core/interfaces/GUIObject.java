@@ -53,4 +53,6 @@ public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel,
 
 	public int getModCount();
 
+	public CoreObject getCoreObject();
+
 }

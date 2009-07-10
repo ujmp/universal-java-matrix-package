@@ -23,18 +23,14 @@
 
 package org.ujmp.core;
 
-import java.io.Serializable;
-
 import org.ujmp.core.annotation.HasAnnotation;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
-import org.ujmp.core.interfaces.Clearable;
 import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
+import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
-import org.ujmp.core.interfaces.HasGUIObject;
-import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.io.ExportMatrixInterface;
 
 /**
@@ -51,10 +47,9 @@ import org.ujmp.core.io.ExportMatrixInterface;
  * @log $Log$
  * 
  */
-public interface Matrix extends Serializable, ExportMatrixInterface, CoordinateFunctions,
+public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFunctions,
 		GettersAndSetters, BasicMatrixProperties, CanPerformCalculations, DistanceMeasures,
-		Comparable<Matrix>, Cloneable, Clearable, HasAnnotation, HasLabel, HasGUIObject,
-		Conversions {
+		Comparable<Matrix>, HasAnnotation, Conversions {
 
 	public enum StorageType {
 		DENSE, SPARSE, LIST, SET, MAP, TREE, GRAPH

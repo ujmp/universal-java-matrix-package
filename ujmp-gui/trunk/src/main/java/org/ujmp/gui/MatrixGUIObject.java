@@ -40,6 +40,7 @@ import javax.swing.table.TableModel;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.gui.util.FastListSelectionModel;
@@ -387,5 +388,10 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 			return "[" + Coordinates.toString(matrix.getSize()) + "] "
 					+ matrix.getClass().getSimpleName();
 		}
+	}
+
+	@Override
+	public Matrix getCoreObject() {
+		return matrix;
 	}
 }

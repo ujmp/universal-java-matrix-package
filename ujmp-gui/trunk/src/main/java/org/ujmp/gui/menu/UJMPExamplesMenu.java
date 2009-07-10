@@ -32,14 +32,23 @@ import javax.swing.JMenuItem;
 import org.ujmp.gui.actions.MandelbrotMatrixAction;
 import org.ujmp.gui.actions.SunSpotDataMatrixAction;
 
-public class ExamplesMenu extends JMenu {
+public class UJMPExamplesMenu extends JMenu {
 	private static final long serialVersionUID = -7279072623034811310L;
 
-	public ExamplesMenu(JComponent component) {
+	public UJMPExamplesMenu(JComponent component) {
 		super("Examples");
 		setMnemonic(KeyEvent.VK_E);
-		add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
-		add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
+		add(new MatrixExamplesMenu());
+	}
+
+	class MatrixExamplesMenu extends JMenu {
+		private static final long serialVersionUID = -5582717033551246385L;
+
+		public MatrixExamplesMenu() {
+			super("Matrix");
+			add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
+			add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
+		}
 	}
 
 }

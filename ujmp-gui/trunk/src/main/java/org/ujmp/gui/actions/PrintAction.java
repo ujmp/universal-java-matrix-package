@@ -42,7 +42,7 @@ public class PrintAction extends ObjectAction {
 	@Override
 	public Object call() {
 		if (getComponent() == null) {
-			logger.log(Level.WARNING, "no panel provided for printing");
+			//logger.log(Level.WARNING, "no panel provided for printing");
 		} else {
 			// PrintPreviewDialog ppd = new PrintPreviewDialog(getPanel());
 			// ppd.setVisible(true);

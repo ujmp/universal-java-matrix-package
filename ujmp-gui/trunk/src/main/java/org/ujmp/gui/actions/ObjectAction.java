@@ -29,8 +29,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -40,15 +38,13 @@ import javax.swing.UIManager;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
 public abstract class ObjectAction implements Action, Callable<Object>,
 		Serializable {
 	private static final long serialVersionUID = -118767390543995981L;
-
-	protected static final Logger logger = Logger.getLogger(ObjectAction.class
-			.getName());
 
 	public static final int ROW = Matrix.ROW;
 
@@ -69,7 +65,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 	private transient final HashMap<String, Object> arrayTable = new HashMap<String, Object>();
 
 	public ObjectAction(JComponent c, GUIObject o) {
-		setObject(o);
+		setGUIObject(o);
 		this.component = c;
 		icon = UIManager.getIcon("UJMP.icon." + getClass().getSimpleName());
 		// putValue(Action.MNEMONIC_KEY, UIManager.get("UJMP.mnemonicKey." +
@@ -96,17 +92,21 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 				+ getValue(Action.SHORT_DESCRIPTION) + ")";
 	}
 
-	public final GUIObject getObject() {
-		// if (object == null)
-		// object =
-		// Workspace.getInstance().getObjectForReference(objectReference);
+	public final GUIObject getGUIObject() {
 		return object;
 	}
 
-	public final void setObject(GUIObject o) {
+	public final CoreObject getCoreObject() {
+		if (object == null) {
+			return null;
+		} else {
+			return object.getCoreObject();
+		}
+	}
+
+	public final void setGUIObject(GUIObject o) {
 		if (o != null) {
 			this.object = o;
-			// this.objectReference = o.getReference();
 		}
 	}
 
@@ -115,7 +115,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 		try {
 			// f.get();
 		} catch (Exception ex) {
-			logger.log(Level.WARNING, "error execution action " + e, ex);
+			ex.printStackTrace();
 		}
 	}
 

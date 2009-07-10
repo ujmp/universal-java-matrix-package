@@ -21,31 +21,26 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.actions;
+package org.ujmp.gui.menu;
 
 import java.awt.event.KeyEvent;
 
-import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.actions.DenseMatrixAction;
+import org.ujmp.gui.actions.SparseMatrixAction;
 
-public class ClearAction extends ObjectAction {
-	private static final long serialVersionUID = 8394347761552694383L;
+public class NewMatrixMenu extends JMenu {
+	private static final long serialVersionUID = 8007649388830397309L;
 
-	public ClearAction(JComponent c, GUIObject o) {
-		super(c, o);
-		putValue(Action.NAME, "Clear");
-		putValue(Action.SHORT_DESCRIPTION, "Delete the contents of this object");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
-	}
-
-	@Override
-	public Object call() {
-		getGUIObject().clear();
-		return getGUIObject();
+	public NewMatrixMenu(JComponent c, GUIObject o) {
+		super("Matrix");
+		setMnemonic(KeyEvent.VK_M);
+		add(new JMenuItem(new DenseMatrixAction(c, o)));
+		add(new JMenuItem(new SparseMatrixAction(c, o)));
 	}
 
 }

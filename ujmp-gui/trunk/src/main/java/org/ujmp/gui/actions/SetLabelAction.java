@@ -40,8 +40,8 @@ public class SetLabelAction extends ObjectAction {
 
 	@Override
 	public Object call() {
-		String label = JOptionPane.showInputDialog("Enter the new Label for this Object:", getObject().getLabel());
-		getObject().setLabel(label);
+		String label = JOptionPane.showInputDialog("Enter the new Label for this Object:", getGUIObject().getLabel());
+		getGUIObject().setLabel(label);
 		return null;
 	}
 

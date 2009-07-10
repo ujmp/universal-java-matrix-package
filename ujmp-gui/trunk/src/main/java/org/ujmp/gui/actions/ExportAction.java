@@ -24,7 +24,6 @@
 package org.ujmp.gui.actions;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -33,10 +32,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
-import org.ujmp.gui.MatrixGUIObject;
 
 public class ExportAction extends ObjectAction {
 	private static final long serialVersionUID = -3132833245167910507L;

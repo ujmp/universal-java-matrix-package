@@ -21,26 +21,18 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.core.util;
 
-import java.awt.event.KeyEvent;
+public abstract class Lucene {
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.LinkMatrixToDatabaseAction;
-import org.ujmp.gui.actions.LinkMatrixToFileAction;
-
-public class LinkMatrixMenu extends JMenu {
-	private static final long serialVersionUID = 2167931436790620147L;
-
-	public LinkMatrixMenu(JComponent c, GUIObject o) {
-		super("Matrix");
-		setMnemonic(KeyEvent.VK_M);
-		add(new JMenuItem(new LinkMatrixToFileAction(c, o)));
-		add(new JMenuItem(new LinkMatrixToDatabaseAction(c, o)));
+	public static boolean isAvailable() {
+		boolean isAvailable = true;
+		try {
+			Class.forName("org.apache.lucene.LucenePackage");
+		} catch (Exception e) {
+			isAvailable = false;
+		}
+		return isAvailable;
 	}
 
 }

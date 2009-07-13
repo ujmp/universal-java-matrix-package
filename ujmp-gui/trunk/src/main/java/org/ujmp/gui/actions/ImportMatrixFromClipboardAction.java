@@ -21,26 +21,39 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.LinkMatrixToDatabaseAction;
-import org.ujmp.gui.actions.LinkMatrixToFileAction;
 
-public class LinkMatrixMenu extends JMenu {
-	private static final long serialVersionUID = 2167931436790620147L;
+public class ImportMatrixFromClipboardAction extends ObjectAction {
+	private static final long serialVersionUID = -7154091864377936296L;
 
-	public LinkMatrixMenu(JComponent c, GUIObject o) {
-		super("Matrix");
-		setMnemonic(KeyEvent.VK_M);
-		add(new JMenuItem(new LinkMatrixToFileAction(c, o)));
-		add(new JMenuItem(new LinkMatrixToDatabaseAction(c, o)));
+	public ImportMatrixFromClipboardAction(JComponent c, GUIObject m) {
+		super(c, m);
+		putValue(Action.NAME, "from Clipboard...");
+		putValue(Action.SHORT_DESCRIPTION, "import a matrix from clipboard");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 	}
 
+	@Override
+	public Object call() throws Exception {
+		FileFormat fileFormat = FileFormat.values()[JOptionPane
+				.showOptionDialog(getComponent(), "Select format",
+						"Import Matrix", JOptionPane.OK_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null,
+						FileFormat.values(), FileFormat.CSV)];
+
+		Matrix m = MatrixFactory.importFromClipboard(fileFormat);
+		m.showGUI();
+		return m;
+	}
 }

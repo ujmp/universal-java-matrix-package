@@ -30,6 +30,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.actions.ImportMatrixFromClipboardAction;
+import org.ujmp.gui.actions.ImportMatrixFromDatabaseAction;
+import org.ujmp.gui.actions.ImportMatrixFromFileAction;
 import org.ujmp.gui.actions.ImportMatrixFromURLAction;
 
 public class ImportMatrixMenu extends JMenu {
@@ -38,7 +41,10 @@ public class ImportMatrixMenu extends JMenu {
 	public ImportMatrixMenu(JComponent c, GUIObject o) {
 		super("Matrix");
 		setMnemonic(KeyEvent.VK_M);
+		add(new JMenuItem(new ImportMatrixFromFileAction(c, o)));
+		add(new JMenuItem(new ImportMatrixFromClipboardAction(c, o)));
 		add(new JMenuItem(new ImportMatrixFromURLAction(c, o)));
+		add(new JMenuItem(new ImportMatrixFromDatabaseAction(c, o)));
 	}
 
 }

@@ -24,42 +24,59 @@
 package org.ujmp.gui.actions;
 
 import java.awt.event.KeyEvent;
-import java.net.URL;
+import java.io.File;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
-public class ImportMatrixFromURLAction extends ObjectAction {
-	private static final long serialVersionUID = -7585669703654474086L;
+public class ImportMatrixFromFileAction extends ObjectAction {
+	private static final long serialVersionUID = 8110915004887885053L;
 
-	public ImportMatrixFromURLAction(JComponent c, GUIObject m) {
+	public ImportMatrixFromFileAction(JComponent c, GUIObject m) {
 		super(c, m);
-		putValue(Action.NAME, "from URL...");
+		putValue(Action.NAME, "from File...");
 		putValue(Action.SHORT_DESCRIPTION,
-				"import a matrix from a location on the web");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
+				"import a matrix from a location on disk");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
 	}
 
 	@Override
 	public Object call() throws Exception {
-		URL url = null;
-		while (url == null) {
-			String s = JOptionPane.showInputDialog("Enter URL:", "http://");
-			url = new URL(s);
-		}
-		FileFormat fileFormat = FileFormat.values()[JOptionPane
-				.showOptionDialog(getComponent(), "Select format",
-						"Import Matrix", JOptionPane.OK_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null,
-						FileFormat.values(), FileFormat.CSV)];
+		File file = null;
+		FileFormat fileFormat = null;
+		JFileChooser chooser = new JFileChooser();
 
-		Matrix m = MatrixFactory.importFromURL(fileFormat, url);
+		for (FileFormat f : FileFormat.values()) {
+			chooser.addChoosableFileFilter(f.getFileFilter());
+		}
+
+		chooser.setFileFilter(FileFormat.CSV.getFileFilter());
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setDialogTitle("Import");
+
+		int returnVal = chooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			file = chooser.getSelectedFile();
+			FileFilter filter = chooser.getFileFilter();
+			for (FileFormat f : FileFormat.values()) {
+				if (filter.equals(f.getFileFilter())) {
+					fileFormat = f;
+				}
+			}
+
+		}
+
+		if (file == null)
+			return null;
+
+		Matrix m = MatrixFactory.importFromFile(fileFormat, file);
 		m.showGUI();
 		return m;
 	}

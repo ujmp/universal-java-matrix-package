@@ -45,11 +45,11 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 		super(dimension, sources);
 	}
 
-	public final DoubleMatrix calcLink() throws MatrixException {
+	public DoubleMatrix calcLink() throws MatrixException {
 		return new DoubleCalculationMatrix(this);
 	}
 
-	public final DoubleMatrix calcNew() throws MatrixException {
+	public DoubleMatrix calcNew() throws MatrixException {
 		DoubleMatrix result = (DoubleMatrix) MatrixFactory.zeros(ValueType.DOUBLE, getSize());
 		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
@@ -58,7 +58,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 		return result;
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public Matrix calcOrig() throws MatrixException {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new MatrixException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");

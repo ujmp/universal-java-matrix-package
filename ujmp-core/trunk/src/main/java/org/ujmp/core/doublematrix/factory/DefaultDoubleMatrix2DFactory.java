@@ -23,7 +23,7 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -31,7 +31,7 @@ public class DefaultDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFactory 
 	private static final long serialVersionUID = 284962013815817731L;
 
 	@Override
-	public DoubleMatrix2D dense(long rows, long columns) throws MatrixException {
+	public DenseDoubleMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseDoubleMatrix2D(rows, columns);
 	}
 

@@ -25,13 +25,13 @@ package org.ujmp.core.doublematrix.factory;
 
 import java.io.Serializable;
 
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
 public interface DoubleMatrix2DFactory extends Serializable {
 
-	public DoubleMatrix2D dense(long rows, long columns) throws MatrixException;
+	public DenseDoubleMatrix2D dense(long rows, long columns) throws MatrixException;
 
-	public DoubleMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public DenseDoubleMatrix2D zeros(long rows, long columns) throws MatrixException;
 
 }

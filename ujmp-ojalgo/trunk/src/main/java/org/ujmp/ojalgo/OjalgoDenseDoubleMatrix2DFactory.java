@@ -23,7 +23,7 @@
 
 package org.ujmp.ojalgo;
 
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -32,7 +32,8 @@ public class OjalgoDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = -2350372463029926450L;
 
 	@Override
-	public DoubleMatrix2D dense(long rows, long columns) throws MatrixException {
+	public DenseDoubleMatrix2D dense(long rows, long columns)
+			throws MatrixException {
 		return new OjalgoDenseDoubleMatrix2D(rows, columns);
 	}
 

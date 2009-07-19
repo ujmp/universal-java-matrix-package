@@ -51,6 +51,8 @@ public interface ObjectCalculations {
 
 	public Matrix toRowVector() throws MatrixException;
 
+	public Matrix swap(Ret returnType, int dimension, long pos1, long pos2);
+
 	/**
 	 * Returns a matrix with equal size, where all entries are set to a desired
 	 * value.
@@ -93,6 +95,10 @@ public interface ObjectCalculations {
 	 * @return transposed Matrix.
 	 */
 	public Matrix transpose(Ret returnType) throws MatrixException;
+
+	public Matrix transpose(Ret returnType, int dimension1, int dimension2) throws MatrixException;
+
+	public Matrix flipdim(Ret returnType, int dimension);
 
 	/**
 	 * Creates a copy of the matrix. Annotation is linked by default.

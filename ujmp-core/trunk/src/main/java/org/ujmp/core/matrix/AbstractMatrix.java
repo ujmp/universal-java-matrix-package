@@ -147,10 +147,12 @@ import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
 import org.ujmp.core.objectmatrix.calculation.Distinct;
 import org.ujmp.core.objectmatrix.calculation.Fill;
+import org.ujmp.core.objectmatrix.calculation.Flipdim;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sort;
+import org.ujmp.core.objectmatrix.calculation.Swap;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.objectmatrix.calculation.Unique;
@@ -1333,6 +1335,18 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException {
 		return new Bootstrap(this, count).calc(returnType);
+	}
+
+	public Matrix transpose(Ret returnType, int dimension1, int dimension2) throws MatrixException {
+		return new Transpose(this, dimension1, dimension2).calc(returnType);
+	}
+
+	public Matrix swap(Ret returnType, int dimension, long pos1, long pos2) throws MatrixException {
+		return new Swap(dimension, pos1, pos2, this).calc(returnType);
+	}
+
+	public Matrix flipdim(Ret returnType, int dimension) throws MatrixException {
+		return new Flipdim(dimension, this).calc(returnType);
 	}
 
 	public Matrix shuffle(Ret returnType) throws MatrixException {

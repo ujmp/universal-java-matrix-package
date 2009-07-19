@@ -57,7 +57,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 		return result;
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public Matrix calcOrig() throws MatrixException {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new MatrixException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");

@@ -60,4 +60,20 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 		setDouble(o, row, column);
 	}
 
+	public double getAsDouble(long row, long column) {
+		return getDouble(row, column);
+	}
+
+	public double getAsDouble(int row, int column) {
+		return getDouble(row, column);
+	}
+
+	public void setAsDouble(double value, int row, int column) {
+		setDouble(value, row, column);
+	}
+
+	public void setAsDouble(double value, long row, long column) {
+		setDouble(value, row, column);
+	}
+
 }

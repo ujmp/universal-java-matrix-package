@@ -88,7 +88,19 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return values[(int) (column * rows + row)];
 	}
 
+	public double getAsDouble(long row, long column) {
+		return values[(int) (column * rows + row)];
+	}
+
+	public double getAsDouble(int row, int column) {
+		return values[(column * rows + row)];
+	}
+
 	public void setDouble(double value, long row, long column) {
+		values[(int) (column * rows + row)] = value;
+	}
+
+	public void setAsDouble(double value, long row, long column) {
 		values[(int) (column * rows + row)] = value;
 	}
 
@@ -97,6 +109,10 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	}
 
 	public void setDouble(double value, int row, int column) {
+		values[column * rows + row] = value;
+	}
+
+	public void setAsDouble(double value, int row, int column) {
 		values[column * rows + row] = value;
 	}
 

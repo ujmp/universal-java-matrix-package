@@ -2125,4 +2125,130 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	public boolean containsBigInteger(BigInteger v) {
+		for (long[] c : availableCoordinates()) {
+			if (v.equals(getAsBigInteger(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsBigDecimal(BigDecimal v) {
+		for (long[] c : availableCoordinates()) {
+			if (v.equals(getAsBigDecimal(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsDate(Date v) {
+		for (long[] c : availableCoordinates()) {
+			if (v.equals(getAsDate(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsObject(Object o) {
+		for (long[] c : availableCoordinates()) {
+			if (o.equals(getAsObject(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsString(String s) {
+		for (long[] c : availableCoordinates()) {
+			if (s.equals(getAsString(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsBoolean(boolean v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsBoolean(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsByte(byte v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsByte(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsChar(char v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsChar(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsDouble(double v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsDouble(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsFloat(float v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsFloat(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsInt(int v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsInt(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsLong(long v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsLong(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsShort(short v) {
+		for (long[] c : availableCoordinates()) {
+			if (getAsShort(c) == v) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsNull() {
+		for (long[] c : allCoordinates()) {
+			if (getAsDouble(c) == 0.0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

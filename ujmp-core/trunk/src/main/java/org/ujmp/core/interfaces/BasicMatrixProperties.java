@@ -151,4 +151,32 @@ public interface BasicMatrixProperties {
 
 	public StorageType getStorageType();
 
+	public boolean containsNull();
+
+	public boolean containsBigDecimal(BigDecimal v);
+
+	public boolean containsBigInteger(BigInteger v);
+
+	public boolean containsBoolean(boolean v);
+
+	public boolean containsByte(byte v);
+
+	public boolean containsChar(char v);
+
+	public boolean containsDate(Date v);
+
+	public boolean containsDouble(double v);
+
+	public boolean containsFloat(float v);
+
+	public boolean containsInt(int v);
+
+	public boolean containsLong(long v);
+
+	public boolean containsObject(Object o);
+
+	public boolean containsShort(short v);
+
+	public boolean containsString(String s);
+
 }

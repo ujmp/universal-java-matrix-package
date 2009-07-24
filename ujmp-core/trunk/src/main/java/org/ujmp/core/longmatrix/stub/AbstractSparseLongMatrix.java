@@ -23,12 +23,10 @@
 
 package org.ujmp.core.longmatrix.stub;
 
-import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.longmatrix.SparseLongMatrix;
 
 public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix implements
 		SparseLongMatrix {
-
 	private static final long serialVersionUID = 5682519172871817291L;
 
 	public final StorageType getStorageType() {

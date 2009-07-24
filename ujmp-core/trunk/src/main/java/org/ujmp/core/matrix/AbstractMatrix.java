@@ -31,8 +31,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -847,23 +845,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Date getAsDate(long... coordinates) throws MatrixException {
-		Object o = getAsObject(coordinates);
-		if (o == null) {
-			return null;
-		}
-		if (o instanceof Date) {
-			return (Date) o;
-		}
-		if (o instanceof Long) {
-			return new Date((Long) o);
-		}
-		if (o instanceof String) {
-			try {
-				return DateFormat.getInstance().parse((String) o);
-			} catch (ParseException e) {
-			}
-		}
-		return new Date(getAsLong(coordinates));
+		return MathUtil.getDate(getAsObject(coordinates));
 	}
 
 	public void setAsDate(Date date, long... coordinates) throws MatrixException {

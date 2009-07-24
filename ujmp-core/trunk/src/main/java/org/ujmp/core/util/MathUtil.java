@@ -27,14 +27,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -207,6 +207,25 @@ public abstract class MathUtil {
 		} else {
 			return MatrixFactory.linkToValue(o);
 		}
+	}
+
+	public static final Date getDate(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof Date) {
+			return (Date) o;
+		}
+		if (o instanceof Long) {
+			return new Date((Long) o);
+		}
+		if (o instanceof String) {
+			try {
+				return DateFormat.getInstance().parse((String) o);
+			} catch (ParseException e) {
+			}
+		}
+		return new Date(getLong(o));
 	}
 
 	public static final double getDouble(Object o) {

@@ -30,6 +30,7 @@ import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 
 public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D implements
 		HasStringArray {
+	private static final long serialVersionUID = 1643931435178952984L;
 
 	private String[] values = null;
 

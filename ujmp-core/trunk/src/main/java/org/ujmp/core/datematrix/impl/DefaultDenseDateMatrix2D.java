@@ -31,6 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDateArray;
 
 public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implements HasDateArray {
+	private static final long serialVersionUID = -3145074963888564555L;
 
 	private Date[] values = null;
 

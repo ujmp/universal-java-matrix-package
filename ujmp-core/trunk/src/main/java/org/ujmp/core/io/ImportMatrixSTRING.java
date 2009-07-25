@@ -24,6 +24,7 @@
 package org.ujmp.core.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +51,7 @@ public abstract class ImportMatrixSTRING {
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
 			throws MatrixException, IOException {
-		InputStreamReader r = new InputStreamReader(stream);
+		InputStreamReader r = new InputStreamReader(stream, "UTF-8");
 		Matrix m = fromReader(r, parameters);
 		r.close();
 		return m;
@@ -58,8 +59,8 @@ public abstract class ImportMatrixSTRING {
 
 	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		FileReader lr = new FileReader(file);
-		Matrix m = fromReader(lr, parameters);
+		FileInputStream lr = new FileInputStream(file);
+		Matrix m = fromStream(lr, parameters);
 		m.setLabel(file.getAbsolutePath());
 		lr.close();
 		return m;

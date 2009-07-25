@@ -30,8 +30,8 @@ import org.ujmp.core.collections.AbstractMapTest;
 public class TestLuceneMap extends AbstractMapTest {
 
 	@Override
-	public Map<Object, Object> createMap() throws Exception {
-		return new LuceneMap<Object, Object>();
+	public Map<String, Object> createMap() throws Exception {
+		return new LuceneMap<String, Object>();
 	}
 
 }

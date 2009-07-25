@@ -47,7 +47,7 @@ import org.ujmp.core.util.Base64;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.io.FileUtil;
 
-public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
+public class SerializedObjectMap<V> implements Map<String, V>, Erasable {
 
 	private boolean useGZip = true;
 
@@ -87,7 +87,11 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	}
 
 	public synchronized void clear() {
-		throw new MatrixException("not implemented");
+		try {
+			erase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public File getPath() {
@@ -106,7 +110,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		throw new MatrixException("not implemented");
 	}
 
-	public synchronized Set<java.util.Map.Entry<K, V>> entrySet() {
+	public synchronized Set<java.util.Map.Entry<String, V>> entrySet() {
 		throw new MatrixException("not implemented");
 	}
 
@@ -142,8 +146,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		return size() == 0;
 	}
 
-	@SuppressWarnings("unchecked")
-	private void listFilesToSet(File path, Set<K> set) {
+	private void listFilesToSet(File path, Set<String> set) {
 		Boolean stringKey = null;
 		for (File f : path.listFiles()) {
 			if (f.isDirectory()) {
@@ -159,12 +162,12 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 				} catch (Exception e) {
 					stringKey = true;
 				}
-				set.add((K) o);
+				set.add((String) o);
 			}
 		}
 	}
 
-	public synchronized V put(K key, V value) {
+	public synchronized V put(String key, V value) {
 		try {
 			if (value == null || key == null) {
 				return null;
@@ -194,8 +197,8 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 		}
 	}
 
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for (K key : m.keySet()) {
+	public void putAll(Map<? extends String, ? extends V> m) {
+		for (String key : m.keySet()) {
 			put(key, m.get(key));
 		}
 	}
@@ -251,7 +254,7 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	public synchronized Collection<V> values() {
 		// TODO: this is not the best way to do it:
 		List<V> list = new ArrayList<V>();
-		for (K key : keySet()) {
+		for (String key : keySet()) {
 			list.add(get(key));
 		}
 		return list;
@@ -267,8 +270,8 @@ public class SerializedObjectMap<K, V> implements Map<K, V>, Erasable {
 	}
 
 	@Override
-	public Set<K> keySet() {
-		Set<K> set = new HashSet<K>();
+	public Set<String> keySet() {
+		Set<String> set = new HashSet<String>();
 		listFilesToSet(path, set);
 		return set;
 	}

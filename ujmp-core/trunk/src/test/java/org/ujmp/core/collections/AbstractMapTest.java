@@ -33,14 +33,14 @@ import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMapTest extends TestCase {
 
-	public abstract Map<Object, Object> createMap() throws Exception;
+	public abstract Map<String, Object> createMap() throws Exception;
 
 	public String getLabel() {
 		return this.getClass().getSimpleName();
 	}
 
 	public void testPutAndGet() throws Exception {
-		Map<Object, Object> m = createMap();
+		Map<String, Object> m = createMap();
 		m.put("a", "test1");
 		m.put("b", "test2");
 		assertEquals(getLabel(), "test1", m.get("a"));
@@ -52,7 +52,7 @@ public abstract class AbstractMapTest extends TestCase {
 
 	@SuppressWarnings("unchecked")
 	public void testSerialize() throws Exception {
-		Map<Object, Object> m = createMap();
+		Map<String, Object> m = createMap();
 		m.put("a", "test1");
 		m.put("b", "test2");
 		if (m instanceof Serializable) {

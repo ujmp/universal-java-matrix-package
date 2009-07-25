@@ -25,6 +25,7 @@ package org.ujmp.core.util;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -205,6 +206,21 @@ public abstract class StringUtil {
 			s.append(minutes + "m");
 		}
 		s.append(seconds + "s");
+		return s.toString();
+	}
+
+	public static String getAllAsString(Collection<Matrix> collection) {
+		StringBuffer s = new StringBuffer();
+		int i = 0;
+		for (Matrix m : collection) {
+			if (m != null && !m.isEmpty()) {
+				s.append(StringUtil.format(m.stringValue()));
+			}
+			if (i < collection.size() - 1) {
+				s.append(", ");
+			}
+			i++;
+		}
 		return s.toString();
 	}
 }

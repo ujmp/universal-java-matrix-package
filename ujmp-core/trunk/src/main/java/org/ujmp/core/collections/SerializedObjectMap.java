@@ -23,35 +23,15 @@
 
 package org.ujmp.core.collections;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.util.Base64;
 import org.ujmp.core.util.SerializationUtil;
-import org.ujmp.core.util.io.FileUtil;
 
-public class SerializedObjectMap<V> implements Map<String, V>, Erasable {
-
-	private boolean useGZip = true;
-
-	private File path = null;
+public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
 
 	public SerializedObjectMap() throws IOException {
 		this((File) null, true);
@@ -74,206 +54,26 @@ public class SerializedObjectMap<V> implements Map<String, V>, Erasable {
 	}
 
 	public SerializedObjectMap(File path, boolean useGZip) throws IOException {
-		this.useGZip = useGZip;
-		if (path == null) {
-			path = File.createTempFile("serializedmap" + System.nanoTime(), "");
-			path.delete();
-			path.deleteOnExit();
-		}
-		this.path = path;
-		if (!path.exists()) {
-			path.mkdirs();
-		}
+		super(path, useGZip);
 	}
 
-	public synchronized void clear() {
+	public final void write(OutputStream os, V value) {
 		try {
-			erase();
+			SerializationUtil.serialize((Serializable) value, os);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public File getPath() {
-		return path;
-	}
-
-	public synchronized boolean containsKey(Object key) {
-		File file = getFileNameForKey(key);
-		if (file == null) {
-			return false;
-		}
-		return file.exists();
-	}
-
-	public synchronized boolean containsValue(Object value) {
-		throw new MatrixException("not implemented");
-	}
-
-	public synchronized Set<java.util.Map.Entry<String, V>> entrySet() {
-		throw new MatrixException("not implemented");
-	}
-
 	@SuppressWarnings("unchecked")
-	public synchronized V get(Object key) {
+	@Override
+	public V read(InputStream is) {
 		try {
-			File file = getFileNameForKey(key);
-			if (file == null || !file.exists()) {
-				return null;
-			}
-
-			Object o = null;
-
-			FileInputStream fi = new FileInputStream(file);
-			InputStream bi = new BufferedInputStream(fi);
-			if (useGZip) {
-				bi = new GZIPInputStream(bi);
-			}
-
-			Object[] os = (Object[]) SerializationUtil.deserialize(bi);
-			o = os[1];
-
-			bi.close();
-			fi.close();
-
-			return (V) o;
+			return (V) SerializationUtil.deserialize(is);
 		} catch (Exception e) {
-			throw new MatrixException("could not get object " + key, e);
-		}
-	}
-
-	public synchronized boolean isEmpty() {
-		return size() == 0;
-	}
-
-	private void listFilesToSet(File path, Set<String> set) {
-		Boolean stringKey = null;
-		for (File f : path.listFiles()) {
-			if (f.isDirectory()) {
-				listFilesToSet(f, set);
-			} else {
-				String filename = f.getName();
-				Object o = filename;
-				try {
-					if ((stringKey == null || stringKey == false) && filename.length() >= 4) {
-						o = Base64.decodeToObject(filename);
-						stringKey = false;
-					}
-				} catch (Exception e) {
-					stringKey = true;
-				}
-				set.add((String) o);
-			}
-		}
-	}
-
-	public synchronized V put(String key, V value) {
-		try {
-			if (value == null || key == null) {
-				return null;
-			}
-
-			File file = getFileNameForKey(key);
-
-			if (!file.getParentFile().exists()) {
-				file.getParentFile().mkdirs();
-			}
-
-			FileOutputStream fo = new FileOutputStream(file);
-
-			OutputStream bo = new BufferedOutputStream(fo);
-			if (useGZip) {
-				bo = new GZIPOutputStream(bo);
-			}
-
-			SerializationUtil.serialize(new Object[] { key, value }, bo);
-
-			bo.close();
-			fo.close();
-
+			e.printStackTrace();
 			return null;
-		} catch (Exception e) {
-			throw new MatrixException("could not put object " + key, e);
 		}
-	}
-
-	public void putAll(Map<? extends String, ? extends V> m) {
-		for (String key : m.keySet()) {
-			put(key, m.get(key));
-		}
-	}
-
-	public synchronized V remove(Object key) {
-		V v = get(key);
-		File file = getFileNameForKey(key);
-		if (file.exists()) {
-			file.delete();
-		}
-		return v;
-	}
-
-	public synchronized int size() {
-		return countFiles(path);
-	}
-
-	private static int countFiles(File path) {
-		int count = 0;
-		File[] files = path.listFiles();
-		for (File f : files) {
-			if (f.isDirectory()) {
-				count += countFiles(f);
-			} else {
-				count++;
-			}
-		}
-		return count;
-	}
-
-	private File getFileNameForKey(Object key) {
-		String s = null;
-		if (key instanceof String) {
-			s = (String) key;
-		} else {
-			try {
-				s = Base64.encodeObject((Serializable) key);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		String result = path.getAbsolutePath() + File.separator;
-		for (int i = 0; i < s.length() - 1; i++) {
-			result += s.charAt(i) + File.separator;
-		}
-		result += s + ".dat";
-		if (useGZip) {
-			result += ".gz";
-		}
-		return new File(result);
-	}
-
-	public synchronized Collection<V> values() {
-		// TODO: this is not the best way to do it:
-		List<V> list = new ArrayList<V>();
-		for (String key : keySet()) {
-			list.add(get(key));
-		}
-		return list;
-	}
-
-	public void setPath(File path) {
-		this.path = path;
-	}
-
-	@Override
-	public void erase() throws IOException {
-		FileUtil.deleteRecursive(path);
-	}
-
-	@Override
-	public Set<String> keySet() {
-		Set<String> set = new HashSet<String>();
-		listFilesToSet(path, set);
-		return set;
 	}
 
 }

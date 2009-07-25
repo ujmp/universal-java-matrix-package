@@ -110,6 +110,11 @@ public abstract class UJMPSettings {
 	}
 
 	public static void initialize() {
+		try {
+			System.setProperty("file.encoding", "UTF-8");
+			System.setProperty("sun.jnu.encoding", "UTF-8");
+		} catch (Exception e) {
+		}
 	}
 
 	public static String getSystemOut() {

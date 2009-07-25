@@ -47,6 +47,8 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 
 	private BufferedWriter bw = null;
 
+	private String encoding = "UTF-8";
+
 	public IntelligentFileWriter(String filename) throws IOException, ClassNotFoundException {
 		this(filename, false);
 	}
@@ -57,11 +59,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 	}
 
 	public IntelligentFileWriter(OutputStream outputStream) throws IOException {
-		this(outputStream, false);
-	}
-
-	public IntelligentFileWriter(OutputStream outputStream, boolean append) throws IOException {
-		bw = new BufferedWriter(new OutputStreamWriter(outputStream));
+		bw = new BufferedWriter(new OutputStreamWriter(outputStream, encoding));
 	}
 
 	public IntelligentFileWriter(File file) throws IOException {
@@ -71,10 +69,10 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 	public IntelligentFileWriter(File file, boolean append) throws IOException {
 		if (file.getAbsolutePath().toLowerCase().endsWith(".gz")) {
 			zip = new GZIPOutputStream(new FileOutputStream(file, append));
-			bw = new BufferedWriter(new OutputStreamWriter(zip));
+			bw = new BufferedWriter(new OutputStreamWriter(zip, encoding));
 		} else if (file.getAbsolutePath().toLowerCase().endsWith(".z")) {
 			zip = new ZipOutputStream(new FileOutputStream(file, append));
-			bw = new BufferedWriter(new OutputStreamWriter(zip));
+			bw = new BufferedWriter(new OutputStreamWriter(zip, encoding));
 		} else if (file.getAbsolutePath().toLowerCase().endsWith(".7z")) {
 			try {
 				Class<?> c = Class.forName(SEVENZIPOUTPUTSTREAM);
@@ -86,7 +84,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 			} catch (Exception e) {
 				throw new IOException("Could not create SevenZipOutputStream", e);
 			}
-			bw = new BufferedWriter(new OutputStreamWriter(zip));
+			bw = new BufferedWriter(new OutputStreamWriter(zip, encoding));
 		} else {
 			fw = new FileWriter(file, append);
 			bw = new BufferedWriter(fw);
@@ -127,7 +125,17 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
-		fw.write(cbuf, off, len);
+		bw.write(cbuf, off, len);
+	}
+
+	public static void write(OutputStream os, String text) {
+		try {
+			IntelligentFileWriter fw = new IntelligentFileWriter(os);
+			fw.write(text);
+			fw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

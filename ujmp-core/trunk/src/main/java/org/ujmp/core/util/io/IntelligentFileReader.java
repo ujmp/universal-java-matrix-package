@@ -47,13 +47,15 @@ public class IntelligentFileReader extends Reader {
 
 	private LineNumberReader lr = null;
 
+	private String encoding = "UTF-8";
+
 	public IntelligentFileReader(String file) {
 		this(new File(file));
 	}
 
 	public IntelligentFileReader(InputStream inputStream) {
 		try {
-			lr = new LineNumberReader(new InputStreamReader(inputStream));
+			lr = new LineNumberReader(new InputStreamReader(inputStream, encoding));
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not open stream", e);
 		}
@@ -72,14 +74,14 @@ public class IntelligentFileReader extends Reader {
 			if (file.getAbsolutePath().toLowerCase().endsWith(".gz")) {
 				try {
 					zip = new GZIPInputStream(new FileInputStream(file));
-					lr = new LineNumberReader(new InputStreamReader(zip));
+					lr = new LineNumberReader(new InputStreamReader(zip, encoding));
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "could not open file " + file, e);
 				}
 			} else if (file.getAbsolutePath().toLowerCase().endsWith(".z")) {
 				try {
 					zip = new ZipInputStream(new FileInputStream(file));
-					lr = new LineNumberReader(new InputStreamReader(zip));
+					lr = new LineNumberReader(new InputStreamReader(zip, encoding));
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "could not open file " + file, e);
 				}

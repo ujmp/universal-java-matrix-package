@@ -18,43 +18,50 @@ public abstract class PFor {
 
 	public PFor(int threads, int first, int last, Object... objects) {
 		this.objects = objects;
-		ThreadPoolExecutor es = executors.get();
-		if (es == null) {
-			es = new ThreadPoolExecutor(threads, threads, 500L,
-					TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-			executors.set(es);
-		} else {
-			es.setCorePoolSize(threads);
-			es.setMaximumPoolSize(threads);
-		}
 
-		List<Future<Object>> list = futures.get();
-		if (list == null) {
-			list = new LinkedList<Future<Object>>();
-			futures.set(list);
-		}
-
-		for (int i = 0; i < threads; i++) {
-			list.add(es.submit(new StepCallable(first + i, last, threads)));
-		}
-
-		for (Future<Object> f : list) {
-			try {
-				f.get();
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (threads <= 2) {
+			for (int i = first; i <= last; i++) {
+				step(i);
 			}
-		}
+		} else {
+			ThreadPoolExecutor es = executors.get();
+			if (es == null) {
+				es = new ThreadPoolExecutor(threads, threads, 500L, TimeUnit.MILLISECONDS,
+						new LinkedBlockingQueue<Runnable>());
+				executors.set(es);
+			} else {
+				es.setCorePoolSize(threads);
+				es.setMaximumPoolSize(threads);
+			}
 
-		list.clear();
-		es.setCorePoolSize(0);
+			List<Future<Object>> list = futures.get();
+			if (list == null) {
+				list = new LinkedList<Future<Object>>();
+				futures.set(list);
+			}
+
+			for (int i = 0; i < threads; i++) {
+				list.add(es.submit(new StepCallable(first + i, last, threads)));
+			}
+
+			for (Future<Object> f : list) {
+				try {
+					f.get();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			list.clear();
+			es.setCorePoolSize(0);
+		}
 	}
 
 	public PFor(int first, int last, Object... objects) {
 		this(4, first, last, objects);
 	}
 
-	public abstract void step(int i) throws Exception;
+	public abstract void step(int i);
 
 	public final Object getObject(int i) {
 		return objects[i];

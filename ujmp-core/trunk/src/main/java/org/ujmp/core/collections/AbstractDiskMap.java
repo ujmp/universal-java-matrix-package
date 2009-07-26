@@ -51,6 +51,8 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 
 	private boolean useGZip = true;
 
+	private int maxDepth = 20;
+
 	public AbstractDiskMap(File path, boolean useGZip) throws IOException {
 		this.useGZip = useGZip;
 		if (path == null) {
@@ -85,13 +87,23 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 		return count;
 	}
 
-	private final File getFileNameForKey(String key) {
-		String result = path.getAbsolutePath() + File.separator;
+	private static final String convertKey(String key) {
+		String result = "";
 		for (int i = 0; i < key.length() - 1; i++) {
 			char c = key.charAt(i);
 			if ((c < 48) || (c > 122) || ((c > 90) && (c < 97)) || ((c > 57) && (c < 65))) {
 				c = '_';
 			}
+			result += c;
+		}
+		return result;
+	}
+
+	private final File getFileNameForKey(String key) {
+		key = convertKey(key);
+		String result = path.getAbsolutePath() + File.separator;
+		for (int i = 0; i < maxDepth && i < key.length() - 1; i++) {
+			char c = key.charAt(i);
 			result += c + File.separator;
 		}
 		result += key + ".dat";

@@ -49,7 +49,7 @@ public abstract class StringUtil {
 	}
 
 	public static final String stripTags(String string) {
-		return Pattern.compile("\\<.*?\\>", Pattern.DOTALL + Pattern.MULTILINE).matcher(string)
+		return Pattern.compile("\\<[^\\>]*\\>", Pattern.DOTALL + Pattern.MULTILINE).matcher(string)
 				.replaceAll("");
 	}
 

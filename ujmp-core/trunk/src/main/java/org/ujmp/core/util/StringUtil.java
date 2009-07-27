@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -48,7 +49,8 @@ public abstract class StringUtil {
 	}
 
 	public static final String stripTags(String string) {
-		return string.replaceAll("\\<.*?>", "");
+		return Pattern.compile("\\<.*?\\>", Pattern.DOTALL + Pattern.MULTILINE).matcher(string)
+				.replaceAll("");
 	}
 
 	public static final String format(Object o) {

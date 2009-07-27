@@ -89,7 +89,7 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 
 	private static final String convertKey(String key) {
 		String result = "";
-		for (int i = 0; i < key.length() - 1; i++) {
+		for (int i = 0; i < key.length(); i++) {
 			char c = key.charAt(i);
 			if ((c < 48) || (c > 122) || ((c > 90) && (c < 97)) || ((c > 57) && (c < 65))) {
 				c = '_';
@@ -204,11 +204,16 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 
 	public final synchronized V put(String key, V value) {
 		try {
-			if (value == null || key == null) {
+			if (key == null) {
 				return null;
 			}
 
 			File file = getFileNameForKey(key);
+
+			if (value == null && file.exists()) {
+				file.delete();
+				return null;
+			}
 
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();

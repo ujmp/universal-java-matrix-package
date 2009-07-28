@@ -43,7 +43,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
@@ -64,8 +63,9 @@ import org.ujmp.gui.renderer.MatrixRenderer;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.TooltipUtil;
 
-public class MatrixPaintPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
-		MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
+public class MatrixPaintPanel extends JPanel implements ComponentListener,
+		TableModelListener, MouseListener, MouseMotionListener, CanBeRepainted,
+		HasToolTip, ListSelectionListener {
 	private static final long serialVersionUID = 843653796010276950L;
 
 	private MatrixGUIObject matrix = null;
@@ -111,9 +111,10 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 	}
 
 	private void registerKeyboardAction(Action a) {
-		KeyStroke keyStroke = (KeyStroke) a.getValue(Action.ACCELERATOR_KEY);
-		getActionMap().put(a.getValue(Action.NAME), a);
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke, a.getValue(Action.NAME));
+		// KeyStroke keyStroke = (KeyStroke) a.getValue(Action.ACCELERATOR_KEY);
+		// getActionMap().put(a.getValue(Action.NAME), a);
+		// getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke,
+		// a.getValue(Action.NAME));
 	}
 
 	public void componentHidden(ComponentEvent e) {
@@ -144,10 +145,13 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 
 				newRow = newRow < 0 ? 0 : newRow;
 				newCol = newCol < 0 ? 0 : newCol;
-				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-				newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
+				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1
+						: newRow;
+				newCol = newCol >= matrix.getColumnCount() ? matrix
+						.getColumnCount() - 1 : newCol;
 
-				JPopupMenu popup = new MatrixPopupMenu(this, matrix, newRow, newCol);
+				JPopupMenu popup = new MatrixPopupMenu(this, matrix, newRow,
+						newCol);
 				popup.show(this, e.getX(), e.getY());
 			}
 		}
@@ -166,23 +170,29 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 				startCol = getColPos(e.getX());
 				startRow = startRow < 0 ? 0 : startRow;
 				startCol = startCol < 0 ? 0 : startCol;
-				startRow = startRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : startRow;
-				startCol = startCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : startCol;
+				startRow = startRow >= matrix.getRowCount() ? matrix
+						.getRowCount() - 1 : startRow;
+				startCol = startCol >= matrix.getColumnCount() ? matrix
+						.getColumnCount() - 1 : startCol;
 				matrix.getRowSelectionModel().setValueIsAdjusting(true);
 				matrix.getColumnSelectionModel().setValueIsAdjusting(true);
-				matrix.getRowSelectionModel().setSelectionInterval(startRow, startRow);
-				matrix.getColumnSelectionModel().setSelectionInterval(startCol, startCol);
+				matrix.getRowSelectionModel().setSelectionInterval(startRow,
+						startRow);
+				matrix.getColumnSelectionModel().setSelectionInterval(startCol,
+						startCol);
 			}
 			repaint(100);
 		}
 	}
 
 	private int getRowPos(int y) {
-		return (int) Math.floor((double) matrix.getRowCount() * (double) y / getHeight());
+		return (int) Math.floor((double) matrix.getRowCount() * (double) y
+				/ getHeight());
 	}
 
 	private int getColPos(int x) {
-		return (int) Math.floor((double) matrix.getColumnCount() * (double) x / getWidth());
+		return (int) Math.floor((double) matrix.getColumnCount() * (double) x
+				/ getWidth());
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -192,12 +202,16 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 				int newCol = getColPos(e.getX());
 				newRow = newRow < 0 ? 0 : newRow;
 				newCol = newCol < 0 ? 0 : newCol;
-				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-				newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
+				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1
+						: newRow;
+				newCol = newCol >= matrix.getColumnCount() ? matrix
+						.getColumnCount() - 1 : newCol;
 				matrix.getRowSelectionModel().setValueIsAdjusting(false);
 				matrix.getColumnSelectionModel().setValueIsAdjusting(false);
-				matrix.getRowSelectionModel().setSelectionInterval(startRow, newRow);
-				matrix.getColumnSelectionModel().setSelectionInterval(startCol, newCol);
+				matrix.getRowSelectionModel().setSelectionInterval(startRow,
+						newRow);
+				matrix.getColumnSelectionModel().setSelectionInterval(startCol,
+						newCol);
 				repaint(100);
 			}
 		}
@@ -272,18 +286,29 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 			if (!matrix.getRowSelectionModel().isSelectionEmpty()) {
 				g2d.setColor(Color.BLUE);
 
-				int x1 = matrix.getColumnSelectionModel().getMinSelectionIndex();
-				int x2 = matrix.getColumnSelectionModel().getMaxSelectionIndex();
+				int x1 = matrix.getColumnSelectionModel()
+						.getMinSelectionIndex();
+				int x2 = matrix.getColumnSelectionModel()
+						.getMaxSelectionIndex();
 				int y1 = matrix.getRowSelectionModel().getMinSelectionIndex();
 				int y2 = matrix.getRowSelectionModel().getMaxSelectionIndex();
-				double sx = (double) (getWidth() - PADDINGX - PADDINGX) / (double) matrix.getColumnCount();
-				double sy = (double) (getHeight() - PADDINGY - PADDINGY) / (double) matrix.getRowCount();
+				double sx = (double) (getWidth() - PADDINGX - PADDINGX)
+						/ (double) matrix.getColumnCount();
+				double sy = (double) (getHeight() - PADDINGY - PADDINGY)
+						/ (double) matrix.getRowCount();
 				g2d.setStroke(new BasicStroke(2.0f));
-				g2d.drawRect((int) Math.floor(PADDINGX + x1 * sx), (int) Math.floor(PADDINGY + y1 * sy), (int) Math
-						.ceil(sx + (x2 - x1) * sx), (int) Math.ceil(sy + (y2 - y1) * sy));
-				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3f));
-				g2d.fillRect((int) Math.floor(PADDINGX + x1 * sx), (int) Math.floor(PADDINGY + y1 * sy), (int) Math
-						.ceil(sx + (x2 - x1) * sx), (int) Math.ceil(sy + (y2 - y1) * sy));
+				g2d
+						.drawRect((int) Math.floor(PADDINGX + x1 * sx),
+								(int) Math.floor(PADDINGY + y1 * sy),
+								(int) Math.ceil(sx + (x2 - x1) * sx),
+								(int) Math.ceil(sy + (y2 - y1) * sy));
+				g2d.setComposite(AlphaComposite.getInstance(
+						AlphaComposite.SRC_ATOP, 0.3f));
+				g2d
+						.fillRect((int) Math.floor(PADDINGX + x1 * sx),
+								(int) Math.floor(PADDINGY + y1 * sy),
+								(int) Math.ceil(sx + (x2 - x1) * sx),
+								(int) Math.ceil(sy + (y2 - y1) * sy));
 			}
 		} else {
 			g2d.setColor(Color.GRAY);
@@ -294,7 +319,8 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 
 	public void repaintUI() {
 		if (matrix != null && getWidth() > 0 && getHeight() > 0) {
-			BufferedImage tempBufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+			BufferedImage tempBufferedImage = new BufferedImage(getWidth(),
+					getHeight(), BufferedImage.TYPE_INT_RGB);
 			renderer.setSize(getWidth(), getHeight());
 			Graphics2D g2d = (Graphics2D) tempBufferedImage.getGraphics();
 			renderer.paintComponent(g2d);
@@ -322,10 +348,14 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener, Table
 				int newCol = getColPos(e.getX());
 				newRow = newRow < 0 ? 0 : newRow;
 				newCol = newCol < 0 ? 0 : newCol;
-				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-				newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
-				matrix.getRowSelectionModel().setSelectionInterval(startRow, newRow);
-				matrix.getColumnSelectionModel().setSelectionInterval(startCol, newCol);
+				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1
+						: newRow;
+				newCol = newCol >= matrix.getColumnCount() ? matrix
+						.getColumnCount() - 1 : newCol;
+				matrix.getRowSelectionModel().setSelectionInterval(startRow,
+						newRow);
+				matrix.getColumnSelectionModel().setSelectionInterval(startCol,
+						newCol);
 				repaint(100);
 			}
 		}

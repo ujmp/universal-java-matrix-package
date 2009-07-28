@@ -40,13 +40,14 @@ public class ClearMatrixAction extends MatrixAction {
 		putValue(Action.NAME, "Clear");
 		putValue(Action.SHORT_DESCRIPTION, "Sets all entries to 0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_BACK_SPACE, KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override
 	public Object call() {
 		getMatrixObject().getMatrix().clear();
-		return null;
+		return getMatrixObject();
 	}
 
 }

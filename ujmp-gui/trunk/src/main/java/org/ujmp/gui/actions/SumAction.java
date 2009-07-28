@@ -39,12 +39,14 @@ public class SumAction extends MatrixAction {
 	public SumAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sum");
-		putValue(Action.SHORT_DESCRIPTION, "Calculates the sum of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates the sum of the entries in this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW, getDimension(), true);
+		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW,
+				getDimension(), getIgnoreMissing());
 		result.showGUI();
 		return result;
 	}

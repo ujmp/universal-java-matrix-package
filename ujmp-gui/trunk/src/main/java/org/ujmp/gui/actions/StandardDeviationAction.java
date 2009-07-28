@@ -38,12 +38,14 @@ public class StandardDeviationAction extends MatrixAction {
 	public StandardDeviationAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standard Deviation");
-		putValue(Action.SHORT_DESCRIPTION, "Calculates the standard deviation of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates the standard deviation of the entries in this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW, getDimension(), true);
+		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW,
+				getDimension(), getIgnoreMissing());
 		result.showGUI();
 		return result;
 	}

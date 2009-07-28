@@ -39,9 +39,11 @@ public class FadeOutAction extends MatrixAction {
 	public FadeOutAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fade Out");
-		putValue(Action.SHORT_DESCRIPTION, "multiplies all entries with an decreasing factor");
+		putValue(Action.SHORT_DESCRIPTION,
+				"multiplies all entries with an decreasing factor");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O,
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override

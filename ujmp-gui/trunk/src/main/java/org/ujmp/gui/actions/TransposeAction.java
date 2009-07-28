@@ -29,24 +29,28 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class DeleteMatrixAction extends MatrixAction {
-	private static final long serialVersionUID = -6086020959987292649L;
+public class TransposeAction extends MatrixAction {
+	private static final long serialVersionUID = -993725459831614912L;
 
-	public DeleteMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public TransposeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Delete");
-		putValue(Action.SHORT_DESCRIPTION, "Sets all entries to 0");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		putValue(Action.NAME, "Transpose");
+		putValue(Action.SHORT_DESCRIPTION, "transposes this matrix");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T,
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override
-	public Object call() {
-		getMatrixObject().getMatrix().clear();
-		return null;
+	public Object call() throws MatrixException {
+		Matrix m = getMatrixObject().getMatrix().transpose(getNewOrLink());
+		m.showGUI();
+		return m;
 	}
 
 }

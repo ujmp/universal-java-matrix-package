@@ -44,7 +44,7 @@ public class FillGaussianAction extends MatrixAction {
 				"set entries to gaussian values with mean 0.0 and variance 1.0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_G);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G,
-				0));
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override

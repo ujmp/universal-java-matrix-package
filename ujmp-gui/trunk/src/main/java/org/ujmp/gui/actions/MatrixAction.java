@@ -30,6 +30,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.util.GUIUtil;
 
 public abstract class MatrixAction extends ObjectAction {
 	private static final long serialVersionUID = 7005218564058853146L;
@@ -45,6 +46,21 @@ public abstract class MatrixAction extends ObjectAction {
 	public MatrixAction(JComponent c, MatrixGUIObject matrix, GUIObject v) {
 		super(c, matrix);
 		this.variable = v;
+	}
+
+	public Ret getRet() {
+		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG,
+				Ret.NEW, Ret.LINK);
+	}
+
+	public Ret getOrigOrNew() {
+		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG,
+				Ret.NEW);
+	}
+
+	public Ret getNewOrLink() {
+		return (Ret) GUIUtil.getObject("Select return method", Ret.NEW,
+				Ret.LINK);
 	}
 
 	public int getDimension() {
@@ -69,6 +85,14 @@ public abstract class MatrixAction extends ObjectAction {
 			}
 		}
 		return dimension;
+	}
+
+	public boolean getIgnoreMissing() {
+		if (!getMatrixObject().getMatrix().containsMissingValues()) {
+			return true;
+		} else {
+			return GUIUtil.getBoolean("Ignore missing values");
+		}
 	}
 
 	public MatrixGUIObject getMatrixObject() {

@@ -26,10 +26,12 @@ package org.ujmp.gui.actions;
 import javax.swing.Action;
 import javax.swing.JComponent;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeKNN;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.util.GUIUtil;
 
 public class ReplaceByNearestNeighborAction extends MatrixAction {
 	private static final long serialVersionUID = -2401692333851059830L;
@@ -44,7 +46,10 @@ public class ReplaceByNearestNeighborAction extends MatrixAction {
 
 	@Override
 	public Object call() throws MatrixException {
-		return new ImputeKNN(getMatrixObject().getMatrix(), 3).calcOrig();
+		Matrix m = new ImputeKNN(getMatrixObject().getMatrix(), GUIUtil.getInt(
+				"Number of neighbors", 1, 100)).calc(getOrigOrNew());
+		m.showGUI();
+		return m;
 	}
 
 }

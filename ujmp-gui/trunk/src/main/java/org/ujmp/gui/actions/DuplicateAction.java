@@ -33,17 +33,17 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class CopyMatrixAction extends MatrixAction {
+public class DuplicateAction extends MatrixAction {
 	private static final long serialVersionUID = 6122103774731476379L;
 
-	public CopyMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public DuplicateAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Copy Matrix");
+		putValue(Action.NAME, "Duplicate");
 		putValue(Action.SHORT_DESCRIPTION,
-				"copy the content of this matrix to a new matrix");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C,
-				0));
+				"duplicate the content of this matrix to a new matrix");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D,
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override

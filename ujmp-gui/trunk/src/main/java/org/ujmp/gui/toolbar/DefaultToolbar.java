@@ -27,10 +27,6 @@ import javax.swing.JComponent;
 import javax.swing.JToolBar;
 
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.ClearAction;
-import org.ujmp.gui.actions.DeleteAction;
-import org.ujmp.gui.actions.ExportAction;
-import org.ujmp.gui.actions.PrintAction;
 
 public class DefaultToolbar extends JToolBar {
 	private static final long serialVersionUID = 3044233848101292254L;
@@ -39,18 +35,18 @@ public class DefaultToolbar extends JToolBar {
 
 		setFloatable(false);
 
-		add(new ClearAction(c, o));
+		// add(new ClearMAction(c, o));
 
 		addSeparator();
 
-		add(new ExportAction(c, o));
+		// add(new ExportAction(c, o));
 
 		addSeparator();
 
-		add(new PrintAction(c, o));
+		// add(new PrintAction(c, o));
 
 		addSeparator();
-		add(new DeleteAction(c, o));
+		// add(new DeleteAction(c, o));
 
 	}
 

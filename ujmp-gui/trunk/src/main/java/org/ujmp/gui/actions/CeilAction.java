@@ -30,24 +30,22 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.util.GUIUtil;
 
-public class AddMissingValuesAction extends MatrixAction {
-	private static final long serialVersionUID = -7585669703654474086L;
+public class CeilAction extends MatrixAction {
+	private static final long serialVersionUID = 6042292126818394179L;
 
-	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public CeilAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Add missing values...");
+		putValue(Action.NAME, "Ceil");
 		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a chosen percentage of the values with NaN");
+				"replace cells with the next higher integer");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
-				getDimension(),
-				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
-		result.showGUI();
-		return result;
+		Matrix m = getMatrixObject().getMatrix().ceil(getRet());
+		m.showGUI();
+		return m;
 	}
+
 }

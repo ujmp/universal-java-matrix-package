@@ -32,22 +32,24 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class AddMissingValuesAction extends MatrixAction {
-	private static final long serialVersionUID = -7585669703654474086L;
+public class MinusAction extends MatrixAction {
+	private static final long serialVersionUID = -23456655151951524L;
 
-	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public MinusAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Add missing values...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a chosen percentage of the values with NaN");
+		putValue(Action.NAME, "Minus");
+		putValue(Action.SHORT_DESCRIPTION, "subtract a value from all cells");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
-				getDimension(),
-				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
-		result.showGUI();
-		return result;
+		Matrix m = getMatrixObject().getMatrix().minus(
+				getRet(),
+				getIgnoreMissing(),
+				GUIUtil.getDouble("Value to subtract", -Double.MAX_VALUE,
+						Double.MAX_VALUE));
+		m.showGUI();
+		return m;
 	}
+
 }

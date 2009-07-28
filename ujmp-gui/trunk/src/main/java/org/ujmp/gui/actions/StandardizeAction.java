@@ -29,7 +29,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -40,15 +40,19 @@ public class StandardizeAction extends MatrixAction {
 	public StandardizeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standardize");
-		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries to mean 0 and standard deviation 1");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Rescales all entries to mean 0 and standard deviation 1");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		getMatrixObject().getMatrix().standardize(Ret.ORIG, getDimension(), true);
-		return null;
+		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(),
+				getDimension(), getIgnoreMissing());
+		m.showGUI();
+		return m;
 	}
 
 }

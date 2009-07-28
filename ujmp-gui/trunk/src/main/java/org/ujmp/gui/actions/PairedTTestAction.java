@@ -27,27 +27,26 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.util.GUIUtil;
 
-public class AddMissingValuesAction extends MatrixAction {
-	private static final long serialVersionUID = -7585669703654474086L;
+public class PairedTTestAction extends MatrixAction {
+	private static final long serialVersionUID = 2598668457993167099L;
 
-	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public PairedTTestAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Add missing values...");
+		putValue(Action.NAME, "Paired T-Test");
 		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a chosen percentage of the values with NaN");
+				"Calculates a paired t-test for this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
-				getDimension(),
-				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
+		Matrix result = getMatrixObject().getMatrix().pairedTTest(Ret.NEW);
 		result.showGUI();
 		return result;
 	}
+
 }

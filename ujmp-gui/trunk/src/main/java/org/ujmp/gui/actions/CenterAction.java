@@ -29,7 +29,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -42,13 +42,16 @@ public class CenterAction extends MatrixAction {
 		putValue(Action.NAME, "Center");
 		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries to mean 0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C, 0));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		getMatrixObject().getMatrix().center(Ret.ORIG, getDimension(), true);
-		return null;
+		Matrix m = getMatrixObject().getMatrix().center(getRet(),
+				getDimension(), getIgnoreMissing());
+		m.showGUI();
+		return m;
 	}
 
 }

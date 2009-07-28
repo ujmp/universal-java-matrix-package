@@ -23,28 +23,33 @@
 
 package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.util.GUIUtil;
 
-public class DeleteAction extends ObjectAction {
-	private static final long serialVersionUID = -5156314488187149520L;
+public class MultiplyAction extends MatrixAction {
+	private static final long serialVersionUID = -23456655151951524L;
 
-	public DeleteAction(JComponent c, GUIObject o) {
-		super(c, o);
-		putValue(Action.NAME, "Delete");
-		putValue(Action.SHORT_DESCRIPTION, "Delete this object");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+	public MultiplyAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Multiply");
+		putValue(Action.SHORT_DESCRIPTION, "multiply all cells by a value");
 	}
 
 	@Override
-	public Object call() {
-		return null;
+	public Object call() throws MatrixException {
+		Matrix m = getMatrixObject().getMatrix().times(
+				getRet(),
+				getIgnoreMissing(),
+				GUIUtil.getDouble("Value to multiply by", -Double.MAX_VALUE,
+						Double.MAX_VALUE));
+		m.showGUI();
+		return m;
 	}
 
 }

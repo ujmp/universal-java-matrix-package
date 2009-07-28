@@ -32,22 +32,22 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class AddMissingValuesAction extends MatrixAction {
-	private static final long serialVersionUID = -7585669703654474086L;
+public class BootstrapAction extends MatrixAction {
+	private static final long serialVersionUID = -4303125885679602677L;
 
-	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public BootstrapAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Add missing values...");
+		putValue(Action.NAME, "Bootstrap");
 		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a chosen percentage of the values with NaN");
+				"creates a new matrix by sampling over the rows");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
-				getDimension(),
-				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
-		result.showGUI();
-		return result;
+		Matrix m = getMatrixObject().getMatrix().bootstrap(getNewOrLink(),
+				GUIUtil.getInt("Number of samples", 1, 10000000));
+		m.showGUI();
+		return m;
 	}
+
 }

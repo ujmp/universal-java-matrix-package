@@ -38,12 +38,14 @@ public class MinAction extends MatrixAction {
 	public MinAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Min");
-		putValue(Action.SHORT_DESCRIPTION, "Calculates the min of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates the min of the entries in this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().min(Ret.NEW, getDimension());
+		Matrix result = getMatrixObject().getMatrix().min(Ret.NEW,
+				getDimension());
 		result.showGUI();
 		return result;
 	}

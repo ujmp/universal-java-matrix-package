@@ -44,7 +44,7 @@ public class FillUniformAction extends MatrixAction {
 				"set entries to random values between -1.0 and 1.0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U,
-				0));
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override

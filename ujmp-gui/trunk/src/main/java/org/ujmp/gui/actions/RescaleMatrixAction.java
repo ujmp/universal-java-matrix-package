@@ -26,7 +26,6 @@ package org.ujmp.gui.actions;
 import javax.swing.Action;
 import javax.swing.JComponent;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -37,12 +36,13 @@ public class RescaleMatrixAction extends MatrixAction {
 	public RescaleMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Rescale Matrix");
-		putValue(Action.SHORT_DESCRIPTION, "scales all entries to values between -1 and 1");
+		putValue(Action.SHORT_DESCRIPTION,
+				"scales all entries to values between -1 and 1");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		getMatrixObject().getMatrix().rescaleEntries_(Matrix.ALL, -1, 1);
-		return getMatrixObject();
+		getMatrixObject().getMatrix().rescaleEntries_(getDimension(), -1, 1);
+		return null;
 	}
 }

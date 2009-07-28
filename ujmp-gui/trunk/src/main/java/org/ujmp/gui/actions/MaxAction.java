@@ -38,12 +38,14 @@ public class MaxAction extends MatrixAction {
 	public MaxAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Max");
-		putValue(Action.SHORT_DESCRIPTION, "Calculates the max of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates the max of the entries in this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW, getDimension());
+		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW,
+				getDimension());
 		result.showGUI();
 		return result;
 	}

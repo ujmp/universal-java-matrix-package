@@ -27,25 +27,27 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
-public class ClearAction extends ObjectAction {
-	private static final long serialVersionUID = 8394347761552694383L;
+public class RoundAction extends MatrixAction {
+	private static final long serialVersionUID = 9072784334795456528L;
 
-	public ClearAction(JComponent c, GUIObject o) {
-		super(c, o);
-		putValue(Action.NAME, "Clear");
-		putValue(Action.SHORT_DESCRIPTION, "Delete the contents of this object");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
+	public RoundAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Round");
+		putValue(Action.SHORT_DESCRIPTION, "round cells to the closest integer");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
 	}
 
 	@Override
-	public Object call() {
-		getGUIObject().clear();
-		return getGUIObject();
+	public Object call() throws MatrixException {
+		Matrix m = getMatrixObject().getMatrix().round(getRet());
+		m.showGUI();
+		return m;
 	}
 
 }

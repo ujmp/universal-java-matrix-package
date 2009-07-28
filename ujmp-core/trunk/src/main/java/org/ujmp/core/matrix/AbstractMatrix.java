@@ -175,19 +175,42 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	 */
 	protected transient static final Logger logger = Logger.getLogger(Matrix.class.getName());
 
+	private static long runningId = 0;
+
 	static {
-		UJMPSettings.initialize();
-		long mem = Runtime.getRuntime().maxMemory();
-		if (mem < 133234688) {
-			logger.log(Level.WARNING, "Available memory is very low: " + (mem / 1024 / 1024) + "M");
-			logger.log(Level.WARNING,
-					"Invoke Java with the parameter -Xmx512M to increase available memory");
+		try {
+			runningId = 31 * System.nanoTime() + System.currentTimeMillis();
+		} catch (Throwable t) {
+		}
+		try {
+			UJMPSettings.initialize();
+		} catch (Throwable t) {
+		}
+		try {
+			long mem = Runtime.getRuntime().maxMemory();
+			if (mem < 133234688) {
+				logger.log(Level.WARNING, "Available memory is very low: " + (mem / 1024 / 1024)
+						+ "M");
+				logger.log(Level.WARNING,
+						"Invoke Java with the parameter -Xmx512M to increase available memory");
+			}
+		} catch (Throwable t) {
 		}
 	}
 
 	private transient GUIObject guiObject = null;
 
+	private long id = 0;
+
 	private Annotation annotation = null;
+
+	public AbstractMatrix() {
+		id = runningId++;
+	}
+
+	public final long getCoreObjectId() {
+		return id;
+	}
 
 	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getAsObject(coordinates));

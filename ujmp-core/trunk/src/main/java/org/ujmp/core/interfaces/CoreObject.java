@@ -25,7 +25,8 @@ package org.ujmp.core.interfaces;
 
 import java.io.Serializable;
 
-
 public interface CoreObject extends Serializable, Clearable, Cloneable, HasGUIObject, HasLabel {
+
+	public long getCoreObjectId();
 
 }

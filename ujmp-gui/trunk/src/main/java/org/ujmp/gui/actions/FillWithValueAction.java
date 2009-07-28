@@ -51,19 +51,13 @@ public class FillWithValueAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "sets all entries to the same value");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F,
-				0));
+				KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override
 	public Object call() {
-		double value = 0;
 		String s = JOptionPane.showInputDialog("Enter value:", initialValue);
-		try {
-			value = Double.parseDouble(s);
-			getMatrixObject().getMatrix().fill(Ret.ORIG, value);
-		} catch (Exception ex) {
-		}
-		return null;
+		return getMatrixObject().getMatrix().fill(Ret.ORIG, s);
 	}
 
 }

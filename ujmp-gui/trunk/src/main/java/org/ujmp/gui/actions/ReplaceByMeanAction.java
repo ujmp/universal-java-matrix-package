@@ -26,6 +26,7 @@ package org.ujmp.gui.actions;
 import javax.swing.Action;
 import javax.swing.JComponent;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeMean;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
@@ -43,8 +44,10 @@ public class ReplaceByMeanAction extends MatrixAction {
 
 	@Override
 	public Object call() throws MatrixException {
-		return new ImputeMean(getDimension(), getMatrixObject().getMatrix())
-				.calcOrig();
+		Matrix m = new ImputeMean(getDimension(), getMatrixObject().getMatrix())
+				.calc(getOrigOrNew());
+		m.showGUI();
+		return m;
 	}
 
 }

@@ -38,12 +38,14 @@ public class CovarianceAction extends MatrixAction {
 	public CovarianceAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Covariance");
-		putValue(Action.SHORT_DESCRIPTION, "Calculates the covariance of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates the covariance of the entries in this matrix");
 	}
 
 	@Override
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().cov(Ret.NEW, true);
+		Matrix result = getMatrixObject().getMatrix().cov(Ret.NEW,
+				getIgnoreMissing());
 		result.showGUI();
 		return result;
 	}

@@ -34,8 +34,6 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
-import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 
@@ -543,7 +541,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testInverse() throws Exception {
+	public void testInv() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -555,32 +553,40 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m1.setAsDouble(7.0, 1, 2);
 		m1.setAsDouble(1.0, 2, 2);
 
-		boolean mtjAvailable = true;
-		boolean commonsMathAvailable = true;
+		Matrix m2 = m1.inv();
 
-		try {
-			Class.forName("org.ujmp.mtj.Plugin");
-		} catch (ClassNotFoundException e) {
-			mtjAvailable = false;
-		}
-		try {
-			Class.forName("org.ujmp.commonsmath.Plugin");
-		} catch (ClassNotFoundException e) {
-			commonsMathAvailable = false;
+		assertEquals(getLabel(), -0.1970, m2.getAsDouble(0, 0), 0.001);
+		assertEquals(getLabel(), 0.2879, m2.getAsDouble(1, 0), 0.001);
+		assertEquals(getLabel(), 0.0152, m2.getAsDouble(2, 0), 0.001);
+		assertEquals(getLabel(), 0.0303, m2.getAsDouble(0, 1), 0.001);
+		assertEquals(getLabel(), -0.1212, m2.getAsDouble(1, 1), 0.001);
+		assertEquals(getLabel(), 0.1515, m2.getAsDouble(2, 1), 0.001);
+		assertEquals(getLabel(), 0.3788, m2.getAsDouble(0, 2), 0.001);
+		assertEquals(getLabel(), -0.0152, m2.getAsDouble(1, 2), 0.001);
+		assertEquals(getLabel(), -0.1061, m2.getAsDouble(2, 2), 0.001);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
 		}
 
-		Matrix m2 = null;
-
-		if (mtjAvailable || commonsMathAvailable) {
-			m2 = m1.inv();
-		} else {
-			try {
-				m2 = m1.inv();
-			} catch (MatrixException e) {
-				return;
-			}
-			throw new MatrixException("there should be an error");
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
 		}
+	}
+
+	public void testGinv() throws Exception {
+		Matrix m1 = createMatrix(3, 3);
+		m1.setAsDouble(1.0, 0, 0);
+		m1.setAsDouble(2.0, 1, 0);
+		m1.setAsDouble(3.0, 2, 0);
+		m1.setAsDouble(4.0, 0, 1);
+		m1.setAsDouble(1.0, 1, 1);
+		m1.setAsDouble(2.0, 2, 1);
+		m1.setAsDouble(3.0, 0, 2);
+		m1.setAsDouble(7.0, 1, 2);
+		m1.setAsDouble(1.0, 2, 2);
+
+		Matrix m2 = m1.ginv();
 
 		assertEquals(getLabel(), -0.1970, m2.getAsDouble(0, 0), 0.001);
 		assertEquals(getLabel(), 0.2879, m2.getAsDouble(1, 0), 0.001);

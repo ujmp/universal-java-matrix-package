@@ -96,6 +96,11 @@ import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Pinv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
@@ -103,10 +108,6 @@ import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
-import org.ujmp.core.doublematrix.calculation.general.solving.Inv;
-import org.ujmp.core.doublematrix.calculation.general.solving.Pinv;
-import org.ujmp.core.doublematrix.calculation.general.solving.Princomp;
-import org.ujmp.core.doublematrix.calculation.general.solving.SVD;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Corrcoef;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Cov;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Cumprod;
@@ -354,7 +355,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix inv() throws MatrixException {
-		return new Inv(this).calcNew();
+		if (getDimensionCount() != 2 || getRowCount() != getColumnCount()) {
+			throw new MatrixException(
+					"inverse only possible for square matrices. use pinv or ginv instead");
+		}
+		return ginv();
+	}
+
+	public Matrix ginv() throws MatrixException {
+		return new Ginv(this).calcNew();
 	}
 
 	public Matrix princomp() throws MatrixException {

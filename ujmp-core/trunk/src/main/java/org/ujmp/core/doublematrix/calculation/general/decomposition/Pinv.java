@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.general.solving;
+package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;

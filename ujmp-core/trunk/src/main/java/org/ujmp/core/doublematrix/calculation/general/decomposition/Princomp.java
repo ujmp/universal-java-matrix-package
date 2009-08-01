@@ -21,41 +21,37 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.calculation.general.solving;
+package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface SolvingDoubleCalculations {
+public class Princomp extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = -6137993493011004670L;
 
-	/**
-	 * Calculates the inverse of the Matrix using either LUDecomposition (for
-	 * square matrices) or QRDecomposition (otherwise).
-	 * 
-	 * @return Inverse of the matrix
-	 */
-	public Matrix inv() throws MatrixException;
+	private Matrix pca = null;
 
-	/**
-	 * Calculates the pseudo inverse of the Matrix using Singular Value
-	 * Decomposition.
-	 * 
-	 * @return Pseudo inverse of the Matrix
-	 */
-	public Matrix pinv() throws MatrixException;
+	public Princomp(Matrix matrix) {
+		super(matrix);
+	}
 
-	/**
-	 * Projects the matrix into the space of the principal components.
-	 * 
-	 * @return Matrix projected on principal components.
-	 */
-	public Matrix princomp() throws MatrixException;
+	public static boolean isAvailable() {
+		return SVD.isAvailable();
+	}
 
-	/**
-	 * Calculates the singular value decomposition of the matrix.
-	 * 
-	 * @return Singular value decomposition of the matrix.
-	 */
-	public Matrix[] svd() throws MatrixException;
+	@Override
+	public double getDouble(long... coordinates) throws MatrixException {
+		if (pca == null) {
+
+			Matrix[] usv;
+			usv = getSource().svd();
+			Matrix u = usv[0];
+			Matrix s = usv[1];
+			pca = u.mtimes(s);
+
+		}
+		return pca.getAsDouble(coordinates);
+	}
 
 }

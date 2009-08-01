@@ -33,6 +33,7 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(TestMissingValueImputation.class);
 		suite.addTestSuite(TestConcatenation.class);
 		suite.addTestSuite(TestMtimes.class);
+		suite.addTestSuite(TestGinv.class);
 		return suite;
 	}
 

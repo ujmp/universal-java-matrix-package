@@ -23,13 +23,13 @@
 
 package org.ujmp.core.doublematrix.calculation.general;
 
+import org.ujmp.core.doublematrix.calculation.general.decomposition.DecompositionDoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.general.discretize.DiscretizeCalculations;
 import org.ujmp.core.doublematrix.calculation.general.misc.MiscGeneralDoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.MissingValueDoubleCalculations;
-import org.ujmp.core.doublematrix.calculation.general.solving.SolvingDoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.general.statistical.StatisticalDoubleCalculations;
 
-public interface GeneralDoubleCalculations extends StatisticalDoubleCalculations, SolvingDoubleCalculations, MissingValueDoubleCalculations,
+public interface GeneralDoubleCalculations extends StatisticalDoubleCalculations, DecompositionDoubleCalculations, MissingValueDoubleCalculations,
 		MiscGeneralDoubleCalculations, DiscretizeCalculations {
 
 }

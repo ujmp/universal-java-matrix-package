@@ -29,10 +29,10 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeLS;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
-import org.ujmp.core.doublematrix.calculation.general.solving.SVD;
 
 public class TestMissingValueImputation extends TestCase {
 

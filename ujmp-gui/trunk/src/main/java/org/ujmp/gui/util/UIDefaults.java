@@ -42,14 +42,14 @@ public class UIDefaults {
 	static {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 
 		try {
 			Locale.setDefault(Locale.US);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		UIManager.put("Table.rowHeight", 32);

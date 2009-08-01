@@ -30,7 +30,7 @@ import org.ujmp.core.util.io.TeeStream;
 
 public abstract class UJMPSettings {
 
-	private static double tolerance = Math.pow(10.0, -6.0);
+	private static double tolerance = 1.0e-12;
 
 	private static int systemOutBufferSize = 1024 * 1024;
 
@@ -91,13 +91,16 @@ public abstract class UJMPSettings {
 	private static RingBufferOutputStream err = null;
 
 	static {
-		out = new RingBufferOutputStream(systemOutBufferSize);
-		err = new RingBufferOutputStream(systemErrBufferSize);
+		try {
+			out = new RingBufferOutputStream(systemOutBufferSize);
+			err = new RingBufferOutputStream(systemErrBufferSize);
+		} catch (Throwable e) {
+		}
 
 		try {
 			System.setOut(new TeeStream(System.out, out));
 			System.setErr(new TeeStream(System.err, err));
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 
 		// Set the number of threads to use for expensive calculations. If the
@@ -105,7 +108,7 @@ public abstract class UJMPSettings {
 		// core, the number of threads is higher.
 		try {
 			numberOfThreads = Runtime.getRuntime().availableProcessors();
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 	}
 
@@ -113,7 +116,7 @@ public abstract class UJMPSettings {
 		try {
 			System.setProperty("file.encoding", "UTF-8");
 			System.setProperty("sun.jnu.encoding", "UTF-8");
-		} catch (Exception e) {
+		} catch (Throwable e) {
 		}
 	}
 

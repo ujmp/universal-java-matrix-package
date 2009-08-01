@@ -25,7 +25,6 @@ package org.ujmp.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.TimerTask;
@@ -35,23 +34,18 @@ import javax.swing.JFrame;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
-import org.ujmp.gui.toolbar.DefaultToolbar;
 import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.GlobalTimer;
 import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
 	private static final long serialVersionUID = -4656308453503586700L;
-
-	private static Image image = Toolkit.getDefaultToolkit().getImage(
-			"ujmp16.png");
 
 	private int modCount = -1;
 
@@ -63,8 +57,7 @@ public abstract class AbstractFrame extends JFrame {
 
 	private TimerTask updateTask = null;
 
-	public AbstractFrame(GUIObject o, JComponent component)
-			throws MatrixException {
+	public AbstractFrame(GUIObject o, JComponent component) {
 		UIDefaults.setDefaults();
 		FrameManager.registerFrame(this);
 		this.object = o;
@@ -79,8 +72,6 @@ public abstract class AbstractFrame extends JFrame {
 		} else {
 			setTitle(o.toString());
 		}
-
-		setIconImage(image);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		if (d.getHeight() < 800) {

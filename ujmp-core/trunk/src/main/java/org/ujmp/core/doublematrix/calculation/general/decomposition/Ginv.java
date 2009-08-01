@@ -31,6 +31,7 @@ import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.util.UJMPSettings;
 
 /**
  * <p>
@@ -67,8 +68,6 @@ import org.ujmp.core.interfaces.HasDoubleArray2D;
  */
 public class Ginv extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 1087531579133023922L;
-
-	private static final double TINY_NEAR_ZERO = 1.0E-12;
 
 	public Ginv(Matrix source) {
 		super(source);
@@ -336,6 +335,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return a generalized matrix inverse (possibly not unique)
 	 */
 	public static DenseDoubleMatrix2D inverse(Matrix matrix) {
+		double epsilon = UJMPSettings.getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
 		DenseDoubleMatrix2D s = DoubleMatrix2D.factory.dense(cols, cols);
@@ -356,7 +356,7 @@ public class Ginv extends AbstractDoubleCalculation {
 
 			// divide through to make pivot identity
 			double divisor = matrix.getAsDouble(diag, diag);
-			if (Math.abs(divisor) < TINY_NEAR_ZERO) {
+			if (Math.abs(divisor) < epsilon) {
 				matrix.setAsDouble(0.0, diag, diag);
 				break;
 			}
@@ -400,6 +400,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return generalized matrix inverse
 	 */
 	public static DenseDoubleMatrix2D inverse(DenseDoubleMatrix2D matrix) {
+		double epsilon = UJMPSettings.getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
 		DenseDoubleMatrix2D s = DoubleMatrix2D.factory.dense(cols, cols);
@@ -420,7 +421,7 @@ public class Ginv extends AbstractDoubleCalculation {
 
 			// divide through to make pivot identity
 			double divisor = matrix.getAsDouble(diag, diag);
-			if (Math.abs(divisor) < TINY_NEAR_ZERO) {
+			if (Math.abs(divisor) < epsilon) {
 				matrix.setDouble(0.0, diag, diag);
 				break;
 			}
@@ -463,6 +464,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return generalized matrix inverse
 	 */
 	public static DenseDoubleMatrix2D inverse(double[][] matrix) {
+		double epsilon = UJMPSettings.getTolerance();
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double[][] s = new double[cols][cols];
@@ -487,7 +489,7 @@ public class Ginv extends AbstractDoubleCalculation {
 
 			// divide through to make pivot identity
 			double divisor = matrix[diag][diag];
-			if (Math.abs(divisor) < TINY_NEAR_ZERO) {
+			if (Math.abs(divisor) < epsilon) {
 				matrix[diag][diag] = 0.0;
 				break;
 			}

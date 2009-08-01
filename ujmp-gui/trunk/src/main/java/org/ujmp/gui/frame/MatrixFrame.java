@@ -32,7 +32,7 @@ import org.ujmp.gui.panels.MatrixPanel;
 public class MatrixFrame extends AbstractFrame {
 	private static final long serialVersionUID = -3705093197648545721L;
 
-	public MatrixFrame(MatrixGUIObject m) throws MatrixException {
+	public MatrixFrame(MatrixGUIObject m) {
 		super(m, new MatrixPanel(m));
 		setJMenuBar(new MatrixMenuBar(null, m, null));
 	}

@@ -27,7 +27,6 @@ import java.util.Collection;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -109,16 +108,6 @@ public interface ObjectCalculations {
 	public Matrix copy() throws MatrixException;
 
 	/**
-	 * Creates a copy of the matrix.
-	 * 
-	 * @param annotationTransfer
-	 *            defines how Annotation should be treated
-	 * @return Matrix with the same entries
-	 * @see clone()
-	 */
-	public Matrix copy(AnnotationTransfer annotationTransfer) throws MatrixException;
-
-	/**
 	 * Creates a link to the matrix. All operations take effect in the linked
 	 * and the original matrix simultaneously.
 	 * 
@@ -134,18 +123,6 @@ public interface ObjectCalculations {
 	 * @return Matrix with the same entries in the new format
 	 */
 	public Matrix convert(ValueType newValueType) throws MatrixException;
-
-	/**
-	 * Creates a copy of the matrix with the desired type for matrix entries.
-	 * 
-	 * @param newValueType
-	 *            defines the new format of the matrix
-	 * @param annotationTransfer
-	 *            defines how annotation should be treated
-	 * @return Matrix with the same entries in the new format
-	 */
-	public Matrix convert(ValueType newValueType, AnnotationTransfer annotationTransfer)
-			throws MatrixException;
 
 	/**
 	 * Selects rows and columns in the Matrix and returns a link to it.

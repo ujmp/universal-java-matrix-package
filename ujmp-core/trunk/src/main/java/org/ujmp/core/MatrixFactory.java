@@ -52,7 +52,6 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
-import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
@@ -315,13 +314,8 @@ public abstract class MatrixFactory {
 		return new SimpleDenseStringMatrix2D(values);
 	}
 
-	public static final Matrix copyFromMatrix(AnnotationTransfer annotationTransfer, Matrix matrix)
-			throws MatrixException {
-		return Convert.calcNew(annotationTransfer, matrix);
-	}
-
 	public static final Matrix copyFromMatrix(Matrix matrix) throws MatrixException {
-		return Convert.calcNew(AnnotationTransfer.LINK, matrix);
+		return Convert.calcNew(matrix);
 	}
 
 	public static final Matrix randn(long... size) throws MatrixException {
@@ -338,11 +332,6 @@ public abstract class MatrixFactory {
 
 	public static final Matrix rand(ValueType valueType, long... size) throws MatrixException {
 		return Rand.calc(valueType, size);
-	}
-
-	public static final Matrix copyFromMatrix(ValueType newValueType,
-			AnnotationTransfer annotationTransfer, Matrix matrix) throws MatrixException {
-		return Convert.calcNew(newValueType, annotationTransfer, matrix);
 	}
 
 	public static final Matrix correlatedColumns(int rows, int columns, double correlationFactor)

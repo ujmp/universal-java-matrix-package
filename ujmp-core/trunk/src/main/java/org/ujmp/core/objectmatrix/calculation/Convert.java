@@ -26,38 +26,26 @@ package org.ujmp.core.objectmatrix.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Convert {
 	private static final long serialVersionUID = 6393277198816850597L;
 
-	public static Matrix calcNew(ValueType valueType, AnnotationTransfer annotationTransfer,
-			Matrix source) throws MatrixException {
+	public static Matrix calcNew(ValueType valueType, Matrix source) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsObject(source.getAsObject(c), c);
 		}
-		switch (annotationTransfer) {
-		case LINK:
-			ret.setAnnotation(source.getAnnotation());
-			break;
-		case COPY:
-			Annotation a = source.getAnnotation();
-			if (a != null) {
-				ret.setAnnotation(a.clone());
-			}
-			break;
-		default:
-			break;
+		Annotation a = source.getAnnotation();
+		if (a != null) {
+			ret.setAnnotation(a.clone());
 		}
 		return ret;
 	}
 
-	public static Matrix calcNew(AnnotationTransfer annotationTransfer, Matrix matrix)
-			throws MatrixException {
-		return calcNew(matrix.getValueType(), annotationTransfer, matrix);
+	public static Matrix calcNew(Matrix matrix) throws MatrixException {
+		return calcNew(matrix.getValueType(), matrix);
 	}
 
 }

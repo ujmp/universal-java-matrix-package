@@ -97,7 +97,6 @@ import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Pinv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
@@ -123,7 +122,6 @@ import org.ujmp.core.doublematrix.calculation.general.statistical.Prod;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Sum;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Var;
-import org.ujmp.core.enums.AnnotationTransfer;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -296,7 +294,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	@Override
 	public final Matrix clone() throws CloneNotSupportedException {
 		try {
-			return copy(AnnotationTransfer.COPY);
+			return copy();
 		} catch (MatrixException e) {
 			logger.log(Level.WARNING, "Could not clone Matrix, returning original Matrix", e);
 			return this;
@@ -379,11 +377,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix copy() throws MatrixException {
-		return copy(AnnotationTransfer.COPY);
-	}
-
-	public Matrix copy(AnnotationTransfer annotationTransfer) throws MatrixException {
-		return Convert.calcNew(annotationTransfer, this);
+		return Convert.calcNew(this);
 	}
 
 	public boolean isResizeable() {
@@ -391,12 +385,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix convert(ValueType newValueType) throws MatrixException {
-		return Convert.calcNew(newValueType, AnnotationTransfer.COPY, this);
-	}
-
-	public final Matrix convert(ValueType newValueType, AnnotationTransfer annotationTransfer)
-			throws MatrixException {
-		return Convert.calcNew(newValueType, annotationTransfer, this);
+		return Convert.calcNew(newValueType, this);
 	}
 
 	public final Matrix replaceRegex(Ret returnType, Pattern search, String replacement)

@@ -76,6 +76,7 @@ import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Repmat;
+import org.ujmp.core.objectmatrix.calculation.WelcomeMatrix;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.objectmatrix.impl.SimpleDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.SynchronizedObjectMatrix;
@@ -841,6 +842,10 @@ public abstract class MatrixFactory {
 
 	public static Matrix repmat(Matrix matrix, long... count) {
 		return new Repmat(matrix, count).calc(Ret.LINK);
+	}
+
+	public static Matrix welcomeMatrix() {
+		return new WelcomeMatrix();
 	}
 
 }

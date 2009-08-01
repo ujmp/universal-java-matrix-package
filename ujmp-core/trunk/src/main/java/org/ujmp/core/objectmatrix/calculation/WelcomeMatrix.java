@@ -21,36 +21,39 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.core.objectmatrix.calculation;
 
-import java.awt.event.KeyEvent;
+import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+public class WelcomeMatrix extends DefaultDenseObjectMatrix2D {
+	private static final long serialVersionUID = -4570303224080406364L;
 
-import org.ujmp.gui.actions.MandelbrotMatrixAction;
-import org.ujmp.gui.actions.SunSpotDataMatrixAction;
-import org.ujmp.gui.actions.WelcomeMatrixAction;
+	public WelcomeMatrix() {
+		super(13, 9);
+		setLabel("Welcome to UJMP");
 
-public class UJMPExamplesMenu extends JMenu {
-	private static final long serialVersionUID = -7279072623034811310L;
+		setAsString("Please visit", 2, 3);
+		setAsString("http://www.ujmp.org/", 2, 4);
+		setAsString("for more info", 2, 5);
 
-	public UJMPExamplesMenu(JComponent component) {
-		super("Examples");
-		setMnemonic(KeyEvent.VK_E);
-		add(new MatrixExamplesMenu());
-	}
+		setAsString("Welcome", 3, 1);
+		setAsString("to the", 3, 2);
+		setAsString("Universal", 3, 3);
+		setAsString("Java", 3, 4);
+		setAsString("Matrix", 3, 5);
+		setAsString("Package", 3, 6);
+		setAsString("UJMP", 3, 7);
 
-	class MatrixExamplesMenu extends JMenu {
-		private static final long serialVersionUID = -5582717033551246385L;
+		setAsDouble(100, 5, 2);
+		setAsDouble(100, 5, 6);
 
-		public MatrixExamplesMenu() {
-			super("Matrix");
-			add(new JMenuItem(new WelcomeMatrixAction(this, null, null)));
-			add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
-			add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
-		}
+		setAsDouble(1, 7, 4);
+
+		setAsDouble(-1, 9, 2);
+		setAsDouble(-1, 9, 6);
+		setAsDouble(-1, 10, 3);
+		setAsDouble(-1, 10, 4);
+		setAsDouble(-1, 10, 5);
 	}
 
 }

@@ -21,36 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
-import org.ujmp.gui.actions.MandelbrotMatrixAction;
-import org.ujmp.gui.actions.SunSpotDataMatrixAction;
-import org.ujmp.gui.actions.WelcomeMatrixAction;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
-public class UJMPExamplesMenu extends JMenu {
-	private static final long serialVersionUID = -7279072623034811310L;
+public class WelcomeMatrixAction extends MatrixAction {
+	private static final long serialVersionUID = 4416037171565562066L;
 
-	public UJMPExamplesMenu(JComponent component) {
-		super("Examples");
-		setMnemonic(KeyEvent.VK_E);
-		add(new MatrixExamplesMenu());
+	public WelcomeMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Welcome Matrix");
+		putValue(Action.SHORT_DESCRIPTION,
+				"creates a matrix with a welcome message");
 	}
 
-	class MatrixExamplesMenu extends JMenu {
-		private static final long serialVersionUID = -5582717033551246385L;
-
-		public MatrixExamplesMenu() {
-			super("Matrix");
-			add(new JMenuItem(new WelcomeMatrixAction(this, null, null)));
-			add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
-			add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
-		}
+	@Override
+	public Object call() throws MatrixException {
+		Matrix m = MatrixFactory.welcomeMatrix();
+		m.showGUI();
+		return m;
 	}
 
 }

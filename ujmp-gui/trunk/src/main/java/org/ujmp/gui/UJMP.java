@@ -27,7 +27,6 @@ import java.applet.Applet;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.enums.ValueType;
 
 public class UJMP extends Applet {
 	private static final long serialVersionUID = 9112777043274552132L;
@@ -35,33 +34,7 @@ public class UJMP extends Applet {
 	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
 	public static void main(String[] args) {
-		Matrix m = MatrixFactory.zeros(ValueType.OBJECT, 13, 9);
-
-		m.setLabel("Welcome to UJMP");
-
-		m.setAsObject("Please visit", 2, 3);
-		m.setAsObject("http://www.ujmp.org/", 2, 4);
-		m.setAsObject("for more info", 2, 5);
-
-		m.setAsObject("Welcome", 3, 1);
-		m.setAsObject("to the", 3, 2);
-		m.setAsObject("Universal", 3, 3);
-		m.setAsObject("Java", 3, 4);
-		m.setAsObject("Matrix", 3, 5);
-		m.setAsObject("Package", 3, 6);
-		m.setAsObject("UJMP", 3, 7);
-
-		m.setAsObject(100, 5, 2);
-		m.setAsObject(100, 5, 6);
-
-		m.setAsObject(1, 7, 4);
-
-		m.setAsObject(-1, 9, 2);
-		m.setAsObject(-1, 9, 6);
-		m.setAsObject(-1, 10, 3);
-		m.setAsObject(-1, 10, 4);
-		m.setAsObject(-1, 10, 5);
-
+		Matrix m = MatrixFactory.welcomeMatrix();
 		m.showGUI();
 	}
 

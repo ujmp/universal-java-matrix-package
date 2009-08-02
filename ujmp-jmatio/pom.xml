@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ujmp</groupId>
+	<artifactId>ujmp-jmatio</artifactId>
+	<packaging>jar</packaging>
+	<name>ujmp-jmatio</name>
+
+	<properties>
+		<ujmp.version>0.2.3</ujmp.version>
+	</properties>
+
+	<parent>
+		<groupId>org.ujmp</groupId>
+		<artifactId>ujmp</artifactId>
+		<version>0.2.3</version>
+		<relativePath>../ujmp</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jmatio</groupId>
+			<artifactId>jmatio</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+			<version>${ujmp.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

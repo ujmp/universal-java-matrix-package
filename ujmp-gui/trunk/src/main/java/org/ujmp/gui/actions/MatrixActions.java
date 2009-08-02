@@ -46,6 +46,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 		add(new ContentMenu(c, m, v));
 		add(new TransformMenu(c, m, v));
 		add(new StatisticsMenu(c, m, v));
+		add(new DecompositionMenu(c, m, v));
 		add(new MissingValuesMenu(c, m, v));
 	}
 
@@ -125,6 +126,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 			super("Decomposition");
 			add(new JMenuItem(new InvAction(c, m, v)));
 			add(new JMenuItem(new PinvAction(c, m, v)));
+			add(new JMenuItem(new GinvAction(c, m, v)));
 			add(new JMenuItem(new PrincompAction(c, m, v)));
 		}
 	}

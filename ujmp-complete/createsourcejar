@@ -1,0 +1,23 @@
+DIR="/home/arndt/workspace/ujmp-complete"
+VERSION="0.2.1"
+PACKAGES="ujmp-core ujmp-gui ujmp-bpca ujmp-colt ujmp-commonsmath ujmp-itext ujmp-jackcess ujmp-jama ujmp-jdbc ujmp-jexcelapi ujmp-jmatio ujmp-jmathplot ujmp-jmatrices ujmp-jsci ujmp-jscience ujmp-jung ujmp-lsimpute ujmp-lucene ujmp-mail ujmp-mantissa ujmp-mtj ujmp-ojalgo ujmp-parallelcolt ujmp-sst ujmp-vecmath"
+
+cd $DIR
+rm -rf target
+mkdir -p target
+
+for p in $PACKAGES
+do
+  cp ../$p/target/$p-$VERSION-sources.jar target/$p-$VERSION-sources.zip
+done
+
+cd target
+
+for p in $PACKAGES
+do
+  unzip -o $p-$VERSION-sources.zip
+done
+
+rm -rf *.zip
+
+zip -r ujmp-complete-$VERSION-sources.jar *

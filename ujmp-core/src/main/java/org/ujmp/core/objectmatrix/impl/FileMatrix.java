@@ -37,7 +37,7 @@ import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
-public class FileMatrix extends AbstractMapMatrix<Object, Object> {
+public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
 
 	public static final String CONTENT = "Content";
@@ -70,7 +70,7 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 
 	public static final String FILEFORMAT = "FileFormat";
 
-	private Map<Object, Object> map = null;
+	private Map<String, Object> map = null;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
 		map = new FileMap(file, parameters);
@@ -81,14 +81,14 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 	}
 
 	@Override
-	public Map<Object, Object> getMap() {
+	public Map<String, Object> getMap() {
 		return map;
 	}
 
-	class FileMap implements Map<Object, Object> {
+	class FileMap implements Map<String, Object> {
 		private File file = null;
 
-		private Map<Object, Object> map = null;
+		private Map<String, Object> map = null;
 
 		private SoftReference<Matrix> content = null;
 
@@ -108,7 +108,7 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 			}
 			this.parameters = paramegters;
 			this.file = file;
-			this.map = new HashMap<Object, Object>();
+			this.map = new HashMap<String, Object>();
 			this.content = new SoftReference<Matrix>(null);
 			map.put(CONTENT, content);
 			map.put(PATH, file.getPath());
@@ -147,7 +147,7 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 		}
 
 		@Override
-		public Set<java.util.Map.Entry<Object, Object>> entrySet() {
+		public Set<java.util.Map.Entry<String, Object>> entrySet() {
 			throw new MatrixException("not implemented");
 		}
 
@@ -177,17 +177,17 @@ public class FileMatrix extends AbstractMapMatrix<Object, Object> {
 		}
 
 		@Override
-		public Set<Object> keySet() {
+		public Set<String> keySet() {
 			return map.keySet();
 		}
 
 		@Override
-		public Object put(Object key, Object value) {
+		public Object put(String key, Object value) {
 			return map.put(key, value);
 		}
 
 		@Override
-		public void putAll(Map<? extends Object, ? extends Object> m) {
+		public void putAll(Map<? extends String, ? extends Object> m) {
 			map.putAll(m);
 		}
 

@@ -27,6 +27,6 @@ import java.util.Map;
 
 public interface HasDataMap {
 
-	public Map<Object, Object> getDataMap();
+	public Map<String, Object> getDataMap();
 
 }

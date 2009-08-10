@@ -25,6 +25,7 @@ package org.ujmp.core.objectmatrix.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.util.MathUtil;
 
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
@@ -43,6 +45,8 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public static final String CONTENT = "Content";
 
 	public static final String TEXT = "Text";
+
+	public static final String ID = "Id";
 
 	public static final String BYTES = "Bytes";
 
@@ -70,6 +74,8 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	public static final String FILEFORMAT = "FileFormat";
 
+	public static final String MD5 = "MD5";
+
 	private Map<String, Object> map = null;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
@@ -85,12 +91,16 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		return map;
 	}
 
-	class FileMap implements Map<String, Object> {
+	class FileMap implements Map<String, Object>, Serializable {
+		private static final long serialVersionUID = -4946966403241068247L;
+
 		private File file = null;
 
 		private Map<String, Object> map = null;
 
-		private SoftReference<Matrix> content = null;
+		private transient SoftReference<Matrix> content = null;
+
+		private transient SoftReference<Matrix> bytes = null;
 
 		private FileFormat fileformat = null;
 
@@ -110,10 +120,12 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			this.file = file;
 			this.map = new HashMap<String, Object>();
 			this.content = new SoftReference<Matrix>(null);
-			map.put(CONTENT, content);
+			map.put(CONTENT, null);
+			map.put(MD5, null);
+			map.put(ID, file.getAbsolutePath());
 			map.put(PATH, file.getPath());
 			map.put(FILENAME, file.getName());
-			map.put(BYTES, MatrixFactory.linkToFile(FileFormat.RAW, file));
+			map.put(BYTES, null);
 			String[] components = file.getName().split("\\.");
 			if (components.length > 1) {
 				map.put(EXTENSION, components[components.length - 1]);
@@ -167,6 +179,27 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 					}
 				}
 				return content.get();
+			} else if (MD5.equals(key)) {
+				String md5 = (String) map.get(MD5);
+				if (md5 == null) {
+					try {
+						md5 = MathUtil.getMD5Sum(file);
+						map.put((String) key, md5);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return md5;
+			} else if (BYTES.equals(key)) {
+				if (bytes == null || bytes.get() == null) {
+					try {
+						bytes = new SoftReference<Matrix>(MatrixFactory.linkToFile(FileFormat.RAW,
+								file));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return bytes.get();
 			}
 			return map.get(key);
 		}

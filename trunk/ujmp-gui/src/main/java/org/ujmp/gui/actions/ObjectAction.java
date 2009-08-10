@@ -124,7 +124,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 		return f;
 	}
 
-	public abstract Object call() throws Exception;
+	public abstract Object call();
 
 	public final JComponent getComponent() {
 		return component;

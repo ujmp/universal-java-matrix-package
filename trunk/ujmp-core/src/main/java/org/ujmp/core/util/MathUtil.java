@@ -23,6 +23,7 @@
 
 package org.ujmp.core.util;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -38,6 +39,7 @@ import java.util.Random;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class MathUtil {
 
@@ -59,6 +61,27 @@ public abstract class MathUtil {
 		mdAlgorithm.update(text.getBytes());
 		byte[] digest = mdAlgorithm.digest();
 
+		for (int i = 0; i < digest.length; i++) {
+			text = Integer.toHexString(0xFF & digest[i]);
+
+			if (text.length() < 2) {
+				text = "0" + text;
+			}
+
+			hexString.append(text);
+		}
+		return hexString.toString();
+	}
+
+	public static String getMD5Sum(File file) throws NoSuchAlgorithmException {
+		MessageDigest mdAlgorithm;
+		StringBuilder hexString = new StringBuilder();
+
+		mdAlgorithm = MessageDigest.getInstance("MD5");
+		mdAlgorithm.update(IntelligentFileReader.readBytes(file));
+		byte[] digest = mdAlgorithm.digest();
+
+		String text = null;
 		for (int i = 0; i < digest.length; i++) {
 			text = Integer.toHexString(0xFF & digest[i]);
 

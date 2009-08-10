@@ -23,6 +23,7 @@
 
 package org.ujmp.core.util.io;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -188,4 +189,18 @@ public class IntelligentFileReader extends Reader {
 		return s.toString();
 	}
 
+	public static byte[] readBytes(File file) {
+		try {
+			byte[] data = new byte[(int) file.length()];
+			FileInputStream fi = new FileInputStream(file);
+			BufferedInputStream bi = new BufferedInputStream(fi);
+			bi.read(data);
+			bi.close();
+			fi.close();
+			return data;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

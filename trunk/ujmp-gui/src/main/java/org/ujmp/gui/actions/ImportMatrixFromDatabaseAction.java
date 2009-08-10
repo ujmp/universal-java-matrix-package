@@ -46,41 +46,48 @@ public class ImportMatrixFromDatabaseAction extends ObjectAction {
 	}
 
 	@Override
-	public Object call() throws Exception {
-		DB type = DB.values()[JOptionPane.showOptionDialog(getComponent(),
-				"Select database type", "Import Matrix", JOptionPane.OK_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, DB.values(), DB.MySQL)];
+	public Object call() {
+		try {
+			DB type = DB.values()[JOptionPane.showOptionDialog(getComponent(),
+					"Select database type", "Import Matrix",
+					JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					DB.values(), DB.MySQL)];
 
-		String host = null;
-		while (host == null) {
-			host = JOptionPane.showInputDialog("Enter host name:", "localhost");
-		}
-		int port = 0;
-		while (port <= 0) {
-			try {
-				port = Integer.parseInt(JOptionPane.showInputDialog(
-						"Enter port:", "3306"));
-			} catch (Exception e) {
+			String host = null;
+			while (host == null) {
+				host = JOptionPane.showInputDialog("Enter host name:",
+						"localhost");
 			}
-		}
-		String database = null;
-		while (database == null) {
-			database = JOptionPane
-					.showInputDialog("Enter database name:", null);
-		}
-		String sql = null;
-		while (sql == null) {
-			sql = JOptionPane.showInputDialog("Enter SQL statement:",
-					"SELECT * FROM ");
-		}
-		String username = null;
-		username = JOptionPane.showInputDialog("Enter user name:", "root");
-		String password = null;
-		password = JOptionPane.showInputDialog("Enter password:", null);
+			int port = 0;
+			while (port <= 0) {
+				try {
+					port = Integer.parseInt(JOptionPane.showInputDialog(
+							"Enter port:", "3306"));
+				} catch (Exception e) {
+				}
+			}
+			String database = null;
+			while (database == null) {
+				database = JOptionPane.showInputDialog("Enter database name:",
+						null);
+			}
+			String sql = null;
+			while (sql == null) {
+				sql = JOptionPane.showInputDialog("Enter SQL statement:",
+						"SELECT * FROM ");
+			}
+			String username = null;
+			username = JOptionPane.showInputDialog("Enter user name:", "root");
+			String password = null;
+			password = JOptionPane.showInputDialog("Enter password:", null);
 
-		Matrix m = MatrixFactory.importFromJDBC(type, host, port, database,
-				sql, username, password);
-		m.showGUI();
-		return m;
+			Matrix m = MatrixFactory.importFromJDBC(type, host, port, database,
+					sql, username, password);
+			m.showGUI();
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

@@ -55,7 +55,6 @@ public interface HasGUIObject {
 
 	/**
 	 * This method will show the object in a JFrame on the screen.
-	 * 
 	 */
 	public JFrame showGUI();
 

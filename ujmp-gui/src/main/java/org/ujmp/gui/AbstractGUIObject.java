@@ -23,12 +23,12 @@
 
 package org.ujmp.gui;
 
-import java.lang.reflect.Method;
-
 import javax.swing.JFrame;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.util.FrameManager;
+import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractGUIObject implements GUIObject {
 	private static final long serialVersionUID = -2271465024665498798L;
@@ -46,6 +46,10 @@ public abstract class AbstractGUIObject implements GUIObject {
 	public static final int ALL = Matrix.ALL;
 
 	private int modCount = 0;
+
+	static {
+		UIDefaults.setDefaults();
+	}
 
 	public AbstractGUIObject() {
 	}
@@ -68,15 +72,7 @@ public abstract class AbstractGUIObject implements GUIObject {
 	}
 
 	public final JFrame showGUI() {
-		try {
-			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
-			Method method = c.getMethod("showFrame",
-					new Class[] { GUIObject.class });
-			return (JFrame) method.invoke(null, new Object[] { this });
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return FrameManager.showFrame(this);
 	}
 
 	public String getToolTipText() {

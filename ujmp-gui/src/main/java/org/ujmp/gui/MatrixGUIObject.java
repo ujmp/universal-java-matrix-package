@@ -28,6 +28,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.EventListenerList;
@@ -40,9 +42,10 @@ import javax.swing.table.TableModel;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.gui.frame.MatrixFrame;
+import org.ujmp.gui.panels.MatrixPanel;
 import org.ujmp.gui.util.FastListSelectionModel;
 
 public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
@@ -59,6 +62,10 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	private transient ListSelectionModel columnSelectionModel = null;
 
 	private transient EventListenerList listenerList = null;
+
+	private transient JFrame frame = null;
+
+	private transient JPanel panel = null;
 
 	public MatrixGUIObject(Matrix m) {
 		this.matrix = m;
@@ -394,4 +401,21 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public Matrix getCoreObject() {
 		return matrix;
 	}
+
+	@Override
+	public JFrame getFrame() {
+		if (frame == null) {
+			frame = new MatrixFrame(this);
+		}
+		return frame;
+	}
+
+	@Override
+	public JPanel getPanel() {
+		if (panel == null) {
+			panel = new MatrixPanel(this);
+		}
+		return panel;
+	}
+
 }

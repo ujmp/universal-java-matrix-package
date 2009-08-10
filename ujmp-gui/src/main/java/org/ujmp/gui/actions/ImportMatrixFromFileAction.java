@@ -48,36 +48,41 @@ public class ImportMatrixFromFileAction extends ObjectAction {
 	}
 
 	@Override
-	public Object call() throws Exception {
-		File file = null;
-		FileFormat fileFormat = null;
-		JFileChooser chooser = new JFileChooser();
+	public Object call() {
+		try {
+			File file = null;
+			FileFormat fileFormat = null;
+			JFileChooser chooser = new JFileChooser();
 
-		for (FileFormat f : FileFormat.values()) {
-			chooser.addChoosableFileFilter(f.getFileFilter());
-		}
-
-		chooser.setFileFilter(FileFormat.CSV.getFileFilter());
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setDialogTitle("Import");
-
-		int returnVal = chooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			file = chooser.getSelectedFile();
-			FileFilter filter = chooser.getFileFilter();
 			for (FileFormat f : FileFormat.values()) {
-				if (filter.equals(f.getFileFilter())) {
-					fileFormat = f;
-				}
+				chooser.addChoosableFileFilter(f.getFileFilter());
 			}
 
-		}
+			chooser.setFileFilter(FileFormat.CSV.getFileFilter());
+			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.setDialogTitle("Import");
 
-		if (file == null)
+			int returnVal = chooser.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				file = chooser.getSelectedFile();
+				FileFilter filter = chooser.getFileFilter();
+				for (FileFormat f : FileFormat.values()) {
+					if (filter.equals(f.getFileFilter())) {
+						fileFormat = f;
+					}
+				}
+
+			}
+
+			if (file == null)
+				return null;
+
+			Matrix m = MatrixFactory.importFromFile(fileFormat, file);
+			m.showGUI();
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
-
-		Matrix m = MatrixFactory.importFromFile(fileFormat, file);
-		m.showGUI();
-		return m;
+		}
 	}
 }

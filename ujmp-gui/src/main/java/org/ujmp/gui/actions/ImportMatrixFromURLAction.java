@@ -47,20 +47,25 @@ public class ImportMatrixFromURLAction extends ObjectAction {
 	}
 
 	@Override
-	public Object call() throws Exception {
-		URL url = null;
-		while (url == null) {
-			String s = JOptionPane.showInputDialog("Enter URL:", "http://");
-			url = new URL(s);
-		}
-		FileFormat fileFormat = FileFormat.values()[JOptionPane
-				.showOptionDialog(getComponent(), "Select format",
-						"Import Matrix", JOptionPane.OK_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null,
-						FileFormat.values(), FileFormat.CSV)];
+	public Object call() {
+		try {
+			URL url = null;
+			while (url == null) {
+				String s = JOptionPane.showInputDialog("Enter URL:", "http://");
+				url = new URL(s);
+			}
+			FileFormat fileFormat = FileFormat.values()[JOptionPane
+					.showOptionDialog(getComponent(), "Select format",
+							"Import Matrix", JOptionPane.OK_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, FileFormat
+									.values(), FileFormat.CSV)];
 
-		Matrix m = MatrixFactory.importFromURL(fileFormat, url);
-		m.showGUI();
-		return m;
+			Matrix m = MatrixFactory.importFromURL(fileFormat, url);
+			m.showGUI();
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

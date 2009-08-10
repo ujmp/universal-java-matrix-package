@@ -45,15 +45,20 @@ public class ImportMatrixFromClipboardAction extends ObjectAction {
 	}
 
 	@Override
-	public Object call() throws Exception {
-		FileFormat fileFormat = FileFormat.values()[JOptionPane
-				.showOptionDialog(getComponent(), "Select format",
-						"Import Matrix", JOptionPane.OK_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null,
-						FileFormat.values(), FileFormat.CSV)];
+	public Object call() {
+		try {
+			FileFormat fileFormat = FileFormat.values()[JOptionPane
+					.showOptionDialog(getComponent(), "Select format",
+							"Import Matrix", JOptionPane.OK_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, FileFormat
+									.values(), FileFormat.CSV)];
 
-		Matrix m = MatrixFactory.importFromClipboard(fileFormat);
-		m.showGUI();
-		return m;
+			Matrix m = MatrixFactory.importFromClipboard(fileFormat);
+			m.showGUI();
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

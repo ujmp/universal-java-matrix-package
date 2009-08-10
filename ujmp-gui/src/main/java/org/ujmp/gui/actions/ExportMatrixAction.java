@@ -46,52 +46,57 @@ public class ExportMatrixAction extends ObjectAction {
 	}
 
 	@Override
-	public Object call() throws Exception {
-		File file = null;
-		JFileChooser chooser = new JFileChooser();
+	public Object call() {
+		try {
+			File file = null;
+			JFileChooser chooser = new JFileChooser();
 
-		for (FileFormat f : FileFormat.values()) {
-			chooser.addChoosableFileFilter(f.getFileFilter());
-		}
-
-		chooser.setFileFilter(FileFormat.CSV.getFileFilter());
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setDialogTitle("Export");
-
-		int returnVal = chooser.showSaveDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			file = chooser.getSelectedFile();
-
-			FileFilter filter = chooser.getFileFilter();
-
-			String suffix = ((UJMPFileFilter) filter).getSuffix()[0];
-			if (!file.getAbsolutePath().toLowerCase().endsWith(suffix)) {
-				file = new File(file.getAbsolutePath() + "." + suffix);
+			for (FileFormat f : FileFormat.values()) {
+				chooser.addChoosableFileFilter(f.getFileFilter());
 			}
-		}
 
-		if (file == null)
-			return null;
+			chooser.setFileFilter(FileFormat.CSV.getFileFilter());
+			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.setDialogTitle("Export");
 
-		if (file.exists()) {
-			int result = JOptionPane.showConfirmDialog(null,
-					"File already exists. Overwrite?", "Warning",
-					JOptionPane.YES_NO_OPTION);
-			if (result != JOptionPane.YES_OPTION)
+			int returnVal = chooser.showSaveDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				file = chooser.getSelectedFile();
+
+				FileFilter filter = chooser.getFileFilter();
+
+				String suffix = ((UJMPFileFilter) filter).getSuffix()[0];
+				if (!file.getAbsolutePath().toLowerCase().endsWith(suffix)) {
+					file = new File(file.getAbsolutePath() + "." + suffix);
+				}
+			}
+
+			if (file == null)
 				return null;
-		}
 
-		GUIObject o = getGUIObject();
-
-		if (o instanceof MatrixGUIObject) {
-			MatrixGUIObject m = (MatrixGUIObject) o;
-			try {
-				m.getMatrix().exportToFile(file);
-			} catch (Exception e) {
+			if (file.exists()) {
+				int result = JOptionPane.showConfirmDialog(null,
+						"File already exists. Overwrite?", "Warning",
+						JOptionPane.YES_NO_OPTION);
+				if (result != JOptionPane.YES_OPTION)
+					return null;
 			}
-		}
 
-		return null;
+			GUIObject o = getGUIObject();
+
+			if (o instanceof MatrixGUIObject) {
+				MatrixGUIObject m = (MatrixGUIObject) o;
+				try {
+					m.getMatrix().exportToFile(file);
+				} catch (Exception e) {
+				}
+			}
+
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

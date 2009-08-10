@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import javax.swing.Icon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * A GUIObject is an object that can be displayed in a Frame. This interface is
@@ -52,6 +53,16 @@ public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel,
 	public Icon getIcon();
 
 	public int getModCount();
+
+	/**
+	 * This method will return a JFrame for this object.
+	 */
+	public JFrame getFrame();
+
+	/**
+	 * This method will return a JPanel for this object.
+	 */
+	public JPanel getPanel();
 
 	public CoreObject getCoreObject();
 

@@ -59,7 +59,7 @@ public abstract class AbstractFrame extends JFrame {
 
 	public AbstractFrame(GUIObject o, JComponent component) {
 		UIDefaults.setDefaults();
-		FrameManager.registerFrame(this);
+		FrameManager.registerFrame(o, this);
 		this.object = o;
 		String label = o.getLabel() == null ? "no label" : o.getLabel();
 		if (o instanceof MatrixGUIObject) {

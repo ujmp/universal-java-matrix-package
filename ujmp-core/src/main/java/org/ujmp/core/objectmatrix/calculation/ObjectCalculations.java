@@ -36,6 +36,8 @@ public interface ObjectCalculations {
 
 	public Matrix sort(Ret returnType) throws MatrixException;
 
+	public Matrix sort(Ret returnType, long column) throws MatrixException;
+
 	public Matrix shuffle(Ret returnType) throws MatrixException;
 
 	public Matrix bootstrap(Ret returnType) throws MatrixException;

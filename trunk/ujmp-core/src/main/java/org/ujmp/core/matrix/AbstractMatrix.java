@@ -1168,6 +1168,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Sort(this).calc(returnType);
 	}
 
+	public final Matrix sort(Ret returnType, long column) throws MatrixException {
+		return new Sort(this, column).calc(returnType);
+	}
+
 	public final Matrix cumsum(boolean ignoreNaN) throws MatrixException {
 		return new Cumsum(this, ignoreNaN).calcNew();
 	}

@@ -64,31 +64,6 @@ public class Sort extends AbstractObjectCalculation {
 		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
-	/**
-	 * seems not to work
-	 */
-	// private void createSortIndex() {
-	// Matrix m = getSource();
-	// IntMatrix2D indexMatrix = new DefaultDenseIntMatrix2D(m.getSize());
-	// for (long i = 0; i < m.getRowCount(); i++) {
-	// SortedSet<Sortable<?, Long>> sortedSet = new TreeSet<Sortable<?,
-	// Long>>();
-	// for (long j = 0; j < m.getColumnCount(); j++) {
-	// Comparable c = (Comparable) m.getObject(i, j);
-	// Sortable<?, Long> s = new Sortable(c, j, true);
-	// sortedSet.add(s);
-	// }
-	// Iterator<Sortable<?, Long>> it = sortedSet.iterator();
-	// long j = 0;
-	// while (it.hasNext()) {
-	// Sortable<?, Long> s = it.next();
-	// long index = s.getObject();
-	// indexMatrix.setInt((int) index, i, j);
-	// j++;
-	// }
-	// }
-	// this.index = indexMatrix;
-	// }
 	@SuppressWarnings("unchecked")
 	private void createSortIndex() {
 		Matrix m = getSource();

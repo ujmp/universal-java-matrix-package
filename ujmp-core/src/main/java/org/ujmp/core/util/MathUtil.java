@@ -627,6 +627,19 @@ public abstract class MathUtil {
 		return 0;
 	}
 
+	public static Object getObject(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof Matrix) {
+			Matrix m = (Matrix) o;
+			if (m.getValueCount() == 1) {
+				return m.getAsObject(0, 0);
+			}
+		}
+		return o;
+	}
+
 	public static int getInt(Object o) {
 		if (o == null) {
 			return 0;

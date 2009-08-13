@@ -29,12 +29,12 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.ujmp.core.Matrix;
@@ -42,6 +42,8 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class MathUtil {
+
+	private static List<DateFormat> dateFormats = null;
 
 	private static final double ROOT2PI = Math.sqrt(2 * Math.PI);
 
@@ -51,6 +53,19 @@ public abstract class MathUtil {
 
 	static {
 		random.setSeed(seed);
+		dateFormats = new ArrayList<DateFormat>();
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US));
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US));
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.US));
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN));
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.GERMAN));
+		dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.GERMAN));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.US));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.US));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.GERMAN));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.GERMAN));
+		dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.GERMAN));
 	}
 
 	public static String getMD5Sum(String text) throws NoSuchAlgorithmException {
@@ -243,9 +258,11 @@ public abstract class MathUtil {
 			return new Date((Long) o);
 		}
 		if (o instanceof String) {
-			try {
-				return DateFormat.getInstance().parse((String) o);
-			} catch (ParseException e) {
+			for (DateFormat df : dateFormats) {
+				try {
+					return df.parse((String) o);
+				} catch (Exception e) {
+				}
 			}
 		}
 		return new Date(getLong(o));

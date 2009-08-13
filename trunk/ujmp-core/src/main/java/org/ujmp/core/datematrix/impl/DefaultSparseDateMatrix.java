@@ -30,7 +30,7 @@ import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
-import org.ujmp.core.util.DateUtil;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseDateMatrix extends DefaultSparseGenericMatrix<Date> implements DateMatrix {
 	private static final long serialVersionUID = 2390606192648342906L;
@@ -58,7 +58,7 @@ public class DefaultSparseDateMatrix extends DefaultSparseGenericMatrix<Date> im
 
 	@Override
 	public Date getDate(long... coordinates) throws MatrixException {
-		return DateUtil.fromObject(getObject(coordinates));
+		return MathUtil.getDate(getObject(coordinates));
 	}
 
 	@Override

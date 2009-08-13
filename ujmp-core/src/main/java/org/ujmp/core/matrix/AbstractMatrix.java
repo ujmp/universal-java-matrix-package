@@ -161,7 +161,6 @@ import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
-import org.ujmp.core.util.DateUtil;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -1840,7 +1839,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (isScalar()) {
 			return getAsDate(0, 0);
 		}
-		return DateUtil.fromObject(getMeanValue());
+		return MathUtil.getDate(getMeanValue());
 	}
 
 	public final boolean booleanValue() throws MatrixException {

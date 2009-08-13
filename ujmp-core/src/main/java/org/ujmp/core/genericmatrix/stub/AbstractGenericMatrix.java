@@ -25,7 +25,6 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.matrix.AbstractMatrix;
-import org.ujmp.core.util.DateUtil;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
@@ -55,7 +54,7 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 			setAsChar(MathUtil.getChar(o), coordinates);
 			break;
 		case DATE:
-			setAsDate(DateUtil.fromObject(o), coordinates);
+			setAsDate(MathUtil.getDate(o), coordinates);
 			break;
 		case DOUBLE:
 			setAsDouble(MathUtil.getDouble(o), coordinates);

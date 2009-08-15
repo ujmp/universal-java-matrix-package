@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
@@ -107,6 +108,10 @@ public abstract class StringUtil {
 
 	public void setDefaultMinimumFractionDigits(int n) {
 		DefaultNF.setMinimumFractionDigits(n);
+	}
+
+	public static final String deleteChar(String s, char ch) {
+		return deleteChar(s, ch, 0);
 	}
 
 	public static final String deleteChar(String s, char ch, int startIndex) {
@@ -224,5 +229,31 @@ public abstract class StringUtil {
 			i++;
 		}
 		return s.toString();
+	}
+
+	public static String deleteChars(String s, Set<Character> ignoredChars, char replacement) {
+		char[] result = new char[s.length()];
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (!ignoredChars.contains(c)) {
+				result[i] = c;
+			} else {
+				result[i] = replacement;
+			}
+		}
+		return new String(result);
+	}
+
+	public static String retainChars(String s, Set<Character> allowedChars, char replacement) {
+		char[] result = new char[s.length()];
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (allowedChars.contains(c)) {
+				result[i] = c;
+			} else {
+				result[i] = replacement;
+			}
+		}
+		return new String(result);
 	}
 }

@@ -61,4 +61,12 @@ public interface StringCalculations {
 	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
 			throws MatrixException;
 
+	public Matrix lowercase(Ret returnType) throws MatrixException;
+
+	public Matrix uppercase(Ret returnType) throws MatrixException;
+
+	public Matrix wordcount() throws MatrixException;
+
+	public Matrix removepunctuation(Ret ret) throws MatrixException;
+
 }

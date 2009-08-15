@@ -23,6 +23,7 @@
 
 package org.ujmp.core.stringmatrix.calculation;
 
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
@@ -61,12 +62,14 @@ public interface StringCalculations {
 	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
 			throws MatrixException;
 
-	public Matrix lowercase(Ret returnType) throws MatrixException;
+	public Matrix lowerCase(Ret returnType) throws MatrixException;
 
-	public Matrix uppercase(Ret returnType) throws MatrixException;
+	public Matrix upperCase(Ret returnType) throws MatrixException;
 
-	public Matrix wordcount() throws MatrixException;
+	public Matrix wordCount() throws MatrixException;
 
-	public Matrix removepunctuation(Ret ret) throws MatrixException;
+	public Matrix removePunctuation(Ret ret) throws MatrixException;
+
+	public Matrix removeWords(Ret ret, Collection<String> words) throws MatrixException;
 
 }

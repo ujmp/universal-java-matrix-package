@@ -26,10 +26,10 @@ package org.ujmp.core.stringmatrix.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class Lowercase extends AbstractStringCalculation {
-	private static final long serialVersionUID = 908684280859100626L;
+public class UpperCase extends AbstractStringCalculation {
+	private static final long serialVersionUID = -7716768217752514784L;
 
-	public Lowercase(Matrix m) {
+	public UpperCase(Matrix m) {
 		super(m);
 	}
 
@@ -39,7 +39,7 @@ public class Lowercase extends AbstractStringCalculation {
 		if (s == null) {
 			return null;
 		} else {
-			return s.toLowerCase();
+			return s.toUpperCase();
 		}
 	}
 

@@ -24,14 +24,14 @@
 package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> implements
-		DoubleMatrix {
+		SparseDoubleMatrix {
 	private static final long serialVersionUID = -1168427818140098524L;
 
 	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {

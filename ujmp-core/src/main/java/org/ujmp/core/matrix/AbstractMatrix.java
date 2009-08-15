@@ -136,6 +136,7 @@ import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
+import org.ujmp.core.longmatrix.calculation.WordCount;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
@@ -159,8 +160,11 @@ import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
+import org.ujmp.core.stringmatrix.calculation.Lowercase;
+import org.ujmp.core.stringmatrix.calculation.RemovePunctuation;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
+import org.ujmp.core.stringmatrix.calculation.Uppercase;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -1333,6 +1337,22 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix bootstrap(Ret returnType) throws MatrixException {
 		return new Bootstrap(this).calc(returnType);
+	}
+
+	public Matrix lowercase(Ret returnType) throws MatrixException {
+		return new Lowercase(this).calc(returnType);
+	}
+
+	public Matrix uppercase(Ret returnType) throws MatrixException {
+		return new Uppercase(this).calc(returnType);
+	}
+
+	public Matrix wordcount() throws MatrixException {
+		return new WordCount(this).calc(Ret.NEW);
+	}
+
+	public Matrix removepunctuation(Ret ret) throws MatrixException {
+		return new RemovePunctuation(this).calc(ret);
 	}
 
 	public Matrix unique(Ret returnType) throws MatrixException {

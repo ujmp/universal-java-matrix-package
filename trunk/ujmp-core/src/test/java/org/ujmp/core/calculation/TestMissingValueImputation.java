@@ -29,7 +29,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeLS;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
@@ -40,16 +39,6 @@ public class TestMissingValueImputation extends TestCase {
 
 		for (ImputationMethod method : ImputationMethod.values()) {
 
-			if (ImputationMethod.EM.equals(method)) {
-				if (!SVD.isAvailable()) {
-					continue;
-				}
-			}
-			if (ImputationMethod.Regression.equals(method)) {
-				if (!SVD.isAvailable()) {
-					continue;
-				}
-			}
 			if (ImputationMethod.BPCA.equals(method)) {
 				if (!ImputeBPCA.isAvailable()) {
 					continue;

@@ -21,28 +21,30 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.actions;
+package org.ujmp.core.doublematrix.calculation.general.misc;
 
-import javax.swing.Action;
-import javax.swing.JComponent;
-
+import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.MatrixGUIObject;
 
-public class RescaleMatrixAction extends MatrixAction {
-	private static final long serialVersionUID = -4509186928254414609L;
+public class FadeIn extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = -9112118361778270600L;
 
-	public RescaleMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Rescale Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"scales all entries to values between -1 and 1");
+	public FadeIn(int dimension, Matrix matrix) {
+		super(dimension, matrix);
 	}
 
 	@Override
-	public Object call() throws MatrixException {
-		getMatrixObject().getMatrix().rescaleEntries_(getDimension(), -1, 1);
-		return null;
+	public double getDouble(long... coordinates) throws MatrixException {
+		double factor = 0.0;
+		switch (getDimension()) {
+		case Matrix.COLUMN:
+			factor = (double) coordinates[COLUMN] / (double) (getSource().getColumnCount() - 1);
+			break;
+		default:
+			factor = (double) coordinates[ROW] / (double) (getSource().getRowCount() - 1);
+			break;
+		}
+		return getSource().getAsDouble(coordinates) * factor;
 	}
 }

@@ -38,10 +38,6 @@ public class Pinv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public static boolean isAvailable() {
-		return SVD.isAvailable();
-	}
-
 	@Override
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (pinv == null) {

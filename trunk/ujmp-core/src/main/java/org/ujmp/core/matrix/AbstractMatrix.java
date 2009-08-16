@@ -70,6 +70,7 @@ import org.ujmp.core.datematrix.calculation.ToDateMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
+import org.ujmp.core.doublematrix.calculation.basic.Atimes;
 import org.ujmp.core.doublematrix.calculation.basic.Divide;
 import org.ujmp.core.doublematrix.calculation.basic.Minus;
 import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
@@ -102,6 +103,8 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
+import org.ujmp.core.doublematrix.calculation.general.misc.FadeIn;
+import org.ujmp.core.doublematrix.calculation.general.misc.FadeOut;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
@@ -211,30 +214,37 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		id = runningId++;
 	}
 
+	@Override
 	public final long getCoreObjectId() {
 		return id;
 	}
 
+	@Override
 	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getAsObject(coordinates));
 	}
 
+	@Override
 	public void setAsDouble(double v, long... coordinates) {
 		setAsObject(v, coordinates);
 	}
 
+	@Override
 	public final Object getPreferredObject(long... coordinates) throws MatrixException {
 		return MathUtil.getPreferredObject(getAsObject(coordinates));
 	}
 
+	@Override
 	public final Object getMatrixAnnotation() {
 		return annotation == null ? null : annotation.getMatrixAnnotation();
 	}
 
+	@Override
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
+	@Override
 	public final void setMatrixAnnotation(Object value) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation();
@@ -242,14 +252,17 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		annotation.setMatrixAnnotation(value);
 	}
 
+	@Override
 	public final Object getAxisAnnotation(int axis, long positionOnAxis) {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis, positionOnAxis);
 	}
 
+	@Override
 	public final Object getAxisAnnotation(int axis) {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis);
 	}
 
+	@Override
 	public final void setAxisAnnotation(int axis, long positionOnAxis, Object value) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation();
@@ -257,6 +270,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		annotation.setAxisAnnotation(axis, positionOnAxis, value);
 	}
 
+	@Override
 	public final void setAxisAnnotation(int axis, Object value) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation();
@@ -264,6 +278,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		annotation.setAxisAnnotation(axis, value);
 	}
 
+	@Override
 	public final GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
@@ -277,6 +292,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return guiObject;
 	}
 
+	@Override
 	public final boolean containsMissingValues() throws MatrixException {
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
@@ -287,6 +303,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public final double getEuklideanValue() throws MatrixException {
 		double sum = 0.0;
 		for (long[] c : allCoordinates()) {
@@ -305,57 +322,74 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final Matrix select(Ret returnType, long[]... selection) throws MatrixException {
 		return new Selection(this, selection).calc(returnType);
 	}
 
+	@Override
 	public final Matrix select(Ret returnType, Collection<? extends Number>... selection)
 			throws MatrixException {
 		return new Selection(this, selection).calc(returnType);
 	}
 
+	@Override
 	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
 		return select(returnType, rows, null);
 	}
 
+	@Override
 	public final Matrix select(Ret returnType, String selection) throws MatrixException {
 		return new Selection(this, selection).calc(returnType);
 	}
 
+	@Override
 	public Matrix selectColumns(Ret returnType, long... columns) throws MatrixException {
 		return select(returnType, null, columns);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public final Matrix selectRows(Ret returnType, Collection<? extends Number> rows)
 			throws MatrixException {
 		return select(returnType, rows, null);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public final Matrix selectColumns(Ret returnType, Collection<? extends Number> columns)
 			throws MatrixException {
 		return select(returnType, null, columns);
 	}
 
+	@Override
 	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters)
 			throws MatrixException {
 		return new Impute(this, method, parameters).calc(returnType);
 	}
 
+	@Override
 	public Matrix indexOfMax(Ret returnType, int dimension) throws MatrixException {
 		return new IndexOfMax(dimension, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix indexOfMin(Ret returnType, int dimension) throws MatrixException {
 		return new IndexOfMin(dimension, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN)
 			throws MatrixException {
 		return new Standardize(ignoreNaN, dimension, this).calc(returnType);
 	}
 
+	@Override
+	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
+		return new Atimes(ignoreNaN, this, matrix).calc(returnType);
+	}
+
+	@Override
 	public Matrix inv() throws MatrixException {
 		if (getDimensionCount() != 2 || getRowCount() != getColumnCount()) {
 			throw new MatrixException(
@@ -364,169 +398,210 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return ginv();
 	}
 
+	@Override
 	public Matrix ginv() throws MatrixException {
 		return new Ginv(this).calcNew();
 	}
 
+	@Override
 	public Matrix princomp() throws MatrixException {
 		return new Princomp(this).calcNew();
 	}
 
+	@Override
 	public Matrix pinv() throws MatrixException {
 		return new Pinv(this).calcNew();
 	}
 
+	@Override
 	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Center(ignoreNaN, dimension, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix copy() throws MatrixException {
 		return Convert.calcNew(this);
 	}
 
+	@Override
 	public boolean isResizeable() {
 		return false;
 	}
 
+	@Override
 	public final Matrix convert(ValueType newValueType) throws MatrixException {
 		return Convert.calcNew(newValueType, this);
 	}
 
+	@Override
 	public final Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
 			throws MatrixException {
 		return new ReplaceRegex(this, search, replacement).calc(returnType);
 	}
 
+	@Override
 	public final Matrix replace(Ret returnType, Object search, Object replacement)
 			throws MatrixException {
 		return new Replace(this, search, replacement).calc(returnType);
 	}
 
+	@Override
 	public final Matrix replaceRegex(Ret returnType, String search, String replacement)
 			throws MatrixException {
 		return new ReplaceRegex(this, search, replacement).calc(returnType);
 	}
 
+	@Override
 	public Matrix times(double factor) throws MatrixException {
 		return Times.calc(false, this, factor);
 	}
 
+	@Override
 	public Matrix times(Matrix matrix) throws MatrixException {
 		return Times.calc(false, this, matrix);
 	}
 
+	@Override
 	public Matrix divide(Matrix m) throws MatrixException {
 		return Divide.calc(this, m);
 	}
 
+	@Override
 	public Matrix divide(double factor) throws MatrixException {
 		return Divide.calc(this, factor);
 	}
 
+	@Override
 	public Matrix divide(Ret returnType, boolean ignoreNaN, double factor) throws MatrixException {
 		return new Divide(ignoreNaN, this, factor).calc(returnType);
 	}
 
+	@Override
 	public Matrix times(Ret returnType, boolean ignoreNaN, double factor) throws MatrixException {
 		return new Times(ignoreNaN, this, factor).calc(returnType);
 	}
 
+	@Override
 	public Matrix times(Ret returnType, boolean ignoreNaN, Matrix factor) throws MatrixException {
 		return new Times(ignoreNaN, this, factor).calc(returnType);
 	}
 
+	@Override
 	public Matrix divide(Ret returnType, boolean ignoreNaN, Matrix factor) throws MatrixException {
 		return new Divide(ignoreNaN, this, factor).calc(returnType);
 	}
 
+	@Override
 	public final Matrix power(Ret returnType, double power) throws MatrixException {
 		return new Power(this, power).calc(returnType);
 	}
 
+	@Override
 	public final Matrix power(Ret returnType, Matrix power) throws MatrixException {
 		return new Power(this, power).calc(returnType);
 	}
 
+	@Override
 	public final Matrix gt(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Gt(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix gt(Ret returnType, double value) throws MatrixException {
 		return new Gt(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix and(Ret returnType, Matrix matrix) throws MatrixException {
 		return new And(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix and(Ret returnType, boolean value) throws MatrixException {
 		return new And(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix or(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Or(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix or(Ret returnType, boolean value) throws MatrixException {
 		return new Or(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix xor(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Xor(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix xor(Ret returnType, boolean value) throws MatrixException {
 		return new Xor(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix not(Ret returnType) throws MatrixException {
 		return new Not(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix lt(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Lt(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix lt(Ret returnType, double value) throws MatrixException {
 		return new Lt(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix ge(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Ge(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix ge(Ret returnType, double value) throws MatrixException {
 		return new Ge(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix le(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Le(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix le(Ret returnType, double value) throws MatrixException {
 		return new Le(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix eq(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Eq(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix eq(Ret returnType, Object value) throws MatrixException {
 		return new Eq(this, value).calc(returnType);
 	}
 
+	@Override
 	public final Matrix ne(Ret returnType, Matrix matrix) throws MatrixException {
 		return new Ne(this, matrix).calc(returnType);
 	}
 
+	@Override
 	public final Matrix ne(Ret returnType, Object value) throws MatrixException {
 		return new Ne(this, value).calc(returnType);
 	}
 
+	@Override
 	public long getValueCount() {
 		return Coordinates.product(getSize());
 	}
 
+	@Override
 	public final long[] getCoordinatesOfMaximum() throws MatrixException {
 		double max = -Double.MAX_VALUE;
 		long[] maxc = Coordinates.copyOf(getSize());
@@ -541,6 +616,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return maxc;
 	}
 
+	@Override
 	public final long[] getCoordinatesOfMinimum() throws MatrixException {
 		double min = Double.MAX_VALUE;
 		long[] minc = Coordinates.copyOf(getSize());
@@ -555,26 +631,32 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return minc;
 	}
 
+	@Override
 	public Iterable<long[]> selectedCoordinates(String selection) throws MatrixException {
 		return select(Ret.LINK, selection).allCoordinates();
 	}
 
+	@Override
 	public Iterable<long[]> selectedCoordinates(long[]... selection) throws MatrixException {
 		return select(Ret.LINK, selection).allCoordinates();
 	}
 
+	@Override
 	public boolean isTransient() {
 		return false;
 	}
 
+	@Override
 	public Iterable<long[]> nonZeroCoordinates() {
 		return availableCoordinates();
 	}
 
+	@Override
 	public Iterable<long[]> availableCoordinates() {
 		return allCoordinates();
 	}
 
+	@Override
 	public double[][] toDoubleArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -587,6 +669,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public Object[][] toObjectArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -599,6 +682,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public int[][] toIntArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -611,6 +695,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public long[][] toLongArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -623,6 +708,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public short[][] toShortArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -635,6 +721,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public char[][] toCharArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -647,6 +734,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public String[][] toStringArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -659,6 +747,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public byte[][] toByteArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -671,6 +760,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public boolean[][] toBooleanArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -683,6 +773,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public float[][] toFloatArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -695,6 +786,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public Date[][] toDateArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -707,6 +799,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public BigDecimal[][] toBigDecimalArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -719,6 +812,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public BigInteger[][] toBigIntegerArray() throws MatrixException {
 		int r = (int) getRowCount();
 		int c = (int) getColumnCount();
@@ -731,22 +825,27 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return values;
 	}
 
+	@Override
 	public final Matrix sqrt(Ret returnType) throws MatrixException {
 		return new Sqrt(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix round(Ret returnType) throws MatrixException {
 		return new Round(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix ceil(Ret returnType) throws MatrixException {
 		return new Ceil(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix floor(Ret returnType) throws MatrixException {
 		return new Floor(this).calc(returnType);
 	}
 
+	@Override
 	public final JFrame showGUI() {
 		try {
 			Class<?> c = Class.forName("org.ujmp.gui.util.FrameManager");
@@ -759,68 +858,84 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public void notifyGUIObject() {
 		if (guiObject != null) {
 			guiObject.fireValueChanged();
 		}
 	}
 
+	@Override
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
 		return DoubleCalculations.mtimes.calc(this, matrix);
 	}
 
+	@Override
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
 		return new Mtimes(ignoreNaN, this, matrix).calc(returnType);
 	}
 
+	@Override
 	public Matrix mtimes(double value) throws MatrixException {
 		return times(value);
 	}
 
+	@Override
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value) throws MatrixException {
 		return times(returnType, ignoreNaN, value);
 	}
 
+	@Override
 	public boolean getAsBoolean(long... coordinates) throws MatrixException {
 		return MathUtil.getBoolean(getAsObject(coordinates));
 	}
 
+	@Override
 	public void setAsBoolean(boolean value, long... coordinates) throws MatrixException {
 		setAsDouble(value ? 1.0 : 0.0, coordinates);
 	}
 
+	@Override
 	public int getAsInt(long... coordinates) throws MatrixException {
 		return (int) getAsDouble(coordinates);
 	}
 
+	@Override
 	public void setAsInt(int value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public byte getAsByte(long... coordinates) throws MatrixException {
 		return (byte) getAsDouble(coordinates);
 	}
 
+	@Override
 	public void setAsByte(byte value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public char getAsChar(long... coordinates) throws MatrixException {
 		return (char) getAsDouble(coordinates);
 	}
 
+	@Override
 	public BigInteger getAsBigInteger(long... coordinates) throws MatrixException {
 		return MathUtil.getBigInteger(getAsObject(coordinates));
 	}
 
+	@Override
 	public BigDecimal getAsBigDecimal(long... coordinates) throws MatrixException {
 		return MathUtil.getBigDecimal(getAsObject(coordinates));
 	}
 
+	@Override
 	public void setAsChar(char value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 		if (value == null) {
 			setAsDouble(0, coordinates);
@@ -829,6 +944,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		if (value == null) {
 			setAsLong(0, coordinates);
@@ -837,203 +953,178 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public float getAsFloat(long... coordinates) throws MatrixException {
 		return (float) getAsDouble(coordinates);
 	}
 
+	@Override
 	public void setAsFloat(float value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public short getAsShort(long... coordinates) throws MatrixException {
 		return (short) getAsDouble(coordinates);
 	}
 
+	@Override
 	public Matrix getAsMatrix(long... coordinates) throws MatrixException {
 		return MathUtil.getMatrix(getAsObject(coordinates));
 	}
 
+	@Override
 	public void setAsMatrix(Matrix m, long... coordinates) throws MatrixException {
 		setAsObject(m, coordinates);
 	}
 
+	@Override
 	public void setAsShort(short value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public long getAsLong(long... coordinates) throws MatrixException {
 		return (long) getAsDouble(coordinates);
 	}
 
+	@Override
 	public void setAsLong(long value, long... coordinates) throws MatrixException {
 		setAsDouble(value, coordinates);
 	}
 
+	@Override
 	public Date getAsDate(long... coordinates) throws MatrixException {
 		return MathUtil.getDate(getAsObject(coordinates));
 	}
 
+	@Override
 	public void setAsDate(Date date, long... coordinates) throws MatrixException {
 		setAsObject(date, coordinates);
 	}
 
+	@Override
 	public final Matrix delete(Ret returnType, String selection) throws MatrixException {
 		return new Deletion(this, selection).calc(returnType);
 	}
 
+	@Override
 	public final Matrix delete(Ret returnType, Collection<? extends Number>... selection)
 			throws MatrixException {
 		return new Deletion(this, selection).calc(returnType);
 	}
 
+	@Override
 	public final Matrix delete(Ret returnType, long[]... selection) throws MatrixException {
 		return new Deletion(this, selection).calc(returnType);
 	}
 
+	@Override
 	public final Matrix deleteRows(Ret returnType, long... rows) throws MatrixException {
 		return delete(returnType, rows, new long[] {});
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public final Matrix deleteRows(Ret returnType, Collection<? extends Number> rows)
 			throws MatrixException {
 		return delete(returnType, rows, new ArrayList<Long>());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public final Matrix deleteColumns(Ret returnType, Collection<? extends Number> columns)
 			throws MatrixException {
 		return delete(returnType, new ArrayList<Long>(), columns);
 	}
 
+	@Override
 	public final Matrix deleteColumns(Ret returnType, long... columns) throws MatrixException {
 		return delete(returnType, new long[] {}, columns);
 	}
 
+	@Override
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double v) throws MatrixException {
 		return new Minus(ignoreNaN, this, v).calc(returnType);
 	}
 
+	@Override
 	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
 		return new Minus(ignoreNaN, this, m).calc(returnType);
 	}
 
+	@Override
 	public Matrix plus(Ret returnType, boolean ignoreNaN, double v) throws MatrixException {
 		return new Plus(ignoreNaN, this, v).calc(returnType);
 	}
 
+	@Override
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m) throws MatrixException {
 		return new Plus(ignoreNaN, this, m).calc(returnType);
 	}
 
-	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
-
-		if (returnType != Ret.NEW) {
-			throw new MatrixException("not yet supported");
-		}
-
-		int i, j, k, count;
-		double sum;
-
-		if (this.getColumnCount() != matrix.getRowCount()) {
-			logger.log(Level.WARNING, "matrices have wrong size");
-			return null;
-		}
-
-		long rowCount = getRowCount();
-		long columnCount = getColumnCount();
-		long mColumnCount = matrix.getColumnCount();
-
-		Matrix ret = MatrixFactory.zeros(rowCount, mColumnCount);
-
-		if (ignoreNaN) {
-
-			for (i = 0; i < rowCount; i++) {
-				for (j = 0; j < mColumnCount; j++) {
-					sum = 0.0;
-					count = 0;
-					for (k = 0; k < columnCount; k++) {
-						double v1 = getAsDouble(i, k);
-						double v2 = matrix.getAsDouble(k, j);
-						if (!MathUtil.isNaNOrInfinite(v1) && !MathUtil.isNaNOrInfinite(v2)) {
-							sum += v1 * v2;
-							count++;
-						}
-					}
-					ret.setAsDouble(sum / count, i, j);
-				}
-			}
-
-		} else {
-
-			for (i = 0; i < rowCount; i++) {
-				for (j = 0; j < mColumnCount; j++) {
-					sum = 0.0;
-					count = 0;
-					for (k = 0; k < columnCount; k++) {
-						double v1 = getAsDouble(i, k);
-						double v2 = matrix.getAsDouble(k, j);
-						sum += v1 * v2;
-						count++;
-					}
-					ret.setAsDouble(sum / count, i, j);
-				}
-			}
-
-		}
-
-		return ret;
-	}
-
+	@Override
 	public Matrix transpose() throws MatrixException {
 		return Transpose.calc(this);
 	}
 
+	@Override
 	public Matrix transpose(Ret returnType) throws MatrixException {
 		return new Transpose(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix mean(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Mean(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Var(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Std(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public long getColumnCount() {
 		return getSize(COLUMN);
 	}
 
+	@Override
 	public long getRowCount() {
 		return getSize(ROW);
 	}
 
+	@Override
 	public long getZCount() {
 		return getSize(Z);
 	}
 
+	@Override
 	public final long getSize(int dimension) {
 		return getSize()[dimension];
 	}
 
+	@Override
 	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Prod(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix diff(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
 		return new Diff(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix sum(Ret returnType, int dimension, boolean ignoreNaN)
 			throws MatrixException {
 		return new Sum(dimension, ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix sign(Ret returnType) throws MatrixException {
 		return new Sign(this).calc(returnType);
 	}
@@ -1070,58 +1161,72 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return s.toString();
 	}
 
+	@Override
 	public final int getDimensionCount() {
 		return getSize().length;
 	}
 
+	@Override
 	public final Matrix ones(Ret ret) throws MatrixException {
 		return new Ones(this).calc(ret);
 	}
 
+	@Override
 	public final Matrix fill(Ret ret, Object value) throws MatrixException {
 		return new Fill(this, value).calc(ret);
 	}
 
+	@Override
 	public final Matrix zeros(Ret ret) throws MatrixException {
 		return new Zeros(this).calc(ret);
 	}
 
+	@Override
 	public final Matrix eye(Ret ret) throws MatrixException {
 		return new Eye(this).calc(ret);
 	}
 
+	@Override
 	public Matrix plus(double v) throws MatrixException {
 		return Plus.calc(false, this, v);
 	}
 
+	@Override
 	public Matrix plus(Matrix m) throws MatrixException {
 		return Plus.calc(false, this, m);
 	}
 
+	@Override
 	public Matrix minus(double v) throws MatrixException {
 		return Minus.calc(false, this, v);
 	}
 
+	@Override
 	public Matrix minus(Matrix m) throws MatrixException {
 		return Minus.calc(false, this, m);
 	}
 
+	@Override
 	public final Matrix link() throws MatrixException {
 		return toObjectMatrix();
 	}
 
+	@Override
 	public void clear() {
 		new Zeros(this).calc(Ret.ORIG);
 	}
 
+	@Override
 	public final Matrix rand(Ret ret) throws MatrixException {
 		return new Rand(this).calc(ret);
 	}
 
+	@Override
 	public final Matrix randn(Ret ret) throws MatrixException {
 		return new Randn(this).calc(ret);
 	}
 
+	@Override
 	public final int compareTo(Matrix m) {
 		try {
 			return new Double(doubleValue()).compareTo(m.doubleValue());
@@ -1131,6 +1236,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public int rank() throws MatrixException {
 		int rank = 0;
 
@@ -1146,11 +1252,24 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return rank;
 	}
 
+	@Override
 	public boolean isSymmetric() {
-		// TODO!!!
-		return false;
+		long rows = getRowCount();
+		long cols = getColumnCount();
+		if (rows != cols) {
+			return false;
+		}
+		for (long r = 0; r < rows; r++) {
+			for (long c = 0; c < cols; c++) {
+				if (MathUtil.equals(getAsObject(r, c), getAsObject(c, r))) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
+	@Override
 	public boolean isEmpty() throws MatrixException {
 		for (long[] c : availableCoordinates()) {
 			if (getAsDouble(c) != 0.0) {
@@ -1160,42 +1279,52 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return true;
 	}
 
+	@Override
 	public final Matrix abs(Ret returnType) throws MatrixException {
 		return new Abs(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix log(Ret returnType) throws MatrixException {
 		return new Log(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix sort(Ret returnType) throws MatrixException {
 		return new Sort(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix sort(Ret returnType, long column) throws MatrixException {
 		return new Sort(this, column).calc(returnType);
 	}
 
+	@Override
 	public final Matrix cumsum(boolean ignoreNaN) throws MatrixException {
 		return new Cumsum(this, ignoreNaN).calcNew();
 	}
 
+	@Override
 	public final Matrix cumprod(boolean ignoreNaN) throws MatrixException {
 		return new Cumprod(this, ignoreNaN).calcNew();
 	}
 
+	@Override
 	public final Matrix distinct(Ret returnType) throws MatrixException {
 		return new Distinct(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix log2(Ret returnType) throws MatrixException {
 		return new Log2(this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix log10(Ret returnType) throws MatrixException {
 		return new Log10(this).calc(returnType);
 	}
 
+	@Override
 	public final boolean isDiagonal() throws MatrixException {
 		if (!isSquare()) {
 			return false;
@@ -1213,18 +1342,22 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return true;
 	}
 
+	@Override
 	public final boolean isSquare() {
 		return getSize().length == 2 && getColumnCount() == getRowCount();
 	}
 
+	@Override
 	public double euklideanDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {
 		return minkowskiDistanceTo(m, 2, ignoreNaN);
 	}
 
+	@Override
 	public double manhattenDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {
 		return minkowskiDistanceTo(m, 1, ignoreNaN);
 	}
 
+	@Override
 	public double minkowskiDistanceTo(Matrix m, double p, boolean ignoreNaN) throws MatrixException {
 		double sum = 0.0;
 		if (ignoreNaN) {
@@ -1240,6 +1373,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Math.pow(sum, 1 / p);
 	}
 
+	@Override
 	public double chebyshevDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {
 		double max = 0.0;
 		if (ignoreNaN) {
@@ -1256,75 +1390,93 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return max;
 	}
 
+	@Override
 	public Matrix min(Ret returnType, int dimension) throws MatrixException {
 		return new Min(dimension, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix max(Ret returnType, int dimension) throws MatrixException {
 		return new Max(dimension, this).calc(returnType);
 	}
 
+	@Override
 	public final Matrix addMissing(Ret returnType, int dimension, double... percentMissing)
 			throws MatrixException {
 		return new AddMissing(dimension, this, percentMissing).calc(returnType);
 	}
 
+	@Override
 	public Matrix countMissing(Ret returnType, int dimension) throws MatrixException {
 		return new CountMissing(dimension, this).calc(returnType);
 	}
 
+	@Override
 	public final boolean isScalar() {
 		return getColumnCount() == 1 && getRowCount() == 1;
 	}
 
+	@Override
 	public final boolean isRowVector() {
 		return getColumnCount() == 1 && getRowCount() != 1;
 	}
 
+	@Override
 	public final boolean isColumnVector() {
 		return getColumnCount() != 1 && getRowCount() == 1;
 	}
 
+	@Override
 	public final boolean isMultidimensionalMatrix() {
 		return getColumnCount() != 1 && getRowCount() != 1;
 	}
 
+	@Override
 	public Matrix sinh(Ret returnType) throws MatrixException {
 		return new Sinh(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix cosh(Ret returnType) throws MatrixException {
 		return new Cosh(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix tanh(Ret returnType) throws MatrixException {
 		return new Tanh(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix sin(Ret returnType) throws MatrixException {
 		return new Sin(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix cos(Ret returnType) throws MatrixException {
 		return new Cos(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix tan(Ret returnType) throws MatrixException {
 		return new Tan(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix cov(Ret returnType, boolean ignoreNaN) throws MatrixException {
 		return new Cov(ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix corrcoef(Ret returnType, boolean ignoreNaN) throws MatrixException {
 		return new Corrcoef(ignoreNaN, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix mutualInf(Ret returnType) throws MatrixException {
 		return new MutualInformation(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix pairedTTest(Ret returnType) throws MatrixException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.commonsmath.PairedTTest");
@@ -1336,55 +1488,68 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public Matrix bootstrap(Ret returnType) throws MatrixException {
 		return new Bootstrap(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix lowerCase(Ret returnType) throws MatrixException {
 		return new LowerCase(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix upperCase(Ret returnType) throws MatrixException {
 		return new UpperCase(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix wordCount() throws MatrixException {
 		return new WordCount(this).calc(Ret.NEW);
 	}
 
+	@Override
 	public Matrix removePunctuation(Ret ret) throws MatrixException {
 		return new RemovePunctuation(this).calc(ret);
 	}
 
+	@Override
 	public Matrix removeWords(Ret ret, Collection<String> words) throws MatrixException {
 		return new RemoveWords(this, words).calc(ret);
 	}
 
+	@Override
 	public Matrix unique(Ret returnType) throws MatrixException {
 		return new Unique(this).calc(returnType);
 	}
 
+	@Override
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException {
 		return new Bootstrap(this, count).calc(returnType);
 	}
 
+	@Override
 	public Matrix transpose(Ret returnType, int dimension1, int dimension2) throws MatrixException {
 		return new Transpose(this, dimension1, dimension2).calc(returnType);
 	}
 
+	@Override
 	public Matrix swap(Ret returnType, int dimension, long pos1, long pos2) throws MatrixException {
 		return new Swap(dimension, pos1, pos2, this).calc(returnType);
 	}
 
+	@Override
 	public Matrix flipdim(Ret returnType, int dimension) throws MatrixException {
 		return new Flipdim(dimension, this).calc(returnType);
 	}
 
-	public Matrix shuffle(Ret returnType) throws MatrixException {
+	@Override
+	public final Matrix shuffle(Ret returnType) throws MatrixException {
 		return new Shuffle(this).calc(returnType);
 	}
 
-	public double trace() throws MatrixException {
+	@Override
+	public final double trace() throws MatrixException {
 		double sum = 0.0;
 		for (long i = Math.min(getRowCount(), getColumnCount()); --i >= 0;) {
 			sum += getAsDouble(i, i);
@@ -1392,45 +1557,54 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
+	@Override
 	public final void exportToFile(File file, Object... parameters) throws MatrixException,
 			IOException {
 		ExportMatrix.toFile(file, this, parameters);
 	}
 
+	@Override
 	public final void exportToClipboard(FileFormat format, Object... parameters)
 			throws MatrixException, IOException {
 		ExportMatrix.toClipboard(format, this, parameters);
 	}
 
+	@Override
 	public final void exportToFile(String file, Object... parameters) throws MatrixException,
 			IOException {
 		ExportMatrix.toFile(file, this, parameters);
 	}
 
+	@Override
 	public final void exportToFile(FileFormat format, String filename, Object... parameters)
 			throws MatrixException, IOException {
 		ExportMatrix.toFile(format, filename, this, parameters);
 	}
 
+	@Override
 	public final void exportToFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		ExportMatrix.toFile(format, file, this, parameters);
 	}
 
+	@Override
 	public final void exportToStream(FileFormat format, OutputStream outputStream,
 			Object... parameters) throws MatrixException, IOException {
 		ExportMatrix.toStream(format, outputStream, this, parameters);
 	}
 
+	@Override
 	public final void exportToWriter(FileFormat format, Writer writer, Object... parameters)
 			throws MatrixException, IOException {
 		ExportMatrix.toWriter(format, writer, this, parameters);
 	}
 
+	@Override
 	public final void setLabel(String label) {
 		setMatrixAnnotation(label);
 	}
 
+	@Override
 	public final String getLabel() {
 		Object o = getMatrixAnnotation();
 		if (o == null) {
@@ -1445,34 +1619,42 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return o.toString();
 	}
 
+	@Override
 	public void setAsString(String string, long... coordinates) throws MatrixException {
 		setAsObject(string, coordinates);
 	}
 
+	@Override
 	public boolean isReadOnly() {
 		return false;
 	}
 
+	@Override
 	public String getAsString(long... coordinates) throws MatrixException {
 		return StringUtil.convert(getAsObject(coordinates));
 	}
 
+	@Override
 	public final double getMaxValue() throws MatrixException {
 		return Max.calc(this);
 	}
 
+	@Override
 	public final double getMinValue() throws MatrixException {
 		return Min.calc(this);
 	}
 
+	@Override
 	public final double getMeanValue() throws MatrixException {
 		return Mean.calc(this);
 	}
 
+	@Override
 	public final double getStdValue() throws MatrixException {
 		return std(Ret.NEW, Matrix.ALL, true).getEuklideanValue();
 	}
 
+	@Override
 	public final double getValueSum() throws MatrixException {
 		double sum = 0.0;
 		for (long[] c : allCoordinates()) {
@@ -1481,6 +1663,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
+	@Override
 	public final double getAbsoluteValueSum() throws MatrixException {
 		double sum = 0.0;
 		for (long[] c : allCoordinates()) {
@@ -1489,54 +1672,67 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
+	@Override
 	public final String getColumnLabel(long col) {
 		return StringUtil.convert(getAxisAnnotation(COLUMN, col));
 	}
 
+	@Override
 	public final String getRowLabel(long row) {
 		return StringUtil.convert(getAxisAnnotation(ROW, row));
 	}
 
+	@Override
 	public final long getRowForLabel(Object object) {
 		return getPositionForLabel(ROW, object);
 	}
 
+	@Override
 	public final long getColumnForLabel(Object object) {
 		return getPositionForLabel(COLUMN, object);
 	}
 
+	@Override
 	public final long getPositionForLabel(int dimension, Object object) {
 		return annotation == null ? -1 : annotation.getPositionForLabel(dimension, object);
 	}
 
+	@Override
 	public final Object getRowObject(long row) {
 		return getAxisAnnotation(ROW, row);
 	}
 
+	@Override
 	public final Object getColumnObject(long col) {
 		return getAxisAnnotation(COLUMN, col);
 	}
 
+	@Override
 	public final void setColumnLabel(long col, String label) {
 		setAxisAnnotation(COLUMN, col, label);
 	}
 
+	@Override
 	public final void setRowLabel(long row, String label) {
 		setAxisAnnotation(ROW, row, label);
 	}
 
+	@Override
 	public final void setRowObject(long row, Object o) {
 		setAxisAnnotation(ROW, row, o);
 	}
 
+	@Override
 	public final void setColumnObject(long col, Object o) {
 		setAxisAnnotation(COLUMN, col, o);
 	}
 
+	@Override
 	public final double getAbsoluteValueMean() throws MatrixException {
 		return getAbsoluteValueSum() / getValueCount();
 	}
 
+	@Override
 	public final Matrix toRowVector() throws MatrixException {
 		if (isRowVector()) {
 			return this;
@@ -1547,6 +1743,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final Matrix toColumnVector() throws MatrixException {
 		if (isColumnVector()) {
 			return this;
@@ -1557,49 +1754,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final void rescaleEntries_(int axis, double targetMin, double targetMax)
-			throws MatrixException {
-		if (axis == ALL) {
-			this.toRowVector().rescaleEntries(0, targetMin, targetMax);
-		} else {
-
-		}
-		double minValue = getMinValue();
-		double maxValue = getMaxValue();
-		double targetDiff = targetMax - targetMin;
-		double diffBefore = maxValue - minValue;
-		if (diffBefore != 0) {
-			// TODO: this calculation is not correct
-			double scale = targetDiff / diffBefore;
-			double offet = targetMin - minValue;
-			for (long[] c : allCoordinates()) {
-				setAsDouble(getAsDouble(c) * scale + offet, c);
-			}
-		}
-		notifyGUIObject();
-	}
-
-	public final Matrix rescaleEntries() throws MatrixException {
-		return rescaleEntries(ALL, -1.0, 1.0);
-	}
-
-	public final void rescaleEntries_() throws MatrixException {
-		rescaleEntries_(ALL, -1.0, 1.0);
-	}
-
-	public final Matrix rescaleEntries(int axis, double targetMin, double targetMax)
-			throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(getSize());
-		ret.rescaleEntries_(axis, targetMin, targetMax);
-		return ret;
-	}
-
-	public final void addNoise_(double noiselevel) throws MatrixException {
-		for (long[] c : allCoordinates()) {
-			setAsDouble(getAsDouble(c) + MathUtil.nextGaussian(0.0, noiselevel), c);
-		}
-	}
-
+	@Override
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(getSize());
 		for (long[] c : allCoordinates()) {
@@ -1613,7 +1768,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return ret;
 	}
 
-	public Matrix deleteColumnsWithMissingValues(Ret returnType) throws MatrixException {
+	@Override
+	public final Matrix deleteColumnsWithMissingValues(Ret returnType) throws MatrixException {
 		Matrix mv = countMissing(Ret.NEW, Matrix.ROW);
 		List<Long> sel = new ArrayList<Long>();
 		for (long c = 0; c < mv.getColumnCount(); c++) {
@@ -1627,7 +1783,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return selectColumns(returnType, longsel);
 	}
 
-	public Matrix deleteRowsWithMissingValues(Ret returnType, long threshold)
+	@Override
+	public final Matrix deleteRowsWithMissingValues(Ret returnType, long threshold)
 			throws MatrixException {
 		Matrix mv = countMissing(Ret.NEW, Matrix.COLUMN);
 		List<Long> sel = new ArrayList<Long>();
@@ -1642,29 +1799,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final void fadeIn_(int axis, long start, long end) throws MatrixException {
-		if (axis == ALL) {
-			this.toRowVector().fadeIn_(0, start, end);
-		} else if (axis == ROW) {
-			double stepsize = 1.0 / (end - start);
-			for (long r = start, i = 0; r < end; r++) {
-				double factor = (++i * stepsize);
-				for (int c = 0; c < getSize()[COLUMN]; c++) {
-					setAsDouble(getAsDouble(r, c) * factor, r, c);
-				}
-			}
-		} else if (axis == COLUMN) {
-			double stepsize = 1.0 / (end - start);
-			for (long c = start, i = 0; c < end; c++) {
-				double factor = (++i * stepsize);
-				for (int r = 0; r < getSize()[ROW]; r++) {
-					setAsDouble(getAsDouble(r, c) * factor, r, c);
-				}
-			}
-		}
-		notifyGUIObject();
-	}
-
+	@Override
 	public final Matrix convertIntToVector(int numberOfClasses) throws MatrixException {
 		Matrix m = MatrixFactory.zeros(numberOfClasses, 1);
 		for (int i = numberOfClasses - 1; i != -1; i--) {
@@ -1674,6 +1809,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return m;
 	}
 
+	@Override
 	public final void greaterOrZero_() throws MatrixException {
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
@@ -1681,6 +1817,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final void scaleRowsToOne_() throws MatrixException {
 		for (long r = getRowCount() - 1; r != -1; r--) {
 			double sum = 0.0;
@@ -1694,10 +1831,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final Matrix appendHorizontally(Matrix m) throws MatrixException {
 		return append(COLUMN, m);
 	}
 
+	@Override
 	// TODO: this can be done more efficiently with an iterator
 	public Iterable<Object> allValues() {
 		List<Object> list = new ArrayList<Object>();
@@ -1707,10 +1846,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return list;
 	}
 
+	@Override
 	public final Matrix appendVertically(Matrix m) throws MatrixException {
 		return append(ROW, m);
 	}
 
+	@Override
 	public final Matrix append(int dimension, Matrix m) throws MatrixException {
 		long[] newSize = Coordinates.copyOf(getSize());
 		newSize[dimension] += m.getSize()[dimension];
@@ -1726,41 +1867,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return result;
 	}
 
-	public final void fadeIn_() throws MatrixException {
-		fadeIn_(ROW, 0, getRowCount());
-	}
-
-	public final void fadeOut_() throws MatrixException {
-		fadeOut_(ROW, 0, getRowCount());
-	}
-
-	public final void fadeOut_(int axis, long start, long end) throws MatrixException {
-		if (axis == ALL) {
-			this.toRowVector().fadeOut_(0, start, end);
-		} else if (axis == ROW) {
-			double stepsize = 1.0 / (end - start);
-			for (long r = start, i = 0; r < end; r++) {
-				double factor = 1.0 - (++i * stepsize);
-				for (int c = 0; c < getSize()[COLUMN]; c++) {
-					setAsDouble(getAsDouble(r, c) * factor, r, c);
-				}
-			}
-		} else if (axis == COLUMN) {
-			double stepsize = 1.0 / (end - start);
-			for (long c = start, i = 0; c < end; c++) {
-				double factor = 1.0 - (++i * stepsize);
-				for (int r = 0; r < getSize()[ROW]; r++) {
-					setAsDouble(getAsDouble(r, c) * factor, r, c);
-				}
-			}
-		}
-		notifyGUIObject();
-	}
-
+	@Override
 	public final Matrix discretizeToColumns(long column) throws MatrixException {
 		return new DiscretizeToColumns(this, false, column).calc(Ret.NEW);
 	}
 
+	@Override
 	public final Matrix subMatrix(Ret returnType, long startRow, long startColumn, long endRow,
 			long endColumn) throws MatrixException {
 		long[] rows = MathUtil.sequenceLong(startRow, endRow);
@@ -1768,6 +1880,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return select(returnType, rows, columns);
 	}
 
+	@Override
 	public Matrix addColumnWithOnes() throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(getRowCount(), getColumnCount() + 1);
 		for (long[] c : allCoordinates()) {
@@ -1779,7 +1892,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return ret;
 	}
 
-	public Matrix addRowWithOnes() throws MatrixException {
+	@Override
+	public final Matrix addRowWithOnes() throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(getRowCount() + 1, getColumnCount());
 		for (long[] c : allCoordinates()) {
 			ret.setAsDouble(getAsDouble(c), c);
@@ -1790,19 +1904,23 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return ret;
 	}
 
+	@Override
 	public Matrix[] svd() throws MatrixException {
 		return SVD.calcNew(this);
 	}
 
-	public String exportToString(FileFormat format, Object... parameters) throws MatrixException,
-			IOException {
+	@Override
+	public final String exportToString(FileFormat format, Object... parameters)
+			throws MatrixException, IOException {
 		return ExportMatrix.toString(format, this, parameters);
 	}
 
+	@Override
 	public void setSize(long... size) {
 		throw new MatrixException("operation not possible: cannot change size of matrix");
 	}
 
+	@Override
 	public final Matrix reshape(long... newSize) {
 		return new ReshapedObjectMatrix(this, newSize);
 	}
@@ -1823,6 +1941,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return (int) getMeanValue();
 	}
 
+	@Override
 	public final char charValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsChar(0, 0);
@@ -1830,6 +1949,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return (char) getMeanValue();
 	}
 
+	@Override
 	public final BigInteger bigIntegerValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBigInteger(0, 0);
@@ -1837,11 +1957,20 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return BigInteger.valueOf((long) getMeanValue());
 	}
 
+	@Override
 	public final BigDecimal bigDecimalValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBigDecimal(0, 0);
 		}
 		return BigDecimal.valueOf(getMeanValue());
+	}
+
+	public final Matrix fadeIn(Ret ret, int dimension) throws MatrixException {
+		return new FadeIn(dimension, this).calc(ret);
+	}
+
+	public final Matrix fadeOut(Ret ret, int dimension) throws MatrixException {
+		return new FadeOut(dimension, this).calc(ret);
 	}
 
 	@Override
@@ -1860,6 +1989,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return (long) getMeanValue();
 	}
 
+	@Override
 	public final Date dateValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsDate(0, 0);
@@ -1867,6 +1997,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return MathUtil.getDate(getMeanValue());
 	}
 
+	@Override
 	public final boolean booleanValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBoolean(0, 0);
@@ -1874,6 +2005,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return getMeanValue() != 0;
 	}
 
+	@Override
 	public final String stringValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsString(0, 0);
@@ -1882,6 +2014,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final double getRMS() throws MatrixException {
 		double sum = 0.0;
 		long count = 0;
@@ -1893,14 +2026,17 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Math.sqrt(sum);
 	}
 
+	@Override
 	public final Annotation getAnnotation() {
 		return annotation;
 	}
 
+	@Override
 	public final void setAnnotation(Annotation annotation) {
 		this.annotation = annotation;
 	}
 
+	@Override
 	public final boolean equalsAnnotation(Object o) {
 		if (this == o) {
 			return true;
@@ -1925,10 +2061,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return equalsContent(o) && equalsAnnotation(o);
 	}
 
+	@Override
 	public final boolean equalsContent(Object o) {
-
 		try {
-
 			if (this == o) {
 				return true;
 			}
@@ -1992,58 +2127,68 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 				return true;
 			}
 			return false;
-
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not compare", e);
 			return false;
 		}
-
 	}
 
+	@Override
 	public final BooleanMatrix toBooleanMatrix() {
 		return new ToBooleanMatrix(this).calcLink();
 	}
 
+	@Override
 	public final ByteMatrix toByteMatrix() {
 		return new ToByteMatrix(this).calcLink();
 	}
 
+	@Override
 	public final CharMatrix toCharMatrix() {
 		return new ToCharMatrix(this).calcLink();
 	}
 
+	@Override
 	public final DateMatrix toDateMatrix() {
 		return new ToDateMatrix(this).calcLink();
 	}
 
+	@Override
 	public final DoubleMatrix toDoubleMatrix() {
 		return new ToDoubleMatrix(this).calcLink();
 	}
 
+	@Override
 	public final FloatMatrix toFloatMatrix() {
 		return new ToFloatMatrix(this).calcLink();
 	}
 
+	@Override
 	public final IntMatrix toIntMatrix() {
 		return new ToIntMatrix(this).calcLink();
 	}
 
+	@Override
 	public final LongMatrix toLongMatrix() {
 		return new ToLongMatrix(this).calcLink();
 	}
 
+	@Override
 	public final ObjectMatrix toObjectMatrix() {
 		return new ToObjectMatrix(this).calcLink();
 	}
 
+	@Override
 	public final ShortMatrix toShortMatrix() {
 		return new ToShortMatrix(this).calcLink();
 	}
 
+	@Override
 	public final StringMatrix toStringMatrix() {
 		return new ToStringMatrix(this).calcLink();
 	}
 
+	@Override
 	public double norm1() {
 		long rows = getRowCount();
 		long cols = getColumnCount();
@@ -2058,10 +2203,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return max;
 	}
 
+	@Override
 	public double norm2() {
 		return svd()[1].getAsDouble(0, 0);
 	}
 
+	@Override
 	public double normInf() {
 		long rows = getRowCount();
 		long cols = getColumnCount();
@@ -2076,6 +2223,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return max;
 	}
 
+	@Override
 	public double normF() {
 		long rows = getRowCount();
 		long cols = getColumnCount();
@@ -2099,6 +2247,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return result;
 	}
 
+	@Override
 	public ListMatrix<?> toListMatrix() {
 		if (this instanceof ListMatrix<?>) {
 			return (ListMatrix<?>) this;
@@ -2111,6 +2260,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public SetMatrix<?> toSetMatrix() {
 		if (this instanceof SetMatrix<?>) {
 			return (SetMatrix<?>) this;
@@ -2123,6 +2273,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public MapMatrix<?, ?> toMapMatrix() {
 		if (this instanceof MapMatrix<?, ?>) {
 			return (MapMatrix<?, ?>) this;
@@ -2135,6 +2286,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public final boolean isSparse() {
 		switch (getStorageType()) {
 		case DENSE:
@@ -2156,6 +2308,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	@Override
 	public boolean containsBigInteger(BigInteger v) {
 		for (long[] c : availableCoordinates()) {
 			if (v.equals(getAsBigInteger(c))) {
@@ -2165,6 +2318,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsBigDecimal(BigDecimal v) {
 		for (long[] c : availableCoordinates()) {
 			if (v.equals(getAsBigDecimal(c))) {
@@ -2174,6 +2328,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsDate(Date v) {
 		for (long[] c : availableCoordinates()) {
 			if (v.equals(getAsDate(c))) {
@@ -2183,6 +2338,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsObject(Object o) {
 		for (long[] c : availableCoordinates()) {
 			if (o.equals(getAsObject(c))) {
@@ -2192,6 +2348,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsString(String s) {
 		for (long[] c : availableCoordinates()) {
 			if (s.equals(getAsString(c))) {
@@ -2201,6 +2358,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsBoolean(boolean v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsBoolean(c) == v) {
@@ -2210,6 +2368,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsByte(byte v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsByte(c) == v) {
@@ -2219,6 +2378,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsChar(char v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsChar(c) == v) {
@@ -2228,6 +2388,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsDouble(double v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsDouble(c) == v) {
@@ -2237,6 +2398,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsFloat(float v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsFloat(c) == v) {
@@ -2246,6 +2408,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsInt(int v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsInt(c) == v) {
@@ -2255,6 +2418,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsLong(long v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsLong(c) == v) {
@@ -2264,6 +2428,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsShort(short v) {
 		for (long[] c : availableCoordinates()) {
 			if (getAsShort(c) == v) {
@@ -2273,6 +2438,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
+	@Override
 	public boolean containsNull() {
 		for (long[] c : allCoordinates()) {
 			if (getAsDouble(c) == 0.0) {

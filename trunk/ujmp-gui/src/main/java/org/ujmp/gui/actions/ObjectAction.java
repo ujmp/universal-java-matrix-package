@@ -135,7 +135,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 			return null;
 		}
 
-		if ("enabled".equals(key)) {
+		if ("enabled".equalsIgnoreCase(key)) {
 			return enabled;
 		} else if (key == Action.SMALL_ICON) {
 			return icon;

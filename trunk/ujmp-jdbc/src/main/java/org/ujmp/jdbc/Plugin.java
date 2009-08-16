@@ -53,10 +53,6 @@ public class Plugin extends AbstractPlugin {
 	}
 
 	@Override
-	public void setDescription(String description) {
-	}
-
-	@Override
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}

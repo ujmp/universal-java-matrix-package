@@ -48,4 +48,7 @@ public abstract class AbstractPlugin implements HasDescription, HasDependencies,
 	public boolean isAvailable() {
 		return "ok".equals(getStatus());
 	}
+
+	public final void setDescription(String description) {
+	}
 }

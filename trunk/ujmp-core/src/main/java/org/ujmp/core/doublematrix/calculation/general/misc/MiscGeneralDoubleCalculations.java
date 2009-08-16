@@ -62,29 +62,13 @@ public interface MiscGeneralDoubleCalculations {
 
 	public Matrix addRowWithOnes() throws MatrixException;
 
-	public Matrix rescaleEntries() throws MatrixException;
-
-	public void rescaleEntries_() throws MatrixException;
-
-	public Matrix rescaleEntries(int axis, double targetMin, double targetMax)
-			throws MatrixException;
-
-	public void rescaleEntries_(int axis, double targetMin, double targetMax)
-			throws MatrixException;
-
-	public void addNoise_(double noiselevel) throws MatrixException;
-
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException;
 
-	public void fadeIn_(int axis, long start, long end) throws MatrixException;
-
-	public void fadeOut_(int axis, long start, long end) throws MatrixException;
-
-	public void fadeIn_() throws MatrixException;
-
-	public void fadeOut_() throws MatrixException;
-
 	public Matrix convertIntToVector(int numberOfClasses) throws MatrixException;
+
+	public Matrix fadeIn(Ret ret, int dimension) throws MatrixException;
+
+	public Matrix fadeOut(Ret ret, int dimensions) throws MatrixException;
 
 	public void greaterOrZero_() throws MatrixException;
 

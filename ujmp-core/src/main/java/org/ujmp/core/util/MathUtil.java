@@ -292,6 +292,21 @@ public abstract class MathUtil {
 		return Double.NaN;
 	}
 
+	/** sqrt(a^2 + b^2) without under/overflow. **/
+	public static double hypot(double a, double b) {
+		double r;
+		if (Math.abs(a) > Math.abs(b)) {
+			r = b / a;
+			r = Math.abs(a) * Math.sqrt(1 + r * r);
+		} else if (b != 0) {
+			r = a / b;
+			r = Math.abs(b) * Math.sqrt(1 + r * r);
+		} else {
+			r = 0.0;
+		}
+		return r;
+	}
+
 	public static long[] collectionToLong(Collection<? extends Number> numbers) {
 		long[] ret = new long[numbers.size()];
 		int i = 0;
@@ -489,6 +504,10 @@ public abstract class MathUtil {
 	}
 
 	public static double fallout(double tn, double fp) {
+		return tn / (fp + tn);
+	}
+
+	public static double trueNegativeRate(double tn, double fp) {
 		return tn / (fp + tn);
 	}
 
@@ -836,6 +855,12 @@ public abstract class MathUtil {
 
 		}
 		return mu + sigma * val;
+	}
+
+	public static double f1measure(double tp, double tn, double fp, double fn) {
+		double precision = precision(tp, fp);
+		double recall = recall(tp, fn);
+		return f1Measure(precision, recall);
 	}
 
 }

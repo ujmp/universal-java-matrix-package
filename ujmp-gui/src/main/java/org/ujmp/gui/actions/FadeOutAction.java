@@ -48,7 +48,7 @@ public class FadeOutAction extends MatrixAction {
 
 	@Override
 	public Object call() throws MatrixException {
-		getMatrixObject().getMatrix().fadeOut_();
+		getMatrixObject().getMatrix().fadeOut(getRet(), getDimension());
 		return getMatrixObject();
 	}
 }

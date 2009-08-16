@@ -99,6 +99,8 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JSeparator());
 			add(new JMenuItem(new CenterAction(c, m, v)));
 			add(new JMenuItem(new StandardizeAction(c, m, v)));
+			add(new JMenuItem(new FadeInAction(c, m, v)));
+			add(new JMenuItem(new FadeOutAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new AbsAction(c, m, v)));
 			add(new JMenuItem(new RoundAction(c, m, v)));

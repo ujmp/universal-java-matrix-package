@@ -24,7 +24,6 @@
 package org.ujmp.core.stringmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.PorterStemmer;
 
@@ -53,12 +52,6 @@ public class Stem extends AbstractStringCalculation {
 			}
 		}
 		return result.toString();
-	}
-
-	public static void main(String[] args) {
-		Matrix m = MatrixFactory
-				.linkToValue("this forum contains information which is relevant for both projects ujmp and jdmp if you have questions or comments concerning only one of those projects please use the appropriate sub folder below");
-		System.out.println(m.stem(Ret.NEW));
 	}
 
 }

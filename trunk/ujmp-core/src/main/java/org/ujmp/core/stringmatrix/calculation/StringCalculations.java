@@ -70,6 +70,8 @@ public interface StringCalculations {
 
 	public Matrix removePunctuation(Ret ret) throws MatrixException;
 
+	public Matrix stem(Ret ret) throws MatrixException;
+
 	public Matrix removeWords(Ret ret, Collection<String> words) throws MatrixException;
 
 }

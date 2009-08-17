@@ -49,7 +49,7 @@ public enum FileFormat {
 	MTX("Matrix Data Format", "mtx"), //
 	XLS("Microsoft Excel Files", "xls"), //
 	SER("Serialized Data Files", "ser", "obj", "dat"), //
-	GraphML("GraphML Files", "gml", "graphml"), //
+	GRAPHML("GraphML Files", "graphml", "gml"), //
 	TEX("Latex Files", "tex"), //
 	WAV("Wave Audio Files", "wav"), //
 	BMP("BMP Image Files", "bmp"), //

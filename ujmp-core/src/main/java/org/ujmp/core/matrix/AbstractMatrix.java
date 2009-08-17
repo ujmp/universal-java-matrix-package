@@ -167,6 +167,7 @@ import org.ujmp.core.stringmatrix.calculation.LowerCase;
 import org.ujmp.core.stringmatrix.calculation.RemovePunctuation;
 import org.ujmp.core.stringmatrix.calculation.RemoveWords;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
+import org.ujmp.core.stringmatrix.calculation.Stem;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
 import org.ujmp.core.util.MathUtil;
@@ -1511,6 +1512,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	@Override
 	public Matrix removePunctuation(Ret ret) throws MatrixException {
 		return new RemovePunctuation(this).calc(ret);
+	}
+
+	@Override
+	public Matrix stem(Ret ret) throws MatrixException {
+		return new Stem(this).calc(ret);
 	}
 
 	@Override

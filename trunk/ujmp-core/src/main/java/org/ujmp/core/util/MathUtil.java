@@ -472,51 +472,63 @@ public abstract class MathUtil {
 	}
 
 	public static double sensitivity(double tp, double fn) {
-		return tp / (tp + fn);
+		double r = tp / (tp + fn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double specificity(double tn, double fp) {
-		return tn / (tn + fp);
+		double r = tn / (tn + fp);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double positivePredictiveValue(double tp, double fp) {
-		return tp / (tp + fp);
+		double r = tp / (tp + fp);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double negativePredictiveValue(double tn, double fn) {
-		return tn / (tn + fn);
+		double r = tn / (tn + fn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double falsePositiveRate(double fp, double tn) {
-		return fp / (fp + tn);
+		double r = fp / (fp + tn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double falseNegativeRate(double fn, double tp) {
-		return fn / (fn + tp);
+		double r = fn / (fn + tp);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double recall(double tp, double fn) {
-		return tp / (tp + fn);
+		double r = tp / (tp + fn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double precision(double tp, double fp) {
-		return tp / (tp + fp);
+		double r = tp / (tp + fp);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double fallout(double tn, double fp) {
-		return tn / (fp + tn);
+		double r = tn / (fp + tn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double trueNegativeRate(double tn, double fp) {
-		return tn / (fp + tn);
+		double r = tn / (fp + tn);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double f1Measure(double precision, double recall) {
-		return (2.0 * precision * recall) / (precision + recall);
+		double r = (2.0 * precision * recall) / (precision + recall);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static double fBetaMeasure(double beta, double precision, double recall) {
-		return ((1 + beta * beta) * precision * recall) / (beta * beta * precision + recall);
+		double r = ((1 + beta * beta) * precision * recall) / (beta * beta * precision + recall);
+		return MathUtil.isNaNOrInfinite(r) ? 0.0 : r;
 	}
 
 	public static Object getPreferredObject(Object o) {

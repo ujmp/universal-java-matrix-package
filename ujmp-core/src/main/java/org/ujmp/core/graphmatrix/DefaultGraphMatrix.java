@@ -24,6 +24,7 @@
 package org.ujmp.core.graphmatrix;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +54,8 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		this.nodes.addAll(nodes);
 	}
 
-	public List<long[]> getEdgeList() {
-		throw new MatrixException("not implemented!");
-		// return Collections.EMPTY_LIST;
+	public Collection<E> getEdgeList() {
+		return edges.values();
 	}
 
 	@Override

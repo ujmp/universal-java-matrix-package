@@ -23,6 +23,7 @@
 
 package org.ujmp.core.graphmatrix;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface GenericGraph<N, E> {
@@ -33,12 +34,7 @@ public interface GenericGraph<N, E> {
 
 	public void setDirected(boolean directed);
 
-	/**
-	 * @holger Waere es nicht besser, eine Liste von Kanten zurückzuliefern?
-	 *         Oder einen Iterator über Kanten?
-	 * @return
-	 */
-	public List<long[]> getEdgeList();
+	public Collection<E> getEdgeList();
 
 	public E getEdgeValue(long nodeIndex1, long nodeIndex2);
 

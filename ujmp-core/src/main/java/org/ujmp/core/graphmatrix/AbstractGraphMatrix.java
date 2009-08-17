@@ -146,7 +146,8 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 
 	@Override
 	public Iterable<long[]> availableCoordinates() {
-		return getEdgeList();
+		// TODO: improve
+		return super.availableCoordinates();
 	}
 
 	public long[] getSize() {

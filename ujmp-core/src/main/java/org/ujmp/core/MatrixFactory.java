@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.ujmp.core.bigintegermatrix.calculation.Fibonacci;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
@@ -539,6 +540,10 @@ public abstract class MatrixFactory {
 
 	public static Matrix eye(long... size) throws MatrixException {
 		return Eye.calc(size);
+	}
+
+	public static Matrix fibonacci(int count) throws MatrixException {
+		return Fibonacci.calc(count);
 	}
 
 	public static Matrix eye(ValueType valueType, long... size) throws MatrixException {

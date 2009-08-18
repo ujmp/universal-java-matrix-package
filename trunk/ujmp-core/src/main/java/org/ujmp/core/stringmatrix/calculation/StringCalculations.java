@@ -66,7 +66,13 @@ public interface StringCalculations {
 
 	public Matrix upperCase(Ret returnType) throws MatrixException;
 
-	public Matrix wordCount() throws MatrixException;
+	public Matrix docTerm() throws MatrixException;
+
+	public Matrix tf() throws MatrixException;
+
+	public Matrix idf() throws MatrixException;
+
+	public Matrix tfIdf() throws MatrixException;
 
 	public Matrix removePunctuation(Ret ret) throws MatrixException;
 

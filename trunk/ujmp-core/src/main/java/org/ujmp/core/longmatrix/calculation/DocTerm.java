@@ -29,14 +29,14 @@ import org.ujmp.core.longmatrix.impl.DefaultSparseLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 
-public class WordCount extends AbstractLongCalculation {
+public class DocTerm extends AbstractLongCalculation {
 	private static final long serialVersionUID = 9021699761386822606L;
 
 	private MapMatrix<String, Long> wordMapping = null;
 
 	private Matrix result = null;
 
-	public WordCount(Matrix m) {
+	public DocTerm(Matrix m) {
 		super(m);
 	}
 

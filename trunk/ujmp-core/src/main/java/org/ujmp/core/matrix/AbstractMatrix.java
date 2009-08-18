@@ -105,7 +105,10 @@ import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeIn;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeOut;
+import org.ujmp.core.doublematrix.calculation.general.misc.Idf;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
+import org.ujmp.core.doublematrix.calculation.general.misc.Tf;
+import org.ujmp.core.doublematrix.calculation.general.misc.TfIdf;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute;
@@ -138,8 +141,8 @@ import org.ujmp.core.io.ExportMatrix;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
+import org.ujmp.core.longmatrix.calculation.DocTerm;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
-import org.ujmp.core.longmatrix.calculation.WordCount;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
@@ -1505,8 +1508,23 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	@Override
-	public Matrix wordCount() throws MatrixException {
-		return new WordCount(this).calc(Ret.NEW);
+	public Matrix docTerm() throws MatrixException {
+		return new DocTerm(this).calc(Ret.NEW);
+	}
+
+	@Override
+	public Matrix tf() throws MatrixException {
+		return new Tf(this).calc(Ret.NEW);
+	}
+
+	@Override
+	public Matrix idf() throws MatrixException {
+		return new Idf(this).calc(Ret.NEW);
+	}
+
+	@Override
+	public Matrix tfIdf() throws MatrixException {
+		return new TfIdf(this).calc(Ret.NEW);
 	}
 
 	@Override

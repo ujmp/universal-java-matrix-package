@@ -28,6 +28,8 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jama.SingularValueDecomposition;
+
 public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<Jama.Matrix> {
 	private static final long serialVersionUID = -6065454603299978242L;
@@ -47,6 +49,13 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
+	}
+
+	public Matrix[] svd() throws MatrixException {
+		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+		return new Matrix[] { new JamaDenseDoubleMatrix2D(svd.getU()),
+				new JamaDenseDoubleMatrix2D(svd.getS()),
+				new JamaDenseDoubleMatrix2D(svd.getV()) };
 	}
 
 	public double getDouble(long row, long column) {

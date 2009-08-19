@@ -26,6 +26,7 @@ package org.ujmp.core.doublematrix.calculation.general.misc;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.longmatrix.calculation.DocTerm;
 import org.ujmp.core.util.MathUtil;
 
 public class TfIdf extends AbstractDoubleCalculation {
@@ -40,8 +41,20 @@ public class TfIdf extends AbstractDoubleCalculation {
 
 	private Matrix sumPerTerm = null;
 
-	public TfIdf(Matrix matrix) {
+	private boolean calculateTf = false;
+
+	private boolean calculateIdf = false;
+
+	private boolean normalize = false;
+
+	public TfIdf(Matrix matrix, boolean calculateTf, boolean calculateIdf, boolean normalize) {
 		super(matrix);
+		this.calculateTf = calculateTf;
+		this.calculateIdf = calculateIdf;
+		this.normalize = normalize;
+		if (normalize) {
+			throw new MatrixException("not yet implemented");
+		}
 	}
 
 	@Override
@@ -50,17 +63,31 @@ public class TfIdf extends AbstractDoubleCalculation {
 			calculate();
 		}
 
+		double tf = docTerm.getAsDouble(coordinates);
+		double idf = 1.0;
+
 		double numDocs = docTerm.getRowCount();
-		double tf = docTerm.getAsDouble(coordinates) / sumPerDoc.getAsDouble(coordinates[ROW], 0);
-		double idf = MathUtil.log10(numDocs / sumPerTerm.getAsDouble(0, coordinates[COLUMN]));
+
+		if (calculateTf) {
+			tf = docTerm.getAsDouble(coordinates) / sumPerDoc.getAsDouble(coordinates[ROW], 0);
+		}
+
+		if (calculateIdf) {
+			idf = MathUtil.log10(numDocs / sumPerTerm.getAsDouble(0, coordinates[COLUMN]));
+		}
+
 		double result = tf * idf;
 		return MathUtil.isNaNOrInfinite(result) ? 0.0 : result;
 	}
 
 	private void calculate() {
-		docTerm = getSource().docTerm();
-		sumPerDoc = docTerm.sum(Ret.NEW, Matrix.COLUMN, true);
-		sumPerTerm = docTerm.toBooleanMatrix().sum(Ret.NEW, Matrix.ROW, true);
+		docTerm = new DocTerm(getSource()).calcNew();
+		if (calculateTf) {
+			sumPerDoc = docTerm.sum(Ret.NEW, Matrix.COLUMN, true);
+		}
+		if (calculateIdf) {
+			sumPerTerm = docTerm.toBooleanMatrix().sum(Ret.NEW, Matrix.ROW, true);
+		}
 	}
 
 	@Override

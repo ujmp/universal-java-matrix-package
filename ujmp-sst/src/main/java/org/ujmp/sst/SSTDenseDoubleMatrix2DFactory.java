@@ -31,7 +31,7 @@ public class SSTDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -1454666644074596760L;
 
-	@Override
+	
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
 		return new SSTDenseDoubleMatrix2D(rows, columns);

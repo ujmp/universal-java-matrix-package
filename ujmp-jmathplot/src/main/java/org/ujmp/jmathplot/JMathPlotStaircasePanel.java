@@ -35,7 +35,7 @@ public class JMathPlotStaircasePanel extends AbstractJMathPlotPanel {
 		super(matrix);
 	}
 
-	@Override
+	
 	public void repaintUI() {
 		Matrix matrix = getMatrix();
 		Plot2DPanel panel = new Plot2DPanel();

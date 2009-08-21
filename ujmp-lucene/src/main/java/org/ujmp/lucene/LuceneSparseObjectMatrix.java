@@ -48,7 +48,7 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 		super(matrix);
 	}
 
-	@Override
+	
 	public Map<Coordinates, Object> getMap() {
 		if (map == null) {
 			try {
@@ -60,26 +60,26 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 		return map;
 	}
 
-	@Override
+	
 	public void setMap(Map<Coordinates, Object> map) {
 		throw new MatrixException("cannot exchange map");
 	}
 
-	@Override
+	
 	public void flush() throws IOException {
 		if (map != null) {
 			map.flush();
 		}
 	}
 
-	@Override
+	
 	public void close() throws IOException {
 		if (map != null) {
 			map.close();
 		}
 	}
 
-	@Override
+	
 	public void erase() throws IOException {
 		if (map != null) {
 			map.close();

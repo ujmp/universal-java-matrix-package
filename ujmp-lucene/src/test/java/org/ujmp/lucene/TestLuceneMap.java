@@ -29,7 +29,7 @@ import org.ujmp.core.collections.AbstractMapTest;
 
 public class TestLuceneMap extends AbstractMapTest {
 
-	@Override
+	
 	public Map<String, Object> createMap() throws Exception {
 		return new LuceneMap<String, Object>();
 	}

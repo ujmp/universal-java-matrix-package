@@ -35,7 +35,7 @@ public class PairedTTest extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		try {
 			long var1 = coordinates[ROW];
@@ -53,7 +53,7 @@ public class PairedTTest extends AbstractDoubleCalculation {
 		}
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}

@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_mail
+Bundle-SymbolicName: ujmp_mail
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.mail

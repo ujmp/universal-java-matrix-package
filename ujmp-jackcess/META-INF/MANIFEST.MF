@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_jackcess
+Bundle-SymbolicName: ujmp_jackcess
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.jackcess

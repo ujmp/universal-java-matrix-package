@@ -45,17 +45,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.apache.commons.lang.ClassUtils");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "import and export filters for mdb files (MS Access databases)";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

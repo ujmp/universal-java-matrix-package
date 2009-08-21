@@ -83,12 +83,12 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new OjalgoDenseDoubleMatrix2D(matrix.transpose());
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 			BasicMatrix mo = ((OjalgoDenseDoubleMatrix2D) m).getWrappedObject();

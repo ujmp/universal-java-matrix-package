@@ -129,7 +129,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			return new JScienceDenseDoubleMatrix2D(matrix
@@ -139,7 +139,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new JScienceDenseDoubleMatrix2D(matrix.transpose().copy());
 	}

@@ -39,17 +39,17 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("all");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "collection of all available packages in UJMP";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

@@ -31,12 +31,12 @@ import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 public class ParallelColtDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(source);
 	}

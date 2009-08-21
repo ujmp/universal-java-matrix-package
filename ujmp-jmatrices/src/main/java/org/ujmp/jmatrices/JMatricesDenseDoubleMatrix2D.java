@@ -86,13 +86,13 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer
 				.transpose(matrix));
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof JMatricesDenseDoubleMatrix2D) {
 			return new JMatricesDenseDoubleMatrix2D(MatrixOperator.multiply(

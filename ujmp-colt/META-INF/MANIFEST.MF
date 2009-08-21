@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_colt
+Bundle-SymbolicName: ujmp_colt
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.colt,
+ org.ujmp.colt.benchmark

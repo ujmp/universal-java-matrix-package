@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_commonsmath
+Bundle-SymbolicName: ujmp_commonsmath
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.commonsmath,
+ org.ujmp.commonsmath.benchmark

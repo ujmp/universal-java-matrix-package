@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_jmatrices
+Bundle-SymbolicName: ujmp_jmatrices
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.jmatrices,
+ org.ujmp.jmatrices.benchmark

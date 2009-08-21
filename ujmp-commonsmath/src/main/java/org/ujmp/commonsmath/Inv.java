@@ -39,7 +39,7 @@ public class Inv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
 			if (getSource() instanceof RealMatrix) {
@@ -51,7 +51,7 @@ public class Inv extends AbstractDoubleCalculation {
 		return inv.getEntry((int) coordinates[ROW], (int) coordinates[COLUMN]);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

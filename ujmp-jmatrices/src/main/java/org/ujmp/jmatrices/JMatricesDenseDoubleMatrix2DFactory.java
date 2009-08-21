@@ -31,7 +31,7 @@ public class JMatricesDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -6167055683649848958L;
 
-	@Override
+	
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
 		return new JMatricesDenseDoubleMatrix2D(rows, columns);

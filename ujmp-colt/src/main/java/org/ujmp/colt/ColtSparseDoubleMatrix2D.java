@@ -87,7 +87,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new AvailableCoordinateIterable();
 	}
@@ -111,25 +111,25 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return getAsDouble(coordinates) != 0.0;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.viewDice().copy());
 	}
 
-	@Override
+	
 	public Matrix plus(double value) {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy().assign(Functions.plus(value)));
 	}
 
-	@Override
+	
 	public Matrix times(double value) {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy().assign(Functions.mult(value)));
 	}
 
-	@Override
+	
 	public Matrix copy() {
 		Matrix m = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy());
@@ -139,7 +139,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return m;
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof ColtSparseDoubleMatrix2D) {
 			SparseDoubleMatrix2D ret = new SparseDoubleMatrix2D(

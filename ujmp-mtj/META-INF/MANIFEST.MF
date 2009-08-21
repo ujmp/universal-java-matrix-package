@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_mtj
+Bundle-SymbolicName: ujmp_mtj
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.mtj,
+ org.ujmp.mtj.benchmark

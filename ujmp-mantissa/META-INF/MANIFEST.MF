@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_mantissa
+Bundle-SymbolicName: ujmp_mantissa
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.mantissa,
+ org.ujmp.mantissa.benchmark

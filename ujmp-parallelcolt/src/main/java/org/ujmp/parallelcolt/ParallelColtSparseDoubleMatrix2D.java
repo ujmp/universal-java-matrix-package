@@ -87,7 +87,7 @@ public class ParallelColtSparseDoubleMatrix2D extends
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new AvailableCoordinateIterable();
 	}

@@ -54,7 +54,7 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		}
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
@@ -69,17 +69,17 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		return MathUtil.toLongArray(data.dimensions());
 	}
 
-	@Override
+	
 	public Iterable<long[]> allCoordinates() throws MatrixException {
 		return new CoordinateIterator(this.getSize());
 	}
 
-	@Override
+	
 	public ObjectArray<Object> getWrappedObject() {
 		return data;
 	}
 
-	@Override
+	
 	public void setWrappedObject(ObjectArray<Object> object) {
 		this.data = object;
 	}

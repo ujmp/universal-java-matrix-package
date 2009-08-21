@@ -27,7 +27,7 @@ import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixXML extends AbstractExportMatrixTest {
 
-	@Override
+	
 	public FileFormat getFormat() {
 		return FileFormat.XML;
 	}

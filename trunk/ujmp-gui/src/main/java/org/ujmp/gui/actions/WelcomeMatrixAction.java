@@ -42,7 +42,7 @@ public class WelcomeMatrixAction extends MatrixAction {
 				"creates a matrix with a welcome message");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = MatrixFactory.welcomeMatrix();
 		m.showGUI();

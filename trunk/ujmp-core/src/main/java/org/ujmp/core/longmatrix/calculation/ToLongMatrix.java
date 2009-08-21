@@ -33,7 +33,7 @@ public class ToLongMatrix extends AbstractLongCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public long getLong(long... coordinates) throws MatrixException {
 		return getSource().getAsLong(coordinates);
 	}

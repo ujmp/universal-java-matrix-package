@@ -50,7 +50,7 @@ public class MatrixAvailableProcessors extends AbstractDenseIntMatrix2D {
 	public void setInt(int value, int row, int column) {
 	}
 
-	@Override
+	
 	public boolean isReadOnly() {
 		return true;
 	}

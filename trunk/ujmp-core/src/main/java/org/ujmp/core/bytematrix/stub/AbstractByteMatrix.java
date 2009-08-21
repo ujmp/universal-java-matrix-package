@@ -31,37 +31,37 @@ import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 701344082157040644L;
 
-	@Override
+	
 	public final Byte getObject(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(Byte o, long... coordinates) throws MatrixException {
 		setByte(o, coordinates);
 	}
 
-	@Override
+	
 	public final byte getAsByte(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsByte(byte value, long... coordinates) throws MatrixException {
 		setByte(value, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setByte((byte) value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

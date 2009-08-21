@@ -41,7 +41,7 @@ public class SortAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "Sorts the entries in the matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().sort(Ret.NEW);
 		result.showGUI();

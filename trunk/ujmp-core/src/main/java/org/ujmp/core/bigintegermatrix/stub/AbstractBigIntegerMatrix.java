@@ -34,27 +34,27 @@ public abstract class AbstractBigIntegerMatrix extends AbstractGenericMatrix<Big
 		BigIntegerMatrix {
 	private static final long serialVersionUID = 3292181924433131789L;
 
-	@Override
+	
 	public final BigInteger getObject(long... coordinates) throws MatrixException {
 		return getBigInteger(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(BigInteger o, long... coordinates) throws MatrixException {
 		setBigInteger(o, coordinates);
 	}
 
-	@Override
+	
 	public final BigInteger getAsBigInteger(long... coordinates) throws MatrixException {
 		return getBigInteger(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		setBigInteger(value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}

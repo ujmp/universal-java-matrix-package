@@ -70,12 +70,12 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -96,7 +96,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		values[row][column] = value;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final int retcols = values.length;
 		final int retrows = values[0].length;
@@ -109,7 +109,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix plus(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -120,7 +120,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix minus(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -131,7 +131,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix times(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -142,7 +142,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix divide(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
@@ -153,7 +153,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix plus(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
@@ -164,7 +164,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -179,7 +179,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix minus(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -190,7 +190,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix times(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -201,7 +201,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	@Override
+	
 	public final Matrix divide(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -223,7 +223,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return false;
 	}
 
-	@Override
+	
 	public double[][] getDoubleArray2D() {
 		return values;
 	}

@@ -49,7 +49,7 @@ public class Xor extends AbstractBooleanCalculation {
 		this(MatrixFactory.fill(v1, m2.getSize()), m2);
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return MathUtil.xor(getSource().getAsBoolean(coordinates), getSources()[1]
 				.getAsBoolean(coordinates));

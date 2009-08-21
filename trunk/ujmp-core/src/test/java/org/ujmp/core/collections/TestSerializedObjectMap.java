@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class TestSerializedObjectMap extends AbstractMapTest {
 
-	@Override
+	
 	public Map<String, Object> createMap() throws Exception {
 		return new SerializedObjectMap<Object>();
 	}

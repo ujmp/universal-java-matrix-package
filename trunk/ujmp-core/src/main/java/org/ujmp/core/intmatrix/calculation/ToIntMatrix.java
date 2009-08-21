@@ -33,7 +33,7 @@ public class ToIntMatrix extends AbstractIntCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public int getInt(long... coordinates) throws MatrixException {
 		return getSource().getAsInt(coordinates);
 	}

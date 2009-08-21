@@ -50,17 +50,17 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

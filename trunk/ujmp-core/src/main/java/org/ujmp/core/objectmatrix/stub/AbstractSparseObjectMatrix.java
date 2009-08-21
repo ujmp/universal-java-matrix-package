@@ -29,7 +29,7 @@ public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix im
 		SparseObjectMatrix {
 	private static final long serialVersionUID = -8252625246356993341L;
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

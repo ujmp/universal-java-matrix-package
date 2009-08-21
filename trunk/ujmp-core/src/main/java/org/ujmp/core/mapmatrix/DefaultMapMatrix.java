@@ -40,7 +40,7 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 		this.map = map;
 	}
 
-	@Override
+	
 	public Map<K, V> getMap() {
 		return map;
 	}

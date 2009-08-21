@@ -43,7 +43,7 @@ public class Power extends AbstractDoubleCalculation {
 		this(m1, MatrixFactory.fill(v2, m1.getSize()));
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.pow(getSource().getAsDouble(coordinates), getSources()[1]
 				.getAsDouble(coordinates));

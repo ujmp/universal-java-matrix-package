@@ -221,7 +221,7 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 		return matrix;
 	}
 
-	@Override
+	
 	public String getToolTipText(MouseEvent e) {
 		// only generate tool text when there a matrix with size >0 is available
 		if (matrix != null && Coordinates.product(matrix.getSize()) != 0) {
@@ -266,7 +266,7 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 		GraphicsExecutor.scheduleUpdate(this);
 	}
 
-	@Override
+	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		if (matrix != null) {
@@ -275,7 +275,7 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 		ToolTipManager.sharedInstance().unregisterComponent(this);
 	}
 
-	@Override
+	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;

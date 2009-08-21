@@ -34,7 +34,7 @@ public class IndexOfMax extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double max = -Double.MAX_VALUE;
 		long index = -1;
@@ -61,7 +61,7 @@ public class IndexOfMax extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

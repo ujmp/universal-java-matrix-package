@@ -30,7 +30,7 @@ public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix implem
 
 	private static final long serialVersionUID = 1233020617561440217L;
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
 	}

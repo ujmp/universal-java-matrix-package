@@ -47,7 +47,7 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 		return calculation.allCoordinates();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -56,7 +56,7 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 		return calculation.getSize();
 	}
 
-	@Override
+	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -64,17 +64,17 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 		}
 	}
 
-	@Override
+	
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
 		return calculation.getBigInteger(coordinates);
 	}
 
-	@Override
+	
 	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		calculation.setBigInteger(value, coordinates);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

@@ -30,12 +30,12 @@ import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixM extends AbstractExportMatrixTest {
 
-	@Override
+	
 	public FileFormat getFormat() {
 		return FileFormat.M;
 	}
 
-	@Override
+	
 	public void testExportToFile() throws Exception {
 
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());

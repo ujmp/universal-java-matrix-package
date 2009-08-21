@@ -59,7 +59,7 @@ public class MemoryUsage extends JProgressBar {
 			this.memoryUsage = memoryUsage;
 		}
 
-		@Override
+		
 		public void run() {
 			memoryUsage.update();
 		}

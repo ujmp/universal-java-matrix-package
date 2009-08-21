@@ -34,7 +34,7 @@ public class MatrixSystemProperties extends AbstractMapMatrix<Object, Object> {
 		setLabel("System Properties");
 	}
 
-	@Override
+	
 	public Map<Object, Object> getMap() {
 		return System.getProperties();
 	}

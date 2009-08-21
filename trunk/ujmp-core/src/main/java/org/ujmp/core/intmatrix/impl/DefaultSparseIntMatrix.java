@@ -50,17 +50,17 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}
 
-	@Override
+	
 	public int getInt(long... coordinates) throws MatrixException {
 		return MathUtil.getInt(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setInt(int value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

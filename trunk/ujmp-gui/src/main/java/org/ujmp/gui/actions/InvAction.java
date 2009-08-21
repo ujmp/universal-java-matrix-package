@@ -41,7 +41,7 @@ public class InvAction extends MatrixAction {
 				"Calculates the inverse of a matrix if possible");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().inv();
 		result.showGUI();

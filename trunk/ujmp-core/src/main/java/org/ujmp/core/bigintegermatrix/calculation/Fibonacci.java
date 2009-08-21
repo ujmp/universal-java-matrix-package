@@ -42,12 +42,12 @@ public class Fibonacci extends AbstractBigIntegerCalculation {
 		}
 	}
 
-	@Override
+	
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
 		return data[(int) coordinates[ROW]];
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { data.length, 1 };
 	}

@@ -84,7 +84,7 @@ public class SeekableLineInputStream extends InputStream {
 		}
 	}
 
-	@Override
+	
 	public void close() throws IOException {
 		in.close();
 	}
@@ -93,7 +93,7 @@ public class SeekableLineInputStream extends InputStream {
 		return lineEnds.size() + 1;
 	}
 
-	@Override
+	
 	public int read() throws IOException {
 		return in.read();
 	}

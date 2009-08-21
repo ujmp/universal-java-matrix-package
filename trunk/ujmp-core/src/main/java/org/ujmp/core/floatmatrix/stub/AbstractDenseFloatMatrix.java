@@ -35,7 +35,7 @@ public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix imple
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
 	}

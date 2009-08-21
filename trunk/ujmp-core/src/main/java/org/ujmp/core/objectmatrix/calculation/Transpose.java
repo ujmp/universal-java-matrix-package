@@ -47,32 +47,32 @@ public class Transpose extends AbstractObjectCalculation {
 		this.swap2 = swap2;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize(), swap1, swap2);
 	}
 
-	@Override
+	
 	public boolean contains(long... coordinates) {
 		return getSource().contains(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
-	@Override
+	
 	public boolean isSparse() {
 		return getSource().isSparse();
 	}
 
-	@Override
+	
 	public long getValueCount() {
 		return getSource().getValueCount();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new Iterable<long[]>() {
 

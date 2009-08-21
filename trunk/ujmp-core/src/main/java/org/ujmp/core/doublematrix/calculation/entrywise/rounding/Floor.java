@@ -35,7 +35,7 @@ public class Floor extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.floor(getSource().getAsDouble(coordinates));
 	}

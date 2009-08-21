@@ -41,7 +41,7 @@ public class MultiplyAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "multiply all cells by a value");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().times(
 				getRet(),

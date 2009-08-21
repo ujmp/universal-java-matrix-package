@@ -42,7 +42,7 @@ public class MandelbrotMatrixAction extends MatrixAction {
 				"creates a matrix from the mandelbrot set");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		double xoffset = -.5;
 		double yoffset = 0;

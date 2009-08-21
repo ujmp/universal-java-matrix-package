@@ -35,7 +35,7 @@ public class Tan extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.tan(getSource().getAsDouble(coordinates));
 	}

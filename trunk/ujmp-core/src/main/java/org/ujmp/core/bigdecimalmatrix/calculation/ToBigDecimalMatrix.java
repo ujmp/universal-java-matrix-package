@@ -35,7 +35,7 @@ public class ToBigDecimalMatrix extends AbstractBigDecimalCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException {
 		return getSource().getAsBigDecimal(coordinates);
 	}

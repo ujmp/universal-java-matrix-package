@@ -64,7 +64,7 @@ public abstract class AbstractGUIObject implements GUIObject {
 		setDescription(description);
 	}
 
-	@Override
+	
 	public abstract String toString();
 
 	public void fireValueChanged() {

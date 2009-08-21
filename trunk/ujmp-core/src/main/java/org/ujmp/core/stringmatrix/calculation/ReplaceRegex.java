@@ -47,7 +47,7 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		this.replaceString = replaceString;
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		String src = getSource().getAsString(coordinates);
 

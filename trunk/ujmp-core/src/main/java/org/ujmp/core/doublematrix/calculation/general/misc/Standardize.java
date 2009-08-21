@@ -42,7 +42,7 @@ public class Standardize extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (center == null) {
 			center = new Center(ignoreNaN, getDimension(), getSource()).calcNew();

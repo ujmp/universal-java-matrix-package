@@ -74,12 +74,12 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}

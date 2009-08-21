@@ -42,7 +42,7 @@ public class Sum extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double sum = 0;
 
@@ -95,7 +95,7 @@ public class Sum extends AbstractDoubleCalculation {
 
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

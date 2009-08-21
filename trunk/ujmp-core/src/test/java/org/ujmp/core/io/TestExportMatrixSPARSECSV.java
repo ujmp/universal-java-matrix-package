@@ -27,7 +27,7 @@ import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixSPARSECSV extends AbstractExportMatrixTest {
 
-	@Override
+	
 	public FileFormat getFormat() {
 		return FileFormat.SPARSECSV;
 	}

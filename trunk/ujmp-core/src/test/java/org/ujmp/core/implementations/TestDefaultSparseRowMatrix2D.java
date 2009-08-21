@@ -29,12 +29,12 @@ import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
 public class TestDefaultSparseRowMatrix2D extends AbstractMatrixTest {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new DefaultSparseRowObjectMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new DefaultSparseRowObjectMatrix2D(source);
 	}

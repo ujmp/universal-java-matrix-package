@@ -61,12 +61,12 @@ public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}

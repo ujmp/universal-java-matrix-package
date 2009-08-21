@@ -58,7 +58,7 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 		this.object = object;
 	}
 
-	@Override
+	
 	public String toString() {
 		return "" + comparable + ": " + object;
 	}
@@ -71,7 +71,7 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 		return ((Comparable<O>) object).compareTo(s.object);
 	}
 
-	@Override
+	
 	public boolean equals(Object obj) {
 		if (obj instanceof Sortable) {
 			Sortable<?, ?> s = (Sortable<?, ?>) obj;
@@ -88,7 +88,7 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 		return false;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		int hash = 0;
 		if (object != null) {

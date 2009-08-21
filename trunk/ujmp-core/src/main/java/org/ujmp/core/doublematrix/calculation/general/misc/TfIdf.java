@@ -57,7 +57,7 @@ public class TfIdf extends AbstractDoubleCalculation {
 		}
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (docTerm == null) {
 			calculate();
@@ -90,7 +90,7 @@ public class TfIdf extends AbstractDoubleCalculation {
 		}
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (docTerm == null) {
 			calculate();

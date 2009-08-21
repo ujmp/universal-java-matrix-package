@@ -33,7 +33,7 @@ public class ToObjectMatrix extends AbstractObjectCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(coordinates);
 	}

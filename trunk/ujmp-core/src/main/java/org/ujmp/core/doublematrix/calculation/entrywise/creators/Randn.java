@@ -47,7 +47,7 @@ public class Randn extends AbstractDoubleCalculation {
 		this.sigma = sigma;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return MathUtil.nextGaussian(mean, sigma);
 	}

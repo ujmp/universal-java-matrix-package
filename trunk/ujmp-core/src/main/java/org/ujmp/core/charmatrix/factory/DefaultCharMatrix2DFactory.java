@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultCharMatrix2DFactory extends AbstractCharMatrix2DFactory {
 	private static final long serialVersionUID = -1124203886604964405L;
 
-	@Override
+	
 	public CharMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new ArrayDenseCharMatrix2D(rows, columns);
 	}

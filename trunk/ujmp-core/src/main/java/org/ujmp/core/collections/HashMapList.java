@@ -38,7 +38,7 @@ public class HashMapList<K, V> extends HashMap<K, V> {
 		super(m);
 	}
 
-	@Override
+	
 	public synchronized V put(K key, V value) {
 		return super.put(key, value);
 	}
@@ -61,7 +61,7 @@ public class HashMapList<K, V> extends HashMap<K, V> {
 		return it.hasNext() ? it.next() : null;
 	}
 
-	@Override
+	
 	public synchronized V remove(Object key) {
 		return super.remove(key);
 	}

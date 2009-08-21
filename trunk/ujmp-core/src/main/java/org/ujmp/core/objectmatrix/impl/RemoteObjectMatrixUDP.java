@@ -90,7 +90,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	@Override
+	
 	public synchronized double getAsDouble(long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
@@ -118,7 +118,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	@Override
+	
 	public synchronized void setAsDouble(double value, long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
@@ -144,7 +144,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) {
 		// TODO Auto-generated method stub
 		return null;

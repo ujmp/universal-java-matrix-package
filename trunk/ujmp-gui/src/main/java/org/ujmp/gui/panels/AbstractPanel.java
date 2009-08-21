@@ -50,7 +50,7 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip {
 		ToolTipManager.sharedInstance().registerComponent(this);
 	}
 
-	@Override
+	
 	protected void finalize() throws Throwable {
 		ToolTipManager.sharedInstance().unregisterComponent(this);
 		super.finalize();
@@ -68,7 +68,7 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip {
 		ExportPNG.save(file, this);
 	}
 
-	@Override
+	
 	public String getToolTipText() {
 		return object.getToolTipText();
 	}

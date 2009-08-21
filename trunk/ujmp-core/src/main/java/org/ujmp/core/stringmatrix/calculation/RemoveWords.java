@@ -44,7 +44,7 @@ public class RemoveWords extends AbstractStringCalculation {
 		}
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		String s = getSource().getAsString(coordinates);
 		StringBuilder result = new StringBuilder(s.length());

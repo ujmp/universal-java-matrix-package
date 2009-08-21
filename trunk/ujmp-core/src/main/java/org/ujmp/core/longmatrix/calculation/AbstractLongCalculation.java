@@ -74,7 +74,7 @@ public abstract class AbstractLongCalculation extends AbstractCalculation<Matrix
 	public void setLong(long value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

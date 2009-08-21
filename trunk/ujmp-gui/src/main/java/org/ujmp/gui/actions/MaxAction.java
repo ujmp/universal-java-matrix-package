@@ -42,7 +42,7 @@ public class MaxAction extends MatrixAction {
 				"Calculates the max of the entries in this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW,
 				getDimension());

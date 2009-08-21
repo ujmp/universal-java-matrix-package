@@ -120,7 +120,7 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 		}
 	}
 
-	@Override
+	
 	protected void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);

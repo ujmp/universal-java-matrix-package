@@ -47,7 +47,7 @@ public class StandardizeAction extends MatrixAction {
 				KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(),
 				getDimension(), getIgnoreMissing());

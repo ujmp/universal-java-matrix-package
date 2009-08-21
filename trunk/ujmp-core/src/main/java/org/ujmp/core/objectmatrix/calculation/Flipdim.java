@@ -34,7 +34,7 @@ public class Flipdim extends AbstractObjectCalculation {
 		super(dimension, m);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		coordinates = Coordinates.copyOf(coordinates);
 		long newValue = getSize()[getDimension()] - coordinates[getDimension()] - 1;

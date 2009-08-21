@@ -1000,24 +1000,24 @@ public class Ginv extends AbstractDoubleCalculation {
 		return MatrixFactory.eye(intermediate.getSize()).minus(intermediate);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		throw new MatrixException("this method should never be called: LINK not possible");
 	}
 
-	@Override
+	
 	public DenseDoubleMatrix2D calcLink() throws MatrixException {
 		throw new MatrixException("linking not possible, use ORIG or NEW");
 	}
 
-	@Override
+	
 	public DenseDoubleMatrix2D calcNew() throws MatrixException {
 		Matrix source = getSource();
 		ArrayDenseDoubleMatrix2D matrix = new ArrayDenseDoubleMatrix2D(source);
 		return inverse(matrix.getDoubleArray2D());
 	}
 
-	@Override
+	
 	public DenseDoubleMatrix2D calcOrig() throws MatrixException {
 		Matrix source = getSource();
 		if (!source.isSquare()) {

@@ -51,17 +51,17 @@ public class DefaultSparseDateMatrix extends DefaultSparseGenericMatrix<Date> im
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.DATE;
 	}
 
-	@Override
+	
 	public Date getDate(long... coordinates) throws MatrixException {
 		return MathUtil.getDate(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setDate(Date date, long... coordinates) throws MatrixException {
 		setObject(date, coordinates);
 	}

@@ -80,9 +80,9 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 				zip = (OutputStream) con.newInstance(new Object[] { new FileOutputStream(file,
 						append) });
 			} catch (ClassNotFoundException e) {
-				throw new IOException("Could not find ujmp-j7zip in classpath", e);
+				throw new IOException("Could not find ujmp-j7zip in classpath");
 			} catch (Exception e) {
-				throw new IOException("Could not create SevenZipOutputStream", e);
+				throw new IOException("Could not create SevenZipOutputStream");
 			}
 			bw = new BufferedWriter(new OutputStreamWriter(zip, encoding));
 		} else {
@@ -103,7 +103,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 		fw.close();
 	}
 
-	@Override
+	
 	public void close() throws IOException {
 		if (bw != null)
 			bw.close();
@@ -113,7 +113,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 			zip.close();
 	}
 
-	@Override
+	
 	public void flush() throws IOException {
 		if (bw != null)
 			bw.flush();
@@ -123,7 +123,7 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 			zip.flush();
 	}
 
-	@Override
+	
 	public void write(char[] cbuf, int off, int len) throws IOException {
 		bw.write(cbuf, off, len);
 	}

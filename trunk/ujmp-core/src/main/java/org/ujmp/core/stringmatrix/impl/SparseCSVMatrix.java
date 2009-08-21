@@ -137,11 +137,11 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		return null;
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new Iterable<long[]>() {
 
-			@Override
+			
 			public Iterator<long[]> iterator() {
 				return new SparseCSVMatrixIterator();
 			}
@@ -151,7 +151,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	public void setString(String value, long row, long column) {
 	}
 
-	@Override
+	
 	public boolean contains(long... coordinates) throws MatrixException {
 		return getString(coordinates) != null;
 	}
@@ -160,12 +160,12 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 
 		long l = 0;
 
-		@Override
+		
 		public boolean hasNext() {
 			return l < sli.getLineCount();
 		}
 
-		@Override
+		
 		public long[] next() {
 			try {
 				Object[] objects = data.get(l);
@@ -186,7 +186,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 			}
 		}
 
-		@Override
+		
 		public void remove() {
 		}
 

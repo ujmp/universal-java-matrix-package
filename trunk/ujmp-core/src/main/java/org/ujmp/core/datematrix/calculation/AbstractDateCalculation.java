@@ -76,7 +76,7 @@ public abstract class AbstractDateCalculation extends AbstractCalculation<Matrix
 	public void setDate(Date value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.DATE;
 	}

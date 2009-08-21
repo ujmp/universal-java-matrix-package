@@ -98,32 +98,32 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return newSize;
 	}
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return source.getAsDouble(getOldCoordinates(coordinates));
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return source.getAsObject(getOldCoordinates(coordinates));
 	}
 
-	@Override
+	
 	public long getValueCount() {
 		return source.getValueCount();
 	}
 
-	@Override
+	
 	public boolean isReadOnly() {
 		return source.isReadOnly();
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return source.getStorageType();
 	}
 
-	@Override
+	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		source.setAsDouble(value, getOldCoordinates(coordinates));
 	}

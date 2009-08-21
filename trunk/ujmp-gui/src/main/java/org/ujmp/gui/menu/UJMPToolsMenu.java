@@ -89,7 +89,7 @@ public class UJMPToolsMenu extends JMenu {
 			putValue(Action.SHORT_DESCRIPTION, "Show JMathlib in a new Window");
 		}
 
-		@Override
+		
 		public void actionPerformed(ActionEvent e) {
 			JMathLib.showGUI();
 		}

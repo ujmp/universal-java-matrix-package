@@ -114,7 +114,7 @@ public class IntelligentFileReader extends Reader {
 		return null;
 	}
 
-	@Override
+	
 	public void close() {
 		try {
 			if (lr != null)
@@ -140,7 +140,7 @@ public class IntelligentFileReader extends Reader {
 			return -1;
 	}
 
-	@Override
+	
 	public int read(char[] cbuf, int off, int len) throws IOException {
 		return lr.read(cbuf, off, len);
 	}

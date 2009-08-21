@@ -40,7 +40,7 @@ public class Cov extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double sumProd = 0.0;
 		long rows = getSource().getRowCount();
@@ -87,7 +87,7 @@ public class Cov extends AbstractDoubleCalculation {
 		return cov;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}

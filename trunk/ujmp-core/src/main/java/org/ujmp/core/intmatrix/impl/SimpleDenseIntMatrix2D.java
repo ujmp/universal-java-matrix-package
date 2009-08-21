@@ -70,12 +70,12 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -96,7 +96,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		values[row][column] = value;
 	}
 
-	@Override
+	
 	public final IntMatrix transpose() {
 		int[][] result = new int[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {
@@ -107,7 +107,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	@Override
+	
 	public final IntMatrix plus(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -119,7 +119,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	@Override
+	
 	public final IntMatrix minus(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -131,7 +131,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	@Override
+	
 	public final IntMatrix times(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -143,7 +143,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	@Override
+	
 	public final IntMatrix divide(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];

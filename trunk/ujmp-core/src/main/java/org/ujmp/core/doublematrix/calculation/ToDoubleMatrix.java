@@ -33,7 +33,7 @@ public class ToDoubleMatrix extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return getSource().getAsDouble(coordinates);
 	}

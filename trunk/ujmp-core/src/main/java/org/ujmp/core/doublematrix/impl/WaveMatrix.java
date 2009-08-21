@@ -59,7 +59,7 @@ public class WaveMatrix extends DenseFileMatrix2D {
 		return 32768;
 	}
 
-	@Override
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("RIFF Tag:         " + getRIFFTag() + "\n");

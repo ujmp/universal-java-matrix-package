@@ -42,7 +42,7 @@ public class CovarianceAction extends MatrixAction {
 				"Calculates the covariance of the entries in this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().cov(Ret.NEW,
 				getIgnoreMissing());

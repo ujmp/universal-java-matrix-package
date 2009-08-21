@@ -77,7 +77,7 @@ public abstract class AbstractBigDecimalCalculation extends
 	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}

@@ -45,7 +45,7 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 		return calculation.allCoordinates();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +54,7 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 		return calculation.getSize();
 	}
 
-	@Override
+	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +62,17 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 		}
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return calculation.getBoolean(coordinates);
 	}
 
-	@Override
+	
 	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
 		calculation.setBoolean(value, coordinates);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

@@ -29,7 +29,7 @@ import org.ujmp.core.intmatrix.IntMatrix2D;
 public abstract class AbstractIntMatrix2DFactory implements IntMatrix2DFactory {
 	private static final long serialVersionUID = -5395956090810693224L;
 
-	@Override
+	
 	public IntMatrix2D zeros(long rows, long columns) throws MatrixException {
 		return dense(rows, columns);
 	}

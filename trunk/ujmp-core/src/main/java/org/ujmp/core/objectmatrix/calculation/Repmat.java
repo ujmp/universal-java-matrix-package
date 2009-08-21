@@ -37,17 +37,17 @@ public class Repmat extends AbstractObjectCalculation {
 		size = Coordinates.multiply(matrix.getSize(), count);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(Coordinates.modulo(coordinates, getSource().getSize()));
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return size;
 	}
 
-	@Override
+	
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 	}
 

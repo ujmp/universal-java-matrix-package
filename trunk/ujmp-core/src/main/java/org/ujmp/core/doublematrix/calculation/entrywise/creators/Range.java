@@ -42,12 +42,12 @@ public class Range extends AbstractDoubleCalculation {
 		this.max = max;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return min + coordinates[COLUMN] * stepSize;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		long cols = (long) Math.floor((max - min) / stepSize) + 1;
 		return new long[] { 1, cols };

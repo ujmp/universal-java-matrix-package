@@ -50,7 +50,7 @@ public class MatrixSystemTime extends AbstractDenseLongMatrix2D {
 	public void setLong(long value, int row, int column) {
 	}
 
-	@Override
+	
 	public boolean isReadOnly() {
 		return true;
 	}

@@ -33,7 +33,7 @@ public class ToStringMatrix extends AbstractStringCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		return getSource().getAsString(coordinates);
 	}

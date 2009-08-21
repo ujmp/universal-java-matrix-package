@@ -44,7 +44,7 @@ public class DefaultTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrappe
 		super(source);
 	}
 
-	@Override
+	
 	public Map<Coordinates, ObjectMatrix2D> getMap() {
 		if (values == null) {
 			values = new HashMap<Coordinates, ObjectMatrix2D>();
@@ -52,7 +52,7 @@ public class DefaultTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrappe
 		return values;
 	}
 
-	@Override
+	
 	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
 		this.values = map;
 	}

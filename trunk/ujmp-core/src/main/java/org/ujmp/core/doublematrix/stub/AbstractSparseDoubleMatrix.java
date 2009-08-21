@@ -30,7 +30,7 @@ public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix im
 
 	private static final long serialVersionUID = 3204626510806761165L;
 
-	@Override
+	
 	public StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

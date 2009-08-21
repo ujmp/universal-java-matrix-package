@@ -33,7 +33,7 @@ public class ToShortMatrix extends AbstractShortCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public short getShort(long... coordinates) throws MatrixException {
 		return getSource().getAsShort(coordinates);
 	}

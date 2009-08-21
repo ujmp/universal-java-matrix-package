@@ -122,7 +122,7 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 		}
 	}
 
-	@Override
+	
 	public List<Object> getChildren(Object o) {
 		List<Object> children = childrenMap.get(o);
 		if (children == null) {
@@ -132,17 +132,17 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 		return children;
 	}
 
-	@Override
+	
 	public Collection<Object> getObjectList() {
 		return objects;
 	}
 
-	@Override
+	
 	public Object getRoot() {
 		return root;
 	}
 
-	@Override
+	
 	public void setRoot(Object o) {
 		root = o;
 	}
@@ -160,7 +160,7 @@ class NameAndValue {
 		this.value = value;
 	}
 
-	@Override
+	
 	public String toString() {
 		String s = name + " = " + value;
 		if (s.length() > 50) {
@@ -169,12 +169,12 @@ class NameAndValue {
 		return s;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		return (name + " - " + value).hashCode();
 	}
 
-	@Override
+	
 	public boolean equals(Object o) {
 		if (o instanceof NameAndValue) {
 			NameAndValue no = (NameAndValue) o;

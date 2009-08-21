@@ -74,12 +74,12 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -100,7 +100,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		String[] result = new String[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -111,7 +111,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final String[] result = new String[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -122,7 +122,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		return new DefaultDenseStringMatrix2D(result, cols, rows);
 	}
 
-	@Override
+	
 	public String[] getStringArray() {
 		return values;
 	}

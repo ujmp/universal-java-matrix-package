@@ -49,7 +49,7 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

@@ -38,7 +38,7 @@ public class SetLabelAction extends ObjectAction {
 		putValue(Action.SHORT_DESCRIPTION, "Change the name of this object");
 	}
 
-	@Override
+	
 	public Object call() {
 		String label = JOptionPane.showInputDialog("Enter the new Label for this Object:", getGUIObject().getLabel());
 		getGUIObject().setLabel(label);

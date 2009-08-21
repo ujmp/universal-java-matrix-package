@@ -56,20 +56,20 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Object getObject(long row, long column) throws MatrixException {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
-	@Override
+	
 	public Object getObject(int row, int column) throws MatrixException {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
 		for (Long r : rows.keySet()) {
@@ -89,12 +89,12 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
@@ -117,7 +117,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return size;
 	}
 
-	@Override
+	
 	public void setSize(long... size) {
 		if (this.size[COLUMN] != size[COLUMN]) {
 			for (Matrix m : rows.values()) {
@@ -131,7 +131,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return rows.get(row);
 	}
 
-	@Override
+	
 	public Matrix max(Ret returnType, int dimension) throws MatrixException {
 		if (returnType == Ret.NEW) {
 
@@ -159,7 +159,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		throw new MatrixException("not supported");
 	}
 
-	@Override
+	
 	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
@@ -167,12 +167,12 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return super.selectRows(returnType, rows);
 	}
 
-	@Override
+	
 	public Map<Long, Matrix> getWrappedObject() {
 		return rows;
 	}
 
-	@Override
+	
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.rows = object;
 	}

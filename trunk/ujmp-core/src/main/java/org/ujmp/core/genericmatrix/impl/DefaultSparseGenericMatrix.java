@@ -71,17 +71,17 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return size;
 	}
 
-	@Override
+	
 	public void setSize(long... size) {
 		this.size = size;
 	}
 
-	@Override
+	
 	public A getObject(long... coordinates) {
 		return values.get(new Coordinates(coordinates));
 	}
 
-	@Override
+	
 	public long getValueCount() {
 		return values.size();
 	}
@@ -104,7 +104,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return new CoordinateIterator(getSize());
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(values.keySet());
 	}
@@ -113,22 +113,22 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return values.containsKey(new Coordinates(coordinates));
 	}
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
 
-	@Override
+	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

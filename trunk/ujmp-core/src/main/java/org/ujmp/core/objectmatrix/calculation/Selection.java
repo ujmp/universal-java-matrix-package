@@ -56,7 +56,7 @@ public class Selection extends AbstractObjectCalculation {
 		this.selection = selection;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
@@ -72,7 +72,7 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return new long[] { selection[ROW].length, selection[COLUMN].length };
@@ -85,7 +85,7 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	@Override
+	
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],

@@ -74,7 +74,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation<Matrix
 	public void setByte(byte value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

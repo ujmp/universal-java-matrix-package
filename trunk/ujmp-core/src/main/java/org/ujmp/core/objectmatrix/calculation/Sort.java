@@ -56,7 +56,7 @@ public class Sort extends AbstractObjectCalculation {
 		this.column = column;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (index == null) {
 			createSortIndex();

@@ -125,12 +125,12 @@ class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
 		setColumnLabel(2, "Extensions");
 	}
 
-	@Override
+	
 	public Object getObject(long row, long column) {
 		return getObject((int) row, (int) column);
 	}
 
-	@Override
+	
 	public Object getObject(int row, int column) {
 		FileFormat f = FileFormat.values()[row];
 		switch (column) {
@@ -143,15 +143,15 @@ class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
 		}
 	}
 
-	@Override
+	
 	public void setObject(Object value, long row, long column) {
 	}
 
-	@Override
+	
 	public void setObject(Object value, int row, int column) {
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { FileFormat.values().length, 3 };
 	}

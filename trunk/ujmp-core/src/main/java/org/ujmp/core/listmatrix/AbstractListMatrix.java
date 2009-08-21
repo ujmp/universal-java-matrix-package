@@ -87,7 +87,7 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().indexOf(o);
 	}
 
-	@Override
+	
 	public boolean isEmpty() {
 		return getList().isEmpty();
 	}
@@ -174,22 +174,22 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().toArray(a);
 	}
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setAsObject(value, coordinates);
 	}
 
-	@Override
+	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.LIST;
 	}

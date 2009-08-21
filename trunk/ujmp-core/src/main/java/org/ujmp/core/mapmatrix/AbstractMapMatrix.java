@@ -91,7 +91,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return getMap().get(key);
 	}
 
-	@Override
+	
 	public final boolean isEmpty() {
 		return getMap().isEmpty();
 	}
@@ -125,7 +125,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return getMap().values();
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.MAP;
 	}

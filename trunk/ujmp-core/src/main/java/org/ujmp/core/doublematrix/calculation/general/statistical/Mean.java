@@ -43,7 +43,7 @@ public class Mean extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (sum == null) {
 			sum = new Sum(getDimension(), ignoreNaN, getSource()).calcNew();
@@ -86,7 +86,7 @@ public class Mean extends AbstractDoubleCalculation {
 		}
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

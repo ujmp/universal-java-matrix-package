@@ -35,7 +35,7 @@ public class Zeros extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return 0.0;
 	}

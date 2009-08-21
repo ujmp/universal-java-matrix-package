@@ -30,7 +30,7 @@ import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 public class DefaultLongMatrix2DFactory extends AbstractLongMatrix2DFactory {
 	private static final long serialVersionUID = 7430273868074744639L;
 
-	@Override
+	
 	public LongMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseLongMatrix2D(rows, columns);
 	}

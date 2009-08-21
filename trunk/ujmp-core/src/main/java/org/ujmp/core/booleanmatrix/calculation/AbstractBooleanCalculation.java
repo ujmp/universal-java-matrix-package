@@ -74,7 +74,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation<Mat
 	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}

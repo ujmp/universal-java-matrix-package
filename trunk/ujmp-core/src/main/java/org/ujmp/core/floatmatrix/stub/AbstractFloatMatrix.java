@@ -33,37 +33,37 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 
 	private static final long serialVersionUID = -6051872055791093546L;
 
-	@Override
+	
 	public final Float getObject(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(Float o, long... coordinates) throws MatrixException {
 		setFloat(o, coordinates);
 	}
 
-	@Override
+	
 	public final float getAsFloat(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsFloat(float value, long... coordinates) throws MatrixException {
 		setFloat(value, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setFloat((float) value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

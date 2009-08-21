@@ -44,7 +44,7 @@ public class Var extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (mean == null) {
 			mean = new Mean(getDimension(), ignoreNaN, getSource()).calcNew();
@@ -129,7 +129,7 @@ public class Var extends AbstractDoubleCalculation {
 
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

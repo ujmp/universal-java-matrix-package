@@ -29,7 +29,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public abstract class AbstractBooleanMatrix2DFactory implements BooleanMatrix2DFactory {
 	private static final long serialVersionUID = -9208052531077534453L;
 
-	@Override
+	
 	public BooleanMatrix2D zeros(long rows, long columns) throws MatrixException {
 		return dense(rows, columns);
 	}

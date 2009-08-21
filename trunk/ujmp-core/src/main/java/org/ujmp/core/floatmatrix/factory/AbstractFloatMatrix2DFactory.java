@@ -29,7 +29,7 @@ import org.ujmp.core.floatmatrix.FloatMatrix2D;
 public abstract class AbstractFloatMatrix2DFactory implements FloatMatrix2DFactory {
 	private static final long serialVersionUID = 6436157519292393559L;
 
-	@Override
+	
 	public FloatMatrix2D zeros(long rows, long columns) throws MatrixException {
 		return dense(rows, columns);
 	}

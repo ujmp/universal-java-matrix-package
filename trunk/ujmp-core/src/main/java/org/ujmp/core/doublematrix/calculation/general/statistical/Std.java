@@ -39,7 +39,7 @@ public class Std extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (variance == null) {
 			variance = new Var(getDimension(), ignoreNaN, getSource()).calcNew();
@@ -47,7 +47,7 @@ public class Std extends AbstractDoubleCalculation {
 		return Math.sqrt(variance.getAsDouble(coordinates));
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

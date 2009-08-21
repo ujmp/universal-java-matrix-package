@@ -29,7 +29,7 @@ public abstract class AbstractSparseBooleanMatrix extends AbstractBooleanMatrix 
 		SparseBooleanMatrix {
 	private static final long serialVersionUID = 921125319412028934L;
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

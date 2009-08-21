@@ -28,12 +28,12 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixSER extends AbstractExportMatrixTest {
 
-	@Override
+	
 	public FileFormat getFormat() {
 		return FileFormat.SER;
 	}
 
-	@Override
+	
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -43,7 +43,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Override
+	
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();
@@ -53,7 +53,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Override
+	
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();

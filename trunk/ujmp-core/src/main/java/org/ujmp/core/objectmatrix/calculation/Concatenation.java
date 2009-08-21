@@ -53,7 +53,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		this(dimension, matrices.toArray(new Matrix[matrices.size()]));
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		int i = 0;
 		for (; i < positions.length; i++) {
@@ -68,12 +68,12 @@ public class Concatenation extends AbstractObjectCalculation {
 		return m.getAsObject(c);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return size;
 	}
 
-	@Override
+	
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 	}
 

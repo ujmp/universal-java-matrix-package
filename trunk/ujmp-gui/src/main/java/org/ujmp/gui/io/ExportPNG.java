@@ -71,7 +71,6 @@ public abstract class ExportPNG {
 		try {
 			OutputStream out = new FileOutputStream(file);
 			Iterator<?> writers = ImageIO.getImageWritersByFormatName("png");
-			String[] s = ImageIO.getWriterFileSuffixes();
 			ImageWriter writer = (ImageWriter) writers.next();
 			ImageOutputStream ios = ImageIO.createImageOutputStream(file);
 			writer.setOutput(ios);

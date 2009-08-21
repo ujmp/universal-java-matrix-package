@@ -33,7 +33,7 @@ public class ToCharMatrix extends AbstractCharCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public char getChar(long... coordinates) throws MatrixException {
 		return getSource().getAsChar(coordinates);
 	}

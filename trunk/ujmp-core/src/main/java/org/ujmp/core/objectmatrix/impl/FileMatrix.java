@@ -86,7 +86,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		map = new FileMap(fileFormat, file, parameters);
 	}
 
-	@Override
+	
 	public Map<String, Object> getMap() {
 		return map;
 	}
@@ -132,7 +132,6 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			} else {
 				map.put(EXTENSION, null);
 			}
-			map.put(CANEXECUTE, file.canExecute());
 			map.put(CANREAD, file.canRead());
 			map.put(CANWRITE, file.canWrite());
 			map.put(ISHIDDEN, file.isHidden());
@@ -143,27 +142,27 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			map.put(FILEFORMAT, this.fileformat);
 		}
 
-		@Override
+		
 		public void clear() {
 			map.clear();
 		}
 
-		@Override
+		
 		public boolean containsKey(Object key) {
 			return map.containsKey(key);
 		}
 
-		@Override
+		
 		public boolean containsValue(Object value) {
 			return map.containsValue(value);
 		}
 
-		@Override
+		
 		public Set<java.util.Map.Entry<String, Object>> entrySet() {
 			throw new MatrixException("not implemented");
 		}
 
-		@Override
+		
 		public Object get(Object key) {
 			if (CONTENT.equals(key)) {
 				if (fileformat == null) {
@@ -204,37 +203,37 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			return map.get(key);
 		}
 
-		@Override
+		
 		public boolean isEmpty() {
 			return map.isEmpty();
 		}
 
-		@Override
+		
 		public Set<String> keySet() {
 			return map.keySet();
 		}
 
-		@Override
+		
 		public Object put(String key, Object value) {
 			return map.put(key, value);
 		}
 
-		@Override
+		
 		public void putAll(Map<? extends String, ? extends Object> m) {
 			map.putAll(m);
 		}
 
-		@Override
+		
 		public Object remove(Object key) {
 			return map.remove(key);
 		}
 
-		@Override
+		
 		public int size() {
 			return map.size();
 		}
 
-		@Override
+		
 		public Collection<Object> values() {
 			throw new MatrixException("not implemented");
 		}

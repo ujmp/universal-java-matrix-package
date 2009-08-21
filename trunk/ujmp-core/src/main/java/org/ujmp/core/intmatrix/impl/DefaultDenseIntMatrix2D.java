@@ -74,12 +74,12 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -100,7 +100,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		values[column * rows + row] = value;
 	}
 
-	@Override
+	
 	public final Matrix plus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -109,7 +109,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix minus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -118,7 +118,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix times(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -127,7 +127,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix divide(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -136,7 +136,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		int[] result = new int[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -147,7 +147,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final int[] result = new int[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -158,7 +158,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseIntMatrix2D(result, cols, rows);
 	}
 
-	@Override
+	
 	public int[] getIntArray() {
 		return values;
 	}

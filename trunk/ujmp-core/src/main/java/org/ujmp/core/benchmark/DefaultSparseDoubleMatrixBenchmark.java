@@ -29,12 +29,12 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultSparseDoubleMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new DefaultSparseDoubleMatrix(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new DefaultSparseDoubleMatrix(source);
 	}

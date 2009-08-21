@@ -53,7 +53,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		this.firstGuess = firstGuess;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (imputed == null) {
 			createMatrix();

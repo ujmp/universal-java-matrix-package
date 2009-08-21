@@ -29,12 +29,12 @@ import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 
 public class TestDefaultDenseStringMatrix2D extends AbstractMatrixTest {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new DefaultDenseStringMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new DefaultDenseStringMatrix2D(source);
 	}

@@ -52,7 +52,7 @@ public class ImputeLS extends AbstractDoubleCalculation {
 		return true;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (imp == null) {
 			try {

@@ -32,17 +32,17 @@ public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object>
 		ObjectMatrix {
 	private static final long serialVersionUID = -2861884195413889506L;
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsDouble(double v, long... coordinates) {
 		setObject(v, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

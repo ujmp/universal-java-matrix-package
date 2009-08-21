@@ -33,7 +33,7 @@ public class ToFloatMatrix extends AbstractFloatCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public float getFloat(long... coordinates) throws MatrixException {
 		return getSource().getAsFloat(coordinates);
 	}

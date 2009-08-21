@@ -39,7 +39,7 @@ public class PrintAction extends ObjectAction {
 		putValue(Action.SHORT_DESCRIPTION, "Print a screenshot of this object");
 	}
 
-	@Override
+	
 	public Object call() {
 		if (getComponent() == null) {
 			//logger.log(Level.WARNING, "no panel provided for printing");

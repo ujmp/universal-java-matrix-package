@@ -59,12 +59,12 @@ public class MatrixStatisticsBar extends JLabel implements TableModelListener,
 		updateThread.start();
 	}
 
-	@Override
+	
 	public void tableChanged(TableModelEvent e) {
 		update();
 	}
 
-	@Override
+	
 	public void valueChanged(ListSelectionEvent e) {
 		update();
 	}
@@ -90,7 +90,7 @@ class UpdateThread extends Thread {
 		this.setPriority(Thread.MIN_PRIORITY);
 	}
 
-	@Override
+	
 	public void run() {
 		jLabel.setText("calculating statistics...");
 

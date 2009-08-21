@@ -21,19 +21,19 @@ public class GraphPanel extends JPanel implements ComponentListener {
 		this.addComponentListener(this);
 	}
 
-	@Override
+	
 	public void componentHidden(ComponentEvent e) {
 	}
 
-	@Override
+	
 	public void componentMoved(ComponentEvent e) {
 	}
 
-	@Override
+	
 	public void componentResized(ComponentEvent e) {
 	}
 
-	@Override
+	
 	public void componentShown(ComponentEvent e) {
 		if (graphPanel == null) {
 			try {

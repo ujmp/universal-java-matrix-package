@@ -34,7 +34,7 @@ public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix imp
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	@Override
+	
 	public StorageType getStorageType() {
 		return StorageType.DENSE;
 	}

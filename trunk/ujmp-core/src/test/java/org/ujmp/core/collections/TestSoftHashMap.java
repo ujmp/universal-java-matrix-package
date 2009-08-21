@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class TestSoftHashMap extends AbstractMapTest {
 
-	@Override
+	
 	public Map<String, Object> createMap() throws Exception {
 		return new SoftHashMap<String, Object>();
 	}

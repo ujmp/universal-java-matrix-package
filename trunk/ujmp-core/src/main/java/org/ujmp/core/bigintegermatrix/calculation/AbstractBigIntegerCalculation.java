@@ -77,7 +77,7 @@ public abstract class AbstractBigIntegerCalculation extends
 	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}

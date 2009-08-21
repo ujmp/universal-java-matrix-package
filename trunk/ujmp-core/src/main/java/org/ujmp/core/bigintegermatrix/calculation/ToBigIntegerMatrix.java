@@ -35,7 +35,7 @@ public class ToBigIntegerMatrix extends AbstractBigIntegerCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
 		return getSource().getAsBigInteger(coordinates);
 	}

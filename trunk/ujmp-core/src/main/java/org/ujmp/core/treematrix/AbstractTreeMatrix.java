@@ -59,12 +59,12 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		}
 	}
 
-	@Override
+	
 	public Object getParent(Object o) {
 		return getParentMap().get(o);
 	}
 
-	@Override
+	
 	public void addChildren(Object parent, Collection<? extends Object> children) {
 		for (Object child : children) {
 			addChild(parent, child);
@@ -148,7 +148,7 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		getObjectList().add(o);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.TREE;
 	}

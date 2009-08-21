@@ -68,12 +68,12 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -94,7 +94,7 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 		values[row][column] = value;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		char[][] result = new char[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

@@ -46,7 +46,7 @@ public class Bootstrap extends AbstractObjectCalculation {
 		this.count = count;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (selection == null) {
 			List<Integer> rows = new ArrayList<Integer>();

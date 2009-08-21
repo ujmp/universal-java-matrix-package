@@ -33,37 +33,37 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 
 	private static final long serialVersionUID = -6190735100426536876L;
 
-	@Override
+	
 	public final Boolean getObject(long... coordinates) throws MatrixException {
 		return getBoolean(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(Boolean o, long... coordinates) throws MatrixException {
 		setBoolean(o, coordinates);
 	}
 
-	@Override
+	
 	public final boolean getAsBoolean(long... coordinates) throws MatrixException {
 		return getBoolean(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsBoolean(boolean value, long... coordinates) throws MatrixException {
 		setBoolean(value, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getBoolean(coordinates) ? 1 : 0;
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setBoolean(value != 0, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}

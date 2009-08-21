@@ -61,7 +61,7 @@ public class TextMap extends AbstractDiskMap<String> {
 		IntelligentFileWriter.write(os, value);
 	}
 
-	@Override
+	
 	public String read(InputStream is) {
 		return IntelligentFileReader.load(is);
 	}

@@ -171,7 +171,7 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 		}
 	}
 
-	@Override
+	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		if (dataModel != null)

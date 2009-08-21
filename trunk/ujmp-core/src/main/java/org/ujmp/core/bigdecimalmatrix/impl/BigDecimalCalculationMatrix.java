@@ -47,7 +47,7 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		return calculation.allCoordinates();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -56,7 +56,7 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		return calculation.getSize();
 	}
 
-	@Override
+	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -64,17 +64,17 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		}
 	}
 
-	@Override
+	
 	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException {
 		return calculation.getBigDecimal(coordinates);
 	}
 
-	@Override
+	
 	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 		calculation.setBigDecimal(value, coordinates);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

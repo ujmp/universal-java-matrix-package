@@ -58,7 +58,7 @@ public class Coordinates implements Serializable {
 		System.arraycopy(c.dimensions, 0, this.dimensions, 0, c.dimensions.length);
 	}
 
-	@Override
+	
 	public final int hashCode() {
 		return hashCode(this.dimensions);
 	}
@@ -90,7 +90,7 @@ public class Coordinates implements Serializable {
 		return product;
 	}
 
-	@Override
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("[");
@@ -104,7 +104,7 @@ public class Coordinates implements Serializable {
 		return s.toString();
 	}
 
-	@Override
+	
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -139,7 +139,7 @@ public class Coordinates implements Serializable {
 		return s;
 	}
 
-	@Override
+	
 	public Coordinates clone() {
 		Coordinates c = new Coordinates(this);
 		return c;

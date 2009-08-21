@@ -30,7 +30,7 @@ import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
 public class DefaultShortMatrix2DFactory extends AbstractShortMatrix2DFactory {
 	private static final long serialVersionUID = 5813129367595413668L;
 
-	@Override
+	
 	public ShortMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseShortMatrix2D(rows, columns);
 	}

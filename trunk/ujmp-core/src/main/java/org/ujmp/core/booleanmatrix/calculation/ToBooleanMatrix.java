@@ -33,7 +33,7 @@ public class ToBooleanMatrix extends AbstractBooleanCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return getSource().getAsBoolean(coordinates);
 	}

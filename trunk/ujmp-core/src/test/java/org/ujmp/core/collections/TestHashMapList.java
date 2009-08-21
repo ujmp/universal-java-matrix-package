@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class TestHashMapList extends AbstractMapTest {
 
-	@Override
+	
 	public Map<String, Object> createMap() throws Exception {
 		return new HashMapList<String, Object>();
 	}

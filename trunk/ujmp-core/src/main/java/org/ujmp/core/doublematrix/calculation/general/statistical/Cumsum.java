@@ -41,7 +41,7 @@ public class Cumsum extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (cumsum == null) {
 			createMatrix();

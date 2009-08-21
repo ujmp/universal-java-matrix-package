@@ -44,22 +44,22 @@ public abstract class AbstractSparseDateMatrix2D extends AbstractSparseDateMatri
 		setDate(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	@Override
+	
 	public Date getObject(long row, long column) {
 		return getDate(row, column);
 	}
 
-	@Override
+	
 	public Date getObject(int row, int column) {
 		return getDate(row, column);
 	}
 
-	@Override
+	
 	public void setObject(Date value, long row, long column) {
 		setDate(value, row, column);
 	}
 
-	@Override
+	
 	public void setObject(Date value, int row, int column) {
 		setDate(value, row, column);
 	}

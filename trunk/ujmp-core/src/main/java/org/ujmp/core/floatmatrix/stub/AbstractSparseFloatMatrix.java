@@ -30,7 +30,7 @@ public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix impl
 
 	private static final long serialVersionUID = -344661054715207894L;
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

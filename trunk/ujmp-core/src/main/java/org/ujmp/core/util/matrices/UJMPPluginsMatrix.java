@@ -128,16 +128,16 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		classes.add(c);
 	}
 
-	@Override
+	
 	public String getString(long row, long column) {
 		return matrix.getAsString(row, column);
 	}
 
-	@Override
+	
 	public void setString(String value, long row, long column) {
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return matrix.getSize();
 	}

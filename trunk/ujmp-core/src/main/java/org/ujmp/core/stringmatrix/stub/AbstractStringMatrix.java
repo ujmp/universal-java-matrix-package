@@ -34,7 +34,7 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 
 	private static final long serialVersionUID = -8163097072559207L;
 
-	@Override
+	
 	public final String getObject(long... coordinates) throws MatrixException {
 		return getAsString(coordinates);
 	}
@@ -43,27 +43,27 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		setAsString(o, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getAsString(coordinates));
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setAsString("" + value, coordinates);
 	}
 
-	@Override
+	
 	public final String getAsString(long... coordinates) {
 		return getString(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsString(String string, long... coordinates) throws MatrixException {
 		setString(string, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

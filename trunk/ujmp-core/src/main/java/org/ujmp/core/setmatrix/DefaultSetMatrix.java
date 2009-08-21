@@ -51,7 +51,7 @@ public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 		}
 	}
 
-	@Override
+	
 	public Set<A> getSet() {
 		return set;
 	}

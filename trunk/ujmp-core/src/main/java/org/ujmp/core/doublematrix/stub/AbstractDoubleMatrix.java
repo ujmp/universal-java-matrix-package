@@ -33,7 +33,7 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 
 	private static final long serialVersionUID = 8234957657491264944L;
 
-	@Override
+	
 	public final Double getObject(long... coordinates) throws MatrixException {
 		return getAsDouble(coordinates);
 	}
@@ -42,17 +42,17 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 		setAsDouble(o, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getDouble(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setDouble(value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}

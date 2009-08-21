@@ -31,12 +31,12 @@ import org.ujmp.jscience.JScienceDenseDoubleMatrix2D;
 public class JScienceDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new JScienceDenseDoubleMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new JScienceDenseDoubleMatrix2D(source);
 	}

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_ojalgo
+Bundle-SymbolicName: ujmp_ojalgo
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.ojalgo,
+ org.ujmp.ojalgo.benchmark

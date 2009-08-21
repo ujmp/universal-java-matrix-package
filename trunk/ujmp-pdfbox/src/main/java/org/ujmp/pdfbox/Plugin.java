@@ -45,17 +45,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.fontbox.util.BoundingBox");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "library for reading PDF files";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

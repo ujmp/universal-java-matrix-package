@@ -45,17 +45,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.netlib.blas.JBLAS");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to Matrix Toolkits for Java";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

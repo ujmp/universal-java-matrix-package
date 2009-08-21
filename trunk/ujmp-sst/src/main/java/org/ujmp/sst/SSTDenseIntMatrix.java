@@ -70,7 +70,7 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements
 		return MathUtil.toLongArray(data.dimensions());
 	}
 
-	@Override
+	
 	public Iterable<long[]> allCoordinates() throws MatrixException {
 		return new CoordinateIterator(this.getSize());
 	}
@@ -88,12 +88,12 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements
 		s.writeObject(data.getBytes());
 	}
 
-	@Override
+	
 	public IntegerArray getWrappedObject() {
 		return data;
 	}
 
-	@Override
+	
 	public void setWrappedObject(IntegerArray object) {
 		this.data = object;
 	}

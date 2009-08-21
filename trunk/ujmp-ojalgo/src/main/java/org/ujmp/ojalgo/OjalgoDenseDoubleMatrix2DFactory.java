@@ -31,7 +31,7 @@ public class OjalgoDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -2350372463029926450L;
 
-	@Override
+	
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
 		return new OjalgoDenseDoubleMatrix2D(rows, columns);

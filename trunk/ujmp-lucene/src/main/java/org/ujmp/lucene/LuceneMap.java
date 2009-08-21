@@ -390,7 +390,7 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 
 	}
 
-	@Override
+	
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -415,7 +415,7 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		return true;
 	}
 
-	@Override
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("{ ");
@@ -427,7 +427,7 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		return s.toString();
 	}
 
-	@Override
+	
 	public synchronized void erase() throws IOException {
 		close();
 		FileUtil.deleteRecursive(path);

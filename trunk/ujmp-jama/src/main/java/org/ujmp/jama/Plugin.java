@@ -41,17 +41,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("Jama.Matrix");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to JAMA matrices";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

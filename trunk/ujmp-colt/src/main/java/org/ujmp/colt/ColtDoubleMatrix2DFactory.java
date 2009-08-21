@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class ColtDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1951543109603957820L;
 
-	@Override
+	
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
 		return new ColtDenseDoubleMatrix2D(rows, columns);

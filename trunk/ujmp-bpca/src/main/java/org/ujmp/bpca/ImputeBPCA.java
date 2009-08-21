@@ -41,7 +41,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (xImputed == null) {
 			createMatrix();

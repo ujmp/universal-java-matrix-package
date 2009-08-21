@@ -43,17 +43,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to Colt matrices";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

@@ -41,17 +41,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.jscience.JScience");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to the JScience library";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

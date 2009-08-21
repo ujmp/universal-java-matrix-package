@@ -104,7 +104,7 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 		return getObject((int) row, (int) column);
 	}
 
-	@Override
+	
 	public synchronized Object getObject(int row, int column) throws MatrixException {
 		if (columns == null || cursor == null) {
 			return null;
@@ -119,15 +119,15 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 		}
 	}
 
-	@Override
+	
 	public void setObject(Object value, long row, long column) {
 	}
 
-	@Override
+	
 	public void setObject(Object value, int row, int column) {
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (table == null) {
 			return Coordinates.ZERO2D;

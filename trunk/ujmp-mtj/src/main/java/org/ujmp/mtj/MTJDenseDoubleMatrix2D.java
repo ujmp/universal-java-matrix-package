@@ -59,7 +59,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = new DenseMatrix((int) size[ROW], (int) size[COLUMN]);
 	}
 
-	@Override
+	
 	public Matrix[] svd() throws MatrixException {
 		try {
 			SVD svd = SVD.factorize(getWrappedObject());
@@ -97,7 +97,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix.getData()[(row + column * matrix.numRows())] = value;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		DenseMatrix ret = new DenseMatrix((int) getColumnCount(),
 				(int) getRowCount());
@@ -125,7 +125,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		s.writeObject(this.toDoubleArray());
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix a = matrix;
@@ -142,7 +142,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return super.mtimes(m2);
 	}
 
-	@Override
+	
 	public Matrix plus(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
@@ -159,7 +159,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix times(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
@@ -176,7 +176,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix minus(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
@@ -193,7 +193,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix plus(Ret returnType, boolean ignoreNaN, double value)
 			throws MatrixException {
 		if (ignoreNaN) {
@@ -217,7 +217,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double value)
 			throws MatrixException {
 		if (ignoreNaN) {
@@ -241,7 +241,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m2)
 			throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
@@ -273,7 +273,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m2)
 			throws MatrixException {
 		if (ignoreNaN) {
@@ -297,7 +297,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix minus(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
 		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
@@ -308,7 +308,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new MTJDenseDoubleMatrix2D(a);
 	}
 
-	@Override
+	
 	public Matrix plus(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
 		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
@@ -319,7 +319,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new MTJDenseDoubleMatrix2D(a);
 	}
 
-	@Override
+	
 	public Matrix times(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
 		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
@@ -330,7 +330,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new MTJDenseDoubleMatrix2D(a);
 	}
 
-	@Override
+	
 	public Matrix divide(double f) throws MatrixException {
 		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
 		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
@@ -341,7 +341,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new MTJDenseDoubleMatrix2D(a);
 	}
 
-	@Override
+	
 	public Matrix copy() {
 		Matrix m = new MTJDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {

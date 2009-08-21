@@ -62,22 +62,22 @@ public abstract class AbstractJMathPlotPanel extends JPanel implements
 		panel = null;
 	}
 
-	@Override
+	
 	public void componentHidden(ComponentEvent e) {
 		changeState();
 	}
 
-	@Override
+	
 	public void componentMoved(ComponentEvent e) {
 		changeState();
 	}
 
-	@Override
+	
 	public void componentResized(ComponentEvent e) {
 		changeState();
 	}
 
-	@Override
+	
 	public void componentShown(ComponentEvent e) {
 		changeState();
 	}

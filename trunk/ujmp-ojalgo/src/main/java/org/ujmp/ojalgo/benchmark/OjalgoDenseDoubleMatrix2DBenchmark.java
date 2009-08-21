@@ -31,12 +31,12 @@ import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 public class OjalgoDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new OjalgoDenseDoubleMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new OjalgoDenseDoubleMatrix2D(source);
 	}

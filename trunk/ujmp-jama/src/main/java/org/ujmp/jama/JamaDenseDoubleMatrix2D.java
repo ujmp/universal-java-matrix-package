@@ -87,7 +87,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {
@@ -96,12 +96,12 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return m;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new JamaDenseDoubleMatrix2D(matrix.transpose());
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			return new JamaDenseDoubleMatrix2D(matrix
@@ -111,12 +111,12 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix times(double value) {
 		return new JamaDenseDoubleMatrix2D(matrix.times(value));
 	}
 
-	@Override
+	
 	public Matrix divide(double value) {
 		return new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
 	}

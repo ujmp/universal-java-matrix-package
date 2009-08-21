@@ -40,7 +40,7 @@ public class Inv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
 			if (getSource() instanceof DenseMatrix) {
@@ -58,7 +58,7 @@ public class Inv extends AbstractDoubleCalculation {
 		return inv.getAsDouble(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

@@ -31,12 +31,12 @@ import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 public class VecMathDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(source);
 	}

@@ -31,7 +31,7 @@ public class ParallelColtDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -6399863648885565273L;
 
-	@Override
+	
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(rows, columns);

@@ -76,12 +76,10 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		return sqlStatement;
 	}
 
-	@Override
 	public synchronized Object getObject(long row, long column) {
 		return getObject((int) row, (int) column);
 	}
 
-	@Override
 	public synchronized Object getObject(int row, int column) {
 		try {
 			ResultSet rs = getResultSet(row);
@@ -99,15 +97,12 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		return sqlStatement;
 	}
 
-	@Override
 	public synchronized void setObject(Object value, long row, long column) {
 	}
 
-	@Override
 	public synchronized void setObject(Object value, int row, int column) {
 	}
 
-	@Override
 	public synchronized long[] getSize() {
 		try {
 			if (size == null) {
@@ -124,7 +119,6 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		}
 	}
 
-	@Override
 	public synchronized void close() throws IOException {
 		try {
 			for (Connection connection : connections.values()) {
@@ -133,7 +127,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 				}
 			}
 		} catch (SQLException e) {
-			throw new IOException(e);
+			throw new IOException(e.toString());
 		}
 	}
 
@@ -142,7 +136,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		int offset = pos * resultSize;
 		int remain = (int) row - offset;
 		ResultSet resultSet = resultSets.get(pos);
-		if (resultSet == null || resultSet.isClosed()) {
+		if (resultSet == null) {
 			PreparedStatement ps = getSelectStatement();
 			// ps.setInt(1, resultSize);
 			// ps.setInt(2, offset);

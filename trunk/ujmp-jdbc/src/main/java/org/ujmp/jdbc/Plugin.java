@@ -47,17 +47,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.hsqldb.Database");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "provides import functionalities for JDBC databases";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_sst
+Bundle-SymbolicName: ujmp_sst
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.sst,
+ org.ujmp.sst.benchmark

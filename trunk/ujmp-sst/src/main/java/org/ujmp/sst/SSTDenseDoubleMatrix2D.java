@@ -64,13 +64,13 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return data.get(rows, columns);
 	}
 
-	@Override
+	
 	public void setDouble(double value, long rows, long columns)
 			throws MatrixException {
 		data.set(value, (int) rows, (int) columns);
 	}
 
-	@Override
+	
 	public void setDouble(double value, int rows, int columns)
 			throws MatrixException {
 		data.set(value, rows, columns);
@@ -93,22 +93,22 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		s.writeObject(data.getBytes());
 	}
 
-	@Override
+	
 	public RealArray getWrappedObject() {
 		return data;
 	}
 
-	@Override
+	
 	public void setWrappedObject(RealArray object) {
 		this.data = object;
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new SSTDenseDoubleMatrix(data.clone().mTranspose());
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix) {
 			return new SSTDenseDoubleMatrix(data
@@ -118,22 +118,22 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	@Override
+	
 	public Matrix plus(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uAdd(v));
 	}
 
-	@Override
+	
 	public Matrix minus(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uAdd(-v));
 	}
 
-	@Override
+	
 	public Matrix times(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uMul(v));
 	}
 
-	@Override
+	
 	public Matrix divide(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uMul(1 / v));
 	}

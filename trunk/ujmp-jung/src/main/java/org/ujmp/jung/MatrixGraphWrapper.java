@@ -169,7 +169,7 @@ public class MatrixGraphWrapper extends DirectedSparseGraph implements TableMode
 		}
 	}
 
-	@Override
+	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		matrix.removeTableModelListener(this);

@@ -41,17 +41,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.apache.lucene.LucenePackage");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to Apache Lucene for indexing data";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

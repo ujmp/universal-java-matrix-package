@@ -195,7 +195,7 @@ public abstract class JungGraphPanel extends VisualizationViewer implements Mous
 	}
 
 	// change method to public to allow pdf export
-	@Override
+	
 	public void renderGraph(Graphics2D g2d) {
 		super.renderGraph(g2d);
 	}
@@ -218,7 +218,7 @@ public abstract class JungGraphPanel extends VisualizationViewer implements Mous
 		bufferedImage = tempBufferedImage;
 	}
 
-	@Override
+	
 	public void paintComponent(Graphics g) {
 		if (ui != null) {
 			Graphics scratchGraphics = (g == null) ? null : g.create();

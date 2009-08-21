@@ -41,17 +41,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.apache.commons.math.MathException");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface to Apache commons mathemathics library";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

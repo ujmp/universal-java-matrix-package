@@ -30,12 +30,12 @@ import org.ujmp.sst.SSTDenseDoubleMatrix;
 
 public class SSTDenseDoubleMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
-	@Override
+	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new SSTDenseDoubleMatrix(size);
 	}
 
-	@Override
+	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new SSTDenseDoubleMatrix(source);
 	}

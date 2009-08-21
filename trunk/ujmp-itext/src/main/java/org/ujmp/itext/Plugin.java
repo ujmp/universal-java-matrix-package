@@ -43,17 +43,17 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("com.lowagie.text.Document");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "interface for PDF export";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

@@ -82,25 +82,25 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public Matrix plus(double value) {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.plus(value)));
 	}
 
-	@Override
+	
 	public Matrix times(double value) {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.mult(value)));
 	}
 
-	@Override
+	
 	public Matrix transpose() {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.viewDice().copy());
 	}
 
-	@Override
+	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
@@ -112,7 +112,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
-	@Override
+	
 	public Matrix copy() {
 		Matrix m = new ParallelColtDenseDoubleMatrix2D(
 				(DenseDoubleMatrix2D) matrix.copy());

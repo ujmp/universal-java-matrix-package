@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_jscience
+Bundle-SymbolicName: ujmp_jscience
+Bundle-Version: 1.0.0
+Export-Package: org.ujmp.jscience,
+ org.ujmp.jscience.benchmark

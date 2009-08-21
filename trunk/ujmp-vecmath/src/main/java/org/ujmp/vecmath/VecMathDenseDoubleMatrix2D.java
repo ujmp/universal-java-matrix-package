@@ -86,7 +86,7 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	@Override
+	
 	public DenseDoubleMatrix2D transpose() {
 		GMatrix m = (GMatrix) matrix.clone();
 		m.transpose();

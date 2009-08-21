@@ -56,7 +56,7 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		MapFile.Writer.setIndexInterval(conf, 3);
 	}
 
-	@Override
+	
 	public void clear() {
 		// TODO Auto-generated method stub
 	}
@@ -82,25 +82,25 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		}
 	}
 
-	@Override
+	
 	public boolean containsKey(Object key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	
 	public boolean containsValue(Object value) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public V get(Object key) {
 		try {
 			prepareReader();
@@ -116,18 +116,18 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		}
 	}
 
-	@Override
+	
 	public boolean isEmpty() {
 		return size() == 0;
 	}
 
-	@Override
+	
 	public Set<K> keySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public V put(K key, V value) {
 		try {
 			prepareWriter();
@@ -141,7 +141,7 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		}
 	}
 
-	@Override
+	
 	public void putAll(Map<? extends K, ? extends V> m) {
 		for (K k : m.keySet()) {
 			put(k, m.get(k));
@@ -149,13 +149,13 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 
 	}
 
-	@Override
+	
 	public V remove(Object key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public int size() {
 		try {
 			prepareWriter();
@@ -166,12 +166,12 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		}
 	}
 
-	@Override
+	
 	public Collection<V> values() {
 		return null;
 	}
 
-	@Override
+	
 	public void close() throws IOException {
 		if (reader != null) {
 			reader.close();

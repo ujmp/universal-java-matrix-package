@@ -37,7 +37,7 @@ public class Unique extends AbstractObjectCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		createUniqueObjects();
 		return uniqueObjects.getAsObject(coordinates);
@@ -52,7 +52,7 @@ public class Unique extends AbstractObjectCalculation {
 		}
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		createUniqueObjects();
 		return uniqueObjects.getSize();

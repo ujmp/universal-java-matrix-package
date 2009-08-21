@@ -199,7 +199,7 @@ public class PrintPreviewPanel extends JPanel implements ActionListener, ChangeL
 			setPreferredSize(new Dimension(640, 640));
 		}
 
-		@Override
+		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 

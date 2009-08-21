@@ -40,7 +40,7 @@ public class DocTerm extends AbstractLongCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public long getLong(long... coordinates) throws MatrixException {
 		if (result == null) {
 			result = calculate();
@@ -48,7 +48,7 @@ public class DocTerm extends AbstractLongCalculation {
 		return result.getAsLong(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (result == null) {
 			result = calculate();
@@ -56,7 +56,7 @@ public class DocTerm extends AbstractLongCalculation {
 		return result.getSize();
 	}
 
-	@Override
+	
 	public boolean isSparse() {
 		return true;
 	}

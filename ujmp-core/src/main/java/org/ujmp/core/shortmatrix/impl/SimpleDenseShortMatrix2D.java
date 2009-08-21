@@ -61,12 +61,12 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -79,7 +79,7 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 		values[(int) row][(int) column] = value;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		short[][] result = new short[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

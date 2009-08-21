@@ -75,12 +75,12 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -101,7 +101,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		values[column * rows + row] = value;
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		Date[] result = new Date[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -112,7 +112,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final Date[] result = new Date[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -123,7 +123,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return new DefaultDenseDateMatrix2D(result, cols, rows);
 	}
 
-	@Override
+	
 	public Date[] getDateArray() {
 		return values;
 	}

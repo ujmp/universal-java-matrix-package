@@ -41,7 +41,7 @@ public class DivideAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "divide all cells by a value");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().divide(
 				getRet(),

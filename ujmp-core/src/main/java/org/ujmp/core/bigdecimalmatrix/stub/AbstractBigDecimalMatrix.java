@@ -34,27 +34,27 @@ public abstract class AbstractBigDecimalMatrix extends AbstractGenericMatrix<Big
 		BigDecimalMatrix {
 	private static final long serialVersionUID = 499221768058489393L;
 
-	@Override
+	
 	public final BigDecimal getObject(long... coordinates) throws MatrixException {
 		return getBigDecimal(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(BigDecimal o, long... coordinates) throws MatrixException {
 		setBigDecimal(o, coordinates);
 	}
 
-	@Override
+	
 	public final BigDecimal getAsBigDecimal(long... coordinates) throws MatrixException {
 		return getBigDecimal(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 		setBigDecimal(value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}

@@ -137,7 +137,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		getListenerList().add(TableModelListener.class, l);
 	}
 
-	@Override
+	
 	public final String getToolTipText() {
 		try {
 			if (tooltipText == null) {
@@ -217,7 +217,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		}
 	}
 
-	@Override
+	
 	public final void fireValueChanged() {
 		for (Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener)
@@ -385,7 +385,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public void setDescription(String description) {
 	}
 
-	@Override
+	
 	public String toString() {
 		if (matrix.getLabel() != null) {
 			return "[" + Coordinates.toString(matrix.getSize()) + "] "
@@ -397,12 +397,12 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		}
 	}
 
-	@Override
+	
 	public Matrix getCoreObject() {
 		return matrix;
 	}
 
-	@Override
+	
 	public JFrame getFrame() {
 		if (frame == null) {
 			frame = new MatrixFrame(this);
@@ -410,7 +410,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		return frame;
 	}
 
-	@Override
+	
 	public JPanel getPanel() {
 		if (panel == null) {
 			panel = new MatrixPanel(this);

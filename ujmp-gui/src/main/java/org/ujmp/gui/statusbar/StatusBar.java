@@ -143,7 +143,7 @@ public class StatusBar extends JPanel {
 			this.statusBar = statusBar;
 		}
 
-		@Override
+		
 		public void run() {
 			statusBar.setTaskString(TaskQueue.getStatus());
 			// statusBar.setToolTipText(getObject().getToolTipText());

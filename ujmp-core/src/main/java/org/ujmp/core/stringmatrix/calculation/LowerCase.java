@@ -33,7 +33,7 @@ public class LowerCase extends AbstractStringCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		String s = getSource().getAsString(coordinates);
 		if (s == null) {

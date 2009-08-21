@@ -42,7 +42,7 @@ public class PairedTTestAction extends MatrixAction {
 				"Calculates a paired t-test for this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().pairedTTest(Ret.NEW);
 		result.showGUI();

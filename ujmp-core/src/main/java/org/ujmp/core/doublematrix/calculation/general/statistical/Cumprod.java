@@ -41,7 +41,7 @@ public class Cumprod extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (cumprod == null) {
 			createMatrix();

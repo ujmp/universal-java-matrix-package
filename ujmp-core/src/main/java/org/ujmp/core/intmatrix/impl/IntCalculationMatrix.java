@@ -45,7 +45,7 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		return calculation.allCoordinates();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +54,7 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		return calculation.getSize();
 	}
 
-	@Override
+	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +62,17 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		}
 	}
 
-	@Override
+	
 	public int getInt(long... coordinates) throws MatrixException {
 		return calculation.getInt(coordinates);
 	}
 
-	@Override
+	
 	public void setInt(int value, long... coordinates) throws MatrixException {
 		calculation.setInt(value, coordinates);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

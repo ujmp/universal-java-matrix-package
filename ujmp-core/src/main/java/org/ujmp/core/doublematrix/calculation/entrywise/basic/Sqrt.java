@@ -35,7 +35,7 @@ public class Sqrt extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.sqrt(getSource().getAsDouble(coordinates));
 	}

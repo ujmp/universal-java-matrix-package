@@ -38,7 +38,7 @@ public class Diff extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double v1 = 0.0;
 		double v2 = 0.0;

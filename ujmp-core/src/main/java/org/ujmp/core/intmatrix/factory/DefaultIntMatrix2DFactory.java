@@ -30,7 +30,7 @@ import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 public class DefaultIntMatrix2DFactory extends AbstractIntMatrix2DFactory {
 	private static final long serialVersionUID = -5861384991023886955L;
 
-	@Override
+	
 	public IntMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseIntMatrix2D(rows, columns);
 	}

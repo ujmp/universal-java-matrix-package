@@ -47,7 +47,7 @@ public class BufferedRandomAccessFile extends RandomAccessFile {
 		this.bufferSize = bufferSize;
 	}
 
-	@Override
+	
 	public synchronized int read() throws IOException {
 		byte[] b = new byte[1];
 		read(b);
@@ -56,14 +56,14 @@ public class BufferedRandomAccessFile extends RandomAccessFile {
 		return b[0];
 	}
 
-	@Override
+	
 	public synchronized void seek(long pos) throws IOException {
 		new IOException("don't use this method").printStackTrace();
 		super.seek(pos);
 
 	}
 
-	@Override
+	
 	public synchronized int read(byte[] b) throws IOException {
 		new IOException("don't use this method").printStackTrace();
 		return super.read(b);

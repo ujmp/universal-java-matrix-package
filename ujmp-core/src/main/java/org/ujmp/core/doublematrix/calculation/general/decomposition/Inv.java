@@ -54,7 +54,7 @@ public class Inv extends AbstractDoubleCalculation {
 		return true;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
 			try {
@@ -90,7 +90,7 @@ public class Inv extends AbstractDoubleCalculation {
 		return inv.getAsDouble(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

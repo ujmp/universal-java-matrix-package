@@ -73,7 +73,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation<Matr
 	public void setString(String value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

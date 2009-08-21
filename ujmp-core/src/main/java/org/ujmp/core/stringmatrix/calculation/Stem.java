@@ -36,7 +36,7 @@ public class Stem extends AbstractStringCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		String s = getSource().getAsString(coordinates).toLowerCase();
 		StringBuilder result = new StringBuilder(s.length());

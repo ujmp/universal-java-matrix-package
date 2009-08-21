@@ -47,7 +47,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		}
 	}
 
-	@Override
+	
 	public boolean isTransient() {
 		return true;
 	}
@@ -60,12 +60,12 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		return size;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) {
 		return values.get(new Coordinates(coordinates));
 	}
 
-	@Override
+	
 	public long getValueCount() {
 		return values.size();
 	}

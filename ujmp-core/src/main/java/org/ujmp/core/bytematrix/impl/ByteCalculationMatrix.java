@@ -45,7 +45,7 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		return calculation.allCoordinates();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +54,7 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		return calculation.getSize();
 	}
 
-	@Override
+	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +62,17 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		}
 	}
 
-	@Override
+	
 	public byte getByte(long... coordinates) throws MatrixException {
 		return calculation.getByte(coordinates);
 	}
 
-	@Override
+	
 	public void setByte(byte value, long... coordinates) throws MatrixException {
 		calculation.setByte(value, coordinates);
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

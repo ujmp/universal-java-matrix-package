@@ -74,7 +74,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation<Matri
 	public void setFloat(float value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

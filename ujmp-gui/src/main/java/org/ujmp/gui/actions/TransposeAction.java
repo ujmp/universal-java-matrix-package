@@ -46,7 +46,7 @@ public class TransposeAction extends MatrixAction {
 				KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().transpose(getNewOrLink());
 		m.showGUI();

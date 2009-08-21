@@ -111,7 +111,7 @@ public class DefaultAnnotation implements Annotation {
 		this.matrixAnnotation = matrixAnnotation;
 	}
 
-	@Override
+	
 	public Annotation clone() {
 		DefaultAnnotation a = new DefaultAnnotation(this);
 		return a;

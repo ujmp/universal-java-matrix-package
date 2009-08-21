@@ -41,7 +41,7 @@ public class PinvAction extends MatrixAction {
 				"Calculates the Moore Penrose pseudo inverse of a matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().pinv();
 		result.showGUI();

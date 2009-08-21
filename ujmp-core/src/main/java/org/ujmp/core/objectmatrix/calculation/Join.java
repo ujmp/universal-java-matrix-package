@@ -49,7 +49,7 @@ public class Join extends AbstractObjectCalculation {
 		this.column2 = column2;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (result == null) {
 			createMatrix();
@@ -57,7 +57,7 @@ public class Join extends AbstractObjectCalculation {
 		return result.getAsObject(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (result == null) {
 			createMatrix();

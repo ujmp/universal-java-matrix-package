@@ -50,17 +50,17 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}
 
-	@Override
+	
 	public short getShort(long... coordinates) throws MatrixException {
 		return MathUtil.getShort(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setShort(short value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

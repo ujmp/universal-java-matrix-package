@@ -41,7 +41,7 @@ public class GinvAction extends MatrixAction {
 				"Calculates a generalized inverse of the matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().ginv();
 		result.showGUI();

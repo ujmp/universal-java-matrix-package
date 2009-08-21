@@ -74,7 +74,7 @@ public abstract class AbstractShortCalculation extends AbstractCalculation<Matri
 	public void setShort(short value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

@@ -43,22 +43,22 @@ public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix 
 		setByte(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	@Override
+	
 	public final Byte getObject(long row, long column) {
 		return getByte(row, column);
 	}
 
-	@Override
+	
 	public final Byte getObject(int row, int column) {
 		return getByte(row, column);
 	}
 
-	@Override
+	
 	public final void setObject(Byte value, long row, long column) {
 		setByte(value, row, column);
 	}
 
-	@Override
+	
 	public final void setObject(Byte value, int row, int column) {
 		setByte(value, row, column);
 	}

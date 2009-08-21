@@ -46,7 +46,7 @@ public class FadeOutAction extends MatrixAction {
 				KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		getMatrixObject().getMatrix().fadeOut(getRet(), getDimension());
 		return getMatrixObject();

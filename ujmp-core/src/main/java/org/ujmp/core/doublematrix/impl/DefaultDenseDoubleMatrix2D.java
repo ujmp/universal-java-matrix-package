@@ -74,12 +74,12 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -116,7 +116,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	@Override
+	
 	public final Matrix plus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -125,7 +125,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix minus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -134,7 +134,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix times(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -143,7 +143,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix divide(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -152,7 +152,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -163,7 +163,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final double[] result = new double[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -174,7 +174,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, cols, rows);
 	}
 
-	@Override
+	
 	public double[] getDoubleArray() {
 		return values;
 	}

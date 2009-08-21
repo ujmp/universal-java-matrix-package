@@ -91,7 +91,7 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 		return neighbors;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (distanceMatrix == null) {
 			distanceMatrix = getDistanceMatrix();

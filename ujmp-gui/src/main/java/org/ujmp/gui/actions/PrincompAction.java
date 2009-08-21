@@ -41,7 +41,7 @@ public class PrincompAction extends MatrixAction {
 				"Calculates the principal components of a matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().princomp();
 		result.showGUI();

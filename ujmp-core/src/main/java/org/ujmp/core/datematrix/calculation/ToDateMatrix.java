@@ -35,7 +35,7 @@ public class ToDateMatrix extends AbstractDateCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public Date getDate(long... coordinates) throws MatrixException {
 		return getSource().getAsDate(coordinates);
 	}

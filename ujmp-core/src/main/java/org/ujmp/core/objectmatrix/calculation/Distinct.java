@@ -40,7 +40,7 @@ public class Distinct extends AbstractObjectCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (distinctObjects == null) {
 			createDistinctObjectMatrix();
@@ -48,7 +48,7 @@ public class Distinct extends AbstractObjectCalculation {
 		return distinctObjects.getObject(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		if (distinctObjects == null) {
 			createDistinctObjectMatrix();

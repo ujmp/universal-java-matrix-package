@@ -74,12 +74,12 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return size;
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return rows;
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -100,7 +100,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		values[column * rows + row] = value;
 	}
 
-	@Override
+	
 	public final Matrix plus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -109,7 +109,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix minus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -118,7 +118,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix times(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -127,7 +127,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix divide(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -136,7 +136,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	@Override
+	
 	public final Matrix copy() throws MatrixException {
 		short[] result = new short[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -147,7 +147,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return m;
 	}
 
-	@Override
+	
 	public final Matrix transpose() {
 		final short[] result = new short[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -158,7 +158,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseShortMatrix2D(result, cols, rows);
 	}
 
-	@Override
+	
 	public short[] getShortArray() {
 		return values;
 	}

@@ -35,7 +35,7 @@ public class Log10 extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double v = getSource().getAsDouble(coordinates);
 		return Math.log(v) / Math.log(10.0);

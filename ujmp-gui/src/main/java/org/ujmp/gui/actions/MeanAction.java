@@ -42,7 +42,7 @@ public class MeanAction extends MatrixAction {
 				"Calculates the mean of the entries in this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().mean(Ret.NEW,
 				getDimension(), getIgnoreMissing());

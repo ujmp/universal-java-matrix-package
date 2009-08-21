@@ -46,7 +46,7 @@ public class DuplicateAction extends MatrixAction {
 				KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().copy();
 		m.showGUI();

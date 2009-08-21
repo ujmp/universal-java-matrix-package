@@ -98,7 +98,7 @@ public abstract class AbstractFrame extends JFrame {
 		final GUIObject go = object;
 		updateTask = new TimerTask() {
 
-			@Override
+			
 			public void run() {
 				if (modCount != go.getModCount()) {
 					modCount = go.getModCount();
@@ -111,7 +111,7 @@ public abstract class AbstractFrame extends JFrame {
 
 	}
 
-	@Override
+	
 	public final void setVisible(boolean state) {
 		if (state == true && isVisible()) {
 			return;

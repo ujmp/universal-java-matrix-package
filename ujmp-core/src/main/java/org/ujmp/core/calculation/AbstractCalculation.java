@@ -112,7 +112,7 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 		return (T[]) new Object[] { calcNew() };
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return getSource().getStorageType();
 	}

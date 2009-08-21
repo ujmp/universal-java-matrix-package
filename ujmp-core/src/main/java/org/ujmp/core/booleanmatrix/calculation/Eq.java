@@ -49,7 +49,7 @@ public class Eq extends AbstractBooleanCalculation {
 		this(MatrixFactory.fill(v1, m2.getSize()), m2);
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		Object o1 = getSource().getAsObject(coordinates);
 		Object o2 = getSources()[1].getAsObject(coordinates);

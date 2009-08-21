@@ -43,7 +43,7 @@ public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 		return matrix;
 	}
 
-	@Override
+	
 	public Map<Object, Object> getMap() {
 		return UIManager.getDefaults();
 	}

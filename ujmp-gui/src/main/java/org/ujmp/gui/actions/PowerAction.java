@@ -42,7 +42,7 @@ public class PowerAction extends MatrixAction {
 				"calculates all cells to the power of x");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().power(
 				getRet(),

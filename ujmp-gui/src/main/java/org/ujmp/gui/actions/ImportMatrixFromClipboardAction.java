@@ -44,7 +44,7 @@ public class ImportMatrixFromClipboardAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 	}
 
-	@Override
+	
 	public Object call() {
 		try {
 			FileFormat fileFormat = FileFormat.values()[JOptionPane

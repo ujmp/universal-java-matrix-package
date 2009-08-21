@@ -50,27 +50,27 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}
 
-	@Override
+	
 	public String getString(long... coordinates) throws MatrixException {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setString(String string, long... coordinates) throws MatrixException {
 		setObject(string, coordinates);
 	}
 	
-	@Override
+	
 	public String getAsString(long... coordinates) throws MatrixException {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsString(String string, long... coordinates) throws MatrixException {
 		setObject(string, coordinates);
 	}

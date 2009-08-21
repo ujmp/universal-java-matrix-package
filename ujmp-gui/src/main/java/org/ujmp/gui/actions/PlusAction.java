@@ -41,7 +41,7 @@ public class PlusAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "add a value to all cells");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().plus(
 				getRet(),

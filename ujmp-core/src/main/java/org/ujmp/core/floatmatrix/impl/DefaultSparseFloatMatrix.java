@@ -50,17 +50,17 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}
 
-	@Override
+	
 	public float getFloat(long... coordinates) throws MatrixException {
 		return MathUtil.getFloat(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setFloat(float value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

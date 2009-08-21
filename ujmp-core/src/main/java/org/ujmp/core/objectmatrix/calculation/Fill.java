@@ -38,7 +38,7 @@ public class Fill extends AbstractObjectCalculation {
 		this.fill = value;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) {
 		return fill;
 	}

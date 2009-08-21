@@ -78,13 +78,13 @@ public class Deletion extends AbstractObjectCalculation {
 		selection[COLUMN] = MathUtil.collectionToLong(columns);
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 				selection[COLUMN][(int) coordinates[COLUMN]]);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { selection[ROW].length, selection[COLUMN].length };
 	}

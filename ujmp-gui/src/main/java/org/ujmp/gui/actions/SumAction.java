@@ -43,7 +43,7 @@ public class SumAction extends MatrixAction {
 				"Calculates the sum of the entries in this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW,
 				getDimension(), getIgnoreMissing());

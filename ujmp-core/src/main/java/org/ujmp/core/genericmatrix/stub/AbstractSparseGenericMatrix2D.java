@@ -36,7 +36,7 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 		return new CoordinateIterator2D(getSize());
 	}
 
-	@Override
+	
 	public final A getObject(long... coordinates) throws MatrixException {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}

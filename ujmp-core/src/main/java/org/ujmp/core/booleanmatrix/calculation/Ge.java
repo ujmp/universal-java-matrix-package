@@ -48,7 +48,7 @@ public class Ge extends AbstractBooleanCalculation {
 		this(MatrixFactory.fill(v1, m2.getSize()), m2);
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return getSource().getAsDouble(coordinates) >= getSources()[1].getAsDouble(coordinates);
 	}

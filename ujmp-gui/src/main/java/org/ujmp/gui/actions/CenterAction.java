@@ -46,7 +46,7 @@ public class CenterAction extends MatrixAction {
 				KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().center(getRet(),
 				getDimension(), getIgnoreMissing());

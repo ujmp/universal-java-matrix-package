@@ -33,7 +33,7 @@ public class Not extends AbstractBooleanCalculation {
 		super(m);
 	}
 
-	@Override
+	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return !getSource().getAsBoolean(coordinates);
 	}

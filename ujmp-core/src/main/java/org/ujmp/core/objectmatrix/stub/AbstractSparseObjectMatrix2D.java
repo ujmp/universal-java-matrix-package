@@ -35,7 +35,7 @@ public abstract class AbstractSparseObjectMatrix2D extends AbstractSparseObjectM
 		return new CoordinateIterator2D(getSize());
 	}
 
-	@Override
+	
 	public final Object getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}

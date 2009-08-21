@@ -86,7 +86,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 		TaskQueue.setProgress(progress);
 	}
 
-	@Override
+	
 	public final String toString() {
 		return (String) getValue(Action.NAME) + " ("
 				+ getValue(Action.SHORT_DESCRIPTION) + ")";

@@ -35,7 +35,7 @@ public class Ceil extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.ceil(getSource().getAsDouble(coordinates));
 	}

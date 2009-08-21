@@ -42,7 +42,7 @@ public class SunSpotDataMatrixAction extends MatrixAction {
 				"creates a matrix with Wolfer's sunspot data 1700 - 1987");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = MatrixFactory.SUNSPOTDATASET();
 		m.showGUI();

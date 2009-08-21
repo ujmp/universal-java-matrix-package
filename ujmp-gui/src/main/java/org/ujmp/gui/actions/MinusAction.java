@@ -41,7 +41,7 @@ public class MinusAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "subtract a value from all cells");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().minus(
 				getRet(),

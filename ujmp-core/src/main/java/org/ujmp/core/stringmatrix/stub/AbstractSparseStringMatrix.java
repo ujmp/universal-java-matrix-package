@@ -30,7 +30,7 @@ public abstract class AbstractSparseStringMatrix extends AbstractStringMatrix im
 
 	private static final long serialVersionUID = -7749735785708631991L;
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

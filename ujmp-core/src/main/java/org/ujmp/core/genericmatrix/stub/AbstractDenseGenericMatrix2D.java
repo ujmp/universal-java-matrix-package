@@ -35,7 +35,7 @@ public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGener
 		return new CoordinateIterator2D(getSize());
 	}
 
-	@Override
+	
 	public final A getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}

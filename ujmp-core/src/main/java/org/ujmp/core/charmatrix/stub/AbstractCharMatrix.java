@@ -33,37 +33,37 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 
 	private static final long serialVersionUID = 1967840166659276033L;
 
-	@Override
+	
 	public final Character getObject(long... coordinates) throws MatrixException {
 		return getChar(coordinates);
 	}
 
-	@Override
+	
 	public final void setObject(Character o, long... coordinates) throws MatrixException {
 		setChar(o, coordinates);
 	}
 
-	@Override
+	
 	public final char getAsChar(long... coordinates) throws MatrixException {
 		return getChar(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsChar(char value, long... coordinates) throws MatrixException {
 		setChar(value, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getChar(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setChar((char) value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}

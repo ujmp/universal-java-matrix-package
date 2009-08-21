@@ -144,7 +144,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		removeDirectedEdge(index1, index2);
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		// TODO: improve
 		return super.availableCoordinates();
@@ -162,7 +162,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return getEdgeValue(row, column);
 	}
 
-	@Override
+	
 	public long getValueCount() {
 		return getEdgeList().size();
 	}
@@ -212,10 +212,10 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		setUndirectedEdge(edgeObject, index1, index2);
 	}
 
-	@Override
+	
 	public abstract void clear();
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.GRAPH;
 	}

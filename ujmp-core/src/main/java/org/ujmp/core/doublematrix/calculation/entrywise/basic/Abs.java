@@ -35,7 +35,7 @@ public class Abs extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.abs(getSource().getAsDouble(coordinates));
 	}

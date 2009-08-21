@@ -117,17 +117,17 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return timestampsListSet;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { getEventCount(), getSeriesCount() + 1 };
 	}
 
-	@Override
+	
 	public long getRowCount() {
 		return getEventCount();
 	}
 
-	@Override
+	
 	public long getColumnCount() {
 		return getSeriesCount() + 1;
 	}
@@ -136,7 +136,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return getDouble((int) row, (int) column);
 	}
 
-	@Override
+	
 	public double getDouble(int row, int column) {
 
 		if (row < 0 || column >= getColumnCount() || row >= getRowCount()) {
@@ -178,12 +178,12 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
-	@Override
+	
 	public void setDouble(double value, long row, long column) {
 		throw new MatrixException("please use addEvent() for making changes");
 	}
 
-	@Override
+	
 	public void setDouble(double value, int row, int column) {
 		throw new MatrixException("please use addEvent() for making changes");
 	}

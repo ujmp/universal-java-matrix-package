@@ -57,7 +57,7 @@ public class Plus extends AbstractDoubleCalculation {
 		super();
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				+ MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]

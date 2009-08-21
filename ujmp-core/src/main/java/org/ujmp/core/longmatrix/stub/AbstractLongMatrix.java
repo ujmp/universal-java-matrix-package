@@ -31,7 +31,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -47058946507188869L;
 
-	@Override
+	
 	public final Long getObject(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
@@ -40,27 +40,27 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		setLong(o, coordinates);
 	}
 
-	@Override
+	
 	public final long getAsLong(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsLong(long value, long... coordinates) throws MatrixException {
 		setLong(value, coordinates);
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
 
-	@Override
+	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setLong((int) value, coordinates);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

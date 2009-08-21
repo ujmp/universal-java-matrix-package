@@ -55,20 +55,20 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		}
 	}
 
-	@Override
+	
 	public Object getObject(long row, long column) throws MatrixException {
 		Matrix m = columns.get(column);
 		return m == null ? null : m.getAsObject(row, 0);
 	}
 
-	@Override
+	
 	public Object getObject(int row, int column) throws MatrixException {
 		Matrix m = columns.get(column);
 		return m == null ? null : m.getAsObject(row, 0);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
 		for (Long i : columns.keySet()) {
@@ -88,7 +88,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		}
 	}
 
-	@Override
+	
 	public void setObject(Object o, long row, long column) throws MatrixException {
 		Matrix m = columns.get(column);
 		if (m == null) {
@@ -99,7 +99,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		m.setAsObject(o, row, 0);
 	}
 
-	@Override
+	
 	public void setObject(Object o, int row, int column) throws MatrixException {
 		setObject(o, (long) row, (long) column);
 	}
@@ -108,7 +108,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return size;
 	}
 
-	@Override
+	
 	public void setSize(long... size) {
 		if (this.size[ROW] != size[ROW]) {
 			for (Matrix m : columns.values()) {
@@ -122,7 +122,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return columns.get((int) column);
 	}
 
-	@Override
+	
 	public Matrix max(Ret returnType, int dimension) throws MatrixException {
 		if (returnType == Ret.NEW) {
 
@@ -150,7 +150,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		throw new MatrixException("not supported");
 	}
 
-	@Override
+	
 	public Matrix selectColumns(Ret returnType, long... columns) throws MatrixException {
 		if (returnType == Ret.LINK && columns.length == 1) {
 			return getColumn(columns[0]);
@@ -158,12 +158,12 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return super.selectColumns(returnType, columns);
 	}
 
-	@Override
+	
 	public Map<Long, Matrix> getWrappedObject() {
 		return columns;
 	}
 
-	@Override
+	
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.columns = object;
 	}

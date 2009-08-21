@@ -33,7 +33,7 @@ public abstract class AbstractPlugin implements HasDescription, HasDependencies,
 
 	public abstract Collection<String> getNeededClasses();
 
-	@Override
+	
 	public String getStatus() {
 		for (String s : getNeededClasses()) {
 			try {

@@ -34,7 +34,7 @@ public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix impleme
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
 	}

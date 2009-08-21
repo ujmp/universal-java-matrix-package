@@ -38,7 +38,7 @@ public class Pinv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (pinv == null) {
 
@@ -60,7 +60,7 @@ public class Pinv extends AbstractDoubleCalculation {
 		return pinv.getAsDouble(coordinates);
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

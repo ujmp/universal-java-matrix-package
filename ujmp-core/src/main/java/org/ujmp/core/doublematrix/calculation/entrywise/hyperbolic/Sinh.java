@@ -35,7 +35,7 @@ public class Sinh extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.sinh(getSource().getAsDouble(coordinates));
 	}

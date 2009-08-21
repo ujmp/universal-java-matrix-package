@@ -41,7 +41,7 @@ public class CeilAction extends MatrixAction {
 				"replace cells with the next higher integer");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().ceil(getRet());
 		m.showGUI();

@@ -75,7 +75,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}

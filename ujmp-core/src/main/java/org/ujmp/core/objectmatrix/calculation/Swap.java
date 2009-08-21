@@ -39,7 +39,7 @@ public class Swap extends AbstractObjectCalculation {
 		this.pos2 = pos2;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (pos1 == pos2) {
 			return getSource().getAsObject(coordinates);

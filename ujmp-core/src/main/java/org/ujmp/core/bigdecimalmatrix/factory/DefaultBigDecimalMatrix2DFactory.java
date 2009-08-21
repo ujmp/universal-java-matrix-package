@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultBigDecimalMatrix2DFactory extends AbstractBigDecimalMatrix2DFactory {
 	private static final long serialVersionUID = 1996140590280640948L;
 
-	@Override
+	
 	public BigDecimalMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseBigDecimalMatrix2D(rows, columns);
 	}

@@ -40,7 +40,7 @@ public class Corrcoef extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double sumSqX = 0.0;
 		double sumSqY = 0.0;
@@ -98,7 +98,7 @@ public class Corrcoef extends AbstractDoubleCalculation {
 		return corr;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}

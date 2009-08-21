@@ -62,7 +62,7 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		return getSet().containsAll(c);
 	}
 
-	@Override
+	
 	public boolean isEmpty() {
 		return getSet().isEmpty();
 	}
@@ -125,22 +125,22 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		return getSet().toArray(a);
 	}
 
-	@Override
+	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setAsObject(value, coordinates);
 	}
 
-	@Override
+	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return StorageType.SET;
 	}

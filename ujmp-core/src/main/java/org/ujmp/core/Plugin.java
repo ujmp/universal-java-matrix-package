@@ -39,17 +39,17 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("none");
 	}
 
-	@Override
+	
 	public String getDescription() {
 		return "main package containing most matrix implementations and calculations";
 	}
 
-	@Override
+	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	@Override
+	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

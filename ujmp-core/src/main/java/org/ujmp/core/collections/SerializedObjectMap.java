@@ -66,7 +66,7 @@ public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public V read(InputStream is) {
 		try {
 			return (V) SerializationUtil.deserialize(is);

@@ -42,7 +42,7 @@ public class MutualinfAction extends MatrixAction {
 				"Calculates the mutual information for this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().mutualInf(Ret.NEW);
 		result.showGUI();

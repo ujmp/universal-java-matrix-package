@@ -48,7 +48,7 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		try {
 			countValues();
@@ -61,7 +61,7 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 		return size;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		countValues();
 		if (coordinates[COLUMN] < column) {

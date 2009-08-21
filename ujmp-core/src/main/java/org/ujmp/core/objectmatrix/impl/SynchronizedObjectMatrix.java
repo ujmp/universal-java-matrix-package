@@ -45,22 +45,22 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.getSize();
 	}
 
-	@Override
+	
 	public synchronized double getAsDouble(long... coordinates) throws MatrixException {
 		return matrix.getAsDouble(coordinates);
 	}
 
-	@Override
+	
 	public synchronized long getValueCount() {
 		return matrix.getValueCount();
 	}
 
-	@Override
+	
 	public synchronized void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
 	}
 
-	@Override
+	
 	public synchronized Object getObject(long... c) throws MatrixException {
 		return matrix.getAsObject(c);
 	}
@@ -73,12 +73,12 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.contains(coordinates);
 	}
 
-	@Override
+	
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
 	}
 
-	@Override
+	
 	public final StorageType getStorageType() {
 		return matrix.getStorageType();
 	}

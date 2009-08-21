@@ -54,7 +54,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		super();
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		Matrix m1 = getSources()[0];
 		Matrix m2 = getSources()[1];
@@ -77,7 +77,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return sum;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		return size;
 	}

@@ -39,7 +39,7 @@ public class Eye extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return coordinates[ROW] == coordinates[COLUMN] ? 1.0 : 0.0;
 	}

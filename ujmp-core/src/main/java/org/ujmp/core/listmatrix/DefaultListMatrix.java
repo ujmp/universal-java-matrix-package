@@ -49,7 +49,7 @@ public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
 		this.list = Arrays.asList(objects);
 	}
 
-	@Override
+	
 	public List<A> getList() {
 		return list;
 	}

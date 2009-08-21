@@ -35,7 +35,7 @@ public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatri
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	@Override
+	
 	public StorageType getStorageType() {
 		return StorageType.DENSE;
 	}

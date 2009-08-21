@@ -49,17 +49,17 @@ public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> im
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}
 
-	@Override
+	
 	public long getLong(long... coordinates) throws MatrixException {
 		return MathUtil.getLong(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setLong(long value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

@@ -87,17 +87,17 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	public abstract void setMap(Map<Coordinates, ObjectMatrix2D> map);
 
-	@Override
+	
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
 		setObject(v, coordinates);
 	}

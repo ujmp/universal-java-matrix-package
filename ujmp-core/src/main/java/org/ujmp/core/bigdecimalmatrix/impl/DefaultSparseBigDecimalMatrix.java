@@ -53,17 +53,17 @@ public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<Bi
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}
 
-	@Override
+	
 	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException {
 		return MathUtil.getBigDecimal(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

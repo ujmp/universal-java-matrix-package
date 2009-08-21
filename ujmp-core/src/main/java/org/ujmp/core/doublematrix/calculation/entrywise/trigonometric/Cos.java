@@ -35,7 +35,7 @@ public class Cos extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.cos(getSource().getAsDouble(coordinates));
 	}

@@ -79,7 +79,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		setMap(object);
 	}
 
-	@Override
+	
 	public final Object getObject(long... coordinates) throws MatrixException {
 		Object v = getMap().get(new Coordinates(coordinates));
 		return v == null ? defaultValue : v;
@@ -93,12 +93,12 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		return getMap().containsKey(new Coordinates(coordinates));
 	}
 
-	@Override
+	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	@Override
+	
 	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
 		setObject(v, coordinates);
 	}
@@ -116,12 +116,12 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		return maximumNumberOfEntries;
 	}
 
-	@Override
+	
 	public final long getValueCount() {
 		return getMap().size();
 	}
 
-	@Override
+	
 	public final Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(getMap().keySet());
 	}

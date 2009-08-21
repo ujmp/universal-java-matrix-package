@@ -74,7 +74,7 @@ public abstract class AbstractCharCalculation extends AbstractCalculation<Matrix
 	public void setChar(char value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}

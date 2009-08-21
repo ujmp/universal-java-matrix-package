@@ -39,7 +39,7 @@ public class Replace extends AbstractObjectCalculation {
 		this.replace = replace;
 	}
 
-	@Override
+	
 	public Object getObject(long... coordinates) throws MatrixException {
 		Object src = getSource().getAsObject(coordinates);
 

@@ -33,7 +33,7 @@ public class ToByteMatrix extends AbstractByteCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public byte getByte(long... coordinates) throws MatrixException {
 		return getSource().getAsByte(coordinates);
 	}

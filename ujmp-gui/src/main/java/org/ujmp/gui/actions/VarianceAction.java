@@ -42,7 +42,7 @@ public class VarianceAction extends MatrixAction {
 				"Calculates the variance of the entries in this matrix");
 	}
 
-	@Override
+	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().var(Ret.NEW,
 				getDimension(), getIgnoreMissing());

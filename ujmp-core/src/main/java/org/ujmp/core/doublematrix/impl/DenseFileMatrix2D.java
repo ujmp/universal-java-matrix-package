@@ -462,7 +462,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
-	@Override
+	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		if (randomAccessFile != null) {
@@ -478,7 +478,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		return new long[] { rowCount, columnCount };
 	}
 
-	@Override
+	
 	public boolean isReadOnly() {
 		return readOnly;
 	}

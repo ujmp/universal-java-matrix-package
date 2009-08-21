@@ -36,7 +36,7 @@ public class Ones extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return 1.0;
 	}

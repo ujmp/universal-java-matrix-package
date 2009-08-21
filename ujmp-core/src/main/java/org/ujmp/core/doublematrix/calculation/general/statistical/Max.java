@@ -34,7 +34,7 @@ public class Max extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double max = -Double.MAX_VALUE;
 		switch (getDimension()) {
@@ -71,7 +71,7 @@ public class Max extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	@Override
+	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

@@ -42,7 +42,7 @@ public class ShowInFrameAction extends ObjectAction {
 		putValue(Action.SHORT_DESCRIPTION, "Show " + object.getLabel() + " in a new Window");
 	}
 
-	@Override
+	
 	public Object call() {
 		getGUIObject().showGUI();
 		return null;

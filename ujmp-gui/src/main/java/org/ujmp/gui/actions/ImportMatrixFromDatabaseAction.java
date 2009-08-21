@@ -45,7 +45,7 @@ public class ImportMatrixFromDatabaseAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 	}
 
-	@Override
+	
 	public Object call() {
 		try {
 			DB type = DB.values()[JOptionPane.showOptionDialog(getComponent(),

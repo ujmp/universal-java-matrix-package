@@ -74,7 +74,7 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 		this.matrix = m;
 	}
 
-	@Override
+	
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 
@@ -128,7 +128,7 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 		return this;
 	}
 
-	@Override
+	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 

@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultByteMatrix2DFactory extends AbstractByteMatrix2DFactory {
 	private static final long serialVersionUID = 3562619700375387209L;
 
-	@Override
+	
 	public ByteMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new ArrayDenseByteMatrix2D(rows, columns);
 	}

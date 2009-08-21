@@ -35,7 +35,7 @@ public class FadeOut extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double factor = 0.0;
 		switch (getDimension()) {

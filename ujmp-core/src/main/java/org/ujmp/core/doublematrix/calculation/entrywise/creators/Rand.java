@@ -47,7 +47,7 @@ public class Rand extends AbstractDoubleCalculation {
 		this.max = max;
 	}
 
-	@Override
+	
 	public double getDouble(long... coordinates) {
 		return MathUtil.nextUniform(min, max);
 	}

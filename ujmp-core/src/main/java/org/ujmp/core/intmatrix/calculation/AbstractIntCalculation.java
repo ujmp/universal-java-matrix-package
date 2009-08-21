@@ -74,7 +74,7 @@ public abstract class AbstractIntCalculation extends AbstractCalculation<Matrix,
 	public void setInt(int value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}

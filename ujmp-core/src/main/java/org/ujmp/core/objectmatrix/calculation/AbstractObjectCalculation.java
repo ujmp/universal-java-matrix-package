@@ -74,7 +74,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

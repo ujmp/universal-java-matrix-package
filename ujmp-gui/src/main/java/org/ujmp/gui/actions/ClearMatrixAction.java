@@ -44,7 +44,7 @@ public class ClearMatrixAction extends MatrixAction {
 				KeyEvent.VK_BACK_SPACE, KeyEvent.ALT_DOWN_MASK));
 	}
 
-	@Override
+	
 	public Object call() {
 		getMatrixObject().getMatrix().clear();
 		return getMatrixObject();

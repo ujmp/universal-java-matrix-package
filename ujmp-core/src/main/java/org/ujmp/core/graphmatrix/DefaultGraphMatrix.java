@@ -58,7 +58,7 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return edges.values();
 	}
 
-	@Override
+	
 	public Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(edges.keySet());
 	}
@@ -95,17 +95,17 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return nodes.size();
 	}
 
-	@Override
+	
 	public void addDirectedEdge(long node1, long node2) {
 		throw new MatrixException("not implemented!");
 	}
 
-	@Override
+	
 	public void addUndirectedEdge(long node1, long node2) {
 		throw new MatrixException("not implemented!");
 	}
 
-	@Override
+	
 	public void clear() {
 		// nodes.clear();
 		edges.clear();
@@ -218,7 +218,7 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		throw new MatrixException("not implemented!");
 	}
 
-	@Override
+	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

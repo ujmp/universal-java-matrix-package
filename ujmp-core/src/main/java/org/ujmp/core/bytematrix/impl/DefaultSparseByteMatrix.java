@@ -49,17 +49,17 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> im
 		super(maximumNumberOfEntries, size);
 	}
 
-	@Override
+	
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}
 
-	@Override
+	
 	public byte getByte(long... coordinates) throws MatrixException {
 		return MathUtil.getByte(getObject(coordinates));
 	}
 
-	@Override
+	
 	public void setByte(byte value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

@@ -573,6 +573,39 @@ public abstract class AbstractMatrixTest extends TestCase {
 			((Erasable) m2).erase();
 		}
 	}
+	
+	public void testPinv() throws Exception {
+		Matrix m1 = createMatrix(3, 3);
+		m1.setAsDouble(1.0, 0, 0);
+		m1.setAsDouble(2.0, 1, 0);
+		m1.setAsDouble(3.0, 2, 0);
+		m1.setAsDouble(4.0, 0, 1);
+		m1.setAsDouble(1.0, 1, 1);
+		m1.setAsDouble(2.0, 2, 1);
+		m1.setAsDouble(3.0, 0, 2);
+		m1.setAsDouble(7.0, 1, 2);
+		m1.setAsDouble(1.0, 2, 2);
+
+		Matrix m2 = m1.pinv();
+
+		assertEquals(getLabel(), -0.1970, m2.getAsDouble(0, 0), 0.001);
+		assertEquals(getLabel(), 0.2879, m2.getAsDouble(1, 0), 0.001);
+		assertEquals(getLabel(), 0.0152, m2.getAsDouble(2, 0), 0.001);
+		assertEquals(getLabel(), 0.0303, m2.getAsDouble(0, 1), 0.001);
+		assertEquals(getLabel(), -0.1212, m2.getAsDouble(1, 1), 0.001);
+		assertEquals(getLabel(), 0.1515, m2.getAsDouble(2, 1), 0.001);
+		assertEquals(getLabel(), 0.3788, m2.getAsDouble(0, 2), 0.001);
+		assertEquals(getLabel(), -0.0152, m2.getAsDouble(1, 2), 0.001);
+		assertEquals(getLabel(), -0.1061, m2.getAsDouble(2, 2), 0.001);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+	}
 
 	public void testGinv() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
@@ -604,6 +637,63 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 		if (m2 instanceof Erasable) {
 			((Erasable) m2).erase();
+		}
+	}
+
+	// test example from wikipedia
+	public void testSVD() throws Exception {
+		Matrix a = createMatrix(4, 5);
+		a.setAsDouble(1, 0, 0);
+		a.setAsDouble(2, 0, 4);
+		a.setAsDouble(3, 1, 2);
+		a.setAsDouble(4, 3, 1);
+
+		Matrix u = MatrixFactory.linkToArray(new double[][] { { 0, 0, 1, 0 }, { 0, 1, 0, 0 },
+				{ 0, 0, 0, -1 }, { 1, 0, 0, 0 } });
+
+		Matrix s = MatrixFactory.linkToArray(new double[][] { { 4, 0, 0, 0, 0 }, { 0, 3, 0, 0, 0 },
+				{ 0, 0, 0, Math.sqrt(5), 0 }, { 0, 0, 0, 0, 0 } });
+
+		Matrix v1 = MatrixFactory.linkToArray(new double[][] { { 0, 1, 0, 0, 0 },
+				{ 0, 0, 1, 0, 0 }, { Math.sqrt(0.2), 0, 0, 0, Math.sqrt(0.8) }, { 0, 0, 0, 1, 0 },
+				{ -Math.sqrt(0.8), 0, 0, 0, Math.sqrt(0.2) } });
+
+		Matrix v2 = MatrixFactory.linkToArray(new double[][] {
+				{ 0, 0, Math.sqrt(0.2), 0, -Math.sqrt(0.8) }, { 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 },
+				{ 0, 0, Math.sqrt(0.8), 0, Math.sqrt(0.2) }, { 0, 0, 0, 1, 0 } });
+
+		Matrix v3 = MatrixFactory
+				.linkToArray(new double[][] { { 0, 0, -Math.sqrt(0.2), 0, -Math.sqrt(0.8) },
+						{ 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1 },
+						{ 0, 0, -Math.sqrt(0.8), Math.sqrt(0.2), 0 } });
+
+		Matrix[] svd = a.svd();
+
+		System.out.println();
+		System.out.println(svd[0]);
+		System.out.println();
+		System.out.println(svd[1]);
+		System.out.println();
+		System.out.println(svd[2]);
+		System.out.println();
+
+		assertEquals(0.0, svd[0].minus(u).doubleValue(), 1e-12);
+		assertEquals(0.0, svd[1].minus(s).doubleValue(), 1e-12);
+
+		// v1, v2 and v3 are all valid
+		double d1 = Math.abs(svd[2].minus(v1).doubleValue());
+		double d2 = Math.abs(svd[2].minus(v2).doubleValue());
+		double d3 = Math.abs(svd[2].minus(v3).doubleValue());
+		double v = Math.min(d1, Math.min(d2, d3));
+
+		assertEquals(0.0, v, 1e-12);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
 		}
 	}
 

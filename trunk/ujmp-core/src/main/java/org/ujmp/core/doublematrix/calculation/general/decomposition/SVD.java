@@ -8,8 +8,8 @@ import org.ujmp.core.util.MathUtil;
 /**
  * Singular Value Decomposition.
  * <P>
- * For an m-by-n matrix A with m >= n, the singular value decomposition is an
- * m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and an n-by-n
+ * For an m-by-n matrix A, the singular value decomposition is an m-by-(m or n)
+ * orthogonal matrix U, a (m or n)-by-n diagonal matrix S, and an n-by-n
  * orthogonal matrix V so that A = U*S*V'.
  * <P>
  * The singular values, sigma[k] = S[k][k], are ordered so that sigma[0] >=
@@ -20,11 +20,9 @@ import org.ujmp.core.util.MathUtil;
  * computed from this decomposition.
  */
 
-public class SVD {
+public class SVD implements java.io.Serializable {
 
-	/*
-	 * ------------------------ Class variables ------------------------
-	 */
+	private static final long serialVersionUID = 968443719603746815L;
 
 	/**
 	 * Arrays for internal storage of U and V.
@@ -46,8 +44,32 @@ public class SVD {
 	 * 
 	 * @serial row dimension.
 	 * @serial column dimension.
+	 * @serial U column dimension.
 	 */
-	private int m, n;
+	private int m, n, ncu;
+
+	/**
+	 * Column specification of matrix U
+	 * 
+	 * @serial U column dimension toggle
+	 */
+
+	private boolean thin;
+
+	/*
+	 * ------------------------ Old Constructor ------------------------
+	 */
+	/**
+	 * Construct the singular value decomposition
+	 * 
+	 * @param Arg
+	 *            Rectangular matrix
+	 * @return Structure to access U, S and V.
+	 */
+
+	public SVD(Matrix Arg) {
+		this(Arg, true, true, true);
+	}
 
 	/*
 	 * ------------------------ Constructor ------------------------
@@ -56,39 +78,42 @@ public class SVD {
 	/**
 	 * Construct the singular value decomposition
 	 * 
-	 * @param A
+	 * @param Arg
 	 *            Rectangular matrix
+	 * @param thin
+	 *            If true U is economy sized
+	 * @param wantu
+	 *            If true generate the U matrix
+	 * @param wantv
+	 *            If true generate the V matrix
 	 * @return Structure to access U, S and V.
 	 */
 
-	public SVD(Matrix Arg) {
+	public SVD(Matrix Arg, boolean thin, boolean wantu, boolean wantv) {
 
 		// Derived from LINPACK code.
 		// Initialize.
 		double[][] A = Arg.toDoubleArray();
 		m = (int) Arg.getRowCount();
 		n = (int) Arg.getColumnCount();
+		this.thin = thin;
 
-		/*
-		 * Apparently the failing cases are only a proper subset of (m<n), so
-		 * let's not throw error. Correct fix to come later? if (m<n) { throw
-		 * new IllegalArgumentException("Jama SVD only works for m >= n"); }
-		 */
-		int nu = Math.min(m, n);
+		ncu = thin ? Math.min(m, n) : m;
 		s = new double[Math.min(m + 1, n)];
-		U = new double[m][nu];
-		V = new double[n][n];
+		if (wantu)
+			U = new double[m][ncu];
+		if (wantv)
+			V = new double[n][n];
 		double[] e = new double[n];
 		double[] work = new double[m];
-		boolean wantu = true;
-		boolean wantv = true;
 
 		// Reduce A to bidiagonal form, storing the diagonal elements
 		// in s and the super-diagonal elements in e.
 
 		int nct = Math.min(m - 1, n);
 		int nrt = Math.max(0, Math.min(n - 2, m));
-		for (int k = 0; k < Math.max(nct, nrt); k++) {
+		int lu = Math.max(nct, nrt);
+		for (int k = 0; k < lu; k++) {
 			if (k < nct) {
 
 				// Compute the transformation for the k-th column and
@@ -189,7 +214,6 @@ public class SVD {
 		}
 
 		// Set up the final bidiagonal matrix or order p.
-
 		int p = Math.min(n, m + 1);
 		if (nct < n) {
 			s[nct] = A[nct][nct];
@@ -203,9 +227,8 @@ public class SVD {
 		e[p - 1] = 0.0;
 
 		// If required, generate U.
-
 		if (wantu) {
-			for (int j = nct; j < nu; j++) {
+			for (int j = nct; j < ncu; j++) {
 				for (int i = 0; i < m; i++) {
 					U[i][j] = 0.0;
 				}
@@ -213,7 +236,7 @@ public class SVD {
 			}
 			for (int k = nct - 1; k >= 0; k--) {
 				if (s[k] != 0.0) {
-					for (int j = k + 1; j < nu; j++) {
+					for (int j = k + 1; j < ncu; j++) {
 						double t = 0;
 						for (int i = k; i < m; i++) {
 							t += U[i][k] * U[i][j];
@@ -226,7 +249,7 @@ public class SVD {
 					for (int i = k; i < m; i++) {
 						U[i][k] = -U[i][k];
 					}
-					U[k][k] = 1.0 + U[k][k];
+					U[k][k] += 1.0;
 					for (int i = 0; i < k - 1; i++) {
 						U[i][k] = 0.0;
 					}
@@ -240,11 +263,10 @@ public class SVD {
 		}
 
 		// If required, generate V.
-
 		if (wantv) {
 			for (int k = n - 1; k >= 0; k--) {
 				if ((k < nrt) & (e[k] != 0.0)) {
-					for (int j = k + 1; j < nu; j++) {
+					for (int j = k + 1; j < n; j++) {
 						double t = 0;
 						for (int i = k + 1; i < n; i++) {
 							t += V[i][k] * V[i][j];
@@ -433,7 +455,7 @@ public class SVD {
 					}
 				}
 				e[p - 2] = f;
-				iter = iter + 1;
+				iter++;
 			}
 				break;
 
@@ -446,7 +468,7 @@ public class SVD {
 				if (s[k] <= 0.0) {
 					s[k] = (s[k] < 0.0 ? -s[k] : 0.0);
 					if (wantv) {
-						for (int i = 0; i <= pp; i++) {
+						for (int i = 0; i < n; i++) {
 							V[i][k] = -V[i][k];
 						}
 					}
@@ -483,6 +505,7 @@ public class SVD {
 				break;
 			}
 		}
+		A = null;
 	}
 
 	/*
@@ -496,7 +519,15 @@ public class SVD {
 	 */
 
 	public Matrix getU() {
-		return MatrixFactory.linkToArray(U);
+		double[][] x = new double[m][m >= n ? (thin ? Math.min(m + 1, n) : ncu) : ncu];
+
+		for (int r = 0; r < m; r++) {
+			for (int c = 0; c < x[0].length; c++) {
+				x[r][c] = U[r][c];
+			}
+		}
+
+		return MatrixFactory.linkToArray(x);
 	}
 
 	/**
@@ -506,7 +537,7 @@ public class SVD {
 	 */
 
 	public Matrix getV() {
-		return MatrixFactory.linkToArray(V);
+		return V == null ? null : MatrixFactory.linkToArray(V);
 	}
 
 	/**
@@ -526,14 +557,52 @@ public class SVD {
 	 */
 
 	public Matrix getS() {
-		double[][] S = new double[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				S[i][j] = 0.0;
-			}
-			S[i][i] = this.s[i];
+		double[][] X = new double[m >= n ? (thin ? n : ncu) : ncu][n];
+		for (int i = Math.min(m, n) - 1; i >= 0; i--)
+			X[i][i] = s[i];
+		return MatrixFactory.linkToArray(X);
+	}
+
+	/**
+	 * Return the diagonal matrix of the reciprocals of the singular values
+	 * 
+	 * @return S+
+	 */
+
+	public Matrix getreciprocalS() {
+		double[][] X = new double[n][m >= n ? (thin ? n : ncu) : ncu];
+		for (int i = Math.min(m, n) - 1; i >= 0; i--)
+			X[i][i] = s[i] == 0.0 ? 0.0 : 1.0 / s[i];
+		return MatrixFactory.linkToArray(X);
+	}
+
+	/**
+	 * Return the Moore-Penrose (generalized) inverse Slightly modified version
+	 * of Kim van der Linde's code
+	 * 
+	 * @param omit
+	 *            if true tolerance based omitting of negligible singular values
+	 * @return A+
+	 */
+
+	public Matrix inverse(boolean omit) {
+		double[][] inverse = new double[n][m];
+		if (rank() > 0) {
+			double[] reciprocalS = new double[s.length];
+			if (omit) {
+				double tol = Math.max(m, n) * s[0] * Math.pow(2.0, -52.0);
+				for (int i = s.length - 1; i >= 0; i--)
+					reciprocalS[i] = Math.abs(s[i]) < tol ? 0.0 : 1.0 / s[i];
+			} else
+				for (int i = s.length - 1; i >= 0; i--)
+					reciprocalS[i] = s[i] == 0.0 ? 0.0 : 1.0 / s[i];
+			int min = Math.min(n, ncu);
+			for (int i = n - 1; i >= 0; i--)
+				for (int j = m - 1; j >= 0; j--)
+					for (int k = min - 1; k >= 0; k--)
+						inverse[i][j] += V[i][k] * reciprocalS[k] * U[j][k];
 		}
-		return MatrixFactory.linkToArray(S);
+		return MatrixFactory.linkToArray(inverse);
 	}
 
 	/**
@@ -563,8 +632,7 @@ public class SVD {
 	 */
 
 	public int rank() {
-		double eps = Math.pow(2.0, -52.0);
-		double tol = Math.max(m, n) * s[0] * eps;
+		double tol = Math.max(m, n) * s[0] * Math.pow(2.0, -52.0);
 		int r = 0;
 		for (int i = 0; i < s.length; i++) {
 			if (s[i] > tol) {
@@ -577,7 +645,8 @@ public class SVD {
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {
 		SVD svd = new SVD(m);
 		return new Matrix[] { svd.getU(), svd.getS(), svd.getV() };
-
 	}
+	
+	
 
 }

@@ -26,10 +26,11 @@ package org.ujmp.complete;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 
-public class Main {
+public class UJMP extends org.ujmp.gui.UJMP {
+	private static final long serialVersionUID = 6107915206776591113L;
 
 	public static void main(String[] args) {
-		Matrix m = MatrixFactory.eye(10, 10);
+		Matrix m = MatrixFactory.welcomeMatrix();
 		m.showGUI();
 	}
 

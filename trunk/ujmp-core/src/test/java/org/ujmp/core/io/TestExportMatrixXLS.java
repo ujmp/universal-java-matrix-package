@@ -28,32 +28,32 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 
-	
 	public FileFormat getFormat() {
 		return FileFormat.XLS;
 	}
 
-	
 	public void testExportToFile() throws Exception {
 		try {
 			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
 		} catch (ClassNotFoundException e) {
 			return;
-		}
-		super.testExportToFile();
-	}
-
-	
-	public void testExportToStream() throws Exception {
-		try {
-			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
-		} catch (ClassNotFoundException e) {
+		} catch (UnsupportedClassVersionError e) {
 			return;
 		}
 		super.testExportToFile();
 	}
 
-	
+	public void testExportToStream() throws Exception {
+		try {
+			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
+		} catch (ClassNotFoundException e) {
+			return;
+		} catch (UnsupportedClassVersionError e) {
+			return;
+		}
+		super.testExportToFile();
+	}
+
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -63,7 +63,6 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();
@@ -73,7 +72,6 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();

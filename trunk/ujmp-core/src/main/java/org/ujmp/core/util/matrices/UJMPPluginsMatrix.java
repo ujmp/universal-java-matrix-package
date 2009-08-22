@@ -48,7 +48,6 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		setColumnLabel(4, "Status");
 		addClass("ujmp-core");
 		addClass("ujmp-gui");
-		addClass("ujmp-complete");
 		addClass("ujmp-bpca");
 		addClass("ujmp-colt");
 		addClass("ujmp-commonsmath");

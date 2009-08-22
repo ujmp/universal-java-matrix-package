@@ -29,7 +29,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
-import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
 
 public class TestMtimes extends TestCase {
 

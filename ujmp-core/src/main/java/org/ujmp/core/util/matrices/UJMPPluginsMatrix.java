@@ -108,10 +108,17 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 			}
 
 			if (o != null) {
-				matrix.setAsString("yes", r, 1);
-				matrix.setAsString(o.getDescription(), r, 2);
-				matrix.setAsString("" + o.getDependencies(), r, 3);
-				matrix.setAsString(o.getStatus(), r, 4);
+				try {
+					matrix.setAsString("yes", r, 1);
+					matrix.setAsString(o.getDescription(), r, 2);
+					matrix.setAsString("" + o.getDependencies(), r, 3);
+					matrix.setAsString(o.getStatus(), r, 4);
+				} catch (Throwable t) {
+					matrix.setAsString("no", r, 1);
+					matrix.setAsString("n/a", r, 2);
+					matrix.setAsString("n/a", r, 3);
+					matrix.setAsString(t.getMessage(), r, 4);
+				}
 			} else {
 				matrix.setAsString("no", r, 1);
 				matrix.setAsString("n/a", r, 2);
@@ -128,16 +135,13 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		classes.add(c);
 	}
 
-	
 	public String getString(long row, long column) {
 		return matrix.getAsString(row, column);
 	}
 
-	
 	public void setString(String value, long row, long column) {
 	}
 
-	
 	public long[] getSize() {
 		return matrix.getSize();
 	}

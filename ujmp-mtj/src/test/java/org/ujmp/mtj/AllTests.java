@@ -29,7 +29,7 @@ public class AllTests extends TestSuite {
 
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(org.ujmp.mtj.TestMTJDenseDoubleMatrix2D.class);
+		suite.addTestSuite(TestMTJDenseDoubleMatrix2D.class);
 		return suite;
 	}
 

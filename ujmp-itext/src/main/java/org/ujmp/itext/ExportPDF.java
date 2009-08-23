@@ -95,6 +95,7 @@ public abstract class ExportPDF {
 			g2.dispose();
 			cb.addTemplate(tp, 0, 0);
 			document.close();
+			writer.close();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not save PDF file", e);
 		}

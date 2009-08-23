@@ -34,6 +34,7 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(TestHashMapList.class);
 		suite.addTestSuite(TestSoftHashMap.class);
 		suite.addTestSuite(TestSoftHashMapList.class);
+		suite.addTestSuite(TestLazyMap.class);
 		return suite;
 	}
 

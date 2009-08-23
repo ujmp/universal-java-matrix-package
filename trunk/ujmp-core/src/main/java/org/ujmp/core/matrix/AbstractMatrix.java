@@ -134,7 +134,9 @@ import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.intmatrix.IntMatrix;
+import org.ujmp.core.intmatrix.calculation.Discretize;
 import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
+import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 import org.ujmp.core.io.ExportMatrix;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
@@ -344,6 +346,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters)
 			throws MatrixException {
 		return new Impute(this, method, parameters).calc(returnType);
+	}
+
+	public Matrix discretize(Ret returnType, DiscretizationMethod method, int numberOfBins)
+			throws MatrixException {
+		return new Discretize(this, method, numberOfBins).calc(returnType);
 	}
 
 	public Matrix indexOfMax(Ret returnType, int dimension) throws MatrixException {

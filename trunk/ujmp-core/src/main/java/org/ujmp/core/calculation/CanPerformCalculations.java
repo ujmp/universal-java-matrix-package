@@ -25,6 +25,7 @@ package org.ujmp.core.calculation;
 
 import org.ujmp.core.booleanmatrix.calculation.BooleanCalculations;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
+import org.ujmp.core.intmatrix.calculation.IntCalculations;
 import org.ujmp.core.objectmatrix.calculation.ObjectCalculations;
 import org.ujmp.core.stringmatrix.calculation.StringCalculations;
 
@@ -59,6 +60,6 @@ import org.ujmp.core.stringmatrix.calculation.StringCalculations;
  * 
  */
 public interface CanPerformCalculations extends DoubleCalculations, BooleanCalculations,
-		StringCalculations, ObjectCalculations {
+		IntCalculations, StringCalculations, ObjectCalculations {
 
 }

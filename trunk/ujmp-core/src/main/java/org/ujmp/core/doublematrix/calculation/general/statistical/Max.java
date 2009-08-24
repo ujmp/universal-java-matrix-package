@@ -34,7 +34,6 @@ public class Max extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double max = -Double.MAX_VALUE;
 		switch (getDimension()) {
@@ -71,15 +70,17 @@ public class Max extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:
 			return new long[] { 1, getSource().getSize()[COLUMN] };
 		case COLUMN:
 			return new long[] { getSource().getSize()[ROW], 1 };
+		case ALL:
+			return new long[] { 1, 1 };
+		default:
+			throw new MatrixException("dimension not supported: " + getDimension());
 		}
-		return null;
 	}
 
 	public static double calc(Matrix m) throws MatrixException {

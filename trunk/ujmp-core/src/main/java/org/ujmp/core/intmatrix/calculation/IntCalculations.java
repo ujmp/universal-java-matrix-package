@@ -30,6 +30,6 @@ import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 
 public interface IntCalculations {
 
-	public Matrix discretize(Ret returnType, DiscretizationMethod method, int numberOfBins)
-			throws MatrixException;
+	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
+			int numberOfBins) throws MatrixException;
 }

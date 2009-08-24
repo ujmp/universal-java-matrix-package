@@ -106,6 +106,8 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new RoundAction(c, m, v)));
 			add(new JMenuItem(new CeilAction(c, m, v)));
 			add(new JMenuItem(new FloorAction(c, m, v)));
+			add(new JSeparator());
+			add(new JMenuItem(new DiscretizeAction(c, m, v)));
 		}
 	}
 

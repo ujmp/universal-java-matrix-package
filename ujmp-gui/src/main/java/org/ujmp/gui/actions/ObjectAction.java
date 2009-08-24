@@ -86,7 +86,6 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 		TaskQueue.setProgress(progress);
 	}
 
-	
 	public final String toString() {
 		return (String) getValue(Action.NAME) + " ("
 				+ getValue(Action.SHORT_DESCRIPTION) + ")";
@@ -111,9 +110,8 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 	}
 
 	public final void actionPerformed(ActionEvent e) {
-		Future<?> f = TaskQueue.submit(this);
 		try {
-			// f.get();
+			call();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

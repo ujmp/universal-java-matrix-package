@@ -52,20 +52,23 @@ public abstract class MathUtil {
 	private static Random random = new Random();
 
 	static {
-		random.setSeed(seed);
-		dateFormats = new ArrayList<DateFormat>();
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US));
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US));
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.US));
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN));
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.GERMAN));
-		dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.GERMAN));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.US));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.US));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.GERMAN));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.GERMAN));
-		dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.GERMAN));
+		try {
+			random.setSeed(seed);
+			dateFormats = new ArrayList<DateFormat>();
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US));
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US));
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.US));
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN));
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.GERMAN));
+			dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.GERMAN));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.US));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.US));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.SHORT, Locale.GERMAN));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.GERMAN));
+			dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.GERMAN));
+		} catch (Throwable t) {
+		}
 	}
 
 	public static String getMD5Sum(String text) throws NoSuchAlgorithmException {

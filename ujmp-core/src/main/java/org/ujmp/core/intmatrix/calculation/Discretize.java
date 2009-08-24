@@ -36,11 +36,14 @@ public class Discretize extends AbstractIntCalculation {
 		ROUND, STRINGS, STANDARDBINNING, EQUALBINNING, INFORMATIONGAIN
 	};
 
-	public Discretize(Matrix matrix, DiscretizationMethod method, int numberOfBins) {
-		super(matrix);
+	public Discretize(Matrix matrix, int dimension, DiscretizationMethod method, int numberOfBins) {
+		super(dimension, matrix);
 		switch (method) {
 		case ROUND:
 			discretized = new Round(matrix).calcLink();
+			break;
+		case STANDARDBINNING:
+			discretized = new DiscretizeStandardBinning(dimension, matrix, numberOfBins).calcLink();
 			break;
 		default:
 			throw new MatrixException("method not yet implemented");

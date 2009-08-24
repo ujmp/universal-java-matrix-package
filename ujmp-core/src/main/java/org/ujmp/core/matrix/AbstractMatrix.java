@@ -348,9 +348,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Impute(this, method, parameters).calc(returnType);
 	}
 
-	public Matrix discretize(Ret returnType, DiscretizationMethod method, int numberOfBins)
-			throws MatrixException {
-		return new Discretize(this, method, numberOfBins).calc(returnType);
+	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
+			int numberOfBins) throws MatrixException {
+		return new Discretize(this, dimension, method, numberOfBins).calc(returnType);
 	}
 
 	public Matrix indexOfMax(Ret returnType, int dimension) throws MatrixException {

@@ -38,12 +38,6 @@ public class RemovePunctuation extends AbstractStringCalculation {
 	static {
 		allowedChars = new HashSet<Character>();
 		allowedChars.add(' ');
-		allowedChars.add('�');
-		allowedChars.add('�');
-		allowedChars.add('�');
-		allowedChars.add('�');
-		allowedChars.add('�');
-		allowedChars.add('�');
 		for (char c = 'a'; c <= 'z'; c++) {
 			allowedChars.add(c);
 		}
@@ -56,7 +50,6 @@ public class RemovePunctuation extends AbstractStringCalculation {
 		super(m);
 	}
 
-	
 	public String getString(long... coordinates) throws MatrixException {
 		String s = getSource().getAsString(coordinates);
 		s = StringUtil.retainChars(s, allowedChars, ' ');

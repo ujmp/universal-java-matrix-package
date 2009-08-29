@@ -86,10 +86,15 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	
 	public DenseDoubleMatrix2D transpose() {
 		GMatrix m = (GMatrix) matrix.clone();
 		m.transpose();
+		return new VecMathDenseDoubleMatrix2D(m);
+	}
+
+	public DenseDoubleMatrix2D inv() {
+		GMatrix m = (GMatrix) matrix.clone();
+		m.invert();
 		return new VecMathDenseDoubleMatrix2D(m);
 	}
 

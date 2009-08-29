@@ -98,8 +98,11 @@ import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Pinv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
@@ -375,7 +378,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			throw new MatrixException(
 					"inverse only possible for square matrices. use pinv or ginv instead");
 		}
-		return ginv();
+		return new Inv(this).calcNew();
 	}
 
 	public Matrix ginv() throws MatrixException {
@@ -1665,6 +1668,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix[] svd() throws MatrixException {
 		return SVD.calcNew(this);
+	}
+
+	public Matrix[] qr() throws MatrixException {
+		return QR.calcNew(this);
+	}
+
+	public Matrix[] lu() throws MatrixException {
+		return LU.calcNew(this);
 	}
 
 	public final String exportToString(FileFormat format, Object... parameters)

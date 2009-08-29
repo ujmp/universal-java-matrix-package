@@ -34,7 +34,9 @@ import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
+import cern.colt.matrix.linalg.Algebra;
 import cern.jet.math.Functions;
 
 public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
@@ -87,7 +89,11 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	
+	public Matrix inv() {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) new Algebra()
+				.inverse(matrix));
+	}
+
 	public Iterable<long[]> availableCoordinates() {
 		return new AvailableCoordinateIterable();
 	}
@@ -111,25 +117,21 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return getAsDouble(coordinates) != 0.0;
 	}
 
-	
 	public Matrix transpose() {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.viewDice().copy());
 	}
 
-	
 	public Matrix plus(double value) {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy().assign(Functions.plus(value)));
 	}
 
-	
 	public Matrix times(double value) {
 		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy().assign(Functions.mult(value)));
 	}
 
-	
 	public Matrix copy() {
 		Matrix m = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
 				.copy());
@@ -139,7 +141,6 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return m;
 	}
 
-	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof ColtSparseDoubleMatrix2D) {
 			SparseDoubleMatrix2D ret = new SparseDoubleMatrix2D(

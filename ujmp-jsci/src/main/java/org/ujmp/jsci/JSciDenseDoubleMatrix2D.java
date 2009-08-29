@@ -76,13 +76,11 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix.setElement(row, column, value);
 	}
 
-	
 	public Matrix transpose() {
 		return new JSciDenseDoubleMatrix2D((AbstractDoubleMatrix) matrix
 				.transpose());
 	}
 
-	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JSciDenseDoubleMatrix2D) {
 			return new JSciDenseDoubleMatrix2D(matrix

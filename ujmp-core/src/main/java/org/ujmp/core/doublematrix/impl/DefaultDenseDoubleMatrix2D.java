@@ -27,6 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray;
+import org.ujmp.core.util.concurrent.PFor;
 
 public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasDoubleArray {
@@ -74,12 +75,10 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return size;
 	}
 
-	
 	public long getRowCount() {
 		return rows;
 	}
 
-	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -116,7 +115,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	
 	public final Matrix plus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -125,7 +123,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix minus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -134,7 +131,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix times(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -143,7 +139,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix divide(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -152,7 +147,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -163,18 +157,21 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return m;
 	}
 
-	
 	public final Matrix transpose() {
 		final double[] result = new double[cols * rows];
-		for (int c = rows; --c != -1;) {
-			for (int r = cols; --r != -1;) {
-				result[c * cols + r] = values[r * rows + c];
+		new PFor(0, cols - 1) {
+
+			@Override
+			public void step(int i) {
+				for (int r = cols; --r != -1;) {
+					result[i * cols + r] = values[r * rows + i];
+				}
 			}
-		}
+		};
+
 		return new DefaultDenseDoubleMatrix2D(result, cols, rows);
 	}
 
-	
 	public double[] getDoubleArray() {
 		return values;
 	}

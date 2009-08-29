@@ -129,7 +129,6 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	
 	public Matrix mtimes(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			return new JScienceDenseDoubleMatrix2D(matrix
@@ -139,9 +138,12 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	
 	public Matrix transpose() {
 		return new JScienceDenseDoubleMatrix2D(matrix.transpose().copy());
+	}
+
+	public Matrix inv() {
+		return new JScienceDenseDoubleMatrix2D(matrix.inverse());
 	}
 
 	public Float64Matrix getWrappedObject() {

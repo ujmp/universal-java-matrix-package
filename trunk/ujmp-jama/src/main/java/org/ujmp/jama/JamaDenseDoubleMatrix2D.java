@@ -28,6 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jama.QRDecomposition;
 import Jama.SingularValueDecomposition;
 
 public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -49,6 +50,10 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
+	}
+
+	public Matrix inv() throws MatrixException {
+		return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
 	public Matrix[] svd() throws MatrixException {
@@ -87,7 +92,6 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {
@@ -96,12 +100,16 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return m;
 	}
 
-	
 	public Matrix transpose() {
 		return new JamaDenseDoubleMatrix2D(matrix.transpose());
 	}
 
-	
+	public Matrix[] qr() {
+		QRDecomposition qr = new QRDecomposition(matrix);
+		return new Matrix[] { new JamaDenseDoubleMatrix2D(qr.getQ()),
+				new JamaDenseDoubleMatrix2D(qr.getR()) };
+	}
+
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			return new JamaDenseDoubleMatrix2D(matrix
@@ -111,12 +119,10 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	
 	public Matrix times(double value) {
 		return new JamaDenseDoubleMatrix2D(matrix.times(value));
 	}
 
-	
 	public Matrix divide(double value) {
 		return new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
 	}

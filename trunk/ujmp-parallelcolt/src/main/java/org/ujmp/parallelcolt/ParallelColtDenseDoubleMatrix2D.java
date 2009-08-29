@@ -28,6 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.tdouble.algo.DoubleAlgebra;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
 
@@ -82,25 +83,26 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		this.matrix = object;
 	}
 
-	
 	public Matrix plus(double value) {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.plus(value)));
 	}
 
-	
+	public Matrix inv() {
+		return new ParallelColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) new DoubleAlgebra().inverse(matrix));
+	}
+
 	public Matrix times(double value) {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.mult(value)));
 	}
 
-	
 	public Matrix transpose() {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.viewDice().copy());
 	}
 
-	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
@@ -112,7 +114,6 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
-	
 	public Matrix copy() {
 		Matrix m = new ParallelColtDenseDoubleMatrix2D(
 				(DenseDoubleMatrix2D) matrix.copy());

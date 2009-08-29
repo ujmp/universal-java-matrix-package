@@ -27,6 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.util.concurrent.PFor;
 
 public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasDoubleArray2D {
@@ -70,12 +71,10 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -96,20 +95,23 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		final int retcols = values.length;
 		final int retrows = values[0].length;
-		double[][] result = new double[retrows][retcols];
-		for (int r = retrows; --r != -1;) {
-			for (int c = retcols; --c != -1;) {
-				result[r][c] = values[c][r];
+		final double[][] result = new double[retrows][retcols];
+		new PFor(0, retrows - 1) {
+
+			@Override
+			public void step(int i) {
+				for (int c = retcols; --c != -1;) {
+					result[i][c] = values[c][i];
+				}
 			}
-		}
+		};
+
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix plus(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -120,7 +122,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix minus(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -131,7 +132,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix times(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -142,7 +142,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix divide(double v) {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
@@ -153,7 +152,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix plus(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
@@ -164,7 +162,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -179,7 +176,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return m;
 	}
 
-	
 	public final Matrix minus(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -190,7 +186,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix times(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -201,7 +196,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	
 	public final Matrix divide(Matrix m2) throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -223,7 +217,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return false;
 	}
 
-	
 	public double[][] getDoubleArray2D() {
 		return values;
 	}

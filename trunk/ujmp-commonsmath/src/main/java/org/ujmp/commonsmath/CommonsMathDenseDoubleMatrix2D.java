@@ -90,12 +90,14 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				matrix.getRowDimension(), matrix.getColumnDimension() };
 	}
 
-	
 	public Matrix transpose() {
 		return new CommonsMathDenseDoubleMatrix2D(matrix.transpose());
 	}
 
-	
+	public Matrix inv() {
+		return new CommonsMathDenseDoubleMatrix2D(matrix.inverse());
+	}
+
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof CommonsMathDenseDoubleMatrix2D) {
 			return new CommonsMathDenseDoubleMatrix2D(matrix

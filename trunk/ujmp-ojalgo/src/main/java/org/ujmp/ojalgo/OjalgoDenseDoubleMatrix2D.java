@@ -29,92 +29,109 @@ import java.io.ObjectOutputStream;
 
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
+import org.ojalgo.matrix.decomposition.LUDecomposition;
+import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<BasicMatrix> {
+		implements Wrapper<PrimitiveDenseStore> {
+
 	private static final long serialVersionUID = 6628172130438716653L;
 
-	private transient BasicMatrix matrix = null;
+	private transient PrimitiveDenseStore matrix = null;
 
-	public OjalgoDenseDoubleMatrix2D(long... size) {
-		this.matrix = PrimitiveMatrix.FACTORY.makeZero((int) size[ROW],
-				(int) size[COLUMN]);
+	public OjalgoDenseDoubleMatrix2D(final long... size) {
+		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY.makeEmpty(
+				(int) size[ROW], (int) size[COLUMN]);
 	}
 
-	public OjalgoDenseDoubleMatrix2D(Matrix m) {
+	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
 		this(m.getSize());
-		for (long[] c : m.allCoordinates()) {
-			setAsDouble(m.getAsDouble(c), c);
+		for (final long[] c : m.allCoordinates()) {
+			this.setAsDouble(m.getAsDouble(c), c);
 		}
 	}
 
-	public OjalgoDenseDoubleMatrix2D(BasicMatrix matrix) {
+	public OjalgoDenseDoubleMatrix2D(final PrimitiveDenseStore matrix) {
 		this.matrix = matrix;
 	}
 
-	public double getDouble(long row, long column) {
-		return matrix.doubleValue((int) row, (int) column);
+	public final BasicMatrix getBasicMatrix() {
+		return new PrimitiveMatrix(matrix);
 	}
 
-	public double getDouble(int row, int column) {
+	public double getDouble(final int row, final int column) {
 		return matrix.doubleValue(row, column);
+	}
+
+	public double getDouble(final long row, final long column) {
+		return matrix.doubleValue((int) row, (int) column);
 	}
 
 	public long[] getSize() {
 		return new long[] { matrix.getRowDim(), matrix.getColDim() };
 	}
 
-	public void setDouble(double value, long row, long column) {
-		matrix = matrix.set((int) row, (int) column, value);
-	}
-
-	public void setDouble(double value, int row, int column) {
-		matrix = matrix.set(row, column, value);
-	}
-
-	public BasicMatrix getWrappedObject() {
+	public PrimitiveDenseStore getWrappedObject() {
 		return matrix;
 	}
 
-	public void setWrappedObject(BasicMatrix object) {
-		this.matrix = object;
-	}
-
-	
-	public Matrix transpose() {
-		return new OjalgoDenseDoubleMatrix2D(matrix.transpose());
-	}
-
-	
-	public Matrix mtimes(Matrix m) {
+	@Override
+	public Matrix mtimes(final Matrix m) {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
-			BasicMatrix mo = ((OjalgoDenseDoubleMatrix2D) m).getWrappedObject();
-			BasicMatrix result = matrix.multiplyRight(mo);
+			final PrimitiveDenseStore mo = ((OjalgoDenseDoubleMatrix2D) m)
+					.getWrappedObject();
+			final PrimitiveDenseStore result = (PrimitiveDenseStore) matrix
+					.multiplyRight(mo);
 			return new OjalgoDenseDoubleMatrix2D(result);
 		} else {
 			return super.mtimes(m);
 		}
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException {
-		s.defaultWriteObject();
-		s.writeObject(toDoubleArray());
+	public void setDouble(final double value, final int row, final int column) {
+		matrix.set(row, column, value);
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
+	public void setDouble(final double value, final long row, final long column) {
+		matrix.set((int) row, (int) column, value);
+	}
+
+	public void setWrappedObject(final PrimitiveDenseStore object) {
+		matrix = object;
+	}
+
+	@Override
+	public double[][] toDoubleArray() throws MatrixException {
+		return matrix.toRawCopy();
+	}
+
+	@Override
+	public Matrix transpose() {
+		return new OjalgoDenseDoubleMatrix2D(matrix.transpose());
+	}
+
+	@Override
+	public Matrix inv() {
+		return new OjalgoDenseDoubleMatrix2D(
+				(PrimitiveDenseStore) LUDecomposition.makePrimitive().invert(
+						matrix));
+	}
+
+	private void readObject(final ObjectInputStream s) throws IOException,
 			ClassNotFoundException {
 		s.defaultReadObject();
-		double[][] data = (double[][]) s.readObject();
-		this.matrix = PrimitiveMatrix.FACTORY.makeZero(data.length,
-				data[0].length);
-		for (int r = data.length; --r != -1;) {
-			for (int c = data[0].length; --c != -1;) {
-				setDouble(data[r][c], r, c);
-			}
-		}
+		final double[][] data = (double[][]) s.readObject();
+		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
+				.copyRaw(data);
+	}
+
+	private void writeObject(final ObjectOutputStream s) throws IOException {
+		s.defaultWriteObject();
+		s.writeObject(this.toDoubleArray());
 	}
 
 }

@@ -31,7 +31,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public abstract class PFor {
+public abstract class PFor2 {
 
 	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
 
@@ -48,7 +48,7 @@ public abstract class PFor {
 		}
 	}
 
-	public PFor(int threads, int first, int last, Object... objects) {
+	public PFor2(int threads, int first, int last, Object... objects) {
 		this.objects = objects;
 
 		if (threads <= 2) {
@@ -72,13 +72,8 @@ public abstract class PFor {
 				futures.set(list);
 			}
 
-			last++;
-			double stepsize = (double) (last - first) / threads;
-
 			for (int i = 0; i < threads; i++) {
-				int starti = (int) Math.ceil(first + i * stepsize);
-				int endi = (int) Math.ceil(first + (i + 1) * stepsize);
-				list.add(es.submit(new StepCallable(starti, endi)));
+				list.add(es.submit(new StepCallable(first + i, last, threads)));
 			}
 
 			for (Future<Object> f : list) {
@@ -94,8 +89,8 @@ public abstract class PFor {
 		}
 	}
 
-	public PFor(int first, int last, Object... objects) {
-		this(processors + 1, first, last, objects);
+	public PFor2(int first, int last, Object... objects) {
+		this(processors, first, last, objects);
 	}
 
 	public abstract void step(int i);
@@ -110,14 +105,17 @@ public abstract class PFor {
 
 		private int last = 0;
 
-		public StepCallable(int first, int last) {
+		private int stepsize = 0;
+
+		public StepCallable(int first, int last, int stepsize) {
 			this.first = first;
 			this.last = last;
+			this.stepsize = stepsize;
 		}
 
 		public Object call() throws Exception {
 			try {
-				for (int i = first; i < last; i++) {
+				for (int i = first; i <= last; i += stepsize) {
 					step(i);
 				}
 			} catch (Exception e) {
@@ -128,20 +126,4 @@ public abstract class PFor {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		int count = 5;
-		int start = 0;
-		int end = 40;
-		int sum = 0;
-		double stepsize = (double) (end - start) / count;
-
-		for (int i = 0; i < count; i++) {
-			int starti = (int) Math.ceil(start + i * stepsize);
-			int endi = (int) Math.ceil(start + (i + 1) * stepsize);
-			System.out.println(i + ": " + starti + " " + endi);
-			sum += endi - starti;
-		}
-		System.out.println("stepsize:" + stepsize);
-		System.out.println("sum: " + (sum - 1));
-	}
 }

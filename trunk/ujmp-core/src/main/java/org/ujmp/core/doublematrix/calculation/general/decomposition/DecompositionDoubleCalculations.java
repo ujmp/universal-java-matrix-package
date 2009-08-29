@@ -65,4 +65,18 @@ public interface DecompositionDoubleCalculations {
 	 */
 	public Matrix[] svd() throws MatrixException;
 
+	/**
+	 * Calculates a QR decomposition of the matrix.
+	 * 
+	 * @return QR decomposition of the matrix.
+	 */
+	public Matrix[] qr() throws MatrixException;
+
+	/**
+	 * Calculates a LU decomposition of the matrix.
+	 * 
+	 * @return LU decomposition of the matrix.
+	 */
+	public Matrix[] lu() throws MatrixException;
+
 }

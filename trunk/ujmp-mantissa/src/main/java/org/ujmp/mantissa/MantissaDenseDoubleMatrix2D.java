@@ -74,12 +74,10 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix.setElement(row, column, value);
 	}
 
-	
 	public Matrix transpose() {
 		return new MantissaDenseDoubleMatrix2D(matrix.getTranspose());
 	}
 
-	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof MantissaDenseDoubleMatrix2D) {
 			return new MantissaDenseDoubleMatrix2D(matrix

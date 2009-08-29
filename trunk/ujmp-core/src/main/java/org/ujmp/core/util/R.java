@@ -70,7 +70,7 @@ public class R {
 		return r;
 	}
 
-	public static synchronized R getInstance(String pathToOctave) throws Exception {
+	public static synchronized R getInstance(String pathToR) throws Exception {
 		if (r == null) {
 			r = new R(pathToR);
 		}
@@ -183,9 +183,11 @@ public class R {
 		try {
 
 			String rawRows = execute("cat(nrow(" + label + "))");
-			int rows = Integer.parseInt(rawRows.split("\n")[1]);
+			String rString = rawRows.split("\n")[1].replaceAll("\\>", "").trim();
+			int rows = Integer.parseInt(rString);
 			String rawCols = execute("cat(ncol(" + label + "))");
-			int cols = Integer.parseInt(rawCols.split("\n")[1]);
+			String cString = rawCols.split("\n")[1].replaceAll("\\>", "").trim();
+			int cols = Integer.parseInt(cString);
 
 			String rawText = execute("cat(" + label + ")");
 			String[] rawValues = rawText.split("\n")[1].split("[\\s]+");
@@ -195,7 +197,8 @@ public class R {
 			int i = 0;
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
-					matrix.setAsDouble(Double.parseDouble(rawValues[i++]), r, c);
+					matrix.setAsDouble(Double.parseDouble(rawValues[i++].replaceAll("\\>", "")
+							.trim()), r, c);
 				}
 			}
 

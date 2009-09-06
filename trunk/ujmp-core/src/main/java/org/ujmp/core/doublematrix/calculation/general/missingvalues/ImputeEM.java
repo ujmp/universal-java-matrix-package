@@ -63,7 +63,6 @@ public class ImputeEM extends AbstractDoubleCalculation {
 		this.delta = delta;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (imputed == null) {
 			createMatrix();
@@ -179,12 +178,15 @@ public class ImputeEM extends AbstractDoubleCalculation {
 			return y;
 		}
 
-		Matrix xtrain = x.deleteRows(Ret.NEW, missingRows).addColumnWithOnes();
+		Matrix xdel = x.deleteRows(Ret.NEW, missingRows);
+		Matrix bias1 = MatrixFactory.ones(xdel.getRowCount(), 1);
+		Matrix xtrain = MatrixFactory.horCat(xdel, bias1);
 		Matrix ytrain = y.deleteRows(Ret.NEW, missingRows);
 
 		Matrix xinv = xtrain.pinv();
 		Matrix b = xinv.mtimes(ytrain);
-		Matrix yPredicted = x.addColumnWithOnes().mtimes(b);
+		Matrix bias2 = MatrixFactory.ones(x.getRowCount(), 1);
+		Matrix yPredicted = MatrixFactory.horCat(x, bias2).mtimes(b);
 
 		// set non-missing values back to original values
 		for (int row = 0; row < y.getRowCount(); row++) {

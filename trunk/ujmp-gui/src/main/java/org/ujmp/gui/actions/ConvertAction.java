@@ -21,46 +21,34 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.objectmatrix.calculation;
+package org.ujmp.gui.actions;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.Action;
+import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.util.GUIUtil;
 
-public class Bootstrap extends AbstractObjectCalculation {
-	private static final long serialVersionUID = -5084329826465538416L;
+public class ConvertAction extends MatrixAction {
+	private static final long serialVersionUID = -7845885942299676242L;
 
-	private int count = 0;
-
-	private Matrix selection = null;
-
-	public Bootstrap(Matrix m) {
-		this(m, (int) m.getRowCount());
+	public ConvertAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Convert");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Convert all entries to another format");
 	}
 
-	public Bootstrap(Matrix m, int count) {
-		super(m);
-		this.count = count;
-	}
-
-	public Object getObject(long... coordinates) throws MatrixException {
-		if (selection == null) {
-			List<Integer> rows = new ArrayList<Integer>();
-			for (int i = 0; i < count; i++) {
-				int s = MathUtil.nextInteger(0, (int) getSource().getRowCount() - 1);
-				rows.add(s);
-			}
-			selection = getSource().selectRows(Ret.LINK, rows);
-		}
-		return selection.getAsObject(coordinates);
-	}
-
-	@Override
-	public long[] getSize() {
-		return new long[] { count, getSource().getColumnCount() };
+	public Object call() throws MatrixException {
+		Matrix m = getMatrixObject().getMatrix().convert(
+				(ValueType) GUIUtil.getObject("New entry type",
+						(Object[]) ValueType.values()));
+		m.showGUI();
+		return m;
 	}
 
 }

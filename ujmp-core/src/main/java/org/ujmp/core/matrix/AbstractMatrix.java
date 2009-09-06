@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1572,46 +1573,32 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final Matrix convertIntToVector(int numberOfClasses) throws MatrixException {
-		Matrix m = MatrixFactory.zeros(numberOfClasses, 1);
-		for (int i = numberOfClasses - 1; i != -1; i--) {
-			m.setAsDouble(-1.0, i, 0);
-		}
-		m.setAsDouble(1.0, (int) getAsDouble(0, 0), 0);
-		return m;
-	}
-
-	public final void greaterOrZero_() throws MatrixException {
-		for (long[] c : allCoordinates()) {
-			double v = getAsDouble(c);
-			setAsDouble(v < 0.0 ? 0.0 : v, c);
-		}
-	}
-
-	public final void scaleRowsToOne_() throws MatrixException {
-		for (long r = getRowCount() - 1; r != -1; r--) {
-			double sum = 0.0;
-			for (long c = getColumnCount() - 1; c != -1; c--) {
-				sum += Math.abs(getAsDouble(r, c));
-			}
-			sum = sum / getRowCount();
-			for (long c = getColumnCount() - 1; c != -1; c--) {
-				setAsDouble(getAsDouble(r, c) / sum, r, c);
-			}
-		}
-	}
-
 	public final Matrix appendHorizontally(Matrix m) throws MatrixException {
 		return append(COLUMN, m);
 	}
 
-	// TODO: this can be done more efficiently with an iterator
 	public Iterable<Object> allValues() {
-		List<Object> list = new ArrayList<Object>();
-		for (long[] c : availableCoordinates()) {
-			list.add(getAsObject(c));
-		}
-		return list;
+		return new Iterable<Object>() {
+
+			public Iterator<Object> iterator() {
+				return new Iterator<Object>() {
+
+					private Iterator<long[]> it = allCoordinates().iterator();
+
+					public boolean hasNext() {
+						return it.hasNext();
+					}
+
+					public Object next() {
+						return getAsObject(it.next());
+					}
+
+					public void remove() {
+						it.remove();
+					}
+				};
+			}
+		};
 	}
 
 	public final Matrix appendVertically(Matrix m) throws MatrixException {
@@ -1619,18 +1606,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix append(int dimension, Matrix m) throws MatrixException {
-		long[] newSize = Coordinates.copyOf(getSize());
-		newSize[dimension] += m.getSize()[dimension];
-		Matrix result = MatrixFactory.zeros(getValueType(), newSize);
-		for (long[] c : allCoordinates()) {
-			result.setAsObject(getAsObject(c), c);
-		}
-		for (long[] c : m.allCoordinates()) {
-			long[] newC = Coordinates.copyOf(c);
-			newC[dimension] += getSize()[dimension];
-			result.setAsObject(m.getAsObject(c), newC);
-		}
-		return result;
+		return MatrixFactory.concat(dimension, this, m);
 	}
 
 	public final Matrix discretizeToColumns(long column) throws MatrixException {
@@ -1642,28 +1618,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		long[] rows = MathUtil.sequenceLong(startRow, endRow);
 		long[] columns = MathUtil.sequenceLong(startColumn, endColumn);
 		return select(returnType, rows, columns);
-	}
-
-	public Matrix addColumnWithOnes() throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(getRowCount(), getColumnCount() + 1);
-		for (long[] c : allCoordinates()) {
-			ret.setAsDouble(getAsDouble(c), c);
-		}
-		for (long r = getRowCount() - 1; r != -1; r--) {
-			ret.setAsDouble(1.0, r, getColumnCount());
-		}
-		return ret;
-	}
-
-	public final Matrix addRowWithOnes() throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(getRowCount() + 1, getColumnCount());
-		for (long[] c : allCoordinates()) {
-			ret.setAsDouble(getAsDouble(c), c);
-		}
-		for (long c = getColumnCount() - 1; c != -1; c--) {
-			ret.setAsDouble(1.0, getRowCount(), c);
-		}
-		return ret;
 	}
 
 	public Matrix[] svd() throws MatrixException {

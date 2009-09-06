@@ -58,21 +58,11 @@ public interface MiscGeneralDoubleCalculations {
 	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN)
 			throws MatrixException;
 
-	public Matrix addColumnWithOnes() throws MatrixException;
-
-	public Matrix addRowWithOnes() throws MatrixException;
-
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException;
-
-	public Matrix convertIntToVector(int numberOfClasses) throws MatrixException;
 
 	public Matrix fadeIn(Ret ret, int dimension) throws MatrixException;
 
 	public Matrix fadeOut(Ret ret, int dimensions) throws MatrixException;
-
-	public void greaterOrZero_() throws MatrixException;
-
-	public void scaleRowsToOne_() throws MatrixException;
 
 	public Matrix appendHorizontally(Matrix m) throws MatrixException;
 

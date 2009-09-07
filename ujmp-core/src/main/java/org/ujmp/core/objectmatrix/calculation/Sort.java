@@ -56,7 +56,6 @@ public class Sort extends AbstractObjectCalculation {
 		this.column = column;
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (index == null) {
 			createSortIndex();
@@ -70,7 +69,7 @@ public class Sort extends AbstractObjectCalculation {
 		List<Sortable> rows = new ArrayList<Sortable>();
 
 		for (long r = 0; r < m.getRowCount(); r++) {
-			Comparable<?> c = (Comparable<?>) m.getAsObject(r, column);
+			Comparable<?> c = (Comparable<?>) m.getPreferredObject(r, column);
 			Sortable s = new Sortable(c, r, true);
 			rows.add(s);
 		}

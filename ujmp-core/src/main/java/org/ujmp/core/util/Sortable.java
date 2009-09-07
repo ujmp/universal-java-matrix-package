@@ -58,29 +58,40 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 		this.object = object;
 	}
 
-	
 	public String toString() {
 		return "" + comparable + ": " + object;
 	}
 
 	@SuppressWarnings("unchecked")
 	public int compareTo(Sortable<C, O> s) {
+		if (comparable == null) {
+			return Integer.MIN_VALUE;
+		}
 		int compObjectEqual = comparable.compareTo(s.comparable);
-		if (!compareObject || !(compObjectEqual == 0))
+		if (!compareObject || !(compObjectEqual == 0)) {
 			return compObjectEqual;
+		}
+		if (object == null) {
+			return Integer.MIN_VALUE;
+		}
 		return ((Comparable<O>) object).compareTo(s.object);
 	}
 
-	
 	public boolean equals(Object obj) {
 		if (obj instanceof Sortable) {
 			Sortable<?, ?> s = (Sortable<?, ?>) obj;
 			Comparable<?> c = s.getComparable();
 			Object o = s.getObject();
-			if (getComparable().equals(c)) {
+			if (comparable == null && c != null) {
 				return false;
 			}
-			if (getObject().equals(o)) {
+			if (comparable.equals(c)) {
+				return false;
+			}
+			if (object == null && o != null) {
+				return false;
+			}
+			if (object.equals(o)) {
 				return false;
 			}
 			return true;
@@ -88,7 +99,6 @@ public class Sortable<C extends Comparable<C>, O> implements Comparable<Sortable
 		return false;
 	}
 
-	
 	public int hashCode() {
 		int hash = 0;
 		if (object != null) {

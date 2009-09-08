@@ -37,10 +37,11 @@ public class MatrixActions extends ArrayList<JComponent> {
 	private static final long serialVersionUID = -8960033736161810590L;
 
 	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
+		add(new JMenuItem(new NewMatrixAction(c, m)));
+		add(new JMenuItem(new SaveMatrixAction(c, m)));
+		add(new JSeparator());
 		add(new JMenuItem(new DuplicateAction(c, m, v)));
 		add(new JMenuItem(new ConvertAction(c, m, v)));
-		add(new JSeparator());
-		add(new JMenuItem(new ExportMatrixAction(c, m)));
 		add(new JSeparator());
 		add(new AnnotationMenu(c, m, v));
 		add(new JSeparator());
@@ -49,6 +50,9 @@ public class MatrixActions extends ArrayList<JComponent> {
 		add(new StatisticsMenu(c, m, v));
 		add(new DecompositionMenu(c, m, v));
 		add(new MissingValuesMenu(c, m, v));
+		add(new JSeparator());
+		add(new TrigonometricMenu(c, m, v));
+		add(new HyperbolicMenu(c, m, v));
 	}
 
 	class ContentMenu extends JMenu {
@@ -87,13 +91,14 @@ public class MatrixActions extends ArrayList<JComponent> {
 
 		public TransformMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
 			super("Transform");
+			add(new JMenuItem(new TransposeAction(c, m, v)));
+			add(new JSeparator());
 			add(new JMenuItem(new PlusAction(c, m, v)));
 			add(new JMenuItem(new MinusAction(c, m, v)));
 			add(new JMenuItem(new MultiplyAction(c, m, v)));
 			add(new JMenuItem(new DivideAction(c, m, v)));
-			add(new JMenuItem(new PowerAction(c, m, v)));
 			add(new JSeparator());
-			add(new JMenuItem(new TransposeAction(c, m, v)));
+			add(new JMenuItem(new PowerAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new SortAction(c, m, v)));
 			add(new JMenuItem(new BootstrapAction(c, m, v)));
@@ -142,6 +147,28 @@ public class MatrixActions extends ArrayList<JComponent> {
 		public AnnotationMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
 			super("Annotation");
 			add(new JMenuItem(new SetLabelAction(c, m)));
+		}
+	}
+
+	class TrigonometricMenu extends JMenu {
+		private static final long serialVersionUID = 5800051912623058943L;
+
+		public TrigonometricMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
+			super("Trigonometric");
+			add(new JMenuItem(new SinAction(c, m, v)));
+			add(new JMenuItem(new CosAction(c, m, v)));
+			add(new JMenuItem(new TanAction(c, m, v)));
+		}
+	}
+
+	class HyperbolicMenu extends JMenu {
+		private static final long serialVersionUID = 4420801549072051385L;
+
+		public HyperbolicMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
+			super("Hyperbolic");
+			add(new JMenuItem(new SinhAction(c, m, v)));
+			add(new JMenuItem(new CoshAction(c, m, v)));
+			add(new JMenuItem(new TanhAction(c, m, v)));
 		}
 	}
 }

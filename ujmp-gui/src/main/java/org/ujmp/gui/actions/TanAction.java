@@ -23,31 +23,26 @@
 
 package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class RoundAction extends MatrixAction {
-	private static final long serialVersionUID = 9072784334795456528L;
+public class TanAction extends MatrixAction {
+	private static final long serialVersionUID = 762698941291670245L;
 
-	public RoundAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public TanAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Round");
-		putValue(Action.SHORT_DESCRIPTION, "round cells to the closest integer");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_PERIOD, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.NAME, "Tan");
+		putValue(Action.SHORT_DESCRIPTION,
+				"tangens of the entries in this matrix");
 	}
 
 	public Object call() throws MatrixException {
-		Matrix m = getMatrixObject().getMatrix().round(getRet());
+		Matrix m = getMatrixObject().getMatrix().tan(getRet());
 		m.showGUI();
 		return m;
 	}

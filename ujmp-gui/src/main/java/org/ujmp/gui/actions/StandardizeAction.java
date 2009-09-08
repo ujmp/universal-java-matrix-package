@@ -43,11 +43,10 @@ public class StandardizeAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION,
 				"Rescales all entries to mean 0 and standard deviation 1");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N,
-				KeyEvent.ALT_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(),
 				getDimension(), getIgnoreMissing());

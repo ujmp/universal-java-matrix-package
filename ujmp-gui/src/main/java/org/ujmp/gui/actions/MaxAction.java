@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -40,9 +43,10 @@ public class MaxAction extends MatrixAction {
 		putValue(Action.NAME, "Max");
 		putValue(Action.SHORT_DESCRIPTION,
 				"Calculates the max of the entries in this matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_PAGE_UP, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW,
 				getDimension());

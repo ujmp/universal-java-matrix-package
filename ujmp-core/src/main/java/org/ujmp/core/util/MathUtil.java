@@ -629,7 +629,11 @@ public abstract class MathUtil {
 			return ((Matrix) o).bigDecimalValue();
 		}
 		if (o instanceof String) {
-			return new BigDecimal((String) o);
+			try {
+				return new BigDecimal((String) o);
+			} catch (Exception e) {
+				return BigDecimal.ZERO;
+			}
 		}
 		return BigDecimal.ZERO;
 	}

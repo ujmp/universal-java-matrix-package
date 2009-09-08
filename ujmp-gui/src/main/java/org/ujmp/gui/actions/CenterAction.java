@@ -42,11 +42,10 @@ public class CenterAction extends MatrixAction {
 		putValue(Action.NAME, "Center");
 		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries to mean 0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C,
-				KeyEvent.ALT_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_0,
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().center(getRet(),
 				getDimension(), getIgnoreMissing());

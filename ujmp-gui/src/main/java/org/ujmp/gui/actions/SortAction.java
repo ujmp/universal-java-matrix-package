@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -39,9 +42,10 @@ public class SortAction extends MatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Sort");
 		putValue(Action.SHORT_DESCRIPTION, "Sorts the entries in the matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O,
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().sort(Ret.NEW);
 		result.showGUI();

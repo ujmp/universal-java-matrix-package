@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -40,9 +43,10 @@ public class BootstrapAction extends MatrixAction {
 		putValue(Action.NAME, "Bootstrap");
 		putValue(Action.SHORT_DESCRIPTION,
 				"creates a new matrix by sampling over the rows");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_B,
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().bootstrap(getNewOrLink(),
 				GUIUtil.getInt("Number of samples", 1, 10000000));

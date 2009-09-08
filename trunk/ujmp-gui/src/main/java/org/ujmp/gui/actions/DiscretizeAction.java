@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -41,6 +44,8 @@ public class DiscretizeAction extends MatrixAction {
 		putValue(Action.NAME, "Discretize");
 		putValue(Action.SHORT_DESCRIPTION,
 				"discretize all cells to integer values");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_COLON, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() throws MatrixException {

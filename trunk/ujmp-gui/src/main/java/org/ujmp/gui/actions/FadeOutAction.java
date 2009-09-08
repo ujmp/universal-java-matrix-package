@@ -42,11 +42,10 @@ public class FadeOutAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION,
 				"multiplies all entries with an decreasing factor");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O,
-				KeyEvent.ALT_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_RIGHT, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		getMatrixObject().getMatrix().fadeOut(getRet(), getDimension());
 		return getMatrixObject();

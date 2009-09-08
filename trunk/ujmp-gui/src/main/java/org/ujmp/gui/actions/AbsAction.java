@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -42,9 +43,10 @@ public class AbsAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION,
 				"replace cells with their absolute values");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_HOME, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().abs(getRet());
 		m.showGUI();

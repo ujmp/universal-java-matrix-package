@@ -42,11 +42,10 @@ public class FadeInAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION,
 				"multiplies all entries with an increasing factor");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_I);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_I,
-				KeyEvent.ALT_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		getMatrixObject().getMatrix().fadeIn(getRet(), getDimension());
 		return getMatrixObject();

@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -39,9 +42,10 @@ public class DivideAction extends MatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Divide");
 		putValue(Action.SHORT_DESCRIPTION, "divide all cells by a value");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_SLASH, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().divide(
 				getRet(),

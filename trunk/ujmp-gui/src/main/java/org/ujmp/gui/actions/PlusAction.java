@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -39,9 +42,10 @@ public class PlusAction extends MatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Plus");
 		putValue(Action.SHORT_DESCRIPTION, "add a value to all cells");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_PLUS, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().plus(
 				getRet(),

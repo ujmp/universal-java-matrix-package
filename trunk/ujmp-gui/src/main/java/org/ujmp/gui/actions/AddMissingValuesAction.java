@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -40,9 +43,10 @@ public class AddMissingValuesAction extends MatrixAction {
 		putValue(Action.NAME, "Add missing values...");
 		putValue(Action.SHORT_DESCRIPTION,
 				"replaces a chosen percentage of the values with NaN");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_NUMBER_SIGN, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
 				getDimension(),

@@ -43,10 +43,9 @@ public class TransposeAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "transposes this matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T,
-				KeyEvent.ALT_DOWN_MASK));
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().transpose(getNewOrLink());
 		m.showGUI();

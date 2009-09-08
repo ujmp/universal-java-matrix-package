@@ -23,8 +23,11 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
@@ -41,6 +44,8 @@ public class ConvertAction extends MatrixAction {
 		putValue(Action.NAME, "Convert");
 		putValue(Action.SHORT_DESCRIPTION,
 				"Convert all entries to another format");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_SPACE, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() throws MatrixException {

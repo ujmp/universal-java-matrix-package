@@ -23,12 +23,14 @@
 
 package org.ujmp.gui.actions;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import org.ujmp.core.enums.FileFormat;
@@ -36,16 +38,17 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ExportMatrixAction extends ObjectAction {
+public class SaveMatrixAction extends ObjectAction {
 	private static final long serialVersionUID = -212812956173346428L;
 
-	public ExportMatrixAction(JComponent c, GUIObject o) {
+	public SaveMatrixAction(JComponent c, GUIObject o) {
 		super(c, o);
-		putValue(Action.NAME, "Export...");
-		putValue(Action.SHORT_DESCRIPTION, "Export this Matrix");
+		putValue(Action.NAME, "Save...");
+		putValue(Action.SHORT_DESCRIPTION, "Save this Matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S,
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() {
 		try {
 			File file = null;
@@ -57,7 +60,7 @@ public class ExportMatrixAction extends ObjectAction {
 
 			chooser.setFileFilter(FileFormat.CSV.getFileFilter());
 			chooser.setAcceptAllFileFilterUsed(false);
-			chooser.setDialogTitle("Export");
+			chooser.setDialogTitle("Save");
 
 			int returnVal = chooser.showSaveDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {

@@ -41,10 +41,9 @@ public class ClearMatrixAction extends MatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "Sets all entries to 0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_BACK_SPACE, KeyEvent.ALT_DOWN_MASK));
+				KeyEvent.VK_BACK_SPACE, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() {
 		getMatrixObject().getMatrix().clear();
 		return getMatrixObject();

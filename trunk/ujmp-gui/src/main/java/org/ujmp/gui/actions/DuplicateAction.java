@@ -43,10 +43,9 @@ public class DuplicateAction extends MatrixAction {
 				"duplicate the content of this matrix to a new matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D,
-				KeyEvent.ALT_DOWN_MASK));
+				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().copy();
 		m.showGUI();

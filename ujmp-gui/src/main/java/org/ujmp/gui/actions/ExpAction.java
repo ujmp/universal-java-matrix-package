@@ -21,49 +21,30 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.objectmatrix.calculation;
+package org.ujmp.gui.actions;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.swing.Action;
+import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.listmatrix.DefaultListMatrix;
-import org.ujmp.core.listmatrix.ListMatrix;
+import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
-public class Distinct extends AbstractObjectCalculation {
-	private static final long serialVersionUID = 9160233290884903745L;
+public class ExpAction extends MatrixAction {
+	private static final long serialVersionUID = 7306170010244274142L;
 
-	private ListMatrix<Object> distinctObjects = null;
-
-	public Distinct(Matrix m) {
-		super(m);
+	public ExpAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Exp");
+		putValue(Action.SHORT_DESCRIPTION,
+				"exponential function of the entries in this matrix");
 	}
 
-	
-	public Object getObject(long... coordinates) throws MatrixException {
-		if (distinctObjects == null) {
-			createDistinctObjectMatrix();
-		}
-		return distinctObjects.getObject(coordinates);
-	}
-
-	
-	public long[] getSize() {
-		if (distinctObjects == null) {
-			createDistinctObjectMatrix();
-		}
-		return distinctObjects.getSize();
-	}
-
-	private void createDistinctObjectMatrix() {
-		Set<Object> objects = new HashSet<Object>();
-		Matrix m = getSource();
-		for (long[] c : m.availableCoordinates()) {
-			objects.add(m.getAsObject(c));
-		}
-		ListMatrix<Object> obj = new DefaultListMatrix<Object>(objects);
-		distinctObjects = obj;
+	public Object call() throws MatrixException {
+		Matrix m = getMatrixObject().getMatrix().exp(getRet());
+		m.showGUI();
+		return m;
 	}
 
 }

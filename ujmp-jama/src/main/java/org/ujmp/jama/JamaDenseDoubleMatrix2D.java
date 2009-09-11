@@ -28,6 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jama.LUDecomposition;
 import Jama.QRDecomposition;
 import Jama.SingularValueDecomposition;
 
@@ -52,8 +53,22 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
+	public static Jama.Matrix identity(int m, int n) {
+		Jama.Matrix A = new Jama.Matrix(m, n);
+		double[][] X = A.getArray();
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				X[i][j] = (i == j ? 1.0 : 0.0);
+			}
+		}
+		return A;
+	}
+
 	public Matrix inv() throws MatrixException {
-		return new JamaDenseDoubleMatrix2D(matrix.inverse());
+		return new JamaDenseDoubleMatrix2D(new LUDecomposition(matrix)
+				.solve(identity(matrix.getColumnDimension(), matrix
+						.getColumnDimension())));
+		// return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
 	public Matrix[] svd() throws MatrixException {
@@ -108,6 +123,12 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		QRDecomposition qr = new QRDecomposition(matrix);
 		return new Matrix[] { new JamaDenseDoubleMatrix2D(qr.getQ()),
 				new JamaDenseDoubleMatrix2D(qr.getR()) };
+	}
+
+	public Matrix[] lu() {
+		LUDecomposition lu = new LUDecomposition(matrix);
+		return new Matrix[] { new JamaDenseDoubleMatrix2D(lu.getL()),
+				new JamaDenseDoubleMatrix2D(lu.getU()) };
 	}
 
 	public Matrix mtimes(Matrix m) {

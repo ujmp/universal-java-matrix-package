@@ -65,12 +65,16 @@ public class Deletion extends AbstractObjectCalculation {
 		List<Long> rows = MathUtil.sequenceListLong(0, getSource().getRowCount() - 1);
 		List<Long> columns = MathUtil.sequenceListLong(0, getSource().getColumnCount() - 1);
 
-		for (int r = 0; r < deletion[ROW].length; r++) {
-			rows.remove(deletion[ROW][r]);
+		if (deletion != null && deletion[ROW] != null) {
+			for (int r = 0; r < deletion[ROW].length; r++) {
+				rows.remove(deletion[ROW][r]);
+			}
 		}
 
-		for (int c = 0; c < deletion[COLUMN].length; c++) {
-			columns.remove(deletion[COLUMN][c]);
+		if (deletion.length > 1 && deletion[COLUMN] != null) {
+			for (int c = 0; c < deletion[COLUMN].length; c++) {
+				columns.remove(deletion[COLUMN][c]);
+			}
 		}
 
 		selection = new long[2][];
@@ -78,13 +82,11 @@ public class Deletion extends AbstractObjectCalculation {
 		selection[COLUMN] = MathUtil.collectionToLong(columns);
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 				selection[COLUMN][(int) coordinates[COLUMN]]);
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { selection[ROW].length, selection[COLUMN].length };
 	}

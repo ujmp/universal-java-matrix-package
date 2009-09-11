@@ -42,17 +42,22 @@ public class MatrixActions extends ArrayList<JComponent> {
 		add(new JSeparator());
 		add(new JMenuItem(new DuplicateAction(c, m, v)));
 		add(new JMenuItem(new ConvertAction(c, m, v)));
+		add(new JMenuItem(new SelectAction(c, m, v)));
+		add(new JMenuItem(new DeleteAction(c, m, v)));
 		add(new JSeparator());
 		add(new AnnotationMenu(c, m, v));
 		add(new JSeparator());
 		add(new ContentMenu(c, m, v));
 		add(new TransformMenu(c, m, v));
+		add(new JSeparator());
+		add(new TrigonometricMenu(c, m, v));
+		add(new HyperbolicMenu(c, m, v));
+		add(new JSeparator());
 		add(new StatisticsMenu(c, m, v));
 		add(new DecompositionMenu(c, m, v));
 		add(new MissingValuesMenu(c, m, v));
 		add(new JSeparator());
-		add(new TrigonometricMenu(c, m, v));
-		add(new HyperbolicMenu(c, m, v));
+		add(new TextMenu(c, m, v));
 	}
 
 	class ContentMenu extends JMenu {
@@ -62,9 +67,12 @@ public class MatrixActions extends ArrayList<JComponent> {
 			super("Set Content");
 			add(new JMenuItem(new ClearMatrixAction(c, m, v)));
 			add(new JSeparator());
-			add(new JMenuItem(new FillGaussianAction(c, m, v)));
-			add(new JMenuItem(new FillUniformAction(c, m, v)));
-			add(new JMenuItem(new FillWithValueAction(c, m, v)));
+			add(new JMenuItem(new EyeAction(c, m, v)));
+			add(new JMenuItem(new OnesAction(c, m, v)));
+			add(new JMenuItem(new ZerosAction(c, m, v)));
+			add(new JMenuItem(new FillAction(c, m, v)));
+			add(new JMenuItem(new RandAction(c, m, v)));
+			add(new JMenuItem(new RandnAction(c, m, v)));
 		}
 	}
 
@@ -78,8 +86,14 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new SumAction(c, m, v)));
 			add(new JMenuItem(new MeanAction(c, m, v)));
 			add(new JMenuItem(new VarianceAction(c, m, v)));
-			add(new JMenuItem(new CovarianceAction(c, m, v)));
 			add(new JMenuItem(new StandardDeviationAction(c, m, v)));
+			add(new JSeparator());
+			add(new JMenuItem(new DiffAction(c, m, v)));
+			add(new JMenuItem(new ProdAction(c, m, v)));
+			add(new JMenuItem(new CumSumAction(c, m, v)));
+			add(new JMenuItem(new CumProdAction(c, m, v)));
+			add(new JSeparator());
+			add(new JMenuItem(new CovarianceAction(c, m, v)));
 			add(new JMenuItem(new CorrcoefAction(c, m, v)));
 			add(new JMenuItem(new MutualinfAction(c, m, v)));
 			add(new JMenuItem(new PairedTTestAction(c, m, v)));
@@ -92,6 +106,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 		public TransformMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
 			super("Transform");
 			add(new JMenuItem(new TransposeAction(c, m, v)));
+			add(new JMenuItem(new FlipdimAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new PlusAction(c, m, v)));
 			add(new JMenuItem(new MinusAction(c, m, v)));
@@ -99,8 +114,16 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new DivideAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new PowerAction(c, m, v)));
+			add(new JMenuItem(new SqrtAction(c, m, v)));
+			add(new JMenuItem(new SignAction(c, m, v)));
+			add(new JMenuItem(new ExpAction(c, m, v)));
+			add(new JMenuItem(new LogAction(c, m, v)));
+			add(new JMenuItem(new Log10Action(c, m, v)));
+			add(new JMenuItem(new Log2Action(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new SortAction(c, m, v)));
+			add(new JMenuItem(new ShuffleAction(c, m, v)));
+			add(new JMenuItem(new UniqueAction(c, m, v)));
 			add(new JMenuItem(new BootstrapAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new CenterAction(c, m, v)));
@@ -137,6 +160,12 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new InvAction(c, m, v)));
 			add(new JMenuItem(new PinvAction(c, m, v)));
 			add(new JMenuItem(new GinvAction(c, m, v)));
+			add(new JSeparator());
+			add(new JMenuItem(new SVDAction(c, m, v)));
+			add(new JMenuItem(new EVDAction(c, m, v)));
+			add(new JMenuItem(new QRAction(c, m, v)));
+			add(new JMenuItem(new LUAction(c, m, v)));
+			add(new JSeparator());
 			add(new JMenuItem(new PrincompAction(c, m, v)));
 		}
 	}
@@ -169,6 +198,20 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new SinhAction(c, m, v)));
 			add(new JMenuItem(new CoshAction(c, m, v)));
 			add(new JMenuItem(new TanhAction(c, m, v)));
+		}
+	}
+
+	class TextMenu extends JMenu {
+		private static final long serialVersionUID = 3061912494435216531L;
+
+		public TextMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
+			super("Text");
+			add(new JMenuItem(new LowerCaseAction(c, m, v)));
+			add(new JMenuItem(new UpperCaseAction(c, m, v)));
+			add(new JMenuItem(new ReplaceRegexAction(c, m, v)));
+			add(new JMenuItem(new RemovePunctuationAction(c, m, v)));
+			add(new JMenuItem(new RemoveStopWordsAction(c, m, v)));
+			add(new JMenuItem(new TfIdfAction(c, m, v)));
 		}
 	}
 }

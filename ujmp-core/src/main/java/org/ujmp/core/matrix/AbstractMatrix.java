@@ -78,6 +78,7 @@ import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
 import org.ujmp.core.doublematrix.calculation.basic.Plus;
 import org.ujmp.core.doublematrix.calculation.basic.Times;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Abs;
+import org.ujmp.core.doublematrix.calculation.entrywise.basic.Exp;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Log;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Log10;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Log2;
@@ -98,6 +99,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.EVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
@@ -152,7 +154,6 @@ import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
-import org.ujmp.core.objectmatrix.calculation.Distinct;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
 import org.ujmp.core.objectmatrix.calculation.Replace;
@@ -290,7 +291,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public final boolean containsMissingValues() throws MatrixException {
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
-			if (v != v || v == Double.NEGATIVE_INFINITY || v == Double.POSITIVE_INFINITY) {
+			if (MathUtil.isNaNOrInfinite(v)) {
 				return true;
 			}
 		}
@@ -1064,10 +1065,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Minus.calc(false, this, m);
 	}
 
-	public final Matrix link() throws MatrixException {
-		return toObjectMatrix();
-	}
-
 	public void clear() {
 		new Zeros(this).calc(Ret.ORIG);
 	}
@@ -1137,6 +1134,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Log(this).calc(returnType);
 	}
 
+	public final Matrix exp(Ret returnType) throws MatrixException {
+		return new Exp(this).calc(returnType);
+	}
+
 	public final Matrix sort(Ret returnType) throws MatrixException {
 		return new Sort(this).calc(returnType);
 	}
@@ -1151,10 +1152,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final Matrix cumprod(boolean ignoreNaN) throws MatrixException {
 		return new Cumprod(this, ignoreNaN).calcNew();
-	}
-
-	public final Matrix distinct(Ret returnType) throws MatrixException {
-		return new Distinct(this).calc(returnType);
 	}
 
 	public final Matrix log2(Ret returnType) throws MatrixException {
@@ -1622,6 +1619,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix[] svd() throws MatrixException {
 		return SVD.calcNew(this);
+	}
+
+	public Matrix[] evd() throws MatrixException {
+		return EVD.calcNew(this);
 	}
 
 	public Matrix[] qr() throws MatrixException {

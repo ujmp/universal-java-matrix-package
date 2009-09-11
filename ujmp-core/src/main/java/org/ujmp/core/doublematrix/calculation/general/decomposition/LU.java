@@ -5,6 +5,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.concurrent.PFor;
 
 /**
  * LU Decomposition.
@@ -75,8 +76,8 @@ public class LU implements java.io.Serializable {
 			piv[i] = i;
 		}
 		pivsign = 1;
-		double[] LUrowi;
-		double[] LUcolj = new double[m];
+
+		final double[] LUcolj = new double[m];
 
 		// Outer loop.
 
@@ -90,21 +91,24 @@ public class LU implements java.io.Serializable {
 
 			// Apply previous transformations.
 
-			for (int i = 0; i < m; i++) {
-				LUrowi = LU[i];
+			final int _j = j;
+			new PFor(0, m - 1) {
 
-				// Most of the time is spent in the following dot product.
+				@Override
+				public void step(int i) {
+					double[] LUrowi = LU[i];
 
-				int kmax = Math.min(i, j);
-				double s = 0.0;
-				for (int k = 0; k < kmax; k++) {
-					s += LUrowi[k] * LUcolj[k];
+					// Most of the time is spent in the following dot product.
+
+					int kmax = Math.min(i, _j);
+					double s = 0.0;
+					for (int k = 0; k < kmax; k++) {
+						s += LUrowi[k] * LUcolj[k];
+					}
+
+					LUrowi[_j] = LUcolj[i] -= s;
 				}
-
-				LUrowi[j] = LUcolj[i] -= s;
-			}
-
-			// Find pivot and exchange if necessary.
+			};
 
 			int p = j;
 			for (int i = j + 1; i < m; i++) {
@@ -294,9 +298,9 @@ public class LU implements java.io.Serializable {
 		}
 
 		// Copy right hand side with pivoting
-		int nx = (int) B.getColumnCount();
+		final int nx = (int) B.getColumnCount();
 		Matrix Xmat = B.selectRows(Ret.NEW, MathUtil.toLongArray(piv));
-		double[][] X = Xmat.toDoubleArray();
+		final double[][] X = Xmat.toDoubleArray();
 
 		// Solve L*Y = B(piv,:)
 		for (int k = 0; k < n; k++) {
@@ -306,7 +310,7 @@ public class LU implements java.io.Serializable {
 				}
 			}
 		}
-		// Solve U*X = Y;
+
 		for (int k = n - 1; k >= 0; k--) {
 			for (int j = 0; j < nx; j++) {
 				X[k][j] /= LU[k][k];
@@ -317,7 +321,7 @@ public class LU implements java.io.Serializable {
 				}
 			}
 		}
-		return Xmat;
+		return MatrixFactory.linkToArray(X);
 	}
 
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {

@@ -66,6 +66,13 @@ public interface DecompositionDoubleCalculations {
 	public Matrix[] svd() throws MatrixException;
 
 	/**
+	 * Calculates the Eigenvalue decomposition of the matrix.
+	 * 
+	 * @return Eigenvalue decomposition of the matrix.
+	 */
+	public Matrix[] evd() throws MatrixException;
+
+	/**
 	 * Calculates a QR decomposition of the matrix.
 	 * 
 	 * @return QR decomposition of the matrix.

@@ -27,30 +27,35 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FillUniformAction extends MatrixAction {
-	private static final long serialVersionUID = -2169147968755999187L;
+public class FillAction extends MatrixAction {
+	private static final long serialVersionUID = 6318874871015478768L;
 
-	public FillUniformAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	private String initialValue = "";
+
+	public FillAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		this(c, m, v, "");
+	}
+
+	public FillAction(JComponent c, MatrixGUIObject m, GUIObject v,
+			String initialValue) {
 		super(c, m, v);
-		putValue(Action.NAME, "Fill Uniform");
-		putValue(Action.SHORT_DESCRIPTION,
-				"set entries to random values between -1.0 and 1.0");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U,
+		this.initialValue = initialValue;
+		putValue(Action.NAME, "Fill");
+		putValue(Action.SHORT_DESCRIPTION, "sets all entries to the same value");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F,
 				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
-	public Object call() throws MatrixException {
-		MatrixGUIObject m = getMatrixObject();
-		m.getMatrix().rand(Ret.ORIG);
-		return m;
+	public Object call() {
+		String s = JOptionPane.showInputDialog("Enter value:", initialValue);
+		return getMatrixObject().getMatrix().fill(getRet(), s);
 	}
+
 }

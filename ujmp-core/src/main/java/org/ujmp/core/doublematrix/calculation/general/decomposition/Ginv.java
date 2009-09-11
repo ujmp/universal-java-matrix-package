@@ -463,7 +463,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 *            the matrix to invert
 	 * @return generalized matrix inverse
 	 */
-	public static DenseDoubleMatrix2D inverse(double[][] matrix) {
+	public static DenseDoubleMatrix2D inverse(final double[][] matrix) {
 		double epsilon = UJMPSettings.getTolerance();
 		int rows = matrix.length;
 		int cols = matrix[0].length;
@@ -471,7 +471,7 @@ public class Ginv extends AbstractDoubleCalculation {
 		for (int c = 0; c < cols; c++) {
 			s[c][c] = 1.0;
 		}
-		double[][] t = new double[rows][rows];
+		final double[][] t = new double[rows][rows];
 		for (int r = 0; r < rows; r++) {
 			t[r][r] = 1.0;
 		}
@@ -739,6 +739,7 @@ public class Ginv extends AbstractDoubleCalculation {
 		long rows = source.getRowCount();
 		long cols = source.getColumnCount();
 		double abs = 0;
+
 		for (long row = diag; row < rows; row++) {
 			for (long col = diag; col < cols; col++) {
 				abs = Math.abs(source.getAsDouble(row, col));
@@ -1000,24 +1001,20 @@ public class Ginv extends AbstractDoubleCalculation {
 		return MatrixFactory.eye(intermediate.getSize()).minus(intermediate);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		throw new MatrixException("this method should never be called: LINK not possible");
 	}
 
-	
 	public DenseDoubleMatrix2D calcLink() throws MatrixException {
 		throw new MatrixException("linking not possible, use ORIG or NEW");
 	}
 
-	
 	public DenseDoubleMatrix2D calcNew() throws MatrixException {
 		Matrix source = getSource();
 		ArrayDenseDoubleMatrix2D matrix = new ArrayDenseDoubleMatrix2D(source);
 		return inverse(matrix.getDoubleArray2D());
 	}
 
-	
 	public DenseDoubleMatrix2D calcOrig() throws MatrixException {
 		Matrix source = getSource();
 		if (!source.isSquare()) {

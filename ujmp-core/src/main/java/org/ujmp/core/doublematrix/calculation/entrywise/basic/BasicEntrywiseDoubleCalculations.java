@@ -71,6 +71,16 @@ public interface BasicEntrywiseDoubleCalculations {
 	public Matrix log(Ret returnType) throws MatrixException;
 
 	/**
+	 * Calculates the exponential function all entries in the Matrix.
+	 * 
+	 * @param returnType
+	 *            Select whether a new or a linked Matrix is returned, or if the
+	 *            operation is performed on the original Matrix
+	 * @return Matrix with exp values.
+	 */
+	public Matrix exp(Ret returnType) throws MatrixException;
+
+	/**
 	 * Calculates the sign of the entries in a Matrix. For values greater than
 	 * zero, 1.0 is returned. Negative values will give -1.0 as return value.
 	 * 0.0 is returned for entries equal to zero.

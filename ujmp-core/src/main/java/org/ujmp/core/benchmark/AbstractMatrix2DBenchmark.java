@@ -31,10 +31,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
-
-	private int runs = 3;
 
 	public static final long[] SIZE100X100 = new long[] { 100, 100 };
 
@@ -93,10 +92,6 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private boolean runCopy = false;
 
-	private boolean runInv = false;
-
-	private boolean runMtimesNew = false;
-
 	private boolean runPlusScalarNew = false;
 
 	private boolean runPlusScalarOrig = false;
@@ -105,20 +100,18 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private boolean runTimesScalarOrig = false;
 
-	private boolean runTransposeNew = false;
-
 	private boolean runTransposeOrig = false;
 
 	public abstract Matrix createMatrix(long... size) throws MatrixException;
 
 	public abstract Matrix createMatrix(Matrix source) throws MatrixException;
 
-	public int getRuns() {
-		return runs;
+	public void setRunsPerMatrix(int runs) {
+		System.setProperty("runsPerMatrix", "" + runs);
 	}
 
-	public void setRuns(int runs) {
-		this.runs = runs;
+	public int getRunsPerMatrix() {
+		return MathUtil.getInt(System.getProperty("runsPerMatrix"));
 	}
 
 	public boolean isRunInit() {
@@ -143,22 +136,6 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public void setRunCopy(boolean runCopy) {
 		this.runCopy = runCopy;
-	}
-
-	public boolean isRunInv() {
-		return runInv;
-	}
-
-	public void setRunInv(boolean runInv) {
-		this.runInv = runInv;
-	}
-
-	public boolean isRunMtimesNew() {
-		return runMtimesNew;
-	}
-
-	public void setRunMtimesNew(boolean runMtimesNew) {
-		this.runMtimesNew = runMtimesNew;
 	}
 
 	public boolean isRunPlusScalarNew() {
@@ -194,11 +171,31 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public boolean isRunTransposeNew() {
-		return runTransposeNew;
+		return "true".equals(System.getProperty("runTransposeNew"));
 	}
 
-	public void setRunTransposeNew(boolean runTransposeNew) {
-		this.runTransposeNew = runTransposeNew;
+	public boolean isRunMtimesNew() {
+		return "true".equals(System.getProperty("runMtimesNew"));
+	}
+
+	public boolean isRunInv() {
+		return "true".equals(System.getProperty("runInv"));
+	}
+
+	public void setRunTransposeNew(boolean b) {
+		System.setProperty("runTransposeNew", "" + b);
+	}
+
+	public void setRunMtimesNew(boolean b) {
+		System.setProperty("runMtimesNew", "" + b);
+	}
+
+	public void setRunInv(boolean b) {
+		System.setProperty("runInv", "" + b);
+	}
+
+	public void setInv(boolean b) {
+		System.setProperty("runInv", "" + b);
 	}
 
 	public boolean isRunTransposeOrig() {
@@ -276,7 +273,7 @@ public abstract class AbstractMatrix2DBenchmark {
 			result.add(runBenchmarkTimesScalarOrig());
 		}
 
-		if (runTransposeNew) {
+		if (isRunTransposeNew()) {
 			result.add(runBenchmarkTransposeNew());
 		}
 
@@ -284,11 +281,11 @@ public abstract class AbstractMatrix2DBenchmark {
 			result.add(runBenchmarkTransposeOrig());
 		}
 
-		if (runMtimesNew) {
+		if (isRunMtimesNew()) {
 			result.add(runBenchmarkMtimesNew());
 		}
 
-		if (runInv) {
+		if (isRunInv()) {
 			result.add(runBenchmarkInv());
 		}
 
@@ -298,10 +295,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix init() {
-		Matrix result = MatrixFactory.zeros(runs, initSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), initSizes.size());
 		System.out.print("init: ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < initSizes.size(); s++) {
 				long[] size = initSizes.get(s);
 				long t = benchmarkCreate(size);
@@ -317,10 +314,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkCreate() {
-		Matrix result = MatrixFactory.zeros(runs, createSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), createSizes.size());
 		System.out.print("create: ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < createSizes.size(); s++) {
 				long[] size = createSizes.get(s);
 				long t = benchmarkCreate(size);
@@ -336,10 +333,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkPlusScalarNew() {
-		Matrix result = MatrixFactory.zeros(runs, plusSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), plusSizes.size());
 		System.out.print("plus scalar (new matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < plusSizes.size(); s++) {
 				long[] size = plusSizes.get(s);
 				long t = benchmarkPlusScalarNew(size);
@@ -355,10 +352,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkCopy() {
-		Matrix result = MatrixFactory.zeros(runs, copySizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), copySizes.size());
 		System.out.print("copy: ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < copySizes.size(); s++) {
 				long[] size = copySizes.get(s);
 				long t = benchmarkCopy(size);
@@ -374,10 +371,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkPlusScalarOrig() {
-		Matrix result = MatrixFactory.zeros(runs, plusSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), plusSizes.size());
 		System.out.print("plus scalar (original matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < plusSizes.size(); s++) {
 				long[] size = plusSizes.get(s);
 				long t = benchmarkPlusScalarOrig(size);
@@ -393,10 +390,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkTimesScalarNew() {
-		Matrix result = MatrixFactory.zeros(runs, timesSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), timesSizes.size());
 		System.out.print("times scalar (new matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < timesSizes.size(); s++) {
 				long[] size = timesSizes.get(s);
 				long t = benchmarkTimesScalarNew(size);
@@ -412,10 +409,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkTimesScalarOrig() {
-		Matrix result = MatrixFactory.zeros(runs, timesSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), timesSizes.size());
 		System.out.print("times scalar (original matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < timesSizes.size(); s++) {
 				long[] size = timesSizes.get(s);
 				long t = benchmarkTimesScalarOrig(size);
@@ -431,10 +428,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkTransposeNew() {
-		Matrix result = MatrixFactory.zeros(runs, transposeSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), transposeSizes.size());
 		System.out.print("transpose (new matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < transposeSizes.size(); s++) {
 				long[] size = transposeSizes.get(s);
 				long t = benchmarkTransposeNew(size);
@@ -450,10 +447,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkTransposeOrig() {
-		Matrix result = MatrixFactory.zeros(runs, transposeSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), transposeSizes.size());
 		System.out.print("transpose (original matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < transposeSizes.size(); s++) {
 				long[] size = transposeSizes.get(s);
 				long t = benchmarkTransposeOrig(size);
@@ -469,10 +466,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkInv() {
-		Matrix result = MatrixFactory.zeros(runs, invSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), invSizes.size());
 		System.out.print("inverse: ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < invSizes.size(); s++) {
 				long[] size = invSizes.get(s);
 				long t = benchmarkInv(size);
@@ -488,10 +485,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public Matrix runBenchmarkMtimesNew() {
-		Matrix result = MatrixFactory.zeros(runs, mtimesSizes.size());
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), mtimesSizes.size());
 		System.out.print("mtimes (new matrix): ");
 
-		for (int i = 0; i < runs; i++) {
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
 			for (int s = 0; s < mtimesSizes.size(); s++) {
 				long[][] sizes = mtimesSizes.get(s);
 				long[] size0 = sizes[0];

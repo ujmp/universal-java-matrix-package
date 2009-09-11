@@ -40,7 +40,6 @@ public class DocTerm extends AbstractLongCalculation {
 		super(m);
 	}
 
-	
 	public long getLong(long... coordinates) throws MatrixException {
 		if (result == null) {
 			result = calculate();
@@ -48,7 +47,6 @@ public class DocTerm extends AbstractLongCalculation {
 		return result.getAsLong(coordinates);
 	}
 
-	
 	public long[] getSize() {
 		if (result == null) {
 			result = calculate();
@@ -56,7 +54,6 @@ public class DocTerm extends AbstractLongCalculation {
 		return result.getSize();
 	}
 
-	
 	public boolean isSparse() {
 		return true;
 	}
@@ -66,14 +63,16 @@ public class DocTerm extends AbstractLongCalculation {
 		Matrix m = getSource();
 		for (long[] c : m.availableCoordinates()) {
 			String s = m.getAsString(c);
-			String[] words = s.split("\\s+");
-			for (String w : words) {
-				if (w.length() == 0) {
-					continue;
-				}
-				Long i = wordMapping.get(w);
-				if (i == null) {
-					wordMapping.put(w, wordMapping.getRowCount());
+			if (s != null) {
+				String[] words = s.split("\\s+");
+				for (String w : words) {
+					if (w.length() == 0) {
+						continue;
+					}
+					Long i = wordMapping.get(w);
+					if (i == null) {
+						wordMapping.put(w, wordMapping.getRowCount());
+					}
 				}
 			}
 		}

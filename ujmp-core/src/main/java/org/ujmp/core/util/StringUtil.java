@@ -181,7 +181,10 @@ public abstract class StringUtil {
 						}
 
 					} else {
-						list.add(Long.parseLong(dimsel.replaceAll("\\D", "")));
+						dimsel = dimsel.replaceAll("\\D", "");
+						if (dimsel.length() > 0) {
+							list.add(Long.parseLong(dimsel));
+						}
 					}
 				}
 				selection[i] = MathUtil.collectionToLong(list);

@@ -32,8 +32,6 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface ObjectCalculations {
 
-	public Matrix distinct(Ret returnType) throws MatrixException;
-
 	public Matrix sort(Ret returnType) throws MatrixException;
 
 	public Matrix sort(Ret returnType, long column) throws MatrixException;
@@ -108,14 +106,6 @@ public interface ObjectCalculations {
 	 * @see clone()
 	 */
 	public Matrix copy() throws MatrixException;
-
-	/**
-	 * Creates a link to the matrix. All operations take effect in the linked
-	 * and the original matrix simultaneously.
-	 * 
-	 * @return A Matrix linked to the original Matrix
-	 */
-	public Matrix link() throws MatrixException;
 
 	/**
 	 * Creates a copy of the matrix with the desired type for matrix entries.

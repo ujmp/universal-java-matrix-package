@@ -220,12 +220,13 @@ public abstract class MathUtil {
 	}
 
 	public static double ignoreNaN(double v) {
-		return (v != v) || (v == Double.POSITIVE_INFINITY) || (v == Double.NEGATIVE_INFINITY) ? 0.0
-				: v;
+		return Double.isNaN(v) || (v == Double.POSITIVE_INFINITY)
+				|| (v == Double.NEGATIVE_INFINITY) ? 0.0 : v;
 	}
 
 	public static boolean isNaNOrInfinite(double v) {
-		return (v != v) || (v == Double.POSITIVE_INFINITY) || (v == Double.NEGATIVE_INFINITY);
+		return Double.isNaN(v) || (v == Double.POSITIVE_INFINITY)
+				|| (v == Double.NEGATIVE_INFINITY);
 	}
 
 	public static boolean isNaNOrInfinite(Object o) {

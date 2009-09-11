@@ -23,8 +23,6 @@
 
 package org.ujmp.core.util;
 
-import java.io.File;
-
 import org.ujmp.core.util.io.RingBufferOutputStream;
 import org.ujmp.core.util.io.TeeStream;
 
@@ -35,15 +33,6 @@ public abstract class UJMPSettings {
 	private static int systemOutBufferSize = 1024 * 1024;
 
 	private static int systemErrBufferSize = 1024 * 1024;
-
-	private static String datasetFolder = ".";
-
-	static {
-		try {
-			datasetFolder = System.getProperty("user.home") + File.separator + "datasets";
-		} catch (Exception e) {
-		}
-	}
 
 	private static int numberOfThreads = 1;
 
@@ -176,7 +165,4 @@ public abstract class UJMPSettings {
 		UJMPSettings.maxToolTipRows = maxToolTipRows;
 	}
 
-	public static String getDataSetFolder() {
-		return datasetFolder;
-	}
 }

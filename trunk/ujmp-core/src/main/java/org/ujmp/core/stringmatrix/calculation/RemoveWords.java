@@ -44,24 +44,27 @@ public class RemoveWords extends AbstractStringCalculation {
 		}
 	}
 
-	
 	public String getString(long... coordinates) throws MatrixException {
 		String s = getSource().getAsString(coordinates);
-		StringBuilder result = new StringBuilder(s.length());
-		String[] words = s.split("\\s+");
-		for (int i = 0; i < words.length; i++) {
-			String w = words[i];
-			if (w.length() == 0) {
-				continue;
+		if (s != null) {
+			StringBuilder result = new StringBuilder(s.length());
+			String[] words = s.split("\\s+");
+			for (int i = 0; i < words.length; i++) {
+				String w = words[i];
+				if (w.length() == 0) {
+					continue;
+				}
+				if (!wordsToRemove.contains(w)) {
+					result.append(w);
+				}
+				if (i < words.length - 1) {
+					result.append(" ");
+				}
 			}
-			if (!wordsToRemove.contains(w)) {
-				result.append(w);
-			}
-			if (i < words.length - 1) {
-				result.append(" ");
-			}
+			return result.toString();
+		} else {
+			return "";
 		}
-		return result.toString();
 	}
 
 }

@@ -56,6 +56,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation<Matr
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsString(getString(c), c);
 		}
+		getSource().notifyGUIObject();
 		return getSource();
 	}
 
@@ -73,7 +74,6 @@ public abstract class AbstractStringCalculation extends AbstractCalculation<Matr
 	public void setString(String value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

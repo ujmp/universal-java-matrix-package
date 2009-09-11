@@ -137,15 +137,6 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testLink() throws Exception {
-		// SST requires Java 1.6, it cannot be tested with 1.5
-		if ("1.5".equals(System.getProperty("java.specification.version"))) {
-			return;
-		}
-		super.testLink();
-	}
-
-	@Override
 	public void testMinus() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {

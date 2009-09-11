@@ -27,36 +27,29 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FillWithValueAction extends MatrixAction {
-	private static final long serialVersionUID = 6318874871015478768L;
+public class RandnAction extends MatrixAction {
+	private static final long serialVersionUID = -8334744425028399100L;
 
-	private String initialValue = "";
-
-	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v) {
-		this(c, m, v, "");
-	}
-
-	public FillWithValueAction(JComponent c, MatrixGUIObject m, GUIObject v,
-			String initialValue) {
+	public RandnAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		this.initialValue = initialValue;
-		putValue(Action.NAME, "Fill with value");
-		putValue(Action.SHORT_DESCRIPTION, "sets all entries to the same value");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F,
+		putValue(Action.NAME, "Randn");
+		putValue(Action.SHORT_DESCRIPTION,
+				"set entries to gaussian values with mean 0.0 and variance 1.0");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_G);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G,
 				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call() {
-		String s = JOptionPane.showInputDialog("Enter value:", initialValue);
-		return getMatrixObject().getMatrix().fill(Ret.ORIG, s);
+	public Object call() throws MatrixException {
+		MatrixGUIObject m = getMatrixObject();
+		m.getMatrix().randn(getRet());
+		return m;
 	}
 
 }

@@ -36,7 +36,7 @@ public class CoshAction extends MatrixAction {
 
 	public CoshAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "CoshAction");
+		putValue(Action.NAME, "Cosh");
 		putValue(Action.SHORT_DESCRIPTION,
 				"cosinus hyperbolicus of the entries in this matrix");
 	}

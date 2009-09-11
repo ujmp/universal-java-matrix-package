@@ -29,29 +29,26 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FillGaussianAction extends MatrixAction {
-	private static final long serialVersionUID = -8334744425028399100L;
+public class RandAction extends MatrixAction {
+	private static final long serialVersionUID = -2169147968755999187L;
 
-	public FillGaussianAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public RandAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Fill Gaussian");
+		putValue(Action.NAME, "Rand");
 		putValue(Action.SHORT_DESCRIPTION,
-				"set entries to gaussian values with mean 0.0 and variance 1.0");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_G);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G,
+				"set entries to random values between -1.0 and 1.0");
+		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U,
 				KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	
 	public Object call() throws MatrixException {
 		MatrixGUIObject m = getMatrixObject();
-		m.getMatrix().randn(Ret.ORIG);
+		m.getMatrix().rand(getRet());
 		return m;
 	}
-
 }

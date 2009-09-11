@@ -356,34 +356,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testLink() throws Exception {
-		Matrix m = createMatrix(2, 2);
-		m.setAsDouble(1.0, 0, 0);
-		m.setAsDouble(2.0, 0, 1);
-		m.setAsDouble(3.0, 1, 0);
-		m.setAsDouble(4.0, 1, 1);
-		Matrix m2 = m.link();
-		assertEquals(getLabel(), m, m2);
-
-		m.setAsDouble(5.0, 0, 0);
-		m.setAsDouble(6.0, 0, 1);
-		m.setAsDouble(3.0, 1, 0);
-		m.setAsDouble(2.0, 1, 1);
-
-		assertEquals(getLabel(), m, m2);
-
-		m2.setAsDouble(3.0, 0, 0);
-		m2.setAsDouble(2.0, 0, 1);
-		m2.setAsDouble(1.0, 1, 0);
-		m2.setAsDouble(-9.0, 1, 1);
-
-		assertEquals(getLabel(), m, m2);
-
-		if (m instanceof Erasable) {
-			((Erasable) m).erase();
-		}
-	}
-
 	public void testSerialize() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -573,7 +545,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 			((Erasable) m2).erase();
 		}
 	}
-	
+
 	public void testPinv() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 		m1.setAsDouble(1.0, 0, 0);

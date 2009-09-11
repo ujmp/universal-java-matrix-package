@@ -23,32 +23,29 @@
 
 package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SortAction extends MatrixAction {
-	private static final long serialVersionUID = 6226680852162744489L;
+public class ProdAction extends MatrixAction {
+	private static final long serialVersionUID = -6268502779513490985L;
 
-	public SortAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public ProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Sort");
-		putValue(Action.SHORT_DESCRIPTION, "Sorts the entries in the matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.NAME, "Prod");
+		putValue(Action.SHORT_DESCRIPTION,
+				"calculates the product between each two rows in this matrix");
 	}
 
 	public Object call() throws MatrixException {
-		Matrix result = getMatrixObject().getMatrix().sort(getNewOrLink());
-		result.showGUI();
-		return result;
+		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(),
+				getDimension(), getIgnoreMissing());
+		m.showGUI();
+		return m;
 	}
 
 }

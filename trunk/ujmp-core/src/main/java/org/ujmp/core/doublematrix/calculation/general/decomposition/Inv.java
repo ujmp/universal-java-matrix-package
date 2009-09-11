@@ -41,7 +41,7 @@ public class Inv extends AbstractDoubleCalculation {
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
 			try {
-				inv = new QR(getSource()).solve(MatrixFactory.eye(getSource().getRowCount(),
+				inv = new LU(getSource()).solve(MatrixFactory.eye(getSource().getRowCount(),
 						getSource().getRowCount()));
 			} catch (Exception e) {
 				throw new MatrixException(e);

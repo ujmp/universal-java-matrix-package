@@ -24,6 +24,10 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.jmatrices.dbl.decomposition.EigenvalueDecomposition;
+import org.jmatrices.dbl.decomposition.LUDecomposition;
+import org.jmatrices.dbl.decomposition.QRDecomposition;
+import org.jmatrices.dbl.decomposition.SingularValueDecomposition;
 import org.jmatrices.dbl.operator.MatrixOperator;
 import org.jmatrices.dbl.transformer.MatrixTransformer;
 import org.ujmp.core.Matrix;
@@ -94,6 +98,35 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix inv() {
 		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer
 				.inverse(matrix));
+	}
+
+	public Matrix[] svd() {
+		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+		Matrix u = new JMatricesDenseDoubleMatrix2D(svd.getU());
+		Matrix s = new JMatricesDenseDoubleMatrix2D(svd.getS());
+		Matrix v = new JMatricesDenseDoubleMatrix2D(svd.getV());
+		return new Matrix[] { u, s, v };
+	}
+
+	public Matrix[] evd() {
+		EigenvalueDecomposition evd = new EigenvalueDecomposition(matrix);
+		Matrix v = new JMatricesDenseDoubleMatrix2D(evd.getV());
+		Matrix d = new JMatricesDenseDoubleMatrix2D(evd.getD());
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix[] qr() {
+		QRDecomposition qr = new QRDecomposition(matrix);
+		Matrix q = new JMatricesDenseDoubleMatrix2D(qr.getQ());
+		Matrix r = new JMatricesDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
+	}
+
+	public Matrix[] lu() {
+		LUDecomposition lu = new LUDecomposition(matrix);
+		Matrix l = new JMatricesDenseDoubleMatrix2D(lu.getL());
+		Matrix u = new JMatricesDenseDoubleMatrix2D(lu.getU());
+		return new Matrix[] { l, u };
 	}
 
 	public Matrix mtimes(Matrix m2) {

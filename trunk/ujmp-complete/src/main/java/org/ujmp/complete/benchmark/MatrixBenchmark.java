@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
+import org.ujmp.commonsmath.benchmark.CommonsMathDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
@@ -35,8 +37,15 @@ import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jsci.benchmark.JSciDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jscience.benchmark.JScienceDenseDoubleMatrix2DBenchmark;
+import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
+import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
+import org.ujmp.sst.benchmark.SSTDenseDoubleMatrixBenchmark;
+import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
 public class MatrixBenchmark {
 
@@ -46,6 +55,7 @@ public class MatrixBenchmark {
 
 	public List<AbstractMatrix2DBenchmark> getDenseBenchmarks() {
 		List<AbstractMatrix2DBenchmark> list = new ArrayList<AbstractMatrix2DBenchmark>();
+
 		if (isRunDefaultDenseDoubleMatrix2DBenchmark()) {
 			list.add(new DefaultDenseDoubleMatrix2DBenchmark());
 		}
@@ -58,35 +68,67 @@ public class MatrixBenchmark {
 		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
 			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
 		}
-		// list.add(new JScienceDenseDoubleMatrix2DBenchmark());
-		// list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
-		// list.add(new ColtDenseDoubleMatrix2DBenchmark());
-		// list.add(new SSTDenseDoubleMatrixBenchmark());
+		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunParallelColtDenseDoubleMatrix2DBenchmark()) {
+			list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunColtDenseDoubleMatrix2DBenchmark()) {
+			list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunSSTDenseDoubleMatrix2DBenchmark()) {
+			list.add(new SSTDenseDoubleMatrixBenchmark());
+		}
 		if (isRunJamaDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JamaDenseDoubleMatrix2DBenchmark());
 		}
-		// list.add(new JSciDenseDoubleMatrix2DBenchmark());
-		// list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
-		// list.add(new MantissaDenseDoubleMatrix2DBenchmark());
-		// list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
-		// list.add(new VecMathDenseDoubleMatrix2DBenchmark());
+		if (isRunJSciDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JSciDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunCommonsMathDenseDoubleMatrix2DBenchmark()) {
+			list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunMantissaDenseDoubleMatrix2DBenchmark()) {
+			list.add(new MantissaDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunJMatricesDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunVecMathDenseDoubleMatrix2DBenchmark()) {
+			list.add(new VecMathDenseDoubleMatrix2DBenchmark());
+		}
+
 		Collections.reverse(list);
 		return list;
 	}
 
 	public void configureDefault() throws Exception {
 		setBenchmarkRuns(1);
-		setRunsPerMatrix(2);
+		setRunsPerMatrix(10);
 
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
-		// setRunArrayDenseDoubleMatrix2DBenchmark(true);
+		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
+		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
+		setRunJSciDenseDoubleMatrix2DBenchmark(true);
+		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
+		setRunColtDenseDoubleMatrix2DBenchmark(true);
+		setRunSSTDenseDoubleMatrix2DBenchmark(true);
+		setRunCommonsMathDenseDoubleMatrix2DBenchmark(true);
+		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
+		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
+		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 
-		// getDenseBenchmarks().get(0).setRunTransposeNew(true);
-		// getDenseBenchmarks().get(0).setRunMtimesNew(true);
-		getDenseBenchmarks().get(0).setRunInv(true);
+		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
+		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
+		AbstractMatrix2DBenchmark.setRunInv(true);
+		AbstractMatrix2DBenchmark.setRunSVD(true);
+		AbstractMatrix2DBenchmark.setRunEVD(true);
+		AbstractMatrix2DBenchmark.setRunQR(true);
+		AbstractMatrix2DBenchmark.setRunLU(true);
 	}
 
 	public void setRunDefaultDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -105,8 +147,44 @@ public class MatrixBenchmark {
 		System.setProperty("runOjalgoDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
+	public void setRunJScienceDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runJScienceDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunJSciDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runJSciDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunParallelColtDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runParallelColtDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunColtDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runColtDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
 	public void setRunJamaDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runJamaDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunMantissaDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runMantissaDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunCommonsMathDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runCommonsMathDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunSSTDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runSSTDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunJMatricesDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runJMatricesDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunVecMathDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runVecMathDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunsPerMatrix(int runs) {
@@ -141,8 +219,44 @@ public class MatrixBenchmark {
 		return "true".equals(System.getProperty("runOjalgoDenseDoubleMatrix2DBenchmark"));
 	}
 
+	public boolean isRunJScienceDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runJScienceDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunJSciDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runJSciDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunParallelColtDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runParallelColtDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunColtDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runColtDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunSSTDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runSSTDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunCommonsMathDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runCommonsMathDenseDoubleMatrix2DBenchmark"));
+	}
+
 	public boolean isRunJamaDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runJamaDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunJMatricesDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runJMatricesDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunMantissaDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runMantissaDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunVecMathDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runVecMathDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public void run() throws Exception {

@@ -83,6 +83,14 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private final List<long[]> invSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
 
+	private final List<long[]> svdSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
+
+	private final List<long[]> evdSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
+
+	private final List<long[]> qrSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
+
+	private final List<long[]> luSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
+
 	private final List<long[][]> mtimesSizes = Arrays.asList(new long[][][] { { SIZE1000X1000,
 			SIZE1000X1000 } });
 
@@ -182,20 +190,48 @@ public abstract class AbstractMatrix2DBenchmark {
 		return "true".equals(System.getProperty("runInv"));
 	}
 
-	public void setRunTransposeNew(boolean b) {
+	public boolean isRunSVD() {
+		return "true".equals(System.getProperty("runSVD"));
+	}
+
+	public boolean isRunEVD() {
+		return "true".equals(System.getProperty("runEVD"));
+	}
+
+	public boolean isRunQR() {
+		return "true".equals(System.getProperty("runQR"));
+	}
+
+	public boolean isRunLU() {
+		return "true".equals(System.getProperty("runLU"));
+	}
+
+	public static void setRunTransposeNew(boolean b) {
 		System.setProperty("runTransposeNew", "" + b);
 	}
 
-	public void setRunMtimesNew(boolean b) {
+	public static void setRunMtimesNew(boolean b) {
 		System.setProperty("runMtimesNew", "" + b);
 	}
 
-	public void setRunInv(boolean b) {
+	public static void setRunInv(boolean b) {
 		System.setProperty("runInv", "" + b);
 	}
 
-	public void setInv(boolean b) {
-		System.setProperty("runInv", "" + b);
+	public static void setRunSVD(boolean b) {
+		System.setProperty("runSVD", "" + b);
+	}
+
+	public static void setRunQR(boolean b) {
+		System.setProperty("runQR", "" + b);
+	}
+
+	public static void setRunEVD(boolean b) {
+		System.setProperty("runEVD", "" + b);
+	}
+
+	public static void setRunLU(boolean b) {
+		System.setProperty("runLU", "" + b);
 	}
 
 	public boolean isRunTransposeOrig() {
@@ -287,6 +323,22 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		if (isRunInv()) {
 			result.add(runBenchmarkInv());
+		}
+
+		if (isRunSVD()) {
+			result.add(runBenchmarkSVD());
+		}
+
+		if (isRunEVD()) {
+			result.add(runBenchmarkEVD());
+		}
+
+		if (isRunQR()) {
+			result.add(runBenchmarkQR());
+		}
+
+		if (isRunLU()) {
+			result.add(runBenchmarkLU());
 		}
 
 		System.out.println();
@@ -484,6 +536,82 @@ public abstract class AbstractMatrix2DBenchmark {
 		return m;
 	}
 
+	public Matrix runBenchmarkSVD() {
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), svdSizes.size());
+		System.out.print("SVD: ");
+
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int s = 0; s < svdSizes.size(); s++) {
+				long[] size = svdSizes.get(s);
+				long t = benchmarkSVD(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("SVD");
+		return m;
+	}
+
+	public Matrix runBenchmarkEVD() {
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), evdSizes.size());
+		System.out.print("EVD: ");
+
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int s = 0; s < evdSizes.size(); s++) {
+				long[] size = evdSizes.get(s);
+				long t = benchmarkEVD(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("EVD");
+		return m;
+	}
+
+	public Matrix runBenchmarkQR() {
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), qrSizes.size());
+		System.out.print("QR: ");
+
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int s = 0; s < qrSizes.size(); s++) {
+				long[] size = qrSizes.get(s);
+				long t = benchmarkQR(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("QR");
+		return m;
+	}
+
+	public Matrix runBenchmarkLU() {
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), luSizes.size());
+		System.out.print("LU: ");
+
+		for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int s = 0; s < luSizes.size(); s++) {
+				long[] size = luSizes.get(s);
+				long t = benchmarkLU(size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+			}
+		}
+
+		System.out.println();
+		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
+		m.setLabel("LU");
+		return m;
+	}
+
 	public Matrix runBenchmarkMtimesNew() {
 		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), mtimesSizes.size());
 		System.out.print("mtimes (new matrix): ");
@@ -513,7 +641,7 @@ public abstract class AbstractMatrix2DBenchmark {
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return -1;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -528,10 +656,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.plus(2);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -546,10 +677,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.plus(Ret.ORIG, false, 2);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -564,10 +698,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.copy();
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -582,10 +719,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.times(2);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -600,10 +740,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.times(Ret.ORIG, false, 2);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -615,10 +758,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.transpose();
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -630,10 +776,13 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m.transpose(Ret.ORIG);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -641,14 +790,113 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("inv") == null) {
+				System.out.print("*");
+				return -1;
+			}
 			m.randn(Ret.ORIG);
 			long t0 = System.currentTimeMillis();
 			r = m.inv();
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
 			System.out.print("*");
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
+		}
+	}
+
+	public long benchmarkSVD(long... size) {
+		Matrix m = null;
+		Matrix[] r = null;
+		try {
+			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("svd") == null) {
+				System.out.print("*");
+				return -1;
+			}
+			m.randn(Ret.ORIG);
+			long t0 = System.currentTimeMillis();
+			r = m.svd();
+			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
+			return t1 - t0;
+		} catch (Throwable e) {
+			System.out.print("*");
+			return Long.MAX_VALUE;
+		}
+	}
+
+	public long benchmarkEVD(long... size) {
+		Matrix m = null;
+		Matrix[] r = null;
+		try {
+			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("svd") == null) {
+				System.out.print("*");
+				return -1;
+			}
+			m.randn(Ret.ORIG);
+			long t0 = System.currentTimeMillis();
+			r = m.evd();
+			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
+			return t1 - t0;
+		} catch (Throwable e) {
+			System.out.print("*");
+			return Long.MAX_VALUE;
+		}
+	}
+
+	public long benchmarkQR(long... size) {
+		Matrix m = null;
+		Matrix[] r = null;
+		try {
+			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("qr") == null) {
+				System.out.print("*");
+				return -1;
+			}
+			m.randn(Ret.ORIG);
+			long t0 = System.currentTimeMillis();
+			r = m.qr();
+			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
+			return t1 - t0;
+		} catch (Throwable e) {
+			System.out.print("*");
+			return Long.MAX_VALUE;
+		}
+	}
+
+	public long benchmarkLU(long... size) {
+		Matrix m = null;
+		Matrix[] r = null;
+		try {
+			m = createMatrix(size);
+			if (m.getClass().getDeclaredMethod("lu") == null) {
+				System.out.print("*");
+				return -1;
+			}
+			m.randn(Ret.ORIG);
+			long t0 = System.currentTimeMillis();
+			r = m.lu();
+			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
+			return t1 - t0;
+		} catch (Throwable e) {
+			System.out.print("*");
+			return Long.MAX_VALUE;
 		}
 	}
 
@@ -662,9 +910,12 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 			r = m0.mtimes(m1);
 			long t1 = System.currentTimeMillis();
+			if (r == null) {
+				return Long.MAX_VALUE;
+			}
 			return t1 - t0;
 		} catch (Throwable e) {
-			return r == null ? -2 : -3;
+			return Long.MAX_VALUE;
 		}
 	}
 

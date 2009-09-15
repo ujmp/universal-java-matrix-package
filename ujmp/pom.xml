@@ -123,6 +123,12 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>jampack</groupId>
+				<artifactId>jampack</artifactId>
+				<version>1999</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jmatrices</groupId>
 				<artifactId>jmatrices</artifactId>
 				<version>0.6</version>

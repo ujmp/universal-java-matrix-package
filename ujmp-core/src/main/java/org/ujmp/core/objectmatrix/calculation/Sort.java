@@ -36,9 +36,6 @@ import org.ujmp.core.util.Sortable;
 
 /**
  * Sorts the rows of a matrix
- * 
- * 
- * 
  */
 public class Sort extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -6935375114060680121L;
@@ -68,10 +65,91 @@ public class Sort extends AbstractObjectCalculation {
 		Matrix m = getSource();
 		List<Sortable> rows = new ArrayList<Sortable>();
 
-		for (long r = 0; r < m.getRowCount(); r++) {
-			Comparable<?> c = (Comparable<?>) m.getPreferredObject(r, column);
-			Sortable s = new Sortable(c, r, true);
-			rows.add(s);
+		switch (m.getValueType()) {
+		case BIGDECIMAL:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsBigDecimal(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case BIGINTEGER:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsBigInteger(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case DATE:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsDate(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case DOUBLE:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsDouble(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case INT:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsInt(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case FLOAT:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsFloat(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case CHAR:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsChar(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case BYTE:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsByte(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case BOOLEAN:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsBoolean(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case LONG:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsLong(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		case SHORT:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsShort(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
+		default:
+			for (long r = 0; r < m.getRowCount(); r++) {
+				Comparable<?> c = (Comparable<?>) m.getAsString(r, column);
+				Sortable s = new Sortable(c, r, true);
+				rows.add(s);
+			}
+			break;
 		}
 
 		Collections.sort(rows);

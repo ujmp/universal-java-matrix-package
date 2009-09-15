@@ -21,36 +21,19 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jmatrices.benchmark;
+package org.ujmp.jampack;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
-import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 
-public class JMatricesDenseDoubleMatrix2DBenchmark extends
-		AbstractMatrix2DBenchmark {
+public class JampackDenseDoubleMatrix2DFactory extends
+		AbstractDoubleMatrix2DFactory {
+	private static final long serialVersionUID = -9135903625272489384L;
 
-	public Matrix createMatrix(long... size) throws MatrixException {
-		return new JMatricesDenseDoubleMatrix2D(size);
-	}
-
-	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new JMatricesDenseDoubleMatrix2D(source);
-	}
-
-	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new JMatricesDenseDoubleMatrix2DBenchmark();
-		long t0 = System.currentTimeMillis();
-		benchmark.run();
-		long t1 = System.currentTimeMillis();
-		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
-	}
-
-	// matrix multiplication takes extremely long with JMatrices
-	public long benchmarkMtimesNew(long[] size0, long[] size1) {
-		return -1;
+	public DenseDoubleMatrix2D dense(long rows, long columns)
+			throws MatrixException {
+		return new JampackDenseDoubleMatrix2D(rows, columns);
 	}
 
 }

@@ -20,6 +20,7 @@ import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultSparseFloatMatrix;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
+import org.ujmp.jampack.JampackDenseDoubleMatrix2D;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 import org.ujmp.jsci.JSciDenseDoubleMatrix2D;
 import org.ujmp.jscience.JScienceDenseDoubleMatrix2D;
@@ -34,7 +35,7 @@ import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 @SuppressWarnings("unchecked")
 public class TestCompareMatrices extends TestCase {
 
-	private static final double TOLERANCE = 1e-5;
+	private static final double TOLERANCE = 1e-4;
 
 	public static Class<Matrix>[] ALLFLOATMATRIXCLASSES = new Class[] {
 			DefaultDenseDoubleMatrix2D.class, ArrayDenseDoubleMatrix2D.class,
@@ -48,7 +49,7 @@ public class TestCompareMatrices extends TestCase {
 			MantissaDenseDoubleMatrix2D.class, MTJDenseDoubleMatrix2D.class,
 			OjalgoDenseDoubleMatrix2D.class, ParallelColtDenseDoubleMatrix2D.class,
 			ParallelColtSparseDoubleMatrix2D.class, SSTDenseDoubleMatrix.class,
-			VecMathDenseDoubleMatrix2D.class };
+			VecMathDenseDoubleMatrix2D.class, JampackDenseDoubleMatrix2D.class };
 
 	private Matrix getMatrix(Class<Matrix> mclass, Matrix m) {
 		try {

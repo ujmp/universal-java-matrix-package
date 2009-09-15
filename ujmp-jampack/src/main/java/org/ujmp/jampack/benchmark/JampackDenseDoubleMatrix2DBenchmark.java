@@ -21,36 +21,30 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jmatrices.benchmark;
+package org.ujmp.jampack.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
+import org.ujmp.jampack.JampackDenseDoubleMatrix2D;
 
-public class JMatricesDenseDoubleMatrix2DBenchmark extends
+public class JampackDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new JMatricesDenseDoubleMatrix2D(size);
+		return new JampackDenseDoubleMatrix2D(size);
 	}
 
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new JMatricesDenseDoubleMatrix2D(source);
+		return new JampackDenseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new JMatricesDenseDoubleMatrix2DBenchmark();
+		AbstractMatrix2DBenchmark benchmark = new JampackDenseDoubleMatrix2DBenchmark();
 		long t0 = System.currentTimeMillis();
 		benchmark.run();
 		long t1 = System.currentTimeMillis();
 		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
-	}
-
-	// matrix multiplication takes extremely long with JMatrices
-	public long benchmarkMtimesNew(long[] size0, long[] size1) {
-		return -1;
 	}
 
 }

@@ -400,6 +400,7 @@
 		<module>../ujmp-itext</module>
 		<module>../ujmp-jackcess</module>
 		<module>../ujmp-jama</module>
+		<module>../ujmp-jampack</module>
 		<module>../ujmp-jdbc</module>
 		<module>../ujmp-jexcelapi</module>
 		<module>../ujmp-jmathplot</module>

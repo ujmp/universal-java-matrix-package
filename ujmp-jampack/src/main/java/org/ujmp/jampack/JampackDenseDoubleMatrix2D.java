@@ -23,6 +23,10 @@
 
 package org.ujmp.jampack;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -35,7 +39,6 @@ import Jampack.Parameters;
 import Jampack.Times;
 import Jampack.Z;
 import Jampack.Zmat;
-import Jampack.Zsvd;
 
 public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<Zmat> {
@@ -49,7 +52,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	private Zmat matrix = null;
+	private transient Zmat matrix = null;
 
 	public JampackDenseDoubleMatrix2D(long... size) {
 		this.matrix = new Zmat((int) size[ROW], (int) size[COLUMN]);
@@ -114,16 +117,18 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new JampackDenseDoubleMatrix2D(H.trans(matrix));
 	}
 
-	public Matrix[] svd() {
-		try {
-			Zsvd svd = new Zsvd(matrix);
-			return new Matrix[] { new JampackDenseDoubleMatrix2D(svd.U),
-					new JampackDenseDoubleMatrix2D(new Zmat(svd.S)),
-					new JampackDenseDoubleMatrix2D(svd.V) };
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
-	}
+	// SVD has errors and does not work on the test case
+
+	// public Matrix[] svd() {
+	// try {
+	// Zsvd svd = new Zsvd(matrix);
+	// return new Matrix[] { new JampackDenseDoubleMatrix2D(svd.U),
+	// new JampackDenseDoubleMatrix2D(new Zmat(svd.S)),
+	// new JampackDenseDoubleMatrix2D(svd.V) };
+	// } catch (Exception e) {
+	// throw new MatrixException(e);
+	// }
+	// }
 
 	public Matrix mtimes(Matrix m) {
 		try {
@@ -156,6 +161,19 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
+	}
+
+	private void readObject(ObjectInputStream s) throws IOException,
+			ClassNotFoundException {
+		s.defaultReadObject();
+		double[][] values = (double[][]) s.readObject();
+		matrix = new Zmat(values);
+	}
+
+	private void writeObject(ObjectOutputStream s) throws IOException,
+			MatrixException {
+		s.defaultWriteObject();
+		s.writeObject(matrix.getRe());
 	}
 
 }

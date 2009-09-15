@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ujmp_jampack
+Bundle-SymbolicName: ujmp_jampack
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.ujmp.jampack,
+ org.ujmp.jampack.benchmark

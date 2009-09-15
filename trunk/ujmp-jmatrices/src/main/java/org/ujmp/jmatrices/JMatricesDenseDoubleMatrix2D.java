@@ -100,13 +100,14 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				.inverse(matrix));
 	}
 
-	public Matrix[] svd() {
-		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
-		Matrix u = new JMatricesDenseDoubleMatrix2D(svd.getU());
-		Matrix s = new JMatricesDenseDoubleMatrix2D(svd.getS());
-		Matrix v = new JMatricesDenseDoubleMatrix2D(svd.getV());
-		return new Matrix[] { u, s, v };
-	}
+	// TODO: test
+	// public Matrix[] svd() {
+	// SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
+	// Matrix u = new JMatricesDenseDoubleMatrix2D(svd.getU());
+	// Matrix s = new JMatricesDenseDoubleMatrix2D(svd.getS());
+	// Matrix v = new JMatricesDenseDoubleMatrix2D(svd.getV());
+	// return new Matrix[] { u, s, v };
+	// }
 
 	public Matrix[] evd() {
 		EigenvalueDecomposition evd = new EigenvalueDecomposition(matrix);

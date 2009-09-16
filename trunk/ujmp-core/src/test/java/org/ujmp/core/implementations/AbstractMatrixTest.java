@@ -612,6 +612,87 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	public void testQR1() throws Exception {
+		Matrix a = createMatrix(5, 5);
+		a.randn(Ret.ORIG);
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testQR2() throws Exception {
+		Matrix a = createMatrix(4, 5);
+		a.randn(Ret.ORIG);
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testQR3() throws Exception {
+		Matrix a = createMatrix(5, 4);
+		a.randn(Ret.ORIG);
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testLU1() throws Exception {
+		Matrix a = createMatrix(5, 5);
+		a.randn(Ret.ORIG);
+		Matrix[] lu = a.lu();
+		Matrix prod = lu[0].mtimes(lu[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testLU2() throws Exception {
+		Matrix a = createMatrix(4, 5);
+		a.randn(Ret.ORIG);
+		Matrix[] lu = a.lu();
+		Matrix prod = lu[0].mtimes(lu[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testLU3() throws Exception {
+		Matrix a = createMatrix(5, 4);
+		a.randn(Ret.ORIG);
+		Matrix[] lu = a.lu();
+		Matrix prod = lu[0].mtimes(lu[1]);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testChol1() throws Exception {
+		Matrix a = createMatrix(5, 5);
+		a.randn(Ret.ORIG);
+		Matrix chol = a.chol();
+		Matrix prod = chol.transpose().mtimes(chol);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testChol2() throws Exception {
+		Matrix a = createMatrix(4, 5);
+		a.randn(Ret.ORIG);
+		Matrix chol = a.chol();
+		Matrix prod = chol.transpose().mtimes(chol);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
+	public void testChol3() throws Exception {
+		Matrix a = createMatrix(5, 4);
+		a.randn(Ret.ORIG);
+		Matrix chol = a.chol();
+		Matrix prod = chol.transpose().mtimes(chol);
+
+		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	}
+
 	// test example from wikipedia
 	public void testSVD() throws Exception {
 		Matrix a = createMatrix(4, 5);
@@ -640,14 +721,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 						{ 0, 0, -Math.sqrt(0.8), Math.sqrt(0.2), 0 } });
 
 		Matrix[] svd = a.svd();
-
-		System.out.println();
-		System.out.println(svd[0]);
-		System.out.println();
-		System.out.println(svd[1]);
-		System.out.println();
-		System.out.println(svd[2]);
-		System.out.println();
 
 		assertEquals(0.0, svd[0].minus(u).doubleValue(), 1e-12);
 		assertEquals(0.0, svd[1].minus(s).doubleValue(), 1e-12);

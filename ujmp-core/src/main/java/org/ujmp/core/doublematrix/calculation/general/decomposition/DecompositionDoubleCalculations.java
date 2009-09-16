@@ -86,4 +86,11 @@ public interface DecompositionDoubleCalculations {
 	 */
 	public Matrix[] lu() throws MatrixException;
 
+	/**
+	 * Calculates a Cholesky decomposition of the matrix.
+	 * 
+	 * @return Cholesky decomposition of the matrix.
+	 */
+	public Matrix chol() throws MatrixException;
+
 }

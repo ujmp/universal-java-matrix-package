@@ -99,6 +99,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Cos;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Sin;
 import org.ujmp.core.doublematrix.calculation.entrywise.trigonometric.Tan;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.EVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
@@ -1631,6 +1632,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix[] lu() throws MatrixException {
 		return LU.calcNew(this);
+	}
+
+	public Matrix chol() throws MatrixException {
+		return Chol.calcNew(this);
 	}
 
 	public final String exportToString(FileFormat format, Object... parameters)

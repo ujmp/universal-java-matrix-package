@@ -110,6 +110,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmatharray</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jsci</artifactId>
 			<version>${ujmp.version}</version>
 			<scope>compile</scope>
@@ -299,6 +305,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmatharray</artifactId>
+			<version>${ujmp.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jsci</artifactId>
 			<version>${ujmp.version}</version>
 			<type>test-jar</type>
@@ -406,6 +419,7 @@
 		<module>../ujmp-jmathplot</module>
 		<module>../ujmp-jmatio</module>
 		<module>../ujmp-jmatrices</module>
+		<module>../ujmp-jmatharray</module>
 		<module>../ujmp-jsci</module>
 		<module>../ujmp-jscience</module>
 		<module>../ujmp-jung</module>

@@ -38,6 +38,7 @@ import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jsci.benchmark.JSciDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jscience.benchmark.JScienceDenseDoubleMatrix2DBenchmark;
@@ -102,6 +103,9 @@ public class MatrixBenchmark {
 		if (isRunVecMathDenseDoubleMatrix2DBenchmark()) {
 			list.add(new VecMathDenseDoubleMatrix2DBenchmark());
 		}
+		if (isRunJMathArrayDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JMathArrayDenseDoubleMatrix2DBenchmark());
+		}
 
 		Collections.reverse(list);
 		return list;
@@ -117,6 +121,7 @@ public class MatrixBenchmark {
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
 		setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
 		// setRunJScienceDenseDoubleMatrix2DBenchmark(true);
 		// setRunJSciDenseDoubleMatrix2DBenchmark(true);
 		// setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
@@ -154,6 +159,10 @@ public class MatrixBenchmark {
 
 	public void setRunJScienceDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runJScienceDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunJMathArrayDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runJMathArrayDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunJSciDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -234,6 +243,10 @@ public class MatrixBenchmark {
 
 	public boolean isRunJSciDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runJSciDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunJMathArrayDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runJMathArrayDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunParallelColtDenseDoubleMatrix2DBenchmark() {

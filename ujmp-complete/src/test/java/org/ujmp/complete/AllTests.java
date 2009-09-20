@@ -46,6 +46,7 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.jdbc.AllTests.suite());
 		suite.addTest(org.ujmp.jexcelapi.AllTests.suite());
 		suite.addTest(org.ujmp.jmathplot.AllTests.suite());
+		suite.addTest(org.ujmp.jmatharray.AllTests.suite());
 		suite.addTest(org.ujmp.jmatio.AllTests.suite());
 		suite.addTest(org.ujmp.jmatrices.AllTests.suite());
 		suite.addTest(org.ujmp.jsci.AllTests.suite());
@@ -57,6 +58,7 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.mantissa.AllTests.suite());
 		suite.addTest(org.ujmp.mtj.AllTests.suite());
 		suite.addTest(org.ujmp.ojalgo.AllTests.suite());
+		suite.addTest(org.ujmp.orbital.AllTests.suite());
 		suite.addTest(org.ujmp.parallelcolt.AllTests.suite());
 		suite.addTest(org.ujmp.pdfbox.AllTests.suite());
 		suite.addTest(org.ujmp.sst.AllTests.suite());

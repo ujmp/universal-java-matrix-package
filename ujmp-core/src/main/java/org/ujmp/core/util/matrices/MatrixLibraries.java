@@ -82,13 +82,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int OJALGO = 12;
 
-	private static final int PARALLELCOLT = 13;
+	private static final int ORBITAL = 13;
 
-	private static final int SST = 14;
+	private static final int PARALLELCOLT = 14;
 
-	private static final int UJMP = 15;
+	private static final int SST = 15;
 
-	private static final int VECMATH = 16;
+	private static final int UJMP = 16;
+
+	private static final int VECMATH = 17;
 
 	public enum MatrixLibrariesFormat {
 		DEFAULT, LATEX, HTML
@@ -149,9 +151,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), D4, UJMP);
 		setAsString(yes(), D4PLUS, UJMP);
 
-		setAsString(unknown(), VERSION, ARRAY4J);
-		setAsString(unknown(), DATE, ARRAY4J);
-		setAsString(unknown(), LICENCE, ARRAY4J);
+		setAsString("SVN", VERSION, ARRAY4J);
+		setAsString("2008/05", DATE, ARRAY4J);
+		setAsString("BSD", LICENCE, ARRAY4J);
 		setAsString(unknown(), JAVA14, ARRAY4J);
 		setAsString(unknown(), JAVA5, ARRAY4J);
 		setAsString(yes(), JAVA6, ARRAY4J);
@@ -163,9 +165,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4, ARRAY4J);
 		setAsString(no(), D4PLUS, ARRAY4J);
 
-		setAsString(unknown(), VERSION, COLT);
-		setAsString(unknown(), DATE, COLT);
-		setAsString(unknown(), LICENCE, COLT);
+		setAsString("1.2.0", VERSION, COLT);
+		setAsString("2004/09", DATE, COLT);
+		setAsString("BSD", LICENCE, COLT);
 		setAsString(unknown(), JAVA14, COLT);
 		setAsString(unknown(), JAVA5, COLT);
 		setAsString(yes(), JAVA6, COLT);
@@ -179,7 +181,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 		setAsString("2.0", VERSION, COMMONSMATH);
 		setAsString("2009/08", DATE, COMMONSMATH);
-		setAsString(unknown(), LICENCE, COMMONSMATH);
+		setAsString("Apache", LICENCE, COMMONSMATH);
 		setAsString(unknown(), JAVA14, COMMONSMATH);
 		setAsString(unknown(), JAVA5, COMMONSMATH);
 		setAsString(yes(), JAVA6, COMMONSMATH);
@@ -191,9 +193,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, COMMONSMATH);
 		setAsString(unknown(), D4PLUS, COMMONSMATH);
 
-		setAsString(unknown(), VERSION, JAMA);
-		setAsString(unknown(), DATE, JAMA);
-		setAsString(unknown(), LICENCE, JAMA);
+		setAsString("1.0.2", VERSION, JAMA);
+		setAsString("2005/07", DATE, JAMA);
+		setAsString("PD", LICENCE, JAMA);
 		setAsString(unknown(), JAVA14, JAMA);
 		setAsString(unknown(), JAVA5, JAMA);
 		setAsString(yes(), JAVA6, JAMA);
@@ -205,9 +207,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JAMA);
 		setAsString(unknown(), D4PLUS, JAMA);
 
-		setAsString(unknown(), VERSION, JAMPACK);
-		setAsString(unknown(), DATE, JAMPACK);
-		setAsString(unknown(), LICENCE, JAMPACK);
+		setAsString("unknown", VERSION, JAMPACK);
+		setAsString("1999/02", DATE, JAMPACK);
+		setAsString("unknown", LICENCE, JAMPACK);
 		setAsString(unknown(), JAVA14, JAMPACK);
 		setAsString(unknown(), JAVA5, JAMPACK);
 		setAsString(yes(), JAVA6, JAMPACK);
@@ -219,9 +221,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JAMPACK);
 		setAsString(unknown(), D4PLUS, JAMPACK);
 
-		setAsString(unknown(), VERSION, JMATHARRAY);
-		setAsString(unknown(), DATE, JMATHARRAY);
-		setAsString(unknown(), LICENCE, JMATHARRAY);
+		setAsString("unknown", VERSION, JMATHARRAY);
+		setAsString("2009/07", DATE, JMATHARRAY);
+		setAsString("BSD", LICENCE, JMATHARRAY);
 		setAsString(unknown(), JAVA14, JMATHARRAY);
 		setAsString(unknown(), JAVA5, JMATHARRAY);
 		setAsString(yes(), JAVA6, JMATHARRAY);
@@ -233,9 +235,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JMATHARRAY);
 		setAsString(unknown(), D4PLUS, JMATHARRAY);
 
-		setAsString(unknown(), VERSION, JMATRICES);
-		setAsString(unknown(), DATE, JMATRICES);
-		setAsString(unknown(), LICENCE, JMATRICES);
+		setAsString("0.6", VERSION, JMATRICES);
+		setAsString("2004/05", DATE, JMATRICES);
+		setAsString("LGPL", LICENCE, JMATRICES);
 		setAsString(unknown(), JAVA14, JMATRICES);
 		setAsString(unknown(), JAVA5, JMATRICES);
 		setAsString(yes(), JAVA6, JMATRICES);
@@ -247,11 +249,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JMATRICES);
 		setAsString(unknown(), D4PLUS, JMATRICES);
 
-		setAsString(unknown(), VERSION, JSCI);
-		setAsString(unknown(), DATE, JSCI);
-		setAsString(unknown(), LICENCE, JSCI);
-		setAsString(unknown(), JAVA14, JSCI);
-		setAsString(unknown(), JAVA5, JSCI);
+		setAsString("1.1", VERSION, JSCI);
+		setAsString("2009/07", DATE, JSCI);
+		setAsString("LGPL", LICENCE, JSCI);
+		setAsString(yes(), JAVA14, JSCI);
+		setAsString(yes(), JAVA5, JSCI);
 		setAsString(yes(), JAVA6, JSCI);
 		setAsString(yes(), DENSE, JSCI);
 		setAsString(unknown(), SPARSE, JSCI);
@@ -261,9 +263,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JSCI);
 		setAsString(unknown(), D4PLUS, JSCI);
 
-		setAsString(unknown(), VERSION, JSCIENCE);
-		setAsString(unknown(), DATE, JSCIENCE);
-		setAsString(unknown(), LICENCE, JSCIENCE);
+		setAsString("4.3.1", VERSION, JSCIENCE);
+		setAsString("2007/10", DATE, JSCIENCE);
+		setAsString("BSD", LICENCE, JSCIENCE);
 		setAsString(unknown(), JAVA14, JSCIENCE);
 		setAsString(unknown(), JAVA5, JSCIENCE);
 		setAsString(yes(), JAVA6, JSCIENCE);
@@ -275,9 +277,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, JSCIENCE);
 		setAsString(unknown(), D4PLUS, JSCIENCE);
 
-		setAsString(unknown(), VERSION, MANTISSA);
-		setAsString(unknown(), DATE, MANTISSA);
-		setAsString(unknown(), LICENCE, MANTISSA);
+		setAsString("7.2", VERSION, MANTISSA);
+		setAsString("2007/10", DATE, MANTISSA);
+		setAsString("BSD", LICENCE, MANTISSA);
 		setAsString(unknown(), JAVA14, MANTISSA);
 		setAsString(unknown(), JAVA5, MANTISSA);
 		setAsString(yes(), JAVA6, MANTISSA);
@@ -289,9 +291,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, MANTISSA);
 		setAsString(unknown(), D4PLUS, MANTISSA);
 
-		setAsString(unknown(), VERSION, MTJ);
-		setAsString(unknown(), DATE, MTJ);
-		setAsString(unknown(), LICENCE, MTJ);
+		setAsString("0.9.12", VERSION, MTJ);
+		setAsString("2009/04", DATE, MTJ);
+		setAsString("LGPL", LICENCE, MTJ);
 		setAsString(unknown(), JAVA14, MTJ);
 		setAsString(unknown(), JAVA5, MTJ);
 		setAsString(yes(), JAVA6, MTJ);
@@ -303,9 +305,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, MTJ);
 		setAsString(unknown(), D4PLUS, MTJ);
 
-		setAsString(unknown(), VERSION, OJALGO);
-		setAsString(unknown(), DATE, OJALGO);
-		setAsString(unknown(), LICENCE, OJALGO);
+		setAsString("28.0", VERSION, OJALGO);
+		setAsString("2009/08", DATE, OJALGO);
+		setAsString("MIT", LICENCE, OJALGO);
 		setAsString(unknown(), JAVA14, OJALGO);
 		setAsString(unknown(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
@@ -316,6 +318,20 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D3, OJALGO);
 		setAsString(unknown(), D4, OJALGO);
 		setAsString(unknown(), D4PLUS, OJALGO);
+
+		setAsString("1.3.0", VERSION, ORBITAL);
+		setAsString("2009/03", DATE, ORBITAL);
+		setAsString("Custom", LICENCE, ORBITAL);
+		setAsString(unknown(), JAVA14, ORBITAL);
+		setAsString(unknown(), JAVA5, ORBITAL);
+		setAsString(yes(), JAVA6, ORBITAL);
+		setAsString(yes(), DENSE, ORBITAL);
+		setAsString(unknown(), SPARSE, ORBITAL);
+		setAsString(unknown(), COMPLEX, ORBITAL);
+		setAsString(yes(), D2, ORBITAL);
+		setAsString(unknown(), D3, ORBITAL);
+		setAsString(unknown(), D4, ORBITAL);
+		setAsString(unknown(), D4PLUS, ORBITAL);
 
 		setAsString(unknown(), VERSION, PARALLELCOLT);
 		setAsString(unknown(), DATE, PARALLELCOLT);

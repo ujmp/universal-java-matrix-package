@@ -45,6 +45,7 @@ import org.ujmp.jscience.benchmark.JScienceDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
+import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrixBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
@@ -69,6 +70,9 @@ public class MatrixBenchmark {
 		}
 		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
 			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunOrbitalDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
@@ -119,6 +123,7 @@ public class MatrixBenchmark {
 		// setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		// setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
+		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
 		setRunJampackDenseDoubleMatrix2DBenchmark(true);
 		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
@@ -155,6 +160,10 @@ public class MatrixBenchmark {
 
 	public void setRunOjalgoDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runOjalgoDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunOrbitalDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runOrbitalDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunJScienceDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -235,6 +244,10 @@ public class MatrixBenchmark {
 
 	public boolean isRunOjalgoDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runOjalgoDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunOrbitalDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runOrbitalDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunJScienceDenseDoubleMatrix2DBenchmark() {

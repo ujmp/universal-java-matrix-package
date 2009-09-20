@@ -27,6 +27,8 @@ import org.ujmp.jscience.JScienceDenseDoubleMatrix2D;
 import org.ujmp.mantissa.MantissaDenseDoubleMatrix2D;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
+import org.ujmp.orbital.OrbitalDenseDoubleMatrix2D;
+import org.ujmp.owlpack.OwlpackDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
 import org.ujmp.sst.SSTDenseDoubleMatrix;
@@ -47,7 +49,8 @@ public class TestCompareMatrices extends TestCase {
 			JamaDenseDoubleMatrix2D.class, JMatricesDenseDoubleMatrix2D.class,
 			JSciDenseDoubleMatrix2D.class, JScienceDenseDoubleMatrix2D.class,
 			MantissaDenseDoubleMatrix2D.class, MTJDenseDoubleMatrix2D.class,
-			OjalgoDenseDoubleMatrix2D.class, ParallelColtDenseDoubleMatrix2D.class,
+			OjalgoDenseDoubleMatrix2D.class, OrbitalDenseDoubleMatrix2D.class,
+			OwlpackDenseDoubleMatrix2D.class, ParallelColtDenseDoubleMatrix2D.class,
 			ParallelColtSparseDoubleMatrix2D.class, SSTDenseDoubleMatrix.class,
 			VecMathDenseDoubleMatrix2D.class, JampackDenseDoubleMatrix2D.class };
 

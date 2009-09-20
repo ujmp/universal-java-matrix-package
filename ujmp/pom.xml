@@ -255,6 +255,12 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>owlpack</groupId>
+				<artifactId>owlpack</artifactId>
+				<version>1998</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>parallelcolt</groupId>
 				<artifactId>parallelcolt</artifactId>
 				<version>0.7.2</version>
@@ -391,6 +397,7 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-mtj/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-ojalgo/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-orbital/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-owlpack/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-parallelcolt/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-pdfbox/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-sst/apidocs</link>

@@ -176,6 +176,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-owlpack</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
 			<version>${ujmp.version}</version>
 			<scope>compile</scope>
@@ -388,6 +394,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-owlpack</artifactId>
+			<version>${ujmp.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
 			<version>${ujmp.version}</version>
 			<type>test-jar</type>
@@ -443,6 +456,7 @@
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-ojalgo</module>
 		<module>../ujmp-orbital</module>
+		<module>../ujmp-owlpack</module>
 		<module>../ujmp-parallelcolt</module>
 		<module>../ujmp-pdfbox</module>
 		<module>../ujmp-sst</module>

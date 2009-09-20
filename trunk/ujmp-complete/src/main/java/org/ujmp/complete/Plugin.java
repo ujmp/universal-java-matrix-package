@@ -39,17 +39,14 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("all");
 	}
 
-	
 	public String getDescription() {
 		return "collection of all available packages in UJMP";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

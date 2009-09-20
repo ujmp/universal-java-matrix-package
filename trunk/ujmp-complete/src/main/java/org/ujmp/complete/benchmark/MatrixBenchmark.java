@@ -124,6 +124,7 @@ public class MatrixBenchmark {
 		// setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
 		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
+		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
 		setRunJampackDenseDoubleMatrix2DBenchmark(true);
 		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
@@ -164,6 +165,10 @@ public class MatrixBenchmark {
 
 	public void setRunOrbitalDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runOrbitalDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunOwlpackDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runOwlpackDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunJScienceDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -248,6 +253,10 @@ public class MatrixBenchmark {
 
 	public boolean isRunOrbitalDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runOrbitalDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunOwlpackDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runOwlpackDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunJScienceDenseDoubleMatrix2DBenchmark() {

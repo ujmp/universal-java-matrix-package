@@ -29,7 +29,17 @@ import java.io.ObjectOutputStream;
 
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
+import org.ojalgo.matrix.decomposition.Cholesky;
+import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
+import org.ojalgo.matrix.decomposition.Eigenvalue;
+import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
+import org.ojalgo.matrix.decomposition.LU;
 import org.ojalgo.matrix.decomposition.LUDecomposition;
+import org.ojalgo.matrix.decomposition.QR;
+import org.ojalgo.matrix.decomposition.QRDecomposition;
+import org.ojalgo.matrix.decomposition.SingularValue;
+import org.ojalgo.matrix.decomposition.SingularValueDecomposition;
+import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -57,6 +67,11 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public OjalgoDenseDoubleMatrix2D(final PrimitiveDenseStore matrix) {
 		this.matrix = matrix;
+	}
+
+	public OjalgoDenseDoubleMatrix2D(MatrixStore<Double> m) {
+		this.matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
+				.copyStore(m);
 	}
 
 	public final BasicMatrix getBasicMatrix() {
@@ -119,6 +134,51 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new OjalgoDenseDoubleMatrix2D(
 				(PrimitiveDenseStore) LUDecomposition.makePrimitive().invert(
 						matrix));
+	}
+
+	@Override
+	public Matrix[] qr() {
+		QR<Double> qr = QRDecomposition.makePrimitive();
+		qr.compute(matrix);
+		Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
+		Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
+	}
+
+	@Override
+	public Matrix[] evd() {
+		Eigenvalue<Double> evd = EigenvalueDecomposition.makeJama();
+		evd.compute(matrix);
+		Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
+		Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
+		return new Matrix[] { v, d };
+	}
+
+	@Override
+	public Matrix[] svd() {
+		SingularValue<Double> svd = SingularValueDecomposition.makePrimitive();
+		svd.compute(matrix);
+		Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
+		Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
+		Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
+		return new Matrix[] { u, s, v };
+	}
+
+	@Override
+	public Matrix chol() {
+		Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
+		chol.compute(matrix);
+		Matrix r = new OjalgoDenseDoubleMatrix2D(chol.getR());
+		return r;
+	}
+
+	@Override
+	public Matrix[] lu() {
+		LU<Double> lu = LUDecomposition.makePrimitive();
+		lu.compute(matrix);
+		Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
+		Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
+		return new Matrix[] { l, u };
 	}
 
 	private void readObject(final ObjectInputStream s) throws IOException,

@@ -28,7 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-import cern.colt.matrix.tdouble.algo.DoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
 
@@ -90,7 +90,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 
 	public Matrix inv() {
 		return new ParallelColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) new DoubleAlgebra().inverse(matrix));
+				(DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
 	}
 
 	public Matrix times(double value) {

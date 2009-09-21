@@ -34,7 +34,7 @@ import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-import cern.colt.matrix.tdouble.algo.DoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
 
@@ -91,7 +91,7 @@ public class ParallelColtSparseDoubleMatrix2D extends
 
 	public Matrix inv() {
 		return new ParallelColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) new DoubleAlgebra().inverse(matrix));
+				(DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
 	}
 
 	public Iterable<long[]> availableCoordinates() {

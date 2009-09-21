@@ -23,6 +23,8 @@
 
 package org.ujmp.complete.benchmark;
 
+import java.io.File;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
@@ -127,20 +130,20 @@ public class MatrixBenchmark {
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
-		// setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
-		// setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
+		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
+		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
-		// setRunJampackDenseDoubleMatrix2DBenchmark(true);
-		// setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
-		// setRunJScienceDenseDoubleMatrix2DBenchmark(true);
-		// setRunJSciDenseDoubleMatrix2DBenchmark(true);
+		setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
+		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
+		setRunJSciDenseDoubleMatrix2DBenchmark(true);
 		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
-		// setRunColtDenseDoubleMatrix2DBenchmark(true);
+		setRunColtDenseDoubleMatrix2DBenchmark(true);
 		setRunSSTDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathDenseDoubleMatrix2DBenchmark(true);
-		// setRunMantissaDenseDoubleMatrix2DBenchmark(true);
-		// setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
-		// setRunVecMathDenseDoubleMatrix2DBenchmark(true);
+		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
+		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
+		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 
 		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
 		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
@@ -332,6 +335,9 @@ public class MatrixBenchmark {
 				for (int i = 0; i < l.size(); i++) {
 					Matrix m = l.get(i).appendVertically(results.get(i));
 					m.setLabel(l.get(i).getLabel());
+					for (int c = 0; c < l.get(i).getColumnCount(); c++) {
+						m.setColumnLabel(c, l.get(i).getColumnLabel(c));
+					}
 					results.set(i, m);
 				}
 			}
@@ -346,7 +352,19 @@ public class MatrixBenchmark {
 
 			for (Matrix m : results) {
 				if (m != null && !(m instanceof EmptyMatrix)) {
-					m.showGUI();
+					try {
+						String name = InetAddress.getLocalHost().getHostName();
+						name += "-" + System.getProperty("os.name");
+						name += "-" + System.getProperty("java.version");
+						name += "-" + m.getLabel();
+						name += ".csv";
+						m.exportToFile(FileFormat.CSV, new File(name));
+					} catch (Exception e) {
+					}
+					try {
+						m.showGUI();
+					} catch (Exception e) {
+					}
 				}
 			}
 		}
@@ -355,7 +373,7 @@ public class MatrixBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (Runtime.getRuntime().maxMemory() < 1000 * 1024 * 1024) {
+		if (Runtime.getRuntime().maxMemory() < 980 * 1024 * 1024) {
 			throw new Exception("You must start Java with more memory: -Xmx1024M");
 		}
 		MatrixBenchmark mb = new MatrixBenchmark();

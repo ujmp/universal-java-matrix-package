@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_pdfbox
-Bundle-SymbolicName: ujmp_pdfbox
+Bundle-Name: ujmp-pdfbox
+Bundle-SymbolicName: ujmp-pdfbox
 Bundle-Version: 1.0.0
 Export-Package: org.ujmp.pdfbox
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_parallelcolt
-Bundle-SymbolicName: ujmp_parallelcolt
+Bundle-Name: ujmp-parallelcolt
+Bundle-SymbolicName: ujmp-parallelcolt
 Bundle-Version: 1.0.0
 Export-Package: org.ujmp.parallelcolt,
  org.ujmp.parallelcolt.benchmark
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

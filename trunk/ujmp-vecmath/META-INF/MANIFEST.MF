@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_vecmath
-Bundle-SymbolicName: ujmp_vecmath
+Bundle-Name: ujmp-vecmath
+Bundle-SymbolicName: ujmp-vecmath
 Bundle-Version: 1.0.0
 Export-Package: org.ujmp.vecmath,
  org.ujmp.vecmath.benchmark
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

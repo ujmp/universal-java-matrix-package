@@ -27,7 +27,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import no.uib.cipr.matrix.DenseCholesky;
+import no.uib.cipr.matrix.DenseLU;
 import no.uib.cipr.matrix.DenseMatrix;
+import no.uib.cipr.matrix.EVD;
+import no.uib.cipr.matrix.QR;
 import no.uib.cipr.matrix.SVD;
 
 import org.ujmp.core.Matrix;
@@ -45,6 +49,10 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public MTJDenseDoubleMatrix2D(DenseMatrix m) {
 		this.matrix = m;
+	}
+
+	public MTJDenseDoubleMatrix2D(no.uib.cipr.matrix.Matrix m) {
+		this.matrix = new DenseMatrix(m);
 	}
 
 	public MTJDenseDoubleMatrix2D(Matrix m) throws MatrixException {
@@ -71,6 +79,49 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 
 			return new Matrix[] { u, s, v };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix[] qr() throws MatrixException {
+		try {
+			QR qr = QR.factorize(getWrappedObject());
+			Matrix q = new MTJDenseDoubleMatrix2D(qr.getQ());
+			Matrix r = new MTJDenseDoubleMatrix2D(qr.getR());
+			return new Matrix[] { q, r };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix[] lu() throws MatrixException {
+		try {
+			DenseLU lu = DenseLU.factorize(getWrappedObject());
+			Matrix l = new MTJDenseDoubleMatrix2D(lu.getL());
+			Matrix u = new MTJDenseDoubleMatrix2D(lu.getU());
+			return new Matrix[] { l, u };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix chol() throws MatrixException {
+		try {
+			DenseCholesky chol = DenseCholesky.factorize(getWrappedObject());
+			Matrix l = new MTJDenseDoubleMatrix2D(chol.getL());
+			return l;
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix[] evd() throws MatrixException {
+		try {
+			EVD evd = EVD.factorize(getWrappedObject());
+			Matrix v = new MTJDenseDoubleMatrix2D(evd.getLeftEigenvectors());
+			Matrix d = new MTJDenseDoubleMatrix2D(evd.getRightEigenvectors());
+			return new Matrix[] { v, d };
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}

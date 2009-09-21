@@ -46,6 +46,7 @@ import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
 import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
+import org.ujmp.owlpack.benchmark.OwlpackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrixBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
@@ -73,6 +74,9 @@ public class MatrixBenchmark {
 		}
 		if (isRunOrbitalDenseDoubleMatrix2DBenchmark()) {
 			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
@@ -119,21 +123,21 @@ public class MatrixBenchmark {
 		setBenchmarkRuns(1);
 		setRunsPerMatrix(1);
 
-		// setRunDefaultDenseDoubleMatrix2DBenchmark(true);
-		// setRunArrayDenseDoubleMatrix2DBenchmark(true);
-		// setRunMTJDenseDoubleMatrix2DBenchmark(true);
+		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
+		setRunArrayDenseDoubleMatrix2DBenchmark(true);
+		setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
-		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
-		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
+		// setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
+		// setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
 		setRunJamaDenseDoubleMatrix2DBenchmark(true);
-		setRunJampackDenseDoubleMatrix2DBenchmark(true);
-		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
+		// setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		// setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
 		// setRunJScienceDenseDoubleMatrix2DBenchmark(true);
 		// setRunJSciDenseDoubleMatrix2DBenchmark(true);
-		// setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
+		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
 		// setRunColtDenseDoubleMatrix2DBenchmark(true);
-		// setRunSSTDenseDoubleMatrix2DBenchmark(true);
-		// setRunCommonsMathDenseDoubleMatrix2DBenchmark(true);
+		setRunSSTDenseDoubleMatrix2DBenchmark(true);
+		setRunCommonsMathDenseDoubleMatrix2DBenchmark(true);
 		// setRunMantissaDenseDoubleMatrix2DBenchmark(true);
 		// setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
 		// setRunVecMathDenseDoubleMatrix2DBenchmark(true);
@@ -351,8 +355,8 @@ public class MatrixBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (Runtime.getRuntime().maxMemory() < 500 * 1024 * 1024) {
-			throw new Exception("You must start Java with more memory: -Xmx512M");
+		if (Runtime.getRuntime().maxMemory() < 1000 * 1024 * 1024) {
+			throw new Exception("You must start Java with more memory: -Xmx1024M");
 		}
 		MatrixBenchmark mb = new MatrixBenchmark();
 		mb.configureDefault();

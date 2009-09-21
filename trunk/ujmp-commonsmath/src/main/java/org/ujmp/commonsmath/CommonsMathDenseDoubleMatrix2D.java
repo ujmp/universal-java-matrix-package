@@ -23,8 +23,19 @@
 
 package org.ujmp.commonsmath;
 
+import org.apache.commons.math.linear.Array2DRowRealMatrix;
+import org.apache.commons.math.linear.CholeskyDecomposition;
+import org.apache.commons.math.linear.CholeskyDecompositionImpl;
+import org.apache.commons.math.linear.EigenDecomposition;
+import org.apache.commons.math.linear.EigenDecompositionImpl;
+import org.apache.commons.math.linear.LUDecomposition;
+import org.apache.commons.math.linear.LUDecompositionImpl;
+import org.apache.commons.math.linear.QRDecomposition;
+import org.apache.commons.math.linear.QRDecompositionImpl;
 import org.apache.commons.math.linear.RealMatrix;
-import org.apache.commons.math.linear.RealMatrixImpl;
+import org.apache.commons.math.linear.SingularValueDecomposition;
+import org.apache.commons.math.linear.SingularValueDecompositionImpl;
+import org.apache.commons.math.util.MathUtils;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -32,14 +43,15 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<RealMatrixImpl> {
+		implements Wrapper<Array2DRowRealMatrix> {
 	private static final long serialVersionUID = -1161807620507675926L;
 
-	private RealMatrixImpl matrix = null;
+	private Array2DRowRealMatrix matrix = null;
 
 	public CommonsMathDenseDoubleMatrix2D(long... size) {
 		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			matrix = new RealMatrixImpl((int) size[ROW], (int) size[COLUMN]);
+			matrix = new Array2DRowRealMatrix((int) size[ROW],
+					(int) size[COLUMN]);
 		}
 	}
 
@@ -52,18 +64,18 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public CommonsMathDenseDoubleMatrix2D(RealMatrix matrix) {
-		if (matrix instanceof RealMatrixImpl) {
-			this.matrix = (RealMatrixImpl) matrix;
+		if (matrix instanceof Array2DRowRealMatrix) {
+			this.matrix = (Array2DRowRealMatrix) matrix;
 		} else {
-			throw new MatrixException("Can oly use RealMatrixImpl");
+			throw new MatrixException("Can oly use Array2DRowRealMatrix");
 		}
 	}
 
-	public RealMatrixImpl getWrappedObject() {
+	public Array2DRowRealMatrix getWrappedObject() {
 		return matrix;
 	}
 
-	public void setWrappedObject(RealMatrixImpl object) {
+	public void setWrappedObject(Array2DRowRealMatrix object) {
 		this.matrix = object;
 	}
 
@@ -95,7 +107,49 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix inv() {
-		return new CommonsMathDenseDoubleMatrix2D(matrix.inverse());
+		return new CommonsMathDenseDoubleMatrix2D(new LUDecompositionImpl(
+				matrix).getSolver().getInverse());
+	}
+
+	public Matrix[] lu() {
+		LUDecomposition lu = new LUDecompositionImpl(matrix);
+		Matrix l = new CommonsMathDenseDoubleMatrix2D(lu.getL());
+		Matrix u = new CommonsMathDenseDoubleMatrix2D(lu.getU());
+		return new Matrix[] { l, u };
+	}
+
+	public Matrix[] qr() {
+		QRDecomposition qr = new QRDecompositionImpl(matrix);
+		Matrix q = new CommonsMathDenseDoubleMatrix2D(qr.getQ());
+		Matrix r = new CommonsMathDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
+	}
+
+	public Matrix[] svd() {
+		SingularValueDecomposition svd = new SingularValueDecompositionImpl(
+				matrix);
+		Matrix u = new CommonsMathDenseDoubleMatrix2D(svd.getU());
+		Matrix s = new CommonsMathDenseDoubleMatrix2D(svd.getS());
+		Matrix v = new CommonsMathDenseDoubleMatrix2D(svd.getV());
+		return new Matrix[] { u, s, v };
+	}
+
+	public Matrix[] evd() {
+		EigenDecomposition evd = new EigenDecompositionImpl(matrix,
+				MathUtils.EPSILON);
+		Matrix v = new CommonsMathDenseDoubleMatrix2D(evd.getV());
+		Matrix d = new CommonsMathDenseDoubleMatrix2D(evd.getD());
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix chol() {
+		try {
+			CholeskyDecomposition chol = new CholeskyDecompositionImpl(matrix);
+			Matrix l = new CommonsMathDenseDoubleMatrix2D(chol.getL());
+			return l;
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 	public Matrix mtimes(Matrix m2) {

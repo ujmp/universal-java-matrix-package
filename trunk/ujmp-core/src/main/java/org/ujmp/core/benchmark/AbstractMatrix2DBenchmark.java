@@ -691,7 +691,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("copy") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("copy") == null) {
 				System.out.print("*");
 				return -1;
 			}
@@ -790,7 +791,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("inv") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("inv") == null) {
 				System.out.print("*");
 				return -1;
 			}
@@ -813,7 +815,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("svd") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("svd") == null) {
 				System.out.print("*");
 				return -1;
 			}
@@ -836,7 +839,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("svd") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("evd") == null) {
 				System.out.print("*");
 				return -1;
 			}
@@ -859,7 +863,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("qr") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("qr") == null) {
 				System.out.print("*");
 				return -1;
 			}
@@ -882,7 +887,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (m.getClass().getDeclaredMethod("lu") == null) {
+			if (!m.getClass().getName().startsWith("org.ujmp")
+					&& m.getClass().getDeclaredMethod("lu") == null) {
 				System.out.print("*");
 				return -1;
 			}

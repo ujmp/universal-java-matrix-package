@@ -154,15 +154,16 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new Matrix[] { v, d };
 	}
 
-	@Override
-	public Matrix[] svd() {
-		SingularValue<Double> svd = SingularValueDecomposition.makePrimitive();
-		svd.compute(matrix);
-		Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
-		Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
-		Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
-		return new Matrix[] { u, s, v };
-	}
+	// SVD does not work with example test case
+	// @Override
+	// public Matrix[] svd() {
+	// SingularValue<Double> svd = SingularValueDecomposition.makePrimitive();
+	// svd.compute(matrix);
+	// Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
+	// Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
+	// Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
+	// return new Matrix[] { u, s, v };
+	// }
 
 	@Override
 	public Matrix chol() {

@@ -13,6 +13,20 @@
 	<packaging>jar</packaging>
 	<url>http://www.ujmp.org</url>
 
+	<developers>
+    <developer>
+      <id>arndt</id>
+      <name>Holger Arndt</name>
+      <email>mail@holger-arndt.com</email>
+      <url>http://www.holger-arndt.com</url>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+	</developers>
+
+
 	<build>
 		<resources>
 			<resource>
@@ -69,6 +83,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-assembly-plugin</artifactId>
+        		<version>2.2-beta-4</version>
+        		<configuration>
+         			<descriptors>
+            		<descriptor>src/assemble/complete.xml</descriptor>
+            		<descriptor>src/assemble/sources.xml</descriptor>
+            		<descriptor>src/assemble/with-deps.xml</descriptor>
+          			</descriptors>
+          			<archive>
+            		<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+          			</archive>
+        		</configuration>        		
+      		</plugin>			
 		</plugins>
 	</build>
 
@@ -263,6 +292,12 @@
 			<dependency>
 				<groupId>parallelcolt</groupId>
 				<artifactId>parallelcolt</artifactId>
+				<version>0.9.1</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>jtransforms</groupId>
+				<artifactId>jtransforms</artifactId>
 				<version>0.9.1</version>
 				<scope>compile</scope>
 			</dependency>

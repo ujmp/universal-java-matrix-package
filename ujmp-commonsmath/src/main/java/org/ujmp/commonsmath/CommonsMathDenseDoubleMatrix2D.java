@@ -125,14 +125,15 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new Matrix[] { q, r };
 	}
 
-	public Matrix[] svd() {
-		SingularValueDecomposition svd = new SingularValueDecompositionImpl(
-				matrix);
-		Matrix u = new CommonsMathDenseDoubleMatrix2D(svd.getU());
-		Matrix s = new CommonsMathDenseDoubleMatrix2D(svd.getS());
-		Matrix v = new CommonsMathDenseDoubleMatrix2D(svd.getV());
-		return new Matrix[] { u, s, v };
-	}
+	// SVD does not work on example test case
+	// public Matrix[] svd() {
+	// SingularValueDecomposition svd = new SingularValueDecompositionImpl(
+	// matrix);
+	// Matrix u = new CommonsMathDenseDoubleMatrix2D(svd.getU());
+	// Matrix s = new CommonsMathDenseDoubleMatrix2D(svd.getS());
+	// Matrix v = new CommonsMathDenseDoubleMatrix2D(svd.getV());
+	// return new Matrix[] { u, s, v };
+	// }
 
 	public Matrix[] evd() {
 		EigenDecomposition evd = new EigenDecompositionImpl(matrix,

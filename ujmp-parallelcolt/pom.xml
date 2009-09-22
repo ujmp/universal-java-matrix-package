@@ -27,6 +27,10 @@
 			<artifactId>parallelcolt</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>jtransforms</groupId>
+			<artifactId>jtransforms</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>netlib-java</groupId>
 			<artifactId>netlib-java</artifactId>
 		</dependency>

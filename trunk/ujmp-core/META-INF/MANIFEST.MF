@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_core
-Bundle-SymbolicName: ujmp_core
-Bundle-Version: 1.0.0
+Bundle-Name: ujmp-core
+Bundle-SymbolicName: ujmp-core
+Bundle-Version: 0.2.4
 Export-Package: org.ujmp.core,
  org.ujmp.core.annotation,
  org.ujmp.core.benchmark,
@@ -110,3 +110,4 @@ Export-Package: org.ujmp.core,
  org.ujmp.core.util.concurrent,
  org.ujmp.core.util.io,
  org.ujmp.core.util.matrices
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

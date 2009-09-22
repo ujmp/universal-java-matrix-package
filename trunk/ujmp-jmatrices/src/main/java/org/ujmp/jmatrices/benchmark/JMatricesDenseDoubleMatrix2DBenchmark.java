@@ -25,7 +25,6 @@ package org.ujmp.jmatrices.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 

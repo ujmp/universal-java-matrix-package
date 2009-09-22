@@ -1,7 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_jama
-Bundle-SymbolicName: ujmp_jama
-Bundle-Version: 1.0.0
+Bundle-Name: ujmp-jama
+Bundle-SymbolicName: ujmp-jama
+Bundle-Version: 0.2.4
 Export-Package: org.ujmp.jama,
  org.ujmp.jama.benchmark
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: ujmp;bundle-version="0.2.4",
+ ujmp-core;bundle-version="0.2.4"

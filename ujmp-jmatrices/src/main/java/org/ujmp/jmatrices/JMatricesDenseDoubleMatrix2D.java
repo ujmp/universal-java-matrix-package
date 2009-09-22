@@ -27,7 +27,6 @@ import org.jmatrices.dbl.MatrixFactory;
 import org.jmatrices.dbl.decomposition.EigenvalueDecomposition;
 import org.jmatrices.dbl.decomposition.LUDecomposition;
 import org.jmatrices.dbl.decomposition.QRDecomposition;
-import org.jmatrices.dbl.decomposition.SingularValueDecomposition;
 import org.jmatrices.dbl.operator.MatrixOperator;
 import org.jmatrices.dbl.transformer.MatrixTransformer;
 import org.ujmp.core.Matrix;

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_gui
-Bundle-SymbolicName: ujmp_gui
-Bundle-Version: 1.0.0
+Bundle-Name: ujmp-gui
+Bundle-SymbolicName: ujmp-gui
+Bundle-Version: 0.2.4
 Export-Package: org.ujmp.gui,
  org.ujmp.gui.actions,
  org.ujmp.gui.clipboard,
@@ -19,3 +19,6 @@ Export-Package: org.ujmp.gui,
  org.ujmp.gui.statusbar,
  org.ujmp.gui.toolbar,
  org.ujmp.gui.util
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: ujmp;bundle-version="0.2.4",
+ ujmp-core;bundle-version="0.2.4"

@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_jexcelapi
-Bundle-SymbolicName: ujmp_jexcelapi
-Bundle-Version: 1.0.0
+Bundle-Name: ujmp-jexcelapi
+Bundle-SymbolicName: ujmp-jexcelapi
+Bundle-Version: 0.2.4
 Export-Package: org.ujmp.jexcelapi
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: ujmp;bundle-version="0.2.4",
+ ujmp-core;bundle-version="0.2.4"

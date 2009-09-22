@@ -1,7 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ujmp_jampack
-Bundle-SymbolicName: ujmp_jampack
-Bundle-Version: 1.0.0.qualifier
+Bundle-Name: ujmp-jampack
+Bundle-SymbolicName: ujmp-jampack
+Bundle-Version: 0.2.4
 Export-Package: org.ujmp.jampack,
  org.ujmp.jampack.benchmark
+Require-Bundle: ujmp;bundle-version="0.2.4",
+ ujmp-core;bundle-version="0.2.4"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

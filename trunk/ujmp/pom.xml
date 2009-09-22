@@ -14,16 +14,12 @@
 	<url>http://www.ujmp.org</url>
 
 	<developers>
-    <developer>
-      <id>arndt</id>
-      <name>Holger Arndt</name>
-      <email>mail@holger-arndt.com</email>
-      <url>http://www.holger-arndt.com</url>
-      <roles>
-        <role>architect</role>
-        <role>developer</role>
-      </roles>
-    </developer>
+		<developer>
+			<id>arndt</id>
+			<name>Holger Arndt</name>
+			<email>mail@holger-arndt.com</email>
+			<url>http://www.holger-arndt.com/</url>
+		</developer>
 	</developers>
 
 
@@ -84,20 +80,20 @@
 				</executions>
 			</plugin>
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-assembly-plugin</artifactId>
-        		<version>2.2-beta-4</version>
-        		<configuration>
-         			<descriptors>
-            		<descriptor>src/assemble/complete.xml</descriptor>
-            		<descriptor>src/assemble/sources.xml</descriptor>
-            		<descriptor>src/assemble/with-deps.xml</descriptor>
-          			</descriptors>
-          			<archive>
-            		<manifestFile>META-INF/MANIFEST.MF</manifestFile>
-          			</archive>
-        		</configuration>        		
-      		</plugin>			
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-4</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assemble/complete.xml</descriptor>
+						<descriptor>src/assemble/sources.xml</descriptor>
+						<descriptor>src/assemble/with-deps.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

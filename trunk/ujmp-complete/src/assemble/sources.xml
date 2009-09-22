@@ -1,66 +1,62 @@
 <assembly>
-  <id>sources</id>
-  <formats>
-    <format>jar</format>
-  </formats>
-  <includeBaseDirectory>false</includeBaseDirectory>
-  <moduleSets>
-    <moduleSet>
-      <includes>
-        <include>org.ujmp:ujmp-core</include>
-        <include>org.ujmp:ujmp-gui</include>
-      </includes>
-      <sources>
-        <outputDirectory></outputDirectory>
-       <!-- <outputDirectory>sources/${artifactId}</outputDirectory> -->
-      </sources>
-    </moduleSet>
-  </moduleSets>
-  
-  <!--
-  <dependencySets>
-    <dependencySet>
-      <outputDirectory></outputDirectory>
-      <outputFileNameMapping></outputFileNameMapping>
-      <unpack>true</unpack>
-      <scope>runtime</scope>
-      <includes>
-        <include>org.ujmp:ujmp-bpca</include>
-        <include>org.ujmp:ujmp-colt</include>
-        <include>org.ujmp:ujmp-commonsmath</include>
-        <include>org.ujmp:ujmp-hadoop</include>
-        <include>org.ujmp:ujmp-itext</include>
-        <include>org.ujmp:ujmp-jackcess</include>
-        <include>org.ujmp:ujmp-jama</include>
-        <include>org.ujmp:ujmp-jampack</include>
-        <include>org.ujmp:ujmp-jdbc</include>
-        <include>org.ujmp:ujmp-jexcelapi</include>
-        <include>org.ujmp:ujmp-jmatharray</include>
-        <include>org.ujmp:ujmp-jmathplot</include>
-        <include>org.ujmp:ujmp-jmatio</include>
-        <include>org.ujmp:ujmp-jmatrices</include>
-        <include>org.ujmp:ujmp-jsci</include>
-        <include>org.ujmp:ujmp-jscience</include>
-        <include>org.ujmp:ujmp-jung</include>
-        <include>org.ujmp:ujmp-lsimpute</include>
-        <include>org.ujmp:ujmp-lucene</include>
-        <include>org.ujmp:ujmp-mail</include>
-        <include>org.ujmp:ujmp-mantissa</include>
-        <include>org.ujmp:ujmp-mtj</include>
-        <include>org.ujmp:ujmp-ojalgo</include>
-        <include>org.ujmp:ujmp-orbital</include>
-        <include>org.ujmp:ujmp-owlpack</include>
-        <include>org.ujmp:ujmp-parallelcolt</include>
-        <include>org.ujmp:ujmp-pdfbox</include>
-        <include>org.ujmp:ujmp-sst</include>
-        <include>org.ujmp:ujmp-vecmath</include> 
-      </includes>
-    </dependencySet>
-  </dependencySets> -->
-  <fileSets>
-    <fileSet>
-      <directory>src/main/java</directory>
-      <outputDirectory></outputDirectory>
-    </fileSet>
-  </fileSets> -->
+	<id>sources</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<moduleSets>
+		<moduleSet>
+			<includes>
+				<include>org.ujmp:ujmp-core</include>
+				<include>org.ujmp:ujmp-gui</include>
+			</includes>
+			<sources>
+				<outputDirectory></outputDirectory>
+				<!-- <outputDirectory>sources/${artifactId}</outputDirectory> -->
+			</sources>
+		</moduleSet>
+	</moduleSets>
+
+	<!--
+		<dependencySets> <dependencySet> <outputDirectory></outputDirectory>
+		<outputFileNameMapping></outputFileNameMapping> <unpack>true</unpack>
+		<scope>runtime</scope> <includes>
+		<include>org.ujmp:ujmp-bpca</include>
+		<include>org.ujmp:ujmp-colt</include>
+		<include>org.ujmp:ujmp-commonsmath</include>
+		<include>org.ujmp:ujmp-hadoop</include>
+		<include>org.ujmp:ujmp-itext</include>
+		<include>org.ujmp:ujmp-jackcess</include>
+		<include>org.ujmp:ujmp-jama</include>
+		<include>org.ujmp:ujmp-jampack</include>
+		<include>org.ujmp:ujmp-jdbc</include>
+		<include>org.ujmp:ujmp-jexcelapi</include>
+		<include>org.ujmp:ujmp-jmatharray</include>
+		<include>org.ujmp:ujmp-jmathplot</include>
+		<include>org.ujmp:ujmp-jmatio</include>
+		<include>org.ujmp:ujmp-jmatrices</include>
+		<include>org.ujmp:ujmp-jsci</include>
+		<include>org.ujmp:ujmp-jscience</include>
+		<include>org.ujmp:ujmp-jung</include>
+		<include>org.ujmp:ujmp-lsimpute</include>
+		<include>org.ujmp:ujmp-lucene</include>
+		<include>org.ujmp:ujmp-mail</include>
+		<include>org.ujmp:ujmp-mantissa</include>
+		<include>org.ujmp:ujmp-mtj</include>
+		<include>org.ujmp:ujmp-ojalgo</include>
+		<include>org.ujmp:ujmp-orbital</include>
+		<include>org.ujmp:ujmp-owlpack</include>
+		<include>org.ujmp:ujmp-parallelcolt</include>
+		<include>org.ujmp:ujmp-pdfbox</include>
+		<include>org.ujmp:ujmp-sst</include>
+		<include>org.ujmp:ujmp-vecmath</include> </includes> </dependencySet>
+		</dependencySets>
+	-->
+	<fileSets>
+		<fileSet>
+			<directory>src/main/java</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+	</fileSets>
+	-->
 </assembly>

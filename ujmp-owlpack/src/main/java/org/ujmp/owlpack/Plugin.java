@@ -38,7 +38,7 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("owlpack.jar");
-		neededClasses.add("edu.linpack.Matrix");
+		neededClasses.add("edu.rice.linpack.Matrix.Matrix");
 	}
 
 	public String getDescription() {

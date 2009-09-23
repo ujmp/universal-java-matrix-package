@@ -97,22 +97,6 @@ public abstract class AbstractMatrix2DBenchmark {
 	private final List<long[][]> mtimesSizes = Arrays.asList(new long[][][] { { SIZE500X500,
 			SIZE500X500 } });
 
-	private boolean runInit = false;
-
-	private boolean runCreate = false;
-
-	private boolean runCopy = false;
-
-	private boolean runPlusScalarNew = false;
-
-	private boolean runPlusScalarOrig = false;
-
-	private boolean runTimesScalarNew = false;
-
-	private boolean runTimesScalarOrig = false;
-
-	private boolean runTransposeOrig = false;
-
 	public abstract Matrix createMatrix(long... size) throws MatrixException;
 
 	public abstract Matrix createMatrix(Matrix source) throws MatrixException;
@@ -126,59 +110,59 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public boolean isRunInit() {
-		return runInit;
+		return "true".equals(System.getProperty("runInit"));
 	}
 
 	public void setRunInit(boolean runInit) {
-		this.runInit = runInit;
+		System.setProperty("runInit", "" + runInit);
 	}
 
 	public boolean isRunCreate() {
-		return runCreate;
+		return "true".equals(System.getProperty("runCreate"));
 	}
 
 	public void setRunCreate(boolean runCreate) {
-		this.runCreate = runCreate;
+		System.setProperty("runCreate", "" + runCreate);
 	}
 
 	public boolean isRunCopy() {
-		return runCopy;
+		return "true".equals(System.getProperty("runCopy"));
 	}
 
 	public void setRunCopy(boolean runCopy) {
-		this.runCopy = runCopy;
+		System.setProperty("runCopy", "" + runCopy);
 	}
 
 	public boolean isRunPlusScalarNew() {
-		return runPlusScalarNew;
+		return "true".equals(System.getProperty("runPlusScalarNew"));
 	}
 
 	public void setRunPlusScalarNew(boolean runPlusScalarNew) {
-		this.runPlusScalarNew = runPlusScalarNew;
+		System.setProperty("runPlusScalarNew", "" + runPlusScalarNew);
 	}
 
 	public boolean isRunPlusScalarOrig() {
-		return runPlusScalarOrig;
+		return "true".equals(System.getProperty("runPlusScalarOrig"));
 	}
 
 	public void setRunPlusScalarOrig(boolean runPlusScalarOrig) {
-		this.runPlusScalarOrig = runPlusScalarOrig;
+		System.setProperty("runPlusScalarOrig", "" + runPlusScalarOrig);
 	}
 
 	public boolean isRunTimesScalarNew() {
-		return runTimesScalarNew;
+		return "true".equals(System.getProperty("runTimesScalarNew"));
 	}
 
 	public void setRunTimesScalarNew(boolean runTimesScalarNew) {
-		this.runTimesScalarNew = runTimesScalarNew;
+		System.setProperty("runTimesScalarNew", "" + runTimesScalarNew);
 	}
 
 	public boolean isRunTimesScalarOrig() {
-		return runTimesScalarOrig;
+		return "true".equals(System.getProperty("runTimesScalarOrig"));
 	}
 
 	public void setRunTimesScalarOrig(boolean runTimesScalarOrig) {
-		this.runTimesScalarOrig = runTimesScalarOrig;
+		System.setProperty("runTimesScalarOrig", "" + runTimesScalarOrig);
 	}
 
 	public boolean isRunTransposeNew() {
@@ -238,11 +222,11 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public boolean isRunTransposeOrig() {
-		return runTransposeOrig;
+		return "true".equals(System.getProperty("runTransposeOrig"));
 	}
 
 	public void setRunTransposeOrig(boolean runTransposeOrig) {
-		this.runTransposeOrig = runTransposeOrig;
+		System.setProperty("runTransposeOrig", "" + runTransposeOrig);
 	}
 
 	public List<long[]> getTransposeSizes() {
@@ -286,31 +270,31 @@ public abstract class AbstractMatrix2DBenchmark {
 			System.out.println(createMatrix(1, 1).getClass().getSimpleName());
 			System.out.println("===============================================================");
 
-			if (runInit) {
+			if (isRunInit()) {
 				init();
 			}
 
-			if (runCreate) {
+			if (isRunCreate()) {
 				result.add(runBenchmarkCreate());
 			}
 
-			if (runCopy) {
+			if (isRunCopy()) {
 				result.add(runBenchmarkCopy());
 			}
 
-			if (runPlusScalarNew) {
+			if (isRunPlusScalarNew()) {
 				result.add(runBenchmarkPlusScalarNew());
 			}
 
-			if (runPlusScalarOrig) {
+			if (isRunPlusScalarOrig()) {
 				result.add(runBenchmarkPlusScalarOrig());
 			}
 
-			if (runTimesScalarNew) {
+			if (isRunTimesScalarNew()) {
 				result.add(runBenchmarkTimesScalarNew());
 			}
 
-			if (runTimesScalarOrig) {
+			if (isRunTimesScalarOrig()) {
 				result.add(runBenchmarkTimesScalarOrig());
 			}
 
@@ -318,7 +302,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				result.add(runBenchmarkTransposeNew());
 			}
 
-			if (runTransposeOrig) {
+			if (isRunTransposeOrig()) {
 				result.add(runBenchmarkTransposeOrig());
 			}
 
@@ -719,7 +703,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("copy") == null) {
 				System.err.print("-");
 				return -1;
@@ -824,7 +808,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix m = null, r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("inv") == null) {
 				System.err.print("-");
 				return -1;
@@ -848,7 +832,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("svd") == null) {
 				System.err.print("-");
 				return -1;
@@ -872,7 +856,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("evd") == null) {
 				System.err.print("-");
 				return -1;
@@ -896,7 +880,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("qr") == null) {
 				System.err.print("-");
 				return -1;
@@ -920,7 +904,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix[] r = null;
 		try {
 			m = createMatrix(size);
-			if (!m.getClass().getName().startsWith("org.ujmp")
+			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("lu") == null) {
 				System.err.print("-");
 				return -1;
@@ -944,6 +928,13 @@ public abstract class AbstractMatrix2DBenchmark {
 		try {
 			m0 = createMatrix(size0);
 			m1 = createMatrix(size1);
+
+			if (m0.getClass().getName().startsWith("org.ujmp.orbital")) {
+				// this matrix takes 100 times longer for multiplication
+				System.err.print("skip");
+				return -1;
+			}
+
 			m0.randn(Ret.ORIG);
 			m1.randn(Ret.ORIG);
 			long t0 = System.currentTimeMillis();

@@ -124,7 +124,7 @@ public class MatrixBenchmark {
 
 	public void configureDefault() throws Exception {
 		setBenchmarkRuns(1);
-		setRunsPerMatrix(1);
+		setRunsPerMatrix(10);
 
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
@@ -353,7 +353,8 @@ public class MatrixBenchmark {
 			for (Matrix m : results) {
 				if (m != null && !(m instanceof EmptyMatrix)) {
 					try {
-						String name = InetAddress.getLocalHost().getHostName();
+						String name = "results" + File.separator;
+						name += InetAddress.getLocalHost().getHostName();
 						name += "-" + System.getProperty("os.name");
 						name += "-" + System.getProperty("java.version");
 						name += "-" + m.getLabel();

@@ -1,6 +1,8 @@
 package org.ujmp.complete;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -34,29 +36,49 @@ import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
 import org.ujmp.sst.SSTDenseDoubleMatrix;
 import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 
-@SuppressWarnings("unchecked")
 public class TestCompareMatrices extends TestCase {
 
 	private static final double TOLERANCE = 1e-4;
 
-	public static Class<Matrix>[] ALLFLOATMATRIXCLASSES = new Class[] {
-			DefaultDenseDoubleMatrix2D.class, ArrayDenseDoubleMatrix2D.class,
-			DefaultSparseDoubleMatrix.class, DefaultDenseBigDecimalMatrix2D.class,
-			ArrayDenseBigDecimalMatrix2D.class, DefaultSparseBigDecimalMatrix.class,
-			DefaultDenseFloatMatrix2D.class, ArrayDenseFloatMatrix2D.class,
-			DefaultSparseFloatMatrix.class, ColtDenseDoubleMatrix2D.class,
-			ColtSparseDoubleMatrix2D.class, CommonsMathDenseDoubleMatrix2D.class,
-			JamaDenseDoubleMatrix2D.class, JMatricesDenseDoubleMatrix2D.class,
-			JSciDenseDoubleMatrix2D.class, JScienceDenseDoubleMatrix2D.class,
-			MantissaDenseDoubleMatrix2D.class, MTJDenseDoubleMatrix2D.class,
-			OjalgoDenseDoubleMatrix2D.class, OrbitalDenseDoubleMatrix2D.class,
-			OwlpackDenseDoubleMatrix2D.class, ParallelColtDenseDoubleMatrix2D.class,
-			ParallelColtSparseDoubleMatrix2D.class, SSTDenseDoubleMatrix.class,
-			VecMathDenseDoubleMatrix2D.class, JampackDenseDoubleMatrix2D.class };
+	public static List<Class<? extends Matrix>> ALLFLOATMATRIXCLASSES = null;
 
-	private Matrix getMatrix(Class<Matrix> mclass, Matrix m) {
+	static {
+		ALLFLOATMATRIXCLASSES = new ArrayList<Class<? extends Matrix>>();
+		ALLFLOATMATRIXCLASSES.add(DefaultDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ArrayDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultSparseDoubleMatrix.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultDenseBigDecimalMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ArrayDenseBigDecimalMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultSparseBigDecimalMatrix.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultDenseFloatMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ArrayDenseFloatMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultSparseFloatMatrix.class);
+		ALLFLOATMATRIXCLASSES.add(ColtDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ColtSparseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(CommonsMathDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JamaDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JMatricesDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JSciDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JScienceDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(MantissaDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(MTJDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(OjalgoDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(OrbitalDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(OwlpackDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ParallelColtDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(ParallelColtSparseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(VecMathDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JampackDenseDoubleMatrix2D.class);
+
+		if (!"1.5".equals(System.getProperty("java.specification.version"))) {
+			ALLFLOATMATRIXCLASSES.add(SSTDenseDoubleMatrix.class);
+		}
+
+	}
+
+	private Matrix getMatrix(Class<? extends Matrix> mclass, Matrix m) {
 		try {
-			Constructor<Matrix> con = mclass.getConstructor(Matrix.class);
+			Constructor<? extends Matrix> con = mclass.getConstructor(Matrix.class);
 			return con.newInstance(m);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,11 +92,15 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref2 = MatrixFactory.randn(5, 15);
 		Matrix ref3 = ref1.mtimes(Ret.LINK, true, ref2);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = getMatrix(mclass, ref2);
-			Matrix m3 = m1.mtimes(m2);
-			assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = getMatrix(mclass, ref2);
+				Matrix m3 = m1.mtimes(m2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 
@@ -83,11 +109,15 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref2 = MatrixFactory.randn(10, 10);
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = getMatrix(mclass, ref2);
-			Matrix m3 = m1.plus(m2);
-			assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = getMatrix(mclass, ref2);
+				Matrix m3 = m1.plus(m2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 
@@ -96,11 +126,15 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref2 = MatrixFactory.randn(10, 10);
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = getMatrix(mclass, ref2);
-			Matrix m3 = m1.minus(m2);
-			assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = getMatrix(mclass, ref2);
+				Matrix m3 = m1.minus(m2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 
@@ -109,12 +143,17 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref2 = MatrixFactory.randn(10, 10);
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = getMatrix(mclass, ref2);
-			Matrix m3 = m1.times(m2);
-			assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = getMatrix(mclass, ref2);
+				Matrix m3 = m1.times(m2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
+
 	}
 
 	public void testDivide() throws Exception {
@@ -122,11 +161,15 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref2 = MatrixFactory.randn(10, 10);
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = getMatrix(mclass, ref2);
-			Matrix m3 = m1.divide(m2);
-			assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = getMatrix(mclass, ref2);
+				Matrix m3 = m1.divide(m2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 
@@ -134,14 +177,18 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref1 = MatrixFactory.randn(10, 10);
 		Matrix ref2 = ref1.inv();
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = m1.inv();
-			Matrix m3 = m1.pinv();
-			Matrix m4 = m1.ginv();
-			assertEquals(mclass.toString(), 0.0, ref2.minus(m2).doubleValue(), TOLERANCE);
-			assertEquals(mclass.toString(), 0.0, ref2.minus(m3).doubleValue(), TOLERANCE);
-			assertEquals(mclass.toString(), 0.0, ref2.minus(m4).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = m1.inv();
+				Matrix m3 = m1.pinv();
+				Matrix m4 = m1.ginv();
+				assertEquals(mclass.toString(), 0.0, ref2.minus(m2).doubleValue(), TOLERANCE);
+				assertEquals(mclass.toString(), 0.0, ref2.minus(m3).doubleValue(), TOLERANCE);
+				assertEquals(mclass.toString(), 0.0, ref2.minus(m4).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 
@@ -149,10 +196,14 @@ public class TestCompareMatrices extends TestCase {
 		Matrix ref1 = MatrixFactory.randn(10, 10);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
-		for (Class<Matrix> mclass : ALLFLOATMATRIXCLASSES) {
-			Matrix m1 = getMatrix(mclass, ref1);
-			Matrix m2 = m1.transpose();
-			assertEquals(mclass.toString(), 0.0, ref2.minus(m2).doubleValue(), TOLERANCE);
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m2 = m1.transpose();
+				assertEquals(mclass.toString(), 0.0, ref2.minus(m2).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
 		}
 	}
 

@@ -55,9 +55,13 @@ public abstract class ExportMatrix {
 		toFile(format, new File(filename), matrix, parameters);
 	}
 
-	public static final void toFile(FileFormat format, File file, Matrix matrix, Object... parameters)
-			throws MatrixException, IOException {
+	public static final void toFile(FileFormat format, File file, Matrix matrix,
+			Object... parameters) throws MatrixException, IOException {
 		try {
+			File dir = file.getParentFile();
+			if (dir != null && !dir.exists()) {
+				dir.mkdirs();
+			}
 			Class<?> c = Class.forName("org.ujmp.core.io.ExportMatrix" + format.name());
 			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Matrix.class,
 					Object[].class });

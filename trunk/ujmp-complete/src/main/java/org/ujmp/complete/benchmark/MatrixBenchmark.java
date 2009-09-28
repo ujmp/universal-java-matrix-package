@@ -72,15 +72,6 @@ public class MatrixBenchmark {
 		if (isRunMTJDenseDoubleMatrix2DBenchmark()) {
 			list.add(new MTJDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
-			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunOrbitalDenseDoubleMatrix2DBenchmark()) {
-			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
-			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
-		}
 		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
 		}
@@ -89,6 +80,15 @@ public class MatrixBenchmark {
 		}
 		if (isRunColtDenseDoubleMatrix2DBenchmark()) {
 			list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunOrbitalDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunSSTDenseDoubleMatrix2DBenchmark()) {
 			list.add(new SSTDenseDoubleMatrixBenchmark());
@@ -340,6 +340,9 @@ public class MatrixBenchmark {
 					}
 					results.set(i, m);
 				}
+				Thread.sleep(1000);
+				System.gc();
+				Thread.sleep(1000);
 			}
 
 			for (int i = 0; i < results.size(); i++) {

@@ -65,17 +65,25 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix inv() throws MatrixException {
-		return new JamaDenseDoubleMatrix2D(new LUDecomposition(matrix)
-				.solve(identity(matrix.getColumnDimension(), matrix
-						.getColumnDimension())));
-		// return new JamaDenseDoubleMatrix2D(matrix.inverse());
+		return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
 	public Matrix[] svd() throws MatrixException {
-		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
-		return new Matrix[] { new JamaDenseDoubleMatrix2D(svd.getU()),
-				new JamaDenseDoubleMatrix2D(svd.getS()),
-				new JamaDenseDoubleMatrix2D(svd.getV()) };
+		if (getColumnCount() > getRowCount()) {
+			SingularValueDecomposition svd = new SingularValueDecomposition(
+					matrix.transpose());
+			Matrix u = new JamaDenseDoubleMatrix2D(svd.getV());
+			Matrix s = new JamaDenseDoubleMatrix2D(svd.getS().transpose());
+			Matrix v = new JamaDenseDoubleMatrix2D(svd.getU());
+			return new Matrix[] { u, s, v };
+		} else {
+			SingularValueDecomposition svd = new SingularValueDecomposition(
+					matrix);
+			Matrix u = new JamaDenseDoubleMatrix2D(svd.getU());
+			Matrix s = new JamaDenseDoubleMatrix2D(svd.getS());
+			Matrix v = new JamaDenseDoubleMatrix2D(svd.getV());
+			return new Matrix[] { u, s, v };
+		}
 	}
 
 	public double getDouble(long row, long column) {

@@ -28,7 +28,9 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleSingularValueDecompositionDC;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
 
@@ -41,6 +43,14 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	public ParallelColtDenseDoubleMatrix2D(long... size) {
 		this.matrix = new DenseDoubleMatrix2D((int) size[ROW],
 				(int) size[COLUMN]);
+	}
+
+	public ParallelColtDenseDoubleMatrix2D(DoubleMatrix2D m) {
+		if (m instanceof DenseDoubleMatrix2D) {
+			this.matrix = (DenseDoubleMatrix2D) m;
+		} else {
+			this.matrix = new DenseDoubleMatrix2D(m.toArray());
+		}
 	}
 
 	public ParallelColtDenseDoubleMatrix2D(DenseDoubleMatrix2D m) {
@@ -112,6 +122,15 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		} else {
 			return super.mtimes(m);
 		}
+	}
+
+	public Matrix[] svd() {
+		DenseDoubleSingularValueDecompositionDC svd = new DenseDoubleSingularValueDecompositionDC(
+				matrix, true, false);
+		Matrix u = new ParallelColtDenseDoubleMatrix2D(svd.getU());
+		Matrix s = new ParallelColtDenseDoubleMatrix2D(svd.getS());
+		Matrix v = new ParallelColtDenseDoubleMatrix2D(svd.getV());
+		return new Matrix[] { u, s, v };
 	}
 
 	public Matrix copy() {

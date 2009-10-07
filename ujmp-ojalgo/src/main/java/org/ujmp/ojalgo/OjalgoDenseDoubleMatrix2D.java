@@ -47,15 +47,16 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<PrimitiveDenseStore> {
+		implements Wrapper<MatrixStore<Double>> {
 
 	private static final long serialVersionUID = 6628172130438716653L;
 
 	private transient PrimitiveDenseStore matrix = null;
 
 	public OjalgoDenseDoubleMatrix2D(final long... size) {
-		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY.makeEmpty(
+		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY.makeZero(
 				(int) size[ROW], (int) size[COLUMN]);
+		matrix.unshade();
 	}
 
 	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
@@ -65,13 +66,25 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public OjalgoDenseDoubleMatrix2D(final PrimitiveDenseStore matrix) {
-		this.matrix = matrix;
+	public OjalgoDenseDoubleMatrix2D(final MatrixStore<Double> m) {
+		this.setWrappedObject(m);
 	}
 
-	public OjalgoDenseDoubleMatrix2D(MatrixStore<Double> m) {
-		this.matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
-				.copyStore(m);
+	@Override
+	public Matrix chol() {
+		final Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
+		chol.compute(matrix);
+		final Matrix r = new OjalgoDenseDoubleMatrix2D(chol.getR());
+		return r;
+	}
+
+	@Override
+	public Matrix[] evd() {
+		final Eigenvalue<Double> evd = EigenvalueDecomposition.makeJama();
+		evd.compute(matrix);
+		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
+		final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
+		return new Matrix[] { v, d };
 	}
 
 	public final BasicMatrix getBasicMatrix() {
@@ -95,6 +108,21 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
+	public Matrix inv() {
+		return new OjalgoDenseDoubleMatrix2D(LUDecomposition.makePrimitive()
+				.invert(matrix));
+	}
+
+	@Override
+	public Matrix[] lu() {
+		final LU<Double> lu = LUDecomposition.makePrimitive();
+		lu.compute(matrix);
+		final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
+		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
+		return new Matrix[] { l, u };
+	}
+
+	@Override
 	public Matrix mtimes(final Matrix m) {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 			final PrimitiveDenseStore mo = ((OjalgoDenseDoubleMatrix2D) m)
@@ -107,6 +135,15 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
+	@Override
+	public Matrix[] qr() {
+		final QR<Double> qr = QRDecomposition.makePrimitive();
+		qr.compute(matrix);
+		final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
+		final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
+	}
+
 	public void setDouble(final double value, final int row, final int column) {
 		matrix.set(row, column, value);
 	}
@@ -115,8 +152,24 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix.set((int) row, (int) column, value);
 	}
 
-	public void setWrappedObject(final PrimitiveDenseStore object) {
-		matrix = object;
+	public void setWrappedObject(final MatrixStore<Double> object) {
+		if (object instanceof PrimitiveDenseStore) {
+			matrix = (PrimitiveDenseStore) object;
+		} else {
+			matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
+					.copyStore(object);
+		}
+	}
+
+	@Override
+	public Matrix[] svd() {
+		final SingularValue<Double> svd = SingularValueDecomposition
+				.makePrimitive();
+		svd.compute(matrix);
+		final Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
+		final Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
+		final Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
+		return new Matrix[] { u, s, v };
 	}
 
 	@Override
@@ -127,59 +180,6 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	@Override
 	public Matrix transpose() {
 		return new OjalgoDenseDoubleMatrix2D(matrix.transpose());
-	}
-
-	@Override
-	public Matrix inv() {
-		return new OjalgoDenseDoubleMatrix2D(
-				(PrimitiveDenseStore) LUDecomposition.makePrimitive().invert(
-						matrix));
-	}
-
-	@Override
-	public Matrix[] qr() {
-		QR<Double> qr = QRDecomposition.makePrimitive();
-		qr.compute(matrix);
-		Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
-		Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
-		return new Matrix[] { q, r };
-	}
-
-	@Override
-	public Matrix[] evd() {
-		Eigenvalue<Double> evd = EigenvalueDecomposition.makeJama();
-		evd.compute(matrix);
-		Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
-		Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
-		return new Matrix[] { v, d };
-	}
-
-	// SVD does not work with example test case
-	// @Override
-	// public Matrix[] svd() {
-	// SingularValue<Double> svd = SingularValueDecomposition.makePrimitive();
-	// svd.compute(matrix);
-	// Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
-	// Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
-	// Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
-	// return new Matrix[] { u, s, v };
-	// }
-
-	@Override
-	public Matrix chol() {
-		Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-		chol.compute(matrix);
-		Matrix r = new OjalgoDenseDoubleMatrix2D(chol.getR());
-		return r;
-	}
-
-	@Override
-	public Matrix[] lu() {
-		LU<Double> lu = LUDecomposition.makePrimitive();
-		lu.compute(matrix);
-		Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
-		Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
-		return new Matrix[] { l, u };
 	}
 
 	private void readObject(final ObjectInputStream s) throws IOException,

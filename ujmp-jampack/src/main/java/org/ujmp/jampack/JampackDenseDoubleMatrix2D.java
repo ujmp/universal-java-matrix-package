@@ -39,6 +39,7 @@ import Jampack.Parameters;
 import Jampack.Times;
 import Jampack.Z;
 import Jampack.Zmat;
+import Jampack.Zsvd;
 
 public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<Zmat> {
@@ -118,17 +119,21 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	// SVD has errors and does not work on the test case
-
-	// public Matrix[] svd() {
-	// try {
-	// Zsvd svd = new Zsvd(matrix);
-	// return new Matrix[] { new JampackDenseDoubleMatrix2D(svd.U),
-	// new JampackDenseDoubleMatrix2D(new Zmat(svd.S)),
-	// new JampackDenseDoubleMatrix2D(svd.V) };
-	// } catch (Exception e) {
-	// throw new MatrixException(e);
-	// }
-	// }
+	public Matrix[] svd() {
+		if (isSquare()) {
+			try {
+				Zsvd svd = new Zsvd(matrix);
+				Matrix u = new JampackDenseDoubleMatrix2D(svd.U);
+				Matrix s = new JampackDenseDoubleMatrix2D(new Zmat(svd.S));
+				Matrix v = new JampackDenseDoubleMatrix2D(svd.V);
+				return new Matrix[] { u, s, v };
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		} else {
+			return super.svd();
+		}
+	}
 
 	public Matrix mtimes(Matrix m) {
 		try {

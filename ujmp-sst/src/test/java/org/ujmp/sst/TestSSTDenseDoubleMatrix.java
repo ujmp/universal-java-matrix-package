@@ -146,12 +146,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testMultiply() throws Exception {
+	public void testMTimes() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testMultiply();
+		super.testMTimes();
 	}
 
 	@Override
@@ -245,21 +245,21 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testSVD() throws Exception {
+	public void testSVDFat() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testSVD();
+		super.testSVDFat();
 	}
 
 	@Override
-	public void testQR1() throws Exception {
+	public void testQRSquare() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testQR1();
+		super.testQRSquare();
 	}
 
 }

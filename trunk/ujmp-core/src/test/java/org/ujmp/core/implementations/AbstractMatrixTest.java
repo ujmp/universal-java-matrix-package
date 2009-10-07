@@ -37,6 +37,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.UJMPSettings;
 
 public abstract class AbstractMatrixTest extends TestCase {
 
@@ -484,7 +485,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testMultiply() throws Exception {
+	public void testMTimes() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
@@ -613,13 +614,13 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testQR1() throws Exception {
+	public void testQRSquare() throws Exception {
 		Matrix a = createMatrix(5, 5);
 		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
-		assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
 	}
 
 	// public void testQR2() throws Exception {
@@ -628,7 +629,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix[] qr = a.qr();
 	// Matrix prod = qr[0].mtimes(qr[1]);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 
 	// public void testQR3() throws Exception {
@@ -637,7 +639,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix[] qr = a.qr();
 	// Matrix prod = qr[0].mtimes(qr[1]);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testLU1() throws Exception {
@@ -646,7 +649,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix[] lu = a.lu();
 	// Matrix prod = lu[0].mtimes(lu[1]);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testLU2() throws Exception {
@@ -655,7 +659,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix[] lu = a.lu();
 	// Matrix prod = lu[0].mtimes(lu[1]);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testLU3() throws Exception {
@@ -664,7 +669,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix[] lu = a.lu();
 	// Matrix prod = lu[0].mtimes(lu[1]);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testChol1() throws Exception {
@@ -673,7 +679,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix chol = a.chol();
 	// Matrix prod = chol.transpose().mtimes(chol);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testChol2() throws Exception {
@@ -682,7 +689,8 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix chol = a.chol();
 	// Matrix prod = chol.transpose().mtimes(chol);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 	//
 	// public void testChol3() throws Exception {
@@ -691,48 +699,92 @@ public abstract class AbstractMatrixTest extends TestCase {
 	// Matrix chol = a.chol();
 	// Matrix prod = chol.transpose().mtimes(chol);
 	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(), 1e-12);
+	// assertEquals(0.0, prod.minus(a).doubleValue(),
+	// UJMPSettings.getTolerance());
 	// }
 
 	// test example from wikipedia
-	public void testSVD() throws Exception {
+	public void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrix(4, 5);
 		a.setAsDouble(1, 0, 0);
 		a.setAsDouble(2, 0, 4);
 		a.setAsDouble(3, 1, 2);
 		a.setAsDouble(4, 3, 1);
 
-		Matrix u = MatrixFactory.linkToArray(new double[][] { { 0, 0, 1, 0 }, { 0, 1, 0, 0 },
-				{ 0, 0, 0, -1 }, { 1, 0, 0, 0 } });
+		Matrix[] svd = a.svd();
 
-		Matrix s = MatrixFactory.linkToArray(new double[][] { { 4, 0, 0, 0, 0 }, { 0, 3, 0, 0, 0 },
-				{ 0, 0, 0, Math.sqrt(5), 0 }, { 0, 0, 0, 0, 0 } });
+		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
-		Matrix v1 = MatrixFactory.linkToArray(new double[][] { { 0, 1, 0, 0, 0 },
-				{ 0, 0, 1, 0, 0 }, { Math.sqrt(0.2), 0, 0, 0, Math.sqrt(0.8) }, { 0, 0, 0, 1, 0 },
-				{ -Math.sqrt(0.8), 0, 0, 0, Math.sqrt(0.2) } });
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
 
-		Matrix v2 = MatrixFactory.linkToArray(new double[][] {
-				{ 0, 0, Math.sqrt(0.2), 0, -Math.sqrt(0.8) }, { 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 },
-				{ 0, 0, Math.sqrt(0.8), 0, Math.sqrt(0.2) }, { 0, 0, 0, 1, 0 } });
+		if (a instanceof Closeable) {
+			((Closeable) a).close();
+		}
 
-		Matrix v3 = MatrixFactory
-				.linkToArray(new double[][] { { 0, 0, -Math.sqrt(0.2), 0, -Math.sqrt(0.8) },
-						{ 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1 },
-						{ 0, 0, -Math.sqrt(0.8), Math.sqrt(0.2), 0 } });
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+	}
+
+	public void testSVDSquare() throws Exception {
+		Matrix a = createMatrix(5, 5);
+		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
 
 		Matrix[] svd = a.svd();
 
-		assertEquals(0.0, svd[0].minus(u).doubleValue(), 1e-12);
-		assertEquals(0.0, svd[1].minus(s).doubleValue(), 1e-12);
+		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
-		// v1, v2 and v3 are all valid
-		double d1 = Math.abs(svd[2].minus(v1).doubleValue());
-		double d2 = Math.abs(svd[2].minus(v2).doubleValue());
-		double d3 = Math.abs(svd[2].minus(v3).doubleValue());
-		double v = Math.min(d1, Math.min(d2, d3));
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
 
-		assertEquals(0.0, v, 1e-12);
+		if (a instanceof Closeable) {
+			((Closeable) a).close();
+		}
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+	}
+
+	public void testSVDFat() throws Exception {
+		Matrix a = createMatrix(4, 6);
+		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
+
+		Matrix[] svd = a.svd();
+
+		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+
+		if (a instanceof Closeable) {
+			((Closeable) a).close();
+		}
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+	}
+
+	public void testSVDTall() throws Exception {
+		Matrix a = createMatrix(6, 4);
+		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
+
+		Matrix[] svd = a.svd();
+
+		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
 
 		if (a instanceof Closeable) {
 			((Closeable) a).close();

@@ -28,8 +28,10 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import cern.colt.matrix.linalg.SingularValueDecomposition;
 import cern.jet.math.Functions;
 
 public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -41,6 +43,14 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public ColtDenseDoubleMatrix2D(long... size) {
 		this.matrix = new DenseDoubleMatrix2D((int) size[ROW],
 				(int) size[COLUMN]);
+	}
+
+	public ColtDenseDoubleMatrix2D(DoubleMatrix2D m) {
+		if (m instanceof DenseDoubleMatrix2D) {
+			this.matrix = (DenseDoubleMatrix2D) m;
+		} else {
+			this.matrix = new DenseDoubleMatrix2D(m.toArray());
+		}
 	}
 
 	public ColtDenseDoubleMatrix2D(DenseDoubleMatrix2D m) {
@@ -110,6 +120,24 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			return new ColtDenseDoubleMatrix2D(ret);
 		} else {
 			return super.mtimes(m);
+		}
+	}
+
+	public Matrix[] svd() {
+		if (getColumnCount() > getRowCount()) {
+			SingularValueDecomposition svd = new SingularValueDecomposition(
+					matrix.viewDice());
+			Matrix u = new ColtDenseDoubleMatrix2D(svd.getV());
+			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS().viewDice());
+			Matrix v = new ColtDenseDoubleMatrix2D(svd.getU());
+			return new Matrix[] { u, s, v };
+		} else {
+			SingularValueDecomposition svd = new SingularValueDecomposition(
+					matrix);
+			Matrix u = new ColtDenseDoubleMatrix2D(svd.getU());
+			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS());
+			Matrix v = new ColtDenseDoubleMatrix2D(svd.getV());
+			return new Matrix[] { u, s, v };
 		}
 	}
 

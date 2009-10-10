@@ -65,7 +65,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	// Test interface CoordinateFunctions
-
 	public void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrix(3, 3);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
@@ -614,65 +613,100 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+//	public void testLUSquare() throws Exception {
+//		Matrix a = createMatrix(5, 5);
+//		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
+//			for (int c = 0; c < a.getColumnCount(); c++) {
+//				a.setAsDouble(v++, r, c);
+//			}
+//		}
+//		Matrix[] lu = a.lu();
+//		Matrix prod = lu[0].mtimes(lu[1]);
+//
+//		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+//	}
+
 	public void testQRSquare() throws Exception {
 		Matrix a = createMatrix(5, 5);
-		a.randn(Ret.ORIG);
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
 	}
 
-	// public void testQR2() throws Exception {
-	// Matrix a = createMatrix(4, 5);
-	// a.randn(Ret.ORIG);
-	// Matrix[] qr = a.qr();
-	// Matrix prod = qr[0].mtimes(qr[1]);
-	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(),
-	// UJMPSettings.getTolerance());
-	// }
+	public void testQRFat() throws Exception {
+		Matrix a = createMatrix(4, 5);
 
-	// public void testQR3() throws Exception {
-	// Matrix a = createMatrix(5, 4);
-	// a.randn(Ret.ORIG);
-	// Matrix[] qr = a.qr();
-	// Matrix prod = qr[0].mtimes(qr[1]);
-	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(),
-	// UJMPSettings.getTolerance());
-	// }
-	//
-	// public void testLU1() throws Exception {
-	// Matrix a = createMatrix(5, 5);
-	// a.randn(Ret.ORIG);
-	// Matrix[] lu = a.lu();
-	// Matrix prod = lu[0].mtimes(lu[1]);
-	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(),
-	// UJMPSettings.getTolerance());
-	// }
-	//
-	// public void testLU2() throws Exception {
-	// Matrix a = createMatrix(4, 5);
-	// a.randn(Ret.ORIG);
-	// Matrix[] lu = a.lu();
-	// Matrix prod = lu[0].mtimes(lu[1]);
-	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(),
-	// UJMPSettings.getTolerance());
-	// }
-	//
-	// public void testLU3() throws Exception {
-	// Matrix a = createMatrix(5, 4);
-	// a.randn(Ret.ORIG);
-	// Matrix[] lu = a.lu();
-	// Matrix prod = lu[0].mtimes(lu[1]);
-	//
-	// assertEquals(0.0, prod.minus(a).doubleValue(),
-	// UJMPSettings.getTolerance());
-	// }
-	//
+		// skip libraries which do not support fat matrices
+		if (a.getClass().getName().startsWith("org.ujmp.core")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.colt")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jama")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jmatio")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jmatharray")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.lucene")) {
+			return;
+		}
+
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testQRTall() throws Exception {
+		Matrix a = createMatrix(4, 5);
+
+		// skip libraries which do not support tall matrices
+		if (a.getClass().getName().startsWith("org.ujmp.core")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.colt")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jama")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jmatio")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jmatharray")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.lucene")) {
+			return;
+		}
+
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
+			for (int c = 0; c < a.getColumnCount(); c++) {
+				a.setAsDouble(v++, r, c);
+			}
+		}
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+	}
+
 	// public void testChol1() throws Exception {
 	// Matrix a = createMatrix(5, 5);
 	// a.randn(Ret.ORIG);
@@ -728,7 +762,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testSVDSquare() throws Exception {
 		Matrix a = createMatrix(5, 5);
-		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
 			}
@@ -751,7 +785,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testSVDFat() throws Exception {
 		Matrix a = createMatrix(4, 6);
-		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
 			}
@@ -774,7 +808,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testSVDTall() throws Exception {
 		Matrix a = createMatrix(6, 4);
-		for (int r = 0, v = 0; r < a.getRowCount(); r++) {
+		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
 			}

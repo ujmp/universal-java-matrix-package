@@ -174,7 +174,16 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testInverse() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.zeros(3, 3);
+		ref1.setAsDouble(1.0, 0, 0);
+		ref1.setAsDouble(2.0, 1, 0);
+		ref1.setAsDouble(3.0, 2, 0);
+		ref1.setAsDouble(4.0, 0, 1);
+		ref1.setAsDouble(1.0, 1, 1);
+		ref1.setAsDouble(2.0, 2, 1);
+		ref1.setAsDouble(3.0, 0, 2);
+		ref1.setAsDouble(7.0, 1, 2);
+		ref1.setAsDouble(1.0, 2, 2);
 		Matrix ref2 = ref1.inv();
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -193,7 +202,7 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testTranspose() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(5, 5);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {

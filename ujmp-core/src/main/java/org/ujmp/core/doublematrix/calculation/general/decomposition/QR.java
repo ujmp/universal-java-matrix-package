@@ -241,7 +241,11 @@ public class QR implements java.io.Serializable {
 	}
 
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {
-		QR qr = new QR(m);
-		return new Matrix[] { qr.getQ(), qr.getR() };
+		if (m.isSquare()) {
+			QR qr = new QR(m);
+			return new Matrix[] { qr.getQ(), qr.getR() };
+		} else {
+			throw new MatrixException("only square matrices are supported");
+		}
 	}
 }

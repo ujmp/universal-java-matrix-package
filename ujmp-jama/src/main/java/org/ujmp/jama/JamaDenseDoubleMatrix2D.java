@@ -128,15 +128,22 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		QRDecomposition qr = new QRDecomposition(matrix);
-		return new Matrix[] { new JamaDenseDoubleMatrix2D(qr.getQ()),
-				new JamaDenseDoubleMatrix2D(qr.getR()) };
+		if (isSquare()) {
+			QRDecomposition qr = new QRDecomposition(matrix);
+			Matrix q = new JamaDenseDoubleMatrix2D(qr.getQ());
+			Matrix r = new JamaDenseDoubleMatrix2D(qr.getR());
+			return new Matrix[] { q, r };
+		} else {
+			throw new MatrixException(
+					"QR decomposition only works for square matrices");
+		}
 	}
 
 	public Matrix[] lu() {
 		LUDecomposition lu = new LUDecomposition(matrix);
-		return new Matrix[] { new JamaDenseDoubleMatrix2D(lu.getL()),
-				new JamaDenseDoubleMatrix2D(lu.getU()) };
+		Matrix l = new JamaDenseDoubleMatrix2D(lu.getL());
+		Matrix u = new JamaDenseDoubleMatrix2D(lu.getU());
+		return new Matrix[] { l, u };
 	}
 
 	public Matrix mtimes(Matrix m) {

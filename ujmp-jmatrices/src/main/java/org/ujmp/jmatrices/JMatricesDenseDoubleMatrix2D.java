@@ -27,6 +27,7 @@ import org.jmatrices.dbl.MatrixFactory;
 import org.jmatrices.dbl.decomposition.EigenvalueDecomposition;
 import org.jmatrices.dbl.decomposition.LUDecomposition;
 import org.jmatrices.dbl.decomposition.QRDecomposition;
+import org.jmatrices.dbl.decomposition.SingularValueDecomposition;
 import org.jmatrices.dbl.operator.MatrixOperator;
 import org.jmatrices.dbl.transformer.MatrixTransformer;
 import org.ujmp.core.Matrix;
@@ -116,10 +117,22 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		QRDecomposition qr = new QRDecomposition(matrix);
-		Matrix q = new JMatricesDenseDoubleMatrix2D(qr.getQ());
-		Matrix r = new JMatricesDenseDoubleMatrix2D(qr.getR());
-		return new Matrix[] { q, r };
+		if (isSquare()) {
+			QRDecomposition qr = new QRDecomposition(matrix);
+			Matrix q = new JMatricesDenseDoubleMatrix2D(qr.getQ());
+			Matrix r = new JMatricesDenseDoubleMatrix2D(qr.getR());
+			return new Matrix[] { q, r };
+		} else {
+			throw new MatrixException("only allowed for square matrices");
+		}
+	}
+
+	public Matrix[] svd() {
+		SingularValueDecomposition qr = new SingularValueDecomposition(matrix);
+		Matrix u = new JMatricesDenseDoubleMatrix2D(qr.getU());
+		Matrix s = new JMatricesDenseDoubleMatrix2D(qr.getS());
+		Matrix v = new JMatricesDenseDoubleMatrix2D(qr.getV());
+		return new Matrix[] { u, s, v };
 	}
 
 	public Matrix[] lu() {

@@ -39,6 +39,7 @@ import Jampack.Parameters;
 import Jampack.Times;
 import Jampack.Z;
 import Jampack.Zmat;
+import Jampack.Zqrd;
 import Jampack.Zsvd;
 
 public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -118,7 +119,6 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new JampackDenseDoubleMatrix2D(H.trans(matrix));
 	}
 
-	// SVD has errors and does not work on the test case
 	public Matrix[] svd() {
 		if (isSquare()) {
 			try {
@@ -132,6 +132,17 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 		} else {
 			return super.svd();
+		}
+	}
+
+	public Matrix[] qr() {
+		try {
+			Zqrd qr = new Zqrd(matrix);
+			Matrix q = new JampackDenseDoubleMatrix2D(qr.Q);
+			Matrix r = new JampackDenseDoubleMatrix2D(qr.R);
+			return new Matrix[] { q, r };
+		} catch (Exception e) {
+			throw new MatrixException(e);
 		}
 	}
 

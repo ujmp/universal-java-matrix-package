@@ -96,13 +96,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int ORBITAL = 13;
 
-	private static final int PARALLELCOLT = 14;
+	private static final int OWLPACK = 14;
 
-	private static final int SST = 15;
+	private static final int PARALLELCOLT = 15;
 
-	private static final int UJMP = 16;
+	private static final int SST = 16;
 
-	private static final int VECMATH = 17;
+	private static final int UJMP = 17;
+
+	private static final int VECMATH = 18;
 
 	public enum MatrixLibrariesFormat {
 		DEFAULT, LATEX, HTML
@@ -131,6 +133,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(beginTurn() + "MTJ" + endTurn(), LABELROW, MTJ);
 		setAsString(beginTurn() + "ojAlgo" + endTurn(), LABELROW, OJALGO);
 		setAsString(beginTurn() + "Orbital" + endTurn(), LABELROW, ORBITAL);
+		setAsString(beginTurn() + "OWLPack" + endTurn(), LABELROW, OWLPACK);
 		setAsString(beginTurn() + "Parallel Colt" + endTurn(), LABELROW, PARALLELCOLT);
 		setAsString(beginTurn() + "SST" + endTurn(), LABELROW, SST);
 		setAsString(beginTurn() + "UJMP" + endTurn(), LABELROW, UJMP);
@@ -170,7 +173,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), D4, UJMP);
 		setAsString(yes(), D4PLUS, UJMP);
 		setAsString(yes(), INV, UJMP);
-		setAsString(yes(), SVD, UJMP);
+		setAsString(all(), SVD, UJMP);
 		setAsString(yes(), LU, UJMP);
 		setAsString(yes(), QR, UJMP);
 		setAsString(yes(), EVD, UJMP);
@@ -191,7 +194,6 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4PLUS, ARRAY4J);
 		setAsString(unknown(), INV, ARRAY4J);
 		setAsString(unknown(), SVD, ARRAY4J);
-		setAsString(unknown(), LU, ARRAY4J);
 		setAsString(unknown(), QR, ARRAY4J);
 		setAsString(unknown(), EVD, ARRAY4J);
 		setAsString(unknown(), CHOL, ARRAY4J);
@@ -210,7 +212,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D4, COLT);
 		setAsString(unknown(), D4PLUS, COLT);
 		setAsString(unknown(), INV, COLT);
-		setAsString(unknown(), SVD, COLT);
+		setAsString(squareTall(), SVD, COLT);
 		setAsString(unknown(), LU, COLT);
 		setAsString(unknown(), QR, COLT);
 		setAsString(unknown(), EVD, COLT);
@@ -229,7 +231,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D3, COMMONSMATH);
 		setAsString(unknown(), D4, COMMONSMATH);
 		setAsString(unknown(), D4PLUS, COMMONSMATH);
-		setAsString(unknown(), INV, COMMONSMATH);
+		setAsString(yes(), INV, COMMONSMATH);
 		setAsString(unknown(), SVD, COMMONSMATH);
 		setAsString(unknown(), LU, COMMONSMATH);
 		setAsString(unknown(), QR, COMMONSMATH);
@@ -249,8 +251,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D3, JAMA);
 		setAsString(unknown(), D4, JAMA);
 		setAsString(unknown(), D4PLUS, JAMA);
-		setAsString(unknown(), INV, JAMA);
-		setAsString(unknown(), SVD, JAMA);
+		setAsString(yes(), INV, JAMA);
+		setAsString(squareTall(), SVD, JAMA);
 		setAsString(unknown(), LU, JAMA);
 		setAsString(unknown(), QR, JAMA);
 		setAsString(unknown(), EVD, JAMA);
@@ -269,8 +271,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), D3, JAMPACK);
 		setAsString(unknown(), D4, JAMPACK);
 		setAsString(unknown(), D4PLUS, JAMPACK);
-		setAsString(unknown(), INV, JAMPACK);
-		setAsString(unknown(), SVD, JAMPACK);
+		setAsString(yes(), INV, JAMPACK);
+		setAsString(square(), SVD, JAMPACK);
 		setAsString(unknown(), LU, JAMPACK);
 		setAsString(unknown(), QR, JAMPACK);
 		setAsString(unknown(), EVD, JAMPACK);
@@ -436,6 +438,26 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(unknown(), EVD, ORBITAL);
 		setAsString(unknown(), CHOL, ORBITAL);
 
+		setAsString(unknown(), VERSION, OWLPACK);
+		setAsString("1999", DATE, OWLPACK);
+		setAsString(unknown(), LICENCE, OWLPACK);
+		setAsString(unknown(), JAVA14, OWLPACK);
+		setAsString(unknown(), JAVA5, OWLPACK);
+		setAsString(yes(), JAVA6, OWLPACK);
+		setAsString(yes(), DENSE, OWLPACK);
+		setAsString(unknown(), SPARSE, OWLPACK);
+		setAsString(unknown(), COMPLEX, OWLPACK);
+		setAsString(yes(), D2, OWLPACK);
+		setAsString(unknown(), D3, OWLPACK);
+		setAsString(unknown(), D4, OWLPACK);
+		setAsString(unknown(), D4PLUS, OWLPACK);
+		setAsString(unknown(), INV, OWLPACK);
+		setAsString(unknown(), SVD, OWLPACK);
+		setAsString(unknown(), LU, OWLPACK);
+		setAsString(unknown(), QR, OWLPACK);
+		setAsString(unknown(), EVD, OWLPACK);
+		setAsString(unknown(), CHOL, OWLPACK);
+
 		setAsString("0.9.1", VERSION, PARALLELCOLT);
 		setAsString("2009/09", DATE, PARALLELCOLT);
 		setAsString("BSD", LICENCE, PARALLELCOLT);
@@ -503,6 +525,33 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 			return "\\bf{$+$}";
 		default:
 			return "yes";
+		}
+	}
+
+	private String all() {
+		switch (format) {
+		case LATEX:
+			return "all";
+		default:
+			return "all";
+		}
+	}
+	
+	private String squareTall() {
+		switch (format) {
+		case LATEX:
+			return "square, tall";
+		default:
+			return "square, tall";
+		}
+	}
+	
+	private String square() {
+		switch (format) {
+		case LATEX:
+			return "square";
+		default:
+			return "square";
 		}
 	}
 

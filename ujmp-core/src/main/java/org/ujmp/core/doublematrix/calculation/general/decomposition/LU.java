@@ -130,7 +130,8 @@ public class LU implements java.io.Serializable {
 
 			// Compute multipliers.
 
-			if (j < m & LU[j][j] != 0.0) {
+			// http://cio.nist.gov/esd/emaildir/lists/jama/msg01498.html
+			if (j < m && LU[j][j] != 0.0) {
 				for (int i = j + 1; i < m; i++) {
 					LU[i][j] /= LU[j][j];
 				}
@@ -195,9 +196,10 @@ public class LU implements java.io.Serializable {
 	 */
 
 	public Matrix getL() {
-		double[][] L = new double[m][n];
+		final int min = Math.min(m, n);
+		double[][] L = new double[m][min];
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = 0; j < min; j++) {
 				if (i > j) {
 					L[i][j] = LU[i][j];
 				} else if (i == j) {
@@ -217,8 +219,9 @@ public class LU implements java.io.Serializable {
 	 */
 
 	public Matrix getU() {
-		double[][] U = new double[n][n];
-		for (int i = 0; i < n; i++) {
+		final int min = Math.min(m, n);
+		double[][] U = new double[min][n];
+		for (int i = 0; i < min; i++) {
 			for (int j = 0; j < n; j++) {
 				if (i <= j) {
 					U[i][j] = LU[i][j];

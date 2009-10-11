@@ -38,7 +38,6 @@ import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
-import org.ujmp.core.util.MathUtil;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
@@ -123,16 +122,14 @@ public class MatrixBenchmark {
 	}
 
 	public void configureDefault() throws Exception {
-		setBenchmarkRuns(1);
-		setRunsPerMatrix(10);
 
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
+		setRunJamaDenseDoubleMatrix2DBenchmark(true);
 		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
 		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
-		setRunJamaDenseDoubleMatrix2DBenchmark(true);
 		setRunJampackDenseDoubleMatrix2DBenchmark(true);
 		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
@@ -145,13 +142,7 @@ public class MatrixBenchmark {
 		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
 		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 
-		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
-		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
-		AbstractMatrix2DBenchmark.setRunInv(true);
-		AbstractMatrix2DBenchmark.setRunSVD(true);
-		AbstractMatrix2DBenchmark.setRunEVD(true);
-		AbstractMatrix2DBenchmark.setRunQR(true);
-		AbstractMatrix2DBenchmark.setRunLU(true);
+		AbstractMatrix2DBenchmark.configureDefault();
 	}
 
 	public void setRunDefaultDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -226,24 +217,8 @@ public class MatrixBenchmark {
 		System.setProperty("runVecMathDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
-	public void setRunsPerMatrix(int runs) {
-		System.setProperty("runsPerMatrix", "" + runs);
-	}
-
-	public void setBenchmarkRuns(int runs) {
-		System.setProperty("benchmarkRuns", "" + runs);
-	}
-
 	public boolean isRunDefaultDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runDefaultDenseDoubleMatrix2DBenchmark"));
-	}
-
-	public int getRunsPerMatrix() {
-		return MathUtil.getInt(System.getProperty("runsPerMatrix"));
-	}
-
-	public int getBenchmarkRuns() {
-		return MathUtil.getInt(System.getProperty("benchmarkRuns"));
 	}
 
 	public boolean isRunArrayDenseDoubleMatrix2DBenchmark() {
@@ -315,63 +290,55 @@ public class MatrixBenchmark {
 	}
 
 	public void run() throws Exception {
-		System.out.println("Running complete benchmark " + getBenchmarkRuns() + " times");
-		System.out.println();
+		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
-		for (int r = 0; r < getBenchmarkRuns(); r++) {
-			System.out.println("This is run number " + (r + 1) + " of " + getBenchmarkRuns());
-			System.out.println();
+		List<Matrix> results = new ArrayList<Matrix>();
 
-			List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
-
-			List<Matrix> results = new ArrayList<Matrix>();
-			for (int i = 0; i < 10; i++) {
-				results.add(MatrixFactory.emptyMatrix());
-			}
-
-			for (int j = 0; j < benchmarks.size(); j++) {
-				AbstractMatrix2DBenchmark benchmark = benchmarks.get(j);
-				List<Matrix> l = benchmark.run();
+		for (int j = 0; j < benchmarks.size(); j++) {
+			AbstractMatrix2DBenchmark benchmark = benchmarks.get(j);
+			List<Matrix> l = benchmark.run();
+			if (results.isEmpty()) {
 				for (int i = 0; i < l.size(); i++) {
-					Matrix m = l.get(i).appendVertically(results.get(i));
-					m.setLabel(l.get(i).getLabel());
-					for (int c = 0; c < l.get(i).getColumnCount(); c++) {
-						m.setColumnLabel(c, l.get(i).getColumnLabel(c));
-					}
-					results.set(i, m);
-				}
-				Thread.sleep(1000);
-				System.gc();
-				Thread.sleep(1000);
-			}
-
-			for (int i = 0; i < results.size(); i++) {
-				Matrix m = results.get(i);
-				for (int j = 0; j < benchmarks.size(); j++) {
-					m.setRowLabel(benchmarks.size() - 1 - j, benchmarks.get(j).getClass()
-							.getSimpleName());
+					results.add(MatrixFactory.emptyMatrix());
 				}
 			}
+			for (int i = 0; i < l.size(); i++) {
+				Matrix m = l.get(i).appendVertically(results.get(i));
+				m.setLabel(l.get(i).getLabel());
+				for (int c = 0; c < l.get(i).getColumnCount(); c++) {
+					m.setColumnLabel(c, l.get(i).getColumnLabel(c));
+				}
+				results.set(i, m);
+			}
+		}
 
-			for (Matrix m : results) {
-				if (m != null && !(m instanceof EmptyMatrix)) {
-					try {
-						String name = "results" + File.separator;
-						name += InetAddress.getLocalHost().getHostName();
-						name += "-" + System.getProperty("os.name");
-						name += "-" + System.getProperty("java.version");
-						name += "-" + m.getLabel();
-						name += ".csv";
-						m.exportToFile(FileFormat.CSV, new File(name));
-					} catch (Exception e) {
-					}
-					try {
-						m.showGUI();
-					} catch (Exception e) {
-					}
+		for (int i = 0; i < results.size(); i++) {
+			Matrix m = results.get(i);
+			for (int j = 0; j < benchmarks.size(); j++) {
+				m.setRowLabel(benchmarks.size() - 1 - j, benchmarks.get(j).getClass()
+						.getSimpleName());
+			}
+		}
+
+		for (Matrix m : results) {
+			if (m != null && !(m instanceof EmptyMatrix)) {
+				try {
+					String name = "results" + File.separator;
+					name += InetAddress.getLocalHost().getHostName();
+					name += "-" + System.getProperty("os.name");
+					name += "-" + System.getProperty("java.version");
+					name += "-" + m.getLabel();
+					name += ".csv";
+					m.exportToFile(FileFormat.CSV, new File(name));
+				} catch (Exception e) {
+				}
+				try {
+					m.showGUI();
+				} catch (Exception e) {
 				}
 			}
 		}
+
 		System.out.println();
 		System.out.println("Finished");
 	}

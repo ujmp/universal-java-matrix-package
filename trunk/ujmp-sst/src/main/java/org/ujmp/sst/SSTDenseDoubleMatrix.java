@@ -71,7 +71,6 @@ public class SSTDenseDoubleMatrix extends AbstractDenseDoubleMatrix implements
 		return MathUtil.toLongArray(data.dimensions());
 	}
 
-	
 	public Iterable<long[]> allCoordinates() throws MatrixException {
 		return new CoordinateIterator(this.getSize());
 	}
@@ -89,22 +88,18 @@ public class SSTDenseDoubleMatrix extends AbstractDenseDoubleMatrix implements
 		s.writeObject(data.getBytes());
 	}
 
-	
 	public RealArray getWrappedObject() {
 		return data;
 	}
 
-	
 	public void setWrappedObject(RealArray object) {
 		this.data = object;
 	}
 
-	
 	public Matrix transpose() {
 		return new SSTDenseDoubleMatrix(data.clone().mTranspose());
 	}
 
-	
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix) {
 			return new SSTDenseDoubleMatrix(data
@@ -114,22 +109,18 @@ public class SSTDenseDoubleMatrix extends AbstractDenseDoubleMatrix implements
 		}
 	}
 
-	
 	public Matrix plus(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uAdd(v));
 	}
 
-	
 	public Matrix minus(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uAdd(-v));
 	}
 
-	
 	public Matrix times(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uMul(v));
 	}
 
-	
 	public Matrix divide(double v) {
 		return new SSTDenseDoubleMatrix(data.clone().uMul(1 / v));
 	}

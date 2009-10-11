@@ -883,4 +883,44 @@ public abstract class MathUtil {
 		return f1Measure(precision, recall);
 	}
 
+	public static final long factorial(int n) {
+		long r = 1;
+		for (int i = 2; i <= n; i++) {
+			r *= i;
+		}
+		return r;
+	}
+
+	public static final BigInteger factorialBig(int n) {
+		BigInteger r = BigInteger.ONE;
+		for (int i = 2; i <= n; i++) {
+			r = r.multiply(BigInteger.valueOf(i));
+		}
+		return r;
+	}
+
+	public static final long binomialCoefficient(int n, int k) {
+		if (k > n || k < 0) {
+			return 0;
+		} else {
+			return factorial(n) / factorial(k) / factorial(n - k);
+		}
+	}
+
+	public static final BigInteger binomialCoefficientBig(int n, int k) {
+		if (k > n || k < 0) {
+			return BigInteger.ZERO;
+		} else {
+			return factorialBig(n).divide(factorialBig(k)).divide(factorialBig(n - k));
+		}
+	}
+
+	public static final boolean greater(BigInteger i1, BigInteger i2) {
+		return i1.subtract(i2).signum() > 0;
+	}
+
+	public static final boolean smaller(BigInteger i1, BigInteger i2) {
+		return i1.subtract(i2).signum() < 0;
+	}
+
 }

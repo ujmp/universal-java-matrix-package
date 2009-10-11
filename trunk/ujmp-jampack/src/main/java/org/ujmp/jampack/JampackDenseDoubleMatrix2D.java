@@ -28,16 +28,21 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jampack.Eig;
 import Jampack.H;
 import Jampack.Inv;
 import Jampack.JampackException;
 import Jampack.Parameters;
+import Jampack.Pivot;
 import Jampack.Times;
 import Jampack.Z;
+import Jampack.Zchol;
+import Jampack.Zludpp;
 import Jampack.Zmat;
 import Jampack.Zqrd;
 import Jampack.Zsvd;
@@ -141,6 +146,44 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix q = new JampackDenseDoubleMatrix2D(qr.Q);
 			Matrix r = new JampackDenseDoubleMatrix2D(qr.R);
 			return new Matrix[] { q, r };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix[] lu() {
+		try {
+			Zludpp lu = new Zludpp(matrix);
+			Matrix l = new JampackDenseDoubleMatrix2D(lu.L);
+			Matrix u = new JampackDenseDoubleMatrix2D(lu.U);
+			int m = (int) getRowCount();
+			JampackDenseDoubleMatrix2D eye = new JampackDenseDoubleMatrix2D(m,
+					m);
+			eye.eye(Ret.ORIG);
+			Matrix p = new JampackDenseDoubleMatrix2D(Pivot.row(eye
+					.getWrappedObject(), lu.pvt));
+			return new Matrix[] { l, u, p };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix[] eig() {
+		try {
+			Eig eig = new Eig(matrix);
+			Matrix v = new JampackDenseDoubleMatrix2D(eig.X);
+			Matrix d = new JampackDenseDoubleMatrix2D(new Zmat(eig.D));
+			return new Matrix[] { v, d };
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
+	public Matrix chol() {
+		try {
+			Zchol chol = new Zchol(matrix);
+			Matrix r = new JampackDenseDoubleMatrix2D(chol.R);
+			return r;
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}

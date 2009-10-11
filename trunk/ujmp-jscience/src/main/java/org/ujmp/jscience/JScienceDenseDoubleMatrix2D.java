@@ -28,9 +28,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javolution.util.FastTable;
+import javolution.util.Index;
 
+import org.jscience.mathematics.number.Float64;
+import org.jscience.mathematics.vector.DenseMatrix;
 import org.jscience.mathematics.vector.Float64Matrix;
 import org.jscience.mathematics.vector.Float64Vector;
+import org.jscience.mathematics.vector.LUDecomposition;
+import org.jscience.mathematics.vector.SparseMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -69,6 +74,14 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public JScienceDenseDoubleMatrix2D(Matrix matrix) throws MatrixException {
 		this.matrix = Float64Matrix.valueOf(matrix.toDoubleArray());
+	}
+
+	public JScienceDenseDoubleMatrix2D(DenseMatrix<Float64> matrix) {
+		this.matrix = Float64Matrix.valueOf(matrix);
+	}
+
+	public JScienceDenseDoubleMatrix2D(SparseMatrix<Float64> matrix) {
+		this.matrix = Float64Matrix.valueOf(matrix);
 	}
 
 	public double getDouble(long row, long column) {
@@ -144,6 +157,25 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix inv() {
 		return new JScienceDenseDoubleMatrix2D(matrix.inverse());
+	}
+
+	public Matrix[] lu() {
+		if (isSquare()) {
+			LUDecomposition<Float64> lu = LUDecomposition.valueOf(matrix);
+			int m = (int) getRowCount();
+			DenseMatrix<Float64> lt = lu.getLower(Float64.ZERO, Float64.ONE);
+			DenseMatrix<Float64> ut = lu.getUpper(Float64.ZERO);
+			FastTable<Index> piv = lu.getPivots();
+			Matrix l = new JScienceDenseDoubleMatrix2D(lt);
+			Matrix u = new JScienceDenseDoubleMatrix2D(ut);
+			Matrix p = new JScienceDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv.get(i).intValue());
+			}
+			return new Matrix[] { l, u, p };
+		} else {
+			throw new MatrixException("matrix must be square");
+		}
 	}
 
 	public Float64Matrix getWrappedObject() {

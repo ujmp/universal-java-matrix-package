@@ -31,6 +31,10 @@
 			<artifactId>jtransforms</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>jplasma</groupId>
+			<artifactId>jplasma</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>netlib-java</groupId>
 			<artifactId>netlib-java</artifactId>
 		</dependency>

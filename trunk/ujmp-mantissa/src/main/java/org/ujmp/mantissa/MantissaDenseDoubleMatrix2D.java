@@ -24,11 +24,14 @@
 package org.ujmp.mantissa;
 
 import org.spaceroots.mantissa.linalg.GeneralMatrix;
+import org.spaceroots.mantissa.linalg.GeneralSquareMatrix;
+import org.spaceroots.mantissa.linalg.SquareMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.UJMPSettings;
 
 public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<org.spaceroots.mantissa.linalg.Matrix> {
@@ -42,7 +45,12 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public MantissaDenseDoubleMatrix2D(long... size) {
 		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			this.matrix = new GeneralMatrix((int) size[ROW], (int) size[COLUMN]);
+			if (size[ROW] == size[COLUMN]) {
+				this.matrix = new GeneralSquareMatrix((int) size[ROW]);
+			} else {
+				this.matrix = new GeneralMatrix((int) size[ROW],
+						(int) size[COLUMN]);
+			}
 		}
 	}
 
@@ -76,6 +84,19 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix transpose() {
 		return new MantissaDenseDoubleMatrix2D(matrix.getTranspose());
+	}
+
+	public Matrix inv() {
+		if (matrix instanceof SquareMatrix) {
+			try {
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
+						.getInverse(UJMPSettings.getTolerance()));
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		} else {
+			throw new MatrixException("only allowed for square matrices");
+		}
 	}
 
 	public Matrix mtimes(Matrix m) {

@@ -67,7 +67,7 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (matrix instanceof Array2DRowRealMatrix) {
 			this.matrix = (Array2DRowRealMatrix) matrix;
 		} else {
-			throw new MatrixException("Can oly use Array2DRowRealMatrix");
+			throw new MatrixException("Can only use Array2DRowRealMatrix");
 		}
 	}
 
@@ -134,7 +134,7 @@ public class CommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new Matrix[] { u, s, v };
 	}
 
-	public Matrix[] evd() {
+	public Matrix[] eig() {
 		EigenDecomposition evd = new EigenDecompositionImpl(matrix,
 				MathUtils.EPSILON);
 		Matrix v = new CommonsMathDenseDoubleMatrix2D(evd.getV());

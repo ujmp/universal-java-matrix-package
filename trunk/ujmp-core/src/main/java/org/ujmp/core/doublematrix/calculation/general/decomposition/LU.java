@@ -5,7 +5,6 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.concurrent.PFor;
 
 /**
  * LU Decomposition.
@@ -91,24 +90,20 @@ public class LU implements java.io.Serializable {
 
 			// Apply previous transformations.
 
-			final int _j = j;
-			new PFor(0, m - 1) {
+			for (int i = 0; i < m; i++) {
+				double[] LUrowi = LU[i];
+				LUrowi = LU[i];
 
-				@Override
-				public void step(int i) {
-					double[] LUrowi = LU[i];
+				// Most of the time is spent in the following dot product.
 
-					// Most of the time is spent in the following dot product.
-
-					int kmax = Math.min(i, _j);
-					double s = 0.0;
-					for (int k = 0; k < kmax; k++) {
-						s += LUrowi[k] * LUcolj[k];
-					}
-
-					LUrowi[_j] = LUcolj[i] -= s;
+				int kmax = Math.min(i, j);
+				double s = 0.0;
+				for (int k = 0; k < kmax; k++) {
+					s += LUrowi[k] * LUcolj[k];
 				}
-			};
+
+				LUrowi[j] = LUcolj[i] -= s;
+			}
 
 			int p = j;
 			for (int i = j + 1; i < m; i++) {
@@ -247,6 +242,14 @@ public class LU implements java.io.Serializable {
 		return p;
 	}
 
+	public Matrix getP() {
+		Matrix p = MatrixFactory.dense(m, m);
+		for (int i = 0; i < m; i++) {
+			p.setAsDouble(1, i, piv[i]);
+		}
+		return p;
+	}
+
 	/**
 	 * Return pivot permutation vector as a one-dimensional double array
 	 * 
@@ -329,7 +332,7 @@ public class LU implements java.io.Serializable {
 
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {
 		LU lu = new LU(m);
-		return new Matrix[] { lu.getL(), lu.getU() };
+		return new Matrix[] { lu.getL(), lu.getU(), lu.getP() };
 	}
 
 }

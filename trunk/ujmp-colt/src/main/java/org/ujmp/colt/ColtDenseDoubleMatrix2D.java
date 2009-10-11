@@ -31,6 +31,10 @@ import org.ujmp.core.interfaces.Wrapper;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import cern.colt.matrix.linalg.CholeskyDecomposition;
+import cern.colt.matrix.linalg.EigenvalueDecomposition;
+import cern.colt.matrix.linalg.LUDecomposition;
+import cern.colt.matrix.linalg.QRDecomposition;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
 import cern.jet.math.Functions;
 
@@ -128,7 +132,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			SingularValueDecomposition svd = new SingularValueDecomposition(
 					matrix.viewDice());
 			Matrix u = new ColtDenseDoubleMatrix2D(svd.getV());
-			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS().viewDice());
+			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS());
 			Matrix v = new ColtDenseDoubleMatrix2D(svd.getU());
 			return new Matrix[] { u, s, v };
 		} else {
@@ -139,6 +143,46 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix v = new ColtDenseDoubleMatrix2D(svd.getV());
 			return new Matrix[] { u, s, v };
 		}
+	}
+
+	public Matrix[] qr() {
+		if (getColumnCount() > getRowCount()) {
+			throw new MatrixException("matrix size must be m>=n");
+		}
+		QRDecomposition qr = new QRDecomposition(matrix);
+		Matrix q = new ColtDenseDoubleMatrix2D(qr.getQ());
+		Matrix r = new ColtDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
+	}
+
+	public Matrix[] eig() {
+		EigenvalueDecomposition eig = new EigenvalueDecomposition(matrix);
+		Matrix v = new ColtDenseDoubleMatrix2D(eig.getV());
+		Matrix d = new ColtDenseDoubleMatrix2D(eig.getD());
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix chol() {
+		CholeskyDecomposition eig = new CholeskyDecomposition(matrix);
+		Matrix r = new ColtDenseDoubleMatrix2D(eig.getL());
+		return r;
+	}
+
+	public Matrix[] lu() {
+		if (getColumnCount() > getRowCount()) {
+			throw new MatrixException("only supported for m>=n");
+		}
+		LUDecomposition lu = new LUDecomposition(matrix);
+		Matrix l = new ColtDenseDoubleMatrix2D(lu.getL());
+		Matrix u = new ColtDenseDoubleMatrix2D(lu.getU().viewPart(0, 0,
+				(int) getColumnCount(), (int) getColumnCount()));
+		int[] piv = lu.getPivot();
+		int m = (int) getRowCount();
+		Matrix p = new ColtDenseDoubleMatrix2D(m, m);
+		for (int i = 0; i < m; i++) {
+			p.setAsDouble(1, i, piv[i]);
+		}
+		return new Matrix[] { l, u, p };
 	}
 
 	public Matrix copy() {

@@ -161,10 +161,11 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new PinvAction(c, m, v)));
 			add(new JMenuItem(new GinvAction(c, m, v)));
 			add(new JSeparator());
-			add(new JMenuItem(new SVDAction(c, m, v)));
-			add(new JMenuItem(new EVDAction(c, m, v)));
-			add(new JMenuItem(new QRAction(c, m, v)));
+			add(new JMenuItem(new CholAction(c, m, v)));
+			add(new JMenuItem(new EigAction(c, m, v)));
 			add(new JMenuItem(new LUAction(c, m, v)));
+			add(new JMenuItem(new QRAction(c, m, v)));
+			add(new JMenuItem(new SVDAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new PrincompAction(c, m, v)));
 		}

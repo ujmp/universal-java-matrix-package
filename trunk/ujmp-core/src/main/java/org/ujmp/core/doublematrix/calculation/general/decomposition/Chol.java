@@ -149,7 +149,7 @@ public class Chol implements java.io.Serializable {
 	 */
 
 	public Matrix getL() {
-		return MatrixFactory.linkToArray(L);
+		return MatrixFactory.linkToArray(L).transpose();
 	}
 
 	/**

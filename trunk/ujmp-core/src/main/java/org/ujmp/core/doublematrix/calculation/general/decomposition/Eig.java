@@ -21,7 +21,7 @@ import org.ujmp.core.util.MathUtil;
  * validity of the equation A = V*D*inverse(V) depends upon V.cond().
  **/
 
-public class EVD implements java.io.Serializable {
+public class Eig implements java.io.Serializable {
 	private static final long serialVersionUID = -4312402808395971553L;
 
 	/**
@@ -71,7 +71,6 @@ public class EVD implements java.io.Serializable {
 	 */
 
 	// Symmetric Householder reduction to tridiagonal form.
-
 	private void tred2() {
 
 		// This is derived from the Algol procedures tred2 by
@@ -875,7 +874,7 @@ public class EVD implements java.io.Serializable {
 	 * @return Structure to access D and V.
 	 */
 
-	public EVD(Matrix Arg) {
+	public Eig(Matrix Arg) {
 		double[][] A = Arg.toDoubleArray();
 		n = (int) Arg.getColumnCount();
 		V = new double[n][n];
@@ -977,7 +976,7 @@ public class EVD implements java.io.Serializable {
 	}
 
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {
-		EVD evd = new EVD(m);
+		Eig evd = new Eig(m);
 		return new Matrix[] { evd.getV(), evd.getD() };
 	}
 }

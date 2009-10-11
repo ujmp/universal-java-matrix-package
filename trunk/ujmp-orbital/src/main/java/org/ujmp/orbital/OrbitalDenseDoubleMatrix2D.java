@@ -27,11 +27,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import orbital.math.LUDecomposition;
 import orbital.math.Real;
 import orbital.math.Values;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -105,6 +107,19 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix inv() {
 		return new OrbitalDenseDoubleMatrix2D((orbital.math.Matrix) matrix
 				.inverse());
+	}
+
+	@Override
+	public Matrix[] lu() {
+		if (isSquare()) {
+			LUDecomposition lu = LUDecomposition.decompose(matrix);
+			Matrix l = new OrbitalDenseDoubleMatrix2D(lu.getL());
+			Matrix u = new OrbitalDenseDoubleMatrix2D(lu.getU());
+			Matrix p = new OrbitalDenseDoubleMatrix2D(lu.getP());
+			return new Matrix[] { l, u, p };
+		} else {
+			throw new MatrixException("only square matrices allowed");
+		}
 	}
 
 	private void readObject(final ObjectInputStream s) throws IOException,

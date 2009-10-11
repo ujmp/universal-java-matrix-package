@@ -56,7 +56,6 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public OjalgoDenseDoubleMatrix2D(final long... size) {
 		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY.makeZero(
 				(int) size[ROW], (int) size[COLUMN]);
-		matrix.unshade();
 	}
 
 	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
@@ -79,7 +78,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix[] evd() {
+	public Matrix[] eig() {
 		final Eigenvalue<Double> evd = EigenvalueDecomposition.makeJama();
 		evd.compute(matrix);
 		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
@@ -119,7 +118,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		lu.compute(matrix);
 		final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
 		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
-		return new Matrix[] { l, u };
+		final Matrix p = new OjalgoDenseDoubleMatrix2D(lu.getP());
+		int[] piv = lu.getPivotOrder();
+		return new Matrix[] { l, u, p };
 	}
 
 	@Override
@@ -137,11 +138,15 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix[] qr() {
-		final QR<Double> qr = QRDecomposition.makePrimitive();
-		qr.compute(matrix);
-		final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
-		final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
-		return new Matrix[] { q, r };
+		if (getRowCount() >= getColumnCount()) {
+			final QR<Double> qr = QRDecomposition.makePrimitive();
+			qr.compute(matrix);
+			final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
+			final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
+			return new Matrix[] { q, r };
+		} else {
+			throw new MatrixException("only supported for matrices m>=n");
+		}
 	}
 
 	public void setDouble(final double value, final int row, final int column) {

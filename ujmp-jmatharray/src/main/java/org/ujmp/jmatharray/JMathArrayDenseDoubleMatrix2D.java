@@ -30,6 +30,8 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jama.CholeskyDecomposition;
+import Jama.EigenvalueDecomposition;
 import Jama.LUDecomposition;
 import Jama.QRDecomposition;
 import Jama.SingularValueDecomposition;
@@ -96,27 +98,48 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		if (isSquare()) {
+		if (getRowCount() >= getColumnCount()) {
 			QRDecomposition qr = new QRDecomposition(new Jama.Matrix(matrix));
 			Matrix q = new JMathArrayDenseDoubleMatrix2D(qr.getQ().getArray());
 			Matrix r = new JMathArrayDenseDoubleMatrix2D(qr.getR().getArray());
 			return new Matrix[] { q, r };
 		} else {
 			throw new MatrixException(
-					"QR decomposition only works for square matrices");
+					"QR decomposition only works for matrices m>=n");
 		}
 	}
 
+	public Matrix[] eig() {
+		EigenvalueDecomposition eig = new EigenvalueDecomposition(
+				new Jama.Matrix(matrix));
+		Matrix v = new JMathArrayDenseDoubleMatrix2D(eig.getV().getArray());
+		Matrix d = new JMathArrayDenseDoubleMatrix2D(eig.getD().getArray());
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix chol() {
+		CholeskyDecomposition chol = new CholeskyDecomposition(new Jama.Matrix(
+				matrix));
+		Matrix r = new JMathArrayDenseDoubleMatrix2D(chol.getL().getArray());
+		return r;
+	}
+
 	public Matrix[] lu() {
-		// if (isSquare()) {
-		LUDecomposition lu = new LUDecomposition(new Jama.Matrix(matrix));
-		Matrix l = new JMathArrayDenseDoubleMatrix2D(lu.getL().getArray());
-		Matrix u = new JMathArrayDenseDoubleMatrix2D(lu.getU().getArray());
-		return new Matrix[] { l, u };
-		// } else {
-		// throw new MatrixException(
-		// "LU decomposition only works for square matrices");
-		// }
+		if (getRowCount() >= getColumnCount()) {
+			LUDecomposition lu = new LUDecomposition(new Jama.Matrix(matrix));
+			Matrix l = new JMathArrayDenseDoubleMatrix2D(lu.getL().getArray());
+			Matrix u = new JMathArrayDenseDoubleMatrix2D(lu.getU().getArray());
+			int m = (int) getRowCount();
+			int[] piv = lu.getPivot();
+			Matrix p = new JMathArrayDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv[i]);
+			}
+			return new Matrix[] { l, u, p };
+		} else {
+			throw new MatrixException(
+					"LU decomposition only works for matrices m>=n");
+		}
 	}
 
 	public double[][] getWrappedObject() {

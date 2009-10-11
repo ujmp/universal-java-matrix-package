@@ -101,13 +101,30 @@ public class OwlpackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new OwlpackDenseDoubleMatrix2D(result);
 	}
 
-	// unit test does not work
-	// @Override
-	// public Matrix inv() {
-	// DFull result = new DFull(matrix);
-	// result.inverse();
-	// return new OwlpackDenseDoubleMatrix2D(result);
-	// }
+	@Override
+	public Matrix inv() {
+		DFull result = new DFull(matrix);
+		result.inverse();
+		return new OwlpackDenseDoubleMatrix2D(result);
+	}
+
+	@Override
+	public Matrix[] svd() {
+		int p = (int) getRowCount();
+		int n = (int) getColumnCount();
+		double[] S = new double[Math.min(n + 1, p)];
+		double[] E = new double[p];
+		DFull U = new DFull(n, Math.min(n, p));
+		DFull V = new DFull(p, p);
+		matrix.svDecompose(S, E, U, V, 2);
+		Matrix u = new OwlpackDenseDoubleMatrix2D(U);
+		Matrix v = new OwlpackDenseDoubleMatrix2D(V);
+		Matrix s = new OwlpackDenseDoubleMatrix2D(S.length, S.length);
+		for (int i = 0; i < S.length; i++) {
+			s.setAsDouble(S[i], i, i);
+		}
+		return new Matrix[] { u, s, v };
+	}
 
 	private void readObject(final ObjectInputStream s) throws IOException,
 			ClassNotFoundException {

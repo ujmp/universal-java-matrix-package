@@ -863,7 +863,7 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			m.randn(Ret.ORIG);
 			long t0 = System.currentTimeMillis();
-			r = m.evd();
+			r = m.eig();
 			long t1 = System.currentTimeMillis();
 			if (r == null) {
 				return Long.MAX_VALUE;

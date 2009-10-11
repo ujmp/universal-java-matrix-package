@@ -107,6 +107,21 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new SSTDenseDoubleMatrix(data.mInvert());
 	}
 
+	public Matrix[] eig() {
+		RealArray[] eig = data.mEigs();
+		Matrix v = new SSTDenseDoubleMatrix2D(eig[0]);
+		Matrix d = new SSTDenseDoubleMatrix2D(eig[1]);
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix[] svd() {
+		RealArray[] svd = data.mSVD();
+		Matrix u = new SSTDenseDoubleMatrix2D(svd[0]);
+		Matrix s = new SSTDenseDoubleMatrix2D(svd[1]);
+		Matrix v = new SSTDenseDoubleMatrix2D(svd[2]);
+		return new Matrix[] { u, s, v };
+	}
+
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix) {
 			return new SSTDenseDoubleMatrix(data

@@ -47,6 +47,7 @@ import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Pascal;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
@@ -540,6 +541,10 @@ public abstract class MatrixFactory {
 
 	public static Matrix eye(long... size) throws MatrixException {
 		return Eye.calc(size);
+	}
+
+	public static Matrix pascal(long... size) throws MatrixException {
+		return new Pascal(zeros(ValueType.BIGINTEGER, size)).calcOrig();
 	}
 
 	public static Matrix fibonacci(int count) throws MatrixException {

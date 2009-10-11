@@ -30,6 +30,9 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposition;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleEigenvalueDecomposition;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleLUDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleSingularValueDecompositionDC;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
@@ -131,6 +134,48 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		Matrix s = new ParallelColtDenseDoubleMatrix2D(svd.getS());
 		Matrix v = new ParallelColtDenseDoubleMatrix2D(svd.getV());
 		return new Matrix[] { u, s, v };
+	}
+
+	public Matrix[] eig() {
+		DenseDoubleEigenvalueDecomposition eig = new DenseDoubleEigenvalueDecomposition(
+				matrix);
+		Matrix v = new ParallelColtDenseDoubleMatrix2D(eig.getV());
+		Matrix d = new ParallelColtDenseDoubleMatrix2D(eig.getD());
+		return new Matrix[] { v, d };
+	}
+
+	// deadlock!!!
+	// public Matrix[] qr() {
+	// DenseDoubleQRDecomposition qr = new DenseDoubleQRDecomposition(matrix);
+	// Matrix q = new ParallelColtDenseDoubleMatrix2D(qr.getQ(false));
+	// Matrix r = new ParallelColtDenseDoubleMatrix2D(qr.getR(false));
+	// return new Matrix[] { q, r };
+	// }
+
+	public Matrix[] lu() {
+		if (getRowCount() >= getColumnCount()) {
+			DenseDoubleLUDecomposition lu = new DenseDoubleLUDecomposition(
+					matrix);
+			Matrix l = new ParallelColtDenseDoubleMatrix2D(lu.getL());
+			Matrix u = new ParallelColtDenseDoubleMatrix2D(lu.getU().viewPart(
+					0, 0, (int) getColumnCount(), (int) getColumnCount()));
+			int m = (int) getRowCount();
+			int[] piv = lu.getPivot();
+			Matrix p = new ParallelColtDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv[i]);
+			}
+			return new Matrix[] { l, u, p };
+		} else {
+			throw new MatrixException("only supported for matrices m>=n");
+		}
+	}
+
+	public Matrix chol() {
+		DenseDoubleCholeskyDecomposition chol = new DenseDoubleCholeskyDecomposition(
+				matrix);
+		Matrix r = new ParallelColtDenseDoubleMatrix2D(chol.getL());
+		return r;
 	}
 
 	public Matrix copy() {

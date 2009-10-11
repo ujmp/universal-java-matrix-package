@@ -24,6 +24,7 @@
 package org.ujmp.vecmath;
 
 import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
@@ -96,6 +97,32 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		GMatrix m = (GMatrix) matrix.clone();
 		m.invert();
 		return new VecMathDenseDoubleMatrix2D(m);
+	}
+
+	public Matrix[] svd() {
+		GMatrix m = (GMatrix) matrix.clone();
+		int nrows = (int) getRowCount();
+		int ncols = (int) getColumnCount();
+		GMatrix u = new GMatrix(nrows, nrows);
+		GMatrix s = new GMatrix(nrows, ncols);
+		GMatrix v = new GMatrix(ncols, ncols);
+		m.SVD(u, s, v);
+		Matrix U = new VecMathDenseDoubleMatrix2D(u);
+		Matrix S = new VecMathDenseDoubleMatrix2D(s);
+		Matrix V = new VecMathDenseDoubleMatrix2D(v);
+		return new Matrix[] { U, S, V };
+	}
+
+	public Matrix[] lu() {
+		if (isSquare()) {
+			GMatrix m = (GMatrix) matrix.clone();
+			GMatrix l = (GMatrix) matrix.clone();
+			GVector v = new GVector(matrix.getNumCol());
+			m.LUD(l, v);
+			return new Matrix[] {};
+		} else {
+			throw new MatrixException("only allowed for square matrices");
+		}
 	}
 
 }

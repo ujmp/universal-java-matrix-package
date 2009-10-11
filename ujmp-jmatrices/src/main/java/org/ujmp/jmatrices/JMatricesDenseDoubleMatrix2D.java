@@ -24,6 +24,7 @@
 package org.ujmp.jmatrices;
 
 import org.jmatrices.dbl.MatrixFactory;
+import org.jmatrices.dbl.decomposition.CholeskyDecomposition;
 import org.jmatrices.dbl.decomposition.EigenvalueDecomposition;
 import org.jmatrices.dbl.decomposition.LUDecomposition;
 import org.jmatrices.dbl.decomposition.QRDecomposition;
@@ -100,16 +101,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				.inverse(matrix));
 	}
 
-	// TODO: test
-	// public Matrix[] svd() {
-	// SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
-	// Matrix u = new JMatricesDenseDoubleMatrix2D(svd.getU());
-	// Matrix s = new JMatricesDenseDoubleMatrix2D(svd.getS());
-	// Matrix v = new JMatricesDenseDoubleMatrix2D(svd.getV());
-	// return new Matrix[] { u, s, v };
-	// }
-
-	public Matrix[] evd() {
+	public Matrix[] eig() {
 		EigenvalueDecomposition evd = new EigenvalueDecomposition(matrix);
 		Matrix v = new JMatricesDenseDoubleMatrix2D(evd.getV());
 		Matrix d = new JMatricesDenseDoubleMatrix2D(evd.getD());
@@ -117,29 +109,51 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		if (isSquare()) {
+		if (getRowCount() >= getColumnCount()) {
 			QRDecomposition qr = new QRDecomposition(matrix);
 			Matrix q = new JMatricesDenseDoubleMatrix2D(qr.getQ());
 			Matrix r = new JMatricesDenseDoubleMatrix2D(qr.getR());
 			return new Matrix[] { q, r };
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new MatrixException("only allowed for matrices m>=n");
 		}
 	}
 
 	public Matrix[] svd() {
-		SingularValueDecomposition qr = new SingularValueDecomposition(matrix);
-		Matrix u = new JMatricesDenseDoubleMatrix2D(qr.getU());
-		Matrix s = new JMatricesDenseDoubleMatrix2D(qr.getS());
-		Matrix v = new JMatricesDenseDoubleMatrix2D(qr.getV());
-		return new Matrix[] { u, s, v };
+		if (isSquare()) {
+			SingularValueDecomposition qr = new SingularValueDecomposition(
+					matrix);
+			Matrix u = new JMatricesDenseDoubleMatrix2D(qr.getU());
+			Matrix s = new JMatricesDenseDoubleMatrix2D(qr.getS());
+			Matrix v = new JMatricesDenseDoubleMatrix2D(qr.getV());
+			return new Matrix[] { u, s, v };
+		} else {
+			throw new MatrixException("only allowed for square matrices");
+		}
+	}
+
+	public Matrix chol() {
+		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+		Matrix r = new JMatricesDenseDoubleMatrix2D(chol.getL());
+		return r;
 	}
 
 	public Matrix[] lu() {
-		LUDecomposition lu = new LUDecomposition(matrix);
-		Matrix l = new JMatricesDenseDoubleMatrix2D(lu.getL());
-		Matrix u = new JMatricesDenseDoubleMatrix2D(lu.getU());
-		return new Matrix[] { l, u };
+		if (getRowCount() >= getColumnCount()) {
+			LUDecomposition lu = new LUDecomposition(matrix);
+			Matrix l = new JMatricesDenseDoubleMatrix2D(lu.getL());
+			Matrix u = new JMatricesDenseDoubleMatrix2D(lu.getU().getSubMatrix(
+					1, 1, (int) getColumnCount(), (int) getColumnCount()));
+			int m = (int) getRowCount();
+			int[] piv = lu.getPivot();
+			Matrix p = new JMatricesDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv[i] - 1);
+			}
+			return new Matrix[] { l, u, p };
+		} else {
+			throw new MatrixException("only allowed for matrices m>=n");
+		}
 	}
 
 	public Matrix mtimes(Matrix m2) {

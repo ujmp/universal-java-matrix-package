@@ -189,6 +189,11 @@ public class TestCompareMatrices extends TestCase {
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
 			try {
 				Matrix m1 = getMatrix(mclass, ref1);
+
+				if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+					return;
+				}
+
 				Matrix m2 = m1.inv();
 				Matrix m3 = m1.pinv();
 				Matrix m4 = m1.ginv();

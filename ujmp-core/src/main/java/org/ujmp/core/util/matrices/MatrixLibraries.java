@@ -23,6 +23,11 @@
 
 package org.ujmp.core.util.matrices;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 
 public class MatrixLibraries extends DefaultDenseStringMatrix2D {
@@ -48,25 +53,31 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int COMPLEX = 9;
 
-	private static final int D2 = 10;
+	private static final int DOUBLE = 10;
 
-	private static final int D3 = 11;
+	private static final int FLOAT = 11;
 
-	private static final int D4 = 12;
+	private static final int BIGDECIMAL = 12;
 
-	private static final int D4PLUS = 13;
+	private static final int D2 = 13;
 
-	private static final int INV = 14;
+	private static final int D3 = 14;
 
-	private static final int SVD = 15;
+	private static final int D4 = 15;
 
-	private static final int LU = 16;
+	private static final int D4PLUS = 16;
 
-	private static final int QR = 17;
+	private static final int INV = 17;
 
 	private static final int CHOL = 18;
 
-	private static final int EVD = 19;
+	private static final int EIG = 19;
+
+	private static final int LU = 20;
+
+	private static final int QR = 21;
+
+	private static final int SVD = 22;
 
 	private static final int LABELROW = 0;
 
@@ -106,6 +117,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int VECMATH = 18;
 
+	private List<String> footnotes = new ArrayList<String>();
+
 	public enum MatrixLibrariesFormat {
 		DEFAULT, LATEX, HTML
 	};
@@ -117,27 +130,27 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(20, 17);
+		super(23, 19);
 		this.format = format;
 
-		setAsString(beginTurn() + "Array4J" + endTurn(), LABELROW, ARRAY4J);
-		setAsString(beginTurn() + "Colt" + endTurn(), LABELROW, COLT);
-		setAsString(beginTurn() + "commons-math" + endTurn(), LABELROW, COMMONSMATH);
-		setAsString(beginTurn() + "JAMA" + endTurn(), LABELROW, JAMA);
-		setAsString(beginTurn() + "Jampack" + endTurn(), LABELROW, JAMPACK);
-		setAsString(beginTurn() + "JMathArray" + endTurn(), LABELROW, JMATHARRAY);
-		setAsString(beginTurn() + "JMatrices" + endTurn(), LABELROW, JMATRICES);
-		setAsString(beginTurn() + "JSci" + endTurn(), LABELROW, JSCI);
-		setAsString(beginTurn() + "JScience" + endTurn(), LABELROW, JSCIENCE);
-		setAsString(beginTurn() + "Mantissa" + endTurn(), LABELROW, MANTISSA);
-		setAsString(beginTurn() + "MTJ" + endTurn(), LABELROW, MTJ);
-		setAsString(beginTurn() + "ojAlgo" + endTurn(), LABELROW, OJALGO);
-		setAsString(beginTurn() + "Orbital" + endTurn(), LABELROW, ORBITAL);
-		setAsString(beginTurn() + "OWLPack" + endTurn(), LABELROW, OWLPACK);
-		setAsString(beginTurn() + "Parallel Colt" + endTurn(), LABELROW, PARALLELCOLT);
-		setAsString(beginTurn() + "SST" + endTurn(), LABELROW, SST);
-		setAsString(beginTurn() + "UJMP" + endTurn(), LABELROW, UJMP);
-		setAsString(beginTurn() + "vecmath" + endTurn(), LABELROW, VECMATH);
+		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
+		setAsString(turn("Colt"), LABELROW, COLT);
+		setAsString(turn("commons-math"), LABELROW, COMMONSMATH);
+		setAsString(turn("JAMA"), LABELROW, JAMA);
+		setAsString(turn("Jampack"), LABELROW, JAMPACK);
+		setAsString(turn("JMathArray"), LABELROW, JMATHARRAY);
+		setAsString(turn("JMatrices"), LABELROW, JMATRICES);
+		setAsString(turn("JSci"), LABELROW, JSCI);
+		setAsString(turn("JScience"), LABELROW, JSCIENCE);
+		setAsString(turn("Mantissa"), LABELROW, MANTISSA);
+		setAsString(turn("MTJ"), LABELROW, MTJ);
+		setAsString(turn("ojAlgo"), LABELROW, OJALGO);
+		setAsString(turn("Orbital"), LABELROW, ORBITAL);
+		setAsString(turn("OWLPack"), LABELROW, OWLPACK);
+		setAsString(turn("Parallel Colt"), LABELROW, PARALLELCOLT);
+		setAsString(turn("SST"), LABELROW, SST);
+		setAsString(turn("UJMP"), LABELROW, UJMP);
+		setAsString(turn("vecmath"), LABELROW, VECMATH);
 
 		setAsString("latest version", VERSION, LABELCOLUMN);
 		setAsString("latest release", DATE, LABELCOLUMN);
@@ -148,6 +161,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString("dense matrices", DENSE, LABELCOLUMN);
 		setAsString("sparse matrices", SPARSE, LABELCOLUMN);
 		setAsString("complex numbers", COMPLEX, LABELCOLUMN);
+		setAsString("double values", DOUBLE, LABELCOLUMN);
+		setAsString("float values", FLOAT, LABELCOLUMN);
+		setAsString("BigDecimal values", BIGDECIMAL, LABELCOLUMN);
 		setAsString("2D matrices", D2, LABELCOLUMN);
 		setAsString("3D matrices", D3, LABELCOLUMN);
 		setAsString("4D matrices", D4, LABELCOLUMN);
@@ -157,365 +173,420 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString("LU", LU, LABELCOLUMN);
 		setAsString("QR", QR, LABELCOLUMN);
 		setAsString("Cholesky", CHOL, LABELCOLUMN);
-		setAsString("EVD", EVD, LABELCOLUMN);
+		setAsString("Eigen", EIG, LABELCOLUMN);
 
 		setAsString(org.ujmp.core.UJMP.UJMPVERSION, VERSION, UJMP);
-		setAsString("09/2009", DATE, UJMP);
-		setAsString("LGPL", LICENCE, UJMP);
+		setAsString(small("2009"), DATE, UJMP);
+		setAsString(small("LGPL"), LICENCE, UJMP);
 		setAsString(no(), JAVA14, UJMP);
 		setAsString(yes(), JAVA5, UJMP);
 		setAsString(yes(), JAVA6, UJMP);
 		setAsString(yes(), DENSE, UJMP);
 		setAsString(yes(), SPARSE, UJMP);
 		setAsString(no(), COMPLEX, UJMP);
+		setAsString(yes(), DOUBLE, UJMP);
+		setAsString(yes(), FLOAT, UJMP);
+		setAsString(yes(), BIGDECIMAL, UJMP);
 		setAsString(yes(), D2, UJMP);
 		setAsString(yes(), D3, UJMP);
 		setAsString(yes(), D4, UJMP);
 		setAsString(yes(), D4PLUS, UJMP);
 		setAsString(yes(), INV, UJMP);
-		setAsString(all(), SVD, UJMP);
-		setAsString(yes(), LU, UJMP);
-		setAsString(yes(), QR, UJMP);
-		setAsString(yes(), EVD, UJMP);
 		setAsString(yes(), CHOL, UJMP);
+		setAsString(yes(), EIG, UJMP);
+		setAsString(all(), LU, UJMP);
+		setAsString(squareTall(), QR, UJMP);
+		setAsString(all(), SVD, UJMP);
 
-		setAsString("SVN", VERSION, ARRAY4J);
-		setAsString("2008/05", DATE, ARRAY4J);
-		setAsString("BSD", LICENCE, ARRAY4J);
-		setAsString(unknown(), JAVA14, ARRAY4J);
-		setAsString(unknown(), JAVA5, ARRAY4J);
+		setAsString(small("SVN"), VERSION, ARRAY4J);
+		setAsString(small("2008"), DATE, ARRAY4J);
+		setAsString(small("BSD"), LICENCE, ARRAY4J);
+		setAsString(no(), JAVA14, ARRAY4J);
+		setAsString(no(), JAVA5, ARRAY4J);
 		setAsString(yes(), JAVA6, ARRAY4J);
 		setAsString(yes(), DENSE, ARRAY4J);
-		setAsString(no(), SPARSE, ARRAY4J);
-		setAsString(no(), COMPLEX, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only"), SPARSE, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only"), COMPLEX, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only"), DOUBLE, ARRAY4J);
+		setAsString(yes(), FLOAT, ARRAY4J);
+		setAsString(no(), BIGDECIMAL, ARRAY4J);
 		setAsString(yes(), D2, ARRAY4J);
 		setAsString(no(), D3, ARRAY4J);
 		setAsString(no(), D4, ARRAY4J);
 		setAsString(no(), D4PLUS, ARRAY4J);
-		setAsString(unknown(), INV, ARRAY4J);
-		setAsString(unknown(), SVD, ARRAY4J);
-		setAsString(unknown(), QR, ARRAY4J);
-		setAsString(unknown(), EVD, ARRAY4J);
-		setAsString(unknown(), CHOL, ARRAY4J);
+		setAsString(no(), INV, ARRAY4J);
+		setAsString(no(), SVD, ARRAY4J);
+		setAsString(no(), QR, ARRAY4J);
+		setAsString(no(), LU, ARRAY4J);
+		setAsString(no(), EIG, ARRAY4J);
+		setAsString(no(), CHOL, ARRAY4J);
 
-		setAsString("1.2.0", VERSION, COLT);
-		setAsString("2004/09", DATE, COLT);
-		setAsString("BSD", LICENCE, COLT);
-		setAsString(unknown(), JAVA14, COLT);
-		setAsString(unknown(), JAVA5, COLT);
+		setAsString(small("1.2.0"), VERSION, COLT);
+		setAsString(small("2004"), DATE, COLT);
+		setAsString(small("BSD"), LICENCE, COLT);
+		setAsString(yes(), JAVA14, COLT);
+		setAsString(yes(), JAVA5, COLT);
 		setAsString(yes(), JAVA6, COLT);
 		setAsString(yes(), DENSE, COLT);
-		setAsString(unknown(), SPARSE, COLT);
-		setAsString(unknown(), COMPLEX, COLT);
+		setAsString(yes(), SPARSE, COLT);
+		setAsString(no(), COMPLEX, COLT);
+		setAsString(yes(), DOUBLE, COLT);
+		setAsString(no(), FLOAT, COLT);
+		setAsString(no(), BIGDECIMAL, COLT);
 		setAsString(yes(), D2, COLT);
-		setAsString(unknown(), D3, COLT);
-		setAsString(unknown(), D4, COLT);
-		setAsString(unknown(), D4PLUS, COLT);
-		setAsString(unknown(), INV, COLT);
+		setAsString(yes(), D3, COLT);
+		setAsString(no(), D4, COLT);
+		setAsString(no(), D4PLUS, COLT);
+		setAsString(yes(), INV, COLT);
 		setAsString(squareTall(), SVD, COLT);
-		setAsString(unknown(), LU, COLT);
-		setAsString(unknown(), QR, COLT);
-		setAsString(unknown(), EVD, COLT);
-		setAsString(unknown(), CHOL, COLT);
+		setAsString(squareTall(), LU, COLT);
+		setAsString(all(), QR, COLT);
+		setAsString(yes(), EIG, COLT);
+		setAsString(yes(), CHOL, COLT);
 
-		setAsString("2.0", VERSION, COMMONSMATH);
-		setAsString("2009/08", DATE, COMMONSMATH);
-		setAsString("Apache", LICENCE, COMMONSMATH);
+		setAsString(small("2.0"), VERSION, COMMONSMATH);
+		setAsString(small("2009"), DATE, COMMONSMATH);
+		setAsString(small("Apache"), LICENCE, COMMONSMATH);
 		setAsString(unknown(), JAVA14, COMMONSMATH);
-		setAsString(unknown(), JAVA5, COMMONSMATH);
+		setAsString(yes(), JAVA5, COMMONSMATH);
 		setAsString(yes(), JAVA6, COMMONSMATH);
 		setAsString(yes(), DENSE, COMMONSMATH);
-		setAsString(unknown(), SPARSE, COMMONSMATH);
-		setAsString(unknown(), COMPLEX, COMMONSMATH);
+		setAsString(yes(), SPARSE, COMMONSMATH);
+		setAsString(yes(), COMPLEX, COMMONSMATH);
+		setAsString(yes(), DOUBLE, COMMONSMATH);
+		setAsString(no(), FLOAT, COMMONSMATH);
+		setAsString(yes(), BIGDECIMAL, COMMONSMATH);
 		setAsString(yes(), D2, COMMONSMATH);
-		setAsString(unknown(), D3, COMMONSMATH);
-		setAsString(unknown(), D4, COMMONSMATH);
-		setAsString(unknown(), D4PLUS, COMMONSMATH);
+		setAsString(no(), D3, COMMONSMATH);
+		setAsString(no(), D4, COMMONSMATH);
+		setAsString(no(), D4PLUS, COMMONSMATH);
 		setAsString(yes(), INV, COMMONSMATH);
-		setAsString(unknown(), SVD, COMMONSMATH);
-		setAsString(unknown(), LU, COMMONSMATH);
-		setAsString(unknown(), QR, COMMONSMATH);
-		setAsString(unknown(), EVD, COMMONSMATH);
-		setAsString(unknown(), CHOL, COMMONSMATH);
+		setAsString(all() + footnote("e", "error in implementation"), SVD, COMMONSMATH);
+		setAsString(square() + footnote("n", "non-singular matrices only"), LU, COMMONSMATH);
+		setAsString(all(), QR, COMMONSMATH);
+		setAsString(square() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
+		setAsString(yes(), CHOL, COMMONSMATH);
 
-		setAsString("1.0.2", VERSION, JAMA);
-		setAsString("2005/07", DATE, JAMA);
-		setAsString("PD", LICENCE, JAMA);
+		setAsString(small("1.0.2"), VERSION, JAMA);
+		setAsString(small("2005"), DATE, JAMA);
+		setAsString(small("PD"), LICENCE, JAMA);
 		setAsString(unknown(), JAVA14, JAMA);
-		setAsString(unknown(), JAVA5, JAMA);
+		setAsString(yes(), JAVA5, JAMA);
 		setAsString(yes(), JAVA6, JAMA);
 		setAsString(yes(), DENSE, JAMA);
-		setAsString(unknown(), SPARSE, JAMA);
-		setAsString(unknown(), COMPLEX, JAMA);
+		setAsString(no(), SPARSE, JAMA);
+		setAsString(no(), COMPLEX, JAMA);
+		setAsString(yes(), DOUBLE, JAMA);
+		setAsString(no(), FLOAT, JAMA);
+		setAsString(no(), BIGDECIMAL, JAMA);
 		setAsString(yes(), D2, JAMA);
-		setAsString(unknown(), D3, JAMA);
-		setAsString(unknown(), D4, JAMA);
-		setAsString(unknown(), D4PLUS, JAMA);
+		setAsString(no(), D3, JAMA);
+		setAsString(no(), D4, JAMA);
+		setAsString(no(), D4PLUS, JAMA);
 		setAsString(yes(), INV, JAMA);
 		setAsString(squareTall(), SVD, JAMA);
-		setAsString(unknown(), LU, JAMA);
-		setAsString(unknown(), QR, JAMA);
-		setAsString(unknown(), EVD, JAMA);
-		setAsString(unknown(), CHOL, JAMA);
+		setAsString(squareTall(), LU, JAMA);
+		setAsString(squareTall(), QR, JAMA);
+		setAsString(yes(), EIG, JAMA);
+		setAsString(yes(), CHOL, JAMA);
 
-		setAsString("unknown", VERSION, JAMPACK);
-		setAsString("1999/02", DATE, JAMPACK);
-		setAsString("unknown", LICENCE, JAMPACK);
-		setAsString(unknown(), JAVA14, JAMPACK);
-		setAsString(unknown(), JAVA5, JAMPACK);
+		setAsString(small("?"), VERSION, JAMPACK);
+		setAsString(small("1999"), DATE, JAMPACK);
+		setAsString(small("?"), LICENCE, JAMPACK);
+		setAsString(yes(), JAVA14, JAMPACK);
+		setAsString(yes(), JAVA5, JAMPACK);
 		setAsString(yes(), JAVA6, JAMPACK);
 		setAsString(yes(), DENSE, JAMPACK);
-		setAsString(unknown(), SPARSE, JAMPACK);
-		setAsString(unknown(), COMPLEX, JAMPACK);
+		setAsString(no(), SPARSE, JAMPACK);
+		setAsString(yes(), COMPLEX, JAMPACK);
+		setAsString(yes(), DOUBLE, JAMPACK);
+		setAsString(no(), FLOAT, JAMPACK);
+		setAsString(no(), BIGDECIMAL, JAMPACK);
 		setAsString(yes(), D2, JAMPACK);
-		setAsString(unknown(), D3, JAMPACK);
-		setAsString(unknown(), D4, JAMPACK);
-		setAsString(unknown(), D4PLUS, JAMPACK);
+		setAsString(no(), D3, JAMPACK);
+		setAsString(no(), D4, JAMPACK);
+		setAsString(no(), D4PLUS, JAMPACK);
 		setAsString(yes(), INV, JAMPACK);
 		setAsString(square(), SVD, JAMPACK);
-		setAsString(unknown(), LU, JAMPACK);
-		setAsString(unknown(), QR, JAMPACK);
-		setAsString(unknown(), EVD, JAMPACK);
-		setAsString(unknown(), CHOL, JAMPACK);
+		setAsString(all(), LU, JAMPACK);
+		setAsString(yes(), QR, JAMPACK);
+		setAsString(yes(), EIG, JAMPACK);
+		setAsString(yes(), CHOL, JAMPACK);
 
-		setAsString("unknown", VERSION, JMATHARRAY);
-		setAsString("2009/07", DATE, JMATHARRAY);
-		setAsString("BSD", LICENCE, JMATHARRAY);
+		setAsString(small("?"), VERSION, JMATHARRAY);
+		setAsString(small("2009"), DATE, JMATHARRAY);
+		setAsString(small("BSD"), LICENCE, JMATHARRAY);
 		setAsString(unknown(), JAVA14, JMATHARRAY);
-		setAsString(unknown(), JAVA5, JMATHARRAY);
+		setAsString(yes(), JAVA5, JMATHARRAY);
 		setAsString(yes(), JAVA6, JMATHARRAY);
 		setAsString(yes(), DENSE, JMATHARRAY);
-		setAsString(unknown(), SPARSE, JMATHARRAY);
-		setAsString(unknown(), COMPLEX, JMATHARRAY);
+		setAsString(no(), SPARSE, JMATHARRAY);
+		setAsString(no(), COMPLEX, JMATHARRAY);
+		setAsString(yes(), DOUBLE, JMATHARRAY);
+		setAsString(no(), FLOAT, JMATHARRAY);
+		setAsString(no(), BIGDECIMAL, JMATHARRAY);
 		setAsString(yes(), D2, JMATHARRAY);
-		setAsString(unknown(), D3, JMATHARRAY);
-		setAsString(unknown(), D4, JMATHARRAY);
-		setAsString(unknown(), D4PLUS, JMATHARRAY);
-		setAsString(unknown(), INV, JMATHARRAY);
-		setAsString(unknown(), SVD, JMATHARRAY);
-		setAsString(unknown(), LU, JMATHARRAY);
-		setAsString(unknown(), QR, JMATHARRAY);
-		setAsString(unknown(), EVD, JMATHARRAY);
-		setAsString(unknown(), CHOL, JMATHARRAY);
+		setAsString(no(), D3, JMATHARRAY);
+		setAsString(no(), D4, JMATHARRAY);
+		setAsString(no(), D4PLUS, JMATHARRAY);
+		setAsString(yes(), INV, JMATHARRAY);
+		setAsString(squareTall(), SVD, JMATHARRAY);
+		setAsString(squareTall(), LU, JMATHARRAY);
+		setAsString(squareTall(), QR, JMATHARRAY);
+		setAsString(yes(), EIG, JMATHARRAY);
+		setAsString(yes(), CHOL, JMATHARRAY);
 
-		setAsString("0.6", VERSION, JMATRICES);
-		setAsString("2004/05", DATE, JMATRICES);
-		setAsString("LGPL", LICENCE, JMATRICES);
+		setAsString(small("0.6"), VERSION, JMATRICES);
+		setAsString(small("2004"), DATE, JMATRICES);
+		setAsString(small("LGPL"), LICENCE, JMATRICES);
 		setAsString(unknown(), JAVA14, JMATRICES);
-		setAsString(unknown(), JAVA5, JMATRICES);
+		setAsString(yes(), JAVA5, JMATRICES);
 		setAsString(yes(), JAVA6, JMATRICES);
 		setAsString(yes(), DENSE, JMATRICES);
-		setAsString(unknown(), SPARSE, JMATRICES);
-		setAsString(unknown(), COMPLEX, JMATRICES);
+		setAsString(no(), SPARSE, JMATRICES);
+		setAsString(yes(), COMPLEX, JMATRICES);
+		setAsString(yes(), DOUBLE, JMATRICES);
+		setAsString(no(), FLOAT, JMATRICES);
+		setAsString(yes(), BIGDECIMAL, JMATRICES);
 		setAsString(yes(), D2, JMATRICES);
-		setAsString(unknown(), D3, JMATRICES);
-		setAsString(unknown(), D4, JMATRICES);
-		setAsString(unknown(), D4PLUS, JMATRICES);
-		setAsString(unknown(), INV, JMATRICES);
-		setAsString(unknown(), SVD, JMATRICES);
-		setAsString(unknown(), LU, JMATRICES);
-		setAsString(unknown(), QR, JMATRICES);
-		setAsString(unknown(), EVD, JMATRICES);
-		setAsString(unknown(), CHOL, JMATRICES);
+		setAsString(no(), D3, JMATRICES);
+		setAsString(no(), D4, JMATRICES);
+		setAsString(no(), D4PLUS, JMATRICES);
+		setAsString(yes(), INV, JMATRICES);
+		setAsString(square(), SVD, JMATRICES);
+		setAsString(squareTall(), LU, JMATRICES);
+		setAsString(squareTall(), QR, JMATRICES);
+		setAsString(yes(), EIG, JMATRICES);
+		setAsString(yes(), CHOL, JMATRICES);
 
-		setAsString("1.1", VERSION, JSCI);
-		setAsString("2009/07", DATE, JSCI);
-		setAsString("LGPL", LICENCE, JSCI);
+		setAsString(small("1.1"), VERSION, JSCI);
+		setAsString(small("2009"), DATE, JSCI);
+		setAsString(small("LGPL"), LICENCE, JSCI);
 		setAsString(yes(), JAVA14, JSCI);
 		setAsString(yes(), JAVA5, JSCI);
 		setAsString(yes(), JAVA6, JSCI);
 		setAsString(yes(), DENSE, JSCI);
-		setAsString(unknown(), SPARSE, JSCI);
-		setAsString(unknown(), COMPLEX, JSCI);
+		setAsString(yes(), SPARSE, JSCI);
+		setAsString(yes(), COMPLEX, JSCI);
+		setAsString(yes(), DOUBLE, JSCI);
+		setAsString(no(), FLOAT, JSCI);
+		setAsString(no(), BIGDECIMAL, JSCI);
 		setAsString(yes(), D2, JSCI);
-		setAsString(unknown(), D3, JSCI);
-		setAsString(unknown(), D4, JSCI);
-		setAsString(unknown(), D4PLUS, JSCI);
-		setAsString(unknown(), INV, JSCI);
-		setAsString(unknown(), SVD, JSCI);
-		setAsString(unknown(), LU, JSCI);
-		setAsString(unknown(), QR, JSCI);
-		setAsString(unknown(), EVD, JSCI);
-		setAsString(unknown(), CHOL, JSCI);
+		setAsString(no(), D3, JSCI);
+		setAsString(no(), D4, JSCI);
+		setAsString(no(), D4PLUS, JSCI);
+		setAsString(yes(), INV, JSCI);
+		setAsString(square(), SVD, JSCI);
+		setAsString(square() + footnote("e", "error in implementation"), LU, JSCI);
+		setAsString(square(), QR, JSCI);
+		setAsString(no(), EIG, JSCI);
+		setAsString(yes(), CHOL, JSCI);
 
-		setAsString("4.3.1", VERSION, JSCIENCE);
-		setAsString("2007/10", DATE, JSCIENCE);
-		setAsString("BSD", LICENCE, JSCIENCE);
+		setAsString(small("4.3.1"), VERSION, JSCIENCE);
+		setAsString(small("2007"), DATE, JSCIENCE);
+		setAsString(small("BSD"), LICENCE, JSCIENCE);
 		setAsString(unknown(), JAVA14, JSCIENCE);
-		setAsString(unknown(), JAVA5, JSCIENCE);
+		setAsString(yes(), JAVA5, JSCIENCE);
 		setAsString(yes(), JAVA6, JSCIENCE);
 		setAsString(yes(), DENSE, JSCIENCE);
-		setAsString(unknown(), SPARSE, JSCIENCE);
-		setAsString(unknown(), COMPLEX, JSCIENCE);
+		setAsString(yes(), SPARSE, JSCIENCE);
+		setAsString(yes(), COMPLEX, JSCIENCE);
+		setAsString(yes(), DOUBLE, JSCIENCE);
+		setAsString(no(), FLOAT, JSCIENCE);
+		setAsString(no(), BIGDECIMAL, JSCIENCE);
 		setAsString(yes(), D2, JSCIENCE);
-		setAsString(unknown(), D3, JSCIENCE);
-		setAsString(unknown(), D4, JSCIENCE);
-		setAsString(unknown(), D4PLUS, JSCIENCE);
-		setAsString(unknown(), INV, JSCIENCE);
-		setAsString(unknown(), SVD, JSCIENCE);
-		setAsString(unknown(), LU, JSCIENCE);
-		setAsString(unknown(), QR, JSCIENCE);
-		setAsString(unknown(), EVD, JSCIENCE);
-		setAsString(unknown(), CHOL, JSCIENCE);
+		setAsString(no(), D3, JSCIENCE);
+		setAsString(no(), D4, JSCIENCE);
+		setAsString(no(), D4PLUS, JSCIENCE);
+		setAsString(yes(), INV, JSCIENCE);
+		setAsString(no(), SVD, JSCIENCE);
+		setAsString(square() + footnote("e", "error in implementation"), LU, JSCIENCE);
+		setAsString(no(), QR, JSCIENCE);
+		setAsString(no(), EIG, JSCIENCE);
+		setAsString(no(), CHOL, JSCIENCE);
 
-		setAsString("7.2", VERSION, MANTISSA);
-		setAsString("2007/10", DATE, MANTISSA);
-		setAsString("BSD", LICENCE, MANTISSA);
+		setAsString(small("7.2"), VERSION, MANTISSA);
+		setAsString(small("2007"), DATE, MANTISSA);
+		setAsString(small("BSD"), LICENCE, MANTISSA);
 		setAsString(unknown(), JAVA14, MANTISSA);
-		setAsString(unknown(), JAVA5, MANTISSA);
+		setAsString(yes(), JAVA5, MANTISSA);
 		setAsString(yes(), JAVA6, MANTISSA);
 		setAsString(yes(), DENSE, MANTISSA);
-		setAsString(unknown(), SPARSE, MANTISSA);
-		setAsString(unknown(), COMPLEX, MANTISSA);
+		setAsString(no(), SPARSE, MANTISSA);
+		setAsString(no(), COMPLEX, MANTISSA);
+		setAsString(yes(), DOUBLE, MANTISSA);
+		setAsString(no(), FLOAT, MANTISSA);
+		setAsString(no(), BIGDECIMAL, MANTISSA);
 		setAsString(yes(), D2, MANTISSA);
-		setAsString(unknown(), D3, MANTISSA);
-		setAsString(unknown(), D4, MANTISSA);
-		setAsString(unknown(), D4PLUS, MANTISSA);
-		setAsString(unknown(), INV, MANTISSA);
-		setAsString(unknown(), SVD, MANTISSA);
-		setAsString(unknown(), LU, MANTISSA);
-		setAsString(unknown(), QR, MANTISSA);
-		setAsString(unknown(), EVD, MANTISSA);
-		setAsString(unknown(), CHOL, MANTISSA);
+		setAsString(no(), D3, MANTISSA);
+		setAsString(no(), D4, MANTISSA);
+		setAsString(no(), D4PLUS, MANTISSA);
+		setAsString(yes(), INV, MANTISSA);
+		setAsString(no(), SVD, MANTISSA);
+		setAsString(square() + footnote("o", "not accessible from outside"), LU, MANTISSA);
+		setAsString(no(), QR, MANTISSA);
+		setAsString(no(), EIG, MANTISSA);
+		setAsString(no(), CHOL, MANTISSA);
 
-		setAsString("0.9.12", VERSION, MTJ);
-		setAsString("2009/04", DATE, MTJ);
-		setAsString("LGPL", LICENCE, MTJ);
+		setAsString(small("0.9.12"), VERSION, MTJ);
+		setAsString(small("2009"), DATE, MTJ);
+		setAsString(small("LGPL"), LICENCE, MTJ);
 		setAsString(unknown(), JAVA14, MTJ);
-		setAsString(unknown(), JAVA5, MTJ);
+		setAsString(yes(), JAVA5, MTJ);
 		setAsString(yes(), JAVA6, MTJ);
 		setAsString(yes(), DENSE, MTJ);
-		setAsString(unknown(), SPARSE, MTJ);
-		setAsString(unknown(), COMPLEX, MTJ);
+		setAsString(yes(), SPARSE, MTJ);
+		setAsString(no(), COMPLEX, MTJ);
+		setAsString(yes(), DOUBLE, MTJ);
+		setAsString(no(), FLOAT, MTJ);
+		setAsString(no(), BIGDECIMAL, MTJ);
 		setAsString(yes(), D2, MTJ);
-		setAsString(unknown(), D3, MTJ);
-		setAsString(unknown(), D4, MTJ);
-		setAsString(unknown(), D4PLUS, MTJ);
-		setAsString(unknown(), INV, MTJ);
-		setAsString(unknown(), SVD, MTJ);
-		setAsString(unknown(), LU, MTJ);
-		setAsString(unknown(), QR, MTJ);
-		setAsString(unknown(), EVD, MTJ);
-		setAsString(unknown(), CHOL, MTJ);
+		setAsString(no(), D3, MTJ);
+		setAsString(no(), D4, MTJ);
+		setAsString(no(), D4PLUS, MTJ);
+		setAsString(yes(), INV, MTJ);
+		setAsString(all(), SVD, MTJ);
+		setAsString(all() + footnote("e", "error in implementation"), LU, MTJ);
+		setAsString(squareTall(), QR, MTJ);
+		setAsString(yes(), EIG, MTJ);
+		setAsString(yes(), CHOL, MTJ);
 
-		setAsString("28.0", VERSION, OJALGO);
-		setAsString("2009/08", DATE, OJALGO);
-		setAsString("MIT", LICENCE, OJALGO);
+		setAsString(small("28.17"), VERSION, OJALGO);
+		setAsString(small("2009"), DATE, OJALGO);
+		setAsString(small("MIT"), LICENCE, OJALGO);
 		setAsString(unknown(), JAVA14, OJALGO);
-		setAsString(unknown(), JAVA5, OJALGO);
+		setAsString(yes(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
 		setAsString(yes(), DENSE, OJALGO);
-		setAsString(unknown(), SPARSE, OJALGO);
-		setAsString(unknown(), COMPLEX, OJALGO);
+		setAsString(no(), SPARSE, OJALGO);
+		setAsString(yes(), COMPLEX, OJALGO);
+		setAsString(yes(), DOUBLE, OJALGO);
+		setAsString(yes(), FLOAT, OJALGO);
+		setAsString(yes(), BIGDECIMAL, OJALGO);
 		setAsString(yes(), D2, OJALGO);
-		setAsString(unknown(), D3, OJALGO);
-		setAsString(unknown(), D4, OJALGO);
-		setAsString(unknown(), D4PLUS, OJALGO);
-		setAsString(unknown(), INV, OJALGO);
-		setAsString(unknown(), SVD, OJALGO);
+		setAsString(no(), D3, OJALGO);
+		setAsString(no(), D4, OJALGO);
+		setAsString(no(), D4PLUS, OJALGO);
+		setAsString(yes(), INV, OJALGO);
+		setAsString(all(), SVD, OJALGO);
 		setAsString(unknown(), LU, OJALGO);
-		setAsString(unknown(), QR, OJALGO);
-		setAsString(unknown(), EVD, OJALGO);
-		setAsString(unknown(), CHOL, OJALGO);
+		setAsString(squareTall(), QR, OJALGO);
+		setAsString(yes(), EIG, OJALGO);
+		setAsString(yes(), CHOL, OJALGO);
 
-		setAsString("1.3.0", VERSION, ORBITAL);
-		setAsString("2009/03", DATE, ORBITAL);
-		setAsString("Custom", LICENCE, ORBITAL);
+		setAsString(small("1.3.0"), VERSION, ORBITAL);
+		setAsString(small("2009"), DATE, ORBITAL);
+		setAsString(small("custom"), LICENCE, ORBITAL);
 		setAsString(unknown(), JAVA14, ORBITAL);
-		setAsString(unknown(), JAVA5, ORBITAL);
+		setAsString(yes(), JAVA5, ORBITAL);
 		setAsString(yes(), JAVA6, ORBITAL);
 		setAsString(yes(), DENSE, ORBITAL);
-		setAsString(unknown(), SPARSE, ORBITAL);
-		setAsString(unknown(), COMPLEX, ORBITAL);
+		setAsString(no(), SPARSE, ORBITAL);
+		setAsString(yes(), COMPLEX, ORBITAL);
+		setAsString(yes(), DOUBLE, ORBITAL);
+		setAsString(no(), FLOAT, ORBITAL);
+		setAsString(no(), BIGDECIMAL, ORBITAL);
 		setAsString(yes(), D2, ORBITAL);
-		setAsString(unknown(), D3, ORBITAL);
-		setAsString(unknown(), D4, ORBITAL);
-		setAsString(unknown(), D4PLUS, ORBITAL);
-		setAsString(unknown(), INV, ORBITAL);
-		setAsString(unknown(), SVD, ORBITAL);
-		setAsString(unknown(), LU, ORBITAL);
-		setAsString(unknown(), QR, ORBITAL);
-		setAsString(unknown(), EVD, ORBITAL);
-		setAsString(unknown(), CHOL, ORBITAL);
+		setAsString(no(), D3, ORBITAL);
+		setAsString(no(), D4, ORBITAL);
+		setAsString(no(), D4PLUS, ORBITAL);
+		setAsString(yes(), INV, ORBITAL);
+		setAsString(no(), SVD, ORBITAL);
+		setAsString(square() + footnote("e", "error in implementation"), LU, ORBITAL);
+		setAsString(no(), QR, ORBITAL);
+		setAsString(no(), EIG, ORBITAL);
+		setAsString(no(), CHOL, ORBITAL);
 
 		setAsString(unknown(), VERSION, OWLPACK);
-		setAsString("1999", DATE, OWLPACK);
+		setAsString(small("1999"), DATE, OWLPACK);
 		setAsString(unknown(), LICENCE, OWLPACK);
-		setAsString(unknown(), JAVA14, OWLPACK);
-		setAsString(unknown(), JAVA5, OWLPACK);
+		setAsString(yes(), JAVA14, OWLPACK);
+		setAsString(yes(), JAVA5, OWLPACK);
 		setAsString(yes(), JAVA6, OWLPACK);
 		setAsString(yes(), DENSE, OWLPACK);
-		setAsString(unknown(), SPARSE, OWLPACK);
-		setAsString(unknown(), COMPLEX, OWLPACK);
+		setAsString(no(), SPARSE, OWLPACK);
+		setAsString(yes(), COMPLEX, OWLPACK);
+		setAsString(yes(), DOUBLE, OWLPACK);
+		setAsString(yes(), FLOAT, OWLPACK);
+		setAsString(no(), BIGDECIMAL, OWLPACK);
 		setAsString(yes(), D2, OWLPACK);
-		setAsString(unknown(), D3, OWLPACK);
-		setAsString(unknown(), D4, OWLPACK);
-		setAsString(unknown(), D4PLUS, OWLPACK);
-		setAsString(unknown(), INV, OWLPACK);
-		setAsString(unknown(), SVD, OWLPACK);
-		setAsString(unknown(), LU, OWLPACK);
-		setAsString(unknown(), QR, OWLPACK);
-		setAsString(unknown(), EVD, OWLPACK);
-		setAsString(unknown(), CHOL, OWLPACK);
+		setAsString(no(), D3, OWLPACK);
+		setAsString(no(), D4, OWLPACK);
+		setAsString(no(), D4PLUS, OWLPACK);
+		setAsString(yes() + footnote("e", "error in implementation"), INV, OWLPACK);
+		setAsString(yes() + footnote("e", "error in implementation"), SVD, OWLPACK);
+		setAsString(no(), LU, OWLPACK);
+		setAsString(circle() + footnote("u", "not useable without documentation"), QR, OWLPACK);
+		setAsString(no(), EIG, OWLPACK);
+		setAsString(no(), CHOL, OWLPACK);
 
-		setAsString("0.9.1", VERSION, PARALLELCOLT);
-		setAsString("2009/09", DATE, PARALLELCOLT);
-		setAsString("BSD", LICENCE, PARALLELCOLT);
+		setAsString(small("0.9.1"), VERSION, PARALLELCOLT);
+		setAsString(small("2009"), DATE, PARALLELCOLT);
+		setAsString(small("BSD"), LICENCE, PARALLELCOLT);
 		setAsString(unknown(), JAVA14, PARALLELCOLT);
-		setAsString(unknown(), JAVA5, PARALLELCOLT);
+		setAsString(yes(), JAVA5, PARALLELCOLT);
 		setAsString(yes(), JAVA6, PARALLELCOLT);
 		setAsString(yes(), DENSE, PARALLELCOLT);
-		setAsString(unknown(), SPARSE, PARALLELCOLT);
-		setAsString(unknown(), COMPLEX, PARALLELCOLT);
+		setAsString(yes(), SPARSE, PARALLELCOLT);
+		setAsString(yes(), COMPLEX, PARALLELCOLT);
+		setAsString(yes(), DOUBLE, PARALLELCOLT);
+		setAsString(yes(), FLOAT, PARALLELCOLT);
+		setAsString(no(), BIGDECIMAL, PARALLELCOLT);
 		setAsString(yes(), D2, PARALLELCOLT);
-		setAsString(unknown(), D3, PARALLELCOLT);
-		setAsString(unknown(), D4, PARALLELCOLT);
-		setAsString(unknown(), D4PLUS, PARALLELCOLT);
-		setAsString(unknown(), INV, PARALLELCOLT);
-		setAsString(unknown(), SVD, PARALLELCOLT);
-		setAsString(unknown(), LU, PARALLELCOLT);
-		setAsString(unknown(), QR, PARALLELCOLT);
-		setAsString(unknown(), EVD, PARALLELCOLT);
-		setAsString(unknown(), CHOL, PARALLELCOLT);
+		setAsString(yes(), D3, PARALLELCOLT);
+		setAsString(no(), D4, PARALLELCOLT);
+		setAsString(no(), D4PLUS, PARALLELCOLT);
+		setAsString(yes(), INV, PARALLELCOLT);
+		setAsString(all(), SVD, PARALLELCOLT);
+		setAsString(squareTall(), LU, PARALLELCOLT);
+		setAsString(circle() + footnote("e", "error in implementation"), QR, PARALLELCOLT);
+		setAsString(yes(), EIG, PARALLELCOLT);
+		setAsString(yes(), CHOL, PARALLELCOLT);
 
-		setAsString("1.10", VERSION, SST);
-		setAsString("2009/09", DATE, SST);
-		setAsString("LGPL", LICENCE, SST);
-		setAsString(unknown(), JAVA14, SST);
-		setAsString(unknown(), JAVA5, SST);
+		setAsString(small("1.10"), VERSION, SST);
+		setAsString(small("2009"), DATE, SST);
+		setAsString(small("LGPL"), LICENCE, SST);
+		setAsString(no(), JAVA14, SST);
+		setAsString(no(), JAVA5, SST);
 		setAsString(yes(), JAVA6, SST);
 		setAsString(yes(), DENSE, SST);
-		setAsString(unknown(), SPARSE, SST);
-		setAsString(unknown(), COMPLEX, SST);
+		setAsString(yes(), SPARSE, SST);
+		setAsString(yes(), COMPLEX, SST);
+		setAsString(yes(), DOUBLE, SST);
+		setAsString(no(), FLOAT, SST);
+		setAsString(no(), BIGDECIMAL, SST);
 		setAsString(yes(), D2, SST);
-		setAsString(unknown(), D3, SST);
-		setAsString(unknown(), D4, SST);
-		setAsString(unknown(), D4PLUS, SST);
-		setAsString(unknown(), INV, SST);
+		setAsString(yes(), D3, SST);
+		setAsString(yes(), D4, SST);
+		setAsString(yes(), D4PLUS, SST);
+		setAsString(yes(), INV, SST);
 		setAsString(unknown(), SVD, SST);
-		setAsString(unknown(), LU, SST);
-		setAsString(unknown(), QR, SST);
-		setAsString(unknown(), EVD, SST);
-		setAsString(unknown(), CHOL, SST);
+		setAsString(no(), LU, SST);
+		setAsString(no(), QR, SST);
+		setAsString(yes(), EIG, SST);
+		setAsString(no(), CHOL, SST);
 
-		setAsString("1.5.1", VERSION, VECMATH);
-		setAsString("2007/06", DATE, VECMATH);
-		setAsString("other", LICENCE, VECMATH);
+		setAsString(small("1.5.1"), VERSION, VECMATH);
+		setAsString(small("2007"), DATE, VECMATH);
+		setAsString(small("other"), LICENCE, VECMATH);
 		setAsString(unknown(), JAVA14, VECMATH);
-		setAsString(unknown(), JAVA5, VECMATH);
+		setAsString(yes(), JAVA5, VECMATH);
 		setAsString(yes(), JAVA6, VECMATH);
 		setAsString(yes(), DENSE, VECMATH);
-		setAsString(unknown(), SPARSE, VECMATH);
-		setAsString(unknown(), COMPLEX, VECMATH);
+		setAsString(no(), SPARSE, VECMATH);
+		setAsString(no(), COMPLEX, VECMATH);
+		setAsString(yes(), DOUBLE, VECMATH);
+		setAsString(no(), FLOAT, VECMATH);
+		setAsString(no(), BIGDECIMAL, VECMATH);
 		setAsString(yes(), D2, VECMATH);
 		setAsString(no(), D3, VECMATH);
 		setAsString(no(), D4, VECMATH);
 		setAsString(no(), D4PLUS, VECMATH);
 		setAsString(yes(), INV, VECMATH);
-		setAsString(yes(), SVD, VECMATH);
-		setAsString(yes(), LU, VECMATH);
+		setAsString(circle() + footnote("e", "error in implementation"), SVD, VECMATH);
+		setAsString(square() + footnote("n", "non-singular matrices only"), LU, VECMATH);
 		setAsString(no(), QR, VECMATH);
-		setAsString(no(), EVD, VECMATH);
+		setAsString(no(), EIG, VECMATH);
 		setAsString(no(), CHOL, VECMATH);
 	}
 
@@ -531,25 +602,34 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	private String all() {
 		switch (format) {
 		case LATEX:
-			return "all";
+			return "\\scalebox{0.6}[1.0]{$\\square$} $\\square$ \\scalebox{1.0}[0.6]{$\\square$}";
 		default:
 			return "all";
 		}
 	}
-	
+
 	private String squareTall() {
 		switch (format) {
 		case LATEX:
-			return "square, tall";
+			return "\\scalebox{0.6}[1.0]{$\\square$} $\\square$";
 		default:
 			return "square, tall";
 		}
 	}
-	
+
 	private String square() {
 		switch (format) {
 		case LATEX:
+			return "$\\square$";
+		default:
 			return "square";
+		}
+	}
+
+	private String circle() {
+		switch (format) {
+		case LATEX:
+			return "$\\circ$";
 		default:
 			return "square";
 		}
@@ -558,7 +638,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	private String no() {
 		switch (format) {
 		case LATEX:
-			return "\\bf{$+$}";
+			return "\\bf{$-$}";
 		default:
 			return "yes";
 		}
@@ -571,26 +651,66 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String beginTurn() {
+	private String turn(String text) {
 		switch (format) {
 		case LATEX:
-			return "\\bf{$+$}";
+			return "\\begin{turn}{90}" + text + "\\end{turn}";
 		default:
 			return "";
 		}
 	}
 
-	private String endTurn() {
+	private String small(String text) {
 		switch (format) {
 		case LATEX:
-			return "\\end{turn}";
+			return "\\small " + text;
 		default:
-			return "";
+			return text;
 		}
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new MatrixLibraries());
+	private String footnote(String footnote, String text) {
+		switch (format) {
+		case LATEX:
+			String f = "$^\\mathrm{" + footnote + "}$ " + text;
+			if (!footnotes.contains(f)) {
+				footnotes.add(f);
+			}
+			return "$^{\\mathrm{" + footnote + "}}$";
+		default:
+			f = footnote + " " + text;
+			if (!footnotes.contains(f)) {
+				footnotes.add(f);
+			}
+			return text;
+		}
 	}
 
+	public List<String> getFootnotes() {
+		return footnotes;
+	}
+
+	public static void main(String[] args) throws Exception {
+		MatrixLibraries ml = new MatrixLibraries(MatrixLibrariesFormat.LATEX);
+		String s = ml.exportToString(FileFormat.TEX);
+		s = s.replaceAll("table", "sidewaystable");
+		s = s.replaceAll("\\\\centering", "");
+		s = s.replaceAll("\\\\toprule", "");
+		s = s
+				.replaceAll("\\\\begin\\{tabular\\}",
+						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{tabular}");
+		s = s.replaceAll("latest version", "\\\\toprule\nlatest version");
+		s = s
+				.replace("{ccccccccccccccccccc}",
+						"{l@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}");
+		s = s.replaceAll("\\\\end\\{sidewaystable\\}", "");
+		s = s + "\\medskip" + "\n";
+		List<String> fn = ml.getFootnotes();
+		Collections.sort(fn);
+		for (String f : fn) {
+			s = s + f + "\\\\" + "\n";
+		}
+		s = s + "\\end{sidewaystable}";
+		System.out.println(s);
+	}
 }

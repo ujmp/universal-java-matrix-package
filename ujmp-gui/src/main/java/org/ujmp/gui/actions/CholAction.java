@@ -21,38 +21,30 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
-import org.ujmp.gui.actions.MandelbrotMatrixAction;
-import org.ujmp.gui.actions.PascalMatrixAction;
-import org.ujmp.gui.actions.SunSpotDataMatrixAction;
-import org.ujmp.gui.actions.WelcomeMatrixAction;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
-public class UJMPExamplesMenu extends JMenu {
-	private static final long serialVersionUID = -7279072623034811310L;
+public class CholAction extends MatrixAction {
+	private static final long serialVersionUID = -7453299795967048288L;
 
-	public UJMPExamplesMenu(JComponent component) {
-		super("Examples");
-		setMnemonic(KeyEvent.VK_E);
-		add(new MatrixExamplesMenu());
+	public CholAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+		super(c, m, v);
+		putValue(Action.NAME, "Chol");
+		putValue(Action.SHORT_DESCRIPTION,
+				"Calculates a Cholesky decomposition of this matrix");
 	}
 
-	class MatrixExamplesMenu extends JMenu {
-		private static final long serialVersionUID = -5582717033551246385L;
-
-		public MatrixExamplesMenu() {
-			super("Matrix");
-			add(new JMenuItem(new WelcomeMatrixAction(this, null, null)));
-			add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
-			add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
-			add(new JMenuItem(new PascalMatrixAction(this, null, null)));
-		}
+	public Object call() throws MatrixException {
+		Matrix result = getMatrixObject().getMatrix().chol();
+		result.showGUI();
+		return result;
 	}
 
 }

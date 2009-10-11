@@ -40,22 +40,23 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("parallelcolt.jar");
 		dependencies.add("arpack-combo.jar");
 		dependencies.add("netlib-java.jar");
+		dependencies.add("jtransforms.jar");
+		dependencies.add("jplasma.jar");
 		neededClasses.add("cern.colt.ParallelQuickSort");
 		neededClasses.add("org.netlib.arpack.Svout");
 		neededClasses.add("org.netlib.blas.JBLAS");
+		neededClasses.add("edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D");
+		neededClasses.add("edu.emory.mathcs.jplasma.Barrier");
 	}
 
-	
 	public String getDescription() {
 		return "interface to parallelcolt";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

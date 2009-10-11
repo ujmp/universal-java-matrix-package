@@ -28,6 +28,8 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import Jama.CholeskyDecomposition;
+import Jama.EigenvalueDecomposition;
 import Jama.LUDecomposition;
 import Jama.QRDecomposition;
 import Jama.SingularValueDecomposition;
@@ -128,14 +130,14 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		if (isSquare()) {
+		if (getRowCount() >= getColumnCount()) {
 			QRDecomposition qr = new QRDecomposition(matrix);
 			Matrix q = new JamaDenseDoubleMatrix2D(qr.getQ());
 			Matrix r = new JamaDenseDoubleMatrix2D(qr.getR());
 			return new Matrix[] { q, r };
 		} else {
 			throw new MatrixException(
-					"QR decomposition only works for square matrices");
+					"QR decomposition only works for matrices m>=n");
 		}
 	}
 
@@ -143,7 +145,26 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		LUDecomposition lu = new LUDecomposition(matrix);
 		Matrix l = new JamaDenseDoubleMatrix2D(lu.getL());
 		Matrix u = new JamaDenseDoubleMatrix2D(lu.getU());
-		return new Matrix[] { l, u };
+		int m = (int) getRowCount();
+		int[] piv = lu.getPivot();
+		Matrix p = new JamaDenseDoubleMatrix2D(m, m);
+		for (int i = 0; i < m; i++) {
+			p.setAsDouble(1, i, piv[i]);
+		}
+		return new Matrix[] { l, u, p };
+	}
+
+	public Matrix[] eig() {
+		EigenvalueDecomposition eig = new EigenvalueDecomposition(matrix);
+		Matrix v = new JamaDenseDoubleMatrix2D(eig.getV());
+		Matrix d = new JamaDenseDoubleMatrix2D(eig.getD());
+		return new Matrix[] { v, d };
+	}
+
+	public Matrix chol() {
+		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+		Matrix r = new JamaDenseDoubleMatrix2D(chol.getL());
+		return r;
 	}
 
 	public Matrix mtimes(Matrix m) {

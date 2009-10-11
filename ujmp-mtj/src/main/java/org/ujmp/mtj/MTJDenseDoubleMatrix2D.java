@@ -77,7 +77,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 				s.setAsDouble(svs[i], i, i);
 			}
-
 			return new Matrix[] { u, s, v };
 		} catch (Exception e) {
 			throw new MatrixException(e);
@@ -85,13 +84,17 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() throws MatrixException {
-		try {
-			QR qr = QR.factorize(getWrappedObject());
-			Matrix q = new MTJDenseDoubleMatrix2D(qr.getQ());
-			Matrix r = new MTJDenseDoubleMatrix2D(qr.getR());
-			return new Matrix[] { q, r };
-		} catch (Exception e) {
-			throw new MatrixException(e);
+		if (getRowCount() >= getColumnCount()) {
+			try {
+				QR qr = QR.factorize(getWrappedObject());
+				Matrix q = new MTJDenseDoubleMatrix2D(qr.getQ());
+				Matrix r = new MTJDenseDoubleMatrix2D(qr.getR());
+				return new Matrix[] { q, r };
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		} else {
+			throw new MatrixException("only allowed for matrices m>=n");
 		}
 	}
 
@@ -100,7 +103,16 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DenseLU lu = DenseLU.factorize(getWrappedObject());
 			Matrix l = new MTJDenseDoubleMatrix2D(lu.getL());
 			Matrix u = new MTJDenseDoubleMatrix2D(lu.getU());
-			return new Matrix[] { l, u };
+			int m = (int) getRowCount();
+			int[] piv = lu.getPivots();
+			Matrix p = new MTJDenseDoubleMatrix2D(m, m);
+			// pivots seem to be broken
+			// http://code.google.com/p/matrix-toolkits-java/issues/detail?id=1
+			// for (int i = 0; i < m; i++) {
+			// p.setAsDouble(1, i, piv[i]);
+			// }
+			p.eye(Ret.ORIG);
+			return new Matrix[] { l, u, p };
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
@@ -116,11 +128,16 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public Matrix[] evd() throws MatrixException {
+	public Matrix[] eig() throws MatrixException {
 		try {
 			EVD evd = EVD.factorize(getWrappedObject());
-			Matrix v = new MTJDenseDoubleMatrix2D(evd.getLeftEigenvectors());
-			Matrix d = new MTJDenseDoubleMatrix2D(evd.getRightEigenvectors());
+			Matrix v = new MTJDenseDoubleMatrix2D(evd.getRightEigenvectors());
+			int m = (int) getRowCount();
+			double[] evds = evd.getRealEigenvalues();
+			Matrix d = new MTJDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				d.setAsDouble(evds[i], i, i);
+			}
 			return new Matrix[] { v, d };
 		} catch (Exception e) {
 			throw new MatrixException(e);
@@ -388,16 +405,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
-	}
-
-	public boolean containsNaN() {
-		double[] data = matrix.getData();
-		for (int i = matrix.getData().length; --i >= 0;) {
-			if (Double.isNaN(data[i])) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

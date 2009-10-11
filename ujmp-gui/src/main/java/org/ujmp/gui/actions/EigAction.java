@@ -31,18 +31,18 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class EVDAction extends MatrixAction {
+public class EigAction extends MatrixAction {
 	private static final long serialVersionUID = -4144551670884886731L;
 
-	public EVDAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public EigAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "EVD");
+		putValue(Action.NAME, "Eig");
 		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a Eigenvalue value decomposition of this matrix");
+				"Calculates an Eigen decomposition of this matrix");
 	}
 
 	public Object call() throws MatrixException {
-		Matrix[] result = getMatrixObject().getMatrix().evd();
+		Matrix[] result = getMatrixObject().getMatrix().eig();
 		result[0].showGUI();
 		result[1].showGUI();
 		return result;

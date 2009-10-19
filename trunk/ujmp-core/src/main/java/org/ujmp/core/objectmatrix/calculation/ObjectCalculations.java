@@ -46,6 +46,10 @@ public interface ObjectCalculations {
 
 	public Matrix unique(Ret returnType) throws MatrixException;
 
+	public Matrix lowerTriangle(Ret returnType) throws MatrixException;
+
+	public Matrix upperTriangle(Ret returnType) throws MatrixException;
+
 	public Matrix toColumnVector() throws MatrixException;
 
 	public Matrix toRowVector() throws MatrixException;

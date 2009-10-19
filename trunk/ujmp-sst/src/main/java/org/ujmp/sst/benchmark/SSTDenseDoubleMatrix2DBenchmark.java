@@ -21,28 +21,25 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath.benchmark;
+package org.ujmp.sst.benchmark;
 
-import org.ujmp.commonsmath.CommonsMathDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.sst.SSTDenseDoubleMatrix2D;
 
-public class CommonsMathDenseDoubleMatrix2DBenchmark extends
-		AbstractMatrix2DBenchmark {
+public class SSTDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(size);
+		return new SSTDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(source);
+		return new SSTDenseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new CommonsMathDenseDoubleMatrix2DBenchmark();
+		AbstractMatrix2DBenchmark benchmark = new SSTDenseDoubleMatrix2DBenchmark();
 		long t0 = System.currentTimeMillis();
 		benchmark.run();
 		long t1 = System.currentTimeMillis();

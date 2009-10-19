@@ -27,16 +27,14 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 
-public class TestCommonsMathRealMatrix extends AbstractMatrixTest {
+public class TestCommonsMathArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(size);
+		return new CommonsMathArrayDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new CommonsMathDenseDoubleMatrix2D(source);
+		return new CommonsMathArrayDenseDoubleMatrix2D(source);
 	}
 
 }

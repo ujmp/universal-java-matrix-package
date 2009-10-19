@@ -26,11 +26,11 @@ package org.ujmp.complete.benchmark;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
-import org.ujmp.commonsmath.benchmark.CommonsMathDenseDoubleMatrix2DBenchmark;
+import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
+import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
@@ -50,79 +50,79 @@ import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
 import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
 import org.ujmp.owlpack.benchmark.OwlpackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
-import org.ujmp.sst.benchmark.SSTDenseDoubleMatrixBenchmark;
+import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
 public class MatrixBenchmark {
 
 	public MatrixBenchmark() {
-
 	}
 
 	public List<AbstractMatrix2DBenchmark> getDenseBenchmarks() {
 		List<AbstractMatrix2DBenchmark> list = new ArrayList<AbstractMatrix2DBenchmark>();
 
+		if (isRunVecMathDenseDoubleMatrix2DBenchmark()) {
+			list.add(new VecMathDenseDoubleMatrix2DBenchmark());
+		}
 		if (isRunDefaultDenseDoubleMatrix2DBenchmark()) {
 			list.add(new DefaultDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunArrayDenseDoubleMatrix2DBenchmark()) {
 			list.add(new ArrayDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunMTJDenseDoubleMatrix2DBenchmark()) {
-			list.add(new MTJDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
-			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
+		if (isRunSSTDenseDoubleMatrix2DBenchmark()) {
+			list.add(new SSTDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunParallelColtDenseDoubleMatrix2DBenchmark()) {
 			list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunColtDenseDoubleMatrix2DBenchmark()) {
-			list.add(new ColtDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
-			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
+		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunOrbitalDenseDoubleMatrix2DBenchmark()) {
 			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
-			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
+		if (isRunOjalgoDenseDoubleMatrix2DBenchmark()) {
+			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunSSTDenseDoubleMatrix2DBenchmark()) {
-			list.add(new SSTDenseDoubleMatrixBenchmark());
-		}
-		if (isRunJamaDenseDoubleMatrix2DBenchmark()) {
-			list.add(new JamaDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunJampackDenseDoubleMatrix2DBenchmark()) {
-			list.add(new JampackDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunJSciDenseDoubleMatrix2DBenchmark()) {
-			list.add(new JSciDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunCommonsMathDenseDoubleMatrix2DBenchmark()) {
-			list.add(new CommonsMathDenseDoubleMatrix2DBenchmark());
+		if (isRunMTJDenseDoubleMatrix2DBenchmark()) {
+			list.add(new MTJDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunMantissaDenseDoubleMatrix2DBenchmark()) {
 			list.add(new MantissaDenseDoubleMatrix2DBenchmark());
 		}
+		if (isRunJScienceDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JScienceDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunJSciDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JSciDenseDoubleMatrix2DBenchmark());
+		}
 		if (isRunJMatricesDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JMatricesDenseDoubleMatrix2DBenchmark());
-		}
-		if (isRunVecMathDenseDoubleMatrix2DBenchmark()) {
-			list.add(new VecMathDenseDoubleMatrix2DBenchmark());
 		}
 		if (isRunJMathArrayDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JMathArrayDenseDoubleMatrix2DBenchmark());
 		}
+		if (isRunJampackDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JampackDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunJamaDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JamaDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunCommonsMathBlockDenseDoubleMatrix2DBenchmark()) {
+			list.add(new CommonsMathBlockDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunCommonsMathArrayDenseDoubleMatrix2DBenchmark()) {
+			list.add(new CommonsMathArrayDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunColtDenseDoubleMatrix2DBenchmark()) {
+			list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		}
 
-		Collections.reverse(list);
 		return list;
 	}
 
 	public void configureDefault() throws Exception {
-
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunMTJDenseDoubleMatrix2DBenchmark(true);
@@ -137,12 +137,25 @@ public class MatrixBenchmark {
 		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
 		setRunColtDenseDoubleMatrix2DBenchmark(true);
 		setRunSSTDenseDoubleMatrix2DBenchmark(true);
-		setRunCommonsMathDenseDoubleMatrix2DBenchmark(true);
+		setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
+		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
 		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
 		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
 		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 
-		AbstractMatrix2DBenchmark.configureDefault();
+		AbstractMatrix2DBenchmark.setSkipSlowLibraries(true);
+
+		AbstractMatrix2DBenchmark.setBurnInRuns(1);
+		AbstractMatrix2DBenchmark.setRunsPerMatrix(3);
+
+		AbstractMatrix2DBenchmark.setRunTransposeNew(false);
+		AbstractMatrix2DBenchmark.setRunMtimesNew(false);
+		AbstractMatrix2DBenchmark.setRunInv(false);
+		AbstractMatrix2DBenchmark.setRunSVD(false);
+		AbstractMatrix2DBenchmark.setRunEVD(false);
+		AbstractMatrix2DBenchmark.setRunQR(false);
+		AbstractMatrix2DBenchmark.setRunLU(false);
+		AbstractMatrix2DBenchmark.setRunChol(true);
 	}
 
 	public void setRunDefaultDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -201,8 +214,12 @@ public class MatrixBenchmark {
 		System.setProperty("runMantissaDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
-	public void setRunCommonsMathDenseDoubleMatrix2DBenchmark(boolean b) {
-		System.setProperty("runCommonsMathDenseDoubleMatrix2DBenchmark", "" + b);
+	public void setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runCommonsMathArrayDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runCommonsMathBlockDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunSSTDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -265,8 +282,12 @@ public class MatrixBenchmark {
 		return "true".equals(System.getProperty("runSSTDenseDoubleMatrix2DBenchmark"));
 	}
 
-	public boolean isRunCommonsMathDenseDoubleMatrix2DBenchmark() {
-		return "true".equals(System.getProperty("runCommonsMathDenseDoubleMatrix2DBenchmark"));
+	public boolean isRunCommonsMathArrayDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runCommonsMathArrayDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunCommonsMathBlockDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runCommonsMathBlockDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunJamaDenseDoubleMatrix2DBenchmark() {

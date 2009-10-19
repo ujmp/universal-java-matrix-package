@@ -826,6 +826,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
+			return;
+		}
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}

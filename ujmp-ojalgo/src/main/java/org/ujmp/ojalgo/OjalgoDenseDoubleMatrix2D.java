@@ -117,9 +117,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		final LU<Double> lu = LUDecomposition.makePrimitive();
 		lu.compute(matrix);
 		final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
-		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
+		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getRowEchelonForm());
 		final Matrix p = new OjalgoDenseDoubleMatrix2D(lu.getP());
-		int[] piv = lu.getPivotOrder();
 		return new Matrix[] { l, u, p };
 	}
 

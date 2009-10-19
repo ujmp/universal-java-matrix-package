@@ -47,9 +47,4 @@ public class JMatricesDenseDoubleMatrix2DBenchmark extends
 		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
 	}
 
-	// matrix multiplication takes extremely long with JMatrices
-	public long benchmarkMtimesNew(long[] size0, long[] size1) {
-		return -1;
-	}
-
 }

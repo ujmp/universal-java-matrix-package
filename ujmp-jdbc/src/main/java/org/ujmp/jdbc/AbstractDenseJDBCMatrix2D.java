@@ -175,6 +175,14 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 			// DatabaseMetaData dbm = connection.getMetaData();
 			// dbm = null;
 			// ResultSet rs = dbm.getTables(null, null, "%", null);
+
+			// rs = meta.getPrimaryKeys(null, null, "table");
+			// while (rs.next()) {
+			// String columnName = rs.getString("COLUMN_NAME");
+			// System.out
+			// .println("getPrimaryKeys(): columnName=" + columnName);
+			// }
+
 			connections.put(id, connection);
 		}
 		id = ++id >= connectionCount ? 0 : id;

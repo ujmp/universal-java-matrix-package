@@ -137,15 +137,11 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix[] qr() {
-		if (getRowCount() >= getColumnCount()) {
-			final QR<Double> qr = QRDecomposition.makePrimitive();
-			qr.compute(matrix);
-			final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
-			final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
-			return new Matrix[] { q, r };
-		} else {
-			throw new MatrixException("only supported for matrices m>=n");
-		}
+		final QR<Double> qr = QRDecomposition.makePrimitive();
+		qr.compute(matrix);
+		final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
+		final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
 	}
 
 	public void setDouble(final double value, final int row, final int column) {

@@ -8,7 +8,8 @@ import junit.framework.TestCase;
 
 import org.ujmp.colt.ColtDenseDoubleMatrix2D;
 import org.ujmp.colt.ColtSparseDoubleMatrix2D;
-import org.ujmp.commonsmath.AbstractCommonsMathDenseDoubleMatrix2D;
+import org.ujmp.commonsmath.CommonsMathArrayDenseDoubleMatrix2D;
+import org.ujmp.commonsmath.CommonsMathBlockDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bigdecimalmatrix.impl.ArrayDenseBigDecimalMatrix2D;
@@ -55,7 +56,8 @@ public class TestCompareMatrices extends TestCase {
 		ALLFLOATMATRIXCLASSES.add(DefaultSparseFloatMatrix.class);
 		ALLFLOATMATRIXCLASSES.add(ColtDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ColtSparseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(AbstractCommonsMathDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(CommonsMathArrayDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(CommonsMathBlockDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JamaDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JMatricesDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JSciDenseDoubleMatrix2D.class);

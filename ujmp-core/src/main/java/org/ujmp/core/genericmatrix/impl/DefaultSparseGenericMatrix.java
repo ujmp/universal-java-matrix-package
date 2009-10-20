@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
@@ -71,17 +70,14 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return size;
 	}
 
-	
 	public void setSize(long... size) {
 		this.size = size;
 	}
 
-	
 	public A getObject(long... coordinates) {
 		return values.get(new Coordinates(coordinates));
 	}
 
-	
 	public long getValueCount() {
 		return values.size();
 	}
@@ -100,11 +96,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		}
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator(getSize());
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(values.keySet());
 	}
@@ -113,22 +104,18 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return values.containsKey(new Coordinates(coordinates));
 	}
 
-	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
 
-	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}

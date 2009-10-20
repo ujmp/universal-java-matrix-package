@@ -832,6 +832,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.jdmp.ehcache.")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {

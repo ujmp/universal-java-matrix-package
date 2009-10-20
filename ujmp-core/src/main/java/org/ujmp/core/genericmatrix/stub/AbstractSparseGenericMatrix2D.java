@@ -23,7 +23,6 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
 
@@ -32,11 +31,6 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 
 	private static final long serialVersionUID = 5833681469274664616L;
 
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
-	}
-
-	
 	public final A getObject(long... coordinates) throws MatrixException {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}

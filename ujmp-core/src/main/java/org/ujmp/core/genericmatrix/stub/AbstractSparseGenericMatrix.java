@@ -23,6 +23,7 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
+import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
 public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
@@ -33,4 +34,9 @@ public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatr
 	public StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}
+
+	public final Iterable<long[]> allCoordinates() {
+		return new CoordinateIterator(getSize());
+	}
+
 }

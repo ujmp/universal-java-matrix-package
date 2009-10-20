@@ -68,35 +68,26 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 		}
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return matrix.allCoordinates();
-	}
-
 	public long[] getSize() {
 		return matrix.getSize();
 	}
 
-	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return matrix.getAsDouble(coordinates);
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return matrix.getAsObject(coordinates);
 	}
 
-	
 	public long getValueCount() {
 		return matrix.getValueCount();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return matrix.getStorageType();
 	}
 
-	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
 	}
@@ -111,7 +102,6 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 
 		}
 
-		
 		public void run() {
 
 			try {
@@ -167,7 +157,6 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 		return matrix.contains(coordinates);
 	}
 
-	
 	public boolean isReadOnly() {
 		return matrix.isReadOnly();
 	}

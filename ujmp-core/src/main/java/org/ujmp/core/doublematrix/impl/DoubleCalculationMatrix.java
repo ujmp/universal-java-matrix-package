@@ -41,11 +41,6 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 		}
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return calculation.getDouble(coordinates);
 	}
 
-	
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 		calculation.setDouble(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

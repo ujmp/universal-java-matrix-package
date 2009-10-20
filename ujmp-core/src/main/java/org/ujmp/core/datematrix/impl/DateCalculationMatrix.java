@@ -43,11 +43,6 @@ public class DateCalculationMatrix extends AbstractDateMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -56,7 +51,6 @@ public class DateCalculationMatrix extends AbstractDateMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -64,17 +58,14 @@ public class DateCalculationMatrix extends AbstractDateMatrix {
 		}
 	}
 
-	
 	public Date getDate(long... coordinates) throws MatrixException {
 		return calculation.getDate(coordinates);
 	}
 
-	
 	public void setDate(Date value, long... coordinates) throws MatrixException {
 		calculation.setDate(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

@@ -41,11 +41,6 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		}
 	}
 
-	
 	public int getInt(long... coordinates) throws MatrixException {
 		return calculation.getInt(coordinates);
 	}
 
-	
 	public void setInt(int value, long... coordinates) throws MatrixException {
 		calculation.setInt(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

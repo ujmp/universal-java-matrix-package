@@ -37,30 +37,22 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		setAnnotation(source.getAnnotation());
 	}
 
-	public synchronized Iterable<long[]> allCoordinates() {
-		return matrix.allCoordinates();
-	}
-
 	public synchronized long[] getSize() {
 		return matrix.getSize();
 	}
 
-	
 	public synchronized double getAsDouble(long... coordinates) throws MatrixException {
 		return matrix.getAsDouble(coordinates);
 	}
 
-	
 	public synchronized long getValueCount() {
 		return matrix.getValueCount();
 	}
 
-	
 	public synchronized void setAsDouble(double value, long... coordinates) throws MatrixException {
 		matrix.setAsDouble(value, coordinates);
 	}
 
-	
 	public synchronized Object getObject(long... c) throws MatrixException {
 		return matrix.getAsObject(c);
 	}
@@ -73,12 +65,10 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 		return matrix.contains(coordinates);
 	}
 
-	
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return matrix.getStorageType();
 	}

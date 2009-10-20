@@ -75,7 +75,6 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 		this.parameters = parameters;
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getMatrix().getAsObject(coordinates);
 	}
@@ -92,27 +91,18 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 		return matrix.get();
 	}
 
-	
 	public void setObject(Object value, long... coordinates) {
 		getMatrix().setAsObject(value, coordinates);
 	}
 
-	
-	public Iterable<long[]> allCoordinates() throws MatrixException {
-		return getMatrix().allCoordinates();
-	}
-
-	
 	public boolean contains(long... coordinates) throws MatrixException {
 		return getMatrix().contains(coordinates);
 	}
 
-	
 	public long[] getSize() {
 		return getMatrix().getSize();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return getMatrix().getStorageType();
 	}

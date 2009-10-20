@@ -41,11 +41,6 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 		}
 	}
 
-	
 	public char getChar(long... coordinates) throws MatrixException {
 		return calculation.getChar(coordinates);
 	}
 
-	
 	public void setChar(char value, long... coordinates) throws MatrixException {
 		calculation.setChar(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

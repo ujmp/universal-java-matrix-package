@@ -59,10 +59,6 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	public synchronized Iterable<long[]> allCoordinates() {
-		return null;
-	}
-
 	public synchronized long[] getSize() {
 		// TODO: not working
 		try {
@@ -90,7 +86,6 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	
 	public synchronized double getAsDouble(long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
@@ -118,7 +113,6 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	
 	public synchronized void setAsDouble(double value, long... coordinates) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(BUFFERSIZE);
@@ -144,7 +138,6 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	
 	public Object getObject(long... coordinates) {
 		// TODO Auto-generated method stub
 		return null;

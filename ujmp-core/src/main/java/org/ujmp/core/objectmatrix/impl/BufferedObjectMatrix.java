@@ -72,7 +72,6 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		return inputBuffer.getSize();
 	}
 
-	
 	public synchronized Object getObject(long... coordinates) throws MatrixException {
 		Object o = null;
 		o = inputBuffer.getAsObject(coordinates);
@@ -83,18 +82,12 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		return o;
 	}
 
-	
 	public synchronized long getValueCount() {
 		return original.getValueCount();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return inputBuffer.getStorageType();
-	}
-
-	public synchronized Iterable<long[]> allCoordinates() {
-		return original.allCoordinates();
 	}
 
 	public synchronized void setObject(Object value, long... coordinates) throws MatrixException {
@@ -135,7 +128,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 	}
 
 	class WriteThread extends Thread {
-		
+
 		public void run() {
 			while (true) {
 				try {
@@ -157,7 +150,6 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		return inputBuffer.contains(coordinates) || original.contains(coordinates);
 	}
 
-	
 	public boolean isReadOnly() {
 		return original.isReadOnly();
 	}

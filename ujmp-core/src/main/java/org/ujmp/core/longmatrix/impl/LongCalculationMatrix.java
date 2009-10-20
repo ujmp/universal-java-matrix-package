@@ -41,11 +41,6 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 		}
 	}
 
-	
 	public long getLong(long... coordinates) throws MatrixException {
 		return calculation.getLong(coordinates);
 	}
 
-	
 	public void setLong(long value, long... coordinates) throws MatrixException {
 		calculation.setLong(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

@@ -65,6 +65,7 @@ import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
+import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.calculation.ToDateMatrix;
@@ -223,6 +224,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public AbstractMatrix() {
 		id = runningId++;
+	}
+
+	public Iterable<long[]> allCoordinates() {
+		return new CoordinateIterator(getSize());
 	}
 
 	public final long getCoreObjectId() {

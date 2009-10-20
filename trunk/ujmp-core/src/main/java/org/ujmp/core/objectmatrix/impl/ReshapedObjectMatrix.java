@@ -49,10 +49,6 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return false;
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterable();
-	}
-
 	private class CoordinateIterable implements Iterable<long[]> {
 
 		public Iterator<long[]> iterator() {
@@ -98,32 +94,26 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		return newSize;
 	}
 
-	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return source.getAsDouble(getOldCoordinates(coordinates));
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return source.getAsObject(getOldCoordinates(coordinates));
 	}
 
-	
 	public long getValueCount() {
 		return source.getValueCount();
 	}
 
-	
 	public boolean isReadOnly() {
 		return source.isReadOnly();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return source.getStorageType();
 	}
 
-	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		source.setAsDouble(value, getOldCoordinates(coordinates));
 	}

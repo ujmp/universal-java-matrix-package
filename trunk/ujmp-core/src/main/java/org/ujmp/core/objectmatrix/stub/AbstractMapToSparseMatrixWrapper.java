@@ -26,7 +26,6 @@ package org.ujmp.core.objectmatrix.stub;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -79,26 +78,19 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		setMap(object);
 	}
 
-	
 	public final Object getObject(long... coordinates) throws MatrixException {
 		Object v = getMap().get(new Coordinates(coordinates));
 		return v == null ? defaultValue : v;
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
 	}
 
 	public final boolean contains(long... coordinates) {
 		return getMap().containsKey(new Coordinates(coordinates));
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
 	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
 		setObject(v, coordinates);
 	}
@@ -116,12 +108,10 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		return maximumNumberOfEntries;
 	}
 
-	
 	public final long getValueCount() {
 		return getMap().size();
 	}
 
-	
 	public final Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(getMap().keySet());
 	}

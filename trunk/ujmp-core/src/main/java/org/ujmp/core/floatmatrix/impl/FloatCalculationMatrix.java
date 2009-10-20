@@ -41,11 +41,6 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		}
 	}
 
-	
 	public float getFloat(long... coordinates) throws MatrixException {
 		return calculation.getFloat(coordinates);
 	}
 
-	
 	public void setFloat(float value, long... coordinates) throws MatrixException {
 		calculation.setFloat(value, coordinates);
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}

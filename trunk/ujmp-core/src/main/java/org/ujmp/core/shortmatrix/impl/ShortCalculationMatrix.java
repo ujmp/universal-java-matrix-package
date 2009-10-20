@@ -41,11 +41,6 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		return calculation.contains(coordinates);
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return calculation.allCoordinates();
-	}
-
-	
 	public Iterable<long[]> availableCoordinates() {
 		return calculation.availableCoordinates();
 	}
@@ -54,7 +49,6 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		return calculation.getSize();
 	}
 
-	
 	public void notifyGUIObject() {
 		super.notifyGUIObject();
 		if (calculation.getSource() != null) {
@@ -62,17 +56,14 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		}
 	}
 
-	
 	public final StorageType getStorageType() {
 		return calculation.getStorageType();
 	}
 
-	
 	public short getShort(long... coordinates) throws MatrixException {
 		return calculation.getShort(coordinates);
 	}
 
-	
 	public void setShort(short value, long... coordinates) throws MatrixException {
 		calculation.setShort(value, coordinates);
 	}

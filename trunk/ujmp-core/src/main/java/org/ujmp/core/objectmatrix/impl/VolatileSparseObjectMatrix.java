@@ -27,7 +27,6 @@ import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.SoftHashMap;
-import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -47,7 +46,6 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		}
 	}
 
-	
 	public boolean isTransient() {
 		return true;
 	}
@@ -60,22 +58,16 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		return size;
 	}
 
-	
 	public Object getObject(long... coordinates) {
 		return values.get(new Coordinates(coordinates));
 	}
 
-	
 	public long getValueCount() {
 		return values.size();
 	}
 
 	public void setObject(Object value, long... coordinates) {
 		values.put(new Coordinates(coordinates), value);
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator(getSize());
 	}
 
 	public Iterable<long[]> entries() {

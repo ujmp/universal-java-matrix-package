@@ -48,6 +48,8 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 
 	private Thread writeThread = null;
 
+	private static final EmptyObject EMPTYOBJECT = new EmptyObject();
+
 	public BufferedObjectMatrix(Matrix original) {
 		this.original = original;
 		setInputBufferSize(0);
@@ -77,7 +79,13 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		o = inputBuffer.getAsObject(coordinates);
 		if (o == null) {
 			o = original.getAsObject(coordinates);
-			inputBuffer.setAsObject(o, coordinates);
+			if (o == null) {
+				inputBuffer.setAsObject(EMPTYOBJECT, coordinates);
+			} else {
+				inputBuffer.setAsObject(o, coordinates);
+			}
+		} else if (o == EMPTYOBJECT) {
+			return null;
 		}
 		return o;
 	}
@@ -154,4 +162,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 		return original.isReadOnly();
 	}
 
+}
+
+class EmptyObject {
 }

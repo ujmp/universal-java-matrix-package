@@ -26,15 +26,17 @@ package org.ujmp.jdbc;
 public class DensePostgreSQLMatrix2D extends AbstractDenseJDBCMatrix2D {
 	private static final long serialVersionUID = -3996486220109980402L;
 
-	public DensePostgreSQLMatrix2D(String url, String sqlStatement, String username, String password)
-			throws ClassNotFoundException {
+	public DensePostgreSQLMatrix2D(String url, String sqlStatement,
+			String username, String password) throws ClassNotFoundException {
 		super(url, sqlStatement, username, password);
 		Class.forName("org.postgresql.Driver");
 	}
 
-	public DensePostgreSQLMatrix2D(String host, int port, String databasename, String sqlStatement, String username,
-			String password) throws ClassNotFoundException {
-		this("jdbc:postgresql://" + host + ":" + port + "/" + databasename, sqlStatement, username, password);
+	public DensePostgreSQLMatrix2D(String host, int port, String databasename,
+			String sqlStatement, String username, String password)
+			throws ClassNotFoundException {
+		this("jdbc:postgresql://" + host + ":" + port + "/" + databasename,
+				sqlStatement, username, password);
 	}
 
 }

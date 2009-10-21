@@ -148,13 +148,13 @@ public class MatrixBenchmark {
 		AbstractMatrix2DBenchmark.setBurnInRuns(1);
 		AbstractMatrix2DBenchmark.setRunsPerMatrix(3);
 
-		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
-		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
-		AbstractMatrix2DBenchmark.setRunInv(true);
-		AbstractMatrix2DBenchmark.setRunSVD(true);
-		AbstractMatrix2DBenchmark.setRunEVD(true);
-		AbstractMatrix2DBenchmark.setRunQR(true);
-		AbstractMatrix2DBenchmark.setRunLU(true);
+		AbstractMatrix2DBenchmark.setRunTransposeNew(false);
+		AbstractMatrix2DBenchmark.setRunMtimesNew(false);
+		AbstractMatrix2DBenchmark.setRunInv(false);
+		AbstractMatrix2DBenchmark.setRunSVD(false);
+		AbstractMatrix2DBenchmark.setRunEVD(false);
+		AbstractMatrix2DBenchmark.setRunQR(false);
+		AbstractMatrix2DBenchmark.setRunLU(false);
 		AbstractMatrix2DBenchmark.setRunChol(true);
 	}
 

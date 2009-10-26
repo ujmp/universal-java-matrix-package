@@ -923,4 +923,20 @@ public abstract class MathUtil {
 		return i1.subtract(i2).signum() < 0;
 	}
 
+	public static int max(int[] values) {
+		int max = -Integer.MAX_VALUE;
+		for (int i = values.length - 1; i != -1; i--) {
+			max = values[i] > max ? values[i] : max;
+		}
+		return max;
+	}
+
+	public static int min(int[] values) {
+		int min = Integer.MAX_VALUE;
+		for (int i = values.length - 1; i != -1; i--) {
+			min = values[i] < min ? values[i] : min;
+		}
+		return min;
+	}
+
 }

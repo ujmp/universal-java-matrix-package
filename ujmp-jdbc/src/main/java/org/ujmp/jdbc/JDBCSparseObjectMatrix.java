@@ -82,7 +82,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	private PreparedStatement getGetEntryStatement() {
 		try {
-			if (getEntryStatement == null || getEntryStatement.isClosed()) {
+			if (getEntryStatement == null) {
 				StringBuilder s = new StringBuilder();
 				s.append("select ");
 				s.append(columnForValue);
@@ -107,7 +107,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	private PreparedStatement getInsertEntryStatement() {
 		try {
-			if (insertEntryStatement == null || insertEntryStatement.isClosed()) {
+			if (insertEntryStatement == null) {
 				StringBuilder s = new StringBuilder();
 				s.append("insert into ");
 				s.append(tableName);
@@ -141,7 +141,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	private PreparedStatement getGetSizeStatement() {
 		try {
-			if (getSizeStatement == null || getSizeStatement.isClosed()) {
+			if (getSizeStatement == null) {
 				StringBuilder s = new StringBuilder();
 				s.append("select ");
 				for (int i = 0; i < columnsForCoordinates.length; i++) {

@@ -39,17 +39,25 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 
 	private int dimension = NONE;
 
+	private Annotation annotation = null;
+
 	public AbstractCalculation(S... sources) {
 		this.sources = sources;
+		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
 	}
 
 	public AbstractCalculation(int dimension, S... sources) {
 		this.sources = sources;
+		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
 		this.dimension = dimension;
 	}
 
 	public boolean isSparse() {
 		return false;
+	}
+
+	public void setAnnotation(Annotation annotation) {
+		this.annotation = annotation;
 	}
 
 	public long getValueCount() {
@@ -69,7 +77,7 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 	}
 
 	public Annotation getAnnotation() {
-		return sources == null || sources[0] == null ? null : sources[0].getAnnotation();
+		return annotation;
 	}
 
 	public final S getSource() {
@@ -112,7 +120,6 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 		return (T[]) new Object[] { calcNew() };
 	}
 
-	
 	public final StorageType getStorageType() {
 		return getSource().getStorageType();
 	}

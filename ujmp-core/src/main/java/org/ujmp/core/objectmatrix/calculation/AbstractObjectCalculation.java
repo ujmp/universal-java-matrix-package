@@ -50,7 +50,9 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 
 	public final ObjectMatrix calcNew() throws MatrixException {
 		ObjectMatrix result = (ObjectMatrix) MatrixFactory.zeros(ValueType.OBJECT, getSize());
-		// TODO: copy annotation
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
+		}
 		for (long[] c : result.allCoordinates()) {
 			result.setAsObject(getObject(c), c);
 		}
@@ -74,7 +76,6 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

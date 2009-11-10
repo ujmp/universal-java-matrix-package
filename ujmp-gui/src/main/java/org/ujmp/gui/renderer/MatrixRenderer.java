@@ -41,7 +41,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
 import org.ujmp.gui.util.GraphicsUtil;
@@ -74,7 +74,6 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 		this.matrix = m;
 	}
 
-	
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 
@@ -128,7 +127,6 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 		return this;
 	}
 
-	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 
@@ -202,7 +200,8 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 				if (width > 20 && matrix.isScalar()) {
 					Color col = ColorUtil.fromObject(matrix.getValueAt(0, 0));
 					g2d.setColor(ColorUtil.contrastBW(col));
-					String s = StringUtil.format(matrix.getValueAt(0, 0));
+					String s = UJMPFormat.getSingleLineInstance().format(
+							matrix.getValueAt(0, 0));
 					if (s != null && s.length() > 25) {
 						s = s.substring(0, 25) + "...";
 					}
@@ -295,7 +294,8 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 			g2d.drawImage(bufferedImage, 0, 0, width, height, 0, 0,
 					bufferedImage.getWidth(), bufferedImage.getHeight(), null);
 			if (width > 20 && matrix.isScalar()) {
-				String s = StringUtil.format(matrix.getAsObject(0, 0));
+				String s = UJMPFormat.getSingleLineInstance().format(
+						matrix.getAsObject(0, 0));
 				if (s != null && s.length() > 25) {
 					s = s.substring(0, 25) + "...";
 				}
@@ -354,7 +354,8 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 				g2d.setColor(ColorUtil.contrastBW(bg.getColor()));
 				GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0,
 						GraphicsUtil.ALIGNCENTER, GraphicsUtil.ALIGNCENTER,
-						StringUtil.format(matrix.getAsDouble(0, 0)));
+						UJMPFormat.getSingleLineInstance().format(
+								matrix.getAsObject(0, 0)));
 			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "error painting matrix", e);
@@ -401,7 +402,8 @@ public class MatrixRenderer extends DefaultTableCellRenderer {
 					bufferedImage.getWidth(), bufferedImage.getHeight(), null);
 			if (width > 20 && matrix.isScalar()) {
 				g2d.setColor(ColorUtil.contrastBW(bg.getColor()));
-				String s = StringUtil.format(matrix.getAsObject(0, 0));
+				String s = UJMPFormat.getSingleLineInstance().format(
+						matrix.getAsObject(0, 0));
 				if (s != null && s.length() > 25) {
 					s = s.substring(0, 25) + "...";
 				}

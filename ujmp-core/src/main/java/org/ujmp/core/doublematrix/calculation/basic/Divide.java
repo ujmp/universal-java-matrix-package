@@ -61,7 +61,6 @@ public class Divide extends AbstractDoubleCalculation {
 		super();
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				/ MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
@@ -85,6 +84,9 @@ public class Divide extends AbstractDoubleCalculation {
 			return calc(ignoreNaN, m1.getAsDouble(0, 0), m2);
 		}
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
+		if (m1.getAnnotation() != null) {
+			ret.setAnnotation(m1.getAnnotation().clone());
+		}
 		if (ignoreNaN) {
 			for (long[] c : m2.availableCoordinates()) {
 				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c))
@@ -100,6 +102,9 @@ public class Divide extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, double v2) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
+		if (m1.getAnnotation() != null) {
+			ret.setAnnotation(m1.getAnnotation().clone());
+		}
 		v2 = ignoreNaN ? MathUtil.ignoreNaN(v2) : v2;
 		if (ignoreNaN) {
 			for (long[] c : m1.allCoordinates()) {
@@ -115,6 +120,9 @@ public class Divide extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, double v1, Matrix m2) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(m2.getSize());
+		if (m2.getAnnotation() != null) {
+			ret.setAnnotation(m2.getAnnotation().clone());
+		}
 		v1 = ignoreNaN ? MathUtil.ignoreNaN(v1) : v1;
 		if (ignoreNaN) {
 			for (long[] c : m2.allCoordinates()) {

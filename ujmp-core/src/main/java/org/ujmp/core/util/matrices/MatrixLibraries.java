@@ -247,7 +247,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("2.0"), VERSION, COMMONSMATH);
 		setAsString(small("2009"), DATE, COMMONSMATH);
 		setAsString(small("Apache"), LICENCE, COMMONSMATH);
-		setAsString(unknown(), JAVA14, COMMONSMATH);
+		setAsString(no(), JAVA14, COMMONSMATH);
 		setAsString(yes(), JAVA5, COMMONSMATH);
 		setAsString(yes(), JAVA6, COMMONSMATH);
 		setAsString(yes(), DENSE, COMMONSMATH);
@@ -270,7 +270,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("1.0.2"), VERSION, JAMA);
 		setAsString(small("2005"), DATE, JAMA);
 		setAsString(small("PD"), LICENCE, JAMA);
-		setAsString(unknown(), JAVA14, JAMA);
+		setAsString(yes(), JAVA14, JAMA);
 		setAsString(yes(), JAVA5, JAMA);
 		setAsString(yes(), JAVA6, JAMA);
 		setAsString(yes(), DENSE, JAMA);
@@ -339,7 +339,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("0.6"), VERSION, JMATRICES);
 		setAsString(small("2004"), DATE, JMATRICES);
 		setAsString(small("LGPL"), LICENCE, JMATRICES);
-		setAsString(unknown(), JAVA14, JMATRICES);
+		setAsString(yes(), JAVA14, JMATRICES);
 		setAsString(yes(), JAVA5, JMATRICES);
 		setAsString(yes(), JAVA6, JMATRICES);
 		setAsString(yes(), DENSE, JMATRICES);
@@ -385,7 +385,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("4.3.1"), VERSION, JSCIENCE);
 		setAsString(small("2007"), DATE, JSCIENCE);
 		setAsString(small("BSD"), LICENCE, JSCIENCE);
-		setAsString(unknown(), JAVA14, JSCIENCE);
+		setAsString(no(), JAVA14, JSCIENCE);
 		setAsString(yes(), JAVA5, JSCIENCE);
 		setAsString(yes(), JAVA6, JSCIENCE);
 		setAsString(yes(), DENSE, JSCIENCE);
@@ -431,7 +431,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("0.9.12"), VERSION, MTJ);
 		setAsString(small("2009"), DATE, MTJ);
 		setAsString(small("LGPL"), LICENCE, MTJ);
-		setAsString(unknown(), JAVA14, MTJ);
+		setAsString(no(), JAVA14, MTJ);
 		setAsString(yes(), JAVA5, MTJ);
 		setAsString(yes(), JAVA6, MTJ);
 		setAsString(yes(), DENSE, MTJ);
@@ -454,7 +454,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("28.17"), VERSION, OJALGO);
 		setAsString(small("2009"), DATE, OJALGO);
 		setAsString(small("MIT"), LICENCE, OJALGO);
-		setAsString(unknown(), JAVA14, OJALGO);
+		setAsString(no(), JAVA14, OJALGO);
 		setAsString(yes(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
 		setAsString(yes(), DENSE, OJALGO);
@@ -523,7 +523,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("0.9.1"), VERSION, PARALLELCOLT);
 		setAsString(small("2009"), DATE, PARALLELCOLT);
 		setAsString(small("BSD"), LICENCE, PARALLELCOLT);
-		setAsString(unknown(), JAVA14, PARALLELCOLT);
+		setAsString(yes(), JAVA14, PARALLELCOLT);
 		setAsString(yes(), JAVA5, PARALLELCOLT);
 		setAsString(yes(), JAVA6, PARALLELCOLT);
 		setAsString(yes(), DENSE, PARALLELCOLT);
@@ -547,7 +547,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("2009"), DATE, SST);
 		setAsString(small("LGPL"), LICENCE, SST);
 		setAsString(no(), JAVA14, SST);
-		setAsString(no(), JAVA5, SST);
+		setAsString(yes() + footnote("5", "pre-compiled jar package does not work with Java 5"),
+				JAVA5, SST);
 		setAsString(yes(), JAVA6, SST);
 		setAsString(yes(), DENSE, SST);
 		setAsString(yes(), SPARSE, SST);

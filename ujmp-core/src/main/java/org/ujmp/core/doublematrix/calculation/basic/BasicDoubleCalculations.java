@@ -29,16 +29,6 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicDoubleCalculations {
 
-	public static Plus plus = new Plus();
-
-	public static Minus minus = new Minus();
-
-	public static Times times = new Times();
-
-	public static Mtimes mtimes = new Mtimes();
-
-	public static Divide divide = new Divide();
-
 	/**
 	 * Adds a specified value to all entries in the matrix.
 	 * 

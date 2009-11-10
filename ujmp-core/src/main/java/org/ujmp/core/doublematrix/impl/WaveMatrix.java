@@ -26,7 +26,7 @@ package org.ujmp.core.doublematrix.impl;
 import java.io.File;
 import java.io.IOException;
 
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 
 public class WaveMatrix extends DenseFileMatrix2D {
 	private static final long serialVersionUID = -4952985947339369630L;
@@ -59,7 +59,6 @@ public class WaveMatrix extends DenseFileMatrix2D {
 		return 32768;
 	}
 
-	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("RIFF Tag:         " + getRIFFTag() + "\n");
@@ -74,7 +73,8 @@ public class WaveMatrix extends DenseFileMatrix2D {
 		s.append("BlockAlign:       " + getBlockAlign() + "\n");
 		s.append("DataLengthHeader: " + getDataLengthFromHeader() + "\n");
 		s.append("DataLengthFile:   " + getDataLengthFromFile() + "\n");
-		s.append("Duration:         " + StringUtil.format(getDuration()) + "s\n");
+		s.append("Duration:         " + UJMPFormat.getSingleLineInstance().format(getDuration())
+				+ "s\n");
 		s.append("RowCount:         " + getRowCount() + "\n");
 		s.append("ColumnCount:      " + getColumnCount() + "\n");
 		s.append("Header-Check:     " + (isWaveFile() ? "passed" : "error") + "\n");

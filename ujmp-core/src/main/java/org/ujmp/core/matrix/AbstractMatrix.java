@@ -70,7 +70,6 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.calculation.ToDateMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
-import org.ujmp.core.doublematrix.calculation.DoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.basic.Atimes;
 import org.ujmp.core.doublematrix.calculation.basic.Divide;
@@ -156,8 +155,10 @@ import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
+import org.ujmp.core.objectmatrix.calculation.ExtractAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
+import org.ujmp.core.objectmatrix.calculation.IncludeAnnotation;
 import org.ujmp.core.objectmatrix.calculation.LowerTriangle;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
@@ -183,6 +184,7 @@ import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
@@ -770,6 +772,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Ceil(this).calc(returnType);
 	}
 
+	public final Matrix extractAnnotation(Ret returnType, int dimension) throws MatrixException {
+		return new ExtractAnnotation(this, dimension).calc(returnType);
+	}
+
+	public final Matrix includeAnnotation(Ret returnType, int dimension) throws MatrixException {
+		return new IncludeAnnotation(this, dimension).calc(returnType);
+	}
+
 	public final Matrix floor(Ret returnType) throws MatrixException {
 		return new Floor(this).calc(returnType);
 	}
@@ -793,7 +803,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		return DoubleCalculations.mtimes.calc(this, matrix);
+		return new Mtimes().calc(this, matrix);
 	}
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
@@ -1007,34 +1017,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		try {
-			final String EOL = System.getProperty("line.separator");
-
-			long rowCount = getRowCount();
-			long columnCount = getColumnCount();
-			for (int row = 0; row < rowCount && row < UJMPSettings.getMaxRowsToPrint(); row++) {
-				for (int col = 0; col < columnCount && col < UJMPSettings.getMaxColumnsToPrint(); col++) {
-					Object o = getAsObject(row, col);
-					String v = StringUtil.format(o);
-					while (v.length() < 10) {
-						v = " " + v;
-					}
-					s.append(v);
-				}
-				s.append(EOL);
-			}
-
-			if (rowCount == 0 || columnCount == 0) {
-				s.append("[" + rowCount + "x" + columnCount + "]" + EOL);
-			} else if (rowCount > UJMPSettings.getMaxRowsToPrint()
-					|| columnCount > UJMPSettings.getMaxColumnsToPrint()) {
-				s.append("[...]");
-			}
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not execute toString()", e);
-		}
-		return s.toString();
+		return UJMPFormat.getMultiLineInstance().format(this);
 	}
 
 	public final int getDimensionCount() {
@@ -1248,7 +1231,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final boolean isScalar() {
-		return getColumnCount() == 1 && getRowCount() == 1;
+		return Coordinates.product(getSize()) == 1;
 	}
 
 	public final boolean isRowVector() {

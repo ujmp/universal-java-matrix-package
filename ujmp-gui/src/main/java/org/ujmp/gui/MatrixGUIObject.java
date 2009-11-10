@@ -42,7 +42,7 @@ import javax.swing.table.TableModel;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.gui.frame.MatrixFrame;
 import org.ujmp.gui.panels.MatrixPanel;
@@ -137,7 +137,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		getListenerList().add(TableModelListener.class, l);
 	}
 
-	
 	public final String getToolTipText() {
 		try {
 			if (tooltipText == null) {
@@ -181,9 +180,12 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 					s.append("<th>" + matrix.getRowLabel(row) + "</th>");
 					for (int col = 0; col < columnCount
 							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
-						s.append("<td align=right>"
-								+ StringUtil.format(matrix
-										.getAsDouble(row, col)) + "</td>");
+						s
+								.append("<td align=right>"
+										+ UJMPFormat.getSingleLineInstance()
+												.format(
+														matrix.getAsObject(row,
+																col)) + "</td>");
 					}
 					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
 						s.append("<td align=right>...</td>");
@@ -217,7 +219,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		}
 	}
 
-	
 	public final void fireValueChanged() {
 		for (Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener)
@@ -385,7 +386,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	public void setDescription(String description) {
 	}
 
-	
 	public String toString() {
 		if (matrix.getLabel() != null) {
 			return "[" + Coordinates.toString(matrix.getSize()) + "] "
@@ -397,12 +397,10 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		}
 	}
 
-	
 	public Matrix getCoreObject() {
 		return matrix;
 	}
 
-	
 	public JFrame getFrame() {
 		if (frame == null) {
 			frame = new MatrixFrame(this);
@@ -410,7 +408,6 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		return frame;
 	}
 
-	
 	public JPanel getPanel() {
 		if (panel == null) {
 			panel = new MatrixPanel(this);

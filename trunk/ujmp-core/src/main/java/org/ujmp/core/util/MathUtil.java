@@ -467,7 +467,8 @@ public abstract class MathUtil {
 		if ((o1 instanceof Number) || (o2 instanceof Number)) {
 			return getDouble(o1) == getDouble(o2);
 		} else if ((o1 instanceof String) || (o2 instanceof String)) {
-			return StringUtil.format(o1).equals(StringUtil.format(o2));
+			return UJMPFormat.getSingleLineInstance().format(o1).equals(
+					UJMPFormat.getSingleLineInstance().format(o2));
 		} else if ((o1 instanceof Boolean) || (o2 instanceof Boolean)) {
 			return ((Boolean) o1).equals(o2);
 		} else {

@@ -54,6 +54,10 @@ public abstract class StringUtil {
 				.replaceAll("");
 	}
 
+	public static final String format(String s) {
+		return (s == null) ? "" : s;
+	}
+
 	public static final String format(Object o) {
 		if (o == null) {
 			return "";
@@ -69,7 +73,7 @@ public abstract class StringUtil {
 			}
 		}
 		if (o instanceof Number) {
-			return format(((Number) o).doubleValue());
+			return format((Number) o);
 		}
 		return o.toString();
 	}
@@ -99,6 +103,14 @@ public abstract class StringUtil {
 			return "Inf";
 		if (Double.NEGATIVE_INFINITY == value)
 			return "-Inf";
+		return DefaultNF.format(value);
+	}
+
+	public static final String format(Number value) {
+		if (value == null)
+			return "";
+		if (value instanceof Double)
+			return format((Double) value);
 		return DefaultNF.format(value);
 	}
 
@@ -258,5 +270,48 @@ public abstract class StringUtil {
 			}
 		}
 		return new String(result);
+	}
+
+	public static String toString(Matrix m, Object... parameters) {
+		int width = 10;
+		long maxRows = UJMPSettings.getMaxRowsToPrint();
+		long maxColumns = UJMPSettings.getMaxColumnsToPrint();
+		NumberFormat nf = DefaultNF;
+
+		StringBuilder s = new StringBuilder();
+
+		final String EOL = System.getProperty("line.separator");
+
+		long rowCount = m.getRowCount();
+		long columnCount = m.getColumnCount();
+		for (int row = 0; row < rowCount && row < maxRows; row++) {
+			for (int col = 0; col < columnCount && col < maxColumns; col++) {
+				Object o = m.getAsObject(row, col);
+				String v = StringUtil.format(o);
+				v = StringUtil.pad(v, width);
+				s.append(v);
+			}
+			s.append(EOL);
+		}
+
+		if (rowCount == 0 || columnCount == 0) {
+			s.append("[" + rowCount + "x" + columnCount + "]" + EOL);
+		} else if (rowCount > UJMPSettings.getMaxRowsToPrint()
+				|| columnCount > UJMPSettings.getMaxColumnsToPrint()) {
+			s.append("[...]");
+		}
+
+		return s.toString();
+
+	}
+
+	public static final String pad(String s, int length) {
+		length = length - s.length();
+		StringBuilder r = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			r.append(" ");
+		}
+		r.append(s);
+		return r.toString();
 	}
 }

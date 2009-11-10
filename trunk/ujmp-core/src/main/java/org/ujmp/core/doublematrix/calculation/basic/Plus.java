@@ -57,7 +57,6 @@ public class Plus extends AbstractDoubleCalculation {
 		super();
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				+ MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
@@ -88,6 +87,9 @@ public class Plus extends AbstractDoubleCalculation {
 
 	public static Matrix calc(boolean ignoreNaN, Matrix m1, double v2) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(m1.getSize());
+		if (m1.getAnnotation() != null) {
+			ret.setAnnotation(m1.getAnnotation().clone());
+		}
 		v2 = ignoreNaN ? MathUtil.ignoreNaN(v2) : v2;
 		if (ignoreNaN) {
 			for (long[] c : m1.allCoordinates()) {

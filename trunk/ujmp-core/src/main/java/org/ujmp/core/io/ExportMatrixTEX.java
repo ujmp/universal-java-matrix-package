@@ -31,7 +31,7 @@ import java.io.Writer;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixTEX {
@@ -60,7 +60,9 @@ public class ExportMatrixTEX {
 		w.write("\\centering" + EOL);
 
 		if (m.getMatrixAnnotation() != null) {
-			w.write("\\caption{" + StringUtil.format(m.getMatrixAnnotation()) + "}" + EOL);
+			w.write("\\caption{"
+					+ UJMPFormat.getSingleLineInstance().format(m.getMatrixAnnotation()) + "}"
+					+ EOL);
 		}
 
 		String alignment = "";
@@ -73,7 +75,7 @@ public class ExportMatrixTEX {
 
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
-				w.write(StringUtil.format(m.getAsObject(row, col)));
+				w.write(UJMPFormat.getSingleLineInstance().format(m.getAsObject(row, col)));
 
 				if (col < colCount - 1) {
 					w.write(" & ");

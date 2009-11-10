@@ -34,6 +34,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
 import org.ujmp.gui.util.TooltipUtil;
@@ -45,7 +46,6 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 
 	private final Border border = BorderFactory.createLineBorder(Color.blue, 2);
 
-	
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table,
@@ -66,7 +66,7 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		if (width < 25) {
 			label.setText("");
 		} else {
-			String s = StringUtil.format(value);
+			String s = UJMPFormat.getSingleLineInstance().format(value);
 			if (s != null && s.length() > 100) {
 				s = s.substring(0, 100) + "...";
 			}

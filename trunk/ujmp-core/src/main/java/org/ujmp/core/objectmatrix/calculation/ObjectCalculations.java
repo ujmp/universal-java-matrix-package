@@ -42,6 +42,28 @@ public interface ObjectCalculations {
 
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException;
 
+	/**
+	 * Generates annotation such as row or column labels from the content of
+	 * this matrix. This is useful for example for data imported from CSV files
+	 * with labels in the first line.
+	 * 
+	 * @param returnType
+	 *            Specify whether to return a new matrix, or a link
+	 * @param dimension
+	 *            Which axis should be shortened to extract the labels. E.g. if
+	 *            you want column labels, you must specify
+	 *            <code>Matrix.ROW</code>, which does not seem very intuitive at
+	 *            first glance. However, if you're dealing with
+	 *            multi-dimensional data, this becomes more clear. If you want
+	 *            annotation generated for all dimensions, you can specify
+	 *            <code>Matrix.ALL</code> or omit the dimensions parameter.
+	 * @return new Matrix with annotation generated from content.
+	 * @throws MatrixException
+	 */
+	public Matrix extractAnnotation(Ret returnType, int dimension) throws MatrixException;
+
+	public Matrix includeAnnotation(Ret returnType, int dimension) throws MatrixException;
+
 	public Matrix reshape(long... newSize) throws MatrixException;
 
 	public Matrix unique(Ret returnType) throws MatrixException;

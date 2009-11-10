@@ -23,6 +23,8 @@
 
 package org.ujmp.core.util;
 
+import java.util.Locale;
+
 import org.ujmp.core.util.io.RingBufferOutputStream;
 import org.ujmp.core.util.io.TeeStream;
 
@@ -99,6 +101,11 @@ public abstract class UJMPSettings {
 			numberOfThreads = Runtime.getRuntime().availableProcessors();
 		} catch (Throwable e) {
 		}
+
+		try {
+			setLocale(Locale.US);
+		} catch (Throwable e) {
+		}
 	}
 
 	public static void initialize() {
@@ -163,6 +170,14 @@ public abstract class UJMPSettings {
 
 	public static void setMaxToolTipRows(long maxToolTipRows) {
 		UJMPSettings.maxToolTipRows = maxToolTipRows;
+	}
+
+	public static Locale getLocale() {
+		return Locale.getDefault();
+	}
+
+	public static void setLocale(Locale locale) {
+		Locale.setDefault(locale);
 	}
 
 }

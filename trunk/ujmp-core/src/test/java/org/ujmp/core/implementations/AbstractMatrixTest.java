@@ -64,6 +64,36 @@ public abstract class AbstractMatrixTest extends TestCase {
 		return m;
 	}
 
+	public void testExtractAnnotation() throws Exception {
+		Matrix m1 = MatrixFactory.randn(5, 5);
+		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
+		assertEquals(getLabel(), 4, m2.getRowCount());
+		Matrix m3 = m2.includeAnnotation(Ret.NEW, Matrix.ROW);
+		m3.setAnnotation(null);
+		assertEquals(getLabel(), m1, m3);
+
+		m1 = MatrixFactory.randn(5, 5);
+		m2 = m1.extractAnnotation(Ret.LINK, Matrix.ROW);
+		assertEquals(getLabel(), 4, m2.getRowCount());
+		m3 = m2.includeAnnotation(Ret.LINK, Matrix.ROW);
+		m3.setAnnotation(null);
+		assertEquals(getLabel(), m1, m3);
+
+		m1 = MatrixFactory.randn(5, 5);
+		m2 = m1.extractAnnotation(Ret.NEW, Matrix.COLUMN);
+		assertEquals(getLabel(), 4, m2.getColumnCount());
+		m3 = m2.includeAnnotation(Ret.NEW, Matrix.COLUMN);
+		m3.setAnnotation(null);
+		assertEquals(getLabel(), m1, m3);
+
+		m1 = MatrixFactory.randn(5, 5);
+		m2 = m1.extractAnnotation(Ret.LINK, Matrix.COLUMN);
+		assertEquals(getLabel(), 4, m2.getColumnCount());
+		m3 = m2.includeAnnotation(Ret.LINK, Matrix.COLUMN);
+		m3.setAnnotation(null);
+		assertEquals(getLabel(), m1, m3);
+	}
+
 	// Test interface CoordinateFunctions
 	public void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrix(3, 3);

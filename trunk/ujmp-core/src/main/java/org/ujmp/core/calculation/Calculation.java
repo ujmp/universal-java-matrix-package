@@ -65,6 +65,8 @@ public interface Calculation<S extends Matrix, T extends Matrix> extends Seriali
 
 	public Annotation getAnnotation();
 
+	public void setAnnotation(Annotation annotation);
+
 	public long getValueCount();
 
 	public Iterable<long[]> availableCoordinates();

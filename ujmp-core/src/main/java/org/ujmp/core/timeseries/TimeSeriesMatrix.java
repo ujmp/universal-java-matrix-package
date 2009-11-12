@@ -56,7 +56,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 			throw new MatrixException("matrix cannot have more than one row");
 		}
 		for (int id = 0; id < value.getColumnCount(); id++) {
-			addEvent(timestamp, id, value.getAsDouble(0, id));
+			addEvent(timestamp, id + 1, value.getAsDouble(0, id));
 		}
 	}
 
@@ -117,17 +117,14 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return timestampsListSet;
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { getEventCount(), getSeriesCount() + 1 };
 	}
 
-	
 	public long getRowCount() {
 		return getEventCount();
 	}
 
-	
 	public long getColumnCount() {
 		return getSeriesCount() + 1;
 	}
@@ -136,7 +133,6 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		return getDouble((int) row, (int) column);
 	}
 
-	
 	public double getDouble(int row, int column) {
 
 		if (row < 0 || column >= getColumnCount() || row >= getRowCount()) {
@@ -178,12 +174,10 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
-	
 	public void setDouble(double value, long row, long column) {
 		throw new MatrixException("please use addEvent() for making changes");
 	}
 
-	
 	public void setDouble(double value, int row, int column) {
 		throw new MatrixException("please use addEvent() for making changes");
 	}

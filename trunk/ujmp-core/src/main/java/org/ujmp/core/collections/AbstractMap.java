@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.io.Serializable;
 import java.util.AbstractCollection;
+import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,7 +37,9 @@ import java.util.Set;
 
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractMap<K, V> implements Map<K, V> {
+public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Map<K, V>,
+		Serializable {
+	private static final long serialVersionUID = -6429342188863787235L;
 
 	public boolean isEmpty() {
 		return size() == 0;
@@ -58,6 +62,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 			}
 		}
 		return false;
+
 	}
 
 	public Collection<V> values() {
@@ -67,19 +72,18 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 			public Iterator<V> iterator() {
 				return new Iterator<V>() {
 
+					Iterator<K> it = keySet().iterator();
+
 					public boolean hasNext() {
-						// TODO Auto-generated method stub
-						return false;
+						return it.hasNext();
 					}
 
 					public V next() {
-						// TODO Auto-generated method stub
-						return null;
+						return get(it.next());
 					}
 
 					public void remove() {
-						// TODO Auto-generated method stub
-
+						throw new MatrixException("not implemented");
 					}
 				};
 			}
@@ -92,7 +96,48 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		throw new MatrixException("not implemented");
+		return new AbstractSet<Entry<K, V>>() {
+
+			@Override
+			public Iterator<java.util.Map.Entry<K, V>> iterator() {
+				return new Iterator<Entry<K, V>>() {
+
+					Iterator<K> it = keySet().iterator();
+
+					public boolean hasNext() {
+						return it.hasNext();
+					}
+
+					public java.util.Map.Entry<K, V> next() {
+						final K k = it.next();
+						final V v = get(k);
+						return new java.util.Map.Entry<K, V>() {
+
+							public K getKey() {
+								return k;
+							}
+
+							public V getValue() {
+								return v;
+							}
+
+							public V setValue(V value) {
+								throw new MatrixException("not implemented");
+							}
+						};
+					}
+
+					public void remove() {
+						throw new MatrixException("not implemented");
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+				return size();
+			}
+		};
 	}
 
 	@SuppressWarnings("unchecked")
@@ -117,4 +162,17 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 			s.writeObject(v);
 		}
 	}
+
+	public abstract void clear();
+
+	public abstract V get(Object key);
+
+	public abstract Set<K> keySet();
+
+	public abstract V put(K key, V value);
+
+	public abstract V remove(Object key);
+
+	public abstract int size();
+
 }

@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class SoftHashMapList<K, V> extends SoftHashMap<K, V> {
+	private static final long serialVersionUID = 6061017330977330118L;
 
 	public SoftHashMapList() {
 		super();
@@ -36,7 +37,6 @@ public class SoftHashMapList<K, V> extends SoftHashMap<K, V> {
 		super(m);
 	}
 
-	
 	public synchronized V put(K key, V value) {
 		return super.put(key, value);
 	}
@@ -59,7 +59,6 @@ public class SoftHashMapList<K, V> extends SoftHashMap<K, V> {
 		return it.hasNext() ? it.next() : null;
 	}
 
-	
 	public synchronized V remove(Object key) {
 		return super.remove(key);
 	}

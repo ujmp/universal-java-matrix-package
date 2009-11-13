@@ -27,8 +27,8 @@ import java.util.Map;
 
 public class TestLazyMap extends AbstractMapTest {
 
-	public Map<String, Object> createMap() throws Exception {
-		return new LazyMap<String, Object>();
+	public Map<String, String> createMap() throws Exception {
+		return new LazyMap<String, String>();
 	}
 
 }

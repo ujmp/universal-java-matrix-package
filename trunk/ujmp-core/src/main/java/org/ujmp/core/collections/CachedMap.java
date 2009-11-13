@@ -23,76 +23,71 @@
 
 package org.ujmp.core.collections;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
+public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K, V>> {
+	private static final long serialVersionUID = 1383398694858918398L;
 
-	private Map<K, V> source = null;
+	private transient Map<K, V> source = null;
 
-	private Map<K, V> cache = null;
+	private transient Map<K, V> cache = null;
 
 	public CachedMap(Map<K, V> source) {
 		setWrappedObject(source);
-		setCache(new SoftHashMap<K, V>());
 	}
 
 	public CachedMap(Map<K, V> source, Map<K, V> cache) {
 		setWrappedObject(source);
-		setCache(cache);
+		this.cache = cache;
 	}
 
 	public void clear() {
-		cache.clear();
-		source.clear();
+		getCache().clear();
+		getWrappedObject().clear();
 	}
 
 	public boolean containsKey(Object key) {
-		if (cache.containsKey(key)) {
+		if (getCache().containsKey(key)) {
 			return true;
 		}
-		return source.containsKey(key);
+		return getWrappedObject().containsKey(key);
 	}
 
 	public boolean containsValue(Object value) {
-		if (cache.containsValue(value)) {
+		if (getCache().containsValue(value)) {
 			return true;
 		}
-		return source.containsValue(value);
-	}
-
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		throw new MatrixException("not implemented");
+		return getWrappedObject().containsValue(value);
 	}
 
 	@SuppressWarnings("unchecked")
 	public V get(Object key) {
-		V value = cache.get(key);
+		V value = getCache().get(key);
 		if (value == null) {
-			value = source.get(key);
-			cache.put((K) key, value);
+			value = getWrappedObject().get(key);
+			getCache().put((K) key, value);
 		}
 		return value;
 	}
 
 	public boolean isEmpty() {
-		if (!cache.isEmpty()) {
+		if (!getCache().isEmpty()) {
 			return false;
 		}
-		return source.isEmpty();
+		return getWrappedObject().isEmpty();
 	}
 
 	public Set<K> keySet() {
-		return source.keySet();
+		return getWrappedObject().keySet();
 	}
 
 	public V put(K key, V value) {
-		cache.put(key, value);
-		return source.put(key, value);
+		getCache().put(key, value);
+		return getWrappedObject().put(key, value);
 	}
 
 	public void putAll(Map<? extends K, ? extends V> m) {
@@ -102,35 +97,31 @@ public class CachedMap<K, V> implements Wrapper<Map<K, V>>, Map<K, V> {
 	}
 
 	public V remove(Object key) {
-		cache.remove(key);
-		return source.remove(key);
+		getCache().remove(key);
+		return getWrappedObject().remove(key);
 	}
 
 	public int size() {
-		return source.size();
-	}
-
-	public Collection<V> values() {
-		throw new MatrixException("not implemented");
+		return getWrappedObject().size();
 	}
 
 	public Map<K, V> getWrappedObject() {
+		if (source == null) {
+			source = new HashMap<K, V>();
+		}
 		return source;
 	}
 
 	public void setWrappedObject(Map<K, V> object) {
-		if (cache != null) {
-			cache.clear();
-		}
+		getCache().clear();
 		this.source = object;
 	}
 
 	public Map<K, V> getCache() {
+		if (cache == null) {
+			cache = new SoftHashMap<K, V>();
+		}
 		return cache;
-	}
-
-	public void setCache(Map<K, V> cache) {
-		this.cache = cache;
 	}
 
 }

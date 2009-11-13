@@ -51,18 +51,15 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 		addAll(c);
 	}
 
-	
 	public void add(int index, M element) {
 		new Exception("not implemented").printStackTrace();
 	}
 
-	
 	public boolean add(M e) {
 		indexMap.put(e, size());
 		return super.add(e);
 	}
 
-	
 	public boolean addAll(Collection<? extends M> c) {
 		for (M m : c) {
 			add(m);
@@ -70,48 +67,40 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 		return true;
 	}
 
-	
 	public boolean addAll(int index, Collection<? extends M> c) {
 		new Exception("not implemented").printStackTrace();
 		return false;
 	}
 
-	
 	public void clear() {
 		indexMap.clear();
 		super.clear();
 	}
 
-	
 	public boolean contains(Object o) {
 		return indexMap.containsKey(o);
 	}
 
-	
 	public int indexOf(Object o) {
 		return indexMap.get(o);
 	}
 
-	
 	public int lastIndexOf(Object o) {
 
 		return super.lastIndexOf(o);
 	}
 
-	
 	public M remove(int index) {
 		M m = super.remove(index);
 		indexMap.remove(m);
 		return m;
 	}
 
-	
 	public boolean remove(Object o) {
 		indexMap.remove(o);
 		return super.remove(o);
 	}
 
-	
 	public M set(int index, M element) {
 		new Exception("not implemented").printStackTrace();
 		return null;

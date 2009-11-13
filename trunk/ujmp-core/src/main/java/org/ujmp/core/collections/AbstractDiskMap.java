@@ -31,21 +31,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.util.Base64;
 import org.ujmp.core.util.io.FileUtil;
 
-public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
+public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implements Erasable {
+	private static final long serialVersionUID = -8615077389159395747L;
 
 	private File path = null;
 
@@ -55,33 +51,38 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 
 	public AbstractDiskMap(File path, boolean useGZip) throws IOException {
 		this.useGZip = useGZip;
-		if (path == null) {
-			path = File.createTempFile("diskmap" + System.nanoTime(), "");
-			path.delete();
-			path.deleteOnExit();
-		}
 		this.path = path;
-		if (!path.exists()) {
-			path.mkdirs();
-		}
 	}
 
-	public synchronized final boolean isEmpty() {
-		return size() == 0;
+	public final File getPath() {
+		if (path == null) {
+			try {
+				path = File.createTempFile("diskmap" + System.nanoTime(), "");
+				path.delete();
+				if (!path.exists()) {
+					path.mkdirs();
+				}
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		}
+		return path;
 	}
 
 	public synchronized final int size() {
-		return countFiles(path);
+		return countFiles(getPath());
 	}
 
 	private static int countFiles(File path) {
 		int count = 0;
 		File[] files = path.listFiles();
-		for (File f : files) {
-			if (f.isDirectory()) {
-				count += countFiles(f);
-			} else {
-				count++;
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					count += countFiles(f);
+				} else {
+					count++;
+				}
 			}
 		}
 		return count;
@@ -101,7 +102,7 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 
 	private final File getFileNameForKey(String key) {
 		key = convertKey(key);
-		String result = path.getAbsolutePath() + File.separator;
+		String result = getPath().getAbsolutePath() + File.separator;
 		for (int i = 0; i < maxDepth && i < key.length() - 1; i++) {
 			char c = key.charAt(i);
 			result += c + File.separator;
@@ -130,34 +131,28 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 		return file.exists();
 	}
 
-	public final File getPath() {
-		return path;
-	}
-
-	
 	public final Set<String> keySet() {
 		Set<String> set = new HashSet<String>();
-		listFilesToSet(path, set);
+		listFilesToSet(getPath(), set);
 		return set;
 	}
 
 	private void listFilesToSet(File path, Set<String> set) {
-		Boolean stringKey = null;
-		for (File f : path.listFiles()) {
-			if (f.isDirectory()) {
-				listFilesToSet(f, set);
-			} else {
-				String filename = f.getName();
-				Object o = filename;
-				try {
-					if ((stringKey == null || stringKey == false) && filename.length() >= 4) {
-						o = Base64.decodeToObject(filename);
-						stringKey = false;
+		File[] files = path.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					listFilesToSet(f, set);
+				} else {
+					String filename = f.getName();
+					if (filename.endsWith(".gz")) {
+						filename = filename.substring(0, filename.length() - 3);
 					}
-				} catch (Exception e) {
-					stringKey = true;
+					if (filename.endsWith(".dat")) {
+						filename = filename.substring(0, filename.length() - 4);
+					}
+					set.add(filename);
 				}
-				set.add((String) o);
 			}
 		}
 	}
@@ -170,36 +165,12 @@ public abstract class AbstractDiskMap<V> implements Map<String, V>, Erasable {
 		}
 	}
 
-	public final synchronized boolean containsValue(Object value) {
-		throw new MatrixException("not implemented");
-	}
-
-	public final synchronized Set<java.util.Map.Entry<String, V>> entrySet() {
-		throw new MatrixException("not implemented");
-	}
-
-	
 	public final void erase() throws IOException {
 		FileUtil.deleteRecursive(path);
 	}
 
 	public final void setPath(File path) {
 		this.path = path;
-	}
-
-	public final synchronized Collection<V> values() {
-		// TODO: this is not the best way to do it:
-		List<V> list = new ArrayList<V>();
-		for (String key : keySet()) {
-			list.add(get(key));
-		}
-		return list;
-	}
-
-	public final void putAll(Map<? extends String, ? extends V> m) {
-		for (String key : m.keySet()) {
-			put(key, m.get(key));
-		}
 	}
 
 	public final synchronized V put(String key, V value) {

@@ -29,12 +29,16 @@ public class AllTests extends TestSuite {
 
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
+		suite.addTestSuite(TestArrayIndexList.class);
+		suite.addTestSuite(TestCachedMap.class);
+		suite.addTestSuite(TestHashMapList.class);
+		suite.addTestSuite(TestLazyMap.class);
 		suite.addTestSuite(TestRingBufferList.class);
 		suite.addTestSuite(TestSerializedObjectMap.class);
-		suite.addTestSuite(TestHashMapList.class);
 		suite.addTestSuite(TestSoftHashMap.class);
 		suite.addTestSuite(TestSoftHashMapList.class);
-		suite.addTestSuite(TestLazyMap.class);
+		suite.addTestSuite(TestSortedListSet.class);
+		suite.addTestSuite(TestTextMap.class);
 		return suite;
 	}
 

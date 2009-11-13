@@ -23,45 +23,32 @@
 
 package org.ujmp.core.collections;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.ujmp.core.exceptions.MatrixException;
-
-public class LazyMap<K, V> implements Map<K, V> {
+public class LazyMap<K, V> extends AbstractMap<K, V> {
 	private static final long serialVersionUID = -5970508001189550492L;
 
-	private Map<K, Callable<V>> map = null;
+	private transient Map<K, Callable<V>> map = null;
 
 	public LazyMap() {
-		this.map = new HashMap<K, Callable<V>>();
+	}
+
+	private Map<K, Callable<V>> getMap() {
+		if (map == null) {
+			map = new HashMap<K, Callable<V>>();
+		}
+		return map;
 	}
 
 	public void clear() {
-		map.clear();
-	}
-
-	public boolean containsKey(Object key) {
-		return map.containsKey(key);
-	}
-
-	public boolean containsValue(Object value) {
-		throw new MatrixException("not implemented");
-	}
-
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		throw new MatrixException("not implemented");
+		getMap().clear();
 	}
 
 	public V get(Object key) {
-		Callable<V> cv = map.get(key);
+		Callable<V> cv = getMap().get(key);
 		if (cv == null) {
 			return null;
 		}
@@ -73,16 +60,12 @@ public class LazyMap<K, V> implements Map<K, V> {
 		}
 	}
 
-	public boolean isEmpty() {
-		return map.isEmpty();
-	}
-
 	public Set<K> keySet() {
-		return map.keySet();
+		return getMap().keySet();
 	}
 
 	public void put(K key, Callable<V> value) {
-		map.put(key, value);
+		getMap().put(key, value);
 	}
 
 	public V put(K key, final V value) {
@@ -95,53 +78,13 @@ public class LazyMap<K, V> implements Map<K, V> {
 		return null;
 	}
 
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for (K key : m.keySet()) {
-			V v = m.get(key);
-			put(key, v);
-		}
-	}
-
 	public V remove(Object key) {
-		map.remove(key);
+		getMap().remove(key);
 		return null;
 	}
 
 	public int size() {
-		return map.size();
-	}
-
-	public Collection<V> values() {
-		throw new MatrixException("not implemented");
-	}
-
-	@SuppressWarnings("unchecked")
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-		s.defaultReadObject();
-		while (true) {
-			try {
-				K k = (K) s.readObject();
-				V v = (V) s.readObject();
-				put(k, v);
-			} catch (OptionalDataException e) {
-				return;
-			}
-		}
-	}
-
-	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {
-		s.defaultWriteObject();
-		for (Object k : keySet()) {
-			Object v = get(k);
-			s.writeObject(k);
-			s.writeObject(v);
-		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		Map<String, String> map = new LazyMap<String, String>();
-		map.put("test", "test");
-		System.out.println(map.get("test"));
+		return getMap().size();
 	}
 
 }

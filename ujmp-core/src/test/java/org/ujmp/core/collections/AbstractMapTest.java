@@ -33,14 +33,14 @@ import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMapTest extends TestCase {
 
-	public abstract Map<String, Object> createMap() throws Exception;
+	public abstract Map<String, String> createMap() throws Exception;
 
 	public String getLabel() {
 		return this.getClass().getSimpleName();
 	}
 
 	public void testPutAndGet() throws Exception {
-		Map<String, Object> m = createMap();
+		Map<String, String> m = createMap();
 		m.put("a", "test1");
 		m.put("b", "test2");
 		assertEquals(getLabel(), "test1", m.get("a"));
@@ -50,17 +50,67 @@ public abstract class AbstractMapTest extends TestCase {
 		}
 	}
 
+	public void testClear() throws Exception {
+		Map<String, String> m = createMap();
+		assertTrue(getLabel(), m.isEmpty());
+		assertEquals(getLabel(), 0, m.size());
+		m.put("a", "test1");
+		assertEquals(getLabel(), 1, m.size());
+		assertFalse(getLabel(), m.isEmpty());
+		m.put("b", "test2");
+		assertEquals(getLabel(), 2, m.size());
+		assertFalse(getLabel(), m.isEmpty());
+		m.clear();
+		assertEquals(getLabel(), 0, m.size());
+		assertTrue(getLabel(), m.isEmpty());
+	}
+
+	public void testContainsKey() throws Exception {
+		Map<String, String> m = createMap();
+		assertFalse(getLabel(), m.containsKey("a"));
+		assertFalse(getLabel(), m.containsKey("b"));
+		m.put("a", "test1");
+		assertTrue(getLabel(), m.containsKey("a"));
+		assertFalse(getLabel(), m.containsKey("b"));
+		m.put("b", "test2");
+		assertTrue(getLabel(), m.containsKey("a"));
+		assertTrue(getLabel(), m.containsKey("b"));
+		m.remove("a");
+		assertFalse(getLabel(), m.containsKey("a"));
+		assertTrue(getLabel(), m.containsKey("b"));
+		m.clear();
+		assertFalse(getLabel(), m.containsKey("a"));
+		assertFalse(getLabel(), m.containsKey("b"));
+	}
+
+	public void testContainsValue() throws Exception {
+		Map<String, String> m = createMap();
+		assertFalse(getLabel(), m.containsValue("test1"));
+		assertFalse(getLabel(), m.containsValue("test2"));
+		m.put("a", "test1");
+		assertTrue(getLabel(), m.containsValue("test1"));
+		assertFalse(getLabel(), m.containsValue("test2"));
+		m.put("b", "test2");
+		assertTrue(getLabel(), m.containsValue("test1"));
+		assertTrue(getLabel(), m.containsValue("test2"));
+		m.remove("a");
+		assertFalse(getLabel(), m.containsValue("test1"));
+		assertTrue(getLabel(), m.containsValue("test2"));
+		m.clear();
+		assertFalse(getLabel(), m.containsValue("test1"));
+		assertFalse(getLabel(), m.containsValue("test2"));
+	}
+
 	@SuppressWarnings("unchecked")
 	public void testSerialize() throws Exception {
-		Map<String, Object> m = createMap();
+		Map<String, String> m = createMap();
 		m.put("a", "test1");
 		m.put("b", "test2");
 		if (m instanceof Serializable) {
 			byte[] data = SerializationUtil.serialize((Serializable) m);
-			Map<Object, Object> m2 = (Map<Object, Object>) SerializationUtil.deserialize(data);
+			Map<String, String> m2 = (Map<String, String>) SerializationUtil.deserialize(data);
 			assertEquals(getLabel(), m, m2);
 		}
-
 	}
 
 }

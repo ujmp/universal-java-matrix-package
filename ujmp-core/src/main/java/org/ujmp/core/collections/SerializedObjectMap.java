@@ -32,6 +32,7 @@ import java.io.Serializable;
 import org.ujmp.core.util.SerializationUtil;
 
 public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
+	private static final long serialVersionUID = -1969661697021465379L;
 
 	public SerializedObjectMap() throws IOException {
 		this((File) null, true);
@@ -66,7 +67,6 @@ public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
 	}
 
 	@SuppressWarnings("unchecked")
-	
 	public V read(InputStream is) {
 		try {
 			return (V) SerializationUtil.deserialize(is);

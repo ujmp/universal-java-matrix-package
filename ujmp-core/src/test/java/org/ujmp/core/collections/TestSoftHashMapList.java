@@ -27,9 +27,8 @@ import java.util.Map;
 
 public class TestSoftHashMapList extends AbstractMapTest {
 
-	
-	public Map<String, Object> createMap() throws Exception {
-		return new SoftHashMapList<String, Object>();
+	public Map<String, String> createMap() throws Exception {
+		return new SoftHashMapList<String, String>();
 	}
 
 }

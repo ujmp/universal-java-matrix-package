@@ -32,6 +32,7 @@ import org.ujmp.core.util.io.IntelligentFileReader;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class TextMap extends AbstractDiskMap<String> {
+	private static final long serialVersionUID = -7635770465612652548L;
 
 	public TextMap() throws IOException {
 		this((File) null, true);
@@ -61,9 +62,12 @@ public class TextMap extends AbstractDiskMap<String> {
 		IntelligentFileWriter.write(os, value);
 	}
 
-	
 	public String read(InputStream is) {
-		return IntelligentFileReader.load(is);
+		String s = IntelligentFileReader.load(is);
+		if (s != null && s.length() > 1) {
+			s = s.substring(0, s.length() - 1);
+		}
+		return s;
 	}
 
 }

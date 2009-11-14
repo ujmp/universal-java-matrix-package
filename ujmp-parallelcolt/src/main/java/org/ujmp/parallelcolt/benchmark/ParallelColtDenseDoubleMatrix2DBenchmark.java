@@ -31,22 +31,16 @@ import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 public class ParallelColtDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new ParallelColtDenseDoubleMatrix2DBenchmark();
-		long t0 = System.currentTimeMillis();
-		benchmark.run();
-		long t1 = System.currentTimeMillis();
-		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
+		new ParallelColtDenseDoubleMatrix2DBenchmark().run();
 	}
 
 }

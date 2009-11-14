@@ -50,6 +50,9 @@ public class TestPlugins extends TestCase {
 			} else if ("ujmp-pdfbox".equals(name)
 					&& "1.5".equals(System.getProperty("java.specification.version"))) {
 				assertNotSame(name, "ok", status);
+			} else if ("ujmp-ejml".equals(name)
+					&& "1.5".equals(System.getProperty("java.specification.version"))) {
+				assertNotSame(name, "ok", status);
 			} else {
 				assertEquals(name, "ok", status);
 			}

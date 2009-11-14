@@ -31,22 +31,16 @@ import org.ujmp.core.exceptions.MatrixException;
 public class ColtSparseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new ColtSparseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new ColtSparseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new ColtSparseDoubleMatrix2DBenchmark();
-		long t0 = System.currentTimeMillis();
-		benchmark.run();
-		long t1 = System.currentTimeMillis();
-		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
+		new ColtSparseDoubleMatrix2DBenchmark().run();
 	}
 
 }

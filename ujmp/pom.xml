@@ -313,7 +313,13 @@
 			<dependency>
 				<groupId>ojalgo</groupId>
 				<artifactId>ojalgo</artifactId>
-				<version>28.18</version>
+				<version>28.26</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>ejml</groupId>
+				<artifactId>ejml</artifactId>
+				<version>0.7</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -421,6 +427,7 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-bpca/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-colt/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-commonsmath/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-ejml/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-hadoop/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-itext/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jackcess/apidocs</link>

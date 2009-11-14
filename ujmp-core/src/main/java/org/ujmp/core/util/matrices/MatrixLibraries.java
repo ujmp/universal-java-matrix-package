@@ -87,35 +87,37 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int COMMONSMATH = 3;
 
-	private static final int JAMA = 4;
+	private static final int EJML = 4;
 
-	private static final int JAMPACK = 5;
+	private static final int JAMA = 5;
 
-	private static final int JMATHARRAY = 6;
+	private static final int JAMPACK = 6;
 
-	private static final int JMATRICES = 7;
+	private static final int JMATHARRAY = 7;
 
-	private static final int JSCI = 8;
+	private static final int JMATRICES = 8;
 
-	private static final int JSCIENCE = 9;
+	private static final int JSCI = 9;
 
-	private static final int MANTISSA = 10;
+	private static final int JSCIENCE = 10;
 
-	private static final int MTJ = 11;
+	private static final int MANTISSA = 11;
 
-	private static final int OJALGO = 12;
+	private static final int MTJ = 12;
 
-	private static final int ORBITAL = 13;
+	private static final int OJALGO = 13;
 
-	private static final int OWLPACK = 14;
+	private static final int ORBITAL = 14;
 
-	private static final int PARALLELCOLT = 15;
+	private static final int OWLPACK = 15;
 
-	private static final int SST = 16;
+	private static final int PARALLELCOLT = 16;
 
-	private static final int UJMP = 17;
+	private static final int SST = 17;
 
-	private static final int VECMATH = 18;
+	private static final int UJMP = 18;
+
+	private static final int VECMATH = 19;
 
 	private List<String> footnotes = new ArrayList<String>();
 
@@ -136,6 +138,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
 		setAsString(turn("Colt"), LABELROW, COLT);
 		setAsString(turn("commons-math"), LABELROW, COMMONSMATH);
+		setAsString(turn("EJML"), LABELROW, EJML);
 		setAsString(turn("JAMA"), LABELROW, JAMA);
 		setAsString(turn("Jampack"), LABELROW, JAMPACK);
 		setAsString(turn("JMathArray"), LABELROW, JMATHARRAY);
@@ -266,6 +269,29 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all(), QR, COMMONSMATH);
 		setAsString(square() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
 		setAsString(yes(), CHOL, COMMONSMATH);
+
+		setAsString(small("0.7"), VERSION, EJML);
+		setAsString(small("2009"), DATE, EJML);
+		setAsString(small("LGPL"), LICENCE, EJML);
+		setAsString(no(), JAVA14, EJML);
+		setAsString(no(), JAVA5, EJML);
+		setAsString(yes(), JAVA6, EJML);
+		setAsString(yes(), DENSE, EJML);
+		setAsString(no(), SPARSE, EJML);
+		setAsString(no(), COMPLEX, EJML);
+		setAsString(yes(), DOUBLE, EJML);
+		setAsString(no(), FLOAT, EJML);
+		setAsString(no(), BIGDECIMAL, EJML);
+		setAsString(yes(), D2, EJML);
+		setAsString(no(), D3, EJML);
+		setAsString(no(), D4, EJML);
+		setAsString(no(), D4PLUS, EJML);
+		setAsString(yes(), INV, EJML);
+		setAsString(unknown(), SVD, EJML);
+		setAsString(square(), LU, EJML);
+		setAsString(unknown(), QR, EJML);
+		setAsString(no(), EIG, EJML);
+		setAsString(yes(), CHOL, EJML);
 
 		setAsString(small("1.0.2"), VERSION, JAMA);
 		setAsString(small("2005"), DATE, JAMA);
@@ -451,7 +477,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), EIG, MTJ);
 		setAsString(yes(), CHOL, MTJ);
 
-		setAsString(small("28.17"), VERSION, OJALGO);
+		setAsString(small("28.26"), VERSION, OJALGO);
 		setAsString(small("2009"), DATE, OJALGO);
 		setAsString(small("MIT"), LICENCE, OJALGO);
 		setAsString(no(), JAVA14, OJALGO);

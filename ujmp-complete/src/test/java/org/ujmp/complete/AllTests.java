@@ -62,8 +62,14 @@ public class AllTests extends TestSuite {
 		suite.addTest(org.ujmp.owlpack.AllTests.suite());
 		suite.addTest(org.ujmp.parallelcolt.AllTests.suite());
 		suite.addTest(org.ujmp.pdfbox.AllTests.suite());
-		suite.addTest(org.ujmp.sst.AllTests.suite());
 		suite.addTest(org.ujmp.vecmath.AllTests.suite());
+
+		// some libraries do not support Java 5
+		if (!"1.5".equals(System.getProperty("java.specification.version"))) {
+			suite.addTest(org.ujmp.ejml.AllTests.suite());
+			suite.addTest(org.ujmp.sst.AllTests.suite());
+		}
+
 		return suite;
 	}
 

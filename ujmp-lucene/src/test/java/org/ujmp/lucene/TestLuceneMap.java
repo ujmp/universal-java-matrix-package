@@ -29,9 +29,8 @@ import org.ujmp.core.collections.AbstractMapTest;
 
 public class TestLuceneMap extends AbstractMapTest {
 
-	
-	public Map<String, Object> createMap() throws Exception {
-		return new LuceneMap<String, Object>();
+	public Map<String, String> createMap() throws Exception {
+		return new LuceneMap<String, String>();
 	}
 
 }

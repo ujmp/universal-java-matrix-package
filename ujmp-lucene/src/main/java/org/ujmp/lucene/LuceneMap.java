@@ -33,12 +33,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.JLabel;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -56,13 +53,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.ujmp.core.collections.AbstractMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.io.FileUtil;
 
-public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
-		Erasable, Serializable {
+public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
+		Flushable, Closeable, Erasable, Serializable {
 	private static final long serialVersionUID = 8998898900190996038L;
 
 	private static final String KEYSTRING = "KS";
@@ -124,7 +122,7 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 
 	public synchronized void clear() {
 		try {
-			getIndexWriter().deleteDocuments(new WildcardQuery(new Term("*")));
+			getIndexWriter().deleteAll();
 		} catch (Exception e) {
 			throw new MatrixException("cannot clear index", e);
 		}
@@ -146,10 +144,6 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		} catch (Exception e) {
 			throw new MatrixException("could not search documents: " + value, e);
 		}
-	}
-
-	public synchronized Set<java.util.Map.Entry<K, V>> entrySet() {
-		throw new MatrixException("not implemented");
 	}
 
 	public synchronized V get(Object key) {
@@ -179,14 +173,6 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 			return (V) o;
 		} catch (Exception e) {
 			throw new MatrixException("could not convert to object", e);
-		}
-	}
-
-	public synchronized boolean isEmpty() {
-		try {
-			return getIndexWriter().numDocs() == 0;
-		} catch (Exception e) {
-			throw new MatrixException("could not search documents", e);
 		}
 	}
 
@@ -236,13 +222,6 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		}
 	}
 
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for (K key : m.keySet()) {
-			V value = m.get(key);
-			put(key, value);
-		}
-	}
-
 	public synchronized V remove(Object key) {
 		try {
 			Term term = new Term(KEYSTRING, getUniqueString(key));
@@ -270,10 +249,6 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		} catch (Exception e) {
 			throw new MatrixException("could not count documents", e);
 		}
-	}
-
-	public synchronized Collection<V> values() {
-		throw new MatrixException("not implemented");
 	}
 
 	public synchronized void flush() throws IOException {
@@ -372,62 +347,6 @@ public class LuceneMap<K, V> implements Map<K, V>, Flushable, Closeable,
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		Map<String, Object> map = new LuceneMap<String, Object>();
-
-		System.out.println(map.keySet());
-		map.put("key1", "test1");
-		System.out.println(map.keySet());
-		map.put("key2", new JLabel());
-		System.out.println(map.keySet());
-		map.put("key1", "test3");
-		System.out.println(map.keySet());
-		System.out.println(map.get("key1"));
-		System.out.println(map.get("key2"));
-		map.remove("key1");
-		System.out.println(map.size());
-
-	}
-
-	
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Map)) {
-			return false;
-		}
-		Map<?, ?> m2 = (Map<?, ?>) obj;
-		for (Object k : keySet()) {
-			Object v1 = get(k);
-			Object v2 = m2.get(k);
-			if (v1 == null && v2 != null) {
-				return false;
-			}
-			if (v1 != null && v2 == null) {
-				return false;
-			}
-			if (!v1.equals(v2)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("{ ");
-		for (Object k : keySet()) {
-			Object v = get(k);
-			s.append(k + ":" + v + " ");
-		}
-		s.append("}");
-		return s.toString();
-	}
-
-	
 	public synchronized void erase() throws IOException {
 		close();
 		FileUtil.deleteRecursive(path);

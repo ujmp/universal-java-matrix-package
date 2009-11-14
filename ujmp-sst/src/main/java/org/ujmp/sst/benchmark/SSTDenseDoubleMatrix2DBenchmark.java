@@ -39,11 +39,7 @@ public class SSTDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new SSTDenseDoubleMatrix2DBenchmark();
-		long t0 = System.currentTimeMillis();
-		benchmark.run();
-		long t1 = System.currentTimeMillis();
-		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
+		new SSTDenseDoubleMatrix2DBenchmark().run();
 	}
 
 }

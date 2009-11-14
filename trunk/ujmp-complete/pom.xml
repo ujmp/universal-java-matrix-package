@@ -5,9 +5,9 @@
 	<artifactId>ujmp-complete</artifactId>
 	<packaging>pom</packaging>
 	<name>ujmp-complete</name>
-	
+
 	<properties>
-		<ujmp.version>0.2.4</ujmp.version>		
+		<ujmp.version>0.2.4</ujmp.version>
 	</properties>
 
 	<parent>
@@ -16,7 +16,7 @@
 		<version>0.2.4</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
-	
+
 
 	<dependencies>
 		<dependency>
@@ -43,6 +43,12 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ejml</artifactId>
 			<version>${ujmp.version}</version>
 			<scope>compile</scope>
 		</dependency>
@@ -274,6 +280,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ejml</artifactId>
+			<version>${ujmp.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-gui</artifactId>
 			<version>${ujmp.version}</version>
 			<type>test-jar</type>
@@ -496,6 +509,7 @@
 		<module>../ujmp-bpca</module>
 		<module>../ujmp-colt</module>
 		<module>../ujmp-commonsmath</module>
+		<module>../ujmp-ejml</module>
 		<module>../ujmp-hadoop</module>
 		<module>../ujmp-itext</module>
 		<module>../ujmp-jackcess</module>

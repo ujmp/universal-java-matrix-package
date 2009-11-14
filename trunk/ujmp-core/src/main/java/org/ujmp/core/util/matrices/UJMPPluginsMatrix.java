@@ -51,6 +51,7 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		addClass("ujmp-bpca");
 		addClass("ujmp-colt");
 		addClass("ujmp-commonsmath");
+		addClass("ujmp-ejml");
 		addClass("ujmp-hadoop");
 		addClass("ujmp-itext");
 		addClass("ujmp-jackcess");

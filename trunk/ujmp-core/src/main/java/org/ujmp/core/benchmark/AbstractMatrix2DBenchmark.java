@@ -33,6 +33,7 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
 
@@ -309,6 +310,8 @@ public abstract class AbstractMatrix2DBenchmark {
 			System.out.println(createMatrix(1, 1).getClass().getSimpleName());
 			System.out.println("===============================================================");
 
+			long t0 = System.currentTimeMillis();
+
 			if (isRunInit()) {
 				init();
 			}
@@ -389,6 +392,10 @@ public abstract class AbstractMatrix2DBenchmark {
 				result.add(r[1]);
 			}
 
+			long t1 = System.currentTimeMillis();
+
+			System.out.println();
+			System.out.println("Benchmark runtime: " + StringUtil.duration(t1 - t0));
 			System.out.println();
 
 		} catch (UnsupportedClassVersionError e) {

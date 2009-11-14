@@ -157,7 +157,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			matrix = (PrimitiveDenseStore) object;
 		} else {
 			matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
-					.copyStore(object);
+					.copyAnything2D(object);
 		}
 	}
 

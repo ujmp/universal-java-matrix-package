@@ -40,11 +40,7 @@ public class JampackDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		AbstractMatrix2DBenchmark benchmark = new JampackDenseDoubleMatrix2DBenchmark();
-		long t0 = System.currentTimeMillis();
-		benchmark.run();
-		long t1 = System.currentTimeMillis();
-		System.out.println("Benchmark runtime: " + (t1 - t0) + "ms");
+		new JampackDenseDoubleMatrix2DBenchmark().run();
 	}
 
 }

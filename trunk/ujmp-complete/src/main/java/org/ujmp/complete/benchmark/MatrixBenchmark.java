@@ -38,6 +38,7 @@ import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
+import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
@@ -109,6 +110,9 @@ public class MatrixBenchmark {
 		if (isRunJamaDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JamaDenseDoubleMatrix2DBenchmark());
 		}
+		if (isRunEJMLDenseDoubleMatrix2DBenchmark()) {
+			list.add(new EJMLDenseDoubleMatrix2DBenchmark());
+		}
 		if (isRunCommonsMathBlockDenseDoubleMatrix2DBenchmark()) {
 			list.add(new CommonsMathBlockDenseDoubleMatrix2DBenchmark());
 		}
@@ -137,6 +141,7 @@ public class MatrixBenchmark {
 		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
 		setRunColtDenseDoubleMatrix2DBenchmark(true);
 		setRunSSTDenseDoubleMatrix2DBenchmark(true);
+		setRunEJMLDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
 		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
@@ -226,6 +231,10 @@ public class MatrixBenchmark {
 		System.setProperty("runSSTDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
+	public void setRunEJMLDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runEJMLDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
 	public void setRunJMatricesDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runJMatricesDenseDoubleMatrix2DBenchmark", "" + b);
 	}
@@ -288,6 +297,10 @@ public class MatrixBenchmark {
 
 	public boolean isRunCommonsMathBlockDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runCommonsMathBlockDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunEJMLDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runEJMLDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunJamaDenseDoubleMatrix2DBenchmark() {

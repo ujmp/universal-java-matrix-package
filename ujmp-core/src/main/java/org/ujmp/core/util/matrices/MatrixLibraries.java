@@ -287,7 +287,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4, EJML);
 		setAsString(no(), D4PLUS, EJML);
 		setAsString(yes(), INV, EJML);
-		setAsString(unknown(), SVD, EJML);
+		setAsString(all(), SVD, EJML);
 		setAsString(square(), LU, EJML);
 		setAsString(unknown(), QR, EJML);
 		setAsString(no(), EIG, EJML);

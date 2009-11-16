@@ -26,15 +26,18 @@ package org.ujmp.core.objectmatrix.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class UpperTriangle extends AbstractObjectCalculation {
-	private static final long serialVersionUID = 758577959954446767L;
+public class Tril extends AbstractObjectCalculation {
+	private static final long serialVersionUID = 7733794714291865581L;
 
-	public UpperTriangle(Matrix m) {
+	private int k = 0;
+
+	public Tril(Matrix m, int k) {
 		super(m);
+		this.k = k;
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
-		if (coordinates[ROW] <= coordinates[COLUMN]) {
+		if (coordinates[ROW] >= coordinates[COLUMN] - k) {
 			return getSource().getAsObject(coordinates);
 		} else {
 			return null;

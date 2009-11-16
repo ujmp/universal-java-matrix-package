@@ -159,7 +159,7 @@ import org.ujmp.core.objectmatrix.calculation.ExtractAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
 import org.ujmp.core.objectmatrix.calculation.IncludeAnnotation;
-import org.ujmp.core.objectmatrix.calculation.LowerTriangle;
+import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
@@ -168,7 +168,7 @@ import org.ujmp.core.objectmatrix.calculation.Swap;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.objectmatrix.calculation.Unique;
-import org.ujmp.core.objectmatrix.calculation.UpperTriangle;
+import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.impl.ReshapedObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
@@ -1266,12 +1266,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Cos(this).calc(returnType);
 	}
 
-	public Matrix lowerTriangle(Ret returnType) throws MatrixException {
-		return new LowerTriangle(this).calc(returnType);
+	public Matrix tril(Ret returnType, int k) throws MatrixException {
+		return new Tril(this, k).calc(returnType);
 	}
 
-	public Matrix upperTriangle(Ret returnType) throws MatrixException {
-		return new UpperTriangle(this).calc(returnType);
+	public Matrix triu(Ret returnType, int k) throws MatrixException {
+		return new Triu(this, k).calc(returnType);
 	}
 
 	public Matrix tan(Ret returnType) throws MatrixException {

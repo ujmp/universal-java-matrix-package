@@ -130,7 +130,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
 		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
 		double[] svs = svd.getW();
-		Matrix s = MatrixFactory.sparse(getSize());
+		Matrix s = MatrixFactory.sparse(u.getColumnCount(), v.getColumnCount());
 		for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 			s.setAsDouble(svs[i], i, i);
 		}
@@ -141,8 +141,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		QRDecompositionHouseholder qr = new QRDecompositionHouseholder();
 		qr.decompose(matrix);
 		Matrix ret = new EJMLDenseDoubleMatrix2D(qr.getQR());
-		Matrix q = ret.lowerTriangle(Ret.LINK);
-		Matrix r = ret.upperTriangle(Ret.LINK);
+		Matrix q = ret.tril(Ret.LINK, 0);
+		Matrix r = ret.triu(Ret.LINK, 0);
 		return new Matrix[] { q, r };
 	}
 
@@ -154,18 +154,23 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] lu() {
-		LUDecompositionAlt lu = new LUDecompositionAlt();
-		lu.decompose(matrix);
-		Matrix ret = new EJMLDenseDoubleMatrix2D(lu.getLU());
-		Matrix l = ret.lowerTriangle(Ret.LINK);
-		Matrix u = ret.upperTriangle(Ret.LINK);
-		int[] piv = lu.getPivot();
-		int m = (int) getRowCount();
-		Matrix p = new EJMLDenseDoubleMatrix2D(m, m);
-		for (int i = 0; i < m; i++) {
-			p.setAsDouble(1, i, piv[i]);
+		if (isSquare()) {
+			LUDecompositionAlt lu = new LUDecompositionAlt();
+			lu.decompose(matrix);
+			Matrix ret = new EJMLDenseDoubleMatrix2D(lu.getLU());
+			Matrix l = ret.tril(Ret.LINK, -1).plus(
+					MatrixFactory.eye(ret.getSize()));
+			Matrix u = ret.triu(Ret.LINK, 0);
+			int[] piv = lu.getPivot();
+			int m = (int) getRowCount();
+			Matrix p = new EJMLDenseDoubleMatrix2D(m, m);
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv[i]);
+			}
+			return new Matrix[] { l, u, p };
+		} else {
+			return super.lu();
 		}
-		return new Matrix[] { l, u, p };
 	}
 
 	public Matrix copy() {

@@ -68,9 +68,9 @@ public interface ObjectCalculations {
 
 	public Matrix unique(Ret returnType) throws MatrixException;
 
-	public Matrix lowerTriangle(Ret returnType) throws MatrixException;
+	public Matrix tril(Ret returnType, int k) throws MatrixException;
 
-	public Matrix upperTriangle(Ret returnType) throws MatrixException;
+	public Matrix triu(Ret returnType, int k) throws MatrixException;
 
 	public Matrix toColumnVector() throws MatrixException;
 

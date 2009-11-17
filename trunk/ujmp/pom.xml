@@ -179,6 +179,12 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>jlinalg</groupId>
+				<artifactId>jlinalg</artifactId>
+				<version>0.6</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jmatrices</groupId>
 				<artifactId>jmatrices</artifactId>
 				<version>0.6</version>

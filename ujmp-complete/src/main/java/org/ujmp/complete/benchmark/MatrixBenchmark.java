@@ -41,6 +41,7 @@ import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jsci.benchmark.JSciDenseDoubleMatrix2DBenchmark;
@@ -104,6 +105,9 @@ public class MatrixBenchmark {
 		if (isRunJMathArrayDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JMathArrayDenseDoubleMatrix2DBenchmark());
 		}
+		if (isRunJLinAlgDenseDoubleMatrix2DBenchmark()) {
+			list.add(new JLinAlgDenseDoubleMatrix2DBenchmark());
+		}
 		if (isRunJampackDenseDoubleMatrix2DBenchmark()) {
 			list.add(new JampackDenseDoubleMatrix2DBenchmark());
 		}
@@ -135,6 +139,8 @@ public class MatrixBenchmark {
 		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
 		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
 		setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		setRunJLinAlgDenseDoubleMatrix2DBenchmark(true);
+		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
 		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
 		setRunJSciDenseDoubleMatrix2DBenchmark(true);
@@ -145,7 +151,6 @@ public class MatrixBenchmark {
 		setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
 		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
-		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
 		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 
 		AbstractMatrix2DBenchmark.setSkipSlowLibraries(true);
@@ -153,13 +158,13 @@ public class MatrixBenchmark {
 		AbstractMatrix2DBenchmark.setBurnInRuns(1);
 		AbstractMatrix2DBenchmark.setRunsPerMatrix(3);
 
-		AbstractMatrix2DBenchmark.setRunTransposeNew(false);
-		AbstractMatrix2DBenchmark.setRunMtimesNew(false);
-		AbstractMatrix2DBenchmark.setRunInv(false);
-		AbstractMatrix2DBenchmark.setRunSVD(false);
-		AbstractMatrix2DBenchmark.setRunEVD(false);
-		AbstractMatrix2DBenchmark.setRunQR(false);
-		AbstractMatrix2DBenchmark.setRunLU(false);
+		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
+		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
+		AbstractMatrix2DBenchmark.setRunInv(true);
+		AbstractMatrix2DBenchmark.setRunSVD(true);
+		AbstractMatrix2DBenchmark.setRunEVD(true);
+		AbstractMatrix2DBenchmark.setRunQR(true);
+		AbstractMatrix2DBenchmark.setRunLU(true);
 		AbstractMatrix2DBenchmark.setRunChol(true);
 	}
 
@@ -193,6 +198,10 @@ public class MatrixBenchmark {
 
 	public void setRunJMathArrayDenseDoubleMatrix2DBenchmark(boolean b) {
 		System.setProperty("runJMathArrayDenseDoubleMatrix2DBenchmark", "" + b);
+	}
+
+	public void setRunJLinAlgDenseDoubleMatrix2DBenchmark(boolean b) {
+		System.setProperty("runJLinAlgDenseDoubleMatrix2DBenchmark", "" + b);
 	}
 
 	public void setRunJSciDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -277,6 +286,10 @@ public class MatrixBenchmark {
 
 	public boolean isRunJMathArrayDenseDoubleMatrix2DBenchmark() {
 		return "true".equals(System.getProperty("runJMathArrayDenseDoubleMatrix2DBenchmark"));
+	}
+
+	public boolean isRunJLinAlgDenseDoubleMatrix2DBenchmark() {
+		return "true".equals(System.getProperty("runJLinAlgDenseDoubleMatrix2DBenchmark"));
 	}
 
 	public boolean isRunParallelColtDenseDoubleMatrix2DBenchmark() {

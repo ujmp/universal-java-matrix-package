@@ -245,7 +245,7 @@ public class QR implements java.io.Serializable {
 			QR qr = new QR(m);
 			return new Matrix[] { qr.getQ(), qr.getR() };
 		} else {
-			throw new MatrixException("only square matrices m>=n are supported");
+			throw new MatrixException("only matrices m>=n are supported");
 		}
 	}
 }

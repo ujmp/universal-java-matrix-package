@@ -440,6 +440,7 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jama/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jdbc/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jexcelapi/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jlinalg/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmathplot/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmatio/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jmatrices/apidocs</link>

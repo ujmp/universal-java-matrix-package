@@ -35,7 +35,6 @@ import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -138,12 +137,21 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		QRDecompositionHouseholder qr = new QRDecompositionHouseholder();
-		qr.decompose(matrix);
-		Matrix ret = new EJMLDenseDoubleMatrix2D(qr.getQR());
-		Matrix q = ret.tril(Ret.LINK, 0);
-		Matrix r = ret.triu(Ret.LINK, 0);
-		return new Matrix[] { q, r };
+		if (matrix.numRows >= matrix.numCols) {
+			QRDecompositionHouseholder qr = new QRDecompositionHouseholder();
+			qr.decompose(matrix);
+			DenseMatrix64F qm = new DenseMatrix64F(matrix.numRows,
+					matrix.numRows);
+			DenseMatrix64F rm = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			qr.setToQ(qm);
+			qr.setToR(rm, false);
+			Matrix q = new EJMLDenseDoubleMatrix2D(qm);
+			Matrix r = new EJMLDenseDoubleMatrix2D(rm);
+			return new Matrix[] { q, r };
+		} else {
+			return super.qr();
+		}
 	}
 
 	public Matrix chol() {
@@ -157,14 +165,18 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (isSquare()) {
 			LUDecompositionAlt lu = new LUDecompositionAlt();
 			lu.decompose(matrix);
-			Matrix ret = new EJMLDenseDoubleMatrix2D(lu.getLU());
-			Matrix l = ret.tril(Ret.LINK, -1).plus(
-					MatrixFactory.eye(ret.getSize()));
-			Matrix u = ret.triu(Ret.LINK, 0);
+			DenseMatrix64F lm = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			DenseMatrix64F um = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			lu.setToLower(lm);
+			lu.setToUpper(um);
+			Matrix l = new EJMLDenseDoubleMatrix2D(lm);
+			Matrix u = new EJMLDenseDoubleMatrix2D(um);
 			int[] piv = lu.getPivot();
-			int m = (int) getRowCount();
-			Matrix p = new EJMLDenseDoubleMatrix2D(m, m);
-			for (int i = 0; i < m; i++) {
+			Matrix p = new EJMLDenseDoubleMatrix2D(matrix.numRows,
+					matrix.numRows);
+			for (int i = 0; i < matrix.numRows; i++) {
 				p.setAsDouble(1, i, piv[i]);
 			}
 			return new Matrix[] { l, u, p };

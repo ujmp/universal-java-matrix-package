@@ -110,6 +110,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jlinalg</artifactId>
+			<version>${ujmp.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmathplot</artifactId>
 			<version>${ujmp.version}</version>
 			<scope>compile</scope>
@@ -351,6 +358,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jlinalg</artifactId>
+			<version>${ujmp.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmathplot</artifactId>
 			<version>${ujmp.version}</version>
 			<type>test-jar</type>
@@ -517,6 +532,7 @@
 		<module>../ujmp-jampack</module>
 		<module>../ujmp-jdbc</module>
 		<module>../ujmp-jexcelapi</module>
+		<module>../ujmp-jlinalg</module>
 		<module>../ujmp-jmathplot</module>
 		<module>../ujmp-jmatio</module>
 		<module>../ujmp-jmatrices</module>

@@ -820,7 +820,13 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
+			return;
+		}
 		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {

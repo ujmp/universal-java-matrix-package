@@ -33,13 +33,14 @@ public abstract class AbstractPlugin implements HasDescription, HasDependencies,
 
 	public abstract Collection<String> getNeededClasses();
 
-	
 	public String getStatus() {
 		for (String s : getNeededClasses()) {
 			try {
 				Class.forName(s);
 			} catch (ClassNotFoundException e) {
 				return "Error: Class " + s + " not found";
+			} catch (Throwable e) {
+				return "Error: Class " + s + " has error: " + e;
 			}
 		}
 		return "ok";

@@ -38,7 +38,7 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("jlinalg.jar");
-		neededClasses.add("org.linalg.Matrix");
+		neededClasses.add("org.jlinalg.Matrix");
 	}
 
 	public String getDescription() {

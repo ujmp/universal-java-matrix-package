@@ -53,9 +53,11 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.ujmp.core.collections.AbstractMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.util.Base64;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.io.FileUtil;
 
@@ -100,7 +102,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 
 	public Directory getDirectory() throws IOException {
 		if (directory == null) {
-			directory = FSDirectory.getDirectory(getPath());
+			directory = FSDirectory.open(getPath());
 		}
 		return directory;
 	}
@@ -201,7 +203,9 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 		if (o == null) {
 			return "";
 		} else {
-			return new String(SerializationUtil.serialize((Serializable) o));
+			byte[] data = SerializationUtil.serialize((Serializable) o);
+			String s = Base64.encodeBytes(data);
+			return s;
 		}
 	}
 
@@ -234,7 +238,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 
 	public Analyzer getAnalyzer() {
 		if (analyzer == null) {
-			analyzer = new StandardAnalyzer();
+			analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
 		}
 		return analyzer;
 	}
@@ -245,13 +249,16 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 
 	public synchronized int size() {
 		try {
-			return getIndexWriter().numDocs();
+			flush();
+			int size = getIndexWriter().numDocs();
+			return size;
 		} catch (Exception e) {
 			throw new MatrixException("could not count documents", e);
 		}
 	}
 
 	public synchronized void flush() throws IOException {
+		getIndexWriter().expungeDeletes(true);
 		getIndexWriter().commit();
 	}
 
@@ -259,7 +266,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 		getIndexWriter().close();
 	}
 
-	private IndexWriter getIndexWriter() {
+	private synchronized IndexWriter getIndexWriter() {
 		try {
 			if (!readOnly && indexSearcher != null) {
 				indexSearcher.close();
@@ -287,13 +294,13 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 		}
 	}
 
-	private IndexSearcher getIndexSearcher() {
+	private synchronized IndexSearcher getIndexSearcher() {
 		try {
 			if (!IndexReader.indexExists(getDirectory())) {
 				getIndexWriter();
 			}
 			if (indexWriter != null) {
-				indexWriter.commit();
+				flush();
 			}
 			if (indexSearcher != null
 					&& !indexSearcher.getIndexReader().isCurrent()) {
@@ -301,7 +308,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 				indexSearcher = null;
 			}
 			if (indexSearcher == null) {
-				indexSearcher = new IndexSearcher(directory);
+				indexSearcher = new IndexSearcher(directory, true);
 			}
 			return indexSearcher;
 		} catch (Exception e) {

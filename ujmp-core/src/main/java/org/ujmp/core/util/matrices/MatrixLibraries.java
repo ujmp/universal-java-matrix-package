@@ -134,7 +134,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(23, 19);
+		super(23, 21);
 		this.format = format;
 
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
@@ -158,22 +158,22 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(turn("UJMP"), LABELROW, UJMP);
 		setAsString(turn("vecmath"), LABELROW, VECMATH);
 
-		setAsString("latest version", VERSION, LABELCOLUMN);
-		setAsString("latest release", DATE, LABELCOLUMN);
+		setAsString("version", VERSION, LABELCOLUMN);
+		setAsString("release", DATE, LABELCOLUMN);
 		setAsString("licence", LICENCE, LABELCOLUMN);
 		setAsString("Java 1.4", JAVA14, LABELCOLUMN);
 		setAsString("Java 5", JAVA5, LABELCOLUMN);
 		setAsString("Java 6", JAVA6, LABELCOLUMN);
-		setAsString("dense matrices", DENSE, LABELCOLUMN);
-		setAsString("sparse matrices", SPARSE, LABELCOLUMN);
-		setAsString("complex numbers", COMPLEX, LABELCOLUMN);
-		setAsString("double values", DOUBLE, LABELCOLUMN);
-		setAsString("float values", FLOAT, LABELCOLUMN);
-		setAsString("BigDecimal values", BIGDECIMAL, LABELCOLUMN);
-		setAsString("2D matrices", D2, LABELCOLUMN);
-		setAsString("3D matrices", D3, LABELCOLUMN);
-		setAsString("4D matrices", D4, LABELCOLUMN);
-		setAsString("matrices $>$4D", D4PLUS, LABELCOLUMN);
+		setAsString("dense", DENSE, LABELCOLUMN);
+		setAsString("sparse", SPARSE, LABELCOLUMN);
+		setAsString("complex", COMPLEX, LABELCOLUMN);
+		setAsString("double", DOUBLE, LABELCOLUMN);
+		setAsString("float", FLOAT, LABELCOLUMN);
+		setAsString("BigDecimal", BIGDECIMAL, LABELCOLUMN);
+		setAsString("2D", D2, LABELCOLUMN);
+		setAsString("3D", D3, LABELCOLUMN);
+		setAsString("4D", D4, LABELCOLUMN);
+		setAsString("$>$4D", D4PLUS, LABELCOLUMN);
 		setAsString("inverse", INV, LABELCOLUMN);
 		setAsString("SVD", SVD, LABELCOLUMN);
 		setAsString("LU", LU, LABELCOLUMN);
@@ -754,8 +754,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{tabular}");
 		s = s.replaceAll("latest version", "\\\\toprule\nlatest version");
 		s = s
-				.replace("{ccccccccccccccccccc}",
-						"{l@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}");
+				.replace("{ccccccccccccccccccccc}",
+						"{l@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}");
 		s = s.replaceAll("\\\\end\\{sidewaystable\\}", "");
 		s = s + "\\medskip" + "\n";
 		List<String> fn = ml.getFootnotes();

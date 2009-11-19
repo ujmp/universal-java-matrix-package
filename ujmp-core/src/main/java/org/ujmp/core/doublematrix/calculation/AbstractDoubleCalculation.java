@@ -63,6 +63,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 			throw new MatrixException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
+
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsDouble(getDouble(c), c);
 		}
@@ -75,7 +76,6 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}

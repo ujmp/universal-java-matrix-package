@@ -25,22 +25,23 @@ package org.ujmp.jmatrices.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 
 public class JMatricesDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
-	public Matrix createMatrix(long... size) throws MatrixException {
+	public DoubleMatrix2D createMatrix(long... size) throws MatrixException {
 		return new JMatricesDenseDoubleMatrix2D(size);
 	}
 
-	public Matrix createMatrix(Matrix source) throws MatrixException {
+	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
 		return new JMatricesDenseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JMatricesDenseDoubleMatrix2DBenchmark().run();
+		new JMatricesDenseDoubleMatrix2DBenchmark().runAllTests();
 	}
 
 }

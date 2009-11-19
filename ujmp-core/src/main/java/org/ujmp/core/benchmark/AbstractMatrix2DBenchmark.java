@@ -22,6 +22,8 @@
 
 package org.ujmp.core.benchmark;
 
+import java.io.File;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +32,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
@@ -37,11 +42,15 @@ import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
 
-	public static final double TOOLONG = 999999;
+	private static final int MEAN = 0;
 
-	public static final double NOTAVAILABLE = 0;
+	private static final int STD = 1;
 
-	public static final double ERRORTIME = Double.NaN;
+	private static final double TOOLONG = 999999;
+
+	private static final double NOTAVAILABLE = 0;
+
+	private static final double ERRORTIME = Double.NaN;
 
 	public static final long[] SIZE100X100 = new long[] { 100, 100 };
 
@@ -83,7 +92,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public static final long[] SIZE100000X100000 = new long[] { 100000, 100000 };
 
-	private final List<long[]> transposeSizes = Arrays.asList(new long[][] { SIZE2000X2000 });
+	private final String transposeSizes = "10x10,50x50,100x100,500x500,1000x1000";
 
 	private final List<long[]> copySizes = Arrays.asList(new long[][] { SIZE5000X5000 });
 
@@ -110,26 +119,26 @@ public abstract class AbstractMatrix2DBenchmark {
 	private final List<long[][]> mtimesSizes = Arrays.asList(new long[][][] { { SIZE500X500,
 			SIZE500X500 } });
 
-	public abstract Matrix createMatrix(long... size) throws MatrixException;
+	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
-	public abstract Matrix createMatrix(Matrix source) throws MatrixException;
+	public abstract DoubleMatrix2D createMatrix(Matrix source) throws MatrixException;
 
 	public AbstractMatrix2DBenchmark() {
 	}
 
-	public static void setRunsPerMatrix(int runs) {
+	public void setRunsPerMatrix(int runs) {
 		System.setProperty("runsPerMatrix", "" + runs);
 	}
 
-	public static int getRunsPerMatrix() {
+	public int getRunsPerMatrix() {
 		return MathUtil.getInt(System.getProperty("runsPerMatrix"));
 	}
 
-	public static void setBurnInRuns(int runs) {
+	public void setBurnInRuns(int runs) {
 		System.setProperty("burnInRuns", "" + runs);
 	}
 
-	public static int getBurnInRuns() {
+	public int getBurnInRuns() {
 		return MathUtil.getInt(System.getProperty("burnInRuns"));
 	}
 
@@ -225,39 +234,39 @@ public abstract class AbstractMatrix2DBenchmark {
 		return "true".equals(System.getProperty("runLU"));
 	}
 
-	public static void setRunTransposeNew(boolean b) {
+	public void setRunTransposeNew(boolean b) {
 		System.setProperty("runTransposeNew", "" + b);
 	}
 
-	public static void setRunMtimesNew(boolean b) {
+	public void setRunMtimesNew(boolean b) {
 		System.setProperty("runMtimesNew", "" + b);
 	}
 
-	public static void setRunInv(boolean b) {
+	public void setRunInv(boolean b) {
 		System.setProperty("runInv", "" + b);
 	}
 
-	public static void setRunSVD(boolean b) {
+	public void setRunSVD(boolean b) {
 		System.setProperty("runSVD", "" + b);
 	}
 
-	public static void setRunQR(boolean b) {
+	public void setRunQR(boolean b) {
 		System.setProperty("runQR", "" + b);
 	}
 
-	public static void setRunEVD(boolean b) {
+	public void setRunEVD(boolean b) {
 		System.setProperty("runEVD", "" + b);
 	}
 
-	public static void setSkipSlowLibraries(boolean b) {
+	public void setSkipSlowLibraries(boolean b) {
 		System.setProperty("skipSlowLibraries", "" + b);
 	}
 
-	public static void setRunLU(boolean b) {
+	public void setRunLU(boolean b) {
 		System.setProperty("runLU", "" + b);
 	}
 
-	public static void setRunChol(boolean b) {
+	public void setRunChol(boolean b) {
 		System.setProperty("runChol", "" + b);
 	}
 
@@ -269,7 +278,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		System.setProperty("runTransposeOrig", "" + runTransposeOrig);
 	}
 
-	public List<long[]> getTransposeSizes() {
+	public String getTransposeSizes() {
 		return transposeSizes;
 	}
 
@@ -301,7 +310,30 @@ public abstract class AbstractMatrix2DBenchmark {
 		return mtimesSizes;
 	}
 
+	public List<Matrix> runAllTests() throws Exception {
+		setRunAllTests();
+		return run();
+	}
+
+	public void setRunAllTests() throws Exception {
+		setBurnInRuns(1);
+		setRunsPerMatrix(4);
+
+		setRunTransposeNew(true);
+		setRunMtimesNew(true);
+		setRunInv(true);
+		setRunSVD(true);
+		setRunEVD(true);
+		setRunQR(true);
+		setRunLU(true);
+		setRunChol(true);
+	}
+
 	public List<Matrix> run() throws Exception {
+		if (Runtime.getRuntime().maxMemory() < 980 * 1024 * 1024) {
+			throw new Exception("You must start Java with more memory: -Xmx1024M");
+		}
+
 		List<Matrix> result = new ArrayList<Matrix>();
 
 		try {
@@ -313,7 +345,7 @@ public abstract class AbstractMatrix2DBenchmark {
 			long t0 = System.currentTimeMillis();
 
 			if (isRunInit()) {
-				init();
+				runInit();
 			}
 
 			if (isRunCreate()) {
@@ -342,8 +374,8 @@ public abstract class AbstractMatrix2DBenchmark {
 
 			if (isRunTransposeNew()) {
 				Matrix[] r = runBenchmarkTransposeNew();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunTransposeOrig()) {
@@ -352,44 +384,44 @@ public abstract class AbstractMatrix2DBenchmark {
 
 			if (isRunMtimesNew()) {
 				Matrix[] r = runBenchmarkMtimesNew();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunInv()) {
 				Matrix[] r = runBenchmarkInv();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunSVD()) {
 				Matrix[] r = runBenchmarkSVD();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunEVD()) {
 				Matrix[] r = runBenchmarkEVD();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunQR()) {
 				Matrix[] r = runBenchmarkQR();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunLU()) {
 				Matrix[] r = runBenchmarkLU();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			if (isRunChol()) {
 				Matrix[] r = runBenchmarkChol();
-				result.add(r[0]);
-				result.add(r[1]);
+				result.add(r[MEAN]);
+				result.add(r[STD]);
 			}
 
 			long t1 = System.currentTimeMillis();
@@ -411,7 +443,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		return result;
 	}
 
-	public Matrix init() {
+	public Matrix runInit() {
 		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), initSizes.size());
 		System.out.print("init: ");
 		System.out.flush();
@@ -558,12 +590,14 @@ public abstract class AbstractMatrix2DBenchmark {
 		return m;
 	}
 
-	public Matrix[] runBenchmarkTransposeNew() {
-		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), transposeSizes.size());
+	public Matrix[] runBenchmarkTransposeNew() throws Exception {
+		String[] sizes = getTransposeSizes().split(",");
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), sizes.length);
 
-		for (int s = 0; s < transposeSizes.size(); s++) {
-			long[] size = transposeSizes.get(s);
-			System.out.print("transpose new matrix [" + Coordinates.toString(size) + "]: ");
+		for (int s = 0; s < sizes.length; s++) {
+			long[] size = Coordinates.parseString(sizes[s]);
+			result.setColumnLabel(s, Coordinates.toString('x', size));
+			System.out.print("transpose new matrix [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -577,30 +611,42 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.out.print(".");
 				System.out.flush();
 			}
+
+			Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
+			mean.setLabel("transpose new matrix (mean)");
+			for (int c = 0; c < result.getColumnCount(); c++) {
+				mean.setColumnLabel(c, result.getColumnLabel(c));
+			}
+			Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
+			std.setLabel("transpose new matrix (std)");
+			for (int c = 0; c < result.getColumnCount(); c++) {
+				std.setColumnLabel(c, result.getColumnLabel(c));
+			}
+			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
 		}
 
+		Matrix r = result.includeAnnotation(Ret.NEW, Matrix.ROW);
+		r.exportToFile(FileFormat.CSV, new File(getPrefix() + "-transposeNew.csv"));
+
 		Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
-		mean.setLabel("transpose new matrix (mean)");
-		for (int c = 0; c < result.getColumnCount(); c++) {
-			mean.setColumnLabel(c, result.getColumnLabel(c));
-		}
 		Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
-		std.setLabel("transpose new matrix (std)");
-		for (int c = 0; c < result.getColumnCount(); c++) {
-			std.setColumnLabel(c, result.getColumnLabel(c));
-		}
-		System.out.println(" " + mean.getAsInt(0, 0) + "+-" + std.getAsInt(0, 0) + "ms");
 		return new Matrix[] { mean, std };
 	}
 
+	public String getPrefix() throws UnknownHostException {
+		return "results/" + System.getProperty("os.name") + "-Java"
+				+ System.getProperty("java.version");
+	}
+
 	public Matrix runBenchmarkTransposeOrig() {
-		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), transposeSizes.size());
+		String[] sizes = getTransposeSizes().split(",");
+		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), sizes.length);
 		System.out.print("transpose (original matrix): ");
 		System.out.flush();
 
 		for (int i = 0; i < getRunsPerMatrix(); i++) {
-			for (int s = 0; s < transposeSizes.size(); s++) {
-				long[] size = transposeSizes.get(s);
+			for (int s = 0; s < sizes.length; s++) {
+				long[] size = Coordinates.parseString(sizes[s]);
 				double t = benchmarkTransposeOrig(size);
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
@@ -880,13 +926,13 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkPlusScalarNew(long... size) {
 		Matrix m = null, r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (m.getClass().getDeclaredMethod("plus", Double.TYPE) == null) {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.plus(2);
 			long t1 = System.currentTimeMillis();
@@ -906,13 +952,13 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkPlusScalarOrig(long... size) {
 		Matrix m = null, r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (m.getClass().getDeclaredMethod("plus", Ret.class, Boolean.TYPE, Double.TYPE) == null) {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.plus(Ret.ORIG, false, 2);
 			long t1 = System.currentTimeMillis();
@@ -932,7 +978,6 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkCopy(long... size) {
 		Matrix m = null, r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("copy") == null) {
@@ -940,6 +985,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.copy();
 			long t1 = System.currentTimeMillis();
@@ -959,13 +1005,13 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkTimesScalarNew(long... size) {
 		Matrix m = null, r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (m.getClass().getDeclaredMethod("times", Double.TYPE) == null) {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.times(2);
 			long t1 = System.currentTimeMillis();
@@ -985,13 +1031,13 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkTimesScalarOrig(long... size) {
 		Matrix m = null, r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (m.getClass().getDeclaredMethod("times", Ret.class, Boolean.TYPE, Double.TYPE) == null) {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.times(Ret.ORIG, false, 2);
 			long t1 = System.currentTimeMillis();
@@ -1009,20 +1055,21 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkTransposeNew(long... size) {
-		Matrix m = null, r = null;
+		DoubleMatrix2D m = null;
+		Matrix r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
-			m.randn(Ret.ORIG);
-			long t0 = System.currentTimeMillis();
+			Randn.calcOrig(m);
+			GCUtil.gc();
+			long n0 = System.nanoTime();
 			r = m.transpose();
-			long t1 = System.currentTimeMillis();
+			long n1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (n1 - n0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1031,11 +1078,12 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkTransposeOrig(long... size) {
-		Matrix m = null, r = null;
+		DoubleMatrix2D m = null;
+		Matrix r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.transpose(Ret.ORIG);
 			long t1 = System.currentTimeMillis();
@@ -1053,9 +1101,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkInv(long... size) {
-		Matrix m = null, r = null;
+		DoubleMatrix2D m = null;
+		Matrix r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("inv") == null) {
@@ -1075,7 +1123,8 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.inv();
 			long t1 = System.currentTimeMillis();
@@ -1093,10 +1142,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkSVD(long... size) {
-		Matrix m = null;
+		DoubleMatrix2D m = null;
 		Matrix[] r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("svd") == null) {
@@ -1111,7 +1159,8 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.svd();
 			long t1 = System.currentTimeMillis();
@@ -1133,10 +1182,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkEVD(long... size) {
-		Matrix m = null;
+		DoubleMatrix2D m = null;
 		Matrix[] r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core.")
 					&& m.getClass().getDeclaredMethod("eig") == null) {
@@ -1144,7 +1192,8 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.eig();
 			long t1 = System.currentTimeMillis();
@@ -1166,10 +1215,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkQR(long... size) {
-		Matrix m = null;
+		DoubleMatrix2D m = null;
 		Matrix[] r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("qr") == null) {
@@ -1177,7 +1225,8 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.qr();
 			long t1 = System.currentTimeMillis();
@@ -1199,10 +1248,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkChol(long... size) {
-		Matrix m = null;
+		DoubleMatrix2D m = null;
 		Matrix r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("chol") == null) {
@@ -1218,7 +1266,8 @@ public abstract class AbstractMatrix2DBenchmark {
 			// return TOOLONG;
 			// }
 
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.chol();
 			long t1 = System.currentTimeMillis();
@@ -1240,10 +1289,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkLU(long... size) {
-		Matrix m = null;
+		DoubleMatrix2D m = null;
 		Matrix[] r = null;
 		try {
-			GCUtil.gc();
 			m = createMatrix(size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
 					&& m.getClass().getDeclaredMethod("lu") == null) {
@@ -1263,7 +1311,8 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			m.randn(Ret.ORIG);
+			Randn.calcOrig(m);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m.lu();
 			long t1 = System.currentTimeMillis();
@@ -1285,9 +1334,9 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public double benchmarkMtimesNew(long[] size0, long[] size1) {
-		Matrix m0 = null, m1 = null, r = null;
+		DoubleMatrix2D m0 = null, m1 = null;
+		Matrix r = null;
 		try {
-			GCUtil.gc();
 			m0 = createMatrix(size0);
 			m1 = createMatrix(size1);
 
@@ -1302,8 +1351,9 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			m0.randn(Ret.ORIG);
-			m1.randn(Ret.ORIG);
+			Randn.calcOrig(m0);
+			Randn.calcOrig(m1);
+			GCUtil.gc();
 			long t0 = System.currentTimeMillis();
 			r = m0.mtimes(m1);
 			long t1 = System.currentTimeMillis();
@@ -1318,22 +1368,6 @@ public abstract class AbstractMatrix2DBenchmark {
 			System.err.flush();
 			return ERRORTIME;
 		}
-	}
-
-	public static void configureDefault() {
-		AbstractMatrix2DBenchmark.setSkipSlowLibraries(true);
-
-		AbstractMatrix2DBenchmark.setBurnInRuns(0);
-		AbstractMatrix2DBenchmark.setRunsPerMatrix(1);
-
-		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
-		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
-		AbstractMatrix2DBenchmark.setRunInv(true);
-		AbstractMatrix2DBenchmark.setRunSVD(true);
-		AbstractMatrix2DBenchmark.setRunEVD(true);
-		AbstractMatrix2DBenchmark.setRunQR(true);
-		AbstractMatrix2DBenchmark.setRunLU(true);
-		AbstractMatrix2DBenchmark.setRunChol(true);
 	}
 
 }

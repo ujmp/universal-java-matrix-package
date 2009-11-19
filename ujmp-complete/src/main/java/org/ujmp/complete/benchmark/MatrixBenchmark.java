@@ -36,7 +36,9 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
@@ -55,7 +57,7 @@ import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
-public class MatrixBenchmark {
+public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 	public MatrixBenchmark() {
 	}
@@ -130,7 +132,9 @@ public class MatrixBenchmark {
 		return list;
 	}
 
-	public void configureDefault() throws Exception {
+	public void setRunAllLibraries() throws Exception {
+		setSkipSlowLibraries(true);
+
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunMTJDenseDoubleMatrix2DBenchmark(true);
@@ -152,20 +156,6 @@ public class MatrixBenchmark {
 		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
 		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
 		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
-
-		AbstractMatrix2DBenchmark.setSkipSlowLibraries(true);
-
-		AbstractMatrix2DBenchmark.setBurnInRuns(1);
-		AbstractMatrix2DBenchmark.setRunsPerMatrix(3);
-
-		AbstractMatrix2DBenchmark.setRunTransposeNew(true);
-		AbstractMatrix2DBenchmark.setRunMtimesNew(true);
-		AbstractMatrix2DBenchmark.setRunInv(true);
-		AbstractMatrix2DBenchmark.setRunSVD(true);
-		AbstractMatrix2DBenchmark.setRunEVD(true);
-		AbstractMatrix2DBenchmark.setRunQR(true);
-		AbstractMatrix2DBenchmark.setRunLU(true);
-		AbstractMatrix2DBenchmark.setRunChol(true);
 	}
 
 	public void setRunDefaultDenseDoubleMatrix2DBenchmark(boolean b) {
@@ -336,7 +326,7 @@ public class MatrixBenchmark {
 		return "true".equals(System.getProperty("runVecMathDenseDoubleMatrix2DBenchmark"));
 	}
 
-	public void run() throws Exception {
+	public void runAll() throws Exception {
 		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
 		List<Matrix> results = new ArrayList<Matrix>();
@@ -391,11 +381,19 @@ public class MatrixBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (Runtime.getRuntime().maxMemory() < 980 * 1024 * 1024) {
-			throw new Exception("You must start Java with more memory: -Xmx1024M");
-		}
 		MatrixBenchmark mb = new MatrixBenchmark();
-		mb.configureDefault();
-		mb.run();
+		mb.setRunAllLibraries();
+		mb.setRunAllTests();
+		mb.runAll();
+	}
+
+	@Override
+	public DoubleMatrix2D createMatrix(long... size) throws MatrixException {
+		return null;
+	}
+
+	@Override
+	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
+		return null;
 	}
 }

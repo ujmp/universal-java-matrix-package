@@ -58,7 +58,6 @@ public class Coordinates implements Serializable {
 		System.arraycopy(c.dimensions, 0, this.dimensions, 0, c.dimensions.length);
 	}
 
-	
 	public final int hashCode() {
 		return hashCode(this.dimensions);
 	}
@@ -90,7 +89,6 @@ public class Coordinates implements Serializable {
 		return product;
 	}
 
-	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("[");
@@ -104,7 +102,6 @@ public class Coordinates implements Serializable {
 		return s.toString();
 	}
 
-	
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -128,18 +125,21 @@ public class Coordinates implements Serializable {
 		}
 	}
 
-	public static String toString(long[] coordinates) {
+	public static String toString(long... coordinates) {
+		return toString(',', coordinates);
+	}
+
+	public static String toString(char separator, long... coordinates) {
 		String s = "";
 		for (int i = 0; i < coordinates.length; i++) {
 			s += coordinates[i];
 			if (i < coordinates.length - 1) {
-				s += ",";
+				s += separator;
 			}
 		}
 		return s;
 	}
 
-	
 	public Coordinates clone() {
 		Coordinates c = new Coordinates(this);
 		return c;

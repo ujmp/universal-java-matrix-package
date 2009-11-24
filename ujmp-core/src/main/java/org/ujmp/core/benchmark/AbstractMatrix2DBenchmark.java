@@ -27,17 +27,18 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.RandomSimple;
 import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
@@ -92,7 +93,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public static final long[] SIZE100000X100000 = new long[] { 100000, 100000 };
 
-	private final String transposeSizes = "10x10,50x50,100x100,500x500,1000x1000";
+	private final String transposeSizes = "10x10,50x50,100x100,500x500,1000x1000,2000x2000,5000x5000";
 
 	private final List<long[]> copySizes = Arrays.asList(new long[][] { SIZE5000X5000 });
 
@@ -122,6 +123,8 @@ public abstract class AbstractMatrix2DBenchmark {
 	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
 	public abstract DoubleMatrix2D createMatrix(Matrix source) throws MatrixException;
+
+	private static Random random = new RandomSimple();
 
 	public AbstractMatrix2DBenchmark() {
 	}
@@ -270,14 +273,6 @@ public abstract class AbstractMatrix2DBenchmark {
 		System.setProperty("runChol", "" + b);
 	}
 
-	public boolean isRunTransposeOrig() {
-		return "true".equals(System.getProperty("runTransposeOrig"));
-	}
-
-	public void setRunTransposeOrig(boolean runTransposeOrig) {
-		System.setProperty("runTransposeOrig", "" + runTransposeOrig);
-	}
-
 	public String getTransposeSizes() {
 		return transposeSizes;
 	}
@@ -376,10 +371,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				Matrix[] r = runBenchmarkTransposeNew();
 				result.add(r[MEAN]);
 				result.add(r[STD]);
-			}
-
-			if (isRunTransposeOrig()) {
-				result.add(runBenchmarkTransposeOrig());
 			}
 
 			if (isRunMtimesNew()) {
@@ -638,28 +629,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				+ System.getProperty("java.version");
 	}
 
-	public Matrix runBenchmarkTransposeOrig() {
-		String[] sizes = getTransposeSizes().split(",");
-		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), sizes.length);
-		System.out.print("transpose (original matrix): ");
-		System.out.flush();
-
-		for (int i = 0; i < getRunsPerMatrix(); i++) {
-			for (int s = 0; s < sizes.length; s++) {
-				long[] size = Coordinates.parseString(sizes[s]);
-				double t = benchmarkTransposeOrig(size);
-				result.setAsDouble(t, i, s);
-				System.out.print(".");
-				System.out.flush();
-			}
-		}
-
-		System.out.println();
-		Matrix m = result.mean(Ret.NEW, Matrix.ROW, true);
-		m.setLabel("transpose (original matrix)");
-		return m;
-	}
-
 	public Matrix[] runBenchmarkInv() {
 		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), invSizes.size());
 
@@ -912,10 +881,10 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkCreate(long... size) {
 		try {
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			createMatrix(size);
-			long t1 = System.currentTimeMillis();
-			return t1 - t0;
+			long t1 = System.nanoTime();
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -933,15 +902,15 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.plus(2);
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -959,15 +928,15 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.plus(Ret.ORIG, false, 2);
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -986,15 +955,15 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.copy();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1012,15 +981,15 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.times(2);
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1038,15 +1007,15 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.times(Ret.ORIG, false, 2);
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1059,17 +1028,17 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix r = null;
 		try {
 			m = createMatrix(size);
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long n0 = System.nanoTime();
+			long t0 = System.nanoTime();
 			r = m.transpose();
-			long n1 = System.nanoTime();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return (n1 - n0) / 1000000.0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1077,26 +1046,13 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 	}
 
-	public double benchmarkTransposeOrig(long... size) {
-		DoubleMatrix2D m = null;
-		Matrix r = null;
-		try {
-			m = createMatrix(size);
-			Randn.calcOrig(m);
-			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
-			r = m.transpose(Ret.ORIG);
-			long t1 = System.currentTimeMillis();
-			if (r == null) {
-				System.err.print("e");
-				System.err.flush();
-				return ERRORTIME;
+	public static void rand(DoubleMatrix2D matrix) {
+		int rows = (int) matrix.getRowCount();
+		int cols = (int) matrix.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				matrix.setDouble(random.nextFloat() - 0.5, r, c);
 			}
-			return t1 - t0;
-		} catch (Throwable e) {
-			System.err.print("e");
-			System.err.flush();
-			return ERRORTIME;
 		}
 	}
 
@@ -1123,17 +1079,17 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.inv();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();
@@ -1159,17 +1115,17 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.svd();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (NoSuchMethodException e) {
 			System.err.print("-");
 			System.err.flush();
@@ -1192,17 +1148,17 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.eig();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (NoSuchMethodException e) {
 			System.err.print("-");
 			System.err.flush();
@@ -1225,17 +1181,17 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.qr();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (NoSuchMethodException e) {
 			System.err.print("-");
 			System.err.flush();
@@ -1266,17 +1222,17 @@ public abstract class AbstractMatrix2DBenchmark {
 			// return TOOLONG;
 			// }
 
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.chol();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (NoSuchMethodException e) {
 			System.err.print("-");
 			System.err.flush();
@@ -1311,17 +1267,17 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			Randn.calcOrig(m);
+			rand(m);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m.lu();
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (NoSuchMethodException e) {
 			System.err.print("-");
 			System.err.flush();
@@ -1351,18 +1307,18 @@ public abstract class AbstractMatrix2DBenchmark {
 				return TOOLONG;
 			}
 
-			Randn.calcOrig(m0);
-			Randn.calcOrig(m1);
+			rand(m0);
+			rand(m1);
 			GCUtil.gc();
-			long t0 = System.currentTimeMillis();
+			long t0 = System.nanoTime();
 			r = m0.mtimes(m1);
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			if (r == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;
 			}
-			return t1 - t0;
+			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.err.print("e");
 			System.err.flush();

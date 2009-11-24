@@ -23,11 +23,8 @@
 
 package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
-import java.util.Random;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -60,17 +57,6 @@ public class Randn extends AbstractDoubleCalculation {
 
 	public static Matrix calc(Matrix source) throws MatrixException {
 		return calc(source, 0.0, 1.0);
-	}
-
-	public static void calcOrig(DoubleMatrix2D matrix) {
-		Random random = MathUtil.getRandom();
-		int rows = (int) matrix.getRowCount();
-		int cols = (int) matrix.getColumnCount();
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				matrix.setDouble(random.nextGaussian(), r, c);
-			}
-		}
 	}
 
 	public static Matrix calc(Matrix source, double mean, double sigma) throws MatrixException {

@@ -27,9 +27,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+
 
 public abstract class PFor {
 
@@ -51,15 +50,14 @@ public abstract class PFor {
 	public PFor(int threads, int first, int last, Object... objects) {
 		this.objects = objects;
 
-		if (threads <= 2) {
+		if (threads < 2) {
 			for (int i = first; i <= last; i++) {
 				step(i);
 			}
 		} else {
 			ThreadPoolExecutor es = executors.get();
 			if (es == null) {
-				es = new ThreadPoolExecutor(threads, threads, 500L, TimeUnit.MILLISECONDS,
-						new LinkedBlockingQueue<Runnable>());
+				es = new UJMPThreadPoolExecutor("PFor", threads, threads);
 				executors.set(es);
 			} else {
 				es.setCorePoolSize(threads);

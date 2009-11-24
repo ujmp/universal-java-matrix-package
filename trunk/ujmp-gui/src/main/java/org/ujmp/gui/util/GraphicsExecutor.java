@@ -79,7 +79,8 @@ public class GraphicsExecutor {
 
 class UpdateTask implements Runnable {
 
-	private static final Logger logger = Logger.getLogger(UpdateTask.class.getName());
+	private static final Logger logger = Logger.getLogger(UpdateTask.class
+			.getName());
 
 	private CanBeRepainted component = null;
 
@@ -93,7 +94,8 @@ class UpdateTask implements Runnable {
 	public void run() {
 		try {
 			GraphicsExecutor.setFinished(component);
-			((JComponent) component).setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			((JComponent) component).setCursor(Cursor
+					.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			component.repaintUI();
 			((JComponent) component).setCursor(Cursor.getDefaultCursor());
 			((JComponent) component).repaint(1);
@@ -107,10 +109,13 @@ class UpdateTask implements Runnable {
 
 class Executor extends ThreadPoolExecutor {
 
-	private final Set<CanBeRepainted> waitingTasks = Collections.synchronizedSet(new HashSet<CanBeRepainted>());
+	private final Set<CanBeRepainted> waitingTasks = Collections
+			.synchronizedSet(new HashSet<CanBeRepainted>());
 
 	public Executor() {
-		super(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), new LowPriorityThreadFactory());
+		super(1, 1, 0L, TimeUnit.MILLISECONDS,
+				new LinkedBlockingQueue<Runnable>(),
+				new LowPriorityThreadFactory());
 	}
 
 	public void setFinished(CanBeRepainted component) {
@@ -138,16 +143,16 @@ class LowPriorityThreadFactory implements ThreadFactory {
 
 	public LowPriorityThreadFactory() {
 		SecurityManager s = System.getSecurityManager();
-		group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
+		group = (s != null) ? s.getThreadGroup() : Thread.currentThread()
+				.getThreadGroup();
 		namePrefix = "GraphicsExecutorPool-";
 	}
 
 	public Thread newThread(Runnable r) {
-		Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement(), 0);
-		if (t.isDaemon())
-			t.setDaemon(false);
-		if (t.getPriority() != Thread.MIN_PRIORITY)
-			t.setPriority(Thread.MIN_PRIORITY);
+		Thread t = new Thread(group, r, namePrefix
+				+ threadNumber.getAndIncrement(), 0);
+		t.setDaemon(true);
+		t.setPriority(Thread.MIN_PRIORITY);
 		return t;
 	}
 }

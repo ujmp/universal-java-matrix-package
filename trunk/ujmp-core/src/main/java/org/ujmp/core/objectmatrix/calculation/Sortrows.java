@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix2D;
@@ -37,114 +38,112 @@ import org.ujmp.core.util.Sortable;
 /**
  * Sorts the rows of a matrix
  */
-public class Sort extends AbstractObjectCalculation {
+public class Sortrows extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -6935375114060680121L;
 
 	private LongMatrix2D index = null;
 
 	private long column = 0;
 
-	public Sort(Matrix m) {
-		super(m);
-	}
+	private boolean reverse = false;
 
-	public Sort(Matrix m, long column) {
+	public Sortrows(Matrix m, long column, boolean reverse) {
 		super(m);
-		this.column = column;
+		this.column = Math.abs(column);
+		this.reverse = reverse;
+		createSortIndex();
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
-		if (index == null) {
-			createSortIndex();
-		}
 		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void createSortIndex() {
 		Matrix m = getSource();
+		long rowCount = m.getRowCount();
 		List<Sortable> rows = new ArrayList<Sortable>();
 
 		switch (m.getValueType()) {
 		case BIGDECIMAL:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsBigDecimal(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BIGINTEGER:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsBigInteger(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case DATE:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsDate(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case DOUBLE:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsDouble(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case INT:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsInt(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case FLOAT:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsFloat(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case CHAR:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsChar(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BYTE:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsByte(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BOOLEAN:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsBoolean(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case LONG:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsLong(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case SHORT:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsShort(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}
 			break;
 		default:
-			for (long r = 0; r < m.getRowCount(); r++) {
+			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsString(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
@@ -153,12 +152,25 @@ public class Sort extends AbstractObjectCalculation {
 		}
 
 		Collections.sort(rows);
+		if (reverse) {
+			Collections.reverse(rows);
+		}
 
 		LongMatrix2D indexMatrix = (LongMatrix2D) MatrixFactory.zeros(ValueType.LONG, rows.size(),
 				1);
 
+		Annotation annotation = m.getAnnotation();
+		if (annotation != null) {
+			annotation = m.getAnnotation().clone();
+			setAnnotation(annotation);
+		}
+
 		for (int r = 0; r < rows.size(); r++) {
 			indexMatrix.setLong((Long) (rows.get(r)).getObject(), r, 0);
+			if (annotation != null) {
+				Object o = m.getAxisAnnotation(Matrix.ROW, (Long) (rows.get(r)).getObject());
+				annotation.setAxisAnnotation(Matrix.ROW, r, o);
+			}
 		}
 
 		this.index = indexMatrix;

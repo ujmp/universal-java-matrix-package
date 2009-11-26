@@ -34,6 +34,7 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(TestConcatenation.class);
 		suite.addTestSuite(TestMtimes.class);
 		suite.addTestSuite(TestGinv.class);
+		suite.addTestSuite(TestSortrows.class);
 		return suite;
 	}
 

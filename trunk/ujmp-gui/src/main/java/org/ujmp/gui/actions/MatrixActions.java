@@ -121,7 +121,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new Log10Action(c, m, v)));
 			add(new JMenuItem(new Log2Action(c, m, v)));
 			add(new JSeparator());
-			add(new JMenuItem(new SortAction(c, m, v)));
+			add(new JMenuItem(new SortrowsAction(c, m, v)));
 			add(new JMenuItem(new ShuffleAction(c, m, v)));
 			add(new JMenuItem(new UniqueAction(c, m, v)));
 			add(new JMenuItem(new BootstrapAction(c, m, v)));

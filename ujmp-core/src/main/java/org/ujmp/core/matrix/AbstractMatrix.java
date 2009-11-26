@@ -163,7 +163,7 @@ import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
-import org.ujmp.core.objectmatrix.calculation.Sort;
+import org.ujmp.core.objectmatrix.calculation.Sortrows;
 import org.ujmp.core.objectmatrix.calculation.Swap;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
@@ -1129,12 +1129,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Exp(this).calc(returnType);
 	}
 
-	public final Matrix sort(Ret returnType) throws MatrixException {
-		return new Sort(this).calc(returnType);
-	}
-
-	public final Matrix sort(Ret returnType, long column) throws MatrixException {
-		return new Sort(this, column).calc(returnType);
+	public final Matrix sortrows(Ret returnType, long column, boolean reverse)
+			throws MatrixException {
+		return new Sortrows(this, column, reverse).calc(returnType);
 	}
 
 	public final Matrix cumsum(boolean ignoreNaN) throws MatrixException {

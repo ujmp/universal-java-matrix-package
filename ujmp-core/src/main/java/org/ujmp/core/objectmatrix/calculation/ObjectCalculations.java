@@ -32,9 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface ObjectCalculations {
 
-	public Matrix sort(Ret returnType) throws MatrixException;
-
-	public Matrix sort(Ret returnType, long column) throws MatrixException;
+	public Matrix sortrows(Ret returnType, long column, boolean reverse) throws MatrixException;
 
 	public Matrix shuffle(Ret returnType) throws MatrixException;
 

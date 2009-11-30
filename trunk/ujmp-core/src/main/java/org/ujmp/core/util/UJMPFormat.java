@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class UJMPFormat extends Format {
@@ -144,6 +145,15 @@ public class UJMPFormat extends Format {
 
 		long rowCount = m.getRowCount();
 		long columnCount = m.getColumnCount();
+		long[] cursor = new long[m.getDimensionCount()];
+
+		if (m.getDimensionCount() > 2) {
+			toAppendTo.append(m.getDimensionCount());
+			toAppendTo.append("D-Matrix [");
+			toAppendTo.append(Coordinates.toString('x', m.getSize()));
+			toAppendTo.append("]: only two dimensions are printed");
+			toAppendTo.append(EOL);
+		}
 
 		if (m.getAnnotation() != null) {
 			format(m.getLabel(), toAppendTo, pos);
@@ -166,15 +176,16 @@ public class UJMPFormat extends Format {
 			toAppendTo.append(EOL);
 		}
 
-		for (long row = 0; row < rowCount && row < maxRows; row++) {
+		for (cursor[Matrix.ROW] = 0; cursor[Matrix.ROW] < rowCount && cursor[Matrix.ROW] < maxRows; cursor[Matrix.ROW]++) {
 			if (m.getAnnotation() != null) {
-				format(m.getRowLabel(row), toAppendTo, pos);
+				format(m.getRowLabel(cursor[Matrix.ROW]), toAppendTo, pos);
 				toAppendTo.append(" | ");
 			}
-			for (long col = 0; col < columnCount && col < maxColumns; col++) {
-				Object o = m.getAsObject(row, col);
+			for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
+					&& cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
+				Object o = m.getAsObject(cursor);
 				toAppendTo = format(o, toAppendTo, pos);
-				if (col < columnCount - 1) {
+				if (cursor[Matrix.COLUMN] < columnCount - 1) {
 					toAppendTo.append(' ');
 				}
 			}

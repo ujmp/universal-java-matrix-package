@@ -31,6 +31,7 @@ public class AllTests extends TestSuite {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTestSuite(TestMLDoubleMatrix.class);
 		suite.addTestSuite(TestExportMAT.class);
+		suite.addTestSuite(Test3D.class);
 		return suite;
 	}
 

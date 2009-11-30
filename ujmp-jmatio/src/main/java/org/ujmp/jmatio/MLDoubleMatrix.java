@@ -29,52 +29,74 @@ import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
 import com.jmatio.types.MLDouble;
 
-public class MLDoubleMatrix extends AbstractDenseDoubleMatrix2D implements Wrapper<MLDouble> {
+public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper<MLDouble> {
 	private static final long serialVersionUID = 5687213209146399315L;
 
 	private transient MLDouble matrix = null;
 
+	private int[] pack = null;
+
 	public MLDoubleMatrix(Matrix m) {
-		this(m.getSize());
-		if (m.getLabel() != null) {
-			setLabel(m.getLabel());
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+			this.matrix = new MLDouble(m.getLabel(), MathUtil.toIntArray(m.getSize()));
+		} else {
+			this.matrix = new MLDouble("matrix" + System.nanoTime(), MathUtil.toIntArray(m
+					.getSize()));
 		}
+		init();
 		for (long[] c : m.availableCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
 		}
 	}
 
 	public MLDoubleMatrix(long... size) {
-		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			this.matrix = new MLDouble("matrix" + System.nanoTime(),
-					new double[(int) size[ROW]][(int) size[COLUMN]]);
+		if (Coordinates.product(size) > 0) {
+			this.matrix = new MLDouble("matrix" + System.nanoTime(), MathUtil.toIntArray(size));
+			init();
 		}
+	}
+
+	private void init() {
+		int[] dims = matrix.getDimensions();
+		pack = new int[matrix.getNDimensions()];
+		pack[0] = 1;
+		for (int i = 1; i < pack.length; i++) {
+			pack[i] = dims[i - 1] * pack[i - 1];
+		}
+	}
+
+	int getIndex(long... coords) {
+		int index = 0;
+		for (int x = 0; x < coords.length; x++) {
+			index += coords[x] * pack[x];
+		}
+		return index;
 	}
 
 	public MLDoubleMatrix(MLDouble matrix) {
 		this.matrix = matrix;
+		setLabel(matrix.getName());
+		init();
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getM(), matrix.getN() };
+		return matrix == null ? Coordinates.ZERO2D : MathUtil.toLongArray(matrix.getDimensions());
 	}
 
-	public double getDouble(long row, long column) {
-		return matrix.get((int) row, (int) column);
+	public double getDouble(long... coordinates) {
+		return matrix.get(getIndex(coordinates));
 	}
 
-	public void setDouble(double value, long row, long column) {
-		matrix.set(value, (int) row, (int) column);
-	}
-
-	public double getDouble(int row, int column) {
-		return matrix.get(row, column);
+	public void setDouble(double value, long... coordinates) {
+		matrix.set(value, getIndex(coordinates));
 	}
 
 	public void setDouble(double value, int row, int column) {

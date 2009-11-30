@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.exceptions.MatrixException;
 
 import com.jmatio.io.MatFileReader;
 import com.jmatio.types.MLArray;
@@ -36,10 +37,23 @@ import com.jmatio.types.MLDouble;
 public class ImportMatrixMAT {
 
 	public static Matrix fromFile(File file, Object... parameters) throws IOException {
+		String key = null;
+		if (parameters != null && parameters.length > 0 && parameters[0] instanceof String) {
+			key = (String) parameters[0];
+		}
 		MatFileReader reader = new MatFileReader();
 		Map<String, MLArray> map = reader.read(file);
-		String key = map.keySet().iterator().next();
-		return new MLDoubleMatrix((MLDouble) map.get(key));
+		if (key == null) {
+			key = map.keySet().iterator().next();
+		}
+		MLArray array = map.get(key);
+		if (array == null) {
+			throw new MatrixException("matrix with label [" + key + "] was not found in .mat file");
+		} else if (array instanceof MLDouble) {
+			return new MLDoubleMatrix((MLDouble) array);
+		} else {
+			throw new MatrixException("This type is not yet supported: " + array.getClass());
+		}
 	}
 
 }

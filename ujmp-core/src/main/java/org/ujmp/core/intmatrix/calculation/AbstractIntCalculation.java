@@ -50,9 +50,11 @@ public abstract class AbstractIntCalculation extends AbstractCalculation<Matrix,
 
 	public final IntMatrix calcNew() throws MatrixException {
 		IntMatrix result = (IntMatrix) MatrixFactory.zeros(ValueType.INT, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsInt(getInt(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractIntCalculation extends AbstractCalculation<Matrix,
 	public void setInt(int value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}

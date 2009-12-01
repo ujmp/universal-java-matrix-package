@@ -46,9 +46,11 @@ public abstract class AbstractByteCalculation extends AbstractCalculation<Matrix
 
 	public final ByteMatrix calcNew() throws MatrixException {
 		ByteMatrix result = (ByteMatrix) MatrixFactory.zeros(ValueType.BYTE, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setByte(getByte(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractByteCalculation extends AbstractCalculation<Matrix
 	public void setByte(byte value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

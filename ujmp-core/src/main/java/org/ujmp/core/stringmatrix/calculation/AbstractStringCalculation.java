@@ -62,9 +62,11 @@ public abstract class AbstractStringCalculation extends AbstractCalculation<Matr
 
 	public final StringMatrix calcNew() throws MatrixException {
 		StringMatrix result = (StringMatrix) MatrixFactory.zeros(ValueType.STRING, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsString(getString(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}

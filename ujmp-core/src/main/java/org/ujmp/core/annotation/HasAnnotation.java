@@ -29,13 +29,13 @@ public interface HasAnnotation {
 
 	public void setAnnotation(Annotation annotation);
 
-	public Object getAxisAnnotation(int axis, long positionOnAxis);
+	public Object getAxisAnnotation(int dimension, long... position);
 
-	public Object getAxisAnnotation(int axis);
+	public Object getAxisAnnotation(int dimension);
 
-	public void setAxisAnnotation(int axis, long positionOnAxis, Object value);
+	public void setAxisAnnotation(int dimension, Object label, long... position);
 
-	public void setAxisAnnotation(int axis, Object value);
+	public void setAxisAnnotation(int dimension, Object label);
 
 	public Object getMatrixAnnotation();
 
@@ -61,6 +61,6 @@ public interface HasAnnotation {
 
 	public long getColumnForLabel(Object object);
 
-	public long getPositionForLabel(int dimension, Object object);
+	public long[] getPositionForLabel(int dimension, Object label);
 
 }

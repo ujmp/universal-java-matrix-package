@@ -46,9 +46,11 @@ public abstract class AbstractCharCalculation extends AbstractCalculation<Matrix
 
 	public final CharMatrix calcNew() throws MatrixException {
 		CharMatrix result = (CharMatrix) MatrixFactory.zeros(ValueType.CHAR, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsChar(getChar(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractCharCalculation extends AbstractCalculation<Matrix
 	public void setChar(char value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}

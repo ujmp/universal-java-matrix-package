@@ -24,34 +24,35 @@
 package org.ujmp.core.annotation;
 
 import java.io.Serializable;
-import java.util.Map;
+
+import org.ujmp.core.Matrix;
 
 public interface Annotation extends Serializable {
 
-	public Map<Integer, Object> getAxisLabelAnnotation();
+	public long[] getSize();
 
-	public Map<Integer, Map<Long, Object>> getAxisAnnotation();
+	public Matrix getDimensionMatrix(int dimension);
 
-	public Map<Integer, Map<Object, Long>> getAxisPositions();
+	public void setDimensionMatrix(int dimension, Matrix matrix);
 
-	public void setAxisAnnotation(int axis, long positionOnAxis, Object value);
+	public void setAxisAnnotation(int dimension, Object label, long... position);
 
-	public Object getAxisAnnotation(int axis, long positionOnAxis);
+	public Object getAxisAnnotation(int dimension, long... position);
 
-	public Object getAxisAnnotation(int axis);
+	public Object getAxisAnnotation(int dimension);
 
-	public void setAxisAnnotation(int axis, Object value);
+	public void setAxisAnnotation(int dimension, Object label);
 
 	public Object getMatrixAnnotation();
 
-	public void setMatrixAnnotation(Object matrixAnnotation);
+	public void setMatrixAnnotation(Object label);
 
 	public Annotation clone();
 
-	public boolean equals(Annotation a);
-	
+	public boolean equals(Object annotation);
+
 	public void clear();
 
-	public long getPositionForLabel(int dimension, Object object);
+	public long[] getPositionForLabel(int dimension, Object label);
 
 }

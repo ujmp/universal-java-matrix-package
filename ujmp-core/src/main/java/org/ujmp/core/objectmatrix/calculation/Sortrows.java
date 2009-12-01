@@ -168,8 +168,9 @@ public class Sortrows extends AbstractObjectCalculation {
 		for (int r = 0; r < rows.size(); r++) {
 			indexMatrix.setLong((Long) (rows.get(r)).getObject(), r, 0);
 			if (annotation != null) {
-				Object o = m.getAxisAnnotation(Matrix.ROW, (Long) (rows.get(r)).getObject());
-				annotation.setAxisAnnotation(Matrix.ROW, r, o);
+				Object o = m.getAxisAnnotation(Matrix.COLUMN, new long[] {
+						(Long) (rows.get(r)).getObject(), 0 });
+				annotation.setAxisAnnotation(Matrix.COLUMN, o, new long[] { r, 0 });
 			}
 		}
 

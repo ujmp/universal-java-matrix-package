@@ -50,9 +50,11 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation<Matri
 
 	public final FloatMatrix calcNew() throws MatrixException {
 		FloatMatrix result = (FloatMatrix) MatrixFactory.zeros(ValueType.FLOAT, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsFloat(getFloat(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation<Matri
 	public void setFloat(float value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

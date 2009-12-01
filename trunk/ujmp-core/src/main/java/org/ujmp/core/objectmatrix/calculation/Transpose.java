@@ -27,6 +27,8 @@ import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -38,41 +40,52 @@ public class Transpose extends AbstractObjectCalculation {
 	private int swap2 = COLUMN;
 
 	public Transpose(Matrix m) {
-		super(m);
+		this(m, ROW, COLUMN);
 	}
 
 	public Transpose(Matrix m, int swap1, int swap2) {
 		super(m);
 		this.swap1 = swap1;
 		this.swap2 = swap2;
+		Annotation aold = m.getAnnotation();
+		if (aold != null) {
+			Annotation a = new DefaultAnnotation(getSize());
+			a.setMatrixAnnotation(aold.getMatrixAnnotation());
+			for (int i = 0; i < m.getDimensionCount(); i++) {
+				Matrix am = aold.getDimensionMatrix(i);
+				am = am.transpose(Ret.NEW, swap1, swap2);
+				if (i == swap1) {
+					a.setDimensionMatrix(swap2, am);
+				} else if (i == swap2) {
+					a.setDimensionMatrix(swap1, am);
+				} else {
+					a.setDimensionMatrix(i, am);
+				}
+			}
+			setAnnotation(a);
+		}
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		return getSource().getAsObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
-	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize(), swap1, swap2);
 	}
 
-	
 	public boolean contains(long... coordinates) {
 		return getSource().contains(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
-	
 	public boolean isSparse() {
 		return getSource().isSparse();
 	}
 
-	
 	public long getValueCount() {
 		return getSource().getValueCount();
 	}
 
-	
 	public Iterable<long[]> availableCoordinates() {
 		return new Iterable<long[]>() {
 

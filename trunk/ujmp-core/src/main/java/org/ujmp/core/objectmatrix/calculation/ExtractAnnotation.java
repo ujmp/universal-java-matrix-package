@@ -25,6 +25,7 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -37,29 +38,31 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 	public ExtractAnnotation(Matrix m, int dim) {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
-		setAnnotation(new DefaultAnnotation());
+		size[dim]--;
+		setAnnotation(new DefaultAnnotation(getSize()));
 		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
 
-		size[dim]--;
-
 		if (dim == Matrix.ROW) {
-			for (long c = m.getColumnCount() - 1; c != -1; c--) {
-				getAnnotation().setAxisAnnotation(Matrix.COLUMN, c, m.getAsObject(0, c));
-			}
-			for (long r = m.getRowCount() - 2; r != -1; r--) {
-				getAnnotation().setAxisAnnotation(Matrix.ROW, r,
-						m.getAxisAnnotation(Matrix.ROW, r + 1));
+			Annotation a = m.getAnnotation();
+			if (a != null) {
+				Matrix ai = a.getDimensionMatrix(Matrix.COLUMN);
+				ai = ai.deleteRows(Ret.NEW, 0);
+				getAnnotation().setDimensionMatrix(Matrix.COLUMN, ai);
 			}
 		} else if (dim == Matrix.COLUMN) {
-			for (long r = m.getRowCount() - 1; r != -1; r--) {
-				getAnnotation().setAxisAnnotation(Matrix.ROW, r, m.getAsObject(r, 0));
+			Annotation a = m.getAnnotation();
+			if (a != null) {
+				Matrix ai = a.getDimensionMatrix(Matrix.ROW);
+				System.out.println(ai);
+				ai = ai.deleteColumns(Ret.NEW, 0);
+				getAnnotation().setDimensionMatrix(Matrix.ROW, ai);
+				System.out.println(getAnnotation());
 			}
-			for (long c = m.getColumnCount() - 2; c != -1; c--) {
-				getAnnotation().setAxisAnnotation(Matrix.COLUMN, c,
-						m.getAxisAnnotation(Matrix.COLUMN, c + 1));
-			}
+		} else {
+			throw new MatrixException("only supported for 2D matrices");
 		}
 
+		throw new MatrixException("this has to be fixed");
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
@@ -80,7 +83,7 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		m.setAsDouble(Double.NaN, 2, 2);
 		m.setAsDouble(Double.NEGATIVE_INFINITY, 3, 2);
 		System.out.println(m);
-		System.out.println(m.extractAnnotation(Ret.NEW, Matrix.COLUMN).times(1));
+		System.out.println(m.extractAnnotation(Ret.NEW, Matrix.COLUMN));
 	}
 
 }

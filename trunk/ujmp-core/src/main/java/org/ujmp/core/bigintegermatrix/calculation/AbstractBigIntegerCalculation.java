@@ -49,9 +49,11 @@ public abstract class AbstractBigIntegerCalculation extends
 	public final BigIntegerMatrix calcNew() throws MatrixException {
 		BigIntegerMatrix result = (BigIntegerMatrix) MatrixFactory.zeros(ValueType.BIGINTEGER,
 				getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigInteger(getBigInteger(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -77,7 +79,6 @@ public abstract class AbstractBigIntegerCalculation extends
 	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}

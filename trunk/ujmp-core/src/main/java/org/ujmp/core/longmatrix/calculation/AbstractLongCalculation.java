@@ -50,9 +50,11 @@ public abstract class AbstractLongCalculation extends AbstractCalculation<Matrix
 
 	public final LongMatrix calcNew() throws MatrixException {
 		LongMatrix result = (LongMatrix) MatrixFactory.zeros(ValueType.LONG, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsLong(getLong(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractLongCalculation extends AbstractCalculation<Matrix
 	public void setLong(long value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

@@ -159,7 +159,6 @@ import org.ujmp.core.objectmatrix.calculation.ExtractAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
 import org.ujmp.core.objectmatrix.calculation.IncludeAnnotation;
-import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
@@ -167,8 +166,9 @@ import org.ujmp.core.objectmatrix.calculation.Sortrows;
 import org.ujmp.core.objectmatrix.calculation.Swap;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
-import org.ujmp.core.objectmatrix.calculation.Unique;
+import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Triu;
+import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.objectmatrix.impl.ReshapedObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
@@ -258,31 +258,31 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setMatrixAnnotation(Object value) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation();
+			annotation = new DefaultAnnotation(getSize());
 		}
 		annotation.setMatrixAnnotation(value);
 	}
 
-	public final Object getAxisAnnotation(int axis, long positionOnAxis) {
-		return annotation == null ? null : annotation.getAxisAnnotation(axis, positionOnAxis);
+	public final Object getAxisAnnotation(int axis, long... position) {
+		return annotation == null ? null : annotation.getAxisAnnotation(axis, position);
 	}
 
 	public final Object getAxisAnnotation(int axis) {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis);
 	}
 
-	public final void setAxisAnnotation(int axis, long positionOnAxis, Object value) {
+	public final void setAxisAnnotation(int axis, Object label, long... position) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation();
+			annotation = new DefaultAnnotation(getSize());
 		}
-		annotation.setAxisAnnotation(axis, positionOnAxis, value);
+		annotation.setAxisAnnotation(axis, label, position);
 	}
 
-	public final void setAxisAnnotation(int axis, Object value) {
+	public final void setAxisAnnotation(int axis, Object label) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation();
+			annotation = new DefaultAnnotation(getSize());
 		}
-		annotation.setAxisAnnotation(axis, value);
+		annotation.setAxisAnnotation(axis, label);
 	}
 
 	public final GUIObject getGUIObject() {
@@ -1457,47 +1457,83 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getColumnLabel(long col) {
-		return StringUtil.convert(getAxisAnnotation(COLUMN, col));
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return StringUtil.convert(getAxisAnnotation(ROW, new long[] { 0, col }));
 	}
 
 	public final String getRowLabel(long row) {
-		return StringUtil.convert(getAxisAnnotation(ROW, row));
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return StringUtil.convert(getAxisAnnotation(COLUMN, new long[] { row, 0 }));
 	}
 
 	public final long getRowForLabel(Object object) {
-		return getPositionForLabel(ROW, object);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return getPositionForLabel(COLUMN, object)[ROW];
 	}
 
 	public final long getColumnForLabel(Object object) {
-		return getPositionForLabel(COLUMN, object);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return getPositionForLabel(ROW, object)[COLUMN];
 	}
 
-	public final long getPositionForLabel(int dimension, Object object) {
-		return annotation == null ? -1 : annotation.getPositionForLabel(dimension, object);
+	public final long[] getPositionForLabel(int dimension, Object label) {
+		if (annotation == null) {
+			long[] t = Coordinates.copyOf(getSize());
+			t[dimension] = -1;
+			return t;
+		} else {
+			return annotation.getPositionForLabel(dimension, label);
+		}
 	}
 
 	public final Object getRowObject(long row) {
-		return getAxisAnnotation(ROW, row);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return getAxisAnnotation(COLUMN, new long[] { row, 0 });
 	}
 
 	public final Object getColumnObject(long col) {
-		return getAxisAnnotation(COLUMN, col);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		return getAxisAnnotation(ROW, new long[] { 0, col });
 	}
 
 	public final void setColumnLabel(long col, String label) {
-		setAxisAnnotation(COLUMN, col, label);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		setAxisAnnotation(ROW, label, new long[] { 0, col });
 	}
 
 	public final void setRowLabel(long row, String label) {
-		setAxisAnnotation(ROW, row, label);
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
 	}
 
-	public final void setRowObject(long row, Object o) {
-		setAxisAnnotation(ROW, row, o);
+	public final void setRowObject(long row, Object label) {
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
 	}
 
-	public final void setColumnObject(long col, Object o) {
-		setAxisAnnotation(COLUMN, col, o);
+	public final void setColumnObject(long col, Object label) {
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("This function is only supported for 2D matrices");
+		}
+		setAxisAnnotation(ROW, label, new long[] { 0, col });
 	}
 
 	public final double getAbsoluteValueMean() throws MatrixException {

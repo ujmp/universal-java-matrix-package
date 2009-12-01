@@ -48,9 +48,11 @@ public abstract class AbstractDateCalculation extends AbstractCalculation<Matrix
 
 	public final DateMatrix calcNew() throws MatrixException {
 		DateMatrix result = (DateMatrix) MatrixFactory.zeros(ValueType.DATE, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDate(getDate(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -76,7 +78,6 @@ public abstract class AbstractDateCalculation extends AbstractCalculation<Matrix
 	public void setDate(Date value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.DATE;
 	}

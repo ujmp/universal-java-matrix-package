@@ -49,9 +49,11 @@ public abstract class AbstractBigDecimalCalculation extends
 	public final BigDecimalMatrix calcNew() throws MatrixException {
 		BigDecimalMatrix result = (BigDecimalMatrix) MatrixFactory.zeros(ValueType.BIGDECIMAL,
 				getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigDecimal(getBigDecimal(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -77,7 +79,6 @@ public abstract class AbstractBigDecimalCalculation extends
 	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}

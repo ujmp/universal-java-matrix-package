@@ -51,9 +51,11 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matr
 
 	public DoubleMatrix calcNew() throws MatrixException {
 		DoubleMatrix result = (DoubleMatrix) MatrixFactory.zeros(ValueType.DOUBLE, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}

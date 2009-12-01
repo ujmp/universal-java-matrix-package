@@ -317,10 +317,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setMatrixAnnotation("annotation");
 		m.setAxisAnnotation(Matrix.ROW, "row");
 		m.setAxisAnnotation(Matrix.COLUMN, "column");
-		m.setAxisAnnotation(Matrix.ROW, 0, "row0");
-		m.setAxisAnnotation(Matrix.ROW, 1, "row1");
-		m.setAxisAnnotation(Matrix.COLUMN, 0, "column0");
-		m.setAxisAnnotation(Matrix.COLUMN, 1, "column1");
+		m.setRowLabel(0, "row0");
+		m.setRowLabel(1, "row1");
+		m.setColumnLabel(0, "column0");
+		m.setColumnLabel(1, "column1");
 		Matrix m2 = m.copy();
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
@@ -339,17 +339,17 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setMatrixAnnotation("annotation");
 		m.setAxisAnnotation(Matrix.ROW, "row");
 		m.setAxisAnnotation(Matrix.COLUMN, "column");
-		m.setAxisAnnotation(Matrix.ROW, 0, "row0");
-		m.setAxisAnnotation(Matrix.ROW, 1, "row1");
-		m.setAxisAnnotation(Matrix.COLUMN, 0, "column0");
-		m.setAxisAnnotation(Matrix.COLUMN, 1, "column1");
+		m.setRowLabel(0, "row0");
+		m.setRowLabel(1, "row1");
+		m.setColumnLabel(0, "column0");
+		m.setColumnLabel(1, "column1");
 		assertEquals(getLabel(), "annotation", m.getMatrixAnnotation());
 		assertEquals(getLabel(), "row", m.getAxisAnnotation(Matrix.ROW));
 		assertEquals(getLabel(), "column", m.getAxisAnnotation(Matrix.COLUMN));
-		assertEquals(getLabel(), "row0", m.getAxisAnnotation(Matrix.ROW, 0));
-		assertEquals(getLabel(), "row1", m.getAxisAnnotation(Matrix.ROW, 1));
-		assertEquals(getLabel(), "column0", m.getAxisAnnotation(Matrix.COLUMN, 0));
-		assertEquals(getLabel(), "column1", m.getAxisAnnotation(Matrix.COLUMN, 1));
+		assertEquals(getLabel(), "row0", m.getRowLabel(0));
+		assertEquals(getLabel(), "row1", m.getRowLabel(1));
+		assertEquals(getLabel(), "column0", m.getColumnLabel(0));
+		assertEquals(getLabel(), "column1", m.getColumnLabel(1));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();

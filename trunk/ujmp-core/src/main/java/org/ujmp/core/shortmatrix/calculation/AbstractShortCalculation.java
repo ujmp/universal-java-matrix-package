@@ -50,9 +50,11 @@ public abstract class AbstractShortCalculation extends AbstractCalculation<Matri
 
 	public final ShortMatrix calcNew() throws MatrixException {
 		ShortMatrix result = (ShortMatrix) MatrixFactory.zeros(ValueType.SHORT, getSize());
-		// TODO: copy annotation
 		for (long[] c : result.allCoordinates()) {
 			result.setAsShort(getShort(c), c);
+		}
+		if (getAnnotation() != null) {
+			result.setAnnotation(getAnnotation().clone());
 		}
 		return result;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractShortCalculation extends AbstractCalculation<Matri
 	public void setShort(short value, long... coordinates) throws MatrixException {
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

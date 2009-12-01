@@ -40,12 +40,6 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 	private Matrix matrix = null;
 
 	public UJMPPluginsMatrix() {
-		setLabel("UJMP Plugins");
-		setColumnLabel(0, "Name");
-		setColumnLabel(1, "Available");
-		setColumnLabel(2, "Description");
-		setColumnLabel(3, "Dependencies");
-		setColumnLabel(4, "Status");
 		addClass("ujmp-core");
 		addClass("ujmp-gui");
 		addClass("ujmp-bpca");
@@ -80,6 +74,12 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		addClass("ujmp-sst");
 		addClass("ujmp-vecmath");
 		refresh();
+		setLabel("UJMP Plugins");
+		setColumnLabel(0, "Name");
+		setColumnLabel(1, "Available");
+		setColumnLabel(2, "Description");
+		setColumnLabel(3, "Dependencies");
+		setColumnLabel(4, "Status");
 	}
 
 	public void refresh() {

@@ -26,6 +26,8 @@ package org.ujmp.core.objectmatrix.calculation;
 import java.util.Collection;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -36,8 +38,7 @@ public class Selection extends AbstractObjectCalculation {
 	private long[][] selection = null;
 
 	public Selection(Matrix m, String selectionString) {
-		super(m);
-		selection = StringUtil.parseSelection(selectionString, m.getSize());
+		this(m, StringUtil.parseSelection(selectionString, m.getSize()));
 	}
 
 	public Selection(Matrix m, Collection<? extends Number>... selection) {
@@ -49,14 +50,35 @@ public class Selection extends AbstractObjectCalculation {
 		if (selection[COLUMN] != null) {
 			this.selection[COLUMN] = MathUtil.collectionToLong(selection[COLUMN]);
 		}
+		createAnnotation();
 	}
 
 	public Selection(Matrix m, long[]... selection) {
 		super(m);
 		this.selection = selection;
+		createAnnotation();
 	}
 
-	
+	private void createAnnotation() {
+		if (getSource().getDimensionCount() != 2) {
+			throw new MatrixException("only supported for 2d matrices");
+		}
+		Annotation a = getSource().getAnnotation();
+		if (a != null) {
+			Annotation anew = new DefaultAnnotation(getSize());
+			anew.setMatrixAnnotation(a.getMatrixAnnotation());
+			for (int r = 0; r < selection[ROW].length; r++) {
+				anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN,
+						selection[ROW][r], 0), r, 0);
+			}
+			for (int c = 0; c < selection[COLUMN].length; c++) {
+				anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0,
+						selection[COLUMN][c]), 0, c);
+			}
+			setAnnotation(anew);
+		}
+	}
+
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
@@ -72,7 +94,6 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	
 	public long[] getSize() {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return new long[] { selection[ROW].length, selection[COLUMN].length };
@@ -85,7 +106,6 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],

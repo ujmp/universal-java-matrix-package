@@ -23,12 +23,10 @@
 
 package org.ujmp.core.doublematrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface DoubleCalculation extends Calculation<Matrix, DoubleMatrix> {
+public interface DoubleCalculation extends Calculation {
 
 	public double getDouble(long... coordinates) throws MatrixException;
 

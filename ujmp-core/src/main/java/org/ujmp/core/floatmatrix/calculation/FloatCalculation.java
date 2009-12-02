@@ -23,12 +23,10 @@
 
 package org.ujmp.core.floatmatrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.FloatMatrix;
 
-public interface FloatCalculation extends Calculation<Matrix, FloatMatrix> {
+public interface FloatCalculation extends Calculation {
 
 	public float getFloat(long... coordinates) throws MatrixException;
 

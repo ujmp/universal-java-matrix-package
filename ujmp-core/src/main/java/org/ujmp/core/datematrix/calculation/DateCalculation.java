@@ -25,12 +25,10 @@ package org.ujmp.core.datematrix.calculation;
 
 import java.util.Date;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface DateCalculation extends Calculation<Matrix, DateMatrix> {
+public interface DateCalculation extends Calculation {
 
 	public Date getDate(long... coordinates) throws MatrixException;
 

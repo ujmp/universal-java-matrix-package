@@ -1291,7 +1291,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		try {
 			Class<?> c = Class.forName("org.ujmp.commonsmath.PairedTTest");
 			Constructor<?> con = c.getConstructor(Matrix.class);
-			Calculation<?, ?> calc = (Calculation<?, ?>) con.newInstance(this);
+			Calculation calc = (Calculation) con.newInstance(this);
 			return calc.calc(returnType);
 		} catch (Exception e) {
 			throw new MatrixException("could not calculate", e);

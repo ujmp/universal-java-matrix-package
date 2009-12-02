@@ -32,8 +32,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.impl.LongCalculationMatrix;
 
-public abstract class AbstractLongCalculation extends AbstractCalculation<Matrix, LongMatrix>
-		implements LongCalculation {
+public abstract class AbstractLongCalculation extends AbstractCalculation implements
+		LongCalculation {
 	private static final long serialVersionUID = -2401843008270253704L;
 
 	public AbstractLongCalculation(Matrix... sources) {

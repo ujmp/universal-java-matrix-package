@@ -30,23 +30,22 @@ import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> implements
-		Calculation<S, T> {
+public abstract class AbstractCalculation implements Calculation {
 
 	private static final long serialVersionUID = -36063772015381070L;
 
-	private S[] sources = null;
+	private Matrix[] sources = null;
 
 	private int dimension = NONE;
 
 	private Annotation annotation = null;
 
-	public AbstractCalculation(S... sources) {
+	public AbstractCalculation(Matrix... sources) {
 		this.sources = sources;
 		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
 	}
 
-	public AbstractCalculation(int dimension, S... sources) {
+	public AbstractCalculation(int dimension, Matrix... sources) {
 		this.sources = sources;
 		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
 		this.dimension = dimension;
@@ -80,15 +79,15 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 		return annotation;
 	}
 
-	public final S getSource() {
+	public final Matrix getSource() {
 		return sources[0];
 	}
 
-	public final S[] getSources() {
+	public final Matrix[] getSources() {
 		return sources;
 	}
 
-	public void setSources(S... sources) {
+	public void setSources(Matrix... sources) {
 		this.sources = sources;
 	}
 
@@ -115,9 +114,8 @@ public abstract class AbstractCalculation<S extends Matrix, T extends Matrix> im
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public T[] calcMulti() throws MatrixException {
-		return (T[]) new Object[] { calcNew() };
+	public Matrix[] calcMulti() throws MatrixException {
+		return new Matrix[] { calcNew() };
 	}
 
 	public final StorageType getStorageType() {

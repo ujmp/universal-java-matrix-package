@@ -176,72 +176,84 @@ public class TestSortrows extends TestCase {
 	public void testSortDoubleNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
+		assertEquals(ValueType.DOUBLE, m2.getValueType());
 		assertEquals(getResult(ValueType.DOUBLE), m2);
 	}
 
 	public void testSortStringNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
+		assertEquals(ValueType.STRING, m2.getValueType());
 		assertEquals(getResult(ValueType.STRING), m2);
 	}
 
 	public void testSortStringLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, false);
+		assertEquals(ValueType.STRING, m2.getValueType());
 		assertEquals(getResult(ValueType.STRING), m2);
 	}
 
 	public void testSortBigDecimalNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
+		assertEquals(ValueType.BIGDECIMAL, m2.getValueType());
 		assertEquals(getResult(ValueType.BIGDECIMAL), m2);
 	}
 
 	public void testSortDoubleLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, false);
+		assertEquals(ValueType.DOUBLE, m2.getValueType());
 		assertEquals(getResult(ValueType.DOUBLE), m2);
 	}
 
 	public void testSortBigDecimalLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, false);
+		assertEquals(ValueType.BIGDECIMAL, m2.getValueType());
 		assertEquals(getResult(ValueType.BIGDECIMAL), m2);
 	}
 
 	public void testSortDoubleReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
+		assertEquals(ValueType.DOUBLE, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.DOUBLE), m2);
 	}
 
 	public void testSortStringReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
+		assertEquals(ValueType.STRING, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.STRING), m2);
 	}
 
 	public void testSortStringReverseLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, true);
+		assertEquals(ValueType.STRING, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.STRING), m2);
 	}
 
 	public void testSortBigDecimalReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
+		assertEquals(ValueType.BIGDECIMAL, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.BIGDECIMAL), m2);
 	}
 
 	public void testSortDoubleReverseLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, true);
+		assertEquals(ValueType.DOUBLE, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.DOUBLE), m2);
 	}
 
 	public void testSortBigDecimalReverseLink() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.LINK, 2, true);
+		assertEquals(ValueType.BIGDECIMAL, m2.getValueType());
 		assertEquals(getResultReverse(ValueType.BIGDECIMAL), m2);
 	}
 }

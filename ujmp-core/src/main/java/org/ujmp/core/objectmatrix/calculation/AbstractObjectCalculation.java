@@ -32,8 +32,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix;
 
-public abstract class AbstractObjectCalculation extends AbstractCalculation<Matrix, ObjectMatrix>
-		implements ObjectCalculation {
+public abstract class AbstractObjectCalculation extends AbstractCalculation implements
+		ObjectCalculation {
 	private static final long serialVersionUID = 7767220107834181824L;
 
 	public AbstractObjectCalculation(Matrix... sources) {
@@ -48,8 +48,10 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 		return new ObjectCalculationMatrix(this);
 	}
 
-	public final ObjectMatrix calcNew() throws MatrixException {
-		ObjectMatrix result = (ObjectMatrix) MatrixFactory.zeros(ValueType.OBJECT, getSize());
+	public final Matrix calcNew() throws MatrixException {
+		// Matrix result = MatrixFactory.zeros(getSource().getValueType(),
+		// getSize());
+		Matrix result = MatrixFactory.zeros(getSource().getValueType(), getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsObject(getObject(c), c);
 		}
@@ -77,7 +79,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation<Matr
 	}
 
 	public final ValueType getValueType() {
-		return ValueType.OBJECT;
+		return getSource().getValueType();
 	}
 
 }

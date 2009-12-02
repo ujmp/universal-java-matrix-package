@@ -23,12 +23,10 @@
 
 package org.ujmp.core.intmatrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.intmatrix.IntMatrix;
 
-public interface IntCalculation extends Calculation<Matrix, IntMatrix> {
+public interface IntCalculation extends Calculation {
 
 	public int getInt(long... coordinates) throws MatrixException;
 

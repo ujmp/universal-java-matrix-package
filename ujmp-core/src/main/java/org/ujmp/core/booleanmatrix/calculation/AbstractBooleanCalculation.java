@@ -32,8 +32,8 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractBooleanCalculation extends AbstractCalculation<Matrix, BooleanMatrix>
-		implements BooleanCalculation {
+public abstract class AbstractBooleanCalculation extends AbstractCalculation implements
+		BooleanCalculation {
 	private static final long serialVersionUID = 1357508932960938265L;
 
 	public AbstractBooleanCalculation(Matrix... sources) {

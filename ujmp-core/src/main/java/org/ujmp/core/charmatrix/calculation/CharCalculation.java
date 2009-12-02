@@ -23,12 +23,10 @@
 
 package org.ujmp.core.charmatrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface CharCalculation extends Calculation<Matrix, CharMatrix> {
+public interface CharCalculation extends Calculation {
 
 	public char getChar(long... coordinates) throws MatrixException;
 

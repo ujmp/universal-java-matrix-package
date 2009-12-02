@@ -32,8 +32,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.stringmatrix.impl.StringCalculationMatrix;
 
-public abstract class AbstractStringCalculation extends AbstractCalculation<Matrix, StringMatrix>
-		implements StringCalculation {
+public abstract class AbstractStringCalculation extends AbstractCalculation implements
+		StringCalculation {
 	private static final long serialVersionUID = 6467659591327635319L;
 
 	public AbstractStringCalculation(Matrix... sources) {

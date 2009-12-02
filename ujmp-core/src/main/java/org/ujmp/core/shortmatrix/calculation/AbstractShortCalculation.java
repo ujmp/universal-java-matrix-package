@@ -32,8 +32,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.impl.ShortCalculationMatrix;
 
-public abstract class AbstractShortCalculation extends AbstractCalculation<Matrix, ShortMatrix>
-		implements ShortCalculation {
+public abstract class AbstractShortCalculation extends AbstractCalculation implements
+		ShortCalculation {
 	private static final long serialVersionUID = 7200876039893919030L;
 
 	public AbstractShortCalculation(Matrix... sources) {

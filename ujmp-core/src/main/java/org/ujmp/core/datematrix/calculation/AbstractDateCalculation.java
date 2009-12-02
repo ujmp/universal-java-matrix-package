@@ -34,8 +34,8 @@ import org.ujmp.core.datematrix.impl.DateCalculationMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractDateCalculation extends AbstractCalculation<Matrix, DateMatrix>
-		implements DateCalculation {
+public abstract class AbstractDateCalculation extends AbstractCalculation implements
+		DateCalculation {
 	private static final long serialVersionUID = -7928696345352218988L;
 
 	public AbstractDateCalculation(Matrix... sources) {

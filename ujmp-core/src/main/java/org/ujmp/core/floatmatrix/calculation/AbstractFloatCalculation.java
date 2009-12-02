@@ -32,8 +32,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.impl.FloatCalculationMatrix;
 
-public abstract class AbstractFloatCalculation extends AbstractCalculation<Matrix, FloatMatrix>
-		implements FloatCalculation {
+public abstract class AbstractFloatCalculation extends AbstractCalculation implements
+		FloatCalculation {
 	private static final long serialVersionUID = 7992575645594878948L;
 
 	public AbstractFloatCalculation(Matrix... sources) {

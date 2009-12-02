@@ -32,8 +32,8 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractByteCalculation extends AbstractCalculation<Matrix, ByteMatrix>
-		implements ByteCalculation {
+public abstract class AbstractByteCalculation extends AbstractCalculation implements
+		ByteCalculation {
 	private static final long serialVersionUID = -6732603786169729218L;
 
 	public AbstractByteCalculation(Matrix... sources) {

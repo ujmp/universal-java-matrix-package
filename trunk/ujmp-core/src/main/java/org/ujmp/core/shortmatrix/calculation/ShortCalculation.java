@@ -23,12 +23,10 @@
 
 package org.ujmp.core.shortmatrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.shortmatrix.ShortMatrix;
 
-public interface ShortCalculation extends Calculation<Matrix, ShortMatrix> {
+public interface ShortCalculation extends Calculation {
 
 	public short getShort(long... coordinates) throws MatrixException;
 

@@ -25,12 +25,10 @@ package org.ujmp.core.bigintegermatrix.calculation;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface BigIntegerCalculation extends Calculation<Matrix, BigIntegerMatrix> {
+public interface BigIntegerCalculation extends Calculation {
 
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException;
 

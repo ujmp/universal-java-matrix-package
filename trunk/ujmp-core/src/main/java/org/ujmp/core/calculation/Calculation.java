@@ -32,14 +32,11 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
- * Interface for all matrix-calculations.
+ * Interface for matrix calculations.
  * 
- * 
- * 
- * @author A. Naegele
- * @version $Revision$
+ * @author arndt
  */
-public interface Calculation<S extends Matrix, T extends Matrix> extends Serializable {
+public interface Calculation extends Serializable {
 
 	public static final int ALL = Matrix.ALL;
 
@@ -55,11 +52,11 @@ public interface Calculation<S extends Matrix, T extends Matrix> extends Seriali
 
 	public Matrix calc(Ret returnType) throws MatrixException;
 
-	public T calcNew() throws MatrixException;
+	public Matrix calcNew() throws MatrixException;
 
-	public T calcLink() throws MatrixException;
+	public Matrix calcLink() throws MatrixException;
 
-	public S calcOrig() throws MatrixException;
+	public Matrix calcOrig() throws MatrixException;
 
 	public boolean isSparse();
 
@@ -75,11 +72,11 @@ public interface Calculation<S extends Matrix, T extends Matrix> extends Seriali
 
 	public boolean contains(long... coordinates);
 
-	public S getSource();
+	public Matrix getSource();
 
-	public S[] getSources();
+	public Matrix[] getSources();
 
-	public void setSources(S... sources);
+	public void setSources(Matrix... sources);
 
 	public int getDimension();
 
@@ -89,7 +86,7 @@ public interface Calculation<S extends Matrix, T extends Matrix> extends Seriali
 
 	public ValueType getValueType();
 
-	public T[] calcMulti();
+	public Matrix[] calcMulti();
 
 	public StorageType getStorageType();
 

@@ -32,8 +32,8 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractCharCalculation extends AbstractCalculation<Matrix, CharMatrix>
-		implements CharCalculation {
+public abstract class AbstractCharCalculation extends AbstractCalculation implements
+		CharCalculation {
 	private static final long serialVersionUID = -3251131937680203514L;
 
 	public AbstractCharCalculation(Matrix... sources) {

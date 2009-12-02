@@ -32,8 +32,8 @@ import org.ujmp.core.doublematrix.impl.DoubleCalculationMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractDoubleCalculation extends AbstractCalculation<Matrix, DoubleMatrix>
-		implements DoubleCalculation {
+public abstract class AbstractDoubleCalculation extends AbstractCalculation implements
+		DoubleCalculation {
 
 	private static final long serialVersionUID = -7509806754731040687L;
 

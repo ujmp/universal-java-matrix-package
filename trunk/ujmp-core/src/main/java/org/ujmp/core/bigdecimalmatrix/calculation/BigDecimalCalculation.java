@@ -25,12 +25,10 @@ package org.ujmp.core.bigdecimalmatrix.calculation;
 
 import java.math.BigDecimal;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface BigDecimalCalculation extends Calculation<Matrix, BigDecimalMatrix> {
+public interface BigDecimalCalculation extends Calculation {
 
 	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException;
 

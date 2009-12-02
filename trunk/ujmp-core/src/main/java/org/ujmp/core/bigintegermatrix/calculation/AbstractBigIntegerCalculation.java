@@ -34,8 +34,8 @@ import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractBigIntegerCalculation extends
-		AbstractCalculation<Matrix, BigIntegerMatrix> implements BigIntegerCalculation {
+public abstract class AbstractBigIntegerCalculation extends AbstractCalculation implements
+		BigIntegerCalculation {
 	private static final long serialVersionUID = 6820193205334660103L;
 
 	public AbstractBigIntegerCalculation(Matrix... sources) {

@@ -23,12 +23,10 @@
 
 package org.ujmp.core.bytematrix.calculation;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface ByteCalculation extends Calculation<Matrix, ByteMatrix> {
+public interface ByteCalculation extends Calculation {
 
 	public byte getByte(long... coordinates) throws MatrixException;
 

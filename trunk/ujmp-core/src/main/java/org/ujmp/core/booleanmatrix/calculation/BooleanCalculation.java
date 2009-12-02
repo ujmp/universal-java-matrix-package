@@ -23,12 +23,10 @@
 
 package org.ujmp.core.booleanmatrix.calculation;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface BooleanCalculation extends Calculation<Matrix, BooleanMatrix> {
+public interface BooleanCalculation extends Calculation {
 
 	public boolean getBoolean(long... coordinates) throws MatrixException;
 

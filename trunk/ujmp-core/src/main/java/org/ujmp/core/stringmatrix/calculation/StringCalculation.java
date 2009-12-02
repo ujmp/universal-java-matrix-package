@@ -23,12 +23,10 @@
 
 package org.ujmp.core.stringmatrix.calculation;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.stringmatrix.StringMatrix;
 
-public interface StringCalculation extends Calculation<Matrix, StringMatrix> {
+public interface StringCalculation extends Calculation {
 
 	public String getString(long... coordinates) throws MatrixException;
 

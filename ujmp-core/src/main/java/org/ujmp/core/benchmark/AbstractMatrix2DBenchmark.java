@@ -428,7 +428,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		} catch (Exception e) {
 			System.out.println("there was some error with this library");
 			System.out.println("it cannot be included in the benchmark");
-			System.out.println();
+			e.printStackTrace();
 		}
 
 		return result;
@@ -616,7 +616,9 @@ public abstract class AbstractMatrix2DBenchmark {
 			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
 		}
 
-		Matrix r = result.includeAnnotation(Ret.NEW, Matrix.ROW);
+		// TODO: temp fix
+		// Matrix r = result.includeAnnotation(Ret.NEW, Matrix.ROW);
+		Matrix r = result;
 		r.exportToFile(FileFormat.CSV, new File(getPrefix() + "-transposeNew.csv"));
 
 		Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);

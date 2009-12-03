@@ -67,13 +67,28 @@ public class Selection extends AbstractObjectCalculation {
 		if (a != null) {
 			Annotation anew = new DefaultAnnotation(getSize());
 			anew.setMatrixAnnotation(a.getMatrixAnnotation());
-			for (int r = 0; r < selection[ROW].length; r++) {
-				anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN,
-						selection[ROW][r], 0), r, 0);
+			if (selection[ROW] == null) {
+				long rowCount = getSource().getRowCount();
+				for (int r = 0; r < rowCount; r++) {
+					anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN, r, 0),
+							r, 0);
+				}
+			} else {
+				for (int r = 0; r < selection[ROW].length; r++) {
+					anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN,
+							selection[ROW][r], 0), r, 0);
+				}
 			}
-			for (int c = 0; c < selection[COLUMN].length; c++) {
-				anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0,
-						selection[COLUMN][c]), 0, c);
+			if (selection[COLUMN] == null) {
+				long colCount = getSource().getColumnCount();
+				for (int c = 0; c < colCount; c++) {
+					anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0, c), 0, c);
+				}
+			} else {
+				for (int c = 0; c < selection[COLUMN].length; c++) {
+					anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0,
+							selection[COLUMN][c]), 0, c);
+				}
 			}
 			setAnnotation(anew);
 		}

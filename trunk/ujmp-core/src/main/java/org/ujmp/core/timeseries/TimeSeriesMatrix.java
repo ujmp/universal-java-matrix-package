@@ -51,6 +51,8 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	private final SortedListSet<Long> timestampsListSet = new SortedListSet<Long>();
 
+	private long[] size = new long[2];
+
 	public void addEvent(long timestamp, Matrix value) {
 		if (value.getRowCount() != 1) {
 			throw new MatrixException("matrix cannot have more than one row");
@@ -118,7 +120,9 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public long[] getSize() {
-		return new long[] { getEventCount(), getSeriesCount() + 1 };
+		size[ROW] = getEventCount();
+		size[COLUMN] = getSeriesCount() + 1;
+		return size;
 	}
 
 	public long getRowCount() {

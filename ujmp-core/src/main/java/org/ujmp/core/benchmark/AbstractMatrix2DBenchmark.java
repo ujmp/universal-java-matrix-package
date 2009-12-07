@@ -23,6 +23,7 @@
 package org.ujmp.core.benchmark;
 
 import java.io.File;
+import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
@@ -93,7 +95,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public static final long[] SIZE100000X100000 = new long[] { 100000, 100000 };
 
-	private final String transposeSizes = "10x10,50x50,100x100,500x500,1000x1000,2000x2000,5000x5000";
+	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
 	private final List<long[]> copySizes = Arrays.asList(new long[][] { SIZE5000X5000 });
 
@@ -117,8 +119,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private final List<long[]> luSizes = Arrays.asList(new long[][] { SIZE1000X1000 });
 
-	private final List<long[][]> mtimesSizes = Arrays.asList(new long[][][] { { SIZE500X500,
-			SIZE500X500 } });
+	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
 	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
@@ -139,6 +140,10 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public void setBurnInRuns(int runs) {
 		System.setProperty("burnInRuns", "" + runs);
+	}
+
+	public String getMatrixLabel() {
+		return createMatrix(1, 1).getClass().getSimpleName();
 	}
 
 	public int getBurnInRuns() {
@@ -277,6 +282,10 @@ public abstract class AbstractMatrix2DBenchmark {
 		return transposeSizes;
 	}
 
+	public String getMtimesSizes() {
+		return mtimesSizes;
+	}
+
 	public List<long[]> getCopySizes() {
 		return copySizes;
 	}
@@ -299,10 +308,6 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public List<long[]> getInvSizes() {
 		return invSizes;
-	}
-
-	public List<long[][]> getMtimesSizes() {
-		return mtimesSizes;
 	}
 
 	public List<Matrix> runAllTests() throws Exception {
@@ -583,11 +588,11 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public Matrix[] runBenchmarkTransposeNew() throws Exception {
 		String[] sizes = getTransposeSizes().split(",");
-		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), sizes.length);
+		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix() + 1, sizes.length);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
-			result.setColumnLabel(s, Coordinates.toString('x', size));
+			result.setAsString(Coordinates.toString('x', size), 0, s);
 			System.out.print("transpose new matrix [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
@@ -598,37 +603,35 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			for (int i = 0; i < getRunsPerMatrix(); i++) {
 				double t = benchmarkTransposeNew(size);
-				result.setAsDouble(t, i, s);
+				result.setAsDouble(t, i + 1, s);
 				System.out.print(".");
 				System.out.flush();
 			}
 
-			Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
-			mean.setLabel("transpose new matrix (mean)");
-			for (int c = 0; c < result.getColumnCount(); c++) {
-				mean.setColumnLabel(c, result.getColumnLabel(c));
-			}
-			Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
-			std.setLabel("transpose new matrix (std)");
-			for (int c = 0; c < result.getColumnCount(); c++) {
-				std.setColumnLabel(c, result.getColumnLabel(c));
-			}
+			Matrix mean = result.deleteRows(Ret.NEW, 0).mean(Ret.NEW, Matrix.ROW, true);
+			Matrix std = result.deleteRows(Ret.NEW, 0).std(Ret.NEW, Matrix.ROW, true);
 			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
 		}
 
-		// TODO: temp fix
-		// Matrix r = result.includeAnnotation(Ret.NEW, Matrix.ROW);
-		Matrix r = result;
-		r.exportToFile(FileFormat.CSV, new File(getPrefix() + "-transposeNew.csv"));
+		result.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel()
+				+ "-transposeNew.csv"));
 
 		Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
 		Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
 		return new Matrix[] { mean, std };
 	}
 
-	public String getPrefix() throws UnknownHostException {
-		return "results/" + System.getProperty("os.name") + "-Java"
-				+ System.getProperty("java.version");
+	private String getResultDir() throws UnknownHostException {
+		return "results/" + getHostName() + "/" + System.getProperty("os.name") + "/Java"
+				+ System.getProperty("java.version") + "/";
+	}
+
+	private String getHostName() {
+		try {
+			return Inet4Address.getLocalHost().getHostName();
+		} catch (Exception e) {
+			return "localhost";
+		}
 	}
 
 	public Matrix[] runBenchmarkInv() {
@@ -841,42 +844,39 @@ public abstract class AbstractMatrix2DBenchmark {
 		return new Matrix[] { mean, std };
 	}
 
-	public Matrix[] runBenchmarkMtimesNew() {
-		Matrix result = MatrixFactory.zeros(getRunsPerMatrix(), mtimesSizes.size());
+	public Matrix[] runBenchmarkMtimesNew() throws Exception {
+		String[] sizes = getMtimesSizes().split(",");
+		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix() + 1, sizes.length);
 
-		for (int s = 0; s < mtimesSizes.size(); s++) {
-			long[][] sizes = mtimesSizes.get(s);
-			long[] size0 = sizes[0];
-			long[] size1 = sizes[1];
-			System.out.print("mtimes new matrix [" + Coordinates.toString(size0) + "x"
-					+ Coordinates.toString(size1) + "]: ");
+		for (int s = 0; s < sizes.length; s++) {
+			long[] size = Coordinates.parseString(sizes[s]);
+			result.setAsString(Coordinates.toString('x', size), 0, s);
+			System.out.print("mtimes new matrix [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkMtimesNew(size0, size1);
+				benchmarkMtimesNew(size, size);
 				System.out.print("#");
 				System.out.flush();
 			}
 			for (int i = 0; i < getRunsPerMatrix(); i++) {
-				double t = benchmarkMtimesNew(size0, size1);
-				result.setLabel(Coordinates.toString(size0) + "|" + Coordinates.toString(size1));
-				result.setAsDouble(t, i, s);
+				double t = benchmarkMtimesNew(size, size);
+				result.setLabel(Coordinates.toString(size) + "|" + Coordinates.toString(size));
+				result.setAsDouble(t, i + 1, s);
 				System.out.print(".");
 				System.out.flush();
 			}
+
+			Matrix mean = result.deleteRows(Ret.NEW, 0).mean(Ret.NEW, Matrix.ROW, true);
+			Matrix std = result.deleteRows(Ret.NEW, 0).std(Ret.NEW, Matrix.ROW, true);
+			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
 		}
 
+		result.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel()
+				+ "-mtimesNew.csv"));
+
 		Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
-		mean.setLabel("mtimes new matrix (mean)");
-		for (int c = 0; c < result.getColumnCount(); c++) {
-			mean.setColumnLabel(c, result.getColumnLabel(c));
-		}
 		Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
-		std.setLabel("mtimes new matrix (std)");
-		for (int c = 0; c < result.getColumnCount(); c++) {
-			std.setColumnLabel(c, result.getColumnLabel(c));
-		}
-		System.out.println(" " + mean.getAsInt(0, 0) + "+-" + std.getAsInt(0, 0) + "ms");
 		return new Matrix[] { mean, std };
 	}
 

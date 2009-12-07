@@ -159,16 +159,23 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public final Matrix transpose() {
 		final double[] result = new double[cols * rows];
-		new PFor(0, rows - 1) {
+		if (values.length > 10000) {
+			new PFor(0, rows - 1) {
 
-			@Override
-			public void step(int i) {
-				for (int r = cols; --r != -1;) {
-					result[i * cols + r] = values[r * rows + i];
+				@Override
+				public void step(int i) {
+					for (int r = 0; r < cols; r++) {
+						result[i * cols + r] = values[r * rows + i];
+					}
+				}
+			};
+		} else {
+			for (int c = 0; c < rows; c++) {
+				for (int r = 0; r < cols; r++) {
+					result[c * cols + r] = values[r * rows + c];
 				}
 			}
-		};
-
+		}
 		return new DefaultDenseDoubleMatrix2D(result, cols, rows);
 	}
 

@@ -24,6 +24,8 @@
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -37,9 +39,19 @@ public class Std extends AbstractDoubleCalculation {
 	public Std(int dimension, boolean ignoreNaN, Matrix matrix) {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
+		Annotation aold = matrix.getAnnotation();
+		if (aold != null) {
+			Annotation a = new DefaultAnnotation(getSize());
+			a.setMatrixAnnotation(aold.getMatrixAnnotation());
+			if (dimension == ROW) {
+				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
+			} else if (dimension == COLUMN) {
+				a.setDimensionMatrix(COLUMN, aold.getDimensionMatrix(COLUMN));
+			}
+			setAnnotation(a);
+		}
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (variance == null) {
 			variance = new Var(getDimension(), ignoreNaN, getSource()).calcNew();
@@ -47,7 +59,6 @@ public class Std extends AbstractDoubleCalculation {
 		return Math.sqrt(variance.getAsDouble(coordinates));
 	}
 
-	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

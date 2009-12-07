@@ -39,30 +39,28 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]--;
-		setAnnotation(new DefaultAnnotation(getSize()));
+		setAnnotation(new DefaultAnnotation(size));
 		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
 
-		if (dim == Matrix.ROW) {
+		if (dim == ROW) {
 			Annotation a = m.getAnnotation();
 			if (a != null) {
-				Matrix ai = a.getDimensionMatrix(Matrix.COLUMN);
+				Matrix ai = a.getDimensionMatrix(COLUMN);
 				ai = ai.deleteRows(Ret.NEW, 0);
-				getAnnotation().setDimensionMatrix(Matrix.COLUMN, ai);
+				getAnnotation().setDimensionMatrix(COLUMN, ai);
 			}
-		} else if (dim == Matrix.COLUMN) {
+			getAnnotation().setDimensionMatrix(ROW, m.selectRows(Ret.NEW, 0));
+		} else if (dim == COLUMN) {
 			Annotation a = m.getAnnotation();
 			if (a != null) {
-				Matrix ai = a.getDimensionMatrix(Matrix.ROW);
-				System.out.println(ai);
-				ai = ai.deleteColumns(Ret.NEW, 0);
-				getAnnotation().setDimensionMatrix(Matrix.ROW, ai);
-				System.out.println(getAnnotation());
+				Matrix ai = a.getDimensionMatrix(ROW);
+				ai = ai.selectColumns(Ret.NEW, 0);
+				getAnnotation().setDimensionMatrix(ROW, ai);
 			}
+			getAnnotation().setDimensionMatrix(COLUMN, m.selectColumns(Ret.NEW, 0));
 		} else {
 			throw new MatrixException("only supported for 2D matrices");
 		}
-
-		throw new MatrixException("this has to be fixed");
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
@@ -83,7 +81,7 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		m.setAsDouble(Double.NaN, 2, 2);
 		m.setAsDouble(Double.NEGATIVE_INFINITY, 3, 2);
 		System.out.println(m);
-		System.out.println(m.extractAnnotation(Ret.NEW, Matrix.COLUMN));
+		System.out.println(m.extractAnnotation(Ret.NEW, Matrix.ROW));
 	}
 
 }

@@ -182,7 +182,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix concat(int dimension, Collection<Matrix> matrices)
 			throws MatrixException {
-		return new Concatenation(dimension, matrices).calc(Ret.LINK);
+		return new Concatenation(dimension, matrices).calc(Ret.NEW);
 	}
 
 	public static final Matrix importFromArray(boolean[]... values) {

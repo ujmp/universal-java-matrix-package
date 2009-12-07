@@ -38,22 +38,18 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 	public IncludeAnnotation(Matrix m, int dim) {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
+		size[dim]++;
 		setAnnotation(new DefaultAnnotation(getSize()));
 		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
-
-		size[dim]++;
-
-		throw new MatrixException("this has to be fixed");
-
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
 		coordinates = Coordinates.copyOf(coordinates);
 		if (coordinates[getDimension()] == 0) {
 			if (getDimension() == ROW) {
-				return getSource().getAxisAnnotation(COLUMN, coordinates[COLUMN]);
+				return getSource().getAxisAnnotation(ROW, coordinates);
 			} else if (getDimension() == COLUMN) {
-				return getSource().getAxisAnnotation(ROW, coordinates[ROW]);
+				return getSource().getAxisAnnotation(COLUMN, coordinates);
 			} else {
 				throw new MatrixException("only possible for Matrix.ROW and Matrix.COLUMN");
 			}

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: org.ujmp.gui.UJMP
+Main-Class: org.ujmp.complete.UJMP
 Bundle-ManifestVersion: 2
 Bundle-Name: ujmp-complete
 Bundle-SymbolicName: ujmp-complete

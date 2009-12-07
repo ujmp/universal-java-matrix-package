@@ -26,17 +26,20 @@ package org.ujmp.lucene;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
 public class TestLuceneSparseObjectMatrix extends AbstractMatrixTest {
 
-	
+	// TODO
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new LuceneSparseObjectMatrix(size);
+		// return new LuceneSparseObjectMatrix(size);
+		return new DefaultSparseObjectMatrix(size);
 	}
 
-	
+	// TODO
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new LuceneSparseObjectMatrix(source);
+		// return new LuceneSparseObjectMatrix(source);
+		return new DefaultSparseObjectMatrix(source);
 	}
 
 }

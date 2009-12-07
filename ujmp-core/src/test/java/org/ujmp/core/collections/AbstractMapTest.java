@@ -50,6 +50,7 @@ public abstract class AbstractMapTest extends TestCase {
 		}
 	}
 
+	// TODO
 	public void testClear() throws Exception {
 		Map<String, String> m = createMap();
 		assertTrue(getLabel(), m.isEmpty());
@@ -65,6 +66,7 @@ public abstract class AbstractMapTest extends TestCase {
 		assertTrue(getLabel(), m.isEmpty());
 	}
 
+	// TODO
 	public void testContainsKey() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsKey("a"));
@@ -83,6 +85,7 @@ public abstract class AbstractMapTest extends TestCase {
 		assertFalse(getLabel(), m.containsKey("b"));
 	}
 
+	// TODO
 	public void testContainsValue() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsValue("test1"));
@@ -101,6 +104,7 @@ public abstract class AbstractMapTest extends TestCase {
 		assertFalse(getLabel(), m.containsValue("test2"));
 	}
 
+	// TODO
 	@SuppressWarnings("unchecked")
 	public void testSerialize() throws Exception {
 		Map<String, String> m = createMap();

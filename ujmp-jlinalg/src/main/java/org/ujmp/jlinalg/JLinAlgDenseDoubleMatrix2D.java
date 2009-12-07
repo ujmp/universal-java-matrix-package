@@ -33,14 +33,14 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class JLinalgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
+public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<org.jlinalg.Matrix<DoubleWrapper>> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private transient org.jlinalg.Matrix<DoubleWrapper> matrix = null;
 
 	// matrix must be filled with zeros
-	public JLinalgDenseDoubleMatrix2D(long... size) {
+	public JLinAlgDenseDoubleMatrix2D(long... size) {
 		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>((int) size[ROW],
 				(int) size[COLUMN], DoubleWrapper.FACTORY);
 		for (long[] c : availableCoordinates()) {
@@ -48,11 +48,11 @@ public class JLinalgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public JLinalgDenseDoubleMatrix2D(org.jlinalg.Matrix<DoubleWrapper> m) {
+	public JLinAlgDenseDoubleMatrix2D(org.jlinalg.Matrix<DoubleWrapper> m) {
 		this.matrix = m;
 	}
 
-	public JLinalgDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JLinAlgDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
@@ -90,35 +90,35 @@ public class JLinalgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix transpose() {
-		return new JLinalgDenseDoubleMatrix2D(matrix.transpose());
+		return new JLinAlgDenseDoubleMatrix2D(matrix.transpose());
 	}
 
 	public Matrix inv() {
-		return new JLinalgDenseDoubleMatrix2D(matrix.inverse());
+		return new JLinAlgDenseDoubleMatrix2D(matrix.inverse());
 	}
 
 	public Matrix plus(double value) {
-		return new JLinalgDenseDoubleMatrix2D(matrix.add(new DoubleWrapper(
+		return new JLinAlgDenseDoubleMatrix2D(matrix.add(new DoubleWrapper(
 				value)));
 	}
 
 	public Matrix times(double value) {
-		return new JLinalgDenseDoubleMatrix2D(matrix
+		return new JLinAlgDenseDoubleMatrix2D(matrix
 				.multiply(new DoubleWrapper(value)));
 	}
 
 	public Matrix mtimes(Matrix m) {
-		if (m instanceof JLinalgDenseDoubleMatrix2D) {
-			org.jlinalg.Matrix<DoubleWrapper> b = ((JLinalgDenseDoubleMatrix2D) m)
+		if (m instanceof JLinAlgDenseDoubleMatrix2D) {
+			org.jlinalg.Matrix<DoubleWrapper> b = ((JLinAlgDenseDoubleMatrix2D) m)
 					.getWrappedObject();
-			return new JLinalgDenseDoubleMatrix2D(matrix.multiply(b));
+			return new JLinAlgDenseDoubleMatrix2D(matrix.multiply(b));
 		} else {
 			return super.mtimes(m);
 		}
 	}
 
 	public Matrix copy() {
-		Matrix m = new JLinalgDenseDoubleMatrix2D(matrix.copy());
+		Matrix m = new JLinAlgDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
 		}

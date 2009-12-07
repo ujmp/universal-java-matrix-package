@@ -27,13 +27,13 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class JLinalgDenseDoubleMatrix2DFactory extends
+public class JLinAlgDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -2472796666760629969L;
 
 	public DenseDoubleMatrix2D dense(long rows, long columns)
 			throws MatrixException {
-		return new JLinalgDenseDoubleMatrix2D(rows, columns);
+		return new JLinAlgDenseDoubleMatrix2D(rows, columns);
 	}
 
 }

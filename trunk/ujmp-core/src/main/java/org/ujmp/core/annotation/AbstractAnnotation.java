@@ -56,6 +56,7 @@ public abstract class AbstractAnnotation implements Annotation {
 	public final String toString() {
 		StringBuilder s = new StringBuilder();
 		String EOL = System.getProperty("line.separator");
+		s.append("Label: " + getMatrixAnnotation() + EOL);
 		for (int i = 0; i < getDimensionCount(); i++) {
 			s.append("Dimension " + i + ":" + EOL);
 			s.append(getDimensionMatrix(i));

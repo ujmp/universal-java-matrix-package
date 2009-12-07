@@ -91,7 +91,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 		}
 	}
 
-	public Matrix calcDoubleMatrix2D(boolean ignoreNaN, DoubleMatrix2D m1, DoubleMatrix2D m2) {
+	public Matrix calcDoubleMatrix2D(final boolean ignoreNaN, final DoubleMatrix2D m1,
+			final DoubleMatrix2D m2) {
 		if (m1 instanceof HasDoubleArray2D && m2 instanceof HasDoubleArray2D) {
 			return calcDoubleArray2D(((HasDoubleArray2D) m1).getDoubleArray2D(),
 					((HasDoubleArray2D) m2).getDoubleArray2D());
@@ -111,32 +112,71 @@ public class Mtimes extends AbstractDoubleCalculation {
 			}
 
 			final double[][] ret = new double[rowCount][retColumnCount];
-			final double[] columns = new double[columnCount];
 
 			if (ignoreNaN) {
-				for (int c = retColumnCount; --c != -1;) {
-					for (int k = columnCount; --k != -1;) {
-						columns[k] = MathUtil.ignoreNaN(m2.getDouble(k, c));
-					}
-					for (int r = rowCount; --r != -1;) {
-						double sum = 0;
-						for (int k = columnCount; --k != -1;) {
-							sum += MathUtil.ignoreNaN(m1.getDouble(r, k)) * columns[k];
+				if (rowCount * retColumnCount > 10000) {
+					new PFor(0, retColumnCount - 1) {
+						@Override
+						public void step(int i) {
+							final double[] columns = new double[columnCount];
+							for (int k = columnCount; --k != -1;) {
+								columns[k] = MathUtil.ignoreNaN(m2.getDouble(k, i));
+							}
+							for (int r = rowCount; --r != -1;) {
+								double sum = 0;
+								for (int k = columnCount; --k != -1;) {
+									sum += MathUtil.ignoreNaN(m1.getDouble(r, k)) * columns[k];
+								}
+								ret[r][i] = sum;
+							}
 						}
-						ret[r][c] = sum;
+					};
+				} else {
+					final double[] columns = new double[columnCount];
+					for (int c = retColumnCount; --c != -1;) {
+						for (int k = columnCount; --k != -1;) {
+							columns[k] = MathUtil.ignoreNaN(m2.getDouble(k, c));
+						}
+						for (int r = rowCount; --r != -1;) {
+							double sum = 0;
+							for (int k = columnCount; --k != -1;) {
+								sum += MathUtil.ignoreNaN(m1.getDouble(r, k)) * columns[k];
+							}
+							ret[r][c] = sum;
+						}
 					}
 				}
 			} else {
-				for (int c = retColumnCount; --c != -1;) {
-					for (int k = columnCount; --k != -1;) {
-						columns[k] = m2.getDouble(k, c);
-					}
-					for (int r = rowCount; --r != -1;) {
-						double sum = 0;
-						for (int k = columnCount; --k != -1;) {
-							sum += m1.getDouble(r, k) * columns[k];
+				if (rowCount * retColumnCount > 10000) {
+					new PFor(0, retColumnCount - 1) {
+						@Override
+						public void step(int i) {
+							final double[] columns = new double[columnCount];
+							for (int k = columnCount; --k != -1;) {
+								columns[k] = m2.getDouble(k, i);
+							}
+							for (int r = rowCount; --r != -1;) {
+								double sum = 0;
+								for (int k = columnCount; --k != -1;) {
+									sum += m1.getDouble(r, k) * columns[k];
+								}
+								ret[r][i] = sum;
+							}
 						}
-						ret[r][c] = sum;
+					};
+				} else {
+					final double[] columns = new double[columnCount];
+					for (int c = retColumnCount; --c != -1;) {
+						for (int k = columnCount; --k != -1;) {
+							columns[k] = m2.getDouble(k, c);
+						}
+						for (int r = rowCount; --r != -1;) {
+							double sum = 0;
+							for (int k = columnCount; --k != -1;) {
+								sum += m1.getDouble(r, k) * columns[k];
+							}
+							ret[r][c] = sum;
+						}
 					}
 				}
 			}
@@ -156,7 +196,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return gemmByteArray(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount, m2ColumnCount);
 	}
 
-	public DenseDoubleMatrix2D calcDoubleArray2D(double[][] m1, double[][] m2) {
+	public DenseDoubleMatrix2D calcDoubleArray2D(final double[][] m1, final double[][] m2) {
 		final int rowCount = m1.length;
 		final int columnCount = m1[0].length;
 		final int retColumnCount = m2[0].length;
@@ -166,18 +206,39 @@ public class Mtimes extends AbstractDoubleCalculation {
 		}
 
 		final double[][] ret = new double[rowCount][retColumnCount];
-		final double[] columns = new double[columnCount];
-		for (int c = retColumnCount; --c != -1;) {
-			for (int k = columnCount; --k != -1;) {
-				columns[k] = m2[k][c];
-			}
-			for (int r = rowCount; --r != -1;) {
-				double sum = 0;
-				double[] row = m1[r];
-				for (int k = columnCount; --k != -1;) {
-					sum += row[k] * columns[k];
+
+		if (rowCount * retColumnCount > 10000) {
+			new PFor(0, retColumnCount - 1) {
+				@Override
+				public void step(int i) {
+					final double[] columns = new double[columnCount];
+					for (int k = columnCount; --k != -1;) {
+						columns[k] = m2[k][i];
+					}
+					for (int r = rowCount; --r != -1;) {
+						double sum = 0;
+						double[] row = m1[r];
+						for (int k = columnCount; --k != -1;) {
+							sum += row[k] * columns[k];
+						}
+						ret[r][i] = sum;
+					}
 				}
-				ret[r][c] = sum;
+			};
+		} else {
+			final double[] columns = new double[columnCount];
+			for (int c = retColumnCount; --c != -1;) {
+				for (int k = columnCount; --k != -1;) {
+					columns[k] = m2[k][c];
+				}
+				for (int r = rowCount; --r != -1;) {
+					double sum = 0;
+					double[] row = m1[r];
+					for (int k = columnCount; --k != -1;) {
+						sum += row[k] * columns[k];
+					}
+					ret[r][c] = sum;
+				}
 			}
 		}
 		return new ArrayDenseDoubleMatrix2D(ret);
@@ -196,10 +257,32 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		new PFor(0, m2ColumnCount - 1) {
+		if (C.length > 10000) {
+			new PFor(0, m2ColumnCount - 1) {
 
-			@Override
-			public void step(int i) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+						if (temp != 0.0) {
+							final int lcolTimesM1RowCount = lcol * m1RowCount;
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+										* temp;
+							}
+						}
+					}
+				}
+			};
+		} else {
+			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
 				if (beta != 1.0) {
@@ -217,7 +300,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 				}
 			}
-		};
+		}
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
@@ -234,10 +317,33 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		new PFor(0, m2ColumnCount - 1) {
+		if (C.length > 10000) {
+			new PFor(0, m2ColumnCount - 1) {
 
-			@Override
-			public void step(int i) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+						if (temp != 0.0) {
+							final int lcolTimesM1RowCount = lcol * m1RowCount;
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+										* temp;
+							}
+						}
+					}
+
+				}
+			};
+		} else {
+			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
 				if (beta != 1.0) {
@@ -254,10 +360,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 						}
 					}
 				}
-
 			}
-
-		};
+		}
 
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
@@ -275,10 +379,32 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		new PFor(0, m2ColumnCount - 1) {
+		if (C.length > 10000) {
+			new PFor(0, m2ColumnCount - 1) {
 
-			@Override
-			public void step(int i) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+						if (temp != 0.0) {
+							final int lcolTimesM1RowCount = lcol * m1RowCount;
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+										* temp;
+							}
+						}
+					}
+				}
+			};
+		} else {
+			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
 				if (beta != 1.0) {
@@ -296,7 +422,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 				}
 			}
-		};
+		}
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
@@ -326,10 +452,29 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		new PFor(0, m2ColumnCount - 1) {
+		if (C.length > 10000) {
+			new PFor(0, m2ColumnCount - 1) {
 
-			@Override
-			public void step(int i) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getAsDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A.getAsDouble(irow, lcol) * temp;
+							}
+						}
+					}
+				}
+			};
+		} else {
+			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				if (beta != 1.0) {
 					for (int irow = 0; irow < m1RowCount; ++irow) {
@@ -345,7 +490,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 				}
 			}
-		};
+		}
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 
@@ -366,10 +511,31 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		new PFor(0, m2ColumnCount - 1) {
+		if (C.length > 10000) {
+			new PFor(0, m2ColumnCount - 1) {
 
-			@Override
-			public void step(int i) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * MathUtil.ignoreNaN(B.getAsDouble(lcol, i));
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += MathUtil.ignoreNaN(A.getAsDouble(
+										irow, lcol))
+										* temp;
+							}
+						}
+					}
+				}
+			};
+		} else {
+			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				if (beta != 1.0) {
 					for (int irow = 0; irow < m1RowCount; ++irow) {
@@ -387,7 +553,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 				}
 			}
-		};
+		}
 		return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 	}
 

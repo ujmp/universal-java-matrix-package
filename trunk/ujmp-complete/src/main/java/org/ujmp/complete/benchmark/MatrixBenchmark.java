@@ -24,9 +24,10 @@
 package org.ujmp.complete.benchmark;
 
 import java.io.File;
-import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
@@ -36,10 +37,12 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
+import org.ujmp.core.listmatrix.DefaultListMatrix;
+import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
@@ -135,26 +138,26 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public void setRunAllLibraries() throws Exception {
 		setSkipSlowLibraries(true);
 
-		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
-		setRunArrayDenseDoubleMatrix2DBenchmark(true);
-		setRunMTJDenseDoubleMatrix2DBenchmark(true);
-		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
-		setRunJamaDenseDoubleMatrix2DBenchmark(true);
-		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
-		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
-		setRunJampackDenseDoubleMatrix2DBenchmark(true);
-		setRunJLinAlgDenseDoubleMatrix2DBenchmark(true);
-		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
-		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
-		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
-		setRunJSciDenseDoubleMatrix2DBenchmark(true);
-		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
 		setRunColtDenseDoubleMatrix2DBenchmark(true);
-		setRunSSTDenseDoubleMatrix2DBenchmark(true);
-		setRunEJMLDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
+		setRunEJMLDenseDoubleMatrix2DBenchmark(true);
+		setRunJamaDenseDoubleMatrix2DBenchmark(true);
+		setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		setRunJLinAlgDenseDoubleMatrix2DBenchmark(true);
+		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
+		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
+		setRunJSciDenseDoubleMatrix2DBenchmark(true);
+		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
 		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
+		setRunMTJDenseDoubleMatrix2DBenchmark(true);
+		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
+		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
+		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
+		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
+		setRunSSTDenseDoubleMatrix2DBenchmark(true);
+		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
+		setRunArrayDenseDoubleMatrix2DBenchmark(true);
 		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 	}
 
@@ -329,55 +332,15 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public void runAll() throws Exception {
 		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
-		List<Matrix> results = new ArrayList<Matrix>();
-
 		for (int j = 0; j < benchmarks.size(); j++) {
 			AbstractMatrix2DBenchmark benchmark = benchmarks.get(j);
-			List<Matrix> l = benchmark.run();
-			if (results.isEmpty()) {
-				for (int i = 0; i < l.size(); i++) {
-					results.add(MatrixFactory.emptyMatrix());
-				}
-			}
-			for (int i = 0; i < l.size(); i++) {
-				Matrix m = l.get(i).appendVertically(results.get(i));
-				m.setLabel(l.get(i).getLabel());
-				for (int c = 0; c < l.get(i).getColumnCount(); c++) {
-					m.setColumnLabel(c, l.get(i).getColumnLabel(c));
-				}
-				results.set(i, m);
-			}
-		}
-
-		for (int i = 0; i < results.size(); i++) {
-			Matrix m = results.get(i);
-			for (int j = 0; j < benchmarks.size(); j++) {
-				m.setRowLabel(benchmarks.size() - 1 - j, benchmarks.get(j).getClass()
-						.getSimpleName());
-			}
-		}
-
-		for (Matrix m : results) {
-			if (m != null && !(m instanceof EmptyMatrix)) {
-				try {
-					String name = "results" + File.separator;
-					name += InetAddress.getLocalHost().getHostName();
-					name += "-" + System.getProperty("os.name");
-					name += "-" + System.getProperty("java.version");
-					name += "-" + m.getLabel();
-					name += ".csv";
-					m.exportToFile(FileFormat.CSV, new File(name));
-				} catch (Exception e) {
-				}
-				try {
-					m.showGUI();
-				} catch (Exception e) {
-				}
-			}
+			benchmark.run();
 		}
 
 		System.out.println();
 		System.out.println("Finished");
+		System.out.println();
+		System.out.println();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -385,6 +348,110 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		mb.setRunAllLibraries();
 		mb.setRunAllTests();
 		mb.runAll();
+		mb.evaluate();
+	}
+
+	public void evaluate() throws Exception {
+		System.out.println("Evaluation");
+		System.out.println("==========");
+		System.out.println();
+		File dir = new File(getResultDir());
+		if (!dir.exists()) {
+			throw new MatrixException("no results found");
+		}
+		Map<String, List<Matrix>> statistics = new HashMap<String, List<Matrix>>();
+		File[] files = dir.listFiles();
+		for (File f : files) {
+			if (f.isDirectory()) {
+				String matrixName = f.getName();
+				File[] results = f.listFiles();
+				for (File r : results) {
+					String benchmarkName = r.getName().replaceAll(".csv", "");
+					Matrix data = MatrixFactory.importFromFile(FileFormat.CSV, r, "\t");
+					data.setLabel(matrixName);
+					List<Matrix> list = statistics.get(benchmarkName);
+					if (list == null) {
+						list = new ArrayList<Matrix>();
+						statistics.put(benchmarkName, list);
+					}
+					list.add(data);
+				}
+			}
+		}
+
+		for (String benchmarkName : statistics.keySet()) {
+			List<Matrix> list = statistics.get(benchmarkName);
+			List<Matrix> means = new ArrayList<Matrix>();
+			List<Matrix> stds = new ArrayList<Matrix>();
+			List<Matrix> mins = new ArrayList<Matrix>();
+			List<Matrix> maxs = new ArrayList<Matrix>();
+
+			for (Matrix m : list) {
+				Matrix data = m.deleteRows(Ret.NEW, 0); // remove label
+				Matrix columnLabels = m.selectRows(Ret.NEW, 0); // extract label
+
+				Matrix mean = data.mean(Ret.NEW, Matrix.ROW, true);
+				mean.setLabel(m.getLabel() + "-" + benchmarkName + "-mean");
+				mean.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				means.add(mean);
+
+				Matrix std = data.std(Ret.NEW, Matrix.ROW, true);
+				std.setLabel(m.getLabel() + "-" + benchmarkName + "-std");
+				std.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				stds.add(std);
+
+				Matrix min = data.min(Ret.NEW, Matrix.ROW);
+				min.setLabel(m.getLabel() + "-" + benchmarkName + "-min");
+				min.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				mins.add(min);
+
+				Matrix max = data.max(Ret.NEW, Matrix.ROW);
+				max.setLabel(m.getLabel() + "-" + benchmarkName + "-max");
+				max.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				maxs.add(max);
+			}
+
+			Matrix allmeans = MatrixFactory.vertCat(means);
+			allmeans.setLabel(benchmarkName + "-mean");
+			ListMatrix<String> matrixLabels = new DefaultListMatrix<String>();
+			for (Matrix m : means) {
+				matrixLabels.add(m.getLabel().split("-")[0]);
+			}
+			allmeans.getAnnotation().setDimensionMatrix(Matrix.COLUMN, matrixLabels);
+			try {
+				allmeans.showGUI();
+			} catch (Exception e) {
+			}
+			Matrix firstMean = MatrixFactory.horCat(MatrixFactory.linkToValue(allmeans.getLabel()),
+					allmeans.getAnnotation().getDimensionMatrix(Matrix.ROW));
+			Matrix lastMean = MatrixFactory.horCat(allmeans.getAnnotation().getDimensionMatrix(
+					Matrix.COLUMN), allmeans);
+			Matrix matrixMean = MatrixFactory.vertCat(firstMean, lastMean);
+			matrixMean.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
+					+ "-mean.csv"));
+
+			Matrix allstds = MatrixFactory.vertCat(stds);
+			allstds.setLabel(benchmarkName + "-std");
+			ListMatrix<String> stdLabels = new DefaultListMatrix<String>();
+			for (Matrix m : stds) {
+				stdLabels.add(m.getLabel().split("-")[0]);
+			}
+			allstds.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
+			try {
+				allstds.showGUI();
+			} catch (Exception e) {
+			}
+			Matrix firstStd = MatrixFactory.horCat(MatrixFactory.linkToValue(allstds.getLabel()),
+					allstds.getAnnotation().getDimensionMatrix(Matrix.ROW));
+			Matrix lastStd = MatrixFactory.horCat(allstds.getAnnotation().getDimensionMatrix(
+					Matrix.COLUMN), allstds);
+			Matrix matrixStd = MatrixFactory.vertCat(firstStd, lastStd);
+			matrixStd.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
+					+ "-std.csv"));
+
+			System.out.println(allmeans);
+			System.out.println();
+		}
 	}
 
 	@Override

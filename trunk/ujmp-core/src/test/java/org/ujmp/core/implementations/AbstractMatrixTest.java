@@ -466,13 +466,39 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(4.0, 1, 0);
 		m.setAsDouble(5.0, 1, 1);
 		m.setAsDouble(6.0, 1, 2);
-		m = m.transpose();
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, m.getAsDouble(2, 1));
+		Matrix r = m.transpose();
+		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
+		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+	}
+
+	public void testTransposeLarge() throws Exception {
+		// TODO: check labels
+		Matrix m = createMatrix(101, 100);
+		m.setAsDouble(1.0, 0, 0);
+		m.setAsDouble(2.0, 0, 1);
+		m.setAsDouble(3.0, 0, 2);
+		m.setAsDouble(4.0, 1, 0);
+		m.setAsDouble(5.0, 1, 1);
+		m.setAsDouble(6.0, 1, 2);
+		Matrix r = m.transpose();
+		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
+		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -490,16 +516,18 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setLabel("label");
 		m.setRowLabel(1, "row1");
 		m.setColumnLabel(2, "col2");
-		m = m.transpose(Ret.NEW);
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, m.getAsDouble(2, 1));
-		assertEquals(getLabel(), "label", m.getLabel());
-		assertEquals(getLabel(), "row1", m.getColumnLabel(1));
-		assertEquals(getLabel(), "col2", m.getRowLabel(2));
+		Matrix r = m.transpose(Ret.NEW);
+		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
+		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), "label", r.getLabel());
+		assertEquals(getLabel(), "row1", r.getColumnLabel(1));
+		assertEquals(getLabel(), "col2", r.getRowLabel(2));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -517,16 +545,18 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setLabel("label");
 		m.setRowLabel(1, "row1");
 		m.setColumnLabel(2, "col2");
-		m = m.transpose(Ret.LINK);
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, m.getAsDouble(2, 1));
-		assertEquals(getLabel(), "label", m.getLabel());
-		assertEquals(getLabel(), "row1", m.getColumnLabel(1));
-		assertEquals(getLabel(), "col2", m.getRowLabel(2));
+		Matrix r = m.transpose(Ret.LINK);
+		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
+		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), "label", r.getLabel());
+		assertEquals(getLabel(), "row1", r.getColumnLabel(1));
+		assertEquals(getLabel(), "col2", r.getRowLabel(2));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -583,6 +613,40 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(5.0, 1, 1);
 		m2.setAsDouble(-6.0, 1, 2);
 		Matrix m3 = m1.mtimes(m2);
+		assertEquals(getLabel(), 2, m3.getRowCount());
+		assertEquals(getLabel(), 3, m3.getColumnCount());
+		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
+		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1));
+		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2));
+		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
+		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
+		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+	}
+
+	public void testMTimesLarge() throws Exception {
+		Matrix m1 = createMatrix(100, 101);
+		m1.setAsDouble(-1.0, 0, 0);
+		m1.setAsDouble(2.0, 0, 1);
+		m1.setAsDouble(-3.0, 1, 0);
+		m1.setAsDouble(4.0, 1, 1);
+		Matrix m2 = createMatrix(101, 102);
+		m2.setAsDouble(1.0, 0, 0);
+		m2.setAsDouble(-2.0, 0, 1);
+		m2.setAsDouble(3.0, 0, 2);
+		m2.setAsDouble(-4.0, 1, 0);
+		m2.setAsDouble(5.0, 1, 1);
+		m2.setAsDouble(-6.0, 1, 2);
+		Matrix m3 = m1.mtimes(m2);
+		assertEquals(getLabel(), 100, m3.getRowCount());
+		assertEquals(getLabel(), 102, m3.getColumnCount());
 		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
 		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1));
 		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2));

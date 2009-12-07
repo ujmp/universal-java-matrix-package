@@ -18,7 +18,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 
 	private Map<Integer, Matrix> dimensionMatrices = null;
 
-	public DefaultAnnotation(long... size) {
+	public DefaultAnnotation(long[] size) {
 		super(size);
 	}
 
@@ -71,7 +71,10 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		Matrix m = getDimensionMatrix(dimension);
 		long old = position[dimension];
 		position[dimension] = 0;
-		Object o = m.getAsObject(position);
+		Object o = null;
+		if (Coordinates.isSmallerThan(position, m.getSize())) {
+			o = m.getAsObject(position);
+		}
 		position[dimension] = old;
 		return o;
 	}
@@ -107,13 +110,6 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		if (matrix == null) {
 			dimensionMatrices.put(dimension, null);
 		} else {
-			long[] t = Coordinates.copyOf(getSize());
-			t[dimension] = 1;
-			if (!Coordinates.equals(t, matrix.getSize())) {
-				throw new MatrixException("matrix for labels must have size "
-						+ Coordinates.toString(t) + " instead of "
-						+ Coordinates.toString(matrix.getSize()));
-			}
 			dimensionMatrices.put(dimension, matrix);
 		}
 	}

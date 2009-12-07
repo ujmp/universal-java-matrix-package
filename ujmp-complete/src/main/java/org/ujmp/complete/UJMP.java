@@ -23,6 +23,7 @@
 
 package org.ujmp.complete;
 
+import org.ujmp.complete.benchmark.MatrixBenchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 
@@ -30,8 +31,12 @@ public class UJMP extends org.ujmp.gui.UJMP {
 	private static final long serialVersionUID = 6107915206776591113L;
 
 	public static void main(String[] args) {
-		Matrix m = MatrixFactory.welcomeMatrix();
-		m.showGUI();
+		if (args != null && args.length == 1 && args[0].equals("--benchmark")) {
+			MatrixBenchmark.main(args);
+		} else {
+			Matrix m = MatrixFactory.welcomeMatrix();
+			m.showGUI();
+		}
 	}
 
 }

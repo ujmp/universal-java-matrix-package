@@ -30,11 +30,11 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 public class TestJLinAlgDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new JLinalgDenseDoubleMatrix2D(size);
+		return new JLinAlgDenseDoubleMatrix2D(size);
 	}
 
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new JLinalgDenseDoubleMatrix2D(source);
+		return new JLinAlgDenseDoubleMatrix2D(source);
 	}
 
 }

@@ -27,17 +27,17 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.jlinalg.JLinalgDenseDoubleMatrix2D;
+import org.ujmp.jlinalg.JLinAlgDenseDoubleMatrix2D;
 
 public class JLinAlgDenseDoubleMatrix2DBenchmark extends
 		AbstractMatrix2DBenchmark {
 
 	public DoubleMatrix2D createMatrix(long... size) throws MatrixException {
-		return new JLinalgDenseDoubleMatrix2D(size);
+		return new JLinAlgDenseDoubleMatrix2D(size);
 	}
 
 	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
-		return new JLinalgDenseDoubleMatrix2D(source);
+		return new JLinAlgDenseDoubleMatrix2D(source);
 	}
 
 	public static void main(String[] args) throws Exception {

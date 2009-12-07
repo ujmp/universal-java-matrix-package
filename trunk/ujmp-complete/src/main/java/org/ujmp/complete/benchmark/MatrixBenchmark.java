@@ -343,12 +343,16 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		System.out.println();
 	}
 
-	public static void main(String[] args) throws Exception {
-		MatrixBenchmark mb = new MatrixBenchmark();
-		mb.setRunAllLibraries();
-		mb.setRunAllTests();
-		mb.runAll();
-		mb.evaluate();
+	public static void main(String[] args) {
+		try {
+			MatrixBenchmark mb = new MatrixBenchmark();
+			mb.setRunAllLibraries();
+			mb.setRunAllTests();
+			mb.runAll();
+			mb.evaluate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void evaluate() throws Exception {

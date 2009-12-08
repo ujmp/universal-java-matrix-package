@@ -669,6 +669,11 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public void testInvRand() throws Exception {
 		Matrix m1 = createMatrix(10, 10);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+
 		do {
 			m1.rand(Ret.ORIG);
 		} while (m1.isSingular());

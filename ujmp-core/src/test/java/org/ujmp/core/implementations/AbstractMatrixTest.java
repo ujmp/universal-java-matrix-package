@@ -832,7 +832,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix prod1 = a.mtimes(eig[0]);
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
-		assertEquals(0.0, prod1.minus(prod2).getRMS(), UJMPSettings.getTolerance());
+		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), UJMPSettings.getTolerance());
 	}
 
 	public void testLUSquare() throws Exception {

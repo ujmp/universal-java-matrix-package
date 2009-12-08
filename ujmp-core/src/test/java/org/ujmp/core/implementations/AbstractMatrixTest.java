@@ -27,6 +27,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import junit.framework.TestCase;
 
@@ -34,6 +35,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
@@ -663,6 +667,19 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	public void testInvRand() throws Exception {
+		Matrix m1 = createMatrix(10, 10);
+		do {
+			m1.rand(Ret.ORIG);
+		} while (m1.isSingular());
+
+		Matrix m2 = m1.inv();
+		Matrix m3 = m1.mtimes(m2);
+		Matrix eye = MatrixFactory.eye(m1.getSize());
+		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), UJMPSettings
+				.getTolerance());
+	}
+
 	public void testInv() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
@@ -778,7 +795,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 	public void testEig() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
-		// skip libraries which do not support fat matrices
+		// skip libraries which do not support all matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			// only symmetric matrices
 			return;
@@ -789,6 +806,23 @@ public abstract class AbstractMatrixTest extends TestCase {
 				a.setAsDouble(v++, r, c);
 			}
 		}
+		Matrix[] eig = a.eig();
+		Matrix prod1 = a.mtimes(eig[0]);
+		Matrix prod2 = eig[0].mtimes(eig[1]);
+
+		assertEquals(0.0, prod1.minus(prod2).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testEigRand() throws Exception {
+		Matrix a = createMatrix(10, 10);
+
+		// skip libraries which do not support all matrices
+		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+			// only symmetric matrices
+			return;
+		}
+
+		a.rand(Ret.ORIG);
 		Matrix[] eig = a.eig();
 		Matrix prod1 = a.mtimes(eig[0]);
 		Matrix prod2 = eig[0].mtimes(eig[1]);
@@ -828,7 +862,38 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
-		assertEquals(0.0, prod.minus(aperm).getRMS(), UJMPSettings.getTolerance());
+		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testLURand() throws Exception {
+		Matrix a = createMatrix(10, 10);
+
+		// skip libraries which do not support fat matrices
+		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+
+		a.rand(Ret.ORIG);
+		Matrix[] lu = a.lu();
+		Matrix prod = lu[0].mtimes(lu[1]);
+		Matrix aperm = lu[2].mtimes(a);
+
+		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), UJMPSettings.getTolerance());
 	}
 
 	public void testLUTall() throws Exception {
@@ -923,6 +988,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 				a.setAsDouble(v++, r, c);
 			}
 		}
+		Matrix[] qr = a.qr();
+		Matrix prod = qr[0].mtimes(qr[1]);
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testQRRand() throws Exception {
+		Matrix a = createMatrix(10, 10);
+		a.rand(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
@@ -1028,6 +1102,28 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).doubleValue(), UJMPSettings.getTolerance());
 	}
 
+	public void testCholRand() throws Exception {
+		Random random = new Random(System.nanoTime());
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(10, 10);
+		int rows = (int) temp.getRowCount();
+		int cols = (int) temp.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				temp.setDouble(random.nextDouble(), r, c);
+			}
+		}
+		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
+
+		Matrix chol = result.chol();
+		Matrix prod = chol.transpose().mtimes(chol);
+
+		assertEquals(0.0, prod.minus(result).doubleValue(), UJMPSettings.getTolerance());
+	}
+
+	public void randPositiveDefinit(long seed, DoubleMatrix2D matrix) {
+
+	}
+
 	// test example from wikipedia
 	public void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrix(4, 5);
@@ -1091,6 +1187,37 @@ public abstract class AbstractMatrixTest extends TestCase {
 				a.setAsDouble(v++, r, c);
 			}
 		}
+
+		Matrix[] svd = a.svd();
+
+		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
+
+		assertEquals(0.0, prod.minus(a).getRMS(), UJMPSettings.getTolerance());
+
+		if (a instanceof Closeable) {
+			((Closeable) a).close();
+		}
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+	}
+
+	public void testSVDRand() throws Exception {
+		Matrix a = createMatrix(10, 10);
+
+		// skip libraries which do not support fat matrices
+		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+
+		a.rand(Ret.ORIG);
 
 		Matrix[] svd = a.svd();
 

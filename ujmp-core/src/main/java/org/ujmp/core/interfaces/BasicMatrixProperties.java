@@ -41,6 +41,8 @@ public interface BasicMatrixProperties {
 
 	public boolean isReadOnly();
 
+	public boolean isSingular();
+
 	public boolean equals(Object o);
 
 	public boolean equalsContent(Object o);
@@ -51,11 +53,15 @@ public interface BasicMatrixProperties {
 
 	public double trace() throws MatrixException;
 
+	public double det() throws MatrixException;
+
 	public boolean isDiagonal() throws MatrixException;
 
 	public boolean isSquare();
 
 	public boolean isSymmetric();
+
+	public boolean isPositiveDefinite() throws MatrixException;
 
 	public boolean isEmpty() throws MatrixException;
 
@@ -65,7 +71,7 @@ public interface BasicMatrixProperties {
 
 	public boolean isScalar();
 
-	public boolean isResizeable();
+	public boolean isResizable();
 
 	public boolean isMultidimensionalMatrix();
 

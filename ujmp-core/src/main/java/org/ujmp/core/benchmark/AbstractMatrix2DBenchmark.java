@@ -31,13 +31,14 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.RandomSimple;
 import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
@@ -50,25 +51,32 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000";
 
-	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
-	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
-	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
 
-	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
 
-	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
-	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
-	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
 	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
 	public abstract DoubleMatrix2D createMatrix(Matrix source) throws MatrixException;
 
+	private long benchmarkSeed = 3345454363676l;
+
 	public AbstractMatrix2DBenchmark() {
+		this(System.currentTimeMillis());
+	}
+
+	public AbstractMatrix2DBenchmark(long benchmarkSeed) {
+		this.benchmarkSeed = benchmarkSeed;
 	}
 
 	public void setRunsPerMatrix(int runs) {
@@ -260,10 +268,10 @@ public abstract class AbstractMatrix2DBenchmark {
 		setBurnInRuns(3);
 		setRunsPerMatrix(10);
 
-		setRunTransposeNew(true);
-		setRunMtimesNew(true);
-		setRunInv(true);
-		setRunSVD(true);
+		// setRunTransposeNew(true);
+		// setRunMtimesNew(true);
+		// setRunInv(true);
+		// setRunSVD(true);
 		setRunEig(true);
 		setRunQR(true);
 		setRunLU(true);
@@ -800,13 +808,44 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 	}
 
-	public static void rand(long seed, DoubleMatrix2D matrix) {
-		Random random = new RandomSimple(3345454363676l + seed);
+	public void rand(long seed, DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + seed);
 		int rows = (int) matrix.getRowCount();
 		int cols = (int) matrix.getColumnCount();
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
-				matrix.setDouble(random.nextFloat() - 0.5, r, c);
+				matrix.setDouble(random.nextDouble() - 0.5, r, c);
+			}
+		}
+	}
+
+	public void randSym(long seed, DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + 31 * seed);
+		int rows = (int) matrix.getRowCount();
+		int cols = (int) matrix.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols && c <= r; c++) {
+				double f = random.nextDouble() - 0.5;
+				matrix.setDouble(f - 0.5, r, c);
+				matrix.setDouble(f - 0.5, c, r);
+			}
+		}
+	}
+
+	public void randPositiveDefinite(long seed, DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + 31 * seed);
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(matrix.getSize());
+		int rows = (int) temp.getRowCount();
+		int cols = (int) temp.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				temp.setDouble(random.nextDouble(), r, c);
+			}
+		}
+		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				matrix.setDouble(result.getDouble(r, c), r, c);
 			}
 		}
 	}
@@ -976,15 +1015,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-
-			// if (m.getClass().getName().startsWith("org.ujmp.parallelcolt."))
-			// {
-			// System.err.print("skip(deadlock)");
-			// System.err.flush();
-			// return TOOLONG;
-			// }
-
-			rand(run, m);
+			randPositiveDefinite(run, m);
 			GCUtil.gc();
 			long t0 = System.nanoTime();
 			r = m.chol();

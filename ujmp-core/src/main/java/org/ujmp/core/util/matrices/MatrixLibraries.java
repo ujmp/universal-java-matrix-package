@@ -776,10 +776,6 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 				.replaceAll("\\\\begin\\{tabular\\}",
 						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{tabular}");
 		s = s.replaceAll("latest version", "\\\\toprule\nlatest version");
-		s = s
-				.replace(
-						"{ccccccccccccccccccccc}",
-						"{l@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}");
 		s = s.replaceAll("\\\\end\\{sidewaystable\\}", "");
 		s = s + "\\medskip" + "\n";
 		List<String> fn = ml.getFootnotes();

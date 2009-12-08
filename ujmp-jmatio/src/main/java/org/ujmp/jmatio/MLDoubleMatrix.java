@@ -91,16 +91,14 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		return matrix == null ? Coordinates.ZERO2D : MathUtil.toLongArray(matrix.getDimensions());
 	}
 
-	public double getDouble(long... coordinates) {
+	// access to matrix data must be synchronized
+	public synchronized double getDouble(long... coordinates) {
 		return matrix.get(getIndex(coordinates));
 	}
 
-	public void setDouble(double value, long... coordinates) {
+	// access to matrix data must be synchronized
+	public synchronized void setDouble(double value, long... coordinates) {
 		matrix.set(value, getIndex(coordinates));
-	}
-
-	public void setDouble(double value, int row, int column) {
-		matrix.set(value, row, column);
 	}
 
 	public MLDouble getWrappedObject() {

@@ -268,10 +268,10 @@ public abstract class AbstractMatrix2DBenchmark {
 		setBurnInRuns(3);
 		setRunsPerMatrix(10);
 
-		// setRunTransposeNew(true);
-		// setRunMtimesNew(true);
-		// setRunInv(true);
-		// setRunSVD(true);
+		setRunTransposeNew(true);
+		setRunMtimesNew(true);
+		setRunInv(true);
+		setRunSVD(true);
 		setRunEig(true);
 		setRunQR(true);
 		setRunLU(true);

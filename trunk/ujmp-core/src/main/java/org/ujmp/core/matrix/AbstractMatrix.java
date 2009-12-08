@@ -413,7 +413,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Convert.calcNew(this);
 	}
 
-	public boolean isResizeable() {
+	public boolean isResizable() {
 		return false;
 	}
 
@@ -1092,15 +1092,27 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return rank;
 	}
 
-	public boolean isSymmetric() {
+	public final boolean isPositiveDefinite() {
+		if (getDimensionCount() != 2) {
+			return false;
+		}
+		if (!isSquare()) {
+			return false;
+		}
+		return new Chol(this).isSPD();
+	}
+
+	public final boolean isSymmetric() {
 		long rows = getRowCount();
 		long cols = getColumnCount();
 		if (rows != cols) {
 			return false;
 		}
 		for (long r = 0; r < rows; r++) {
-			for (long c = 0; c < cols; c++) {
-				if (MathUtil.equals(getAsObject(r, c), getAsObject(c, r))) {
+			for (long c = 0; c < cols && c <= r; c++) {
+				Object o1 = getAsObject(r, c);
+				Object o2 = getAsObject(c, r);
+				if (!MathUtil.equals(o1, o2)) {
 					return false;
 				}
 			}
@@ -1168,11 +1180,25 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final boolean isSquare() {
-		return getSize().length == 2 && getColumnCount() == getRowCount();
+		return getDimensionCount() == 2 && getColumnCount() == getRowCount();
 	}
 
 	public double euklideanDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {
 		return minkowskiDistanceTo(m, 2, ignoreNaN);
+	}
+
+	public double det() throws MatrixException {
+		if (getDimensionCount() != 2 || !isSquare()) {
+			return Double.NaN;
+		}
+		return new LU(this).det();
+	}
+
+	public boolean isSingular() throws MatrixException {
+		if (getDimensionCount() != 2 || !isSquare()) {
+			return false;
+		}
+		return !new LU(this).isNonsingular();
 	}
 
 	public double manhattenDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {

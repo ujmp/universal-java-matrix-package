@@ -164,4 +164,21 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			return super.mtimes(m2);
 		}
 	}
+
+	public Matrix solve(Matrix b) {
+		if (b instanceof JMatricesDenseDoubleMatrix2D) {
+			JMatricesDenseDoubleMatrix2D b2 = (JMatricesDenseDoubleMatrix2D) b;
+			if (isSquare()) {
+				org.jmatrices.dbl.Matrix x = new LUDecomposition(matrix)
+						.solve(b2.matrix);
+				return new JMatricesDenseDoubleMatrix2D(x);
+			} else {
+				org.jmatrices.dbl.Matrix x = new QRDecomposition(matrix)
+						.solve(b2.matrix);
+				return new JMatricesDenseDoubleMatrix2D(x);
+			}
+		} else {
+			return super.solve(b);
+		}
+	}
 }

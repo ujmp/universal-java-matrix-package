@@ -39,6 +39,7 @@ import Jampack.Inv;
 import Jampack.JampackException;
 import Jampack.Parameters;
 import Jampack.Pivot;
+import Jampack.Solve;
 import Jampack.Times;
 import Jampack.Z;
 import Jampack.Zchol;
@@ -233,6 +234,20 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			MatrixException {
 		s.defaultWriteObject();
 		s.writeObject(matrix.getRe());
+	}
+
+	public Matrix solve(Matrix b) {
+		try {
+			if (b instanceof JampackDenseDoubleMatrix2D) {
+				JampackDenseDoubleMatrix2D b2 = (JampackDenseDoubleMatrix2D) b;
+				Zmat x = Solve.aib(matrix, b2.matrix);
+				return new JampackDenseDoubleMatrix2D(x);
+			} else {
+				return super.solve(b);
+			}
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 }

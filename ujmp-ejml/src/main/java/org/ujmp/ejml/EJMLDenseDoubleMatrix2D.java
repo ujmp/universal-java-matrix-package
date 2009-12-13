@@ -100,6 +100,18 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new EJMLDenseDoubleMatrix2D(ret);
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof EJMLDenseDoubleMatrix2D) {
+			EJMLDenseDoubleMatrix2D b2 = (EJMLDenseDoubleMatrix2D) b;
+			DenseMatrix64F x = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			CommonOps.solve(matrix, b2.matrix, x);
+			return new EJMLDenseDoubleMatrix2D(x);
+		} else {
+			return super.solve(b);
+		}
+	}
+
 	public Matrix plus(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, value, ret);

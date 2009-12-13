@@ -106,6 +106,23 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				.inverse(matrix));
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof ColtDenseDoubleMatrix2D) {
+			ColtDenseDoubleMatrix2D b2 = (ColtDenseDoubleMatrix2D) b;
+			if (isSquare()) {
+				DoubleMatrix2D ret = new LUDecomposition(matrix)
+						.solve(b2.matrix);
+				return new ColtDenseDoubleMatrix2D(ret);
+			} else {
+				DoubleMatrix2D ret = new QRDecomposition(matrix)
+						.solve(b2.matrix);
+				return new ColtDenseDoubleMatrix2D(ret);
+			}
+		} else {
+			return super.solve(b);
+		}
+	}
+
 	public Matrix plus(double value) {
 		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.plus(value)));

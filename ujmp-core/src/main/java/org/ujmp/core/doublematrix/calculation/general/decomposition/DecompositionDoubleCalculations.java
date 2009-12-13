@@ -37,6 +37,15 @@ public interface DecompositionDoubleCalculations {
 	public Matrix inv() throws MatrixException;
 
 	/**
+	 * Solve A*X = B
+	 * 
+	 * @param b
+	 *            right hand side
+	 * @return solution for X if A is square, least squares solution otherwise
+	 */
+	public Matrix solve(Matrix b) throws MatrixException;
+
+	/**
 	 * Calculates the pseudo inverse of the Matrix using Singular Value
 	 * Decomposition.
 	 * 

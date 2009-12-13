@@ -407,4 +407,15 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return m;
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof MTJDenseDoubleMatrix2D) {
+			MTJDenseDoubleMatrix2D b2 = (MTJDenseDoubleMatrix2D) b;
+			DenseMatrix x = new DenseMatrix((int) getColumnCount(), (int) b2
+					.getColumnCount());
+			matrix.solve(b2.matrix, x);
+			return new MTJDenseDoubleMatrix2D(x);
+		} else {
+			return super.solve(b);
+		}
+	}
 }

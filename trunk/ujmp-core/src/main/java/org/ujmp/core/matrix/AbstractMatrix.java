@@ -393,6 +393,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Inv(this).calcNew();
 	}
 
+	public Matrix solve(Matrix b) {
+		return isSquare() ? (new LU(this)).solve(b) : (new QR(this)).solve(b);
+	}
+
 	public Matrix ginv() throws MatrixException {
 		return new Ginv(this).calcNew();
 	}

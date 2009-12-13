@@ -199,4 +199,13 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		s.writeObject(this.toDoubleArray());
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof JScienceDenseDoubleMatrix2D) {
+			JScienceDenseDoubleMatrix2D b2 = (JScienceDenseDoubleMatrix2D) b;
+			Float64Matrix x = Float64Matrix.valueOf(matrix.solve(b2.matrix));
+			return new JScienceDenseDoubleMatrix2D(x);
+		} else {
+			return super.solve(b);
+		}
+	}
 }

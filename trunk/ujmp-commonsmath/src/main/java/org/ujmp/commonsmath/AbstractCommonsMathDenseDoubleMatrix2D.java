@@ -161,10 +161,30 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
-			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
-					.multiply(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+					.dense(matrix
+							.multiply(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
 		} else {
 			return super.mtimes(m2);
+		}
+	}
+
+	public Matrix solve(Matrix b) {
+		if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
+			AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
+			if (isSquare()) {
+				RealMatrix ret = new LUDecompositionImpl(matrix).getSolver()
+						.solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+						.dense(ret);
+			} else {
+				RealMatrix ret = new QRDecompositionImpl(matrix).getSolver()
+						.solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+						.dense(ret);
+			}
+		} else {
+			return super.solve(b);
 		}
 	}
 }

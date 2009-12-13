@@ -26,11 +26,13 @@ package org.ujmp.ojalgo;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.concurrent.Future;
 
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
 import org.ojalgo.matrix.decomposition.Cholesky;
 import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
+import org.ojalgo.matrix.decomposition.DecomposeAndSolve;
 import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
 import org.ojalgo.matrix.decomposition.LU;
@@ -118,7 +120,12 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		lu.compute(matrix);
 		final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
 		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getRowEchelonForm());
-		final Matrix p = new OjalgoDenseDoubleMatrix2D(lu.getP());
+		final int m = (int) this.getRowCount();
+		final int[] piv = lu.getPivotOrder();
+		final Matrix p = new OjalgoDenseDoubleMatrix2D(m, m);
+		for (int i = 0; i < m; i++) {
+			p.setAsDouble(1, i, piv[i]);
+		}
 		return new Matrix[] { l, u, p };
 	}
 
@@ -193,6 +200,31 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	private void writeObject(final ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(this.toDoubleArray());
+	}
+
+	public Matrix solve(Matrix b) {
+		try {
+			if (b instanceof OjalgoDenseDoubleMatrix2D) {
+				OjalgoDenseDoubleMatrix2D b2 = (OjalgoDenseDoubleMatrix2D) b;
+				if (isSquare()) {
+					final LU<Double> lu = LUDecomposition.makePrimitive();
+					final Future<DecomposeAndSolve<Double>> ret = lu.solve(
+							matrix, b2.matrix);
+					return new OjalgoDenseDoubleMatrix2D(ret.get()
+							.getSolution());
+				} else {
+					final QR<Double> qr = QRDecomposition.makePrimitive();
+					final Future<DecomposeAndSolve<Double>> ret = qr.solve(
+							matrix, b2.matrix);
+					return new OjalgoDenseDoubleMatrix2D(ret.get()
+							.getSolution());
+				}
+			} else {
+				return super.solve(b);
+			}
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 }

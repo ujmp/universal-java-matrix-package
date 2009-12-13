@@ -55,6 +55,8 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
+	private final String solveSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+
 	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
 
 	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
@@ -167,6 +169,10 @@ public abstract class AbstractMatrix2DBenchmark {
 		return "true".equals(System.getProperty("runInv"));
 	}
 
+	public boolean isRunSolve() {
+		return "true".equals(System.getProperty("runSolve"));
+	}
+
 	public boolean isSkipSlowLibraries() {
 		return "true".equals(System.getProperty("skipSlowLibraries"));
 	}
@@ -201,6 +207,10 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public void setRunInv(boolean b) {
 		System.setProperty("runInv", "" + b);
+	}
+
+	public void setRunSolve(boolean b) {
+		System.setProperty("runSolve", "" + b);
 	}
 
 	public void setRunSVD(boolean b) {
@@ -247,6 +257,10 @@ public abstract class AbstractMatrix2DBenchmark {
 		return svdSizes;
 	}
 
+	public String getSolveSizes() {
+		return solveSizes;
+	}
+
 	public String getQRSizes() {
 		return qrSizes;
 	}
@@ -271,6 +285,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		setRunTransposeNew(true);
 		setRunMtimesNew(true);
 		setRunInv(true);
+		setRunSolve(true);
 		setRunSVD(true);
 		setRunEig(true);
 		setRunQR(true);
@@ -300,6 +315,10 @@ public abstract class AbstractMatrix2DBenchmark {
 
 			if (isRunInv()) {
 				runBenchmarkInv();
+			}
+
+			if (isRunSolve()) {
+				runBenchmarkSolve();
 			}
 
 			if (isRunSVD()) {
@@ -340,14 +359,21 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public void runBenchmarkTransposeNew() throws Exception {
+		String test = "transposeNew";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getTransposeSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-transposeNew");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("transpose new matrix [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -371,19 +397,25 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "transposeNew.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public void runBenchmarkInv() throws Exception {
+		String test = "inv";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getInvSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-inv");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("inv [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -407,19 +439,25 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "inv.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public void runBenchmarkSVD() throws Exception {
+		String test = "svd";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getSVDSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-svd");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("svd [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -443,19 +481,67 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "svd.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
-	public void runBenchmarkQR() throws Exception {
-		String[] sizes = getQRSizes().split(",");
+	public void runBenchmarkSolve() throws Exception {
+		String test = "solve";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
+		String[] sizes = getSolveSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-qr");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("qr [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
+			System.out.flush();
+
+			for (int i = 0; i < getBurnInRuns(); i++) {
+				benchmarkSolve(i, size);
+				System.out.print("#");
+				System.out.flush();
+			}
+			for (int i = 0; i < getRunsPerMatrix(); i++) {
+				double t = benchmarkSolve(i, size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+				System.out.flush();
+			}
+
+			Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
+			Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
+			mean.setLabel(mean.getLabel() + "-mean");
+			std.setLabel(std.getLabel() + "-std");
+			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
+		}
+
+		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
+				result);
+		temp.exportToFile(FileFormat.CSV, resultFile);
+	}
+
+	public void runBenchmarkQR() throws Exception {
+		String test = "qr";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
+		String[] sizes = getQRSizes().split(",");
+		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
+		result.setLabel(getMatrixLabel() + "-" + test);
+
+		for (int s = 0; s < sizes.length; s++) {
+			long[] size = Coordinates.parseString(sizes[s]);
+			result.setColumnLabel(s, Coordinates.toString('x', size));
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -479,19 +565,25 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "qr.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public void runBenchmarkLU() throws Exception {
+		String test = "lu";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getLUSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-lu");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("lu [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -515,19 +607,25 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "lu.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public void runBenchmarkEig() throws Exception {
+		String test = "eig";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getEigSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-eig");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("eig [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -551,19 +649,25 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "eig.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public void runBenchmarkChol() throws Exception {
+		String test = "chol";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getCholSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-chol");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("chol [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -587,8 +691,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "chol.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public String getResultDir() throws UnknownHostException {
@@ -605,14 +708,21 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public void runBenchmarkMtimesNew() throws Exception {
+		String test = "mtimesNew";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
 		String[] sizes = getMtimesSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
-		result.setLabel(getMatrixLabel() + "-mtimesNew");
+		result.setLabel(getMatrixLabel() + "-" + test);
 
 		for (int s = 0; s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
-			System.out.print("mtimes new matrix [" + Coordinates.toString('x', size) + "]: ");
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
 			for (int i = 0; i < getBurnInRuns(); i++) {
@@ -636,8 +746,7 @@ public abstract class AbstractMatrix2DBenchmark {
 
 		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
 				result);
-		temp.exportToFile(FileFormat.CSV, new File(getResultDir() + getMatrixLabel() + "/"
-				+ "mtimesNew.csv"));
+		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
 	public double benchmarkCreate(long... size) {
@@ -955,6 +1064,43 @@ public abstract class AbstractMatrix2DBenchmark {
 			r = m.eig();
 			long t1 = System.nanoTime();
 			if (r == null) {
+				System.err.print("e");
+				System.err.flush();
+				return ERRORTIME;
+			}
+			return (t1 - t0) / 1000000.0;
+		} catch (NoSuchMethodException e) {
+			System.err.print("-");
+			System.err.flush();
+			return NOTAVAILABLE;
+		} catch (Throwable e) {
+			System.err.print("e");
+			System.err.flush();
+			return ERRORTIME;
+		}
+	}
+
+	public double benchmarkSolve(int run, long... size) {
+		DoubleMatrix2D a = null;
+		DoubleMatrix2D x = null;
+		Matrix b = null;
+		try {
+			a = createMatrix(size);
+			if (!a.getClass().getName().startsWith("org.ujmp.core.")
+					&& a.getClass().getDeclaredMethod("solve", Matrix.class) == null) {
+				System.err.print("-");
+				System.err.flush();
+				return NOTAVAILABLE;
+			}
+			x = createMatrix(size);
+			rand(run, a);
+			rand(run, x);
+			Matrix m = a.mtimes(x);
+			GCUtil.gc();
+			long t0 = System.nanoTime();
+			b = a.solve(m);
+			long t1 = System.nanoTime();
+			if (b == null) {
 				System.err.print("e");
 				System.err.flush();
 				return ERRORTIME;

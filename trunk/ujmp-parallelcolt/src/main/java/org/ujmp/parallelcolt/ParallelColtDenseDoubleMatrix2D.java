@@ -33,6 +33,7 @@ import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleEigenvalueDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleLUDecomposition;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleQRDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleSingularValueDecompositionDC;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
@@ -144,13 +145,13 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		return new Matrix[] { v, d };
 	}
 
-	// deadlock!!!
-	// public Matrix[] qr() {
-	// DenseDoubleQRDecomposition qr = new DenseDoubleQRDecomposition(matrix);
-	// Matrix q = new ParallelColtDenseDoubleMatrix2D(qr.getQ(false));
-	// Matrix r = new ParallelColtDenseDoubleMatrix2D(qr.getR(false));
-	// return new Matrix[] { q, r };
-	// }
+	// deadlock?
+	public Matrix[] qr() {
+		DenseDoubleQRDecomposition qr = new DenseDoubleQRDecomposition(matrix);
+		Matrix q = new ParallelColtDenseDoubleMatrix2D(qr.getQ(false));
+		Matrix r = new ParallelColtDenseDoubleMatrix2D(qr.getR(false));
+		return new Matrix[] { q, r };
+	}
 
 	public Matrix[] lu() {
 		if (getRowCount() >= getColumnCount()) {
@@ -171,6 +172,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
+	// deadlock?
 	public Matrix chol() {
 		DenseDoubleCholeskyDecomposition chol = new DenseDoubleCholeskyDecomposition(
 				matrix);
@@ -187,4 +189,20 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		return m;
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
+			DoubleMatrix2D b2 = ((ParallelColtDenseDoubleMatrix2D) b).matrix;
+			if (isSquare()) {
+				DoubleMatrix2D ret = new DenseDoubleLUDecomposition(matrix)
+						.solve(b2);
+				return new ParallelColtDenseDoubleMatrix2D(ret);
+			} else {
+				b2 = b2.copy();
+				new DenseDoubleQRDecomposition(matrix).solve(b2);
+				return new ParallelColtDenseDoubleMatrix2D(b2);
+			}
+		} else {
+			return super.solve(b);
+		}
+	}
 }

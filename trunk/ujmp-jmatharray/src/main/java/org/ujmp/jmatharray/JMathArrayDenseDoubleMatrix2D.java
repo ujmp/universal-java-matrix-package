@@ -184,4 +184,14 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return m;
 	}
 
+	public Matrix solve(Matrix b) {
+		if (b instanceof JMathArrayDenseDoubleMatrix2D) {
+			JMathArrayDenseDoubleMatrix2D b2 = (JMathArrayDenseDoubleMatrix2D) b;
+			double[][] x = LinearAlgebra.solve(matrix, b2.matrix);
+			return new JMathArrayDenseDoubleMatrix2D(x);
+		} else {
+			return super.solve(b);
+		}
+	}
+
 }

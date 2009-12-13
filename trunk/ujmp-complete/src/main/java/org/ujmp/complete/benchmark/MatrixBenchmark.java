@@ -80,9 +80,6 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		if (isRunSSTDenseDoubleMatrix2DBenchmark()) {
 			list.add(new SSTDenseDoubleMatrix2DBenchmark());
 		}
-		if (isRunParallelColtDenseDoubleMatrix2DBenchmark()) {
-			list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
-		}
 		if (isRunOwlpackDenseDoubleMatrix2DBenchmark()) {
 			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
 		}
@@ -130,6 +127,9 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		}
 		if (isRunColtDenseDoubleMatrix2DBenchmark()) {
 			list.add(new ColtDenseDoubleMatrix2DBenchmark());
+		}
+		if (isRunParallelColtDenseDoubleMatrix2DBenchmark()) {
+			list.add(new ParallelColtDenseDoubleMatrix2DBenchmark());
 		}
 
 		return list;

@@ -65,10 +65,11 @@ public class ExportMatrixTEX {
 					+ EOL);
 		}
 
-		String alignment = "";
+		StringBuilder buf = new StringBuilder();
 		for (long i = m.getColumnCount() - 1; i != -1; i--) {
-			alignment += "c";
+			buf.append('c');
 		}
+		String alignment = buf.toString();
 
 		w.write("\\begin{tabular}{" + alignment + "}" + EOL);
 		w.write("\\toprule" + EOL);

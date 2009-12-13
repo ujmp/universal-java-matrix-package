@@ -130,14 +130,14 @@ public class Coordinates implements Serializable {
 	}
 
 	public static String toString(char separator, long... coordinates) {
-		String s = "";
+		StringBuilder buf = new StringBuilder();
 		for (int i = 0; i < coordinates.length; i++) {
-			s += coordinates[i];
+			buf.append(coordinates[i]);
 			if (i < coordinates.length - 1) {
-				s += separator;
+				buf.append(separator);
 			}
 		}
-		return s;
+		return buf.toString();
 	}
 
 	public Coordinates clone() {

@@ -1092,6 +1092,24 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.orbital.")
+					&& Coordinates.product(size) > 40000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.jlinalg.")
+					&& Coordinates.product(size) > 160000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.jscience.")
+					&& Coordinates.product(size) > 160000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
 			x = createMatrix(size);
 			rand(run, a);
 			rand(run, x);

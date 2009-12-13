@@ -1083,8 +1083,6 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkSolve(int run, long... size) {
 		DoubleMatrix2D a = null;
 		DoubleMatrix2D x = null;
-		DoubleMatrix2D a2 = null;
-		DoubleMatrix2D x2 = null;
 		Matrix b = null;
 		try {
 			a = createMatrix(size);

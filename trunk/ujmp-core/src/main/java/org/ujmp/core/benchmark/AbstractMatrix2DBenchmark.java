@@ -1083,6 +1083,8 @@ public abstract class AbstractMatrix2DBenchmark {
 	public double benchmarkSolve(int run, long... size) {
 		DoubleMatrix2D a = null;
 		DoubleMatrix2D x = null;
+		DoubleMatrix2D a2 = null;
+		DoubleMatrix2D x2 = null;
 		Matrix b = null;
 		try {
 			a = createMatrix(size);
@@ -1113,7 +1115,8 @@ public abstract class AbstractMatrix2DBenchmark {
 			x = createMatrix(size);
 			rand(run, a);
 			rand(run, x);
-			Matrix m = a.mtimes(x);
+			Matrix m = new DefaultDenseDoubleMatrix2D(a).mtimes(new DefaultDenseDoubleMatrix2D(x));
+			m = createMatrix(m);
 			GCUtil.gc();
 			long t0 = System.nanoTime();
 			b = a.solve(m);

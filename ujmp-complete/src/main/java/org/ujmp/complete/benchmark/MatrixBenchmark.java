@@ -415,13 +415,19 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 				maxs.add(max);
 			}
 
-			Matrix allmeans = MatrixFactory.vertCat(means);
-			allmeans.setLabel(benchmarkName + "-mean");
-			ListMatrix<String> matrixLabels = new DefaultListMatrix<String>();
-			for (Matrix m : means) {
-				matrixLabels.add(m.getLabel().split("-")[0]);
+			Matrix allmeans = null;
+			try {
+				allmeans = MatrixFactory.vertCat(means);
+				allmeans.setLabel(benchmarkName + "-mean");
+				ListMatrix<String> matrixLabels = new DefaultListMatrix<String>();
+				for (Matrix m : means) {
+					matrixLabels.add(m.getLabel().split("-")[0]);
+				}
+				allmeans.getAnnotation().setDimensionMatrix(Matrix.COLUMN, matrixLabels);
+			} catch (Exception e) {
+				System.err.println("could not evaluate mean results for " + benchmarkName + ": "
+						+ e);
 			}
-			allmeans.getAnnotation().setDimensionMatrix(Matrix.COLUMN, matrixLabels);
 			try {
 				allmeans.showGUI();
 			} catch (Exception e) {
@@ -434,13 +440,19 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			matrixMean.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
 					+ "-mean.csv"));
 
-			Matrix allstds = MatrixFactory.vertCat(stds);
-			allstds.setLabel(benchmarkName + "-std");
-			ListMatrix<String> stdLabels = new DefaultListMatrix<String>();
-			for (Matrix m : stds) {
-				stdLabels.add(m.getLabel().split("-")[0]);
+			Matrix allstds = null;
+			try {
+				allstds = MatrixFactory.vertCat(stds);
+				allstds.setLabel(benchmarkName + "-std");
+				ListMatrix<String> stdLabels = new DefaultListMatrix<String>();
+				for (Matrix m : stds) {
+					stdLabels.add(m.getLabel().split("-")[0]);
+				}
+				allstds.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
+			} catch (Exception e) {
+				System.err
+						.println("could not evaluate std results for " + benchmarkName + ": " + e);
 			}
-			allstds.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
 			try {
 				allstds.showGUI();
 			} catch (Exception e) {

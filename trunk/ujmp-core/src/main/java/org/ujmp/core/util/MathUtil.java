@@ -88,6 +88,7 @@ public abstract class MathUtil {
 
 			hexString.append(text);
 		}
+		hexString.trimToSize();
 		return hexString.toString();
 	}
 
@@ -109,6 +110,7 @@ public abstract class MathUtil {
 
 			hexString.append(text);
 		}
+		hexString.trimToSize();
 		return hexString.toString();
 	}
 

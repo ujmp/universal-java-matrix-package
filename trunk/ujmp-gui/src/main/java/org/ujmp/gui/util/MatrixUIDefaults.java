@@ -27,23 +27,15 @@ import java.util.Map;
 
 import javax.swing.UIManager;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
 public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 6721967669100263805L;
 
-	private static MatrixUIDefaults matrix = null;
-
-	public static Matrix getInstance() {
-		if (matrix == null) {
-			matrix = new MatrixUIDefaults();
-			matrix.setLabel("UI Defaults");
-		}
-		return matrix;
+	public MatrixUIDefaults() {
+		setLabel("UI Defaults");
 	}
 
-	
 	public Map<Object, Object> getMap() {
 		return UIManager.getDefaults();
 	}

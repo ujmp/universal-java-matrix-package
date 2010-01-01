@@ -24,10 +24,7 @@
 package org.ujmp.core.enums;
 
 import java.io.File;
-import java.util.Arrays;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.io.UJMPFileFilter;
 
 /**
@@ -75,8 +72,6 @@ public enum FileFormat {
 
 	private javax.swing.filechooser.FileFilter fileFilter = null;
 
-	private static Matrix matrix = null;
-
 	FileFormat(String description, String... extensions) {
 		this.extensions = extensions;
 		this.description = description;
@@ -105,55 +100,6 @@ public enum FileFormat {
 			}
 		}
 		return FileFormat.TXT;
-	}
-
-	public static Matrix getMatrix() {
-		if (matrix == null) {
-			matrix = new FileFormatMatrix();
-		}
-		return matrix;
-	}
-}
-
-class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
-	private static final long serialVersionUID = 1386986795129799225L;
-
-	public FileFormatMatrix() {
-		setLabel("Supported File Formats");
-		setColumnLabel(0, "File Format");
-		setColumnLabel(1, "Description");
-		setColumnLabel(2, "Extensions");
-	}
-
-	
-	public Object getObject(long row, long column) {
-		return getObject((int) row, (int) column);
-	}
-
-	
-	public Object getObject(int row, int column) {
-		FileFormat f = FileFormat.values()[row];
-		switch (column) {
-		case 1:
-			return f.getDescription();
-		case 2:
-			return Arrays.asList(f.getExtensions());
-		default:
-			return f.name();
-		}
-	}
-
-	
-	public void setObject(Object value, long row, long column) {
-	}
-
-	
-	public void setObject(Object value, int row, int column) {
-	}
-
-	
-	public long[] getSize() {
-		return new long[] { FileFormat.values().length, 3 };
 	}
 
 }

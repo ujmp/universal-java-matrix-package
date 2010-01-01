@@ -52,29 +52,29 @@ public class UJMPToolsMenu extends JMenu {
 	public UJMPToolsMenu(JComponent component) {
 		super("Tools");
 		setMnemonic(KeyEvent.VK_T);
-		add(new JMenuItem(new ShowInFrameAction(component,
-				new UJMPPluginsMatrix())));
-		add(new JSeparator());
-		add(new JMenuItem(new ShowInFrameAction(component, FileFormat
-				.getMatrix())));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixSystemProperties())));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixSystemEnvironment())));
-		add(new JMenuItem(new ShowInFrameAction(component, MatrixUIDefaults
-				.getInstance())));
+		add(new JMenuItem(new ShowInFrameAction(component, "UJMP Plugins",
+				UJMPPluginsMatrix.class)));
 		add(new JSeparator());
 		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixMemoryUsage())));
+				"Supported File Formats", FileFormat.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "System Properties",
+				MatrixSystemProperties.class)));
 		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixRunningThreads())));
+				"System Environment", MatrixSystemEnvironment.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "UI Defaults",
+				MatrixUIDefaults.class)));
+		add(new JSeparator());
+		add(new JMenuItem(new ShowInFrameAction(component, "Memory Usage",
+				MatrixMemoryUsage.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Running Threads",
+				MatrixRunningThreads.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "System Time",
+				MatrixSystemTime.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Random Seed",
+				MatrixRandomSeed.class)));
 		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixSystemTime())));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixRandomSeed())));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				new MatrixAvailableProcessors())));
-		
+				"Available Processors", MatrixAvailableProcessors.class)));
+
 		if (JMathLib.isAvailable()) {
 			add(new JSeparator());
 			add(new JMathLibAction());
@@ -89,7 +89,6 @@ public class UJMPToolsMenu extends JMenu {
 			putValue(Action.SHORT_DESCRIPTION, "Show JMathlib in a new Window");
 		}
 
-		
 		public void actionPerformed(ActionEvent e) {
 			JMathLib.showGUI();
 		}

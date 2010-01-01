@@ -32,20 +32,40 @@ import org.ujmp.core.interfaces.GUIObject;
 public class ShowInFrameAction extends ObjectAction {
 	private static final long serialVersionUID = -5025569936825456099L;
 
-	public ShowInFrameAction(JComponent c, Matrix matrix) {
-		this(c, matrix.getGUIObject());
+	private Class<?> guiClass = null;
+
+	// public ShowInFrameAction(JComponent c, Matrix matrix) {
+	// this(c, matrix.getGUIObject());
+	// }
+	//
+	// public ShowInFrameAction(JComponent c, GUIObject object) {
+	// super(c, object);
+	// putValue(Action.NAME, object.getLabel());
+	// putValue(Action.SHORT_DESCRIPTION, "Show " + object.getLabel()
+	// + " in a new Window");
+	// }
+
+	public ShowInFrameAction(JComponent c, String label, Class<?> object) {
+		super(c, null);
+		putValue(Action.NAME, label);
+		putValue(Action.SHORT_DESCRIPTION, "Show " + label + " in a new Window");
+		this.guiClass = object;
 	}
 
-	public ShowInFrameAction(JComponent c, GUIObject object) {
-		super(c, object);
-		putValue(Action.NAME, object.getLabel());
-		putValue(Action.SHORT_DESCRIPTION, "Show " + object.getLabel() + " in a new Window");
-	}
-
-	
 	public Object call() {
+		if (guiClass != null && getGUIObject() == null) {
+			try {
+				Object o = guiClass.newInstance();
+				if (o instanceof Matrix) {
+					setGUIObject(((Matrix) o).getGUIObject());
+				} else {
+					setGUIObject((GUIObject) o);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		getGUIObject().showGUI();
 		return null;
 	}
-
 }

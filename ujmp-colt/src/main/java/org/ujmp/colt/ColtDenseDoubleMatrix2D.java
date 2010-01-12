@@ -128,9 +128,19 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				.assign(Functions.plus(value)));
 	}
 
+	public Matrix minus(double value) {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
+				.assign(Functions.minus(value)));
+	}
+
 	public Matrix times(double value) {
 		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.mult(value)));
+	}
+
+	public Matrix divide(double value) {
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
+				.assign(Functions.div(value)));
 	}
 
 	public Matrix mtimes(Matrix m) {

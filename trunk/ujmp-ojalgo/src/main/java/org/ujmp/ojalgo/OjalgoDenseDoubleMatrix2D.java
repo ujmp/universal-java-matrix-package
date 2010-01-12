@@ -26,22 +26,14 @@ package org.ujmp.ojalgo;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.concurrent.Future;
 
+import org.ojalgo.array.ArrayUtils;
+import org.ojalgo.function.implementation.PrimitiveFunction;
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
-import org.ojalgo.matrix.decomposition.Cholesky;
-import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
-import org.ojalgo.matrix.decomposition.DecomposeAndSolve;
-import org.ojalgo.matrix.decomposition.Eigenvalue;
-import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
-import org.ojalgo.matrix.decomposition.LU;
-import org.ojalgo.matrix.decomposition.LUDecomposition;
-import org.ojalgo.matrix.decomposition.QR;
-import org.ojalgo.matrix.decomposition.QRDecomposition;
-import org.ojalgo.matrix.decomposition.SingularValue;
-import org.ojalgo.matrix.decomposition.SingularValueDecomposition;
+import org.ojalgo.matrix.decomposition.*;
 import org.ojalgo.matrix.store.MatrixStore;
+import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -80,8 +72,42 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
+	public Matrix divide(final double factor) throws MatrixException {
+
+		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+				.makeEmpty((int) this.getRowCount(), (int) this
+						.getColumnCount());
+
+		retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, factor);
+
+		return new OjalgoDenseDoubleMatrix2D(retVal);
+	}
+
+	@Override
+	public Matrix divide(final Matrix m) throws MatrixException {
+
+		if (m instanceof OjalgoDenseDoubleMatrix2D) {
+
+			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
+					.getWrappedObject();
+
+			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+					.makeEmpty((int) this.getRowCount(), (int) this
+							.getColumnCount());
+
+			retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, tmpArg);
+
+			return new OjalgoDenseDoubleMatrix2D(retVal);
+
+		} else {
+
+			return super.divide(m);
+		}
+	}
+
+	@Override
 	public Matrix[] eig() {
-		final Eigenvalue<Double> evd = EigenvalueDecomposition.makeJama();
+		final Eigenvalue<Double> evd = EigenvalueDecomposition.makePrimitive();
 		evd.compute(matrix);
 		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
 		final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
@@ -130,6 +156,40 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
+	public Matrix minus(final double factor) throws MatrixException {
+
+		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+				.makeEmpty((int) this.getRowCount(), (int) this
+						.getColumnCount());
+
+		retVal.fillMatching(matrix, PrimitiveFunction.SUBTRACT, factor);
+
+		return new OjalgoDenseDoubleMatrix2D(retVal);
+	}
+
+	@Override
+	public Matrix minus(final Matrix m) throws MatrixException {
+
+		if (m instanceof OjalgoDenseDoubleMatrix2D) {
+
+			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
+					.getWrappedObject();
+
+			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+					.makeEmpty((int) this.getRowCount(), (int) this
+							.getColumnCount());
+
+			retVal.fillMatching(matrix, PrimitiveFunction.SUBTRACT, tmpArg);
+
+			return new OjalgoDenseDoubleMatrix2D(retVal);
+
+		} else {
+
+			return super.minus(m);
+		}
+	}
+
+	@Override
 	public Matrix mtimes(final Matrix m) {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 			final PrimitiveDenseStore mo = ((OjalgoDenseDoubleMatrix2D) m)
@@ -139,6 +199,40 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			return new OjalgoDenseDoubleMatrix2D(result);
 		} else {
 			return super.mtimes(m);
+		}
+	}
+
+	@Override
+	public Matrix plus(final double factor) throws MatrixException {
+
+		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+				.makeEmpty((int) this.getRowCount(), (int) this
+						.getColumnCount());
+
+		retVal.fillMatching(matrix, PrimitiveFunction.ADD, factor);
+
+		return new OjalgoDenseDoubleMatrix2D(retVal);
+	}
+
+	@Override
+	public Matrix plus(final Matrix m) throws MatrixException {
+
+		if (m instanceof OjalgoDenseDoubleMatrix2D) {
+
+			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
+					.getWrappedObject();
+
+			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+					.makeEmpty((int) this.getRowCount(), (int) this
+							.getColumnCount());
+
+			retVal.fillMatching(matrix, PrimitiveFunction.ADD, tmpArg);
+
+			return new OjalgoDenseDoubleMatrix2D(retVal);
+
+		} else {
+
+			return super.plus(m);
 		}
 	}
 
@@ -164,7 +258,29 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			matrix = (PrimitiveDenseStore) object;
 		} else {
 			matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
-					.copyAnything2D(object);
+					.copy(object);
+		}
+	}
+
+	@Override
+	public Matrix solve(final Matrix b) {
+		try {
+			if (b instanceof OjalgoDenseDoubleMatrix2D) {
+				final OjalgoDenseDoubleMatrix2D b2 = (OjalgoDenseDoubleMatrix2D) b;
+				if (this.isSquare()) {
+					final LU<Double> lu = LUDecomposition.makePrimitive();
+					lu.compute(matrix);
+					return new OjalgoDenseDoubleMatrix2D(lu.solve(b2.matrix));
+				} else {
+					final QR<Double> qr = QRDecomposition.makePrimitive();
+					qr.compute(matrix);
+					return new OjalgoDenseDoubleMatrix2D(qr.solve(b2.matrix));
+				}
+			} else {
+				return super.solve(b);
+			}
+		} catch (final Exception e) {
+			throw new MatrixException(e);
 		}
 	}
 
@@ -177,6 +293,40 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		final Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
 		final Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
 		return new Matrix[] { u, s, v };
+	}
+
+	@Override
+	public Matrix times(final double factor) throws MatrixException {
+
+		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+				.makeEmpty((int) this.getRowCount(), (int) this
+						.getColumnCount());
+
+		retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, factor);
+
+		return new OjalgoDenseDoubleMatrix2D(retVal);
+	}
+
+	@Override
+	public Matrix times(final Matrix m) throws MatrixException {
+
+		if (m instanceof OjalgoDenseDoubleMatrix2D) {
+
+			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
+					.getWrappedObject();
+
+			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
+					.makeEmpty((int) this.getRowCount(), (int) this
+							.getColumnCount());
+
+			retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, tmpArg);
+
+			return new OjalgoDenseDoubleMatrix2D(retVal);
+
+		} else {
+
+			return super.times(m);
+		}
 	}
 
 	@Override
@@ -194,37 +344,12 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		s.defaultReadObject();
 		final double[][] data = (double[][]) s.readObject();
 		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
-				.copyRaw(data);
+				.copy(ArrayUtils.wrapAccess2D(data));
 	}
 
 	private void writeObject(final ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(this.toDoubleArray());
-	}
-
-	public Matrix solve(Matrix b) {
-		try {
-			if (b instanceof OjalgoDenseDoubleMatrix2D) {
-				OjalgoDenseDoubleMatrix2D b2 = (OjalgoDenseDoubleMatrix2D) b;
-				if (isSquare()) {
-					final LU<Double> lu = LUDecomposition.makePrimitive();
-					final Future<DecomposeAndSolve<Double>> ret = lu.solve(
-							matrix, b2.matrix);
-					return new OjalgoDenseDoubleMatrix2D(ret.get()
-							.getSolution());
-				} else {
-					final QR<Double> qr = QRDecomposition.makePrimitive();
-					final Future<DecomposeAndSolve<Double>> ret = qr.solve(
-							matrix, b2.matrix);
-					return new OjalgoDenseDoubleMatrix2D(ret.get()
-							.getSolution());
-				}
-			} else {
-				return super.solve(b);
-			}
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,6 +26,7 @@ package org.ujmp.core.util;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -69,6 +70,10 @@ public abstract class MathUtil {
 			dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.GERMAN));
 		} catch (Throwable t) {
 		}
+	}
+
+	public static MathContext getDefaultMathContext() {
+		return UJMPSettings.getDefaultMathContext();
 	}
 
 	public static String getMD5Sum(String text) throws NoSuchAlgorithmException {

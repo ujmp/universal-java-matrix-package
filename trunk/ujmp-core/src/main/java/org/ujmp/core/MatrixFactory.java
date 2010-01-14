@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -856,6 +856,15 @@ public abstract class MatrixFactory {
 
 	public static Matrix welcomeMatrix() {
 		return new WelcomeMatrix();
+	}
+
+	public static Matrix like(Matrix matrix) {
+		try {
+			Constructor<?> con = matrix.getClass().getConstructor(long[].class);
+			return (Matrix) con.newInstance(matrix.getSize());
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
 	}
 
 }

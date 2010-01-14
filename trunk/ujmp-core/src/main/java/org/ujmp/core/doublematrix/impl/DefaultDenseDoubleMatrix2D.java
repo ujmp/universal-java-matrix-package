@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -127,22 +127,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
 			result[i] = values[i] - v;
-		}
-		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
-	}
-
-	public final Matrix times(double v) {
-		double[] result = new double[values.length];
-		for (int i = result.length; --i != -1;) {
-			result[i] = values[i] * v;
-		}
-		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
-	}
-
-	public final Matrix divide(double v) {
-		double[] result = new double[values.length];
-		for (int i = result.length; --i != -1;) {
-			result[i] = values[i] / v;
 		}
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}

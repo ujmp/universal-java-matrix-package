@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -134,26 +134,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int r = result.length; --r != -1;) {
 			for (int c = result[0].length; --c != -1;) {
 				result[r][c] = values[r][c] - v;
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix times(double v) {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] * v;
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix divide(double v) {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] / v;
 			}
 		}
 		return new ArrayDenseDoubleMatrix2D(result);

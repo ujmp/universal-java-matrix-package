@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,6 +23,7 @@
 
 package org.ujmp.core.util;
 
+import java.math.MathContext;
 import java.util.Locale;
 
 import org.ujmp.core.util.io.RingBufferOutputStream;
@@ -37,6 +38,16 @@ public abstract class UJMPSettings {
 	private static int systemErrBufferSize = 1024 * 1024;
 
 	private static int numberOfThreads = 1;
+
+	private static MathContext mathContext = MathContext.DECIMAL128;
+
+	public static MathContext getDefaultMathContext() {
+		return mathContext;
+	}
+
+	public static void setDefaultMathContext(MathContext mc) {
+		mathContext = mc;
+	}
 
 	/**
 	 * How many rows should be returned maximally for <code>toString()</code> If

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -62,6 +62,8 @@ import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
+import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
@@ -441,7 +443,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix times(double factor) throws MatrixException {
-		return Times.calc(false, this, factor);
+		Matrix result = MatrixFactory.like(this);
+		TimesScalar.MATRIX.calc(this, factor, result);
+		return result;
 	}
 
 	public Matrix times(Matrix matrix) throws MatrixException {
@@ -452,8 +456,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Divide.calc(this, m);
 	}
 
-	public Matrix divide(double factor) throws MatrixException {
-		return Divide.calc(this, factor);
+	public Matrix divide(double divisor) throws MatrixException {
+		Matrix result = MatrixFactory.like(this);
+		DivideScalar.MATRIX.calc(this, divisor, result);
+		return result;
 	}
 
 	public Matrix divide(Ret returnType, boolean ignoreNaN, double factor) throws MatrixException {

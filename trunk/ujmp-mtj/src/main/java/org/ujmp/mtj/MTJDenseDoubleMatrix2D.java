@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2009 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -204,8 +204,15 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				a.mult(b, c);
 				return new MTJDenseDoubleMatrix2D(c);
 			} catch (Exception e) {
-				// sometimes BLAS cannot be found, in this case, we use the
-				// default method below
+				// sometimes BLAS cannot be found. Don't know why. Use direct
+				// method instead.
+				double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix) c)
+						.getData();
+				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c
+						.numColumns(), a.numColumns(), 1, a.getData(), 0, Math
+						.max(1, a.numRows()), Bd, 0, Math.max(1, b.numRows()),
+						1, Cd, 0, Math.max(1, c.numRows()));
+				return new MTJDenseDoubleMatrix2D(c);
 			}
 		}
 		return super.mtimes(m2);
@@ -213,190 +220,24 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m2) throws MatrixException {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
-					.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
-					.getData().length);
-			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
-			for (int i = a.getData().length; --i >= 0;) {
-				a.getData()[i] += b.getData()[i];
-			}
-			return new MTJDenseDoubleMatrix2D(a);
+			DenseMatrix ret = matrix.copy();
+			ret.add(((MTJDenseDoubleMatrix2D) m2).getWrappedObject());
+			return new MTJDenseDoubleMatrix2D(ret);
 		} else {
 			return super.plus(m2);
 		}
-	}
-
-	public Matrix times(Matrix m2) throws MatrixException {
-		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
-					.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
-					.getData().length);
-			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
-			for (int i = a.getData().length; --i >= 0;) {
-				a.getData()[i] *= b.getData()[i];
-			}
-			return new MTJDenseDoubleMatrix2D(a);
-		} else {
-			return super.plus(m2);
-		}
-	}
-
-	public Matrix minus(Matrix m2) throws MatrixException {
-		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix
-					.numColumns());
-			System.arraycopy(matrix.getData(), 0, a.getData(), 0, matrix
-					.getData().length);
-			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
-			for (int i = a.getData().length; --i >= 0;) {
-				a.getData()[i] -= b.getData()[i];
-			}
-			return new MTJDenseDoubleMatrix2D(a);
-		} else {
-			return super.minus(m2);
-		}
-	}
-
-	public Matrix plus(Ret returnType, boolean ignoreNaN, double value)
-			throws MatrixException {
-		if (ignoreNaN) {
-			switch (returnType) {
-			case ORIG:
-				return super.plus(returnType, ignoreNaN, value);
-			case LINK:
-				return super.plus(returnType, ignoreNaN, value);
-			default:
-				return super.plus(returnType, ignoreNaN, value);
-			}
-		} else {
-			switch (returnType) {
-			case ORIG:
-				return super.plus(returnType, ignoreNaN, value);
-			case LINK:
-				return super.plus(returnType, ignoreNaN, value);
-			default:
-				return super.plus(returnType, ignoreNaN, value);
-			}
-		}
-	}
-
-	public Matrix minus(Ret returnType, boolean ignoreNaN, double value)
-			throws MatrixException {
-		if (ignoreNaN) {
-			switch (returnType) {
-			case ORIG:
-				return super.minus(returnType, ignoreNaN, value);
-			case LINK:
-				return super.minus(returnType, ignoreNaN, value);
-			default:
-				return super.minus(returnType, ignoreNaN, value);
-			}
-		} else {
-			switch (returnType) {
-			case ORIG:
-				return super.minus(returnType, ignoreNaN, value);
-			case LINK:
-				return super.minus(returnType, ignoreNaN, value);
-			default:
-				return super.minus(returnType, ignoreNaN, value);
-			}
-		}
-	}
-
-	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m2)
-			throws MatrixException {
-		if (m2 instanceof MTJDenseDoubleMatrix2D) {
-			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
-
-			if (ignoreNaN) {
-				switch (returnType) {
-				case ORIG:
-					return super.minus(returnType, ignoreNaN, m2);
-				case LINK:
-					return super.minus(returnType, ignoreNaN, m2);
-				default:
-					return super.minus(returnType, ignoreNaN, m2);
-				}
-			} else {
-				switch (returnType) {
-				case ORIG:
-					for (int i = matrix.getData().length; --i >= 0;) {
-						matrix.getData()[i] -= b.getData()[i];
-					}
-				case LINK:
-					return super.minus(returnType, ignoreNaN, m2);
-				default:
-					return super.minus(returnType, ignoreNaN, m2);
-				}
-			}
-		} else {
-			return super.minus(returnType, ignoreNaN, m2);
-		}
-	}
-
-	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m2)
-			throws MatrixException {
-		if (ignoreNaN) {
-			switch (returnType) {
-			case ORIG:
-				return super.plus(returnType, ignoreNaN, m2);
-			case LINK:
-				return super.plus(returnType, ignoreNaN, m2);
-			default:
-				return super.plus(returnType, ignoreNaN, m2);
-			}
-		} else {
-			switch (returnType) {
-			case ORIG:
-				return super.plus(returnType, ignoreNaN, m2);
-			case LINK:
-				return super.plus(returnType, ignoreNaN, m2);
-			default:
-				return super.plus(returnType, ignoreNaN, m2);
-			}
-		}
-	}
-
-	public Matrix minus(double f) throws MatrixException {
-		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
-				matrix.getData().length);
-		for (int i = a.getData().length; --i >= 0;) {
-			a.getData()[i] -= f;
-		}
-		return new MTJDenseDoubleMatrix2D(a);
-	}
-
-	public Matrix plus(double f) throws MatrixException {
-		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
-				matrix.getData().length);
-		for (int i = a.getData().length; --i >= 0;) {
-			a.getData()[i] += f;
-		}
-		return new MTJDenseDoubleMatrix2D(a);
 	}
 
 	public Matrix times(double f) throws MatrixException {
-		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
-				matrix.getData().length);
-		for (int i = a.getData().length; --i >= 0;) {
-			a.getData()[i] *= f;
-		}
-		return new MTJDenseDoubleMatrix2D(a);
+		DenseMatrix ret = matrix.copy();
+		ret.scale(f);
+		return new MTJDenseDoubleMatrix2D(ret);
 	}
 
 	public Matrix divide(double f) throws MatrixException {
-		DenseMatrix a = new DenseMatrix(matrix.numRows(), matrix.numColumns());
-		System.arraycopy(matrix.getData(), 0, a.getData(), 0,
-				matrix.getData().length);
-		for (int i = a.getData().length; --i >= 0;) {
-			a.getData()[i] /= f;
-		}
-		return new MTJDenseDoubleMatrix2D(a);
+		DenseMatrix ret = matrix.copy();
+		ret.scale(1.0 / f);
+		return new MTJDenseDoubleMatrix2D(ret);
 	}
 
 	public Matrix copy() {

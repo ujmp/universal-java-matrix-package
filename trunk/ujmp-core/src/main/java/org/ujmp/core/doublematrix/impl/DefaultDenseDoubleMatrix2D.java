@@ -115,22 +115,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	public final Matrix plus(double v) {
-		double[] result = new double[values.length];
-		for (int i = result.length; --i != -1;) {
-			result[i] = values[i] + v;
-		}
-		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
-	}
-
-	public final Matrix minus(double v) {
-		double[] result = new double[values.length];
-		for (int i = result.length; --i != -1;) {
-			result[i] = values[i] - v;
-		}
-		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
-	}
-
 	public final Matrix copy() throws MatrixException {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);

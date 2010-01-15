@@ -29,7 +29,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
@@ -64,7 +63,7 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 			socket = new DatagramSocket(port);
 			thread.start();
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not open socket", e);
+			throw new MatrixException("could not open socket", e);
 		}
 	}
 
@@ -148,7 +147,7 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 				}
 
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "error in data transmission", e);
+				throw new MatrixException("error in data transmission", e);
 			}
 		}
 	}

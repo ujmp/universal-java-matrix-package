@@ -37,7 +37,7 @@ import org.ujmp.orbital.OrbitalDenseDoubleMatrix2D;
 import org.ujmp.owlpack.OwlpackDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
-import org.ujmp.sst.SSTDenseDoubleMatrix;
+import org.ujmp.sst.SSTDenseDoubleMatrix2D;
 import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 
 public class TestCompareMatrices extends TestCase {
@@ -78,7 +78,7 @@ public class TestCompareMatrices extends TestCase {
 
 		// some libraries do not support Java 5
 		if (!"1.5".equals(System.getProperty("java.specification.version"))) {
-			ALLFLOATMATRIXCLASSES.add(SSTDenseDoubleMatrix.class);
+			ALLFLOATMATRIXCLASSES.add(SSTDenseDoubleMatrix2D.class);
 			ALLFLOATMATRIXCLASSES.add(EJMLDenseDoubleMatrix2D.class);
 		}
 
@@ -114,7 +114,7 @@ public class TestCompareMatrices extends TestCase {
 
 	public void testMtimesLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(100, 101);
+		Matrix ref2 = MatrixFactory.randn(100, 102);
 		Matrix ref3 = ref1.mtimes(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -130,8 +130,8 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testPlusMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
-		Matrix ref2 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref2 = MatrixFactory.randn(11, 10);
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -164,8 +164,8 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testMinusMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
-		Matrix ref2 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref2 = MatrixFactory.randn(11, 10);
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -198,8 +198,8 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testTimesMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
-		Matrix ref2 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref2 = MatrixFactory.randn(11, 10);
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -232,7 +232,7 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testTimesScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
@@ -247,8 +247,72 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	public void testPlusScalarSmall() throws Exception {
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		double ref2 = MathUtil.nextDouble();
+		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
+
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m3 = m1.plus(ref2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
+		}
+	}
+
+	public void testPlusScalarLarge() throws Exception {
+		Matrix ref1 = MatrixFactory.randn(101, 100);
+		double ref2 = MathUtil.nextDouble();
+		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
+
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m3 = m1.plus(ref2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
+		}
+	}
+
+	public void testMinusScalarLarge() throws Exception {
+		Matrix ref1 = MatrixFactory.randn(101, 100);
+		double ref2 = MathUtil.nextDouble();
+		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
+
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m3 = m1.minus(ref2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
+		}
+	}
+
+	public void testMinusScalarSmall() throws Exception {
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		double ref2 = MathUtil.nextDouble();
+		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
+
+		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
+			try {
+				Matrix m1 = getMatrix(mclass, ref1);
+				Matrix m3 = m1.minus(ref2);
+				assertEquals(mclass.toString(), 0.0, ref3.minus(m3).doubleValue(), TOLERANCE);
+			} catch (Throwable e) {
+				assertEquals(mclass.toString() + ": " + e, true, false);
+			}
+		}
+	}
+
 	public void testDivideScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
@@ -296,8 +360,8 @@ public class TestCompareMatrices extends TestCase {
 	}
 
 	public void testDivideMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
-		Matrix ref2 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref2 = MatrixFactory.randn(11, 10);
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {

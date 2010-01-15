@@ -138,27 +138,27 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public void setRunAllLibraries() throws Exception {
 		setSkipSlowLibraries(true);
 
-		setRunColtDenseDoubleMatrix2DBenchmark(true);
-		setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
-		setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
+		// setRunColtDenseDoubleMatrix2DBenchmark(true);
+		// setRunCommonsMathArrayDenseDoubleMatrix2DBenchmark(true);
+		// setRunCommonsMathBlockDenseDoubleMatrix2DBenchmark(true);
 		setRunEJMLDenseDoubleMatrix2DBenchmark(true);
-		setRunJamaDenseDoubleMatrix2DBenchmark(true);
-		setRunJampackDenseDoubleMatrix2DBenchmark(true);
-		setRunJLinAlgDenseDoubleMatrix2DBenchmark(true);
-		setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
-		setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
-		setRunJSciDenseDoubleMatrix2DBenchmark(true);
-		setRunJScienceDenseDoubleMatrix2DBenchmark(true);
-		setRunMantissaDenseDoubleMatrix2DBenchmark(true);
-		setRunMTJDenseDoubleMatrix2DBenchmark(true);
+		// setRunJamaDenseDoubleMatrix2DBenchmark(true);
+		// setRunJampackDenseDoubleMatrix2DBenchmark(true);
+		// setRunJLinAlgDenseDoubleMatrix2DBenchmark(true);
+		// setRunJMathArrayDenseDoubleMatrix2DBenchmark(true);
+		// setRunJMatricesDenseDoubleMatrix2DBenchmark(true);
+		// setRunJSciDenseDoubleMatrix2DBenchmark(true);
+		// setRunJScienceDenseDoubleMatrix2DBenchmark(true);
+		// setRunMantissaDenseDoubleMatrix2DBenchmark(true);
+		// setRunMTJDenseDoubleMatrix2DBenchmark(true);
 		setRunOjalgoDenseDoubleMatrix2DBenchmark(true);
-		setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
-		setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
-		setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
-		setRunSSTDenseDoubleMatrix2DBenchmark(true);
+		// setRunOrbitalDenseDoubleMatrix2DBenchmark(true);
+		// setRunOwlpackDenseDoubleMatrix2DBenchmark(true);
+		// setRunParallelColtDenseDoubleMatrix2DBenchmark(true);
+		// setRunSSTDenseDoubleMatrix2DBenchmark(true);
 		setRunDefaultDenseDoubleMatrix2DBenchmark(true);
 		setRunArrayDenseDoubleMatrix2DBenchmark(true);
-		setRunVecMathDenseDoubleMatrix2DBenchmark(true);
+		// setRunVecMathDenseDoubleMatrix2DBenchmark(true);
 	}
 
 	public void setRunDefaultDenseDoubleMatrix2DBenchmark(boolean b) {

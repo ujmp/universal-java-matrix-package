@@ -64,42 +64,4 @@ public class Plus extends AbstractDoubleCalculation {
 				+ getSources()[1].getAsDouble(coordinates);
 	}
 
-	public static Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) throws MatrixException {
-		if (m2.isScalar()) {
-			return calc(ignoreNaN, m1, m2.getAsDouble(0, 0));
-		}
-		if (m1.isScalar()) {
-			return calc(ignoreNaN, m2, m1.getAsDouble(0, 0));
-		}
-		Matrix ret = MatrixFactory.zeros(m1.getSize());
-		if (ignoreNaN) {
-			for (long[] c : m2.availableCoordinates()) {
-				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c))
-						+ MathUtil.ignoreNaN(m2.getAsDouble(c)), c);
-			}
-		} else {
-			for (long[] c : m2.availableCoordinates()) {
-				ret.setAsDouble(m1.getAsDouble(c) + m2.getAsDouble(c), c);
-			}
-		}
-		return ret;
-	}
-
-	public static Matrix calc(boolean ignoreNaN, Matrix m1, double v2) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(m1.getSize());
-		if (m1.getAnnotation() != null) {
-			ret.setAnnotation(m1.getAnnotation().clone());
-		}
-		v2 = ignoreNaN ? MathUtil.ignoreNaN(v2) : v2;
-		if (ignoreNaN) {
-			for (long[] c : m1.allCoordinates()) {
-				ret.setAsDouble(MathUtil.ignoreNaN(m1.getAsDouble(c)) + v2, c);
-			}
-		} else {
-			for (long[] c : m1.allCoordinates()) {
-				ret.setAsDouble(m1.getAsDouble(c) + v2, c);
-			}
-		}
-		return ret;
-	}
 }

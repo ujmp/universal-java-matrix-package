@@ -100,11 +100,11 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix transpose() {
-		return new SSTDenseDoubleMatrix(data.clone().mTranspose());
+		return new SSTDenseDoubleMatrix2D(data.mTranspose());
 	}
 
 	public Matrix inv() {
-		return new SSTDenseDoubleMatrix(data.mInvert());
+		return new SSTDenseDoubleMatrix2D(data.mInvert());
 	}
 
 	public Matrix[] eig() {
@@ -123,28 +123,46 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix mtimes(Matrix m) {
-		if (m instanceof SSTDenseDoubleMatrix) {
-			return new SSTDenseDoubleMatrix(data
-					.mMul(((SSTDenseDoubleMatrix) m).getWrappedObject()));
+		if (m instanceof SSTDenseDoubleMatrix2D) {
+			return new SSTDenseDoubleMatrix2D(data
+					.mMul(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 		} else {
 			return super.mtimes(m);
 		}
 	}
 
 	public Matrix plus(double v) {
-		return new SSTDenseDoubleMatrix(data.clone().uAdd(v));
+		return new SSTDenseDoubleMatrix2D(data.clone().uAdd(v));
+	}
+
+	public Matrix plus(Matrix m) {
+		if (m instanceof SSTDenseDoubleMatrix2D) {
+			return new SSTDenseDoubleMatrix2D(data.clone().eAdd(
+					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof SSTDenseDoubleMatrix2D) {
+			return new SSTDenseDoubleMatrix2D(data.clone().eSub(
+					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+		} else {
+			return super.plus(m);
+		}
 	}
 
 	public Matrix minus(double v) {
-		return new SSTDenseDoubleMatrix(data.clone().uAdd(-v));
+		return new SSTDenseDoubleMatrix2D(data.clone().uAdd(-v));
 	}
 
 	public Matrix times(double v) {
-		return new SSTDenseDoubleMatrix(data.clone().uMul(v));
+		return new SSTDenseDoubleMatrix2D(data.clone().uMul(v));
 	}
 
 	public Matrix divide(double v) {
-		return new SSTDenseDoubleMatrix(data.clone().uMul(1 / v));
+		return new SSTDenseDoubleMatrix2D(data.clone().uMul(1 / v));
 	}
 
 }

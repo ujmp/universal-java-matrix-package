@@ -947,4 +947,35 @@ public abstract class MathUtil {
 		return min;
 	}
 
+	public static final BigDecimal plus(BigDecimal v1, BigDecimal v2) {
+		if (v1 != null && v2 != null) {
+			return v1.add(v2, getDefaultMathContext());
+		} else {
+			return null;
+		}
+	}
+
+	public static final BigDecimal minus(BigDecimal v1, BigDecimal v2) {
+		if (v1 != null && v2 != null) {
+			return v1.subtract(v2, getDefaultMathContext());
+		} else {
+			return null;
+		}
+	}
+
+	public static final BigDecimal times(BigDecimal v1, BigDecimal v2) {
+		if (v1 != null && v2 != null) {
+			return v1.multiply(v2, getDefaultMathContext());
+		} else {
+			return null;
+		}
+	}
+
+	public static final BigDecimal divide(BigDecimal v1, BigDecimal v2) {
+		if (v1 != null && v2 != null) {
+			return v1.divide(v2, getDefaultMathContext());
+		} else {
+			return null;
+		}
+	}
 }

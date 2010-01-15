@@ -114,7 +114,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 			final double[][] ret = new double[rowCount][retColumnCount];
 
 			if (ignoreNaN) {
-				if (rowCount * retColumnCount > 10000) {
+				if (rowCount * retColumnCount >= 500) {
 					new PFor(0, retColumnCount - 1) {
 						@Override
 						public void step(int i) {
@@ -147,7 +147,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 				}
 			} else {
-				if (rowCount * retColumnCount > 10000) {
+				if (rowCount * retColumnCount >= 500) {
 					new PFor(0, retColumnCount - 1) {
 						@Override
 						public void step(int i) {
@@ -207,7 +207,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 
 		final double[][] ret = new double[rowCount][retColumnCount];
 
-		if (rowCount * retColumnCount > 10000) {
+		if (rowCount * retColumnCount >= 500) {
 			new PFor(0, retColumnCount - 1) {
 				@Override
 				public void step(int i) {
@@ -257,7 +257,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 			return new DefaultDenseDoubleMatrix2D(C, m1RowCount, m2ColumnCount);
 		}
 
-		if (C.length > 10000) {
+		if (C.length >= 500) {
 			new PFor(0, m2ColumnCount - 1) {
 
 				@Override

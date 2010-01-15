@@ -37,8 +37,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -62,7 +60,13 @@ import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
+import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.MinusMatrix;
+import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.PlusMatrix;
+import org.ujmp.core.calculation.PlusScalar;
+import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
@@ -192,11 +196,6 @@ import org.ujmp.core.util.UJMPSettings;
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
 
-	/**
-	 * A logger used for <code>Matrix</code> and all subclasses
-	 */
-	protected transient static final Logger logger = Logger.getLogger(Matrix.class.getName());
-
 	private static long runningId = 0;
 
 	static {
@@ -211,10 +210,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		try {
 			long mem = Runtime.getRuntime().maxMemory();
 			if (mem < 133234688) {
-				logger.log(Level.WARNING, "Available memory is very low: " + (mem / 1024 / 1024)
-						+ "M");
-				logger.log(Level.WARNING,
-						"Invoke Java with the parameter -Xmx512M to increase available memory");
+				System.err.println("Available memory is very low: " + (mem / 1024 / 1024) + "M");
+				System.err
+						.println("Invoke Java with the parameter -Xmx512M to increase available memory");
 			}
 		} catch (Throwable t) {
 		}
@@ -294,7 +292,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 				Constructor<?> con = c.getConstructor(new Class<?>[] { Matrix.class });
 				guiObject = (GUIObject) con.newInstance(new Object[] { this });
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "cannot create matrix gui object", e);
+				throw new MatrixException("cannot create matrix gui object", e);
 			}
 		}
 		return guiObject;
@@ -319,12 +317,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix clone() throws CloneNotSupportedException {
-		try {
-			return copy();
-		} catch (MatrixException e) {
-			logger.log(Level.WARNING, "Could not clone Matrix, returning original Matrix", e);
-			return this;
-		}
+		return copy();
 	}
 
 	public final Matrix select(Ret returnType, long[]... selection) throws MatrixException {
@@ -448,12 +441,16 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return result;
 	}
 
-	public Matrix times(Matrix matrix) throws MatrixException {
-		return Times.calc(false, this, matrix);
+	public Matrix times(Matrix m) throws MatrixException {
+		Matrix result = MatrixFactory.like(this);
+		TimesMatrix.MATRIX.calc(this, m, result);
+		return result;
 	}
 
 	public Matrix divide(Matrix m) throws MatrixException {
-		return Divide.calc(this, m);
+		Matrix result = MatrixFactory.like(this);
+		DivideMatrix.MATRIX.calc(this, m, result);
+		return result;
 	}
 
 	public Matrix divide(double divisor) throws MatrixException {
@@ -801,8 +798,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			Object o = method.invoke(null, new Object[] { getGUIObject() });
 			return (JFrame) o;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "cannot show GUI", e);
-			return null;
+			throw new MatrixException("cannot show GUI", e);
 		}
 	}
 
@@ -1050,20 +1046,28 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Eye(this).calc(ret);
 	}
 
-	public Matrix plus(double v) throws MatrixException {
-		return Plus.calc(false, this, v);
+	public Matrix plus(double value) throws MatrixException {
+		Matrix result = MatrixFactory.like(this);
+		PlusScalar.MATRIX.calc(this, value, result);
+		return result;
 	}
 
 	public Matrix plus(Matrix m) throws MatrixException {
-		return Plus.calc(false, this, m);
+		Matrix result = MatrixFactory.like(this);
+		PlusMatrix.MATRIX.calc(this, m, result);
+		return result;
 	}
 
-	public Matrix minus(double v) throws MatrixException {
-		return Minus.calc(false, this, v);
+	public Matrix minus(double value) throws MatrixException {
+		Matrix result = MatrixFactory.like(this);
+		MinusScalar.MATRIX.calc(this, value, result);
+		return result;
 	}
 
 	public Matrix minus(Matrix m) throws MatrixException {
-		return Minus.calc(false, this, m);
+		Matrix result = MatrixFactory.like(this);
+		MinusMatrix.MATRIX.calc(this, m, result);
+		return result;
 	}
 
 	public void clear() {
@@ -1079,12 +1083,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final int compareTo(Matrix m) {
-		try {
-			return new Double(doubleValue()).compareTo(m.doubleValue());
-		} catch (MatrixException e) {
-			logger.log(Level.WARNING, "could not compare", e);
-			return Integer.MAX_VALUE;
-		}
+		return new Double(doubleValue()).compareTo(m.doubleValue());
 	}
 
 	public int rank() throws MatrixException {
@@ -1905,8 +1904,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 			return false;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not compare", e);
-			return false;
+			throw new MatrixException("could not compare", e);
 		}
 	}
 

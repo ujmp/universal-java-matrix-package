@@ -26,16 +26,9 @@ package org.ujmp.core.util;
 import java.math.MathContext;
 import java.util.Locale;
 
-import org.ujmp.core.util.io.RingBufferOutputStream;
-import org.ujmp.core.util.io.TeeStream;
-
 public abstract class UJMPSettings {
 
 	private static double tolerance = 1.0e-12;
-
-	private static int systemOutBufferSize = 1024 * 1024;
-
-	private static int systemErrBufferSize = 1024 * 1024;
 
 	private static int numberOfThreads = 1;
 
@@ -88,23 +81,7 @@ public abstract class UJMPSettings {
 	 */
 	private static long maxToolTipCols = 10;
 
-	private static RingBufferOutputStream out = null;
-
-	private static RingBufferOutputStream err = null;
-
 	static {
-		try {
-			out = new RingBufferOutputStream(systemOutBufferSize);
-			err = new RingBufferOutputStream(systemErrBufferSize);
-		} catch (Throwable e) {
-		}
-
-		try {
-			System.setOut(new TeeStream(System.out, out));
-			System.setErr(new TeeStream(System.err, err));
-		} catch (Throwable e) {
-		}
-
 		// Set the number of threads to use for expensive calculations. If the
 		// machine has only one cpu, only one thread is used. For more than one
 		// core, the number of threads is higher.
@@ -125,14 +102,6 @@ public abstract class UJMPSettings {
 			System.setProperty("sun.jnu.encoding", "UTF-8");
 		} catch (Throwable e) {
 		}
-	}
-
-	public static String getSystemOut() {
-		return out.toString();
-	}
-
-	public static String getSystemErr() {
-		return err.toString();
 	}
 
 	public static int getNumberOfThreads() {

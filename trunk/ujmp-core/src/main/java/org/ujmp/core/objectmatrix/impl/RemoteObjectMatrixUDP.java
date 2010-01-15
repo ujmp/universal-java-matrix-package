@@ -31,8 +31,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.logging.Level;
 
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
 public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
@@ -55,7 +55,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 			destination = new InetSocketAddress(server, port);
 			receivedPacket = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not connnect to matrix", e);
+			throw new MatrixException("could not connnect to matrix", e);
 		}
 	}
 
@@ -76,13 +76,12 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDIMENSIONCOUNT) {
-				logger.log(Level.WARNING, "could not set value");
+				throw new MatrixException("could not set value");
 			}
 			ois.close();
 			return null;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not send packet", e);
-			return null;
+			throw new MatrixException("could not send packet", e);
 		}
 	}
 
@@ -102,14 +101,13 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDOUBLEVALUE) {
-				logger.log(Level.WARNING, "could not get value");
+				throw new MatrixException("could not get value");
 			}
 			double result = ois.readDouble();
 			ois.close();
 			return result;
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not send packet", e);
-			return Double.NaN;
+			throw new MatrixException("could not send packet", e);
 		}
 	}
 
@@ -131,10 +129,10 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 			int command = ois.readInt();
 			ois.close();
 			if (command != ServerObjectMatrixUDP.SETDOUBLEVALUE) {
-				logger.log(Level.WARNING, "could not set value");
+				throw new MatrixException("could not set value");
 			}
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not send packet", e);
+			throw new MatrixException("could not send packet", e);
 		}
 	}
 

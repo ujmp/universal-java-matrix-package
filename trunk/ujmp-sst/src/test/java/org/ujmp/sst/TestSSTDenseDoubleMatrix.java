@@ -30,11 +30,11 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws MatrixException {
-		return new SSTDenseDoubleMatrix(size);
+		return new SSTDenseDoubleMatrix2D(size);
 	}
 
 	public Matrix createMatrix(Matrix source) throws MatrixException {
-		return new SSTDenseDoubleMatrix(source);
+		return new SSTDenseDoubleMatrix2D(source);
 	}
 
 	@Override
@@ -137,12 +137,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testMinus() throws Exception {
+	public void testMinusScalar() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testMinus();
+		super.testMinusScalar();
 	}
 
 	@Override
@@ -155,12 +155,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testPlus() throws Exception {
+	public void testPlusScalar() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testPlus();
+		super.testPlusScalar();
 	}
 
 	@Override

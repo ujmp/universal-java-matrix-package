@@ -862,8 +862,8 @@ public abstract class MatrixFactory {
 		try {
 			Constructor<?> con = matrix.getClass().getConstructor(long[].class);
 			return (Matrix) con.newInstance(matrix.getSize());
-		} catch (Exception e) {
-			throw new MatrixException(e);
+		} catch (Throwable e) {
+			return MatrixFactory.dense(matrix.getSize());
 		}
 	}
 

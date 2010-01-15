@@ -119,36 +119,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
-	public final Matrix plus(double v) {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] + v;
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix minus(double v) {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] - v;
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix plus(Matrix m2) throws MatrixException {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[r][c] + m2.getAsDouble(r, c);
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
 	public final Matrix copy() throws MatrixException {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
@@ -161,36 +131,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
-	}
-
-	public final Matrix minus(Matrix m2) throws MatrixException {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] - m2.getAsDouble(r, c);
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix times(Matrix m2) throws MatrixException {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] * m2.getAsDouble(r, c);
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
-	}
-
-	public final Matrix divide(Matrix m2) throws MatrixException {
-		double[][] result = new double[values.length][values[0].length];
-		for (int r = result.length; --r != -1;) {
-			for (int c = result[0].length; --c != -1;) {
-				result[r][c] = values[r][c] / m2.getAsDouble(r, c);
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
 	public boolean containsNaN() {

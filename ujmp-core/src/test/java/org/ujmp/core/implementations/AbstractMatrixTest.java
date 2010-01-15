@@ -444,20 +444,68 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testPlus() throws Exception {
+	public void testPlusScalar() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
-		m = m.plus(1.0);
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
+		Matrix r = m.plus(1.0);
+
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
+		}
+	}
+
+	public void testPlusMatrix() throws Exception {
+		Matrix m1 = createMatrix(2, 2);
+		Matrix m2 = createMatrix(2, 2);
+		m1.setAsDouble(1.0, 0, 0);
+		m1.setAsDouble(2.0, 0, 1);
+		m1.setAsDouble(3.0, 1, 0);
+		m1.setAsDouble(4.0, 1, 1);
+		m2.setAsDouble(1.0, 0, 0);
+		m2.setAsDouble(1.0, 0, 1);
+		m2.setAsDouble(1.0, 1, 0);
+		m2.setAsDouble(1.0, 1, 1);
+		Matrix r = m1.plus(m2);
+
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 0));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 1));
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
 		}
 	}
 
@@ -479,6 +527,13 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
 		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
 		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 2));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 6.0, m.getAsDouble(1, 2));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -586,20 +641,116 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testMinus() throws Exception {
+	public void testMinusScalar() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
-		m = m.minus(1.0);
-		assertEquals(getLabel(), 0.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 1));
+		Matrix r = m.minus(1.0);
+		assertEquals(getLabel(), 0.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 3.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
+		}
+	}
+
+	public void testTimesScalar() throws Exception {
+		Matrix m = createMatrix(2, 2);
+		m.setAsDouble(1.0, 0, 0);
+		m.setAsDouble(2.0, 0, 1);
+		m.setAsDouble(3.0, 1, 0);
+		m.setAsDouble(4.0, 1, 1);
+		Matrix r = m.times(2.0);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 6.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 8.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
+		}
+	}
+
+	public void testDivideScalar() throws Exception {
+		Matrix m = createMatrix(2, 2);
+		m.setAsDouble(1.0, 0, 0);
+		m.setAsDouble(2.0, 0, 1);
+		m.setAsDouble(3.0, 1, 0);
+		m.setAsDouble(4.0, 1, 1);
+		Matrix r = m.divide(2.0);
+		assertEquals(getLabel(), 0.5, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 1.5, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
+		}
+	}
+
+	public void testMinusMatrix() throws Exception {
+		Matrix m1 = createMatrix(2, 2);
+		Matrix m2 = createMatrix(2, 2);
+		m1.setAsDouble(1.0, 0, 0);
+		m1.setAsDouble(2.0, 0, 1);
+		m1.setAsDouble(3.0, 1, 0);
+		m1.setAsDouble(4.0, 1, 1);
+		m2.setAsDouble(0.0, 0, 0);
+		m2.setAsDouble(1.0, 0, 1);
+		m2.setAsDouble(2.0, 1, 0);
+		m2.setAsDouble(3.0, 1, 1);
+		Matrix r = m1.minus(m2);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 0));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
+		assertEquals(getLabel(), 2.0, m2.getAsDouble(1, 0));
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 1));
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (r instanceof Erasable) {
+			((Erasable) r).erase();
 		}
 	}
 
@@ -874,9 +1025,22 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	public void testSolveRandSquare() throws Exception {
-		Matrix a = createMatrix(5, 5);
+		Matrix a = createMatrix(2, 2);
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(5, 5);
+		Matrix x = createMatrix(2, 4);
+		x.randn(Ret.ORIG);
+		Matrix b = a.mtimes(x);
+
+		Matrix x2 = a.solve(b);
+		Matrix prod = a.mtimes(x2);
+
+		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testSolveRandTall() throws Exception {
+		Matrix a = createMatrix(6, 2);
+		a.randn(Ret.ORIG);
+		Matrix x = createMatrix(2, 4);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 

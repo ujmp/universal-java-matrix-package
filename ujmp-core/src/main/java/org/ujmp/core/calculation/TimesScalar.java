@@ -24,7 +24,6 @@
 package org.ujmp.core.calculation;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
@@ -34,28 +33,28 @@ import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.concurrent.PFor;
+import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface TimesScalar<T> {
 
 	public static TimesScalar<Matrix> MATRIX = new TimesScalar<Matrix>() {
 
-		public void calc(Matrix source, BigDecimal factor, Matrix target) {
+		public void calc(final Matrix source, final BigDecimal factor, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
 				TimesScalar.DENSEMATRIX.calc((DenseMatrix) source, factor, (DenseMatrix) target);
 			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 				TimesScalar.SPARSEMATRIX.calc((SparseMatrix) source, factor, (SparseMatrix) target);
 			} else {
-				MathContext mathContext = MathUtil.getDefaultMathContext();
 				for (long[] c : source.allCoordinates()) {
 					BigDecimal value = source.getAsBigDecimal(c);
-					BigDecimal result = value.multiply(factor, mathContext);
+					BigDecimal result = MathUtil.times(value, factor);
 					target.setAsBigDecimal(result, c);
 				}
 			}
 		}
 
-		public void calc(Matrix source, double factor, Matrix target) {
+		public void calc(final Matrix source, final double factor, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
 				TimesScalar.DENSEMATRIX.calc((DenseMatrix) source, factor, (DenseMatrix) target);
 			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
@@ -68,21 +67,20 @@ public interface TimesScalar<T> {
 
 	public static TimesScalar<DenseMatrix> DENSEMATRIX = new TimesScalar<DenseMatrix>() {
 
-		public void calc(DenseMatrix source, BigDecimal factor, DenseMatrix target) {
+		public void calc(final DenseMatrix source, final BigDecimal factor, final DenseMatrix target) {
 			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 				TimesScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, factor,
 						(DenseMatrix2D) target);
 			} else {
-				MathContext mathContext = MathUtil.getDefaultMathContext();
 				for (long[] c : source.allCoordinates()) {
 					BigDecimal value = source.getAsBigDecimal(c);
-					BigDecimal result = value.multiply(factor, mathContext);
+					BigDecimal result = MathUtil.times(value, factor);
 					target.setAsBigDecimal(result, c);
 				}
 			}
 		}
 
-		public void calc(DenseMatrix source, double factor, DenseMatrix target) {
+		public void calc(final DenseMatrix source, final double factor, final DenseMatrix target) {
 			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 				TimesScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, factor,
 						(DenseMatrix2D) target);
@@ -94,16 +92,16 @@ public interface TimesScalar<T> {
 
 	public static TimesScalar<SparseMatrix> SPARSEMATRIX = new TimesScalar<SparseMatrix>() {
 
-		public void calc(SparseMatrix source, BigDecimal factor, SparseMatrix target) {
-			MathContext mathContext = MathUtil.getDefaultMathContext();
+		public void calc(final SparseMatrix source, final BigDecimal factor,
+				final SparseMatrix target) {
 			for (long[] c : source.availableCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
-				BigDecimal result = value.multiply(factor, mathContext);
+				BigDecimal result = MathUtil.times(value, factor);
 				target.setAsBigDecimal(result, c);
 			}
 		}
 
-		public void calc(SparseMatrix source, double factor, SparseMatrix target) {
+		public void calc(final SparseMatrix source, final double factor, final SparseMatrix target) {
 			calc(source, new BigDecimal(factor, MathUtil.getDefaultMathContext()), target);
 		}
 	};
@@ -116,18 +114,17 @@ public interface TimesScalar<T> {
 				TimesScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, factor,
 						(DenseDoubleMatrix2D) target);
 			} else {
-				MathContext mathContext = MathUtil.getDefaultMathContext();
 				for (int r = (int) source.getRowCount(); --r != -1;) {
 					for (int c = (int) source.getColumnCount(); --c != -1;) {
 						BigDecimal value = source.getAsBigDecimal(r, c);
-						BigDecimal result = value.multiply(factor, mathContext);
+						BigDecimal result = MathUtil.times(value, factor);
 						target.setAsBigDecimal(result, r, c);
 					}
 				}
 			}
 		}
 
-		public void calc(DenseMatrix2D source, double factor, DenseMatrix2D target) {
+		public void calc(final DenseMatrix2D source, final double factor, final DenseMatrix2D target) {
 			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
 				TimesScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, factor,
 						(DenseDoubleMatrix2D) target);
@@ -139,11 +136,13 @@ public interface TimesScalar<T> {
 
 	public static TimesScalar<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new TimesScalar<DenseDoubleMatrix2D>() {
 
-		public void calc(DenseDoubleMatrix2D source, BigDecimal factor, DenseDoubleMatrix2D target) {
+		public void calc(final DenseDoubleMatrix2D source, final BigDecimal factor,
+				final DenseDoubleMatrix2D target) {
 			calc(source, factor.doubleValue(), target);
 		}
 
-		public void calc(DenseDoubleMatrix2D source, double factor, DenseDoubleMatrix2D target) {
+		public void calc(final DenseDoubleMatrix2D source, final double factor,
+				final DenseDoubleMatrix2D target) {
 			if (source instanceof HasDoubleArray2D && target instanceof HasDoubleArray2D) {
 				calc(((HasDoubleArray2D) source).getDoubleArray2D(), factor,
 						((HasDoubleArray2D) target).getDoubleArray2D());
@@ -160,12 +159,15 @@ public interface TimesScalar<T> {
 		}
 
 		private void calc(final double[][] source, final double factor, final double[][] target) {
-			if (source.length >= 100 && source[0].length >= 100) {
-				new PFor(0, source.length - 1) {
+			final int rows = source.length;
+			final int cols = source[0].length;
+			if (UJMPSettings.getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
+				new PForEquidistant(0, rows - 1) {
+
 					public void step(int i) {
 						double[] tsource = source[i];
 						double[] ttarget = target[i];
-						for (int c = source[0].length; --c != -1;) {
+						for (int c = 0; c < cols; c++) {
 							ttarget[c] = tsource[c] * factor;
 						}
 					}
@@ -173,25 +175,26 @@ public interface TimesScalar<T> {
 			} else {
 				double[] tsource = null;
 				double[] ttarget = null;
-				for (int r = source.length; --r != -1;) {
+				for (int r = 0; r < rows; r++) {
 					tsource = source[r];
 					ttarget = target[r];
-					for (int c = source[0].length; --c != -1;) {
+					for (int c = 0; c < cols; c++) {
 						ttarget[c] = tsource[c] * factor;
 					}
 				}
 			}
 		}
 
-		private void calc(double[] source, double factor, double[] target) {
-			for (int i = source.length; --i != -1;) {
+		private void calc(final double[] source, final double factor, final double[] target) {
+			final int length = source.length;
+			for (int i = 0; i < length; i++) {
 				target[i] = factor * source[i];
 			}
 		}
 	};
 
-	public void calc(T source, BigDecimal factor, T target);
+	public void calc(final T source, final BigDecimal factor, final T target);
 
-	public void calc(T source, double factor, T target);
+	public void calc(final T source, final double factor, final T target);
 
 }

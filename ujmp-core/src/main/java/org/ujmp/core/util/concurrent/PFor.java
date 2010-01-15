@@ -29,7 +29,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
-
 public abstract class PFor {
 
 	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
@@ -57,7 +56,7 @@ public abstract class PFor {
 		} else {
 			ThreadPoolExecutor es = executors.get();
 			if (es == null) {
-				es = new UJMPThreadPoolExecutor("PFor", threads, threads);
+				es = new UJMPThreadPoolExecutor(this.getClass().getName(), threads, threads);
 				executors.set(es);
 			} else {
 				es.setCorePoolSize(threads);
@@ -126,20 +125,4 @@ public abstract class PFor {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		int count = 5;
-		int start = 0;
-		int end = 40;
-		int sum = 0;
-		double stepsize = (double) (end - start) / count;
-
-		for (int i = 0; i < count; i++) {
-			int starti = (int) Math.ceil(start + i * stepsize);
-			int endi = (int) Math.ceil(start + (i + 1) * stepsize);
-			System.out.println(i + ": " + starti + " " + endi);
-			sum += endi - starti;
-		}
-		System.out.println("stepsize:" + stepsize);
-		System.out.println("sum: " + (sum - 1));
-	}
 }

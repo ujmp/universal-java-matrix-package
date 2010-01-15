@@ -2,6 +2,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -202,7 +203,7 @@ public class QR implements java.io.Serializable {
 	 */
 
 	public Matrix solve(Matrix B) {
-		if (B.getColumnCount() != m) {
+		if (B.getRowCount() != m) {
 			throw new IllegalArgumentException("Matrix row dimensions must agree.");
 		}
 		if (!this.isFullRank()) {
@@ -237,7 +238,7 @@ public class QR implements java.io.Serializable {
 				}
 			}
 		}
-		return MatrixFactory.linkToArray(X);
+		return MatrixFactory.linkToArray(X).subMatrix(Ret.NEW, 0, 0, n - 1, nx - 1);
 	}
 
 	public static Matrix[] calcNew(Matrix m) throws MatrixException {

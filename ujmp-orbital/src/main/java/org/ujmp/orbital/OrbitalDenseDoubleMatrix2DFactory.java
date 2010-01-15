@@ -27,7 +27,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class OjalgoDenseDoubleMatrix2DFactory extends
+public class OrbitalDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -2350372463029926450L;
 

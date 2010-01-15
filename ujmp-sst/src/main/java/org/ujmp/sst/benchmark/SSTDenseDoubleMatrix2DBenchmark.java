@@ -40,7 +40,7 @@ public class SSTDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new SSTDenseDoubleMatrix2DBenchmark().run();
+		new SSTDenseDoubleMatrix2DBenchmark().runAllTests();
 	}
 
 }

@@ -31,11 +31,11 @@ import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
 public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
@@ -170,7 +170,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 				}
 			}
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not open file", e);
+			throw new MatrixException("could not open file", e);
 		}
 	}
 
@@ -335,10 +335,10 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 					}
 
 				} else {
-					logger.log(Level.WARNING, "no such coordinates: " + row + "," + column);
+					throw new MatrixException("no such coordinates: " + row + "," + column);
 				}
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "could not read value", e);
+				throw new MatrixException("could not read value", e);
 			}
 		}
 		return 0.0;
@@ -457,12 +457,11 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 				throw new IOException("not supported");
 			}
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not write value at coordinates " + row + "," + column,
+			throw new MatrixException("could not write value at coordinates " + row + "," + column,
 					e);
 		}
 	}
 
-	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		if (randomAccessFile != null) {
@@ -478,7 +477,6 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 		return new long[] { rowCount, columnCount };
 	}
 
-	
 	public boolean isReadOnly() {
 		return readOnly;
 	}

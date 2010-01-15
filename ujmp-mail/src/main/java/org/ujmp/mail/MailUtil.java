@@ -34,22 +34,22 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.ConsoleUtil;
 
 public class MailUtil {
 
 	public static void sendSystemOut(String recipient, String subject,
 			String smtpServer, String userName, String password)
 			throws Exception {
-		sendMessage(recipient, subject, UJMPSettings.getSystemOut(),
-				smtpServer, userName, password);
+		sendMessage(recipient, subject, ConsoleUtil.getSystemOut(), smtpServer,
+				userName, password);
 	}
 
 	public static void sendSystemErr(String recipient, String subject,
 			String smtpServer, String userName, String password)
 			throws Exception {
-		sendMessage(recipient, subject, UJMPSettings.getSystemErr(),
-				smtpServer, userName, password);
+		sendMessage(recipient, subject, ConsoleUtil.getSystemErr(), smtpServer,
+				userName, password);
 	}
 
 	public static void sendMessage(String recipient, String subject,

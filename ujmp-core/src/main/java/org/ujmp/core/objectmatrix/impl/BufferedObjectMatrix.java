@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
@@ -117,7 +116,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 			outputBuffer = Collections.synchronizedSet(new HashSet<Coordinates>());
 			outputBufferSize = numElements;
 		} catch (IOException e) {
-			logger.log(Level.WARNING, "could not set output buffer", e);
+			throw new MatrixException("could not set output buffer", e);
 		}
 	}
 
@@ -126,7 +125,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 			try {
 				outputBuffer.wait();
 			} catch (InterruptedException e) {
-				logger.log(Level.WARNING, "could not flush buffer", e);
+				throw new MatrixException("could not flush buffer", e);
 			}
 		}
 	}
@@ -148,7 +147,7 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 					}
 					Thread.sleep(100);
 				} catch (Exception e) {
-					logger.log(Level.WARNING, "error writing to matrix", e);
+					throw new MatrixException("error writing to matrix", e);
 				}
 			}
 		}

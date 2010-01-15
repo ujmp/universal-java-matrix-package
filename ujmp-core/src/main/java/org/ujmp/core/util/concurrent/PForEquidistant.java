@@ -29,8 +29,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
-
-public abstract class PFor2 {
+public abstract class PForEquidistant {
 
 	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
 
@@ -47,7 +46,7 @@ public abstract class PFor2 {
 		}
 	}
 
-	public PFor2(int threads, int first, int last, Object... objects) {
+	public PForEquidistant(int threads, int first, int last, Object... objects) {
 		this.objects = objects;
 
 		if (threads < 2) {
@@ -57,7 +56,7 @@ public abstract class PFor2 {
 		} else {
 			ThreadPoolExecutor es = executors.get();
 			if (es == null) {
-				es = new UJMPThreadPoolExecutor("PFor2", threads, threads);
+				es = new UJMPThreadPoolExecutor(this.getClass().getName(), threads, threads);
 				executors.set(es);
 			} else {
 				es.setCorePoolSize(threads);
@@ -87,7 +86,7 @@ public abstract class PFor2 {
 		}
 	}
 
-	public PFor2(int first, int last, Object... objects) {
+	public PForEquidistant(int first, int last, Object... objects) {
 		this(processors, first, last, objects);
 	}
 

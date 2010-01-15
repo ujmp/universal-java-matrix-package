@@ -49,27 +49,29 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private static final double ERRORTIME = Double.NaN;
 
-	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000";
+	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String timesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000";
+	private final String timesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String plusSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000";
+	private final String plusSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String solveSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String solveSquareSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
+	private final String solveTallSizes = "3x2,4x3,5x4,6x5,7x6,8x7,9x8,10x9,11x10,21x20,31x30,41x40,51x50,61x60,71x70,81x80,91x90,101x100,201x200,301x300,401x400,501x500,601x600,701x700,801x800,901x900,1001x1000,2001x2000";
 
-	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500";
+	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,1000x1000,2000x2000";
 
-	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,1000x1000,2000x2000";
 
-	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
-	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+
+	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
 	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
@@ -157,8 +159,12 @@ public abstract class AbstractMatrix2DBenchmark {
 		return "true".equals(System.getProperty("runInv"));
 	}
 
-	public boolean isRunSolve() {
-		return "true".equals(System.getProperty("runSolve"));
+	public boolean isRunSolveSquare() {
+		return "true".equals(System.getProperty("runSolveSquare"));
+	}
+
+	public boolean isRunSolveTall() {
+		return "true".equals(System.getProperty("runSolveTall"));
 	}
 
 	public boolean isSkipSlowLibraries() {
@@ -197,8 +203,12 @@ public abstract class AbstractMatrix2DBenchmark {
 		System.setProperty("runInv", "" + b);
 	}
 
-	public void setRunSolve(boolean b) {
-		System.setProperty("runSolve", "" + b);
+	public void setRunSolveSquare(boolean b) {
+		System.setProperty("runSolveSquare", "" + b);
+	}
+
+	public void setRunSolveTall(boolean b) {
+		System.setProperty("runSolveTall", "" + b);
 	}
 
 	public void setRunSVD(boolean b) {
@@ -253,8 +263,12 @@ public abstract class AbstractMatrix2DBenchmark {
 		return svdSizes;
 	}
 
-	public String getSolveSizes() {
-		return solveSizes;
+	public String getSolveSquareSizes() {
+		return solveSquareSizes;
+	}
+
+	public String getSolveTallSizes() {
+		return solveTallSizes;
 	}
 
 	public String getQRSizes() {
@@ -275,6 +289,7 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public void setRunAllTests() throws Exception {
+		setSkipSlowLibraries(true);
 		setBurnInRuns(3);
 		setRunsPerMatrix(10);
 
@@ -283,7 +298,8 @@ public abstract class AbstractMatrix2DBenchmark {
 		setRunTransposeNew(true);
 		setRunMtimesNew(true);
 		setRunInv(true);
-		setRunSolve(true);
+		setRunSolveSquare(true);
+		setRunSolveTall(true);
 		setRunSVD(true);
 		setRunEig(true);
 		setRunQR(true);
@@ -323,8 +339,12 @@ public abstract class AbstractMatrix2DBenchmark {
 				runBenchmarkInv();
 			}
 
-			if (isRunSolve()) {
-				runBenchmarkSolve();
+			if (isRunSolveSquare()) {
+				runBenchmarkSolveSquare();
+			}
+
+			if (isRunSolveTall()) {
+				runBenchmarkSolveTall();
 			}
 
 			if (isRunSVD()) {
@@ -574,15 +594,57 @@ public abstract class AbstractMatrix2DBenchmark {
 		temp.exportToFile(FileFormat.CSV, resultFile);
 	}
 
-	public void runBenchmarkSolve() throws Exception {
-		String test = "solve";
+	public void runBenchmarkSolveSquare() throws Exception {
+		String test = "solveSquare";
 		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
 		if (resultFile.exists()) {
 			System.out.println("old results available, skipping " + test + " for "
 					+ getMatrixLabel());
 			return;
 		}
-		String[] sizes = getSolveSizes().split(",");
+		String[] sizes = getSolveSquareSizes().split(",");
+		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
+		result.setLabel(getMatrixLabel() + "-" + test);
+
+		for (int s = 0; s < sizes.length; s++) {
+			long[] size = Coordinates.parseString(sizes[s]);
+			result.setColumnLabel(s, Coordinates.toString('x', size));
+			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
+			System.out.flush();
+
+			for (int i = 0; i < getBurnInRuns(); i++) {
+				benchmarkSolve(i, size);
+				System.out.print("#");
+				System.out.flush();
+			}
+			for (int i = 0; i < getRunsPerMatrix(); i++) {
+				double t = benchmarkSolve(i, size);
+				result.setAsDouble(t, i, s);
+				System.out.print(".");
+				System.out.flush();
+			}
+
+			Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
+			Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
+			mean.setLabel(mean.getLabel() + "-mean");
+			std.setLabel(std.getLabel() + "-std");
+			System.out.println(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms");
+		}
+
+		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
+				result);
+		temp.exportToFile(FileFormat.CSV, resultFile);
+	}
+
+	public void runBenchmarkSolveTall() throws Exception {
+		String test = "solveTall";
+		File resultFile = new File(getResultDir() + getMatrixLabel() + "/" + test + ".csv");
+		if (resultFile.exists()) {
+			System.out.println("old results available, skipping " + test + " for "
+					+ getMatrixLabel());
+			return;
+		}
+		String[] sizes = getSolveTallSizes().split(",");
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
@@ -936,7 +998,7 @@ public abstract class AbstractMatrix2DBenchmark {
 		}
 	}
 
-	public void randSym(long seed, DoubleMatrix2D matrix) {
+	public void randSymm(long seed, DoubleMatrix2D matrix) {
 		Random random = new Random(benchmarkSeed + 31 * seed);
 		int rows = (int) matrix.getRowCount();
 		int cols = (int) matrix.getColumnCount();
@@ -992,6 +1054,12 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.jscience.")
 					&& Coordinates.product(size) > 160000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.vecmath.")
+					&& Coordinates.product(size) > 1000000) {
 				System.err.print("skip ");
 				System.err.flush();
 				return TOOLONG;
@@ -1066,7 +1134,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			rand(run, m);
+			randSymm(run, m);
 			GCUtil.gc();
 			long t0 = System.nanoTime();
 			r = m.eig();
@@ -1306,6 +1374,12 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.jlinalg.")
 					&& Coordinates.product(size0) > 200000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.vecmath.")
+					&& Coordinates.product(size0) > 800 * 800) {
 				System.err.print("skip ");
 				System.err.flush();
 				return TOOLONG;

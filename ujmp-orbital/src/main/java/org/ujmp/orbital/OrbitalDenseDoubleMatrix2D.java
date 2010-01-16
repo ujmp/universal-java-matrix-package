@@ -98,6 +98,38 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix = object;
 	}
 
+	public Matrix plus(Matrix m) {
+		if (m instanceof OrbitalDenseDoubleMatrix2D) {
+			orbital.math.Matrix result = matrix
+					.add(((OrbitalDenseDoubleMatrix2D) m).matrix);
+			return new OrbitalDenseDoubleMatrix2D(result);
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix times(double v) {
+		orbital.math.Matrix result = matrix.scale(Values.getDefault()
+				.valueOf(v));
+		return new OrbitalDenseDoubleMatrix2D(result);
+	}
+
+	public Matrix divide(double v) {
+		orbital.math.Matrix result = matrix.scale(Values.getDefault().valueOf(
+				1.0 / v));
+		return new OrbitalDenseDoubleMatrix2D(result);
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof OrbitalDenseDoubleMatrix2D) {
+			orbital.math.Matrix result = matrix
+					.subtract(((OrbitalDenseDoubleMatrix2D) m).matrix);
+			return new OrbitalDenseDoubleMatrix2D(result);
+		} else {
+			return super.minus(m);
+		}
+	}
+
 	@Override
 	public Matrix transpose() {
 		return new OrbitalDenseDoubleMatrix2D(matrix.transpose());

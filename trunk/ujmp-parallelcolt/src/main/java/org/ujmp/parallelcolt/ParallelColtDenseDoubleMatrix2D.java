@@ -30,6 +30,8 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.DoubleBlas;
+import cern.colt.matrix.tdouble.algo.SmpDoubleBlas;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleEigenvalueDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleLUDecomposition;
@@ -41,6 +43,10 @@ import cern.jet.math.tdouble.DoubleFunctions;
 public class ParallelColtDenseDoubleMatrix2D extends
 		AbstractDenseDoubleMatrix2D implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -1941030601886654699L;
+
+	private static final DoubleBlas BLAS = new SmpDoubleBlas();
+
+	private static final DenseDoubleAlgebra ALG = new DenseDoubleAlgebra();
 
 	private DenseDoubleMatrix2D matrix = null;
 
@@ -103,8 +109,8 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public Matrix inv() {
-		return new ParallelColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
+		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) ALG
+				.inverse(matrix));
 	}
 
 	public Matrix times(double value) {
@@ -115,6 +121,28 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	public Matrix transpose() {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
 				.viewDice().copy());
+	}
+
+	public Matrix plus(Matrix m) {
+		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
+			DoubleMatrix2D result = matrix.copy();
+			BLAS.daxpy(1.0, ((ParallelColtDenseDoubleMatrix2D) m).matrix,
+					result);
+			return new ParallelColtDenseDoubleMatrix2D(result);
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
+			DoubleMatrix2D result = matrix.copy();
+			BLAS.daxpy(-1.0, ((ParallelColtDenseDoubleMatrix2D) m).matrix,
+					result);
+			return new ParallelColtDenseDoubleMatrix2D(result);
+		} else {
+			return super.plus(m);
+		}
 	}
 
 	public Matrix mtimes(Matrix m) {
@@ -192,15 +220,8 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	public Matrix solve(Matrix b) {
 		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
 			DoubleMatrix2D b2 = ((ParallelColtDenseDoubleMatrix2D) b).matrix;
-			if (isSquare()) {
-				DoubleMatrix2D ret = new DenseDoubleLUDecomposition(matrix)
-						.solve(b2);
-				return new ParallelColtDenseDoubleMatrix2D(ret);
-			} else {
-				b2 = b2.copy();
-				new DenseDoubleQRDecomposition(matrix).solve(b2);
-				return new ParallelColtDenseDoubleMatrix2D(b2);
-			}
+			DoubleMatrix2D result = ALG.solve(matrix, b2);
+			return new ParallelColtDenseDoubleMatrix2D(result);
 		} else {
 			return super.solve(b);
 		}

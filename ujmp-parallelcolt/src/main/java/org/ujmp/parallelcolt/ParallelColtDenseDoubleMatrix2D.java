@@ -145,7 +145,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
-	public Matrix mtimes(Matrix m) {
+	public Matrix mtimes(Matrix m) throws MatrixException {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
 					(int) getRowCount(), (int) m.getColumnCount());
@@ -217,6 +217,8 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		return m;
 	}
 
+	// for tall matrices, the result is not correct: the matrix has wrong
+	// orientation
 	public Matrix solve(Matrix b) {
 		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
 			DoubleMatrix2D b2 = ((ParallelColtDenseDoubleMatrix2D) b).matrix;

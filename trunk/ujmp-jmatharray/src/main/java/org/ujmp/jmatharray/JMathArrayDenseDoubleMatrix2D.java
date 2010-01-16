@@ -159,11 +159,22 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(matrix, value));
+		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(
+				matrix.clone(), value));
+	}
+
+	public Matrix minus(double value) {
+		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(
+				matrix.clone(), -value));
 	}
 
 	public Matrix times(double value) {
 		return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(matrix,
+				value));
+	}
+
+	public Matrix divide(double value) {
+		return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.divide(matrix,
 				value));
 	}
 

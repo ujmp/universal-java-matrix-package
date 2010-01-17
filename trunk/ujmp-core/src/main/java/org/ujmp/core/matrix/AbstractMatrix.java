@@ -43,6 +43,7 @@ import javax.swing.JFrame;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.Ops;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
@@ -381,11 +382,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix inv() throws MatrixException {
-		if (getDimensionCount() != 2 || getRowCount() != getColumnCount()) {
-			throw new MatrixException(
-					"inverse only possible for square matrices. use pinv or ginv instead");
-		}
-		return new Inv(this).calcNew();
+		return Inv.INSTANCE.calc(this);
 	}
 
 	public Matrix solve(Matrix b) {
@@ -437,25 +434,25 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix times(double factor) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		TimesScalar.MATRIX.calc(this, factor, result);
+		TimesScalar.INSTANCE.calc(this, factor, result);
 		return result;
 	}
 
 	public Matrix times(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		TimesMatrix.MATRIX.calc(this, m, result);
+		TimesMatrix.INSTANCE.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix divide(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		DivideMatrix.MATRIX.calc(this, m, result);
+		DivideMatrix.INSTANCE.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix divide(double divisor) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		DivideScalar.MATRIX.calc(this, divisor, result);
+		DivideScalar.INSTANCE.calc(this, divisor, result);
 		return result;
 	}
 
@@ -970,7 +967,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix transpose() throws MatrixException {
-		return Transpose.calc(this);
+		Matrix result = null;
+		try {
+			result = this.getClass().getConstructor(long[].class).newInstance(
+					Coordinates.transpose(getSize()));
+		} catch (Exception e) {
+			result = MatrixFactory.dense(Coordinates.transpose(getSize()));
+		}
+		Ops.TRANSPOSE.calc(this, result);
+		return result;
 	}
 
 	public Matrix transpose(Ret returnType) throws MatrixException {
@@ -1048,25 +1053,25 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix plus(double value) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		PlusScalar.MATRIX.calc(this, value, result);
+		PlusScalar.INSTANCE.calc(this, value, result);
 		return result;
 	}
 
 	public Matrix plus(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		PlusMatrix.MATRIX.calc(this, m, result);
+		PlusMatrix.INSTANCE.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix minus(double value) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		MinusScalar.MATRIX.calc(this, value, result);
+		MinusScalar.INSTANCE.calc(this, value, result);
 		return result;
 	}
 
 	public Matrix minus(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		MinusMatrix.MATRIX.calc(this, m, result);
+		MinusMatrix.INSTANCE.calc(this, m, result);
 		return result;
 	}
 
@@ -1685,7 +1690,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix[] svd() throws MatrixException {
-		return SVD.calcNew(this);
+		return SVD.INSTANCE.calc(this);
 	}
 
 	public Matrix[] eig() throws MatrixException {

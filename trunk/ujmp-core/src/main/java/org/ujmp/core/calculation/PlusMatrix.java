@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface PlusMatrix<T> {
 
-	public static PlusMatrix<Matrix> MATRIX = new PlusMatrix<Matrix>() {
+	public static PlusMatrix<Matrix> INSTANCE = new PlusMatrix<Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix

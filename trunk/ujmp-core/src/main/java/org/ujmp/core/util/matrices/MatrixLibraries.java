@@ -179,7 +179,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString("Java 5", JAVA5, LABELCOLUMN);
 		setAsString("Java 6", JAVA6, LABELCOLUMN);
 		setAsString("multithreaded", MULTITHREADED, LABELCOLUMN);
-		setAsString("in place ops", INPLACE, LABELCOLUMN);
+		setAsString("in-place ops", INPLACE, LABELCOLUMN);
 		setAsString("cached results", CACHEDRESULTS, LABELCOLUMN);
 		setAsString("dense", DENSE, LABELCOLUMN);
 		setAsString("sparse", SPARSE, LABELCOLUMN);
@@ -377,6 +377,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4, JAMPACK);
 		setAsString(no(), D4PLUS, JAMPACK);
 		setAsString(yes(), INV, JAMPACK);
+		setAsString(square(), SOLVE, JAMPACK);
 		setAsString(square(), SVD, JAMPACK);
 		setAsString(all(), LU, JAMPACK);
 		setAsString(yes(), QR, JAMPACK);
@@ -502,6 +503,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4, JSCIENCE);
 		setAsString(no(), D4PLUS, JSCIENCE);
 		setAsString(yes(), INV, JSCIENCE);
+		setAsString(square(), SOLVE, JSCIENCE);
 		setAsString(no(), SVD, JSCIENCE);
 		setAsString(square() + footnote("e", "error in implementation"), LU, JSCIENCE);
 		setAsString(no(), QR, JSCIENCE);
@@ -565,7 +567,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
 		setAsString(yes(), MULTITHREADED, OJALGO);
-		setAsString(unknown(), INPLACE, OJALGO);
+		setAsString(yes(), INPLACE, OJALGO);
+		setAsString(no(), CACHEDRESULTS, OJALGO);
 		setAsString(yes(), DENSE, OJALGO);
 		setAsString(no(), SPARSE, OJALGO);
 		setAsString(yes(), COMPLEX, OJALGO);
@@ -591,6 +594,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA6, ORBITAL);
 		setAsString(unknown(), MULTITHREADED, ORBITAL);
 		setAsString(unknown(), INPLACE, ORBITAL);
+		setAsString(no(), CACHEDRESULTS, ORBITAL);
 		setAsString(yes(), DENSE, ORBITAL);
 		setAsString(no(), SPARSE, ORBITAL);
 		setAsString(yes(), COMPLEX, ORBITAL);
@@ -616,6 +620,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA6, OWLPACK);
 		setAsString(no(), MULTITHREADED, OWLPACK);
 		setAsString(unknown(), INPLACE, OWLPACK);
+		setAsString(no(), CACHEDRESULTS, OWLPACK);
 		setAsString(yes(), DENSE, OWLPACK);
 		setAsString(no(), SPARSE, OWLPACK);
 		setAsString(yes(), COMPLEX, OWLPACK);
@@ -641,6 +646,10 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA6, PARALLELCOLT);
 		setAsString(yes(), MULTITHREADED, PARALLELCOLT);
 		setAsString(yes(), INPLACE, PARALLELCOLT);
+		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, PARALLELCOLT);
+		setAsString(yes(), SCALE, PARALLELCOLT);
+		setAsString(yes(), PLUSMINUS, PARALLELCOLT);
+		setAsString(no(), CACHEDRESULTS, PARALLELCOLT);
 		setAsString(yes(), DENSE, PARALLELCOLT);
 		setAsString(yes(), SPARSE, PARALLELCOLT);
 		setAsString(yes(), COMPLEX, PARALLELCOLT);
@@ -652,6 +661,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D4, PARALLELCOLT);
 		setAsString(no(), D4PLUS, PARALLELCOLT);
 		setAsString(yes(), INV, PARALLELCOLT);
+		setAsString(squareTall() + footnote("e", "error in implementation"), SOLVE, PARALLELCOLT);
 		setAsString(all(), SVD, PARALLELCOLT);
 		setAsString(squareTall(), LU, PARALLELCOLT);
 		setAsString(circle() + footnote("e", "error in implementation"), QR, PARALLELCOLT);
@@ -664,7 +674,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, SST);
 		setAsString(yes() + footnote("5", "jar does not work with Java 5"), JAVA5, SST);
 		setAsString(yes(), JAVA6, SST);
-		setAsString(unknown(), MULTITHREADED, SST);
+		setAsString(no(), MULTITHREADED, SST);
 		setAsString(yes(), INPLACE, SST);
 		setAsString(yes(), TRANSPOSE, SST);
 		setAsString(yes(), SCALE, SST);

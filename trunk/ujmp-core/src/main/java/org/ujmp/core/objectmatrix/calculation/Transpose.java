@@ -26,7 +26,6 @@ package org.ujmp.core.objectmatrix.calculation;
 import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.coordinates.Coordinates;
@@ -110,16 +109,4 @@ public class Transpose extends AbstractObjectCalculation {
 		}
 	}
 
-	public static Matrix calc(Matrix m) throws MatrixException {
-		Matrix ret = null;
-		if (m.isSparse()) {
-			ret = MatrixFactory.sparse(m.getValueType(), Coordinates.transpose(m.getSize()));
-		} else {
-			ret = MatrixFactory.zeros(m.getValueType(), Coordinates.transpose(m.getSize()));
-		}
-		for (long[] c : m.availableCoordinates()) {
-			ret.setAsObject(m.getAsObject(c), Coordinates.transpose(c));
-		}
-		return ret;
-	}
 }

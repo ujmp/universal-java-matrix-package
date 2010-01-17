@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
-import org.ujmp.core.util.concurrent.PFor;
 
 public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasDoubleArray2D {
@@ -93,30 +92,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	public void setDouble(double value, int row, int column) {
 		values[row][column] = value;
-	}
-
-	public final Matrix transpose() {
-		final int retcols = values.length;
-		final int retrows = values[0].length;
-		final double[][] result = new double[retrows][retcols];
-		if (retcols * retrows > 10000) {
-			new PFor(0, retrows - 1) {
-
-				@Override
-				public void step(int i) {
-					for (int c = 0; c < retcols; c++) {
-						result[i][c] = values[c][i];
-					}
-				}
-			};
-		} else {
-			for (int r = 0; r < retrows; r++) {
-				for (int c = 0; c < retcols; c++) {
-					result[r][c] = values[c][r];
-				}
-			}
-		}
-		return new ArrayDenseDoubleMatrix2D(result);
 	}
 
 	public final Matrix copy() throws MatrixException {

@@ -56,11 +56,11 @@ public class Mtimes extends AbstractDoubleCalculation {
 	}
 
 	public double getDouble(long... coordinates) throws MatrixException {
-		Matrix m1 = getSources()[0];
-		Matrix m2 = getSources()[1];
+		final Matrix m1 = getSources()[0];
+		final Matrix m2 = getSources()[1];
 
-		long row = coordinates[ROW];
-		long col = coordinates[COLUMN];
+		final long row = coordinates[ROW];
+		final long col = coordinates[COLUMN];
 
 		double sum = 0.0;
 		if (ignoreNaN) {
@@ -81,7 +81,8 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return size;
 	}
 
-	public Matrix calcByteMatrix2D(boolean ignoreNaN, ByteMatrix2D m1, ByteMatrix2D m2) {
+	public Matrix calcByteMatrix2D(final boolean ignoreNaN, final ByteMatrix2D m1,
+			final ByteMatrix2D m2) {
 		if (m1 instanceof HasByteArray && m2 instanceof HasByteArray) {
 			return calcByteArray(((HasByteArray) m1).getByteArray(), (int) m1.getRowCount(),
 					(int) m1.getColumnCount(), ((HasByteArray) m2).getByteArray(), (int) m2
@@ -185,14 +186,14 @@ public class Mtimes extends AbstractDoubleCalculation {
 		}
 	}
 
-	public Matrix calcDoubleArray(double[] A, int m1RowCount, int m1ColumnCount, double[] B,
-			int m2RowCount, int m2ColumnCount) {
+	public Matrix calcDoubleArray(final double[] A, final int m1RowCount, final int m1ColumnCount,
+			final double[] B, int m2RowCount, int m2ColumnCount) {
 		return gemmDoubleArrayParallel(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount,
 				m2ColumnCount);
 	}
 
-	public Matrix calcByteArray(byte[] A, int m1RowCount, int m1ColumnCount, byte[] B,
-			int m2RowCount, int m2ColumnCount) {
+	public Matrix calcByteArray(final byte[] A, final int m1RowCount, final int m1ColumnCount,
+			final byte[] B, int m2RowCount, int m2ColumnCount) {
 		return gemmByteArray(1.0, A, m1RowCount, m1ColumnCount, 1.0, B, m2RowCount, m2ColumnCount);
 	}
 
@@ -217,7 +218,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 					}
 					for (int r = rowCount; --r != -1;) {
 						double sum = 0;
-						double[] row = m1[r];
+						final double[] row = m1[r];
 						for (int k = columnCount; --k != -1;) {
 							sum += row[k] * columns[k];
 						}
@@ -233,7 +234,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 				}
 				for (int r = rowCount; --r != -1;) {
 					double sum = 0;
-					double[] row = m1[r];
+					final double[] row = m1[r];
 					for (int k = columnCount; --k != -1;) {
 						sum += row[k] * columns[k];
 					}
@@ -427,7 +428,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 	}
 
 	public DenseDoubleMatrix2D gemmMatrix(final double alpha, final Matrix A, final double beta,
-			final Matrix B, boolean ignoreNaN) {
+			final Matrix B, final boolean ignoreNaN) {
 		if (ignoreNaN) {
 			return gemmMatrixIgnoreNaN(alpha, A, beta, B);
 		} else {
@@ -561,7 +562,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		return calc(false, m1, m2);
 	}
 
-	public Matrix calc(boolean ignoreNaN, Matrix m1, Matrix m2) {
+	public Matrix calc(final boolean ignoreNaN, final Matrix m1, final Matrix m2) {
 		if (m1 instanceof DoubleMatrix2D && m2 instanceof DoubleMatrix2D) {
 			return calcDoubleMatrix2D(ignoreNaN, (DoubleMatrix2D) m1, (DoubleMatrix2D) m2);
 		} else if (m1 instanceof ByteMatrix2D && m2 instanceof ByteMatrix2D) {

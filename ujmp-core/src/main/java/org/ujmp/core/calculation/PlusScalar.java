@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface PlusScalar<T> {
 
-	public static PlusScalar<Matrix> MATRIX = new PlusScalar<Matrix>() {
+	public static PlusScalar<Matrix> INSTANCE = new PlusScalar<Matrix>() {
 
 		public void calc(final Matrix source, final BigDecimal value, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {

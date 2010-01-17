@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface DivideMatrix<T> {
 
-	public static DivideMatrix<Matrix> MATRIX = new DivideMatrix<Matrix>() {
+	public static DivideMatrix<Matrix> INSTANCE = new DivideMatrix<Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix

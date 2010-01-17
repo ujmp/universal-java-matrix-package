@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface TimesMatrix<T> {
 
-	public static TimesMatrix<Matrix> MATRIX = new TimesMatrix<Matrix>() {
+	public static TimesMatrix<Matrix> INSTANCE = new TimesMatrix<Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix

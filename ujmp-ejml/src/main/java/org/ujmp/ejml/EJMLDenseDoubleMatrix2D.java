@@ -30,14 +30,15 @@ import java.io.ObjectOutputStream;
 import org.ejml.alg.dense.decomposition.chol.CholeskyDecompositionLDL;
 import org.ejml.alg.dense.decomposition.lu.LUDecompositionAlt;
 import org.ejml.alg.dense.decomposition.qr.QRDecompositionHouseholder;
-import org.ejml.alg.dense.decomposition.svd.SvdNumericalRecipes;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.ejml.calculation.Inv;
+import org.ujmp.ejml.calculation.SVD;
+import org.ujmp.ejml.calculation.Solve;
 
 public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DenseMatrix64F> {
@@ -56,7 +57,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public EJMLDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			setAsDouble(source.getAsDouble(c), c);
+			setDouble(source.getAsDouble(c), c);
 		}
 	}
 
@@ -95,21 +96,11 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix inv() {
-		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
-		CommonOps.invert(matrix, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
+		return Inv.INSTANCE.calc(this);
 	}
 
 	public Matrix solve(Matrix b) {
-		if (b instanceof EJMLDenseDoubleMatrix2D) {
-			EJMLDenseDoubleMatrix2D b2 = (EJMLDenseDoubleMatrix2D) b;
-			DenseMatrix64F x = new DenseMatrix64F(matrix.numCols,
-					b2.matrix.numCols);
-			CommonOps.solve(matrix, b2.matrix, x);
-			return new EJMLDenseDoubleMatrix2D(x);
-		} else {
-			return super.solve(b);
-		}
+		return Solve.INSTANCE.calc(this, b);
 	}
 
 	public Matrix plus(double value) {
@@ -136,16 +127,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] svd() {
-		SvdNumericalRecipes svd = new SvdNumericalRecipes();
-		svd.decompose(matrix);
-		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
-		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
-		double[] svs = svd.getW();
-		Matrix s = MatrixFactory.sparse(u.getColumnCount(), v.getColumnCount());
-		for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
-			s.setAsDouble(svs[i], i, i);
-		}
-		return new Matrix[] { u, s, v };
+		return SVD.INSTANCE.calc(this);
 	}
 
 	public Matrix[] qr() {

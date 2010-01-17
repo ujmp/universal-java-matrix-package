@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.util.concurrent.PFor;
 
 public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasDoubleArray {
@@ -123,28 +122,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
-	}
-
-	public final Matrix transpose() {
-		final double[] result = new double[cols * rows];
-		if (values.length > 10000) {
-			new PFor(0, rows - 1) {
-
-				@Override
-				public void step(int i) {
-					for (int r = 0; r < cols; r++) {
-						result[i * cols + r] = values[r * rows + i];
-					}
-				}
-			};
-		} else {
-			for (int c = 0; c < rows; c++) {
-				for (int r = 0; r < cols; r++) {
-					result[c * cols + r] = values[r * rows + c];
-				}
-			}
-		}
-		return new DefaultDenseDoubleMatrix2D(result, cols, rows);
 	}
 
 	public double[] getDoubleArray() {

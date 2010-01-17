@@ -25,33 +25,130 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.UJMPSettings;
 
-public class Inv extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = 7886298456216056038L;
+public interface Inv<T> {
 
-	private Matrix inv = null;
+	public T calc(T source);
 
-	public Inv(Matrix matrix) {
-		super(matrix);
-	}
+	public static Inv<Matrix> MATRIX = new Inv<Matrix>() {
 
-	public double getDouble(long... coordinates) throws MatrixException {
-		if (inv == null) {
-			try {
-				inv = new LU(getSource()).solve(MatrixFactory.eye(getSource().getRowCount(),
-						getSource().getRowCount()));
-			} catch (Exception e) {
-				throw new MatrixException(e);
+		public Matrix calc(Matrix source) {
+			if (source.getDimensionCount() != 2 || source.getRowCount() != source.getColumnCount()) {
+				throw new MatrixException(
+						"inverse only possible for square matrices. use pinv or ginv instead");
+			}
+			if (UJMPSettings.getNumberOfThreads() == 1) {
+				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+					return MATRIXLARGESINGLETHREADED.calc(source);
+				} else {
+					return MATRIXSMALLSINGLETHREADED.calc(source);
+				}
+			} else {
+				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+					return MATRIXLARGEMULTITHREADED.calc(source);
+				} else {
+					return MATRIXSMALLMULTITHREADED.calc(source);
+				}
 			}
 		}
-		return inv.getAsDouble(coordinates);
-	}
+	};
 
-	public long[] getSize() {
-		return Coordinates.transpose(getSource().getSize());
-	}
+	public Inv<Matrix> UJMP = new Inv<Matrix>() {
+		public Matrix calc(Matrix source) {
+			return new LU(source).solve(MatrixFactory.eye(source.getRowCount(), source
+					.getRowCount()));
+		}
+	};
 
+	public Inv<Matrix> INSTANCE = MATRIX;
+
+	public static Inv<Matrix> MATRIXSMALLSINGLETHREADED = new Inv<Matrix>() {
+
+		@SuppressWarnings("unchecked")
+		public Matrix calc(Matrix source) {
+			Inv<Matrix> inv = null;
+
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+
+			if (inv == null) {
+				inv = UJMP;
+			}
+			return inv.calc(source);
+		}
+	};
+
+	public static Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
+
+		@SuppressWarnings("unchecked")
+		public Matrix calc(Matrix source) {
+			Inv<Matrix> inv = null;
+
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+
+			if (inv == null) {
+				inv = UJMP;
+			}
+			return inv.calc(source);
+		}
+	};
+
+	public static Inv<Matrix> MATRIXSMALLMULTITHREADED = new Inv<Matrix>() {
+
+		@SuppressWarnings("unchecked")
+		public Matrix calc(Matrix source) {
+			Inv<Matrix> inv = null;
+
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+
+			if (inv == null) {
+				inv = UJMP;
+			}
+			return inv.calc(source);
+		}
+	};
+
+	public static Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
+
+		@SuppressWarnings("unchecked")
+		public Matrix calc(Matrix source) {
+			Inv<Matrix> inv = null;
+
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+			try {
+				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
+			} catch (Throwable e) {
+			}
+
+			if (inv == null) {
+				inv = UJMP;
+			}
+			return inv.calc(source);
+		}
+	};
 }

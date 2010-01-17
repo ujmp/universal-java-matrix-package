@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface DivideScalar<T> {
 
-	public static DivideScalar<Matrix> MATRIX = new DivideScalar<Matrix>() {
+	public static DivideScalar<Matrix> INSTANCE = new DivideScalar<Matrix>() {
 
 		public void calc(final Matrix source, final BigDecimal divisor, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {

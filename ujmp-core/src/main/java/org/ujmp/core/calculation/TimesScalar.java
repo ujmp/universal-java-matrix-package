@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface TimesScalar<T> {
 
-	public static TimesScalar<Matrix> MATRIX = new TimesScalar<Matrix>() {
+	public static TimesScalar<Matrix> INSTANCE = new TimesScalar<Matrix>() {
 
 		public void calc(final Matrix source, final BigDecimal factor, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
@@ -188,7 +188,7 @@ public interface TimesScalar<T> {
 		private void calc(final double[] source, final double factor, final double[] target) {
 			final int length = source.length;
 			for (int i = 0; i < length; i++) {
-				target[i] = factor * source[i];
+				target[i] = source[i] * factor;
 			}
 		}
 	};

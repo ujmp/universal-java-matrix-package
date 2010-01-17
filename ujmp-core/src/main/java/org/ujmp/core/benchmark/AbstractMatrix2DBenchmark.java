@@ -63,9 +63,9 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	private final String solveTallSizes = "3x2,4x3,5x4,6x5,7x6,8x7,9x8,10x9,11x10,21x20,31x30,41x40,51x50,61x60,71x70,81x80,91x90,101x100,201x200,301x300,401x400,501x500,601x600,701x700,801x800,901x900,1001x1000,2001x2000";
 
-	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,1000x1000,2000x2000";
+	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
-	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,1000x1000,2000x2000";
+	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
 
 	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
 
@@ -1064,6 +1064,12 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return TOOLONG;
 			}
+			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
+					&& Coordinates.product(size) > 1000000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
 
 			rand(run, m);
 			GCUtil.gc();
@@ -1096,6 +1102,12 @@ public abstract class AbstractMatrix2DBenchmark {
 			}
 			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.vecmath.")
 					&& Coordinates.product(size) > 40000) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
+					&& Coordinates.product(size) > 700 * 700) {
 				System.err.print("skip ");
 				System.err.flush();
 				return TOOLONG;
@@ -1134,6 +1146,13 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
+			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
+					&& Coordinates.product(size) > 700 * 700) {
+				System.err.print("skip ");
+				System.err.flush();
+				return TOOLONG;
+			}
+
 			randSymm(run, m);
 			GCUtil.gc();
 			long t0 = System.nanoTime();
@@ -1337,7 +1356,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				return NOTAVAILABLE;
 			}
 			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.sst.")
-					&& Coordinates.product(size0) > 400000) {
+					&& Coordinates.product(size0) > 1000000) {
 				System.err.print("skip ");
 				System.err.flush();
 				return TOOLONG;

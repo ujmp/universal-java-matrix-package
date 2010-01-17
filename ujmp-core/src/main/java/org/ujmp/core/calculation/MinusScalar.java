@@ -38,7 +38,7 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface MinusScalar<T> {
 
-	public static MinusScalar<Matrix> MATRIX = new MinusScalar<Matrix>() {
+	public static MinusScalar<Matrix> INSTANCE = new MinusScalar<Matrix>() {
 
 		public void calc(final Matrix source, final BigDecimal value, final Matrix target) {
 			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {

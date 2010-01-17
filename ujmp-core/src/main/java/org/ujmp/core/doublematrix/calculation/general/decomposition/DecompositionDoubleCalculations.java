@@ -68,7 +68,7 @@ public interface DecompositionDoubleCalculations {
 	public Matrix princomp() throws MatrixException;
 
 	/**
-	 * Calculates the singular value decomposition of the matrix.
+	 * Calculates the singular value decomposition of the matrix: A = U*S*V'
 	 * 
 	 * @return Singular value decomposition of the matrix.
 	 */

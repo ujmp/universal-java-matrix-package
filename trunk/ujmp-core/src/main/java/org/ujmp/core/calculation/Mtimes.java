@@ -23,18 +23,15 @@
 
 package org.ujmp.core.calculation;
 
-import java.math.BigDecimal;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray;
 import org.ujmp.core.interfaces.HasDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.UJMPSettings;
-import org.ujmp.core.util.concurrent.PForEquidistant;
+import org.ujmp.core.util.concurrent.PFor;
 
 public interface Mtimes<T> {
 
@@ -50,11 +47,62 @@ public interface Mtimes<T> {
 				Mtimes.SPARSEMATRIX.calc((SparseMatrix) source1, (SparseMatrix) source2,
 						(SparseMatrix) target);
 			} else {
-				for (long[] c : source1.allCoordinates()) {
-					BigDecimal v1 = source1.getAsBigDecimal(c);
-					BigDecimal v2 = source2.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.plus(v1, v2);
-					target.setAsBigDecimal(result, c);
+				gemm(1.0, source1, 1.0, source2, target);
+			}
+		}
+
+		private void gemm(final double alpha, final Matrix A, final double beta, final Matrix B,
+				final Matrix C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2RowCount = (int) B.getRowCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B.getAsDouble(lcol, i);
+							if (temp != 0.0) {
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C.setAsDouble(C.getAsDouble(irow, i)
+											+ A.getAsDouble(irow, lcol) * temp, irow, i);
+								}
+							}
+						}
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getAsDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
+										* temp, irow, i);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -69,11 +117,62 @@ public interface Mtimes<T> {
 				Mtimes.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
 						(DenseMatrix2D) target);
 			} else {
-				for (long[] c : source1.allCoordinates()) {
-					BigDecimal v1 = source1.getAsBigDecimal(c);
-					BigDecimal v2 = source2.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.plus(v1, v2);
-					target.setAsBigDecimal(result, c);
+				gemm(1.0, source1, 1.0, source2, target);
+			}
+		}
+
+		private void gemm(final double alpha, final DenseMatrix A, final double beta,
+				final DenseMatrix B, final DenseMatrix C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2RowCount = (int) B.getRowCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B.getAsDouble(lcol, i);
+							if (temp != 0.0) {
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C.setAsDouble(C.getAsDouble(irow, i)
+											+ A.getAsDouble(irow, lcol) * temp, irow, i);
+								}
+							}
+						}
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getAsDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
+										* temp, irow, i);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -83,17 +182,62 @@ public interface Mtimes<T> {
 
 		public void calc(final SparseMatrix source1, final SparseMatrix source2,
 				final SparseMatrix target) {
-			// copy all elements in source1 to target
-			for (long[] c : source1.availableCoordinates()) {
-				BigDecimal svalue = source1.getAsBigDecimal(c);
-				target.setAsBigDecimal(svalue, c);
+			gemm(1.0, source1, 1.0, source2, target);
+		}
+
+		private void gemm(final double alpha, final SparseMatrix A, final double beta,
+				final SparseMatrix B, final SparseMatrix C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2RowCount = (int) B.getRowCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
 			}
-			// calculate sum with source2
-			for (long[] c : source2.availableCoordinates()) {
-				BigDecimal v1 = target.getAsBigDecimal(c);
-				BigDecimal v2 = source2.getAsBigDecimal(c);
-				BigDecimal result = MathUtil.plus(v1, v2);
-				target.setAsBigDecimal(result, c);
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B.getAsDouble(lcol, i);
+							if (temp != 0.0) {
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C.setAsDouble(C.getAsDouble(irow, i)
+											+ A.getAsDouble(irow, lcol) * temp, irow, i);
+								}
+							}
+						}
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getAsDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
+										* temp, irow, i);
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -108,12 +252,61 @@ public interface Mtimes<T> {
 				Mtimes.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
 						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
 			} else {
-				for (int r = (int) source1.getRowCount(); --r != -1;) {
-					for (int c = (int) source1.getColumnCount(); --c != -1;) {
-						BigDecimal v1 = source1.getAsBigDecimal(r, c);
-						BigDecimal v2 = source2.getAsBigDecimal(r, c);
-						BigDecimal result = MathUtil.plus(v1, v2);
-						target.setAsBigDecimal(result, r, c);
+				gemm(1.0, source1, 1.0, source2, target);
+			}
+		}
+
+		private void gemm(final double alpha, final DenseMatrix2D A, final double beta,
+				final DenseMatrix2D B, final DenseMatrix2D C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2RowCount = (int) B.getRowCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B.getAsDouble(lcol, i);
+							if (temp != 0.0) {
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C.setAsDouble(C.getAsDouble(irow, i)
+											+ A.getAsDouble(irow, lcol) * temp, irow, i);
+								}
+							}
+						}
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getAsDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
+										* temp, irow, i);
+							}
+						}
 					}
 				}
 			}
@@ -126,55 +319,178 @@ public interface Mtimes<T> {
 				final DenseDoubleMatrix2D target) {
 			if (source1 instanceof HasDoubleArray2D && source2 instanceof HasDoubleArray2D
 					&& target instanceof HasDoubleArray2D) {
-				calc(((HasDoubleArray2D) source1).getDoubleArray2D(), ((HasDoubleArray2D) source2)
-						.getDoubleArray2D(), ((HasDoubleArray2D) target).getDoubleArray2D());
+				calcDoubleArray2D(((HasDoubleArray2D) source1).getDoubleArray2D(),
+						((HasDoubleArray2D) source2).getDoubleArray2D(),
+						((HasDoubleArray2D) target).getDoubleArray2D());
 			} else if (source1 instanceof HasDoubleArray && source2 instanceof HasDoubleArray
 					&& target instanceof HasDoubleArray) {
-				calc(((HasDoubleArray) source1).getDoubleArray(), ((HasDoubleArray) source2)
-						.getDoubleArray(), ((HasDoubleArray) target).getDoubleArray());
+				gemmDoubleArrayParallel(1.0, ((HasDoubleArray) source1).getDoubleArray(),
+						(int) source1.getRowCount(), (int) source1.getColumnCount(), 1.0,
+						((HasDoubleArray) source2).getDoubleArray(), (int) source2.getRowCount(),
+						(int) source2.getColumnCount(), ((HasDoubleArray) target).getDoubleArray());
 			} else {
-				for (int r = (int) source1.getRowCount(); --r != -1;) {
-					for (int c = (int) source1.getColumnCount(); --c != -1;) {
-						target.setDouble(source1.getDouble(r, c) + source2.getDouble(r, c), r, c);
+				gemmDenseDoubleMatrix2D(1.0, source1, 1.0, source2, target);
+			}
+		}
+
+		private void gemmDoubleArrayParallel(final double alpha, final double[] A,
+				final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
+				final int m2RowCount, final int m2ColumnCount, final double[] C) {
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.length >= 10000) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						final int jcolTimesM1RowCount = i * m1RowCount;
+						final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] *= beta;
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+							if (temp != 0.0) {
+								final int lcolTimesM1RowCount = lcol * m1RowCount;
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+											* temp;
+								}
+							}
+						}
+
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] *= beta;
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+						if (temp != 0.0) {
+							final int lcolTimesM1RowCount = lcol * m1RowCount;
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+										* temp;
+							}
+						}
 					}
 				}
 			}
 		}
 
-		private void calc(final double[][] source1, final double[][] source2,
-				final double[][] target) {
-			final int rows = source1.length;
-			final int cols = source1[0].length;
-			if (UJMPSettings.getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
-				new PForEquidistant(0, rows - 1) {
+		private void calcDoubleArray2D(final double[][] m1, final double[][] m2,
+				final double[][] ret) {
+			final int rowCount = m1.length;
+			final int columnCount = m1[0].length;
+			final int retColumnCount = m2[0].length;
+
+			if (columnCount != m2.length) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (rowCount * retColumnCount >= 500) {
+				new PFor(0, retColumnCount - 1) {
+					@Override
 					public void step(int i) {
-						double[] v1 = source1[i];
-						double[] v2 = source2[i];
-						double[] t = target[i];
-						for (int c = 0; c < cols; c++) {
-							t[c] = v1[c] + v2[c];
+						final double[] columns = new double[columnCount];
+						for (int k = columnCount; --k != -1;) {
+							columns[k] = m2[k][i];
+						}
+						for (int r = rowCount; --r != -1;) {
+							double sum = 0;
+							final double[] row = m1[r];
+							for (int k = columnCount; --k != -1;) {
+								sum += row[k] * columns[k];
+							}
+							ret[r][i] = sum;
 						}
 					}
 				};
 			} else {
-				double[] v1 = null;
-				double[] v2 = null;
-				double[] t = null;
-				for (int r = 0; r < rows; r++) {
-					v1 = source1[r];
-					v2 = source2[r];
-					t = target[r];
-					for (int c = 0; c < cols; c++) {
-						t[c] = v1[c] + v2[c];
+				final double[] columns = new double[columnCount];
+				for (int c = retColumnCount; --c != -1;) {
+					for (int k = columnCount; --k != -1;) {
+						columns[k] = m2[k][c];
+					}
+					for (int r = rowCount; --r != -1;) {
+						double sum = 0;
+						final double[] row = m1[r];
+						for (int k = columnCount; --k != -1;) {
+							sum += row[k] * columns[k];
+						}
+						ret[r][c] = sum;
 					}
 				}
 			}
 		}
 
-		private void calc(final double[] source1, final double[] source2, final double[] target) {
-			final int length = source1.length;
-			for (int i = 0; i < length; i++) {
-				target[i] = source1[i] + source2[i];
+		private void gemmDenseDoubleMatrix2D(final double alpha, final DenseDoubleMatrix2D A,
+				final double beta, final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2RowCount = (int) B.getRowCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			if (m1ColumnCount != m2RowCount) {
+				throw new MatrixException("matrices have wrong size");
+			}
+
+			if (alpha == 0 || beta == 0) {
+				return;
+			}
+
+			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+				new PFor(0, m2ColumnCount - 1) {
+
+					@Override
+					public void step(int i) {
+						if (beta != 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setDouble(C.getDouble(irow, i) * beta, irow, i);
+							}
+						}
+						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+							double temp = alpha * B.getDouble(lcol, i);
+							if (temp != 0.0) {
+								for (int irow = 0; irow < m1RowCount; ++irow) {
+									C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol)
+											* temp, irow, i);
+								}
+							}
+						}
+					}
+				};
+			} else {
+				for (int i = 0; i < m2ColumnCount; i++) {
+					if (beta != 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setDouble(C.getDouble(irow, i) * beta, irow, i);
+						}
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						double temp = alpha * B.getDouble(lcol, i);
+						if (temp != 0.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,
+										irow, i);
+							}
+						}
+					}
+				}
 			}
 		}
 

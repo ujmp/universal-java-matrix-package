@@ -36,15 +36,21 @@ public class Inv
 
 	@Override
 	public Matrix calc(Matrix source) {
-		DenseMatrix64F matrix = null;
-		if (source instanceof EJMLDenseDoubleMatrix2D) {
-			matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
+		try {
+			DenseMatrix64F matrix = null;
+			if (source instanceof EJMLDenseDoubleMatrix2D) {
+				matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
+			} else {
+				matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
+			}
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			CommonOps.invert(matrix, ret);
+			return new EJMLDenseDoubleMatrix2D(ret);
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Inv.UJMP
+					.calc(source);
 		}
-		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
-		CommonOps.invert(matrix, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
 	}
 
 }

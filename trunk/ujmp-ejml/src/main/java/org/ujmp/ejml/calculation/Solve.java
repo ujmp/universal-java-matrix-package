@@ -36,21 +36,26 @@ public class Solve
 
 	@Override
 	public Matrix calc(Matrix a, Matrix b) {
-		DenseMatrix64F a2 = null;
-		DenseMatrix64F b2 = null;
-		if (a instanceof EJMLDenseDoubleMatrix2D) {
-			a2 = ((EJMLDenseDoubleMatrix2D) a).getWrappedObject();
-		} else {
-			a2 = new EJMLDenseDoubleMatrix2D(a).getWrappedObject();
+		try {
+			DenseMatrix64F a2 = null;
+			DenseMatrix64F b2 = null;
+			if (a instanceof EJMLDenseDoubleMatrix2D) {
+				a2 = ((EJMLDenseDoubleMatrix2D) a).getWrappedObject();
+			} else {
+				a2 = new EJMLDenseDoubleMatrix2D(a).getWrappedObject();
+			}
+			if (b instanceof EJMLDenseDoubleMatrix2D) {
+				b2 = ((EJMLDenseDoubleMatrix2D) b).getWrappedObject();
+			} else {
+				b2 = new EJMLDenseDoubleMatrix2D(b).getWrappedObject();
+			}
+			DenseMatrix64F x = new DenseMatrix64F(a2.numCols, b2.numCols);
+			CommonOps.solve(a2, b2, x);
+			return new EJMLDenseDoubleMatrix2D(x);
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMP
+					.calc(a, b);
 		}
-		if (b instanceof EJMLDenseDoubleMatrix2D) {
-			b2 = ((EJMLDenseDoubleMatrix2D) b).getWrappedObject();
-		} else {
-			b2 = new EJMLDenseDoubleMatrix2D(b).getWrappedObject();
-		}
-		DenseMatrix64F x = new DenseMatrix64F(a2.numCols, b2.numCols);
-		CommonOps.solve(a2, b2, x);
-		return new EJMLDenseDoubleMatrix2D(x);
 
 	}
 }

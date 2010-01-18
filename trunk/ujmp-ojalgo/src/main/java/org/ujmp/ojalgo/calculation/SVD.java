@@ -35,20 +35,24 @@ public class SVD
 	public static SVD INSTANCE = new SVD();
 
 	public Matrix[] calc(Matrix source) {
-		final SingularValue<Double> svd = SingularValueDecomposition
-				.makePrimitive();
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			svd
-					.compute(((OjalgoDenseDoubleMatrix2D) source)
-							.getWrappedObject());
-		} else {
-			svd.compute(new OjalgoDenseDoubleMatrix2D(source)
-					.getWrappedObject());
+		try {
+			final SingularValue<Double> svd = SingularValueDecomposition
+					.makePrimitive();
+			if (source instanceof OjalgoDenseDoubleMatrix2D) {
+				svd.compute(((OjalgoDenseDoubleMatrix2D) source)
+						.getWrappedObject());
+			} else {
+				svd.compute(new OjalgoDenseDoubleMatrix2D(source)
+						.getWrappedObject());
+			}
+			final Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
+			final Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
+			final Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
+			return new Matrix[] { u, s, v };
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.UJMP
+					.calc(source);
 		}
-		final Matrix u = new OjalgoDenseDoubleMatrix2D(svd.getQ1());
-		final Matrix s = new OjalgoDenseDoubleMatrix2D(svd.getD());
-		final Matrix v = new OjalgoDenseDoubleMatrix2D(svd.getQ2());
-		return new Matrix[] { u, s, v };
 	}
 
 }

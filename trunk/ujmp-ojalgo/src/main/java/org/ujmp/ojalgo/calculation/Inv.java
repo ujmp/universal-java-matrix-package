@@ -35,14 +35,21 @@ public class Inv
 	public static Inv INSTANCE = new Inv();
 
 	public Matrix calc(Matrix source) {
-		MatrixStore<Double> matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
+		try {
+			MatrixStore<Double> matrix = null;
+			if (source instanceof OjalgoDenseDoubleMatrix2D) {
+				matrix = ((OjalgoDenseDoubleMatrix2D) source)
+						.getWrappedObject();
+			} else {
+				matrix = new OjalgoDenseDoubleMatrix2D(source)
+						.getWrappedObject();
+			}
+			return new OjalgoDenseDoubleMatrix2D(LUDecomposition
+					.makePrimitive().invert(matrix));
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Inv.UJMP
+					.calc(source);
 		}
-		return new OjalgoDenseDoubleMatrix2D(LUDecomposition.makePrimitive()
-				.invert(matrix));
 	}
 
 }

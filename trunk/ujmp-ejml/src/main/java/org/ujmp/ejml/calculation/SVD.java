@@ -36,23 +36,28 @@ public class SVD
 
 	@Override
 	public Matrix[] calc(Matrix source) {
-		SvdNumericalRecipes svd = new SvdNumericalRecipes();
-		if (source instanceof EJMLDenseDoubleMatrix2D) {
-			svd
-					.decompose(((EJMLDenseDoubleMatrix2D) source)
-							.getWrappedObject());
-		} else {
-			svd.decompose(new EJMLDenseDoubleMatrix2D(source)
-					.getWrappedObject());
+		try {
+			SvdNumericalRecipes svd = new SvdNumericalRecipes();
+			if (source instanceof EJMLDenseDoubleMatrix2D) {
+				svd.decompose(((EJMLDenseDoubleMatrix2D) source)
+						.getWrappedObject());
+			} else {
+				svd.decompose(new EJMLDenseDoubleMatrix2D(source)
+						.getWrappedObject());
+			}
+			Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
+			Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
+			double[] svs = svd.getW();
+			Matrix s = MatrixFactory.sparse(u.getColumnCount(), v
+					.getColumnCount());
+			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
+				s.setAsDouble(svs[i], i, i);
+			}
+			return new Matrix[] { u, s, v };
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.UJMP
+					.calc(source);
 		}
-		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
-		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
-		double[] svs = svd.getW();
-		Matrix s = MatrixFactory.sparse(u.getColumnCount(), v.getColumnCount());
-		for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
-			s.setAsDouble(svs[i], i, i);
-		}
-		return new Matrix[] { u, s, v };
 	}
 
 }

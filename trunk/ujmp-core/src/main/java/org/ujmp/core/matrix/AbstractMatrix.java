@@ -115,6 +115,7 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.Pinv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeIn;
@@ -386,7 +387,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix solve(Matrix b) {
-		return isSquare() ? (new LU(this)).solve(b) : (new QR(this)).solve(b);
+		return Solve.INSTANCE.calc(this, b);
 	}
 
 	public Matrix ginv() throws MatrixException {
@@ -1698,7 +1699,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix[] qr() throws MatrixException {
-		return QR.calcNew(this);
+		return QR.INSTANCE.calc(this);
 	}
 
 	public Matrix[] lu() throws MatrixException {

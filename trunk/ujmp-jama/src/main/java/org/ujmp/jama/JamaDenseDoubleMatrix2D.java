@@ -184,6 +184,28 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
 	}
 
+	public double det() {
+		return matrix.det();
+	}
+
+	public Matrix plus(Matrix m) {
+		if (m instanceof JamaDenseDoubleMatrix2D) {
+			return new JamaDenseDoubleMatrix2D(matrix
+					.plus(((JamaDenseDoubleMatrix2D) m).matrix));
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof JamaDenseDoubleMatrix2D) {
+			return new JamaDenseDoubleMatrix2D(matrix
+					.minus(((JamaDenseDoubleMatrix2D) m).matrix));
+		} else {
+			return super.minus(m);
+		}
+	}
+
 	public Matrix solve(Matrix b) {
 		if (b instanceof JamaDenseDoubleMatrix2D) {
 			JamaDenseDoubleMatrix2D b2 = (JamaDenseDoubleMatrix2D) b;

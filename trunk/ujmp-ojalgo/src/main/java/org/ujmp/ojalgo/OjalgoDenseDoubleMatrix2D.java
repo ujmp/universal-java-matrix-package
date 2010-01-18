@@ -37,8 +37,6 @@ import org.ojalgo.matrix.decomposition.Eigenvalue;
 import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
 import org.ojalgo.matrix.decomposition.LU;
 import org.ojalgo.matrix.decomposition.LUDecomposition;
-import org.ojalgo.matrix.decomposition.QR;
-import org.ojalgo.matrix.decomposition.QRDecomposition;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
@@ -47,6 +45,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ojalgo.calculation.Inv;
+import org.ujmp.ojalgo.calculation.QR;
 import org.ujmp.ojalgo.calculation.SVD;
 import org.ujmp.ojalgo.calculation.Solve;
 
@@ -147,6 +146,12 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return Inv.INSTANCE.calc(this);
 	}
 
+	public double det() {
+		final LU<Double> lu = LUDecomposition.makePrimitive();
+		lu.compute(matrix);
+		return lu.getDeterminant();
+	}
+
 	@Override
 	public Matrix[] lu() {
 		final LU<Double> lu = LUDecomposition.makePrimitive();
@@ -241,11 +246,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix[] qr() {
-		final QR<Double> qr = QRDecomposition.makePrimitive();
-		qr.compute(matrix);
-		final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
-		final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
-		return new Matrix[] { q, r };
+		return QR.INSTANCE.calc(this);
 	}
 
 	public void setDouble(final double value, final int row, final int column) {

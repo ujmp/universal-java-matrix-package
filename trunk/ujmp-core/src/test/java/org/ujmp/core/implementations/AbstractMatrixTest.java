@@ -767,7 +767,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(-4.0, 1, 0);
 		m2.setAsDouble(5.0, 1, 1);
 		m2.setAsDouble(-6.0, 1, 2);
+
 		Matrix m3 = m1.mtimes(m2);
+
 		assertEquals(getLabel(), 2, m3.getRowCount());
 		assertEquals(getLabel(), 3, m3.getColumnCount());
 		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
@@ -776,6 +778,18 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
 		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
 		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+
+		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
+		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
+		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2));
+		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2));
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -799,7 +813,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(-4.0, 1, 0);
 		m2.setAsDouble(5.0, 1, 1);
 		m2.setAsDouble(-6.0, 1, 2);
+
 		Matrix m3 = m1.mtimes(m2);
+
 		assertEquals(getLabel(), 100, m3.getRowCount());
 		assertEquals(getLabel(), 102, m3.getColumnCount());
 		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
@@ -808,6 +824,18 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
 		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
 		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+
+		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0));
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
+		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
+		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1));
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2));
+		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0));
+		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2));
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -947,41 +975,39 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
-	public void testEig() throws Exception {
-		Matrix a = createMatrix(5, 5);
-
-		// skip libraries which do not support all matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			// only symmetric matrices
-			return;
-		}
-
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
-		Matrix[] eig = a.eig();
-		Matrix prod1 = a.mtimes(eig[0]);
-		Matrix prod2 = eig[0].mtimes(eig[1]);
-
-		assertEquals(0.0, prod1.minus(prod2).getRMS(), UJMPSettings.getTolerance());
-	}
-
 	public void testEigRand() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
-		// skip libraries which do not support all matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			// only symmetric matrices
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			// testcase fails!
+			// only symmetric matrices
 			return;
 		}
 
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
+		Matrix[] eig = a.eig();
+		Matrix prod1 = a.mtimes(eig[0]);
+		Matrix prod2 = eig[0].mtimes(eig[1]);
+
+		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), UJMPSettings.getTolerance());
+	}
+
+	public void testEigSymm() throws Exception {
+		Matrix a = createMatrix(10, 10);
+		Random random = new Random();
+		int rows = (int) a.getRowCount();
+		int cols = (int) a.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols && c <= r; c++) {
+				double f = random.nextDouble() - 0.5;
+				a.setAsDouble(f - 0.5, r, c);
+				a.setAsDouble(f - 0.5, c, r);
+			}
+		}
+
 		Matrix[] eig = a.eig();
 		Matrix prod1 = a.mtimes(eig[0]);
 		Matrix prod2 = eig[0].mtimes(eig[1]);

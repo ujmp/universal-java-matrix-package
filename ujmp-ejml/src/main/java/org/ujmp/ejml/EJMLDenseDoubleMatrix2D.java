@@ -29,7 +29,6 @@ import java.io.ObjectOutputStream;
 
 import org.ejml.alg.dense.decomposition.chol.CholeskyDecompositionLDL;
 import org.ejml.alg.dense.decomposition.lu.LUDecompositionAlt;
-import org.ejml.alg.dense.decomposition.qr.QRDecompositionHouseholder;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
@@ -37,6 +36,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ejml.calculation.Inv;
+import org.ujmp.ejml.calculation.QR;
 import org.ujmp.ejml.calculation.SVD;
 import org.ujmp.ejml.calculation.Solve;
 
@@ -99,6 +99,10 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return Inv.INSTANCE.calc(this);
 	}
 
+	public double det() {
+		return CommonOps.det(matrix);
+	}
+
 	public Matrix solve(Matrix b) {
 		return Solve.INSTANCE.calc(this, b);
 	}
@@ -109,9 +113,43 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new EJMLDenseDoubleMatrix2D(ret);
 	}
 
+	public Matrix plus(Matrix m) {
+		if (m instanceof EJMLDenseDoubleMatrix2D) {
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			CommonOps.add(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
+			return new EJMLDenseDoubleMatrix2D(ret);
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof EJMLDenseDoubleMatrix2D) {
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			CommonOps.sub(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
+			return new EJMLDenseDoubleMatrix2D(ret);
+		} else {
+			return super.minus(m);
+		}
+	}
+
+	public Matrix minus(double value) {
+		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
+		CommonOps.add(matrix, -value, ret);
+		return new EJMLDenseDoubleMatrix2D(ret);
+	}
+
 	public Matrix times(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(value, matrix, ret);
+		return new EJMLDenseDoubleMatrix2D(ret);
+	}
+
+	public Matrix divide(double value) {
+		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
+		CommonOps.scale(1.0 / value, matrix, ret);
 		return new EJMLDenseDoubleMatrix2D(ret);
 	}
 
@@ -131,21 +169,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] qr() {
-		if (matrix.numRows >= matrix.numCols) {
-			QRDecompositionHouseholder qr = new QRDecompositionHouseholder();
-			qr.decompose(matrix);
-			DenseMatrix64F qm = new DenseMatrix64F(matrix.numRows,
-					matrix.numRows);
-			DenseMatrix64F rm = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
-			qr.setToQ(qm);
-			qr.setToR(rm, false);
-			Matrix q = new EJMLDenseDoubleMatrix2D(qm);
-			Matrix r = new EJMLDenseDoubleMatrix2D(rm);
-			return new Matrix[] { q, r };
-		} else {
-			return super.qr();
-		}
+		return QR.INSTANCE.calc(this);
 	}
 
 	public Matrix chol() {

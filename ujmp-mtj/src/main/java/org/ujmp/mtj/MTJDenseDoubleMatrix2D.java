@@ -40,6 +40,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.mtj.calculation.Inv;
 
 public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DenseMatrix> {

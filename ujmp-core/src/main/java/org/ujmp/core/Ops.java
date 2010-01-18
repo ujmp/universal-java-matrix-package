@@ -27,6 +27,7 @@ import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusScalar;
 import org.ujmp.core.calculation.TimesMatrix;
@@ -54,6 +55,8 @@ public abstract class Ops {
 	public static TimesScalar<Matrix> TIMESSCALAR = TimesScalar.INSTANCE;
 
 	public static DivideScalar<Matrix> DIVIDESCALAR = DivideScalar.INSTANCE;
+
+	public static Mtimes<Matrix> MTIMES = Mtimes.INSTANCE;
 
 	public static SVD<Matrix> SVD = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 

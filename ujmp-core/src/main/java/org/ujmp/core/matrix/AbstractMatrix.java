@@ -807,7 +807,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		return new Mtimes().calc(this, matrix);
+		Matrix result = null;
+		try {
+			result = this.getClass().getConstructor(long[].class).newInstance(getRowCount(),
+					matrix.getColumnCount());
+		} catch (Exception e) {
+			result = MatrixFactory.dense(getRowCount(), matrix.getColumnCount());
+		}
+		Ops.MTIMES.calc(this, matrix, result);
+		return result;
 	}
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {

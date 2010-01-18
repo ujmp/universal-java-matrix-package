@@ -29,7 +29,6 @@ import org.ojalgo.matrix.decomposition.QR;
 import org.ojalgo.matrix.decomposition.QRDecomposition;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class Solve
@@ -61,8 +60,9 @@ public class Solve
 				qr.compute(a2);
 				return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
 			}
-		} catch (final Exception e) {
-			throw new MatrixException(e);
+		} catch (final Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMP
+					.calc(a, b);
 		}
 	}
 

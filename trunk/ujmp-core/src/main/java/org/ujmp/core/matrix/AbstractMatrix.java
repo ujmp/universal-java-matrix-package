@@ -1214,14 +1214,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (getDimensionCount() != 2 || !isSquare()) {
 			return Double.NaN;
 		}
-		return new LU(this).det();
+		return new LU.LUMatrix(this).det();
 	}
 
 	public boolean isSingular() throws MatrixException {
 		if (getDimensionCount() != 2 || !isSquare()) {
 			return false;
 		}
-		return !new LU(this).isNonsingular();
+		return !new LU.LUMatrix(this).isNonsingular();
 	}
 
 	public double manhattenDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException {
@@ -1711,7 +1711,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix[] lu() throws MatrixException {
-		return LU.calcNew(this);
+		return LU.INSTANCE.calc(this);
 	}
 
 	public Matrix chol() throws MatrixException {

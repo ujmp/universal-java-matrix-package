@@ -41,7 +41,7 @@ public class JampackDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JampackDenseDoubleMatrix2DBenchmark().runAllTests();
+		new JampackDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

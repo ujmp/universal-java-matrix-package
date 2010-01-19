@@ -347,7 +347,7 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		try {
 			MatrixBenchmark mb = new MatrixBenchmark();
 			mb.setRunAllLibraries();
-			mb.setRunAllTests();
+			mb.setRunAllTests(BURNINRUNS, RUNS);
 			mb.runAll();
 			mb.evaluate();
 		} catch (Exception e) {

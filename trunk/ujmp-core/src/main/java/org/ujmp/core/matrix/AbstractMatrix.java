@@ -809,8 +809,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
 		Matrix result = null;
 		try {
-			result = this.getClass().getConstructor(long[].class).newInstance(getRowCount(),
-					matrix.getColumnCount());
+			if (matrix instanceof SparseMatrix) {
+				result = matrix.getClass().getConstructor(long[].class).newInstance(
+						new long[] { getRowCount(), matrix.getColumnCount() });
+			} else {
+				result = this.getClass().getConstructor(long[].class).newInstance(
+						new long[] { getRowCount(), matrix.getColumnCount() });
+
+			}
 		} catch (Exception e) {
 			result = MatrixFactory.dense(getRowCount(), matrix.getColumnCount());
 		}

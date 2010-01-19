@@ -40,7 +40,7 @@ public class EJMLDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark 
 	}
 
 	public static void main(String[] args) throws Exception {
-		new EJMLDenseDoubleMatrix2DBenchmark().runAllTests();
+		new EJMLDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

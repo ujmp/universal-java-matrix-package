@@ -41,7 +41,8 @@ public class CommonsMathArrayDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new CommonsMathArrayDenseDoubleMatrix2DBenchmark().runAllTests();
+		new CommonsMathArrayDenseDoubleMatrix2DBenchmark().runAllTests(
+				BURNINRUNS, RUNS);
 	}
 
 }

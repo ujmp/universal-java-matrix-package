@@ -41,7 +41,7 @@ public class OjalgoDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new OjalgoDenseDoubleMatrix2DBenchmark().runAllTests();
+		new OjalgoDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

@@ -41,7 +41,8 @@ public class JScienceDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JScienceDenseDoubleMatrix2DBenchmark().runAllTests();
+		new JScienceDenseDoubleMatrix2DBenchmark()
+				.runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

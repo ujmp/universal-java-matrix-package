@@ -43,6 +43,10 @@ import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrix2DBenchmark {
 
+	public static final int BURNINRUNS = 3;
+
+	public static final int RUNS = 10;
+
 	private static final double TOOLONG = 999999;
 
 	private static final double NOTAVAILABLE = 0;
@@ -283,15 +287,15 @@ public abstract class AbstractMatrix2DBenchmark {
 		return cholSizes;
 	}
 
-	public void runAllTests() throws Exception {
-		setRunAllTests();
+	public void runAllTests(int burnInRuns, int runs) throws Exception {
+		setRunAllTests(burnInRuns, runs);
 		run();
 	}
 
-	public void setRunAllTests() throws Exception {
+	public void setRunAllTests(int burnInRuns, int runs) throws Exception {
 		setSkipSlowLibraries(true);
-		setBurnInRuns(3);
-		setRunsPerMatrix(10);
+		setBurnInRuns(burnInRuns);
+		setRunsPerMatrix(runs);
 
 		setRunTimesScalarNew(true);
 		setRunPlusMatrixNew(true);

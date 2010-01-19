@@ -33,19 +33,19 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.concurrent.PFor;
 
-public interface Mtimes<T> {
+public interface Mtimes<S, T, U> {
 
-	public static Mtimes<Matrix> INSTANCE = new Mtimes<Matrix>() {
+	public static Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
 					&& target instanceof DenseMatrix) {
 				Mtimes.DENSEMATRIX.calc((DenseMatrix) source1, (DenseMatrix) source2,
 						(DenseMatrix) target);
-			} else if (source1 instanceof SparseMatrix && source2 instanceof SparseMatrix
-					&& target instanceof SparseMatrix) {
-				Mtimes.SPARSEMATRIX.calc((SparseMatrix) source1, (SparseMatrix) source2,
-						(SparseMatrix) target);
+			} else if (source1 instanceof SparseMatrix) {
+				Mtimes.SPARSEMATRIX1.calc((SparseMatrix) source1, source2, target);
+			} else if (source2 instanceof SparseMatrix) {
+				Mtimes.SPARSEMATRIX2.calc(source1, (SparseMatrix) source2, target);
 			} else {
 				gemm(1.0, source1, 1.0, source2, target);
 			}
@@ -108,7 +108,7 @@ public interface Mtimes<T> {
 		}
 	};
 
-	public static Mtimes<DenseMatrix> DENSEMATRIX = new Mtimes<DenseMatrix>() {
+	public static Mtimes<DenseMatrix, DenseMatrix, DenseMatrix> DENSEMATRIX = new Mtimes<DenseMatrix, DenseMatrix, DenseMatrix>() {
 
 		public void calc(final DenseMatrix source1, final DenseMatrix source2,
 				final DenseMatrix target) {
@@ -178,72 +178,45 @@ public interface Mtimes<T> {
 		}
 	};
 
-	public static Mtimes<SparseMatrix> SPARSEMATRIX = new Mtimes<SparseMatrix>() {
+	public static Mtimes<SparseMatrix, Matrix, Matrix> SPARSEMATRIX1 = new Mtimes<SparseMatrix, Matrix, Matrix>() {
 
-		public void calc(final SparseMatrix source1, final SparseMatrix source2,
-				final SparseMatrix target) {
-			gemm(1.0, source1, 1.0, source2, target);
-		}
-
-		private void gemm(final double alpha, final SparseMatrix A, final double beta,
-				final SparseMatrix B, final SparseMatrix C) {
-			final int m1RowCount = (int) A.getRowCount();
-			final int m1ColumnCount = (int) A.getColumnCount();
-			final int m2RowCount = (int) B.getRowCount();
-			final int m2ColumnCount = (int) B.getColumnCount();
-
-			if (m1ColumnCount != m2RowCount) {
-				throw new MatrixException("matrices have wrong size");
-			}
-
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
-
-			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
-				new PFor(0, m2ColumnCount - 1) {
-
-					@Override
-					public void step(int i) {
-						if (beta != 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-							}
-						}
-						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B.getAsDouble(lcol, i);
-							if (temp != 0.0) {
-								for (int irow = 0; irow < m1RowCount; ++irow) {
-									C.setAsDouble(C.getAsDouble(irow, i)
-											+ A.getAsDouble(irow, lcol) * temp, irow, i);
-								}
-							}
-						}
-					}
-				};
-			} else {
-				for (int i = 0; i < m2ColumnCount; i++) {
-					if (beta != 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-						}
-					}
-					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B.getAsDouble(lcol, i);
+		public void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
+			for (long[] c1 : source1.availableCoordinates()) {
+				final double v1 = source1.getAsDouble(c1);
+				if (v1 != 0.0) {
+					for (long col2 = source2.getColumnCount(); --col2 != -1;) {
+						double v2 = source2.getAsDouble(c1[1], col2);
+						double temp = v1 * v2;
 						if (temp != 0.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
-										* temp, irow, i);
-							}
+							double v3 = target.getAsDouble(c1[0], col2);
+							target.setAsDouble(v3 + temp, c1[0], col2);
 						}
 					}
 				}
 			}
 		}
-
 	};
 
-	public static Mtimes<DenseMatrix2D> DENSEMATRIX2D = new Mtimes<DenseMatrix2D>() {
+	public static Mtimes<Matrix, SparseMatrix, Matrix> SPARSEMATRIX2 = new Mtimes<Matrix, SparseMatrix, Matrix>() {
+
+		public void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
+			for (long[] c2 : source2.availableCoordinates()) {
+				final double v2 = source2.getAsDouble(c2);
+				if (v2 != 0.0) {
+					for (long row1 = source1.getRowCount(); --row1 != -1;) {
+						double v1 = source1.getAsDouble(row1, c2[0]);
+						double temp = v1 * v2;
+						if (temp != 0.0) {
+							double v3 = target.getAsDouble(row1, c2[1]);
+							target.setAsDouble(v3 + temp, row1, c2[1]);
+						}
+					}
+				}
+			}
+		}
+	};
+
+	public static Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D>() {
 
 		public void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
 				final DenseMatrix2D target) {
@@ -313,7 +286,7 @@ public interface Mtimes<T> {
 		}
 	};
 
-	public static Mtimes<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Mtimes<DenseDoubleMatrix2D>() {
+	public static Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D>() {
 
 		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 				final DenseDoubleMatrix2D target) {
@@ -496,6 +469,6 @@ public interface Mtimes<T> {
 
 	};
 
-	public void calc(T source1, T source2, T target);
+	public void calc(S source1, T source2, U target);
 
 }

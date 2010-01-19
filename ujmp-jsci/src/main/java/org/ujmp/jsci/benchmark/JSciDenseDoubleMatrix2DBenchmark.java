@@ -40,7 +40,7 @@ public class JSciDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark 
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JSciDenseDoubleMatrix2DBenchmark().runAllTests();
+		new JSciDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

@@ -40,7 +40,7 @@ public class MTJDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new MTJDenseDoubleMatrix2DBenchmark().runAllTests();
+		new MTJDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

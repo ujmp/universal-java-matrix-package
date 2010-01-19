@@ -56,7 +56,7 @@ public abstract class Ops {
 
 	public static DivideScalar<Matrix> DIVIDESCALAR = DivideScalar.INSTANCE;
 
-	public static Mtimes<Matrix> MTIMES = Mtimes.INSTANCE;
+	public static Mtimes<Matrix, Matrix, Matrix> MTIMES = Mtimes.INSTANCE;
 
 	public static SVD<Matrix> SVD = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 

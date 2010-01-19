@@ -41,7 +41,7 @@ public class ColtSparseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new ColtSparseDoubleMatrix2DBenchmark().runAllTests();
+		new ColtSparseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

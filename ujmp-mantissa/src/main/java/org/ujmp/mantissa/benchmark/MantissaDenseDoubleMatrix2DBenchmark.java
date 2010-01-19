@@ -41,7 +41,8 @@ public class MantissaDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new MantissaDenseDoubleMatrix2DBenchmark().runAllTests();
+		new MantissaDenseDoubleMatrix2DBenchmark()
+				.runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

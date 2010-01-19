@@ -41,7 +41,7 @@ public class VecMathDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new VecMathDenseDoubleMatrix2DBenchmark().runAllTests();
+		new VecMathDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

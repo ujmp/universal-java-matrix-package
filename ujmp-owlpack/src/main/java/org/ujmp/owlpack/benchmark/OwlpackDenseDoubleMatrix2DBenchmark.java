@@ -41,7 +41,7 @@ public class OwlpackDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new OwlpackDenseDoubleMatrix2DBenchmark().runAllTests();
+		new OwlpackDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

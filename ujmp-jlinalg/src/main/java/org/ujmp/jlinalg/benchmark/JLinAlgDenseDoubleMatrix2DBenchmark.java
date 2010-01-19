@@ -41,7 +41,7 @@ public class JLinAlgDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JLinAlgDenseDoubleMatrix2DBenchmark().runAllTests();
+		new JLinAlgDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
 	}
 
 }

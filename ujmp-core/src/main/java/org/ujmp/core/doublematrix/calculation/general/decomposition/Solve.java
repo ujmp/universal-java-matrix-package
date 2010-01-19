@@ -54,7 +54,7 @@ public interface Solve<T> {
 	public static Solve<Matrix> UJMP = new Solve<Matrix>() {
 
 		public Matrix calc(Matrix a, Matrix b) {
-			return a.isSquare() ? (new LU(a)).solve(b) : QR.INSTANCE.solve(a, b);
+			return a.isSquare() ? LU.INSTANCE.solve(a, b) : QR.INSTANCE.solve(a, b);
 		}
 	};
 

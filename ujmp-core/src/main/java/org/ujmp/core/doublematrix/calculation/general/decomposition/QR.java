@@ -271,7 +271,7 @@ public interface QR<T> {
 		}
 	};
 
-	class QRMatrix {
+	public class QRMatrix {
 
 		/*
 		 * ------------------------ Class variables ------------------------

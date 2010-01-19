@@ -57,7 +57,7 @@ public interface Inv<T> {
 
 	public Inv<Matrix> UJMP = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
-			return new LU(source).solve(MatrixFactory.eye(source.getRowCount(), source
+			return LU.INSTANCE.solve(source, MatrixFactory.eye(source.getRowCount(), source
 					.getRowCount()));
 		}
 	};

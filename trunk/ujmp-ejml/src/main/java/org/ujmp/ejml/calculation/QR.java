@@ -49,8 +49,8 @@ public class QR implements
 					matrix.numRows);
 			DenseMatrix64F rm = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
-			qr.setToQ(qm);
-			qr.setToR(rm, false);
+			qr.getQ(qm, true);
+			qr.getR(rm, false);
 			Matrix q = new EJMLDenseDoubleMatrix2D(qm);
 			Matrix r = new EJMLDenseDoubleMatrix2D(rm);
 			return new Matrix[] { q, r };

@@ -25,7 +25,6 @@ package org.ujmp.ejml.calculation;
 
 import org.ejml.alg.dense.decomposition.svd.SvdNumericalRecipes;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
 public class SVD
@@ -47,12 +46,7 @@ public class SVD
 			}
 			Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
 			Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
-			double[] svs = svd.getW();
-			Matrix s = MatrixFactory.sparse(u.getColumnCount(), v
-					.getColumnCount());
-			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
-				s.setAsDouble(svs[i], i, i);
-			}
+			Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW());
 			return new Matrix[] { u, s, v };
 		} catch (Throwable t) {
 			return org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.UJMP

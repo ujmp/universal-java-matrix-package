@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.ejml.alg.dense.decomposition.DecompositionFactory;
+import org.ejml.alg.dense.decomposition.EigenDecomposition;
 import org.ejml.alg.dense.decomposition.chol.CholeskyDecompositionLDL;
 import org.ejml.alg.dense.decomposition.lu.LUDecompositionAlt;
 import org.ejml.data.DenseMatrix64F;
@@ -187,8 +189,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					matrix.numCols);
 			DenseMatrix64F um = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
-			lu.setToLower(lm);
-			lu.setToUpper(um);
+			lu.getLower(lm);
+			lu.getUpper(um);
 			Matrix l = new EJMLDenseDoubleMatrix2D(lm);
 			Matrix u = new EJMLDenseDoubleMatrix2D(um);
 			int[] piv = lu.getPivot();
@@ -201,6 +203,14 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} else {
 			return super.lu();
 		}
+	}
+
+	public Matrix[] eig() {
+		EigenDecomposition eig = DecompositionFactory.eig();
+		eig.decompose(matrix);
+		Matrix v = null;
+		Matrix d = null;
+		return new Matrix[] { v, d };
 	}
 
 	public Matrix copy() {
@@ -217,7 +227,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		int rows = (Integer) s.readObject();
 		int columns = (Integer) s.readObject();
 		double[] values = (double[]) s.readObject();
-		matrix = new DenseMatrix64F(rows, columns, values);
+		matrix = new DenseMatrix64F(rows, columns, values, true);
 	}
 
 	private void writeObject(ObjectOutputStream s) throws IOException,

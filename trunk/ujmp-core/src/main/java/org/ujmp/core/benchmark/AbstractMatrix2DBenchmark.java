@@ -47,35 +47,35 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public static final int RUNS = 10;
 
-	private static final double TOOLONG = 999999;
+	public static final double MAXTIME = 10000;
 
 	private static final double NOTAVAILABLE = 0;
 
 	private static final double ERRORTIME = Double.NaN;
 
-	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String transposeSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String timesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String timesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String plusSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String plusSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String mtimesSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String invSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String solveSquareSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String solveSquareSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String solveTallSizes = "3x2,4x3,5x4,6x5,7x6,8x7,9x8,10x9,11x10,21x20,31x30,41x40,51x50,61x60,71x70,81x80,91x90,101x100,201x200,301x300,401x400,501x500,601x600,701x700,801x800,901x900,1001x1000,2001x2000";
+	private final String solveTallSizes = "3x2,4x3,5x4,6x5,7x6,8x7,9x8,10x9,11x10,21x20,31x30,41x40,51x50,61x60,71x70,81x80,91x90,101x100,201x200,301x300,401x400,501x500,601x600,701x700,801x800,901x900,1001x1000,2001x2000,3001x3000,4001x4000,5001x5000,6001x6000,7001x7000,8001x8000,9001x9000,10001x10000";
 
-	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String svdSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000";
+	private final String eigSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String qrSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String luSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
-	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000";
+	private final String cholSizes = "2x2,3x3,4x4,5x5,6x6,7x7,8x8,9x9,10x10,20x20,30x30,40x40,50x50,60x60,70x70,80x80,90x90,100x100,200x200,300x300,400x400,500x500,600x600,700x700,800x800,900x900,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
 
 	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
 
@@ -171,10 +171,6 @@ public abstract class AbstractMatrix2DBenchmark {
 		return "true".equals(System.getProperty("runSolveTall"));
 	}
 
-	public boolean isSkipSlowLibraries() {
-		return "true".equals(System.getProperty("skipSlowLibraries"));
-	}
-
 	public boolean isRunSVD() {
 		return "true".equals(System.getProperty("runSVD"));
 	}
@@ -225,10 +221,6 @@ public abstract class AbstractMatrix2DBenchmark {
 
 	public void setRunEig(boolean b) {
 		System.setProperty("runEig", "" + b);
-	}
-
-	public void setSkipSlowLibraries(boolean b) {
-		System.setProperty("skipSlowLibraries", "" + b);
 	}
 
 	public void setRunLU(boolean b) {
@@ -293,7 +285,6 @@ public abstract class AbstractMatrix2DBenchmark {
 	}
 
 	public void setRunAllTests(int burnInRuns, int runs) throws Exception {
-		setSkipSlowLibraries(true);
 		setBurnInRuns(burnInRuns);
 		setRunsPerMatrix(runs);
 
@@ -400,19 +391,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkTransposeNew(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkTransposeNew(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkTransposeNew(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -442,19 +440,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkTimesScalarNew(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkTimesScalarNew(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkTimesScalarNew(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -484,19 +489,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkPlusMatrixNew(i, size, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkPlusMatrixNew(i, size, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkPlusMatrixNew(i, size, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -526,19 +538,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkInv(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkInv(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkInv(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -568,18 +587,22 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkSVD(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkSVD(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkSVD(i, size);
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
@@ -610,18 +633,22 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkSolve(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkSolve(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkSolve(i, size);
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
@@ -652,19 +679,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkSolve(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkSolve(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkSolve(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -694,19 +728,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkQR(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkQR(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkQR(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -736,19 +777,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkLU(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkLU(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkLU(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -778,19 +826,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkEig(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkEig(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkEig(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -820,19 +875,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkChol(i, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkChol(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkChol(i, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -875,19 +937,26 @@ public abstract class AbstractMatrix2DBenchmark {
 		Matrix result = MatrixFactory.zeros(ValueType.STRING, getRunsPerMatrix(), sizes.length);
 		result.setLabel(getMatrixLabel() + "-" + test);
 
-		for (int s = 0; s < sizes.length; s++) {
+		boolean stopped = false;
+		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
 			result.setColumnLabel(s, Coordinates.toString('x', size));
 			System.out.print(test + " [" + Coordinates.toString('x', size) + "]: ");
 			System.out.flush();
 
-			for (int i = 0; i < getBurnInRuns(); i++) {
-				benchmarkMtimesNew(i, size, size);
+			for (int i = 0; !stopped && i < getBurnInRuns(); i++) {
+				double t = benchmarkMtimesNew(i, size, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				System.out.print("#");
 				System.out.flush();
 			}
-			for (int i = 0; i < getRunsPerMatrix(); i++) {
+			for (int i = 0; !stopped && i < getRunsPerMatrix(); i++) {
 				double t = benchmarkMtimesNew(i, size, size);
+				if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+					stopped = true;
+				}
 				result.setAsDouble(t, i, s);
 				System.out.print(".");
 				System.out.flush();
@@ -1044,36 +1113,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.orbital.")
-					&& Coordinates.product(size) > 40000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.jlinalg.")
-					&& Coordinates.product(size) > 160000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.jscience.")
-					&& Coordinates.product(size) > 160000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.vecmath.")
-					&& Coordinates.product(size) > 1000000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
-					&& Coordinates.product(size) > 1000000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
 
 			rand(run, m);
 			GCUtil.gc();
@@ -1103,18 +1142,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.vecmath.")
-					&& Coordinates.product(size) > 40000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
-					&& Coordinates.product(size) > 700 * 700) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
 			}
 
 			rand(run, m);
@@ -1149,12 +1176,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.sst.")
-					&& Coordinates.product(size) > 700 * 700) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
 			}
 
 			randSymm(run, m);
@@ -1191,24 +1212,7 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.orbital.")
-					&& Coordinates.product(size) > 40000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.jlinalg.")
-					&& Coordinates.product(size) > 160000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && a.getClass().getName().startsWith("org.ujmp.jscience.")
-					&& Coordinates.product(size) > 160000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
+
 			x = createMatrix(size);
 			rand(run, a);
 			rand(run, x);
@@ -1312,18 +1316,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.flush();
 				return NOTAVAILABLE;
 			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.orbital.")
-					&& Coordinates.product(size) > 160000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m.getClass().getName().startsWith("org.ujmp.jscience.")
-					&& Coordinates.product(size) > 250000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
 
 			rand(run, m);
 			GCUtil.gc();
@@ -1358,54 +1350,6 @@ public abstract class AbstractMatrix2DBenchmark {
 				System.err.print("-");
 				System.err.flush();
 				return NOTAVAILABLE;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.sst.")
-					&& Coordinates.product(size0) > 1000000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.owlpack.")
-					&& Coordinates.product(size0) > 500000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.orbital.")
-					&& Coordinates.product(size0) > 100000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.mantissa.")
-					&& Coordinates.product(size0) > 900000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.jsci.")
-					&& Coordinates.product(size0) > 900000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.jmatrices.")
-					&& Coordinates.product(size0) > 40000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.jlinalg.")
-					&& Coordinates.product(size0) > 200000) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
-			}
-			if (isSkipSlowLibraries() && m0.getClass().getName().startsWith("org.ujmp.vecmath.")
-					&& Coordinates.product(size0) > 800 * 800) {
-				System.err.print("skip ");
-				System.err.flush();
-				return TOOLONG;
 			}
 
 			rand(run, m0);

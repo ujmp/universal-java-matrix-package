@@ -32,15 +32,14 @@ import no.uib.cipr.matrix.DenseLU;
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.EVD;
 import no.uib.cipr.matrix.QR;
-import no.uib.cipr.matrix.SVD;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.mtj.calculation.Inv;
+import org.ujmp.mtj.calculation.SVD;
 
 public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DenseMatrix> {
@@ -69,19 +68,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] svd() throws MatrixException {
-		try {
-			SVD svd = SVD.factorize(getWrappedObject());
-			Matrix u = new MTJDenseDoubleMatrix2D(svd.getU());
-			Matrix v = new MTJDenseDoubleMatrix2D(svd.getVt()).transpose();
-			double[] svs = svd.getS();
-			Matrix s = MatrixFactory.sparse(getSize());
-			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
-				s.setAsDouble(svs[i], i, i);
-			}
-			return new Matrix[] { u, s, v };
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
+		return SVD.INSTANCE.calc(this);
 	}
 
 	public Matrix[] qr() throws MatrixException {

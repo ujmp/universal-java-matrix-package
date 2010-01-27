@@ -24,8 +24,9 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
 public interface Inv<T> {
@@ -57,72 +58,31 @@ public interface Inv<T> {
 
 	public Inv<Matrix> UJMP = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
-			return LU.INSTANCE.solve(source, MatrixFactory.eye(source.getRowCount(), source
-					.getRowCount()));
+			DenseDoubleMatrix2D b = DenseDoubleMatrix2D.factory.dense(source.getRowCount(), source
+					.getRowCount());
+			for (int i = (int) source.getRowCount(); --i >= 0;) {
+				b.setDouble(1.0, i, i);
+			}
+			return LU.INSTANCE.solve(source, b);
 		}
 	};
 
 	public Inv<Matrix> INSTANCE = MATRIX;
 
-	public static Inv<Matrix> MATRIXSMALLSINGLETHREADED = new Inv<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = null;
-
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
-			} catch (Throwable e) {
-			}
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (inv == null) {
-				inv = UJMP;
-			}
-			return inv.calc(source);
-		}
-	};
+	public static Inv<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public static Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = null;
-
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
-			} catch (Throwable e) {
-			}
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
-			} catch (Throwable e) {
-			}
-
+			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
 			if (inv == null) {
-				inv = UJMP;
+				inv = DecompositionOps.INV_EJML;
 			}
-			return inv.calc(source);
-		}
-	};
-
-	public static Inv<Matrix> MATRIXSMALLMULTITHREADED = new Inv<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = null;
-
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
-			} catch (Throwable e) {
+			if (inv == null) {
+				inv = DecompositionOps.INV_MTJ;
 			}
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
-			} catch (Throwable e) {
+			if (inv == null) {
+				inv = DecompositionOps.INV_OJALGO;
 			}
-
 			if (inv == null) {
 				inv = UJMP;
 			}
@@ -131,24 +91,24 @@ public interface Inv<T> {
 	};
 
 	public static Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = null;
-
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv").newInstance();
-			} catch (Throwable e) {
+			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
+			if (inv == null) {
+				inv = DecompositionOps.INV_OJALGO;
 			}
-			try {
-				inv = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
-			} catch (Throwable e) {
+			if (inv == null) {
+				inv = DecompositionOps.INV_EJML;
 			}
-
+			if (inv == null) {
+				inv = DecompositionOps.INV_MTJ;
+			}
 			if (inv == null) {
 				inv = UJMP;
 			}
 			return inv.calc(source);
 		}
 	};
+
+	public static Inv<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+
 }

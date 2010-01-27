@@ -76,6 +76,7 @@ import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.calculation.ToDateMatrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.basic.Atimes;
@@ -147,6 +148,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.interfaces.HasDoubleArray;
+import org.ujmp.core.interfaces.HasDoubleArray2D;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
@@ -190,6 +193,7 @@ import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 import org.ujmp.core.stringmatrix.calculation.Stem;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
@@ -203,6 +207,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	static {
 		try {
 			runningId = 31 * System.nanoTime() + System.currentTimeMillis();
+		} catch (Throwable t) {
+		}
+		try {
+			DecompositionOps.init();
 		} catch (Throwable t) {
 		}
 		try {
@@ -610,12 +618,35 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public double[][] toDoubleArray() throws MatrixException {
-		int r = (int) getRowCount();
-		int c = (int) getColumnCount();
-		double[][] values = new double[r][c];
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-				values[i][j] = getAsDouble(i, j);
+		final int rows = (int) getRowCount();
+		final int columns = (int) getColumnCount();
+		final double[][] values = new double[rows][columns];
+		if (this instanceof HasDoubleArray) {
+			final double[] m = ((HasDoubleArray) this).getDoubleArray();
+			for (int r = 0; r < rows; r++) {
+				for (int c = 0; c < columns; c++) {
+					values[r][c] = m[c * rows + r];
+				}
+			}
+		} else if (this instanceof HasDoubleArray2D) {
+			final double[][] m = ((HasDoubleArray2D) this).getDoubleArray2D();
+			for (int r = 0; r < rows; r++) {
+				for (int c = 0; c < columns; c++) {
+					values[r][c] = m[r][c];
+				}
+			}
+		} else if (this instanceof DenseDoubleMatrix2D) {
+			final DenseDoubleMatrix2D m = (DenseDoubleMatrix2D) this;
+			for (int r = 0; r < rows; r++) {
+				for (int c = 0; c < columns; c++) {
+					values[r][c] = m.getDouble(r, c);
+				}
+			}
+		} else {
+			for (int r = 0; r < rows; r++) {
+				for (int c = 0; c < columns; c++) {
+					values[r][c] = getAsDouble(r, c);
+				}
 			}
 		}
 		return values;
@@ -1132,20 +1163,32 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final boolean isSymmetric() {
-		long rows = getRowCount();
-		long cols = getColumnCount();
-		if (rows != cols) {
+		if (getDimensionCount() != 2) {
+			throw new MatrixException("only supported for 2d matrices");
+		}
+		if (isSquare()) {
 			return false;
 		}
-		for (long r = 0; r < rows; r++) {
-			for (long c = 0; c < cols && c <= r; c++) {
-				Object o1 = getAsObject(r, c);
-				Object o2 = getAsObject(c, r);
+
+		if (this instanceof DenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D m = (DenseDoubleMatrix2D) this;
+			for (long r = getRowCount(); --r >= 0;) {
+				for (long c = getColumnCount(); --c >= 0;) {
+					if (m.getDouble(r, c) != m.getDouble(c, r)) {
+						return false;
+					}
+				}
+			}
+		} else {
+			for (long[] c : availableCoordinates()) {
+				Object o1 = getAsObject(c);
+				Object o2 = getAsObject(Coordinates.transpose(c));
 				if (!MathUtil.equals(o1, o2)) {
 					return false;
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -1218,14 +1261,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public double det() throws MatrixException {
 		if (getDimensionCount() != 2 || !isSquare()) {
-			return Double.NaN;
+			throw new MatrixException("only supported for 2d square matrices");
 		}
 		return new LU.LUMatrix(this).det();
 	}
 
 	public boolean isSingular() throws MatrixException {
 		if (getDimensionCount() != 2 || !isSquare()) {
-			return false;
+			throw new MatrixException("only supported for 2d square matrices");
 		}
 		return !new LU.LUMatrix(this).isNonsingular();
 	}

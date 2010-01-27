@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -76,50 +77,15 @@ public interface SVD<T> {
 		}
 	};
 
-	public static SVD<Matrix> MATRIXSMALLSINGLETHREADED = new SVD<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = null;
-
-			try {
-				svd = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (svd == null) {
-				svd = UJMP;
-			}
-			return svd.calc(source);
-		}
-	};
+	public static SVD<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public static SVD<Matrix> MATRIXLARGESINGLETHREADED = new SVD<Matrix>() {
 
-		@SuppressWarnings("unchecked")
 		public Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = null;
-
-			try {
-				svd = (SVD<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.SVD").newInstance();
-			} catch (Throwable e) {
-			}
-
+			SVD<Matrix> svd = DecompositionOps.SVD_MTJ;
 			if (svd == null) {
-				try {
-					svd = (SVD<Matrix>) Class.forName("org.ujmp.mtj.calculation.SVD").newInstance();
-				} catch (Throwable e) {
-				}
+				svd = DecompositionOps.SVD_OJALGO;
 			}
-
-			if (svd == null) {
-				try {
-					svd = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD")
-							.newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
 			if (svd == null) {
 				svd = UJMP;
 			}
@@ -127,50 +93,15 @@ public interface SVD<T> {
 		}
 	};
 
-	public static SVD<Matrix> MATRIXSMALLMULTITHREADED = new SVD<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = null;
-
-			try {
-				svd = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (svd == null) {
-				svd = UJMP;
-			}
-			return svd.calc(source);
-		}
-	};
+	public static SVD<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
 	public static SVD<Matrix> MATRIXLARGEMULTITHREADED = new SVD<Matrix>() {
 
-		@SuppressWarnings("unchecked")
 		public Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = null;
-
-			try {
-				svd = (SVD<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.SVD").newInstance();
-			} catch (Throwable e) {
-			}
-
+			SVD<Matrix> svd = DecompositionOps.SVD_OJALGO;
 			if (svd == null) {
-				try {
-					svd = (SVD<Matrix>) Class.forName("org.ujmp.mtj.calculation.SVD").newInstance();
-				} catch (Throwable e) {
-				}
+				svd = DecompositionOps.SVD_MTJ;
 			}
-
-			if (svd == null) {
-				try {
-					svd = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD")
-							.newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
 			if (svd == null) {
 				svd = UJMP;
 			}
@@ -249,7 +180,7 @@ public interface SVD<T> {
 
 			// Derived from LINPACK code.
 			// Initialize.
-			double[][] A = Arg.toDoubleArray();
+			final double[][] A = Arg.toDoubleArray();
 			m = (int) Arg.getRowCount();
 			n = (int) Arg.getColumnCount();
 			this.thin = thin;
@@ -260,15 +191,15 @@ public interface SVD<T> {
 				U = new double[m][ncu];
 			if (wantv)
 				V = new double[n][n];
-			double[] e = new double[n];
-			double[] work = new double[m];
+			final double[] e = new double[n];
+			final double[] work = new double[m];
 
 			// Reduce A to bidiagonal form, storing the diagonal elements
 			// in s and the super-diagonal elements in e.
 
-			int nct = Math.min(m - 1, n);
-			int nrt = Math.max(0, Math.min(n - 2, m));
-			int lu = Math.max(nct, nrt);
+			final int nct = Math.min(m - 1, n);
+			final int nrt = Math.max(0, Math.min(n - 2, m));
+			final int lu = Math.max(nct, nrt);
 			for (int k = 0; k < lu; k++) {
 				if (k < nct) {
 
@@ -661,7 +592,6 @@ public interface SVD<T> {
 					break;
 				}
 			}
-			A = null;
 		}
 
 		/*
@@ -675,10 +605,10 @@ public interface SVD<T> {
 		 */
 
 		public Matrix getU() {
-			double[][] x = new double[m][m >= n ? (thin ? Math.min(m + 1, n) : ncu) : ncu];
+			final double[][] x = new double[m][m >= n ? (thin ? Math.min(m + 1, n) : ncu) : ncu];
 
 			for (int r = 0; r < m; r++) {
-				for (int c = 0; c < x[0].length; c++) {
+				for (int c = x[0].length; --c >= 0;) {
 					x[r][c] = U[r][c];
 				}
 			}
@@ -713,8 +643,8 @@ public interface SVD<T> {
 		 */
 
 		public Matrix getS() {
-			double[][] X = new double[m >= n ? (thin ? n : ncu) : ncu][n];
-			for (int i = Math.min(m, n) - 1; i >= 0; i--)
+			final double[][] X = new double[m >= n ? (thin ? n : ncu) : ncu][n];
+			for (int i = Math.min(m, n); --i >= 0;)
 				X[i][i] = s[i];
 			return MatrixFactory.linkToArray(X);
 		}

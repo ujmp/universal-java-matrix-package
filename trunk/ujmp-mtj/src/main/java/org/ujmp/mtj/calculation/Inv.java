@@ -41,25 +41,18 @@ public class Inv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (inv == null) {
-			if (getSource() instanceof DenseMatrix) {
-				DenseMatrix A = (DenseMatrix) getSource();
-				DenseMatrix I = Matrices.identity((int) getSource().getColumnCount());
-				DenseMatrix AI = I.copy();
-				inv = new MTJDenseDoubleMatrix2D((DenseMatrix) A.solve(I, AI));
-			} else {
-				DenseMatrix A = new MTJDenseDoubleMatrix2D(getSource()).getWrappedObject();
-				DenseMatrix I = Matrices.identity((int) getSource().getColumnCount());
-				DenseMatrix AI = I.copy();
-				inv = new MTJDenseDoubleMatrix2D((DenseMatrix) A.solve(I, AI));
-			}
+			DenseMatrix A = new MTJDenseDoubleMatrix2D(getSource())
+					.getWrappedObject();
+			DenseMatrix I = Matrices.identity((int) getSource()
+					.getColumnCount());
+			DenseMatrix AI = I.copy();
+			inv = new MTJDenseDoubleMatrix2D((DenseMatrix) A.solve(I, AI));
 		}
 		return inv.getAsDouble(coordinates);
 	}
 
-	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

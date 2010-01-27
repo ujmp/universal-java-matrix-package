@@ -316,7 +316,7 @@ public interface QR<T> {
 
 		public QRMatrix(Matrix A) {
 			// Initialize.
-			QR = A.toDoubleArray().clone();
+			QR = A.toDoubleArray();
 			m = (int) A.getRowCount();
 			n = (int) A.getColumnCount();
 			Rdiag = new double[n];
@@ -380,13 +380,11 @@ public interface QR<T> {
 		 */
 
 		public Matrix getH() {
-			double[][] H = new double[m][n];
+			final double[][] H = new double[m][n];
 			for (int i = 0; i < m; i++) {
 				for (int j = 0; j < n; j++) {
 					if (i >= j) {
 						H[i][j] = QR[i][j];
-					} else {
-						H[i][j] = 0.0;
 					}
 				}
 			}
@@ -422,7 +420,7 @@ public interface QR<T> {
 		 */
 
 		public Matrix getQ() {
-			double[][] Q = new double[m][n];
+			final double[][] Q = new double[m][n];
 			for (int k = n - 1; k >= 0; k--) {
 				for (int i = 0; i < m; i++) {
 					Q[i][k] = 0.0;
@@ -465,8 +463,8 @@ public interface QR<T> {
 			}
 
 			// Copy right hand side
-			int nx = (int) B.getColumnCount();
-			double[][] X = B.toDoubleArray().clone();
+			final int nx = (int) B.getColumnCount();
+			final double[][] X = B.toDoubleArray();
 
 			// Compute Y = transpose(Q)*B
 			for (int k = 0; k < n; k++) {

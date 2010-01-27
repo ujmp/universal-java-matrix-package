@@ -2,8 +2,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.util.UJMPSettings;
 
 /**
@@ -61,194 +60,6 @@ public interface LU<T> {
 		}
 	};
 
-	public static LU<Matrix> MATRIXSMALLSINGLETHREADED = new LU<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.solve(source, b);
-		}
-	};
-
-	public static LU<Matrix> MATRIXLARGESINGLETHREADED = new LU<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.solve(source, b);
-		}
-	};
-
-	public static LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.solve(source, b);
-		}
-	};
-
-	public static LU<Matrix> MATRIXSMALLMULTITHREADED = new LU<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = null;
-
-			try {
-				lu = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (lu == null) {
-				try {
-					lu = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (lu == null) {
-				lu = UJMP;
-			}
-			return lu.solve(source, b);
-		}
-	};
-
 	public static LU<Matrix> INSTANCE = MATRIX;
 
 	public static LU<Matrix> UJMP = new LU<Matrix>() {
@@ -263,6 +74,14 @@ public interface LU<T> {
 			return lu.solve(b);
 		}
 	};
+
+	public static LU<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+
+	public static LU<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+
+	public static LU<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
+
+	public static LU<Matrix> MATRIXLARGEMULTITHREADED = UJMP;
 
 	public class LUMatrix {
 
@@ -309,7 +128,7 @@ public interface LU<T> {
 
 			// Use a "left-looking", dot-product, Crout/Doolittle algorithm.
 
-			LU = A.toDoubleArray().clone();
+			LU = A.toDoubleArray();
 			m = (int) A.getRowCount();
 			n = (int) A.getColumnCount();
 			piv = new int[m];
@@ -319,13 +138,13 @@ public interface LU<T> {
 			pivsign = 1;
 
 			final double[] LUcolj = new double[m];
+			double[] LUrowi = null;
 
 			// Outer loop.
 
 			for (int j = 0; j < n; j++) {
 
 				// Make a copy of the j-th column to localize references.
-
 				for (int i = 0; i < m; i++) {
 					LUcolj[i] = LU[i][j];
 				}
@@ -333,7 +152,6 @@ public interface LU<T> {
 				// Apply previous transformations.
 
 				for (int i = 0; i < m; i++) {
-					double[] LUrowi = LU[i];
 					LUrowi = LU[i];
 
 					// Most of the time is spent in the following dot product.
@@ -436,15 +254,13 @@ public interface LU<T> {
 
 		public Matrix getL() {
 			final int min = Math.min(m, n);
-			double[][] L = new double[m][min];
+			final double[][] L = new double[m][min];
 			for (int i = 0; i < m; i++) {
 				for (int j = 0; j < min; j++) {
 					if (i > j) {
 						L[i][j] = LU[i][j];
 					} else if (i == j) {
 						L[i][j] = 1.0;
-					} else {
-						L[i][j] = 0.0;
 					}
 				}
 			}
@@ -459,13 +275,11 @@ public interface LU<T> {
 
 		public Matrix getU() {
 			final int min = Math.min(m, n);
-			double[][] U = new double[min][n];
+			final double[][] U = new double[min][n];
 			for (int i = 0; i < min; i++) {
 				for (int j = 0; j < n; j++) {
 					if (i <= j) {
 						U[i][j] = LU[i][j];
-					} else {
-						U[i][j] = 0.0;
 					}
 				}
 			}
@@ -487,9 +301,9 @@ public interface LU<T> {
 		}
 
 		public Matrix getP() {
-			Matrix p = MatrixFactory.dense(m, m);
+			DenseDoubleMatrix2D p = DenseDoubleMatrix2D.factory.dense(m, m);
 			for (int i = 0; i < m; i++) {
-				p.setAsDouble(1, i, piv[i]);
+				p.setDouble(1, i, piv[i]);
 			}
 			return p;
 		}
@@ -549,8 +363,24 @@ public interface LU<T> {
 
 			// Copy right hand side with pivoting
 			final int nx = (int) B.getColumnCount();
-			Matrix Xmat = B.selectRows(Ret.NEW, MathUtil.toLongArray(piv));
-			final double[][] X = Xmat.toDoubleArray();
+			// final Matrix Xmat = B.selectRows(Ret.NEW,
+			// MathUtil.toLongArray(piv));
+
+			final double[][] X = new double[piv.length][(int) B.getColumnCount()];
+			if (B instanceof DenseDoubleMatrix2D) {
+				DenseDoubleMatrix2D m = (DenseDoubleMatrix2D) B;
+				for (int c = (int) B.getColumnCount(); --c >= 0;) {
+					for (int r = piv.length; --r >= 0;) {
+						X[r][c] = m.getDouble(piv[r], c);
+					}
+				}
+			} else {
+				for (int c = (int) B.getColumnCount(); --c >= 0;) {
+					for (int r = piv.length; --r >= 0;) {
+						X[r][c] = B.getAsDouble(piv[r], c);
+					}
+				}
+			}
 
 			// Solve L*Y = B(piv,:)
 			for (int k = 0; k < n; k++) {
@@ -574,9 +404,5 @@ public interface LU<T> {
 			return MatrixFactory.linkToArray(X);
 		}
 
-		// public static Matrix[] calcNew(Matrix m) throws MatrixException {
-		// LU lu = new LU(m);
-		// return new Matrix[] { lu.getL(), lu.getU(), lu.getP() };
-		// }
 	};
 }

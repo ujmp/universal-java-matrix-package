@@ -41,6 +41,7 @@ import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -63,8 +64,17 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
 		this(m.getSize());
-		for (final long[] c : m.allCoordinates()) {
-			this.setDouble(m.getAsDouble(c), c);
+		if (m instanceof DenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) m;
+			for (int r = (int) m.getRowCount(); --r >= 0;) {
+				for (int c = (int) m.getColumnCount(); --c >= 0;) {
+					matrix.set(r, c, m2.getDouble(r, c));
+				}
+			}
+		} else {
+			for (final long[] c : m.allCoordinates()) {
+				this.setDouble(m.getAsDouble(c), c);
+			}
 		}
 	}
 

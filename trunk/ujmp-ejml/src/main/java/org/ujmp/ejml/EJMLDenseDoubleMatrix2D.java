@@ -31,9 +31,11 @@ import org.ejml.alg.dense.decomposition.DecompositionFactory;
 import org.ejml.alg.dense.decomposition.EigenDecomposition;
 import org.ejml.alg.dense.decomposition.chol.CholeskyDecompositionLDL;
 import org.ejml.alg.dense.decomposition.lu.LUDecompositionAlt;
+import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -58,8 +60,17 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public EJMLDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			setDouble(source.getAsDouble(c), c);
+		if (source instanceof DenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) source;
+			for (int r = (int) source.getRowCount(); --r >= 0;) {
+				for (int c = (int) source.getColumnCount(); --c >= 0;) {
+					matrix.set(r, c, m2.getDouble(r, c));
+				}
+			}
+		} else {
+			for (long[] c : source.availableCoordinates()) {
+				setDouble(source.getAsDouble(c), c);
+			}
 		}
 	}
 
@@ -208,8 +219,31 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix[] eig() {
 		EigenDecomposition eig = DecompositionFactory.eig();
 		eig.decompose(matrix);
-		Matrix v = null;
-		Matrix d = null;
+
+		int N = matrix.numRows;
+
+		DenseMatrix64F D = new DenseMatrix64F(N, N);
+		DenseMatrix64F V = new DenseMatrix64F(N, N);
+
+		for (int i = 0; i < N; i++) {
+			Complex64F c = eig.getEigenvalue(i);
+
+			if (c.isReal()) {
+				D.set(i, i, c.real);
+
+				DenseMatrix64F v = eig.getEigenVector(i);
+
+				if (v != null) {
+					for (int j = 0; j < N; j++) {
+						V.set(j, i, v.get(j, 0));
+					}
+				}
+			}
+		}
+
+		Matrix v = new EJMLDenseDoubleMatrix2D(V);
+		Matrix d = new EJMLDenseDoubleMatrix2D(D);
+
 		return new Matrix[] { v, d };
 	}
 

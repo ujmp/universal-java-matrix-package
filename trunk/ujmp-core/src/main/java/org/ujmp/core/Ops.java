@@ -34,7 +34,10 @@ import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 
 public abstract class Ops {
 
@@ -60,5 +63,15 @@ public abstract class Ops {
 
 	public static SVD<Matrix> SVD = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 
-	public static Inv<Matrix> INV = org.ujmp.core.doublematrix.calculation.general.decomposition.Inv.INSTANCE;
+	public static LU<Matrix> LU = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
+
+	public static QR<Matrix> QR = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
+
+	public static Inv<Matrix> INV = Inv.INSTANCE;
+
+	public static Solve<Matrix> SOLVE = Solve.INSTANCE;
+
+//	public static Chol<Matrix> CHOL = Chol.INSTANCE;
+//
+//	public static Eig<Matrix> EIG = Eig.INSTANCE;
 }

@@ -58,29 +58,31 @@ public class Chol implements java.io.Serializable {
 	public Chol(Matrix Arg) {
 
 		// Initialize.
-		double[][] A = Arg.toDoubleArray();
+		final double[][] A = Arg.toDoubleArray();
 		n = (int) Arg.getRowCount();
 		L = new double[n][n];
 		isspd = (Arg.getColumnCount() == n);
 		// Main loop.
+		double[] Lrowj = null;
+		double[] Lrowk = null;
 		for (int j = 0; j < n; j++) {
-			double[] Lrowj = L[j];
+			Lrowj = L[j];
 			double d = 0.0;
 			for (int k = 0; k < j; k++) {
-				double[] Lrowk = L[k];
+				Lrowk = L[k];
 				double s = 0.0;
 				for (int i = 0; i < k; i++) {
 					s += Lrowk[i] * Lrowj[i];
 				}
-				Lrowj[k] = s = (A[j][k] - s) / L[k][k];
+				Lrowj[k] = s = (A[j][k] - s) / Lrowk[k];
 				d = d + s * s;
 				isspd = isspd & (A[k][j] == A[j][k]);
 			}
 			d = A[j][j] - d;
 			isspd = isspd & (d > 0.0);
-			L[j][j] = Math.sqrt(Math.max(d, 0.0));
+			Lrowj[j] = Math.sqrt(Math.max(d, 0.0));
 			for (int k = j + 1; k < n; k++) {
-				L[j][k] = 0.0;
+				Lrowj[k] = 0.0;
 			}
 		}
 	}
@@ -173,8 +175,8 @@ public class Chol implements java.io.Serializable {
 		}
 
 		// Copy right hand side.
-		double[][] X = B.copy().toDoubleArray();
-		int nx = (int) B.getColumnCount();
+		final double[][] X = B.toDoubleArray();
+		final int nx = (int) B.getColumnCount();
 
 		// Solve L*Y = B;
 		for (int k = 0; k < n; k++) {

@@ -25,6 +25,7 @@ package org.ujmp.commonsmath;
 
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class CommonsMathArrayDenseDoubleMatrix2D extends
@@ -32,12 +33,16 @@ public class CommonsMathArrayDenseDoubleMatrix2D extends
 	private static final long serialVersionUID = -7738250596107670752L;
 
 	public CommonsMathArrayDenseDoubleMatrix2D(long... size) {
-		super(size);
+		super(Coordinates.isZero(size) ? null : new Array2DRowRealMatrix(
+				(int) size[ROW], (int) size[COLUMN]));
 	}
 
 	public CommonsMathArrayDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
 			throws MatrixException {
-		super(source);
+		this(source.getSize());
+		for (long[] c : source.availableCoordinates()) {
+			setAsDouble(source.getAsDouble(c), c);
+		}
 	}
 
 	public CommonsMathArrayDenseDoubleMatrix2D(Array2DRowRealMatrix matrix) {
@@ -74,6 +79,26 @@ public class CommonsMathArrayDenseDoubleMatrix2D extends
 
 	public Matrix[] qr() {
 		return super.qr();
+	}
+
+	public Matrix plus(double value) {
+		return super.plus(value);
+	}
+
+	public Matrix minus(double value) {
+		return super.minus(value);
+	}
+
+	public Matrix times(double value) {
+		return super.times(value);
+	}
+
+	public Matrix divide(double value) {
+		return super.divide(value);
+	}
+
+	public Matrix solve(Matrix b) {
+		return super.solve(b);
 	}
 
 }

@@ -75,21 +75,21 @@ public abstract class DecompositionOps {
 
 	public static QR<Matrix> QR_MTJ = null;
 
-//	public static Chol<Matrix> CHOL_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Chol.INSTANCE;
-//
-//	public static Chol<Matrix> CHOL_EJML = null;
-//
-//	public static Chol<Matrix> CHOL_OJALGO = null;
-//
-//	public static Chol<Matrix> CHOL_MTJ = null;
-//
-//	public static Eig<Matrix> EIG_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Eig.INSTANCE;
-//
-//	public static Eig<Matrix> EIG_EJML = null;
-//
-//	public static Eig<Matrix> EIG_OJALGO = null;
-//
-//	public static Eig<Matrix> EIG_MTJ = null;
+	public static Chol<Matrix> CHOL_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Chol.INSTANCE;
+
+	public static Chol<Matrix> CHOL_EJML = null;
+
+	public static Chol<Matrix> CHOL_OJALGO = null;
+
+	public static Chol<Matrix> CHOL_MTJ = null;
+
+	public static Eig<Matrix> EIG_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Eig.INSTANCE;
+
+	public static Eig<Matrix> EIG_EJML = null;
+
+	public static Eig<Matrix> EIG_OJALGO = null;
+
+	public static Eig<Matrix> EIG_MTJ = null;
 
 	static {
 		init();
@@ -101,8 +101,8 @@ public abstract class DecompositionOps {
 		initSolve();
 		initLU();
 		initQR();
-//		initChol();
-//		initEig();
+		initChol();
+		initEig();
 	}
 
 	public static void initSVD() {
@@ -185,37 +185,37 @@ public abstract class DecompositionOps {
 		}
 	}
 
-//	public static void initChol() {
-//		try {
-//			CHOL_EJML = (Chol<Matrix>) Class.forName("org.ujmp.ejml.calculation.Chol")
-//					.newInstance();
-//		} catch (Throwable t) {
-//		}
-//		try {
-//			CHOL_OJALGO = (Chol<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Chol")
-//					.newInstance();
-//		} catch (Throwable t) {
-//		}
-//		try {
-//			CHOL_MTJ = (Chol<Matrix>) Class.forName("org.ujmp.mtj.calculation.Chol").newInstance();
-//		} catch (Throwable t) {
-//		}
-//	}
-//
-//	public static void initEig() {
-//		try {
-//			EIG_EJML = (Eig<Matrix>) Class.forName("org.ujmp.ejml.calculation.Eig").newInstance();
-//		} catch (Throwable t) {
-//		}
-//		try {
-//			EIG_OJALGO = (Eig<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Eig")
-//					.newInstance();
-//		} catch (Throwable t) {
-//		}
-//		try {
-//			EIG_MTJ = (Eig<Matrix>) Class.forName("org.ujmp.mtj.calculation.Eig").newInstance();
-//		} catch (Throwable t) {
-//		}
-//	}
+	public static void initChol() {
+		try {
+			CHOL_EJML = (Chol<Matrix>) Class.forName("org.ujmp.ejml.calculation.Chol")
+					.newInstance();
+		} catch (Throwable t) {
+		}
+		try {
+			CHOL_OJALGO = (Chol<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Chol")
+					.newInstance();
+		} catch (Throwable t) {
+		}
+		try {
+			CHOL_MTJ = (Chol<Matrix>) Class.forName("org.ujmp.mtj.calculation.Chol").newInstance();
+		} catch (Throwable t) {
+		}
+	}
+
+	public static void initEig() {
+		try {
+			EIG_EJML = (Eig<Matrix>) Class.forName("org.ujmp.ejml.calculation.Eig").newInstance();
+		} catch (Throwable t) {
+		}
+		try {
+			EIG_OJALGO = (Eig<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Eig")
+					.newInstance();
+		} catch (Throwable t) {
+		}
+		try {
+			EIG_MTJ = (Eig<Matrix>) Class.forName("org.ujmp.mtj.calculation.Eig").newInstance();
+		} catch (Throwable t) {
+		}
+	}
 
 }

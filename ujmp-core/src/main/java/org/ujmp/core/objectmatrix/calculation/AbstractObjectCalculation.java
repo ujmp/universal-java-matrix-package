@@ -51,7 +51,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 	public final Matrix calcNew() throws MatrixException {
 		// Matrix result = MatrixFactory.zeros(getSource().getValueType(),
 		// getSize());
-		Matrix result = MatrixFactory.zeros(getSource().getValueType(), getSize());
+		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsObject(getObject(c), c);
 		}
@@ -78,7 +78,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 	public void setObject(Object value, long... coordinates) throws MatrixException {
 	}
 
-	public final ValueType getValueType() {
+	public ValueType getValueType() {
 		return getSource().getValueType();
 	}
 

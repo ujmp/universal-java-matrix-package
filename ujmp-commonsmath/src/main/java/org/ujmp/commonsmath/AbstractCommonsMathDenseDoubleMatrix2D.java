@@ -23,7 +23,6 @@
 
 package org.ujmp.commonsmath;
 
-import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.CholeskyDecomposition;
 import org.apache.commons.math.linear.CholeskyDecompositionImpl;
 import org.apache.commons.math.linear.EigenDecomposition;
@@ -47,21 +46,6 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	private static final long serialVersionUID = -1161807620507675926L;
 
 	private RealMatrix matrix = null;
-
-	public AbstractCommonsMathDenseDoubleMatrix2D(long... size) {
-		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			matrix = new Array2DRowRealMatrix((int) size[ROW],
-					(int) size[COLUMN]);
-		}
-	}
-
-	public AbstractCommonsMathDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
-			throws MatrixException {
-		this(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			setAsDouble(source.getAsDouble(c), c);
-		}
-	}
 
 	public AbstractCommonsMathDenseDoubleMatrix2D(RealMatrix matrix) {
 		this.matrix = matrix;
@@ -167,6 +151,26 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		} else {
 			return super.mtimes(m2);
 		}
+	}
+
+	public Matrix times(double value) {
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+				.scalarMultiply(value));
+	}
+
+	public Matrix divide(double value) {
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+				.scalarMultiply(1.0 / value));
+	}
+
+	public Matrix plus(double value) {
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+				.scalarAdd(value));
+	}
+
+	public Matrix minus(double value) {
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+				.scalarAdd(-value));
 	}
 
 	public Matrix solve(Matrix b) {

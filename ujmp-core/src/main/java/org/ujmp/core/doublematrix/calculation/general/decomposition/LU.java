@@ -3,6 +3,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
 /**
@@ -25,17 +26,19 @@ public interface LU<T> {
 
 	public T solve(T source, T b);
 
+	public static int THRESHOLD = 700;
+
 	public static LU<Matrix> MATRIX = new LU<Matrix>() {
 
 		public Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.calc(source);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.calc(source);
 				} else {
 					return MATRIXSMALLMULTITHREADED.calc(source);
@@ -45,13 +48,13 @@ public interface LU<T> {
 
 		public Matrix solve(Matrix source, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.solve(source, b);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.solve(source, b);
 				} else {
 					return MATRIXSMALLMULTITHREADED.solve(source, b);
@@ -81,7 +84,23 @@ public interface LU<T> {
 
 	public static LU<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
 
-	public static LU<Matrix> MATRIXLARGEMULTITHREADED = UJMP;
+	public static LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
+		public Matrix[] calc(Matrix source) {
+			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
+			if (lu == null) {
+				lu = UJMP;
+			}
+			return lu.calc(source);
+		}
+
+		public Matrix solve(Matrix source, Matrix b) {
+			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
+			if (lu == null) {
+				lu = UJMP;
+			}
+			return lu.solve(source, b);
+		}
+	};
 
 	public class LUMatrix {
 
@@ -156,7 +175,7 @@ public interface LU<T> {
 
 					// Most of the time is spent in the following dot product.
 
-					int kmax = Math.min(i, j);
+					final int kmax = Math.min(i, j);
 					double s = 0.0;
 					for (int k = 0; k < kmax; k++) {
 						s += LUrowi[k] * LUcolj[k];

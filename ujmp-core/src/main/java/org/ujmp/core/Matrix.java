@@ -25,6 +25,7 @@ package org.ujmp.core;
 
 import org.ujmp.core.annotation.HasAnnotation;
 import org.ujmp.core.calculation.CanPerformCalculations;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
@@ -55,6 +56,12 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 		DENSE, SPARSE, LIST, SET, MAP, TREE, GRAPH
 	};
 
+	public static final Ret LINK = Ret.LINK;
+
+	public static final Ret ORIG = Ret.ORIG;
+	
+	public static final Ret NEW = Ret.NEW;
+	
 	public static final int Y = 0;
 
 	public static final int X = 1;

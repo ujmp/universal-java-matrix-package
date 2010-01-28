@@ -25,6 +25,8 @@ package org.ujmp.complete.benchmark;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -341,17 +343,16 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		System.out.println();
 	}
 
-	public static void main(String[] args) {
-		try {
-			System.out.println(1e308 * 1e2);
-			// MatrixBenchmark mb = new MatrixBenchmark();
-			// mb.setRunAllLibraries();
-			// mb.setRunAllTests(BURNINRUNS, RUNS);
-			// mb.runAll();
-			// mb.evaluate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void configure() throws Exception {
+		setRunAllLibraries();
+		setRunAllTests(BURNINRUNS, RUNS);
+	}
+
+	public static void main(String[] args) throws Exception {
+		MatrixBenchmark mb = new MatrixBenchmark();
+		mb.configure();
+		mb.runAll();
+		mb.evaluate();
 	}
 
 	public void evaluate() throws Exception {
@@ -363,11 +364,13 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			throw new MatrixException("no results found");
 		}
 		Map<String, List<Matrix>> statistics = new HashMap<String, List<Matrix>>();
-		File[] files = dir.listFiles();
-		for (File f : files) {
+		List<File> dirs = Arrays.asList(dir.listFiles());
+		Collections.sort(dirs);
+		for (File f : dirs) {
 			if (f.isDirectory()) {
 				String matrixName = f.getName();
-				File[] results = f.listFiles();
+				List<File> results = Arrays.asList(f.listFiles());
+				Collections.sort(results);
 				for (File r : results) {
 					String benchmarkName = r.getName().replaceAll(".csv", "");
 					Matrix data = MatrixFactory.importFromFile(FileFormat.CSV, r, "\t");
@@ -438,31 +441,103 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix matrixMean = MatrixFactory.vertCat(firstMean, lastMean);
 			matrixMean.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
 					+ "-mean.csv"));
+			try {
+				matrixMean.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
+						+ "-mean.xls"));
+			} catch (Exception e) {
+			}
 
 			Matrix allstds = null;
+			Matrix stdPercent = null;
 			try {
 				allstds = MatrixFactory.vertCat(stds);
+				stdPercent = allstds.divide(allmeans).times(100);
 				allstds.setLabel(benchmarkName + "-std");
+				stdPercent.setLabel(benchmarkName + "-stdpercent");
 				ListMatrix<String> stdLabels = new DefaultListMatrix<String>();
 				for (Matrix m : stds) {
 					stdLabels.add(m.getLabel().split("-")[0]);
 				}
 				allstds.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
+				stdPercent.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
 			} catch (Exception e) {
 				System.err
 						.println("could not evaluate std results for " + benchmarkName + ": " + e);
-			}
-			try {
-				allstds.showGUI();
-			} catch (Exception e) {
 			}
 			Matrix firstStd = MatrixFactory.horCat(MatrixFactory.linkToValue(allstds.getLabel()),
 					allstds.getAnnotation().getDimensionMatrix(Matrix.ROW));
 			Matrix lastStd = MatrixFactory.horCat(allstds.getAnnotation().getDimensionMatrix(
 					Matrix.COLUMN), allstds);
+			Matrix lastStdPercent = MatrixFactory.horCat(allstds.getAnnotation()
+					.getDimensionMatrix(Matrix.COLUMN), stdPercent);
 			Matrix matrixStd = MatrixFactory.vertCat(firstStd, lastStd);
 			matrixStd.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
 					+ "-std.csv"));
+			try {
+				matrixStd.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
+						+ "-std.xls"));
+			} catch (Exception e) {
+			}
+			Matrix matrixStdPercent = MatrixFactory.vertCat(firstStd, lastStdPercent);
+			matrixStdPercent.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
+					+ "-stdpercent.csv"));
+			try {
+				matrixStdPercent.exportToFile(FileFormat.XLS, new File(getResultDir()
+						+ benchmarkName + "-stdpercent.xls"));
+			} catch (Exception e) {
+			}
+
+			Matrix allmins = null;
+			try {
+				allmins = MatrixFactory.vertCat(mins);
+				allmins.setLabel(benchmarkName + "-min");
+				ListMatrix<String> minLabels = new DefaultListMatrix<String>();
+				for (Matrix m : mins) {
+					minLabels.add(m.getLabel().split("-")[0]);
+				}
+				allmins.getAnnotation().setDimensionMatrix(Matrix.COLUMN, minLabels);
+			} catch (Exception e) {
+				System.err
+						.println("could not evaluate min results for " + benchmarkName + ": " + e);
+			}
+			Matrix firstMin = MatrixFactory.horCat(MatrixFactory.linkToValue(allmins.getLabel()),
+					allmins.getAnnotation().getDimensionMatrix(Matrix.ROW));
+			Matrix lastMin = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
+					Matrix.COLUMN), allmins);
+			Matrix matrixMin = MatrixFactory.vertCat(firstMin, lastMin);
+			matrixMin.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
+					+ "-min.csv"));
+			try {
+				matrixMin.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
+						+ "-min.xls"));
+			} catch (Exception e) {
+			}
+
+			Matrix allmaxs = null;
+			try {
+				allmaxs = MatrixFactory.vertCat(maxs);
+				allmaxs.setLabel(benchmarkName + "-max");
+				ListMatrix<String> maxLabels = new DefaultListMatrix<String>();
+				for (Matrix m : maxs) {
+					maxLabels.add(m.getLabel().split("-")[0]);
+				}
+				allmaxs.getAnnotation().setDimensionMatrix(Matrix.COLUMN, maxLabels);
+			} catch (Exception e) {
+				System.err
+						.println("could not evaluate max results for " + benchmarkName + ": " + e);
+			}
+			Matrix firstMax = MatrixFactory.horCat(MatrixFactory.linkToValue(allmaxs.getLabel()),
+					allmaxs.getAnnotation().getDimensionMatrix(Matrix.ROW));
+			Matrix lastMax = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
+					Matrix.COLUMN), allmaxs);
+			Matrix matrixMax = MatrixFactory.vertCat(firstMax, lastMax);
+			matrixMax.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
+					+ "-max.csv"));
+			try {
+				matrixMax.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
+						+ "-max.xls"));
+			} catch (Exception e) {
+			}
 
 			System.out.println(allmeans);
 			System.out.println();

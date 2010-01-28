@@ -30,7 +30,7 @@ import org.ujmp.core.MatrixFactory;
 public class UJMP extends org.ujmp.gui.UJMP {
 	private static final long serialVersionUID = 6107915206776591113L;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		if (args != null && args.length == 1 && args[0].equals("--benchmark")) {
 			MatrixBenchmark.main(args);
 		} else {

@@ -1159,7 +1159,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (!isSquare()) {
 			return false;
 		}
-		return new Chol(this).isSPD();
+		return new Chol.CholMatrix(this).isSPD();
 	}
 
 	public final boolean isSymmetric() {
@@ -1752,7 +1752,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix[] eig() throws MatrixException {
-		return Eig.calcNew(this);
+		return Eig.INSTANCE.calc(this);
 	}
 
 	public Matrix[] qr() throws MatrixException {
@@ -1764,7 +1764,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix chol() throws MatrixException {
-		return Chol.calcNew(this);
+		return Chol.INSTANCE.calc(this);
 	}
 
 	public final String exportToString(FileFormat format, Object... parameters)

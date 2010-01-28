@@ -1013,7 +1013,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
 		// tolerance for EJML must be set to larger value
-		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), 1e-8);
+		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), 1e-7);
 	}
 
 	public void testLUSquare() throws Exception {

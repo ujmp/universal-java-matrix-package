@@ -31,11 +31,6 @@ import org.ojalgo.array.ArrayUtils;
 import org.ojalgo.function.implementation.PrimitiveFunction;
 import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
-import org.ojalgo.matrix.decomposition.Cholesky;
-import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
-import org.ojalgo.matrix.decomposition.Eigenvalue;
-import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
-import org.ojalgo.matrix.decomposition.LU;
 import org.ojalgo.matrix.decomposition.LUDecomposition;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.PhysicalStore;
@@ -45,7 +40,10 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.ojalgo.calculation.Chol;
+import org.ujmp.ojalgo.calculation.Eig;
 import org.ujmp.ojalgo.calculation.Inv;
+import org.ujmp.ojalgo.calculation.LU;
 import org.ujmp.ojalgo.calculation.QR;
 import org.ujmp.ojalgo.calculation.SVD;
 import org.ujmp.ojalgo.calculation.Solve;
@@ -65,7 +63,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
 		this(m.getSize());
 		if (m instanceof DenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) m;
+			final DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) m;
 			for (int r = (int) m.getRowCount(); --r >= 0;) {
 				for (int c = (int) m.getColumnCount(); --c >= 0;) {
 					matrix.set(r, c, m2.getDouble(r, c));
@@ -84,10 +82,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix chol() {
-		final Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-		chol.compute(matrix);
-		final Matrix r = new OjalgoDenseDoubleMatrix2D(chol.getR());
-		return r;
+		return Chol.INSTANCE.calc(this);
 	}
 
 	@Override
@@ -124,11 +119,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public Matrix[] eig() {
-		final Eigenvalue<Double> evd = EigenvalueDecomposition.makePrimitive();
-		evd.compute(matrix);
-		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
-		final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
-		return new Matrix[] { v, d };
+		return Eig.INSTANCE.calc(this);
 	}
 
 	public final BasicMatrix getBasicMatrix() {
@@ -157,24 +148,15 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public double det() {
-		final LU<Double> lu = LUDecomposition.makePrimitive();
+		final org.ojalgo.matrix.decomposition.LU<Double> lu = LUDecomposition
+				.makePrimitive();
 		lu.compute(matrix);
 		return lu.getDeterminant();
 	}
 
 	@Override
 	public Matrix[] lu() {
-		final LU<Double> lu = LUDecomposition.makePrimitive();
-		lu.compute(matrix);
-		final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
-		final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getRowEchelonForm());
-		final int m = (int) this.getRowCount();
-		final int[] piv = lu.getPivotOrder();
-		final Matrix p = new OjalgoDenseDoubleMatrix2D(m, m);
-		for (int i = 0; i < m; i++) {
-			p.setAsDouble(1, i, piv[i]);
-		}
-		return new Matrix[] { l, u, p };
+		return LU.INSTANCE.calc(this);
 	}
 
 	@Override

@@ -31,6 +31,8 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface Inv<T> {
 
+	public static int THRESHOLD = 100;
+
 	public T calc(T source);
 
 	public static Inv<Matrix> MATRIX = new Inv<Matrix>() {
@@ -41,13 +43,13 @@ public interface Inv<T> {
 						"inverse only possible for square matrices. use pinv or ginv instead");
 			}
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.calc(source);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.calc(source);
 				} else {
 					return MATRIXSMALLMULTITHREADED.calc(source);

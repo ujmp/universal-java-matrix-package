@@ -33,13 +33,17 @@ public class UJMP extends Applet {
 
 	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Matrix m = MatrixFactory.welcomeMatrix();
 		m.showGUI();
 	}
 
 	public void init() {
-		main(new String[] {});
+		try {
+			main(new String[] {});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -33,6 +33,7 @@ import org.ujmp.core.calculation.PlusScalar;
 import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
@@ -71,7 +72,7 @@ public abstract class Ops {
 
 	public static Solve<Matrix> SOLVE = Solve.INSTANCE;
 
-//	public static Chol<Matrix> CHOL = Chol.INSTANCE;
-//
-//	public static Eig<Matrix> EIG = Eig.INSTANCE;
+	public static Chol<Matrix> CHOL = Chol.INSTANCE;
+
+	// public static Eig<Matrix> EIG = Eig.INSTANCE;
 }

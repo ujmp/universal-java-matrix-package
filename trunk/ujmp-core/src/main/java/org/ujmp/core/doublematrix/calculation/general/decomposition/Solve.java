@@ -24,9 +24,12 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
 public interface Solve<T> {
+
+	public static int THRESHOLD = 100;
 
 	public T calc(T a, T b);
 
@@ -34,13 +37,13 @@ public interface Solve<T> {
 
 		public Matrix calc(Matrix a, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (a.getRowCount() >= 100 && a.getColumnCount() >= 100) {
+				if (a.getRowCount() >= THRESHOLD && a.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(a, b);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.calc(a, b);
 				}
 			} else {
-				if (a.getRowCount() >= 100 && a.getColumnCount() >= 100) {
+				if (a.getRowCount() >= THRESHOLD && a.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.calc(a, b);
 				} else {
 					return MATRIXSMALLMULTITHREADED.calc(a, b);
@@ -58,53 +61,20 @@ public interface Solve<T> {
 		}
 	};
 
-	public static Solve<Matrix> MATRIXSMALLSINGLETHREADED = new Solve<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix calc(Matrix a, Matrix b) {
-			Solve<Matrix> solve = null;
-
-			try {
-				solve = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
-						.newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (solve == null) {
-				try {
-					solve = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
-							.newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (solve == null) {
-				solve = UJMP;
-			}
-			return solve.calc(a, b);
-		}
-	};
+	public static Solve<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public static Solve<Matrix> MATRIXLARGESINGLETHREADED = new Solve<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix calc(Matrix a, Matrix b) {
-			Solve<Matrix> solve = null;
-
-			try {
-				solve = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
-						.newInstance();
-			} catch (Throwable e) {
-			}
-
+			Solve<Matrix> solve = DecompositionOps.SOLVE_OJALGO;
 			if (solve == null) {
-				try {
-					solve = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
-							.newInstance();
-				} catch (Throwable e) {
-				}
+				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-
+			if (solve == null) {
+				solve = DecompositionOps.SOLVE_EJML;
+			}
+			if (solve == null) {
+				solve = DecompositionOps.SOLVE_MTJ;
+			}
 			if (solve == null) {
 				solve = UJMP;
 			}
@@ -113,25 +83,14 @@ public interface Solve<T> {
 	};
 
 	public static Solve<Matrix> MATRIXLARGEMULTITHREADED = new Solve<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix calc(Matrix a, Matrix b) {
-			Solve<Matrix> solve = null;
-
-			try {
-				solve = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
-						.newInstance();
-			} catch (Throwable e) {
-			}
-
+			Solve<Matrix> solve = DecompositionOps.SOLVE_OJALGO;
 			if (solve == null) {
-				try {
-					solve = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
-							.newInstance();
-				} catch (Throwable e) {
-				}
+				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-
+			if (solve == null) {
+				solve = DecompositionOps.SOLVE_EJML;
+			}
 			if (solve == null) {
 				solve = UJMP;
 			}
@@ -139,31 +98,5 @@ public interface Solve<T> {
 		}
 	};
 
-	public static Solve<Matrix> MATRIXSMALLMULTITHREADED = new Solve<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix calc(Matrix a, Matrix b) {
-			Solve<Matrix> solve = null;
-
-			try {
-				solve = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
-						.newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (solve == null) {
-				try {
-					solve = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
-							.newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (solve == null) {
-				solve = UJMP;
-			}
-			return solve.calc(a, b);
-		}
-	};
-
+	public static Solve<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 }

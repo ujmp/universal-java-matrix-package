@@ -4,6 +4,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -21,6 +22,8 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface QR<T> {
 
+	public static int THRESHOLD = 100;
+
 	public T[] calc(T source);
 
 	public T solve(T source, T b);
@@ -29,13 +32,13 @@ public interface QR<T> {
 
 		public Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.calc(source);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.calc(source);
 				} else {
 					return MATRIXSMALLMULTITHREADED.calc(source);
@@ -45,13 +48,13 @@ public interface QR<T> {
 
 		public Matrix solve(Matrix source, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.solve(source, b);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.solve(source, b);
 				} else {
 					return MATRIXSMALLMULTITHREADED.solve(source, b);
@@ -60,93 +63,29 @@ public interface QR<T> {
 		}
 	};
 
-	public static QR<Matrix> MATRIXSMALLSINGLETHREADED = new QR<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (qr == null) {
-				qr = UJMP;
-			}
-			return qr.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (qr == null) {
-				qr = UJMP;
-			}
-			return qr.solve(source, b);
-		}
-	};
-
 	public static QR<Matrix> MATRIXLARGESINGLETHREADED = new QR<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
+			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
+				qr = DecompositionOps.QR_EJML;
 			}
-
+			if (qr == null) {
+				qr = DecompositionOps.QR_MTJ;
+			}
 			if (qr == null) {
 				qr = UJMP;
 			}
 			return qr.calc(source);
 		}
 
-		@SuppressWarnings("unchecked")
 		public Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
+			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
+				qr = DecompositionOps.QR_EJML;
 			}
-
+			if (qr == null) {
+				qr = DecompositionOps.QR_MTJ;
+			}
 			if (qr == null) {
 				qr = UJMP;
 			}
@@ -155,92 +94,28 @@ public interface QR<T> {
 	};
 
 	public static QR<Matrix> MATRIXLARGEMULTITHREADED = new QR<Matrix>() {
-
-		@SuppressWarnings("unchecked")
 		public Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
+			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
+				qr = DecompositionOps.QR_EJML;
 			}
-
+			if (qr == null) {
+				qr = DecompositionOps.QR_MTJ;
+			}
 			if (qr == null) {
 				qr = UJMP;
 			}
 			return qr.calc(source);
 		}
 
-		@SuppressWarnings("unchecked")
 		public Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
+			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
+				qr = DecompositionOps.QR_EJML;
 			}
-
 			if (qr == null) {
-				qr = UJMP;
+				qr = DecompositionOps.QR_MTJ;
 			}
-			return qr.solve(source, b);
-		}
-	};
-
-	public static QR<Matrix> MATRIXSMALLMULTITHREADED = new QR<Matrix>() {
-
-		@SuppressWarnings("unchecked")
-		public Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
-			if (qr == null) {
-				qr = UJMP;
-			}
-			return qr.calc(source);
-		}
-
-		@SuppressWarnings("unchecked")
-		public Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = null;
-
-			try {
-				qr = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
-			} catch (Throwable e) {
-			}
-
-			if (qr == null) {
-				try {
-					qr = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
-				} catch (Throwable e) {
-				}
-			}
-
 			if (qr == null) {
 				qr = UJMP;
 			}
@@ -270,6 +145,10 @@ public interface QR<T> {
 			}
 		}
 	};
+
+	public static QR<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+
+	public static QR<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public class QRMatrix {
 

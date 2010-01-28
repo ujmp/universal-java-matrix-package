@@ -27,6 +27,7 @@ import java.util.Collection;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Concatenation extends AbstractObjectCalculation {
@@ -36,12 +37,18 @@ public class Concatenation extends AbstractObjectCalculation {
 
 	private long[] size = Coordinates.ZERO2D;
 
+	private ValueType valueType = null;
+
 	public Concatenation(int dimension, Matrix... matrices) {
 		super(dimension, matrices);
+		valueType = matrices[0].getValueType();
 		positions = new long[matrices.length];
 		long pos = 0;
 		for (int i = 0; i < matrices.length; i++) {
 			Matrix m = matrices[i];
+			if (!valueType.equals(m.getValueType())) {
+				valueType = ValueType.OBJECT;
+			}
 			positions[i] = pos;
 			pos += m.getSize(dimension);
 			size = Coordinates.max(size, m.getSize());
@@ -53,7 +60,6 @@ public class Concatenation extends AbstractObjectCalculation {
 		this(dimension, matrices.toArray(new Matrix[matrices.size()]));
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		int i = 0;
 		for (; i < positions.length; i++) {
@@ -68,13 +74,15 @@ public class Concatenation extends AbstractObjectCalculation {
 		return m.getAsObject(c);
 	}
 
-	
 	public long[] getSize() {
 		return size;
 	}
 
-	
 	public void setObject(Object value, long... coordinates) throws MatrixException {
+	}
+
+	public final ValueType getValueType() {
+		return valueType;
 	}
 
 }

@@ -6,10 +6,6 @@
 	<packaging>jar</packaging>
 	<name>ujmp-core</name>
 
-	<properties>
-		<ujmp.version>0.2.4</ujmp.version>
-	</properties>
-
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>

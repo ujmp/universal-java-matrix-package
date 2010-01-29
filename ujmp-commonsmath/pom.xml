@@ -6,10 +6,6 @@
 	<packaging>jar</packaging>
 	<name>ujmp-commonsmath</name>
 
-	<properties>
-		<ujmp.version>0.2.4</ujmp.version>
-	</properties>
-
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
@@ -30,13 +26,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
-			<version>${ujmp.version}</version>
+			<version>${version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
-			<version>${ujmp.version}</version>
+			<version>${version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

@@ -26,6 +26,10 @@
 			<groupId>parallelcolt</groupId>
 			<artifactId>parallelcolt</artifactId>
 		</dependency>
+	 	<dependency>
+			<groupId>csparsej</groupId>
+			<artifactId>csparsej</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>jtransforms</groupId>
 			<artifactId>jtransforms</artifactId>
@@ -42,7 +46,7 @@
 			<groupId>arpack-combo</groupId>
 			<artifactId>arpack-combo</artifactId>
 		</dependency>
-
+ 
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>

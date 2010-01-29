@@ -307,8 +307,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
 		setAsString(yes(), CHOL, COMMONSMATH);
 
-		setAsString(small("0.7"), VERSION, EJML);
-		setAsString(small("2009"), DATE, EJML);
+		setAsString(small("0.8"), VERSION, EJML);
+		setAsString(small("2010"), DATE, EJML);
 		setAsString(small("LGPL"), LICENCE, EJML);
 		setAsString(no(), JAVA14, EJML);
 		setAsString(no(), JAVA5, EJML);
@@ -332,7 +332,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), INV, EJML);
 		setAsString(squareTall(), SOLVE, EJML);
 		setAsString(all(), SVD, EJML);
-		setAsString(square(), LU, EJML);
+		setAsString(all(), LU, EJML);
 		setAsString(squareTall(), QR, EJML);
 		setAsString(no(), EIG, EJML);
 		setAsString(yes(), CHOL, EJML);
@@ -651,8 +651,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), EIG, OWLPACK);
 		setAsString(no(), CHOL, OWLPACK);
 
-		setAsString(small("0.9.1"), VERSION, PARALLELCOLT);
-		setAsString(small("2009"), DATE, PARALLELCOLT);
+		setAsString(small("0.9.2"), VERSION, PARALLELCOLT);
+		setAsString(small("2010"), DATE, PARALLELCOLT);
 		setAsString(small("BSD"), LICENCE, PARALLELCOLT);
 		setAsString(yes(), JAVA14, PARALLELCOLT);
 		setAsString(yes(), JAVA5, PARALLELCOLT);

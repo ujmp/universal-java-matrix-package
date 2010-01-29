@@ -15,8 +15,8 @@
 				<include>org.ujmp:ujmp-gui</include>
 				<include>org.ujmp:ujmp-bpca</include>
 				<include>org.ujmp:ujmp-colt</include>
-				<include>org.ujmp:ujmp-commonsmath
-				</include>
+				<include>org.ujmp:ujmp-commonsmath</include>
+				<include>org.ujmp:ujmp-ejml</include>
 				<include>org.ujmp:ujmp-hadoop</include>
 				<include>org.ujmp:ujmp-itext</include>
 				<include>org.ujmp:ujmp-jackcess</include>
@@ -24,6 +24,7 @@
 				<include>org.ujmp:ujmp-jampack</include>
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>org.ujmp:ujmp-jexcelapi</include>
+				<include>org.ujmp:ujmp-jlinalg</include>
 				<include>org.ujmp:ujmp-jmatharray</include>
 				<include>org.ujmp:ujmp-jmathplot</include>
 				<include>org.ujmp:ujmp-jmatio</include>
@@ -39,8 +40,7 @@
 				<include>org.ujmp:ujmp-ojalgo</include>
 				<include>org.ujmp:ujmp-orbital</include>
 				<include>org.ujmp:ujmp-owlpack</include>
-				<include>org.ujmp:ujmp-parallelcolt
-				</include>
+				<include>org.ujmp:ujmp-parallelcolt</include>
 				<include>org.ujmp:ujmp-pdfbox</include>
 				<include>org.ujmp:ujmp-sst</include>
 				<include>org.ujmp:ujmp-vecmath</include>

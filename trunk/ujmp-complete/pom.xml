@@ -51,6 +51,7 @@
 			<artifactId>ujmp-ejml</artifactId>
 			<version>${ujmp.version}</version>
 			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
@@ -291,6 +292,7 @@
 			<version>${ujmp.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>

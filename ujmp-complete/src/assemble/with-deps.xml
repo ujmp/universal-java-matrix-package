@@ -22,25 +22,23 @@
 				<include>colt:colt</include>
 				<include>concurrent:concurrent</include>
 
-				<include>org.ujmp:ujmp-commonsmath
-				</include>
-				<include>commons-math:commons-math
-				</include>
+				<include>org.ujmp:ujmp-commonsmath</include>
+				<include>commons-math:commons-math</include>
+				
+				<include>org.ujmp:ujmp-ejml</include>
+				<include>ejml:ejml</include>
 
 				<include>org.ujmp:ujmp-hadoop</include>
 				<include>hadoop:hadoop-core</include>
-				<include>commons-logging:commons-logging
-				</include>
+				<include>commons-logging:commons-logging</include>
 
 				<include>org.ujmp:ujmp-itext</include>
 				<include>iText:iText</include>
 
 				<include>org.ujmp:ujmp-jackcess</include>
 				<include>jackcess:jackcess</include>
-				<include>commons-logging:commons-logging
-				</include>
-				<include>commons-lang:commons-lang
-				</include>
+				<include>commons-logging:commons-logging</include>
+				<include>commons-lang:commons-lang</include>
 
 				<include>org.ujmp:ujmp-jama</include>
 				<include>jama:jama</include>
@@ -49,14 +47,16 @@
 				<include>jampack:jampack</include>
 
 				<include>org.ujmp:ujmp-jdbc</include>
-				<include>mysql-connector-java:mysql-connector-java
-				</include>
+				<include>mysql-connector-java:mysql-connector-java</include>
 				<include>postgresql:postgresql</include>
 				<include>derby:derby</include>
 				<include>hsqldb:hsqldb</include>
 
 				<include>org.ujmp:ujmp-jexcelapi</include>
 				<include>jxl:jxl</include>
+
+				<include>org.ujmp:ujmp-jlinalg</include>
+				<include>jlinalg:jlinalg</include>
 
 				<include>org.ujmp:ujmp-jmatharray</include>
 				<include>jmatharray:jmatharray</include>
@@ -78,8 +78,7 @@
 
 				<include>org.ujmp:ujmp-jung</include>
 				<include>jung:jung</include>
-				<include>commons-collections:commons-collections
-				</include>
+				<include>commons-collections:commons-collections</include>
 				<include>colt:colt</include>
 				<include>concurrent:concurrent</include>
 
@@ -87,10 +86,8 @@
 				<include>LSimpute:LSimpute</include>
 
 				<include>org.ujmp:ujmp-lucene</include>
-				<include>org.apache.lucene:lucene-core
-				</include>
-				<include>org.apache.lucene:lucene-queries
-				</include>
+				<include>org.apache.lucene:lucene-core</include>
+				<include>org.apache.lucene:lucene-queries</include>
 
 				<include>org.ujmp:ujmp-mail</include>
 				<include>mail:mail</include>
@@ -100,31 +97,26 @@
 
 				<include>org.ujmp:ujmp-mtj</include>
 				<include>mtj:mtj</include>
-				<include>arpack-combo:arpack-combo
-				</include>
+				<include>arpack-combo:arpack-combo</include>
 				<include>netlib-java:netlib-java</include>
 
 				<include>org.ujmp:ujmp-ojalgo</include>
 				<include>ojalgo:ojalgo</include>
 
 				<include>org.ujmp:ujmp-orbital</include>
-				<include>orbital:orbital-core
-				</include>
+				<include>orbital:orbital-core</include>
 				<include>orbital:orbital-ext</include>
 
 				<include>org.ujmp:ujmp-owlpack</include>
 				<include>owlpack:owlpack</include>
 
-				<include>org.ujmp:ujmp-parallelcolt
-				</include>
-				<include>parallelcolt:parallelcolt
-				</include>
-				<include>jtransforms:jtransforms
-				</include>
-				<include>netlib-java:netlib-java
-				</include>
-				<include>arpack-combo:arpack-combo
-				</include>
+				<include>org.ujmp:ujmp-parallelcolt</include>
+				<include>parallelcolt:parallelcolt</include>
+				<include>jtransforms:jtransforms</include>
+				<include>jplasma:jplasma</include>
+				<include>csparsej:csparsej</include>
+				<include>netlib-java:netlib-java</include>
+				<include>arpack-combo:arpack-combo</include>
 
 				<include>org.ujmp:ujmp-pdfbox</include>
 				<include>pdfbox:pdfbox</include>

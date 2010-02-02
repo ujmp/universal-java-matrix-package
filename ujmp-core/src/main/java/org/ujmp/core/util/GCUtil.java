@@ -33,8 +33,9 @@ public abstract class GCUtil {
 
 			do {
 				tmpWasFree = tmpIsFree;
+				tmpRuntime.runFinalization();
 				tmpRuntime.gc();
-				Thread.sleep(10L);
+				Thread.sleep(10);
 				tmpIsFree = tmpRuntime.freeMemory();
 			} while (tmpIsFree > tmpWasFree);
 
@@ -44,4 +45,55 @@ public abstract class GCUtil {
 		}
 	}
 
+	public static void purgeMemory() {
+		try {
+			final Runtime tmpRuntime = Runtime.getRuntime();
+			final long maxMemory = tmpRuntime.maxMemory();
+			long tmpIsFree = tmpRuntime.freeMemory();
+			long tmpWasFree;
+			byte[] a1 = null;
+			byte[] a2 = null;
+			byte[] a3 = null;
+			byte[] a4 = null;
+			byte[] a5 = null;
+			byte[] a6 = null;
+			byte[] a7 = null;
+			byte[] a8 = null;
+			byte[] a9 = null;
+			do {
+				tmpWasFree = tmpIsFree;
+				tmpRuntime.runFinalization();
+				try {
+					a1 = new byte[(int) (maxMemory * 0.1)];
+					a2 = new byte[(int) (maxMemory * 0.1)];
+					a3 = new byte[(int) (maxMemory * 0.1)];
+					a4 = new byte[(int) (maxMemory * 0.1)];
+					a5 = new byte[(int) (maxMemory * 0.1)];
+					a6 = new byte[(int) (maxMemory * 0.1)];
+					a7 = new byte[(int) (maxMemory * 0.1)];
+					a8 = new byte[(int) (maxMemory * 0.1)];
+					a9 = new byte[(int) (maxMemory * 0.1)];
+				} catch (Throwable t1) {
+				}
+				tmpRuntime.gc();
+				Thread.sleep(10);
+				a1 = a1 == null ? null : null;
+				a2 = a2 == null ? null : null;
+				a3 = a3 == null ? null : null;
+				a4 = a4 == null ? null : null;
+				a5 = a5 == null ? null : null;
+				a6 = a6 == null ? null : null;
+				a7 = a7 == null ? null : null;
+				a8 = a8 == null ? null : null;
+				a9 = a9 == null ? null : null;
+				tmpRuntime.gc();
+				Thread.sleep(10);
+				tmpIsFree = tmpRuntime.freeMemory();
+			} while (tmpIsFree > tmpWasFree);
+
+			tmpRuntime.runFinalization();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

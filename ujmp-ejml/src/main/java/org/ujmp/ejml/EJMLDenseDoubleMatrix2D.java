@@ -27,10 +27,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.ejml.alg.dense.decomposition.CholeskyDecomposition;
 import org.ejml.alg.dense.decomposition.DecompositionFactory;
 import org.ejml.alg.dense.decomposition.EigenDecomposition;
-import org.ejml.alg.dense.decomposition.chol.CholeskyDecompositionLDL;
-import org.ejml.alg.dense.decomposition.lu.LUDecompositionAlt;
+import org.ejml.alg.dense.decomposition.LUDecomposition;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -186,15 +186,15 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix chol() {
-		CholeskyDecompositionLDL chol = new CholeskyDecompositionLDL();
+		CholeskyDecomposition chol = DecompositionFactory.chol(5);
 		chol.decompose(matrix);
-		Matrix l = new EJMLDenseDoubleMatrix2D(chol.getL());
+		Matrix l = new EJMLDenseDoubleMatrix2D(chol.getT(null));
 		return l;
 	}
 
 	public Matrix[] lu() {
 		if (isSquare()) {
-			LUDecompositionAlt lu = new LUDecompositionAlt();
+			LUDecomposition lu = DecompositionFactory.lu();
 			lu.decompose(matrix);
 			DenseMatrix64F lm = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
@@ -202,14 +202,11 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					matrix.numCols);
 			lu.getLower(lm);
 			lu.getUpper(um);
+
 			Matrix l = new EJMLDenseDoubleMatrix2D(lm);
 			Matrix u = new EJMLDenseDoubleMatrix2D(um);
-			int[] piv = lu.getPivot();
-			Matrix p = new EJMLDenseDoubleMatrix2D(matrix.numRows,
-					matrix.numRows);
-			for (int i = 0; i < matrix.numRows; i++) {
-				p.setAsDouble(1, i, piv[i]);
-			}
+			Matrix p = new EJMLDenseDoubleMatrix2D(lu.getPivot(null));
+
 			return new Matrix[] { l, u, p };
 		} else {
 			return super.lu();

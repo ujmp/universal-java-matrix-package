@@ -38,6 +38,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
@@ -359,7 +360,7 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 		System.out.println("Evaluation");
 		System.out.println("==========");
 		System.out.println();
-		File dir = new File(getResultDir());
+		File dir = new File(BenchmarkUtil.getResultDir());
 		if (!dir.exists()) {
 			throw new MatrixException("no results found");
 		}
@@ -439,11 +440,11 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix lastMean = MatrixFactory.horCat(allmeans.getAnnotation().getDimensionMatrix(
 					Matrix.COLUMN), allmeans);
 			Matrix matrixMean = MatrixFactory.vertCat(firstMean, lastMean);
-			matrixMean.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
-					+ "-mean.csv"));
+			matrixMean.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+					+ benchmarkName + "-mean.csv"));
 			try {
-				matrixMean.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
-						+ "-mean.xls"));
+				matrixMean.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir()
+						+ benchmarkName + "-mean.xls"));
 			} catch (Exception e) {
 			}
 
@@ -471,18 +472,18 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix lastStdPercent = MatrixFactory.horCat(allstds.getAnnotation()
 					.getDimensionMatrix(Matrix.COLUMN), stdPercent);
 			Matrix matrixStd = MatrixFactory.vertCat(firstStd, lastStd);
-			matrixStd.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
-					+ "-std.csv"));
+			matrixStd.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+					+ benchmarkName + "-std.csv"));
 			try {
-				matrixStd.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
-						+ "-std.xls"));
+				matrixStd.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir()
+						+ benchmarkName + "-std.xls"));
 			} catch (Exception e) {
 			}
 			Matrix matrixStdPercent = MatrixFactory.vertCat(firstStd, lastStdPercent);
-			matrixStdPercent.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
-					+ "-stdpercent.csv"));
+			matrixStdPercent.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+					+ benchmarkName + "-stdpercent.csv"));
 			try {
-				matrixStdPercent.exportToFile(FileFormat.XLS, new File(getResultDir()
+				matrixStdPercent.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir()
 						+ benchmarkName + "-stdpercent.xls"));
 			} catch (Exception e) {
 			}
@@ -505,11 +506,11 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix lastMin = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
 					Matrix.COLUMN), allmins);
 			Matrix matrixMin = MatrixFactory.vertCat(firstMin, lastMin);
-			matrixMin.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
-					+ "-min.csv"));
+			matrixMin.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+					+ benchmarkName + "-min.csv"));
 			try {
-				matrixMin.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
-						+ "-min.xls"));
+				matrixMin.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir()
+						+ benchmarkName + "-min.xls"));
 			} catch (Exception e) {
 			}
 
@@ -531,11 +532,11 @@ public class MatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix lastMax = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
 					Matrix.COLUMN), allmaxs);
 			Matrix matrixMax = MatrixFactory.vertCat(firstMax, lastMax);
-			matrixMax.exportToFile(FileFormat.CSV, new File(getResultDir() + benchmarkName
-					+ "-max.csv"));
+			matrixMax.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+					+ benchmarkName + "-max.csv"));
 			try {
-				matrixMax.exportToFile(FileFormat.XLS, new File(getResultDir() + benchmarkName
-						+ "-max.xls"));
+				matrixMax.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir()
+						+ benchmarkName + "-max.xls"));
 			} catch (Exception e) {
 			}
 

@@ -23,7 +23,8 @@
 
 package org.ujmp.ejml.calculation;
 
-import org.ejml.alg.dense.decomposition.svd.SvdNumericalRecipes;
+import org.ejml.alg.dense.decomposition.DecompositionFactory;
+import org.ejml.alg.dense.decomposition.SingularValueDecomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
@@ -36,7 +37,8 @@ public class SVD
 	@Override
 	public Matrix[] calc(Matrix source) {
 		try {
-			SvdNumericalRecipes svd = new SvdNumericalRecipes();
+			SingularValueDecomposition svd = DecompositionFactory.svd();
+
 			if (source instanceof EJMLDenseDoubleMatrix2D) {
 				svd.decompose(((EJMLDenseDoubleMatrix2D) source)
 						.getWrappedObject());

@@ -23,7 +23,8 @@
 
 package org.ujmp.ejml.calculation;
 
-import org.ejml.alg.dense.decomposition.qr.QRDecompositionHouseholder;
+import org.ejml.alg.dense.decomposition.DecompositionFactory;
+import org.ejml.alg.dense.decomposition.QRDecomposition;
 import org.ejml.alg.dense.linsol.LinearSolver;
 import org.ejml.alg.dense.linsol.qr.LinearSolverQrHouseCol;
 import org.ejml.data.DenseMatrix64F;
@@ -37,7 +38,7 @@ public class QR implements
 
 	public Matrix[] calc(Matrix source) {
 		try {
-			QRDecompositionHouseholder qr = new QRDecompositionHouseholder();
+			QRDecomposition qr = DecompositionFactory.qr();
 			DenseMatrix64F matrix = null;
 			if (source instanceof EJMLDenseDoubleMatrix2D) {
 				matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();

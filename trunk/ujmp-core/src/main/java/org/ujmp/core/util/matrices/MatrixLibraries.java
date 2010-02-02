@@ -307,7 +307,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
 		setAsString(yes(), CHOL, COMMONSMATH);
 
-		setAsString(small("0.8"), VERSION, EJML);
+		setAsString(small("0.9"), VERSION, EJML);
 		setAsString(small("2010"), DATE, EJML);
 		setAsString(small("LGPL"), LICENCE, EJML);
 		setAsString(no(), JAVA14, EJML);

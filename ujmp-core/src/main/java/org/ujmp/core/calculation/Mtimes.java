@@ -75,6 +75,10 @@ public interface Mtimes<S, T, U> {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
 							}
+						} else {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(0.0, irow, i);
+							}
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 							double temp = alpha * B.getAsDouble(lcol, i);
@@ -92,6 +96,10 @@ public interface Mtimes<S, T, U> {
 					if (beta != 1.0) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					} else {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0, irow, i);
 						}
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
@@ -145,6 +153,10 @@ public interface Mtimes<S, T, U> {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
 							}
+						} else {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(0.0, irow, i);
+							}
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 							double temp = alpha * B.getAsDouble(lcol, i);
@@ -162,6 +174,10 @@ public interface Mtimes<S, T, U> {
 					if (beta != 1.0) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					} else {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0, irow, i);
 						}
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
@@ -181,6 +197,7 @@ public interface Mtimes<S, T, U> {
 	public static Mtimes<SparseMatrix, Matrix, Matrix> SPARSEMATRIX1 = new Mtimes<SparseMatrix, Matrix, Matrix>() {
 
 		public void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
+			target.clear();
 			for (long[] c1 : source1.availableCoordinates()) {
 				final double v1 = source1.getAsDouble(c1);
 				if (v1 != 0.0) {
@@ -200,6 +217,7 @@ public interface Mtimes<S, T, U> {
 	public static Mtimes<Matrix, SparseMatrix, Matrix> SPARSEMATRIX2 = new Mtimes<Matrix, SparseMatrix, Matrix>() {
 
 		public void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
+			target.clear();
 			for (long[] c2 : source2.availableCoordinates()) {
 				final double v2 = source2.getAsDouble(c2);
 				if (v2 != 0.0) {
@@ -253,6 +271,10 @@ public interface Mtimes<S, T, U> {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
 							}
+						} else {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setAsDouble(0.0, irow, i);
+							}
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 							double temp = alpha * B.getAsDouble(lcol, i);
@@ -270,6 +292,10 @@ public interface Mtimes<S, T, U> {
 					if (beta != 1.0) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
+						}
+					} else {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0, irow, i);
 						}
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
@@ -316,7 +342,9 @@ public interface Mtimes<S, T, U> {
 			if (alpha == 0 || beta == 0) {
 				return;
 			}
-
+			for (int i = C.length; --i != -1;) {
+				C[i] = 0;
+			}
 			if (C.length >= 10000) {
 				new PFor(0, m2ColumnCount - 1) {
 
@@ -324,7 +352,11 @@ public interface Mtimes<S, T, U> {
 					public void step(int i) {
 						final int jcolTimesM1RowCount = i * m1RowCount;
 						final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-						if (beta != 1.0) {
+						if (beta == 1.0) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] = 0.0;
+							}
+						} else {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C[irow + jcolTimesM1RowCount] *= beta;
 							}
@@ -346,7 +378,11 @@ public interface Mtimes<S, T, U> {
 				for (int i = 0; i < m2ColumnCount; i++) {
 					final int jcolTimesM1RowCount = i * m1RowCount;
 					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-					if (beta != 1.0) {
+					if (beta == 1.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] = 0.0;
+						}
+					} else {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C[irow + jcolTimesM1RowCount] *= beta;
 						}
@@ -435,6 +471,10 @@ public interface Mtimes<S, T, U> {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setDouble(C.getDouble(irow, i) * beta, irow, i);
 							}
+						} else {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setDouble(0.0, irow, i);
+							}
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 							double temp = alpha * B.getDouble(lcol, i);
@@ -452,6 +492,10 @@ public interface Mtimes<S, T, U> {
 					if (beta != 1.0) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setDouble(C.getDouble(irow, i) * beta, irow, i);
+						}
+					} else {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setDouble(0.0, irow, i);
 						}
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {

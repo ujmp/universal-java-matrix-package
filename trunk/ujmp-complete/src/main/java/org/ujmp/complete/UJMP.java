@@ -23,7 +23,7 @@
 
 package org.ujmp.complete;
 
-import org.ujmp.complete.benchmark.MatrixBenchmark;
+import org.ujmp.complete.benchmark.CompleteMatrixBenchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 
@@ -32,7 +32,7 @@ public class UJMP extends org.ujmp.gui.UJMP {
 
 	public static void main(String[] args) throws Exception {
 		if (args != null && args.length == 1 && args[0].equals("--benchmark")) {
-			MatrixBenchmark.main(args);
+			CompleteMatrixBenchmark.main(args);
 		} else {
 			Matrix m = MatrixFactory.welcomeMatrix();
 			m.showGUI();

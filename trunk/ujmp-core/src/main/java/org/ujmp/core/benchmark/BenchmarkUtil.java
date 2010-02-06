@@ -25,7 +25,9 @@ import java.net.Inet4Address;
 import java.util.Random;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
 public abstract class BenchmarkUtil {
 
@@ -42,13 +44,45 @@ public abstract class BenchmarkUtil {
 		}
 	}
 
-	public static void rand(long benchmarkSeed, long seed, DoubleMatrix2D matrix) {
-		Random random = new Random(benchmarkSeed + seed);
+	public static void rand(long benchmarkSeed, int run, int id, DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + (run + 2) * 31 * 31 + (id + 1) * 31);
 		int rows = (int) matrix.getRowCount();
 		int cols = (int) matrix.getColumnCount();
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
 				matrix.setDouble(random.nextDouble() - 0.5, r, c);
+			}
+		}
+	}
+
+	public static void randSymm(long benchmarkSeed, int run, int id, DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + (run + 2) * 31 * 31 + (id + 1) * 31);
+		int rows = (int) matrix.getRowCount();
+		int cols = (int) matrix.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols && c <= r; c++) {
+				double f = random.nextDouble() - 0.5;
+				matrix.setDouble(f - 0.5, r, c);
+				matrix.setDouble(f - 0.5, c, r);
+			}
+		}
+	}
+
+	public static void randPositiveDefinite(long benchmarkSeed, int run, int id,
+			DoubleMatrix2D matrix) {
+		Random random = new Random(benchmarkSeed + (run + 2) * 31 * 31 + (id + 1) * 31);
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(matrix.getSize());
+		int rows = (int) temp.getRowCount();
+		int cols = (int) temp.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				temp.setDouble(random.nextDouble(), r, c);
+			}
+		}
+		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				matrix.setDouble(result.getDouble(r, c), r, c);
 			}
 		}
 	}

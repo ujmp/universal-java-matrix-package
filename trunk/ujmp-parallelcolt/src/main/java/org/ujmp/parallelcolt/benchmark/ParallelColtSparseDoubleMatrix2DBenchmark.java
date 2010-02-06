@@ -25,6 +25,7 @@ package org.ujmp.parallelcolt.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
@@ -41,8 +42,8 @@ public class ParallelColtSparseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new ParallelColtSparseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS,
-				RUNS);
+		MatrixBenchmark benchmark = new ParallelColtSparseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

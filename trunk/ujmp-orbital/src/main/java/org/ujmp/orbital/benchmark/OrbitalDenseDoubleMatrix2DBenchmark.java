@@ -25,6 +25,7 @@ package org.ujmp.orbital.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.orbital.OrbitalDenseDoubleMatrix2D;
@@ -41,7 +42,8 @@ public class OrbitalDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new OrbitalDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
+		MatrixBenchmark benchmark = new OrbitalDenseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

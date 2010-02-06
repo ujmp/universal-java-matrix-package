@@ -25,6 +25,7 @@ package org.ujmp.jmatharray.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.jmatharray.JMathArrayDenseDoubleMatrix2D;
@@ -41,8 +42,8 @@ public class JMathArrayDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JMathArrayDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS,
-				RUNS);
+		MatrixBenchmark benchmark = new JMathArrayDenseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

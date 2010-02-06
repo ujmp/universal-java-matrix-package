@@ -26,6 +26,7 @@ package org.ujmp.colt.benchmark;
 import org.ujmp.colt.ColtDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -40,7 +41,8 @@ public class ColtDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark 
 	}
 
 	public static void main(String[] args) throws Exception {
-		new ColtDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
+		MatrixBenchmark benchmark = new ColtDenseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

@@ -22,52 +22,53 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.util.GCUtil;
 
-public class PlusMatrixTask extends AbstractBenchmarkTask {
+public class MtimesBenchmarkTask extends AbstractBenchmarkTask {
 
-	public PlusMatrixTask(long benchmarkSeed, Class<? extends Matrix> matrixClass, String sizes,
-			int blockCount, int burnInRuns, int runs) {
-		super(benchmarkSeed, matrixClass, sizes, blockCount, burnInRuns, runs);
+	public MtimesBenchmarkTask(long benchmarkSeed, Class<? extends DoubleMatrix2D> matrixClass,
+			BenchmarkConfig config) {
+		super(benchmarkSeed, matrixClass, config.getMtimesSizes(), config);
 	}
 
 	@Override
-	public double task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
-			long[]... sizes) {
+	public double task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run, long[] size) {
+		long t0, t1;
 		DoubleMatrix2D m0 = null, m1 = null;
 		Matrix r = null;
 		try {
-			m0 = BenchmarkUtil.createMatrix(matrixClass, sizes[0]);
-			m1 = BenchmarkUtil.createMatrix(matrixClass, sizes[1]);
+			m0 = BenchmarkUtil.createMatrix(matrixClass, size);
 			if (!m0.getClass().getName().startsWith("org.ujmp.core")
-					&& m0.getClass().getDeclaredMethod("plus", Matrix.class) == null) {
+					&& m0.getClass().getDeclaredMethod("mtimes", Matrix.class) == null) {
 				System.out.print("-");
 				System.out.flush();
-				return NOTAVAILABLE;
+				return BenchmarkConfig.NOTAVAILABLE;
 			}
-			BenchmarkUtil.rand(benchmarkSeed, run, m0);
-			BenchmarkUtil.rand(benchmarkSeed, run * 999, m1);
+			m1 = BenchmarkUtil.createMatrix(matrixClass, Coordinates.transpose(size));
+			BenchmarkUtil.rand(benchmarkSeed, run, 0, m0);
+			BenchmarkUtil.rand(benchmarkSeed, run, 1, m1);
 			GCUtil.purgeMemory();
-			long t0 = System.nanoTime();
-			r = m0.plus(m1);
-			long t1 = System.nanoTime();
+			t0 = System.nanoTime();
+			r = m0.mtimes(m1);
+			t1 = System.nanoTime();
 			if (r == null) {
 				System.out.print("e");
 				System.out.flush();
-				return ERRORTIME;
+				return BenchmarkConfig.ERROR;
 			}
 			return (t1 - t0) / 1000000.0;
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();
-			return ERRORTIME;
+			return BenchmarkConfig.ERROR;
 		}
 	}
 
 	@Override
 	public String getTaskName() {
-		return "plusMatrixNew";
+		return "mtimes";
 	}
 
 }

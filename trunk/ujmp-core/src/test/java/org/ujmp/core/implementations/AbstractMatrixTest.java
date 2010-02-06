@@ -1067,9 +1067,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 	public void testSolveRandTall() throws Exception {
 		Matrix a = createMatrix(6, 2);
 
-		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
-			// for tall matrices, the result is not correct: the matrix has
-			// wrong orientation
+		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
 			return;
 		}
 

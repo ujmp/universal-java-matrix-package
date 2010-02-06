@@ -217,8 +217,6 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		return m;
 	}
 
-	// for tall matrices, the result is not correct: the matrix has wrong
-	// orientation
 	public Matrix solve(Matrix b) {
 		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
 			DoubleMatrix2D b2 = ((ParallelColtDenseDoubleMatrix2D) b).matrix;

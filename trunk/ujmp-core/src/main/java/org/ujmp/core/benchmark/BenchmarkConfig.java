@@ -27,13 +27,13 @@ public class BenchmarkConfig {
 
 	public static final double ERROR = Double.NaN;
 
-	private int burnInRuns = 3;
+	private int burnInRuns = 0;
 
-	private int runs = 25;
+	private int runs = 1;
 
 	private int defaultTrialCount = 1;
 
-	private int maxTrialCount = 5;
+	private int maxTrialCount = 1;
 
 	private int maxTime = 10000; // maximal time for one operation: 10 seconds
 

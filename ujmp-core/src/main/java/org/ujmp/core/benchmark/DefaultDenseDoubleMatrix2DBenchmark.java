@@ -39,7 +39,8 @@ public class DefaultDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchma
 	}
 
 	public static void main(String[] args) throws Exception {
-		new DefaultDenseDoubleMatrix2DBenchmark().runAllTests(BURNINRUNS, RUNS);
+		MatrixBenchmark benchmark = new DefaultDenseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

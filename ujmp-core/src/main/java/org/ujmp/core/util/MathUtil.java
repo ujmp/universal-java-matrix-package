@@ -152,6 +152,11 @@ public abstract class MathUtil {
 		return seed;
 	}
 
+	public static final double round(double value, int decimals) {
+		return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+
+	}
+
 	public static void setSeed(long seed) {
 		MathUtil.seed = seed;
 		random.setSeed(seed);

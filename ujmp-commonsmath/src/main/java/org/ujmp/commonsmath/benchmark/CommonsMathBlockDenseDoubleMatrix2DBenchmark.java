@@ -26,6 +26,7 @@ package org.ujmp.commonsmath.benchmark;
 import org.ujmp.commonsmath.CommonsMathBlockDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
+import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -41,8 +42,8 @@ public class CommonsMathBlockDenseDoubleMatrix2DBenchmark extends
 	}
 
 	public static void main(String[] args) throws Exception {
-		new CommonsMathBlockDenseDoubleMatrix2DBenchmark().runAllTests(
-				BURNINRUNS, RUNS);
+		MatrixBenchmark benchmark = new CommonsMathBlockDenseDoubleMatrix2DBenchmark();
+		benchmark.run();
 	}
 
 }

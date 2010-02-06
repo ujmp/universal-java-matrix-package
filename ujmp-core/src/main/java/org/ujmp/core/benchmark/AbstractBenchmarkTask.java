@@ -25,40 +25,32 @@ import java.io.File;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.matrix.Matrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractBenchmarkTask {
 
-	private int MAXTIME = 10000;
-
-	public static final double NOTAVAILABLE = 0;
-
-	public static final double ERRORTIME = Double.NaN;
+	private BenchmarkConfig config = null;
 
 	private Class<? extends Matrix> matrixClass = null;
 
 	private String[] sizes = null;
 
-	private int blockCount = 5;
-
-	private int runs = 5;
-
-	private int burnInRuns = 1;
-
 	private long benchmarkSeed = 0;
 
 	public AbstractBenchmarkTask(long benchmarkSeed, Class<? extends Matrix> matrixClass,
-			String sizes, int blockCount, int burnInRuns, int runs) {
+			String sizes, BenchmarkConfig config) {
 		this.matrixClass = matrixClass;
-
+		this.config = config;
 		this.sizes = sizes.split(",");
-		this.blockCount = blockCount;
-		this.burnInRuns = burnInRuns;
-		this.runs = runs;
-		this.benchmarkSeed = benchmarkSeed;
+	}
+
+	public BenchmarkConfig getConfig() {
+		return config;
 	}
 
 	public void run() {
@@ -69,49 +61,64 @@ public abstract class AbstractBenchmarkTask {
 					+ getMatrixLabel());
 			return;
 		}
-		Matrix result = MatrixFactory.zeros(ValueType.STRING, runs, sizes.length);
+		Matrix2D result = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+				sizes.length);
+
 		result.setLabel(getMatrixLabel() + "-" + getTaskName());
 
 		boolean stopped = false;
 		for (int s = 0; !stopped && s < sizes.length; s++) {
+			long[] size = Coordinates.parseString(sizes[s]);
+			result.setColumnLabel(s, Coordinates.toString('x', size));
 			double bestStd = Double.MAX_VALUE;
-			for (int c = 0; c < blockCount; c++) {
-				long[] size = Coordinates.parseString(sizes[s]);
-				result.setColumnLabel(s, Coordinates.toString('x', size));
+			int tmpTrialCount = config.getDefaultTrialCount();
+			DenseDoubleMatrix2D tmpResult = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestResult = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
 				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
-				System.out.print((c + 1) + "/" + blockCount + ": ");
+				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");
 				System.out.flush();
 
-				for (int i = 0; !stopped && i < burnInRuns; i++) {
-					double t = task(matrixClass, benchmarkSeed, i, size, size);
-					if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+				for (int i = 0; !stopped && i < config.getBurnInRuns(); i++) {
+					double t = task(matrixClass, benchmarkSeed, i, size);
+					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
 						stopped = true;
 					}
 					System.out.print("#");
 					System.out.flush();
 				}
-				for (int i = 0; !stopped && i < runs; i++) {
-					double t = task(matrixClass, benchmarkSeed, i, size, size);
-					if (t == 0.0 || Double.isNaN(t) || t > MAXTIME) {
+				for (int i = 0; !stopped && i < config.getRuns(); i++) {
+					double t = task(matrixClass, benchmarkSeed, i, size);
+					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
 						stopped = true;
 					}
-					result.setAsDouble(t, i, s);
+					tmpResult.setAsDouble(t, i, 0);
 					System.out.print(".");
 					System.out.flush();
 				}
 
-				Matrix mean = result.mean(Ret.NEW, Matrix.ROW, true);
-				Matrix std = result.std(Ret.NEW, Matrix.ROW, true);
-				mean.setLabel(mean.getLabel() + "-mean");
-				std.setLabel(std.getLabel() + "-std");
-				double tempStd = std.getAsDouble(0, s) / mean.getAsDouble(0, s) * 100;
-				System.out.print(" " + mean.getAsInt(0, s) + "+-" + std.getAsInt(0, s) + "ms (+-"
-						+ Math.round(tempStd) + "%)");
+				double mean = tmpResult.getMeanValue();
+				double std = tmpResult.getStdValue();
+				double tempStd = std / mean * 100.0;
+				System.out.print(" " + MathUtil.round(mean, 3) + "+-" + MathUtil.round(std, 3)
+						+ "ms (+-" + MathUtil.round(tempStd, 1) + "%)");
+				if (tempStd > config.getMaxStd()) {
+					System.out.print(" standard deviation too large, result discarded");
+					if (tmpTrialCount < config.getMaxTrialCount()) {
+						tmpTrialCount++;
+					}
+				}
 				if (tempStd < bestStd) {
 					bestStd = tempStd;
-					System.out.print(" best until now");
+					for (int i = 0; i < config.getRuns(); i++) {
+						bestResult.setDouble(tmpResult.getDouble(i, 0), i, 0);
+					}
 				}
 				System.out.println();
+			}
+
+			for (int i = 0; !stopped && i < config.getRuns(); i++) {
+				result.setAsDouble(bestResult.getDouble(i, 0), i, s);
 			}
 		}
 
@@ -125,12 +132,12 @@ public abstract class AbstractBenchmarkTask {
 	}
 
 	public abstract double task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
-			long[]... sizes);
+			long[] size);
 
 	public abstract String getTaskName();
 
 	public String getMatrixLabel() {
-		return matrixClass.getCanonicalName();
+		return matrixClass.getSimpleName();
 	}
 
 }

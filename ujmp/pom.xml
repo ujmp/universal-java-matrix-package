@@ -85,6 +85,7 @@
 						<descriptor>src/assemble/sources.xml</descriptor>
 						<descriptor>src/assemble/with-deps.xml</descriptor>
 						<descriptor>src/assemble/deps.xml</descriptor>
+						<descriptor>src/assemble/libs.xml</descriptor>
 					</descriptors>
 					<archive>
 						<manifestFile>META-INF/MANIFEST.MF</manifestFile>

@@ -522,6 +522,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D3, JSCIENCE);
 		setAsString(no(), D4, JSCIENCE);
 		setAsString(no(), D4PLUS, JSCIENCE);
+		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, JSCIENCE);
+		setAsString(yes(), SCALE, JSCIENCE);
+		setAsString(yes(), PLUSMINUS, JSCIENCE);
 		setAsString(yes(), INV, JSCIENCE);
 		setAsString(square(), SOLVE, JSCIENCE);
 		setAsString(no(), SVD, JSCIENCE);

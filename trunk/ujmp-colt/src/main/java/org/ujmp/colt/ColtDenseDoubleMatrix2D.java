@@ -36,6 +36,7 @@ import cern.colt.matrix.linalg.EigenvalueDecomposition;
 import cern.colt.matrix.linalg.LUDecomposition;
 import cern.colt.matrix.linalg.QRDecomposition;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
+import cern.colt.matrix.linalg.SmpBlas;
 import cern.jet.math.Functions;
 
 public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -151,6 +152,32 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			return new ColtDenseDoubleMatrix2D(ret);
 		} else {
 			return super.mtimes(m);
+		}
+	}
+
+	public Matrix plus(Matrix m) {
+		if (m instanceof ColtDenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
+					(int) getRowCount(), (int) m.getColumnCount());
+			ret.assign(matrix);
+			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m)
+					.getWrappedObject(), ret);
+			return new ColtDenseDoubleMatrix2D(ret);
+		} else {
+			return super.plus(m);
+		}
+	}
+
+	public Matrix minus(Matrix m) {
+		if (m instanceof ColtDenseDoubleMatrix2D) {
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
+					(int) getRowCount(), (int) m.getColumnCount());
+			ret.assign(matrix);
+			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m)
+					.getWrappedObject(), ret);
+			return new ColtDenseDoubleMatrix2D(ret);
+		} else {
+			return super.plus(m);
 		}
 	}
 

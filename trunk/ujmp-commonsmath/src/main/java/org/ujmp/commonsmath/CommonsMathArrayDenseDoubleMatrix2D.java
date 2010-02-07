@@ -65,6 +65,14 @@ public class CommonsMathArrayDenseDoubleMatrix2D extends
 		return super.mtimes(m);
 	}
 
+	public Matrix plus(Matrix m) {
+		return super.plus(m);
+	}
+
+	public Matrix minus(Matrix m) {
+		return super.minus(m);
+	}
+
 	public Matrix[] eig() {
 		return super.eig();
 	}

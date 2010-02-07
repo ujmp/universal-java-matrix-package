@@ -153,6 +153,25 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		}
 	}
 
+	public Matrix plus(Matrix m2) {
+		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+					.add(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+		} else {
+			return super.plus(m2);
+		}
+	}
+
+	public Matrix minus(Matrix m2) {
+		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+					.dense(matrix
+							.subtract(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+		} else {
+			return super.minus(m2);
+		}
+	}
+
 	public Matrix times(double value) {
 		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
 				.scalarMultiply(value));

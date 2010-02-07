@@ -151,6 +151,34 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
+	public Matrix plus(Matrix that) {
+		if (that instanceof JScienceDenseDoubleMatrix2D) {
+			return new JScienceDenseDoubleMatrix2D(matrix
+					.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
+		} else {
+			return super.plus(that);
+		}
+	}
+
+	public Matrix minus(Matrix that) {
+		if (that instanceof JScienceDenseDoubleMatrix2D) {
+			return new JScienceDenseDoubleMatrix2D(matrix
+					.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
+		} else {
+			return super.minus(that);
+		}
+	}
+
+	public Matrix times(double value) {
+		return new JScienceDenseDoubleMatrix2D(matrix.times(Float64
+				.valueOf(value)));
+	}
+
+	public Matrix divide(double value) {
+		return new JScienceDenseDoubleMatrix2D(matrix.times(Float64
+				.valueOf(1.0 / value)));
+	}
+
 	public Matrix transpose() {
 		return new JScienceDenseDoubleMatrix2D(matrix.transpose().copy());
 	}
@@ -200,7 +228,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix solve(Matrix b) {
-		if ( b instanceof JScienceDenseDoubleMatrix2D) {
+		if (b instanceof JScienceDenseDoubleMatrix2D) {
 			JScienceDenseDoubleMatrix2D b2 = (JScienceDenseDoubleMatrix2D) b;
 			Float64Matrix x = Float64Matrix.valueOf(matrix.solve(b2.matrix));
 			return new JScienceDenseDoubleMatrix2D(x);

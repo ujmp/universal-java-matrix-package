@@ -5,7 +5,7 @@
 
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp</artifactId>
-	<version>0.2.4</version>
+	<version>0.2.5</version>
 	<packaging>jar</packaging>
 	<url>http://www.ujmp.org/</url>
 

@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.2.4</version>
+		<version>0.2.5</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 

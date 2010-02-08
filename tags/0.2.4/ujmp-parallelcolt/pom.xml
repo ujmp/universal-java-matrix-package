@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ujmp</groupId>
+	<artifactId>ujmp-parallelcolt</artifactId>
+	<packaging>jar</packaging>
+	<name>ujmp-parallelcolt</name>
+
+	<parent>
+		<groupId>org.ujmp</groupId>
+		<artifactId>ujmp</artifactId>
+		<version>0.2.4</version>
+		<relativePath>../ujmp</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>parallelcolt</groupId>
+			<artifactId>parallelcolt</artifactId>
+		</dependency>
+	 	<dependency>
+			<groupId>csparsej</groupId>
+			<artifactId>csparsej</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jtransforms</groupId>
+			<artifactId>jtransforms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jplasma</groupId>
+			<artifactId>jplasma</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>netlib-java</groupId>
+			<artifactId>netlib-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>arpack-combo</groupId>
+			<artifactId>arpack-combo</artifactId>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+			<version>${version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+			<version>${version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

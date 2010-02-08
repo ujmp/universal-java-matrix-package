@@ -1,0 +1,112 @@
+/*
+ * Copyright (C) 2008-2010 by Holger Arndt
+ *
+ * This file is part of the Universal Java Matrix Package (UJMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * UJMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * UJMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with UJMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
+package org.ujmp.commonsmath;
+
+import org.apache.commons.math.linear.BlockRealMatrix;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.exceptions.MatrixException;
+
+public class CommonsMathBlockDenseDoubleMatrix2D extends
+		AbstractCommonsMathDenseDoubleMatrix2D {
+	private static final long serialVersionUID = 4040628102089767983L;
+
+	public CommonsMathBlockDenseDoubleMatrix2D(long... size) {
+		super(Coordinates.isZero(size) ? null : new BlockRealMatrix(
+				(int) size[ROW], (int) size[COLUMN]));
+	}
+
+	public CommonsMathBlockDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
+			throws MatrixException {
+		this(source.getSize());
+		for (long[] c : source.availableCoordinates()) {
+			setAsDouble(source.getAsDouble(c), c);
+		}
+	}
+
+	public CommonsMathBlockDenseDoubleMatrix2D(BlockRealMatrix matrix) {
+		super(matrix);
+	}
+
+	public Matrix chol() {
+		return super.chol();
+	}
+
+	public Matrix inv() {
+		return super.inv();
+	}
+
+	public Matrix transpose() {
+		return super.transpose();
+	}
+
+	public Matrix mtimes(Matrix m) {
+		return super.mtimes(m);
+	}
+
+	public Matrix plus(Matrix m) {
+		return super.plus(m);
+	}
+
+	public Matrix minus(Matrix m) {
+		return super.minus(m);
+	}
+
+	public Matrix[] eig() {
+		return super.eig();
+	}
+
+	public Matrix[] lu() {
+		return super.lu();
+	}
+
+	public Matrix[] svd() {
+		return super.svd();
+	}
+
+	public Matrix[] qr() {
+		return super.qr();
+	}
+
+	public Matrix plus(double value) {
+		return super.plus(value);
+	}
+
+	public Matrix minus(double value) {
+		return super.minus(value);
+	}
+
+	public Matrix times(double value) {
+		return super.times(value);
+	}
+
+	public Matrix divide(double value) {
+		return super.divide(value);
+	}
+
+	public Matrix solve(Matrix b) {
+		return super.solve(b);
+	}
+
+}

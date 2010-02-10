@@ -23,6 +23,8 @@
 
 package org.ujmp.core.interfaces;
 
+import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.charmatrix.CharMatrix;
@@ -41,6 +43,10 @@ import org.ujmp.core.stringmatrix.StringMatrix;
 public interface Conversions {
 
 	public BooleanMatrix toBooleanMatrix();
+
+	public BigDecimalMatrix toBigDecimalMatrix();
+
+	public BigIntegerMatrix toBigIntegerMatrix();
 
 	public ByteMatrix toByteMatrix();
 

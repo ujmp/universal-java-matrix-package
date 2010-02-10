@@ -39,10 +39,9 @@ import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 import org.ujmp.gui.util.UpdateListener;
 
-public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentListener, UpdateListener {
+public class BufferedPanel extends JPanel implements CanBeRepainted,
+		ComponentListener, UpdateListener {
 	private static final long serialVersionUID = 7495571585267828933L;
-
-	private final int passes = 4;
 
 	private JPanel panel = null;
 
@@ -57,7 +56,6 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 		}
 	}
 
-	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -72,7 +70,7 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 	}
 
 	public void paintUsingReflection(Graphics2D g2d) throws Exception {
-		Method m = panel.getClass().getDeclaredMethod("paintComponent", new Class<?>[] { Graphics.class });
+		Method m = panel.getClass().getMethod("paintComponent", Graphics.class);
 		boolean accessible = m.isAccessible();
 		m.setAccessible(true);
 		m.invoke(panel, new Object[] { g2d });
@@ -85,7 +83,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 			width = width < 1 ? 1 : width;
 			int height = getHeight();
 			height = height < 1 ? 1 : height;
-			BufferedImage tempBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+			BufferedImage tempBufferedImage = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_RGB);
 			panel.setSize(width, height);
 			Graphics2D g2d = (Graphics2D) tempBufferedImage.getGraphics();
 			paintUsingReflection(g2d);
@@ -115,5 +114,4 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 	public void updated() {
 		GraphicsExecutor.scheduleUpdate(this);
 	}
-
 }

@@ -176,6 +176,18 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>jfreechart</groupId>
+				<artifactId>jfreechart</artifactId>
+				<version>1.0.13</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>jcommon</groupId>
+				<artifactId>jcommon</artifactId>
+				<version>1.0.16</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jlinalg</groupId>
 				<artifactId>jlinalg</artifactId>
 				<version>0.6</version>

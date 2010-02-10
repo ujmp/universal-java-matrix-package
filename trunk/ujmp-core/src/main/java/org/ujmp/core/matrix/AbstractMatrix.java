@@ -46,6 +46,10 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.Ops;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.calculation.ToBigDecimalMatrix;
+import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
+import org.ujmp.core.bigintegermatrix.calculation.ToBigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.booleanmatrix.calculation.And;
 import org.ujmp.core.booleanmatrix.calculation.Eq;
@@ -2001,6 +2005,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final LongMatrix toLongMatrix() {
 		return new ToLongMatrix(this).calcLink();
+	}
+
+	public final BigDecimalMatrix toBigDecimalMatrix() {
+		return new ToBigDecimalMatrix(this).calcLink();
+	}
+
+	public final BigIntegerMatrix toBigIntegerMatrix() {
+		return new ToBigIntegerMatrix(this).calcLink();
 	}
 
 	public final ObjectMatrix toObjectMatrix() {

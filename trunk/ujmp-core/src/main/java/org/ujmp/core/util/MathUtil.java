@@ -983,4 +983,20 @@ public abstract class MathUtil {
 			return null;
 		}
 	}
+
+	public static boolean isGreater(BigDecimal v1, BigDecimal v2) {
+		return v1.compareTo(v2) > 0;
+	}
+
+	public static boolean isSmaller(BigDecimal v1, BigDecimal v2) {
+		return v1.compareTo(v2) < 0;
+	}
+
+	public static BigDecimal sqrt(BigDecimal v) {
+		return BigDecimal.valueOf(Math.sqrt(v.doubleValue()));
+	}
+
+	public static boolean isEqual(BigDecimal v1, BigDecimal v2) {
+		return v1.compareTo(v2) == 0;
+	}
 }

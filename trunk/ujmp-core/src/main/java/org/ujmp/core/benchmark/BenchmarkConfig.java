@@ -35,7 +35,7 @@ public class BenchmarkConfig {
 
 	private int maxTrialCount = 5;
 
-	private int maxTime = 10000; // maximal time for one operation: 10 seconds
+	private int maxTime = 10000; // maximal time for one operation: 10000ms
 
 	private double maxStd = 10; // maximal standard deviation results may vary:
 	// 10%

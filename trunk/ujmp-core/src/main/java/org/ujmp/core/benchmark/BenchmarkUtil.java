@@ -21,6 +21,7 @@
 
 package org.ujmp.core.benchmark;
 
+import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.util.Random;
 
@@ -28,6 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class BenchmarkUtil {
 
@@ -103,6 +105,37 @@ public abstract class BenchmarkUtil {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static double difference(Matrix m1, Matrix m2) {
+		// Matrix d = m1.toBigDecimalMatrix().minus(m2.toBigDecimalMatrix());
+		// return normF(d);
+		return m1.minus(m2).normF();
+	}
+
+	public static BigDecimal normF(Matrix m) {
+		long rows = m.getRowCount();
+		long cols = m.getColumnCount();
+		BigDecimal result = BigDecimal.ZERO;
+		for (long ro = 0; ro < rows; ro++) {
+			for (long c = 0; c < cols; c++) {
+				BigDecimal b = m.getAsBigDecimal(ro, c);
+				BigDecimal temp = BigDecimal.ZERO;
+				if (MathUtil.isGreater(result.abs(), b.abs())) {
+					temp = MathUtil.divide(b, result);
+					temp = MathUtil.times(result.abs(), MathUtil.sqrt(MathUtil.plus(BigDecimal.ONE,
+							MathUtil.times(temp, temp))));
+				} else if (!MathUtil.isEqual(BigDecimal.ZERO, b)) {
+					temp = MathUtil.divide(result, b);
+					temp = MathUtil.times(b.abs(), MathUtil.sqrt(MathUtil.plus(BigDecimal.ONE,
+							MathUtil.times(temp, temp))));
+				} else {
+					temp = BigDecimal.ZERO;
+				}
+				result = temp;
+			}
+		}
+		return result;
 	}
 
 }

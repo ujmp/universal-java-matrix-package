@@ -35,7 +35,8 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 	}
 
 	@Override
-	public double task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run, long[] size) {
+	public BenchmarkResult task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
+			long[] size) {
 		long t0, t1;
 		DoubleMatrix2D a = null, x = null;
 		Matrix b1 = null, b2 = null, result = null;
@@ -45,7 +46,7 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 					&& a.getClass().getDeclaredMethod("solve", Matrix.class) == null) {
 				System.out.print("-");
 				System.out.flush();
-				return BenchmarkConfig.NOTAVAILABLE;
+				return BenchmarkResult.NOTAVAILABLE;
 			}
 			x = DenseDoubleMatrix2D.factory.dense(size[1], size[0]);
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, a);
@@ -59,13 +60,14 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 			if (result == null) {
 				System.out.print("e");
 				System.out.flush();
-				return BenchmarkConfig.ERROR;
+				return BenchmarkResult.ERROR;
 			}
-			return (t1 - t0) / 1000000.0;
+			double diff = BenchmarkUtil.difference(result, x);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();
-			return BenchmarkConfig.ERROR;
+			return BenchmarkResult.ERROR;
 		}
 	}
 

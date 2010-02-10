@@ -56,31 +56,40 @@ public abstract class AbstractBenchmarkTask {
 	public void run() {
 		File resultFile = new File(BenchmarkUtil.getResultDir() + getMatrixLabel() + "/"
 				+ getTaskName() + ".csv");
+		File diffFile = new File(BenchmarkUtil.getResultDir() + getMatrixLabel() + "/"
+				+ getTaskName() + "-diff.csv");
 		if (resultFile.exists()) {
 			System.out.println("old results available, skipping " + getTaskName() + " for "
 					+ getMatrixLabel());
 			return;
 		}
-		Matrix2D result = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+		Matrix2D resultTime = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+				sizes.length);
+		Matrix2D resultDiff = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
 				sizes.length);
 
-		result.setLabel(getMatrixLabel() + "-" + getTaskName());
+		resultTime.setLabel(getMatrixLabel() + "-" + getTaskName());
+		resultDiff.setLabel(getMatrixLabel() + "-" + getTaskName() + "-diff");
 
 		boolean stopped = false;
 		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
-			result.setColumnLabel(s, Coordinates.toString('x', size));
+			resultTime.setColumnLabel(s, Coordinates.toString('x', size));
+			resultDiff.setColumnLabel(s, Coordinates.toString('x', size));
 			double bestStd = Double.MAX_VALUE;
 			int tmpTrialCount = config.getDefaultTrialCount();
-			DenseDoubleMatrix2D tmpResult = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestResult = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpTime = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpDiff = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.factory.dense(config.getRuns(), 1);
 			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
 				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
 				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");
 				System.out.flush();
 
 				for (int i = 0; !stopped && i < config.getBurnInRuns(); i++) {
-					double t = task(matrixClass, benchmarkSeed, i, size);
+					BenchmarkResult r = task(matrixClass, benchmarkSeed + c, i, size);
+					double t = r.getTime();
 					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
 						stopped = true;
 					}
@@ -88,20 +97,27 @@ public abstract class AbstractBenchmarkTask {
 					System.out.flush();
 				}
 				for (int i = 0; !stopped && i < config.getRuns(); i++) {
-					double t = task(matrixClass, benchmarkSeed, i, size);
+					BenchmarkResult r = task(matrixClass, benchmarkSeed + c, i, size);
+					double t = r.getTime();
+					double diff = r.getDifference();
 					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
 						stopped = true;
 					}
-					tmpResult.setAsDouble(t, i, 0);
+					tmpTime.setAsDouble(t, i, 0);
+					tmpDiff.setAsDouble(diff, i, 0);
 					System.out.print(".");
 					System.out.flush();
 				}
 
-				double mean = tmpResult.getMeanValue();
-				double std = tmpResult.getStdValue();
+				double mean = tmpTime.getMeanValue();
+				double meanDiff = tmpDiff.getMeanValue();
+				double std = tmpTime.getStdValue();
 				double tempStd = std / mean * 100.0;
 				System.out.print(" " + MathUtil.round(mean, 3) + "+-" + MathUtil.round(std, 3)
 						+ "ms (+-" + MathUtil.round(tempStd, 1) + "%)");
+				if (!MathUtil.isNaNOrInfinite(meanDiff)) {
+					System.out.print(" diff:" + meanDiff + " ");
+				}
 				if (tempStd > config.getMaxStd()) {
 					System.out.print(" standard deviation too large, result discarded");
 					if (tmpTrialCount < config.getMaxTrialCount()) {
@@ -111,28 +127,33 @@ public abstract class AbstractBenchmarkTask {
 				if (tempStd < bestStd) {
 					bestStd = tempStd;
 					for (int i = 0; i < config.getRuns(); i++) {
-						bestResult.setDouble(tmpResult.getDouble(i, 0), i, 0);
+						bestTime.setDouble(tmpTime.getDouble(i, 0), i, 0);
+						bestDiff.setDouble(tmpDiff.getDouble(i, 0), i, 0);
 					}
 				}
 				System.out.println();
 			}
 
 			for (int i = 0; !stopped && i < config.getRuns(); i++) {
-				result.setAsDouble(bestResult.getDouble(i, 0), i, s);
+				resultTime.setAsDouble(bestTime.getDouble(i, 0), i, s);
+				resultDiff.setAsDouble(bestDiff.getDouble(i, 0), i, s);
 			}
 		}
 
-		Matrix temp = MatrixFactory.vertCat(result.getAnnotation().getDimensionMatrix(Matrix.ROW),
-				result);
+		Matrix temp = MatrixFactory.vertCat(resultTime.getAnnotation().getDimensionMatrix(
+				Matrix.ROW), resultTime);
+		Matrix diff = MatrixFactory.vertCat(resultDiff.getAnnotation().getDimensionMatrix(
+				Matrix.ROW), resultDiff);
 		try {
 			temp.exportToFile(FileFormat.CSV, resultFile);
+			diff.exportToFile(FileFormat.CSV, diffFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public abstract double task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
-			long[] size);
+	public abstract BenchmarkResult task(Class<? extends Matrix> matrixClass, long benchmarkSeed,
+			int run, long[] size);
 
 	public abstract String getTaskName();
 

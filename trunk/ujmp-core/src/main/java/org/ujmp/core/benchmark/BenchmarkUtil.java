@@ -109,7 +109,7 @@ public abstract class BenchmarkUtil {
 
 	public static double difference(Matrix m1, Matrix m2) {
 		// Matrix d = m1.toBigDecimalMatrix().minus(m2.toBigDecimalMatrix());
-		// return normF(d);
+		// return normF(d).doubleValue();
 		return m1.minus(m2).normF();
 	}
 

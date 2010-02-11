@@ -992,11 +992,36 @@ public abstract class MathUtil {
 		return v1.compareTo(v2) < 0;
 	}
 
-	public static BigDecimal sqrt(BigDecimal v) {
-		return BigDecimal.valueOf(Math.sqrt(v.doubleValue()));
-	}
-
 	public static boolean isEqual(BigDecimal v1, BigDecimal v2) {
 		return v1.compareTo(v2) == 0;
+	}
+
+	// Compute square root of large numbers using Heron's method
+	// adapted from http://www.merriampark.com/bigsqrt.htm
+	public static final BigDecimal sqrt(BigDecimal n) {
+		if (n.compareTo(BigDecimal.ZERO) <= 0) {
+			throw new IllegalArgumentException();
+		}
+
+		final BigDecimal TWO = new BigDecimal("2");
+		BigDecimal error;
+		BigDecimal lastGuess = BigDecimal.ZERO;
+		BigDecimal guess = BigDecimal.ONE.movePointRight(n.toBigInteger().toString().length() / 2);
+		int maxIterations = 50;
+		int iterations = 0;
+		boolean more = true;
+		while (more) {
+			lastGuess = guess;
+			guess = n.divide(guess, UJMPSettings.getDefaultMathContext());
+			guess = guess.add(lastGuess);
+			guess = guess.divide(TWO, UJMPSettings.getDefaultMathContext());
+			error = n.subtract(guess.multiply(guess));
+			if (++iterations >= maxIterations) {
+				more = false;
+			} else if (lastGuess.equals(guess)) {
+				more = error.abs().compareTo(BigDecimal.ONE) >= 0;
+			}
+		}
+		return guess;
 	}
 }

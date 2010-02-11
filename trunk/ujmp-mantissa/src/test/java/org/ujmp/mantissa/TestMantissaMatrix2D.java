@@ -29,14 +29,15 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestMantissaMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new MantissaDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new MantissaDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

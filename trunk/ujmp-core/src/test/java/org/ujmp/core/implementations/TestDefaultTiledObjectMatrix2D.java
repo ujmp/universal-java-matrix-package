@@ -28,14 +28,15 @@ import org.ujmp.core.objectmatrix.impl.DefaultTiledObjectMatrix2D;
 
 public class TestDefaultTiledObjectMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws Exception {
 		return new DefaultTiledObjectMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws Exception {
 		return new DefaultTiledObjectMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return true;
+	}
 }

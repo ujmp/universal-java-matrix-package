@@ -37,4 +37,7 @@ public class TestCommonsMathBlockDenseDoubleMatrix2D extends AbstractMatrixTest 
 		return new CommonsMathBlockDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return true;
+	}
 }

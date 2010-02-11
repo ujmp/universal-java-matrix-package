@@ -29,14 +29,16 @@ import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
 public class TestDefaultDenseObjectMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new DefaultDenseObjectMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new DefaultDenseObjectMatrix2D(source);
+	}
+
+	public boolean isTestLarge() {
+		return false;
 	}
 
 }

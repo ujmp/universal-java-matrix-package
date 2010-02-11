@@ -37,4 +37,7 @@ public class TestJLinAlgDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return new JLinAlgDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

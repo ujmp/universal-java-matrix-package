@@ -29,14 +29,15 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new ArrayDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new ArrayDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return true;
+	}
 }

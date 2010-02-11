@@ -37,4 +37,7 @@ public class TestParallelColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 		return new ParallelColtSparseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return true;
+	}
 }

@@ -37,4 +37,7 @@ public class TestOwlpackDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return new OwlpackDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

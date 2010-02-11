@@ -29,14 +29,15 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	
 	public Matrix createMatrix(long... size) throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(size);
 	}
 
-	
 	public Matrix createMatrix(Matrix source) throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

@@ -37,4 +37,7 @@ public class TestEJMLDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return new EJMLDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return true;
+	}
 }

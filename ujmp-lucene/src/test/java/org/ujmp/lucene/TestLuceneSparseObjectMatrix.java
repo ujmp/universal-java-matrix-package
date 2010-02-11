@@ -42,4 +42,8 @@ public class TestLuceneSparseObjectMatrix extends AbstractMatrixTest {
 		return new DefaultSparseObjectMatrix(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
+
 }

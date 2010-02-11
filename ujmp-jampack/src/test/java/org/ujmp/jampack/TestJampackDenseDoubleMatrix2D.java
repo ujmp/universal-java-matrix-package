@@ -37,4 +37,8 @@ public class TestJampackDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return new JampackDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
+
 }

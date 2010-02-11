@@ -119,48 +119,48 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testGinv() throws Exception {
+	public void testGinvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testGinv();
+		super.testGinvSmall();
 	}
 
 	@Override
-	public void testInv() throws Exception {
+	public void testInvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testInv();
+		super.testInvSmall();
 	}
 
 	@Override
-	public void testMinusScalar() throws Exception {
+	public void testMinusScalarSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testMinusScalar();
+		super.testMinusScalarSmall();
 	}
 
 	@Override
-	public void testMTimes() throws Exception {
+	public void testMTimesSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testMTimes();
+		super.testMTimesSmall();
 	}
 
 	@Override
-	public void testPlusScalar() throws Exception {
+	public void testPlusScalarSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testPlusScalar();
+		super.testPlusScalarSmall();
 	}
 
 	@Override
@@ -218,12 +218,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testTranspose() throws Exception {
+	public void testTransposeSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testTranspose();
+		super.testTransposeSmall();
 	}
 
 	@Override
@@ -236,30 +236,33 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
-	public void testPinv() throws Exception {
+	public void testPinvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testPinv();
+		super.testPinvSmall();
 	}
 
 	@Override
-	public void testSVDFat() throws Exception {
+	public void testSVDFatSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testSVDFat();
+		super.testSVDFatSmall();
 	}
 
 	@Override
-	public void testQRSquare() throws Exception {
+	public void testQRSquareSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testQRSquare();
+		super.testQRSquareSmall();
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

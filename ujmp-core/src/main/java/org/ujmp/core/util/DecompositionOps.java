@@ -144,8 +144,10 @@ public abstract class DecompositionOps {
 		} catch (Throwable t) {
 		}
 		try {
-			SOLVE_OJALGO = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
-					.newInstance();
+			// TODO: wait for fix in ojalgo
+			// SOLVE_OJALGO = (Solve<Matrix>)
+			// Class.forName("org.ujmp.ojalgo.calculation.Solve")
+			// .newInstance();
 		} catch (Throwable t) {
 		}
 		try {

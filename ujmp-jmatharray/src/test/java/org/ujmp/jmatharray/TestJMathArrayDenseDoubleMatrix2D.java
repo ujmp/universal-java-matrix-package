@@ -37,4 +37,7 @@ public class TestJMathArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return new JMathArrayDenseDoubleMatrix2D(source);
 	}
 
+	public boolean isTestLarge() {
+		return false;
+	}
 }

@@ -39,7 +39,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	private static final long serialVersionUID = -7464578359102479614L;
 
-	private long[] tileSize = new long[] { 100, 100 };
+	private long[] tileSize = new long[] { 50, 50 };
 
 	private long[] size = null;
 
@@ -61,11 +61,11 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		this.size = Coordinates.copyOf(size);
 	}
 
-	public Object getObject(int row, int column) throws MatrixException {
+	public synchronized Object getObject(int row, int column) throws MatrixException {
 		return getObject((long) row, (long) column);
 	}
 
-	public Object getObject(long row, long column) throws MatrixException {
+	public synchronized Object getObject(long row, long column) throws MatrixException {
 		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
 		Matrix m = getMap().get(c);
 		if (m == null) {
@@ -87,26 +87,24 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	public abstract void setMap(Map<Coordinates, ObjectMatrix2D> map);
 
-	
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public synchronized final double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
-	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
+	public synchronized final void setAsDouble(double v, long... coordinates)
+			throws MatrixException {
 		setObject(v, coordinates);
 	}
 
-	public void setObject(Object o, int row, int column) throws MatrixException {
+	public synchronized void setObject(Object o, int row, int column) throws MatrixException {
 		setObject(o, (long) row, (long) column);
 	}
 
-	public void setObject(Object o, long row, long column) throws MatrixException {
+	public synchronized void setObject(Object o, long row, long column) throws MatrixException {
 		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {

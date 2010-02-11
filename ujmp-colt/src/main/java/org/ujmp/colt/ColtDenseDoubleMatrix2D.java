@@ -177,7 +177,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.getWrappedObject(), ret);
 			return new ColtDenseDoubleMatrix2D(ret);
 		} else {
-			return super.plus(m);
+			return super.minus(m);
 		}
 	}
 

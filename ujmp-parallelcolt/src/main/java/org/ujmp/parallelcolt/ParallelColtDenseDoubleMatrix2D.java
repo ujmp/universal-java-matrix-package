@@ -141,7 +141,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 					result);
 			return new ParallelColtDenseDoubleMatrix2D(result);
 		} else {
-			return super.plus(m);
+			return super.minus(m);
 		}
 	}
 

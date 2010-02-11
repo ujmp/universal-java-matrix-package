@@ -110,7 +110,6 @@ public abstract class BenchmarkUtil {
 	public static double difference(Matrix m1, Matrix m2) {
 		Matrix d = m1.minus(m2);
 		// return normF(d).doubleValue();
-		System.out.println(d);
 		return d.normF();
 	}
 

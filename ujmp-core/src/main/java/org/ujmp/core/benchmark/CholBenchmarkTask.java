@@ -37,7 +37,7 @@ public class CholBenchmarkTask extends AbstractBenchmarkTask {
 			long[] size) {
 		long t0, t1;
 		DoubleMatrix2D m = null;
-		Matrix[] r = null;
+		Matrix r = null;
 		try {
 			m = BenchmarkUtil.createMatrix(matrixClass, size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
@@ -46,17 +46,19 @@ public class CholBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.NOTAVAILABLE;
 			}
-			BenchmarkUtil.rand(benchmarkSeed, run, 0, m);
+			BenchmarkUtil.randPositiveDefinite(benchmarkSeed, run, 0, m);
 			GCUtil.purgeMemory();
 			t0 = System.nanoTime();
-			r = m.svd();
+			r = m.chol();
 			t1 = System.nanoTime();
 			if (r == null) {
 				System.out.print("e");
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			return new BenchmarkResult((t1 - t0) / 1000000.0);
+			Matrix result = r.transpose().mtimes(r);
+			double diff = BenchmarkUtil.difference(result, m);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

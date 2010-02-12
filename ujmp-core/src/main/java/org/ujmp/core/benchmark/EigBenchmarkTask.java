@@ -46,7 +46,7 @@ public class EigBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.NOTAVAILABLE;
 			}
-			BenchmarkUtil.rand(benchmarkSeed, run, 0, m);
+			BenchmarkUtil.randSymm(benchmarkSeed, run, 0, m);
 			GCUtil.purgeMemory();
 			t0 = System.nanoTime();
 			r = m.eig();
@@ -56,7 +56,9 @@ public class EigBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			return new BenchmarkResult((t1 - t0) / 1000000.0);
+			Matrix result = r[0].mtimes(r[1]).mtimes(r[0].transpose());
+			double diff = BenchmarkUtil.difference(result, m);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();
@@ -66,7 +68,7 @@ public class EigBenchmarkTask extends AbstractBenchmarkTask {
 
 	@Override
 	public String getTaskName() {
-		return "Eig";
+		return "eig";
 	}
 
 }

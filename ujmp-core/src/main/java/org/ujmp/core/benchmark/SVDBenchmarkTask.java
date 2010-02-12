@@ -56,7 +56,9 @@ public class SVDBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			return new BenchmarkResult((t1 - t0) / 1000000.0);
+			Matrix result = r[0].mtimes(r[1]).mtimes(r[2].transpose());
+			double diff = BenchmarkUtil.difference(result, m);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

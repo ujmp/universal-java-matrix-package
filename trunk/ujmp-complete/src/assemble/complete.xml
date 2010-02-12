@@ -27,6 +27,7 @@
 				<include>org.ujmp:ujmp-jampack</include>
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>org.ujmp:ujmp-jexcelapi</include>
+				<include>org.ujmp:ujmp-jfreechart</include>
 				<include>org.ujmp:ujmp-jlinalg</include>
 				<include>org.ujmp:ujmp-jmatharray</include>
 				<include>org.ujmp:ujmp-jmathplot</include>

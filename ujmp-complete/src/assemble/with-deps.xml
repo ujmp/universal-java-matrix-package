@@ -57,6 +57,10 @@
 
 				<include>org.ujmp:ujmp-jexcelapi</include>
 				<include>jxl:jxl</include>
+				
+				<include>org.ujmp:ujmp-jfrechart</include>
+				<include>jfreechart:jfreechart</include>
+				<include>jcommon:jcommon</include>
 
 				<include>org.ujmp:ujmp-jlinalg</include>
 				<include>jlinalg:jlinalg</include>

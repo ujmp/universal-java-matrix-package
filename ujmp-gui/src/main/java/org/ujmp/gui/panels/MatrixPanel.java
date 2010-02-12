@@ -194,7 +194,17 @@ public class MatrixPanel extends AbstractPanel {
 			tabbedPane.add("R", rPanel);
 		}
 
-		splitPane2.setTopComponent(new BufferedPanel(new MatrixPlot(m, true)));
+		try {
+			Class<?> jfreechart = Class
+					.forName("org.ujmp.jfreechart.MatrixChartPanel");
+			JPanel panel = (JPanel) jfreechart.getConstructor(
+					MatrixGUIObject.class).newInstance(m);
+			splitPane2.setTopComponent(new BufferedPanel(panel));
+		} catch (Throwable t) {
+			splitPane2.setTopComponent(new BufferedPanel(
+					new MatrixPlot(m, true)));
+		}
+
 		splitPane2.setBottomComponent(tabbedPane);
 		splitPane1.setLeftComponent(splitPane2);
 

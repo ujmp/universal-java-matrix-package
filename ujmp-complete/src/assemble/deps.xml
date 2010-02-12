@@ -23,6 +23,8 @@
 				<include>ejml:ejml</include>
 				<include>iText:iText</include>
 				<include>jackcess:jackcess</include>
+				<include>jfreechart:jfreechart</include>
+				<include>jcommon:jcommon</include>
 				<include>commons-logging:commons-logging</include>
 				<include>commons-lang:commons-lang</include>
 				<include>jama:jama</include>

@@ -55,6 +55,7 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 		addClass("ujmp-jlinalg");
 		addClass("ujmp-jdbc");
 		addClass("ujmp-jexcelapi");
+		addClass("ujmp-jfreechart");
 		addClass("ujmp-jmatharray");
 		addClass("ujmp-jmathplot");
 		addClass("ujmp-jmatio");

@@ -71,7 +71,7 @@ public class BufferedPanel extends JPanel implements CanBeRepainted,
 
 	public void paintUsingReflection(Graphics2D g2d) throws Exception {
 		try {
-			panel.paintComponents(g2d);
+			panel.paint(g2d);
 		} catch (Exception e) {
 			Method m = panel.getClass().getMethod("paintComponent",
 					Graphics.class);

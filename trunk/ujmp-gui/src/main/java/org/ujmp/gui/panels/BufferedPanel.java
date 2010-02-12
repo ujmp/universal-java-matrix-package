@@ -70,11 +70,16 @@ public class BufferedPanel extends JPanel implements CanBeRepainted,
 	}
 
 	public void paintUsingReflection(Graphics2D g2d) throws Exception {
-		Method m = panel.getClass().getMethod("paintComponent", Graphics.class);
-		boolean accessible = m.isAccessible();
-		m.setAccessible(true);
-		m.invoke(panel, new Object[] { g2d });
-		m.setAccessible(accessible);
+		try {
+			panel.paintComponents(g2d);
+		} catch (Exception e) {
+			Method m = panel.getClass().getMethod("paintComponent",
+					Graphics.class);
+			boolean accessible = m.isAccessible();
+			m.setAccessible(true);
+			m.invoke(panel, new Object[] { g2d });
+			m.setAccessible(accessible);
+		}
 	}
 
 	public void repaintUI() {

@@ -24,7 +24,6 @@ package org.ujmp.core.benchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.util.GCUtil;
 
 public class MtimesBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -50,7 +49,7 @@ public class MtimesBenchmarkTask extends AbstractBenchmarkTask {
 			m1 = BenchmarkUtil.createMatrix(matrixClass, Coordinates.transpose(size));
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, m0);
 			BenchmarkUtil.rand(benchmarkSeed, run, 1, m1);
-			GCUtil.purgeMemory();
+			BenchmarkUtil.purgeMemory(getConfig());
 			t0 = System.nanoTime();
 			r = m0.mtimes(m1);
 			t1 = System.nanoTime();

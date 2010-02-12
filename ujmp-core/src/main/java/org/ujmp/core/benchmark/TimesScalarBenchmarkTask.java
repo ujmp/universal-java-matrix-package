@@ -23,7 +23,6 @@ package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
 
 public class TimesScalarBenchmarkTask extends AbstractBenchmarkTask {
@@ -48,7 +47,7 @@ public class TimesScalarBenchmarkTask extends AbstractBenchmarkTask {
 				return BenchmarkResult.NOTAVAILABLE;
 			}
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, m);
-			GCUtil.purgeMemory();
+			BenchmarkUtil.purgeMemory(getConfig());
 			t0 = System.nanoTime();
 			r = m.times(MathUtil.nextDouble());
 			t1 = System.nanoTime();

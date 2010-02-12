@@ -23,7 +23,6 @@ package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.util.GCUtil;
 
 public class CholBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -47,7 +46,7 @@ public class CholBenchmarkTask extends AbstractBenchmarkTask {
 				return BenchmarkResult.NOTAVAILABLE;
 			}
 			BenchmarkUtil.randPositiveDefinite(benchmarkSeed, run, 0, m);
-			GCUtil.purgeMemory();
+			BenchmarkUtil.purgeMemory(getConfig());
 			t0 = System.nanoTime();
 			r = m.chol();
 			t1 = System.nanoTime();

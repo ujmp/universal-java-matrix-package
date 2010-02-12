@@ -29,6 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.util.GCUtil;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class BenchmarkUtil {
@@ -136,6 +137,14 @@ public abstract class BenchmarkUtil {
 			}
 		}
 		return result;
+	}
+
+	public static void purgeMemory(BenchmarkConfig config) {
+		if (config.isPurgeMemory()) {
+			GCUtil.purgeMemory();
+		} else if (config.isGCMemory()) {
+			GCUtil.gc();
+		}
 	}
 
 }

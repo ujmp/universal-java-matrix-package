@@ -132,6 +132,10 @@ public class BenchmarkConfig {
 
 	private boolean runVecMathDenseDoubleMatrix2D = false;
 
+	private boolean gcMemory = false;
+
+	private boolean purgeMemory = false;
+
 	public BenchmarkConfig() {
 	}
 
@@ -575,6 +579,22 @@ public class BenchmarkConfig {
 
 	public void setMaxStd(double maxStd) {
 		this.maxStd = maxStd;
+	}
+
+	public boolean isGCMemory() {
+		return gcMemory;
+	}
+
+	public void setGCMemory(boolean gcMemory) {
+		this.gcMemory = gcMemory;
+	}
+
+	public boolean isPurgeMemory() {
+		return purgeMemory;
+	}
+
+	public void setPurgeMemory(boolean purgeMemory) {
+		this.purgeMemory = purgeMemory;
 	}
 
 }

@@ -25,7 +25,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.util.GCUtil;
 
 public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -53,7 +52,7 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 			BenchmarkUtil.rand(benchmarkSeed, run, 1, x);
 			b1 = new DefaultDenseDoubleMatrix2D(a).mtimes(new DefaultDenseDoubleMatrix2D(x));
 			b2 = BenchmarkUtil.createMatrix(matrixClass, b1);
-			GCUtil.purgeMemory();
+			BenchmarkUtil.purgeMemory(getConfig());
 			t0 = System.nanoTime();
 			result = a.solve(b2);
 			t1 = System.nanoTime();

@@ -23,7 +23,6 @@ package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.util.GCUtil;
 
 public class PlusMatrixBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -49,7 +48,7 @@ public class PlusMatrixBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, m0);
 			BenchmarkUtil.rand(benchmarkSeed, run, 1, m1);
-			GCUtil.purgeMemory();
+			BenchmarkUtil.purgeMemory(getConfig());
 			t0 = System.nanoTime();
 			r = m0.plus(m1);
 			t1 = System.nanoTime();

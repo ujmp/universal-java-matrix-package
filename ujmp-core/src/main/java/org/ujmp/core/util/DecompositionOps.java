@@ -126,13 +126,14 @@ public abstract class DecompositionOps {
 			INV_EJML = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
 		} catch (Throwable t) {
 		}
+		// try {
+		// INV_OJALGO = (Inv<Matrix>)
+		// Class.forName("org.ujmp.ojalgo.calculation.Inv")
+		// .newInstance();
+		// } catch (Throwable t) {
+		// }
 		try {
-			INV_OJALGO = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv")
-					.newInstance();
-		} catch (Throwable t) {
-		}
-		try {
-			INV_OJALGO = (Inv<Matrix>) Class.forName("org.ujmp.mtj.calculation.Inv").newInstance();
+			INV_MTJ = (Inv<Matrix>) Class.forName("org.ujmp.mtj.calculation.Inv").newInstance();
 		} catch (Throwable t) {
 		}
 	}

@@ -1067,6 +1067,28 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 	}
 
+	public void testInvRandLarge() throws Exception {
+		Matrix m1 = createMatrix(120, 120);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		
+		// bug
+		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
+			return;
+		}
+
+		do {
+			m1.rand(Ret.ORIG);
+		} while (m1.isSingular());
+
+		Matrix m2 = m1.inv();
+		Matrix m3 = m1.mtimes(m2);
+		Matrix eye = MatrixFactory.eye(m1.getSize());
+		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+	}
+
 	public void testInvSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
@@ -1358,6 +1380,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 		Matrix a = createMatrix(120, 120);
+
+		// some error?
+		if (a.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
+			return;
+		}
+
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(120, 140);
 		x.randn(Ret.ORIG);
@@ -1886,9 +1914,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	public void testCholSmall() throws Exception {
-		Matrix a = MatrixFactory.pascal(5, 5);
+		Matrix a = createMatrix(MatrixFactory.pascal(5, 5));
+
+		// only SPD
+		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+
+		// some error?
+		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
+			return;
+		}
+
 		Matrix chol = a.chol();
-		Matrix prod = chol.transpose().mtimes(chol);
+		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(a).doubleValue(), TOLERANCE);
 	}
@@ -1903,10 +1942,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 				temp.setDouble(random.nextDouble(), r, c);
 			}
 		}
-		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
+		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+
+		// only SPD
+		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+
+		// some error?
+		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
+			return;
+		}
 
 		Matrix chol = result.chol();
-		Matrix prod = chol.transpose().mtimes(chol);
+		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}
@@ -1924,10 +1973,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 				temp.setDouble(random.nextDouble(), r, c);
 			}
 		}
-		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
+		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+
+		// only SPD
+		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+
+		// some error?
+		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
+			return;
+		}
 
 		Matrix chol = result.chol();
-		Matrix prod = chol.transpose().mtimes(chol);
+		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}

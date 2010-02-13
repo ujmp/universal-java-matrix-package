@@ -261,7 +261,7 @@ public interface Chol<T> {
 		 */
 
 		public Matrix getL() {
-			return MatrixFactory.linkToArray(L).transpose();
+			return MatrixFactory.linkToArray(L);
 		}
 
 		/**

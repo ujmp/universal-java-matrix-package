@@ -1068,12 +1068,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	public void testInvRandLarge() throws Exception {
+		if (!isTestLarge()) {
+			return;
+		}
 		Matrix m1 = createMatrix(120, 120);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
-		
+
 		// bug
 		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
 			return;

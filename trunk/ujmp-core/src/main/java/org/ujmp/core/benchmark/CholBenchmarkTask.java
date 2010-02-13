@@ -55,7 +55,7 @@ public class CholBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			Matrix result = r.transpose().mtimes(r);
+			Matrix result = r.mtimes(r.transpose());
 			double diff = BenchmarkUtil.difference(result, m);
 			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {

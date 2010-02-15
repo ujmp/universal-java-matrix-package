@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 
+import org.ujmp.core.UJMP;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 
@@ -81,7 +82,7 @@ public abstract class ExportPDF {
 					width, height));
 			PdfWriter writer = PdfWriter.getInstance(document,
 					new FileOutputStream(file.getAbsolutePath()));
-			document.addAuthor("JDMP");
+			document.addAuthor("UJMP v" + UJMP.UJMPVERSION);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
 			PdfTemplate tp = cb.createTemplate(width, height);

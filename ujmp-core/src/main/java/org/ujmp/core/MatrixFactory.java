@@ -867,4 +867,16 @@ public abstract class MatrixFactory {
 		}
 	}
 
+	public static Matrix vertCat(Matrix row, long rowCount) {
+		Matrix[] matrices = new Matrix[(int) rowCount];
+		Arrays.fill(matrices, row);
+		return vertCat(matrices);
+	}
+
+	public static Matrix horCat(Matrix column, long columnCount) {
+		Matrix[] matrices = new Matrix[(int) columnCount];
+		Arrays.fill(matrices, column);
+		return horCat(matrices);
+	}
+
 }

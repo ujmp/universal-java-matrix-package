@@ -120,8 +120,7 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 		}
 	}
 
-	
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
 			MatrixGUIObject guiObject = plotSettings.getMatrixGUIObject();

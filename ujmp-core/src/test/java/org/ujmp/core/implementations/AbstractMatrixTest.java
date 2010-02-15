@@ -1077,11 +1077,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 
-		// bug
-		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
-			return;
-		}
-
 		do {
 			m1.rand(Ret.ORIG);
 		} while (m1.isSingular());
@@ -1383,11 +1378,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 		Matrix a = createMatrix(120, 120);
-
-		// some error?
-		if (a.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
-			return;
-		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(120, 140);

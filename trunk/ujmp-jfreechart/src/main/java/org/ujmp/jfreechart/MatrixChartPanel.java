@@ -23,96 +23,102 @@
 
 package org.ujmp.jfreechart;
 
-import java.awt.Dimension;
-
-import javax.swing.UIManager;
+import java.awt.BasicStroke;
+import java.awt.Color;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogarithmicAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.general.Dataset;
+import org.jfree.data.xy.XYDataset;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class MatrixChartPanel extends ChartPanel {
+public class MatrixChartPanel extends AbstractChartPanel {
 	private static final long serialVersionUID = 3661988250162505586L;
-
-	// private Matrix matrix = null;
-
-	// private XYPlot plot = null;
 
 	public MatrixChartPanel(Matrix m) {
 		this((MatrixGUIObject) m.getGUIObject());
 	}
 
-	public MatrixChartPanel(MatrixGUIObject m) {
-		super(null, true);
+	public MatrixChartPanel(MatrixGUIObject guiObject) {
+		this(guiObject, new ChartConfiguration());
+	}
 
-		// this.matrix = m;
+	public MatrixChartPanel(Matrix m, ChartConfiguration config) {
+		this((MatrixGUIObject) m.getGUIObject(), config);
+	}
 
-		// ((MatrixGUIObject) m.getGUIObject()).getRowSelectionModel()
-		// .addListSelectionListener(this);
+	public MatrixChartPanel(MatrixGUIObject matrix, ChartConfiguration config) {
+		super(matrix, config);
+	}
 
-		// addComponentListener(this);
+	public void redraw() {
+		super.redraw();
+		Dataset dataset = null;
+		dataset = new XYSeriesCollectionWrapper(getMatrix());
+		// dataset = new CategoryDatasetWrapper(getMatrix());
 
-		// updatePopupMenu();
-
-		XYSeriesCollectionWrapper dataset = new XYSeriesCollectionWrapper(m);
-
-		// dataset.addChangeListener(this);
-
-		// if (showBorder) {
-		// setBorder(BorderFactory.createTitledBorder("Chart"));
-		// }
-
-		setPreferredSize(new Dimension(800, 600));
-
-		setMaximumDrawWidth(2000);
-		setMaximumDrawHeight(2000);
-
-		String title = m.getLabel();
-		String xLabel = StringUtil.format(m.getMatrix().getAxisAnnotation(
-				Matrix.ROW));
+		String title = getMatrix().getLabel();
+		String xLabel = StringUtil.format(getMatrix().getMatrix()
+				.getAxisAnnotation(Matrix.ROW));
 		String yLabel = null;
 
-		final JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel,
-				yLabel, dataset, PlotOrientation.VERTICAL, true, true, false);
+		// setChart(ChartFactory.createLineChart(title, xLabel, yLabel,
+		// (CategoryDataset) dataset, PlotOrientation.VERTICAL, true,
+		// true, false));
+		setChart(ChartFactory.createXYLineChart(title, xLabel, yLabel,
+				(XYDataset) dataset, PlotOrientation.VERTICAL, true, true,
+				false));
 
-		chart.setTitle((String) null);
+		XYPlot plot = getChart().getXYPlot();
 
-		chart.setBackgroundPaint(UIManager.getColor("Panel.background"));
-		XYPlot plot = chart.getXYPlot();
-		// plot.setBackgroundPaint(new Color(206, 203, 186));
-		// plot.setDomainGridlinePaint(Color.white);
-		// plot.setRangeGridlinePaint(Color.white);
-		// plot.setDomainCrosshairVisible(false);
-		// plot.setRangeCrosshairVisible(false);
-		// plot.addChangeListener(this);
-		//
-		// zeroMarker.setPaint(new Color(0, 0, 0, 128));
-		// plot.addRangeMarker(zeroMarker, Layer.FOREGROUND);
-		//
-		// try {
-		// plot.addRangeMarker(dataset.getMeanMarker(0));
-		// plot.addRangeMarker(dataset.getStandardDeviationMarker(0));
-		// plot.addRangeMarker(dataset.getMinMaxMarker(0));
-		// } catch (Exception e) {
-		// System.out.println("error in VariableChartPanel");
-		// }
+		if (getConfig().isLogScaleDomain()) {
+			NumberAxis axis = new LogarithmicAxis(null);
+			plot.setDomainAxis(axis);
+		} else {
+			NumberAxis axis = new NumberAxis();
+			plot.setDomainAxis(axis);
+		}
 
-		// rangeSelection.setPaint(new Color(200, 200, 235, 128));
-		// rangeSelection.setLabelPaint(new Color(0, 0, 0));
-		// rangeSelection.setLabelAnchor(RectangleAnchor.TOP);
-		// rangeSelection.setLabelTextAnchor(TextAnchor.TOP_CENTER);
-		// rangeSelection.setOutlinePaint(new Color(50, 50, 235));
-		// plot.addDomainMarker(rangeSelection, Layer.FOREGROUND);
+		if (getConfig().isLogScaleRange()) {
+			NumberAxis axis = new LogarithmicAxis(null);
+			plot.setRangeAxis(axis);
+		} else {
+			NumberAxis axis = new NumberAxis();
+			plot.setRangeAxis(axis);
+		}
 
-		// legend = chart.getLegend();
-		// chart.clearSubtitles();
+		getChart().setTitle((String) null);
 
-		setChart(chart);
+		getChart().setBackgroundPaint(Color.WHITE);
+
+		plot.setDomainGridlinesVisible(false);
+		plot.setRangeGridlinesVisible(false);
+
+		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+
+		renderer.setBaseShapesVisible(false);
+		renderer.setDrawSeriesLineAsPath(true);
+		for (int i = 0; i < getMatrix().getColumnCount(); i++) {
+			renderer.setSeriesStroke(i, new BasicStroke(3));
+			plot.setRenderer(i, renderer);
+		}
+
+		plot.setBackgroundPaint(Color.white);
+		plot.setDomainGridlinePaint(Color.white);
+		plot.setRangeGridlinePaint(Color.white);
+		plot.setDomainCrosshairVisible(false);
+		plot.setRangeCrosshairVisible(false);
+
+		plot.getRangeAxis().setAutoRange(true);
+		plot.getDomainAxis().setAutoRange(true);
+		plot.getDomainAxis().setUpperMargin(0);
+
 		setMouseZoomable(false);
 	}
 

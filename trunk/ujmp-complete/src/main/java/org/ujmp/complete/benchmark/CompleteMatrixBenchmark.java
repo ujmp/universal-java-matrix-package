@@ -48,8 +48,11 @@ import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jfreechart.ChartConfiguration;
+import org.ujmp.jfreechart.MatrixChartPanel;
 import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
@@ -239,10 +242,45 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				System.err.println("could not evaluate mean results for " + benchmarkName + ": "
 						+ e);
 			}
-			try {
-				allmeans.showGUI();
-			} catch (Exception e) {
+			if (!allmeans.getLabel().contains("diff")) {
+				try {
+					long jamaRow = allmeans.getRowForLabel(JamaDenseDoubleMatrix2D.class
+							.getSimpleName());
+					Matrix row = allmeans.selectRows(Ret.NEW, jamaRow);
+					Matrix m = MatrixFactory.vertCat(row, allmeans.getRowCount());
+					Matrix scaled = allmeans.divide(Ret.NEW, false, m).power(Ret.NEW, -1)
+							.transpose(Ret.NEW);
+					for (int r = 0; r < scaled.getRowCount(); r++) {
+						scaled.setRowLabel(r, scaled.getRowLabel(r).split("x")[0]);
+					}
+					scaled.showGUI();
+					ChartConfiguration config = new ChartConfiguration();
+					config.setLogScaleRange(true);
+					config.setLogScaleDomain(true);
+					MatrixChartPanel cp = new MatrixChartPanel(scaled, config);
+					cp.export(FileFormat.PDF, new File(BenchmarkUtil.getResultDir() + benchmarkName
+							+ "-scaled.pdf"));
+					cp.export(FileFormat.JPG, new File(BenchmarkUtil.getResultDir() + benchmarkName
+							+ "-scaled.jpg"));
+					Matrix firstScaled = MatrixFactory.horCat(MatrixFactory.linkToValue(scaled
+							.getLabel()), scaled.getAnnotation().getDimensionMatrix(Matrix.ROW));
+					Matrix lastScaled = MatrixFactory.horCat(scaled.getAnnotation()
+							.getDimensionMatrix(Matrix.COLUMN), scaled);
+					Matrix matrixScaled = MatrixFactory.vertCat(firstScaled, lastScaled);
+					matrixScaled.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir()
+							+ benchmarkName + "-scaled.csv"));
+					try {
+						matrixScaled.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
+								.getResultDir()
+								+ benchmarkName + "-scaled.xls"));
+					} catch (Exception e) {
+					}
+				} catch (Exception e) {
+				}
+			} else {
+				allmeans.transpose(Ret.NEW).showGUI();
 			}
+
 			Matrix firstMean = MatrixFactory.horCat(MatrixFactory.linkToValue(allmeans.getLabel()),
 					allmeans.getAnnotation().getDimensionMatrix(Matrix.ROW));
 			Matrix lastMean = MatrixFactory.horCat(allmeans.getAnnotation().getDimensionMatrix(
@@ -362,4 +400,5 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
 		return null;
 	}
+
 }

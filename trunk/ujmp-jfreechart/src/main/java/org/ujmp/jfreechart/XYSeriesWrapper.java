@@ -97,7 +97,14 @@ public class XYSeriesWrapper extends XYSeries {
 		// }
 		//
 		// return xyDataItem;
-		return new XYDataItem(index, matrix.getMatrix().getAsDouble(index,
+
+		double row = index;
+		try {
+			row = Double.parseDouble(matrix.getRowName(index));
+		} catch (Exception e) {
+		}
+
+		return new XYDataItem(row, matrix.getMatrix().getAsDouble(index,
 				seriesId));
 	}
 

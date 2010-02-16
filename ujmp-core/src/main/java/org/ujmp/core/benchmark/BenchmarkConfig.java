@@ -132,9 +132,9 @@ public class BenchmarkConfig {
 
 	private boolean runVecMathDenseDoubleMatrix2D = false;
 
-	private boolean gcMemory = false;
+	private boolean gcMemory = true;
 
-	private boolean purgeMemory = false;
+	private boolean purgeMemory = true;
 
 	public BenchmarkConfig() {
 	}

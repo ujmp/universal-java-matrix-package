@@ -48,7 +48,7 @@ public class SVD
 			}
 			Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
 			Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
-			Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW());
+			Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW(null));
 			return new Matrix[] { u, s, v };
 		} catch (Throwable t) {
 			return org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.UJMP

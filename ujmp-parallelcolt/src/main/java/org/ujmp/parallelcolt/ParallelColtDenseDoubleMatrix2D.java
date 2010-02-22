@@ -30,8 +30,6 @@ import org.ujmp.core.interfaces.Wrapper;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
-import cern.colt.matrix.tdouble.algo.DoubleBlas;
-import cern.colt.matrix.tdouble.algo.SmpDoubleBlas;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleEigenvalueDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleLUDecomposition;
@@ -43,8 +41,6 @@ import cern.jet.math.tdouble.DoubleFunctions;
 public class ParallelColtDenseDoubleMatrix2D extends
 		AbstractDenseDoubleMatrix2D implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -1941030601886654699L;
-
-	private static final DoubleBlas BLAS = new SmpDoubleBlas();
 
 	private static final DenseDoubleAlgebra ALG = new DenseDoubleAlgebra();
 
@@ -126,8 +122,8 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	public Matrix plus(Matrix m) {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			DoubleMatrix2D result = matrix.copy();
-			BLAS.daxpy(1.0, ((ParallelColtDenseDoubleMatrix2D) m).matrix,
-					result);
+			result.assign(((ParallelColtDenseDoubleMatrix2D) m)
+					.getWrappedObject(), DoubleFunctions.plus);
 			return new ParallelColtDenseDoubleMatrix2D(result);
 		} else {
 			return super.plus(m);
@@ -137,8 +133,8 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	public Matrix minus(Matrix m) {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			DoubleMatrix2D result = matrix.copy();
-			BLAS.daxpy(-1.0, ((ParallelColtDenseDoubleMatrix2D) m).matrix,
-					result);
+			result.assign(((ParallelColtDenseDoubleMatrix2D) m)
+					.getWrappedObject(), DoubleFunctions.minus);
 			return new ParallelColtDenseDoubleMatrix2D(result);
 		} else {
 			return super.minus(m);

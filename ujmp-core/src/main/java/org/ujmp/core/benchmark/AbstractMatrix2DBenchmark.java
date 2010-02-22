@@ -52,8 +52,12 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 		return config;
 	}
 
+	public void setName(String name) {
+		config.setName(name);
+	}
+
 	public final void run() {
-		if (Runtime.getRuntime().maxMemory() < 980 * 1024 * 1024) {
+		if (Runtime.getRuntime().maxMemory() < 900 * 1024 * 1024) {
 			throw new MatrixException("You must start Java with more memory: -Xmx1024M");
 		}
 

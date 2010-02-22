@@ -54,9 +54,9 @@ public abstract class AbstractBenchmarkTask {
 	}
 
 	public void run() {
-		File resultFile = new File(BenchmarkUtil.getResultDir() + getMatrixLabel() + "/"
+		File resultFile = new File(BenchmarkUtil.getResultDir(getConfig()) + getMatrixLabel() + "/"
 				+ getTaskName() + ".csv");
-		File diffFile = new File(BenchmarkUtil.getResultDir() + getMatrixLabel() + "/"
+		File diffFile = new File(BenchmarkUtil.getResultDir(getConfig()) + getMatrixLabel() + "/"
 				+ getTaskName() + "-diff.csv");
 		if (resultFile.exists()) {
 			System.out.println("old results available, skipping " + getTaskName() + " for "

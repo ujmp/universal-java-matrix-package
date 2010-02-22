@@ -34,9 +34,14 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class BenchmarkUtil {
 
-	public static String getResultDir() {
-		return "results/" + getHostName() + "/" + System.getProperty("os.name") + "/Java"
-				+ System.getProperty("java.version") + "/";
+	public static String getResultDir(BenchmarkConfig config) {
+		String name = config.getName();
+		if (name == null) {
+			return "results/" + getHostName() + "/" + System.getProperty("os.name") + "/Java"
+					+ System.getProperty("java.version") + "/";
+		} else {
+			return "results/" + name + "/";
+		}
 	}
 
 	public static String getHostName() {

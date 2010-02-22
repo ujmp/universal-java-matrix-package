@@ -136,6 +136,16 @@ public class BenchmarkConfig {
 
 	private boolean purgeMemory = true;
 
+	private boolean shuffle = false;
+
+	private boolean reverse = false;
+
+	private boolean singleThreaded = false;
+
+	private boolean largeMatrices = false;
+
+	private String name = null;
+
 	public BenchmarkConfig() {
 	}
 
@@ -225,6 +235,35 @@ public class BenchmarkConfig {
 
 	public void setRunSVD(boolean runSVD) {
 		this.runSVD = runSVD;
+	}
+
+	public boolean isSingleThreaded() {
+		return singleThreaded;
+	}
+
+	public void setSingleThreaded(boolean singleThreaded) {
+		this.singleThreaded = singleThreaded;
+	}
+
+	public boolean isLargeMatrices() {
+		return largeMatrices;
+	}
+
+	public void setLargeMatrices(boolean largeMatrices) {
+		this.largeMatrices = largeMatrices;
+		defaultSizes = "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
+		transposeSizes = defaultSizes;
+		timesSizes = defaultSizes;
+		plusSizes = defaultSizes;
+		mtimesSizes = defaultSizes;
+		invSizes = defaultSizes;
+		solveSquareSizes = defaultSizes;
+		solveTallSizes = "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000,3000x1500,4000x2000,5000x2500,6000x3000,7000x3500,8000x4000,9000x4500,10000x5000";
+		svdSizes = defaultSizes;
+		eigSizes = defaultSizes;
+		qrSizes = defaultSizes;
+		luSizes = defaultSizes;
+		cholSizes = defaultSizes;
 	}
 
 	public boolean isRunEig() {
@@ -595,6 +634,30 @@ public class BenchmarkConfig {
 
 	public void setPurgeMemory(boolean purgeMemory) {
 		this.purgeMemory = purgeMemory;
+	}
+
+	public boolean isShuffle() {
+		return shuffle;
+	}
+
+	public void setShuffle(boolean shuffle) {
+		this.shuffle = shuffle;
+	}
+
+	public boolean isReverse() {
+		return reverse;
+	}
+
+	public void setReverse(boolean reverse) {
+		this.reverse = reverse;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

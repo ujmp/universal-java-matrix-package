@@ -70,6 +70,8 @@ import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
+import edu.emory.mathcs.utils.ConcurrencyUtils;
+
 public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 	public CompleteMatrixBenchmark() {
@@ -150,6 +152,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 		if (getConfig().isSingleThreaded()) {
 			UJMPSettings.setNumberOfThreads(1);
+			// ConcurrentUtils.AVAILABLE_PROCESSORS = 1;
+			ConcurrencyUtils.setNumberOfThreads(1);
 		}
 
 		if (getConfig().isShuffle()) {

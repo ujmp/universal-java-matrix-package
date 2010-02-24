@@ -42,6 +42,7 @@ import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
 import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.GlobalTimer;
+import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
@@ -58,6 +59,7 @@ public abstract class AbstractFrame extends JFrame {
 	private TimerTask updateTask = null;
 
 	public AbstractFrame(GUIObject o, JComponent component) {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		UIDefaults.setDefaults();
 		FrameManager.registerFrame(o, this);
 		this.object = o;
@@ -98,7 +100,6 @@ public abstract class AbstractFrame extends JFrame {
 		final GUIObject go = object;
 		updateTask = new TimerTask() {
 
-			
 			public void run() {
 				if (modCount != go.getModCount()) {
 					modCount = go.getModCount();
@@ -108,10 +109,8 @@ public abstract class AbstractFrame extends JFrame {
 			}
 		};
 		GlobalTimer.getInstance().scheduleAtFixedRate(updateTask, 1000, 1000);
-
 	}
 
-	
 	public final void setVisible(boolean state) {
 		if (state == true && isVisible()) {
 			return;
@@ -127,6 +126,11 @@ public abstract class AbstractFrame extends JFrame {
 		} else {
 			frameCount--;
 			statusBar.stop();
+		}
+
+		if (frameCount == 0) {
+			GraphicsExecutor.shutDown();
+			GlobalTimer.shutDown();
 		}
 	}
 

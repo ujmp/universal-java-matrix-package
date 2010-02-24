@@ -26,6 +26,7 @@ package org.ujmp.core.util.matrices;
 import java.util.Map;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class MatrixSystemEnvironment extends AbstractMapMatrix<String, String> {
 	private static final long serialVersionUID = -8952532238520266448L;
@@ -34,9 +35,12 @@ public class MatrixSystemEnvironment extends AbstractMapMatrix<String, String> {
 		setLabel("System Environment");
 	}
 
-	
 	public Map<String, String> getMap() {
 		return System.getenv();
+	}
+
+	public MapMatrix<String, String> copy() {
+		return new MatrixSystemEnvironment();
 	}
 
 }

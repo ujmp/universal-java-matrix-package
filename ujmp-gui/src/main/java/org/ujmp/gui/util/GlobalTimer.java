@@ -29,7 +29,7 @@ public class GlobalTimer extends Timer {
 
 	private static GlobalTimer timer = null;
 
-	public static final GlobalTimer getInstance() {
+	public static synchronized final GlobalTimer getInstance() {
 		if (timer == null) {
 			timer = new GlobalTimer();
 		}
@@ -37,6 +37,15 @@ public class GlobalTimer extends Timer {
 	}
 
 	private GlobalTimer() {
+		super("UJMP Global Timer", true);
+	}
+
+	public static synchronized void shutDown() {
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
+
 	}
 
 }

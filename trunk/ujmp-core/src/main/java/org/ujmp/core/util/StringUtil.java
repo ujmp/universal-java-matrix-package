@@ -276,7 +276,6 @@ public abstract class StringUtil {
 		int width = 10;
 		long maxRows = UJMPSettings.getMaxRowsToPrint();
 		long maxColumns = UJMPSettings.getMaxColumnsToPrint();
-		NumberFormat nf = DefaultNF;
 
 		StringBuilder s = new StringBuilder();
 
@@ -313,5 +312,13 @@ public abstract class StringUtil {
 		}
 		r.append(s);
 		return r.toString();
+	}
+
+	public static String getString(Object object) {
+		if (object == null) {
+			return null;
+		} else {
+			return format(object);
+		}
 	}
 }

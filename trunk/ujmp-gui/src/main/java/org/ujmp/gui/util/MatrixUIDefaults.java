@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.swing.UIManager;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 6721967669100263805L;
@@ -38,6 +39,10 @@ public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 
 	public Map<Object, Object> getMap() {
 		return UIManager.getDefaults();
+	}
+
+	public MapMatrix<Object, Object> copy() {
+		return new MatrixUIDefaults();
 	}
 
 }

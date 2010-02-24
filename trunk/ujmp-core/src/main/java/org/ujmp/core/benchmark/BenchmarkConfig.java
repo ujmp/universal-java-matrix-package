@@ -21,74 +21,16 @@
 
 package org.ujmp.core.benchmark;
 
-public class BenchmarkConfig {
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.StringUtil;
+
+public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
+	private static final long serialVersionUID = 2267893158983793396L;
 
 	public static final double NOTAVAILABLE = 0;
 
 	public static final double ERROR = Double.NaN;
-
-	private int burnInRuns = 3;
-
-	private int runs = 25;
-
-	private int defaultTrialCount = 1;
-
-	private int maxTrialCount = 5;
-
-	private int maxTime = 10000; // maximal time for one operation: 10000ms
-
-	private double maxStd = 10; // maximal standard deviation results may vary:
-	// 10%
-
-	private String defaultSizes = "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000";
-
-	private String transposeSizes = defaultSizes;
-
-	private String timesSizes = defaultSizes;
-
-	private String plusSizes = defaultSizes;
-
-	private String mtimesSizes = defaultSizes;
-
-	private String invSizes = defaultSizes;
-
-	private String solveSquareSizes = defaultSizes;
-
-	private String solveTallSizes = "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000";
-
-	private String svdSizes = defaultSizes;
-
-	private String eigSizes = defaultSizes;
-
-	private String qrSizes = defaultSizes;
-
-	private String luSizes = defaultSizes;
-
-	private String cholSizes = defaultSizes;
-
-	private boolean runTimesScalar = true;
-
-	private boolean runPlusMatrix = true;
-
-	private boolean runTranspose = true;
-
-	private boolean runMtimes = true;
-
-	private boolean runInv = true;
-
-	private boolean runSolveSquare = true;
-
-	private boolean runSolveTall = true;
-
-	private boolean runSVD = true;
-
-	private boolean runEig = true;
-
-	private boolean runChol = true;
-
-	private boolean runLU = false;
-
-	private boolean runQR = false;
 
 	private boolean runDefaultDenseDoubleMatrix2D = true;
 
@@ -132,306 +74,255 @@ public class BenchmarkConfig {
 
 	private boolean runVecMathDenseDoubleMatrix2D = false;
 
-	private boolean gcMemory = true;
-
-	private boolean purgeMemory = true;
-
-	private boolean shuffle = false;
-
-	private boolean reverse = false;
-
-	private boolean singleThreaded = false;
-
-	private boolean largeMatrices = false;
-
-	private String name = null;
-
 	public BenchmarkConfig() {
+		put("name", null);
+
+		put("largeMatrices", false);
+		put("singleThreaded", false);
+		put("reverse", false);
+		put("shuffle", false);
+		put("gcMemory", true);
+		put("purgeMemory", true);
+
+		put("burnInRuns", 3);
+		put("runs", 25);
+		put("defaultTrialCount", 1);
+		put("maxTrialCount", 5);
+		put("maxTime", 10000); // maximal time for one operation
+		put("maxStd", 10); // maximal standard deviation results may vary
+
+		put("runTimesScalar", true);
+		put("runPlusMatrix", true);
+		put("runTranspose", true);
+		put("runMtimes", true);
+		put("runInv", true);
+		put("runSolveSquare", true);
+		put("runSolveTall", true);
+		put("runSVD", true);
+		put("runEig", true);
+		put("runChol", true);
+		put("runLU", false);
+		put("runQR", false);
 	}
 
 	public String getSvdSizes() {
-		return svdSizes;
-	}
-
-	public void setSvdSizes(String svdSizes) {
-		this.svdSizes = svdSizes;
+		return getSquareSizes();
 	}
 
 	public String getQrSizes() {
-		return qrSizes;
-	}
-
-	public void setQrSizes(String qrSizes) {
-		this.qrSizes = qrSizes;
+		return getSquareSizes();
 	}
 
 	public String getLuSizes() {
-		return luSizes;
-	}
-
-	public void setLuSizes(String luSizes) {
-		this.luSizes = luSizes;
+		return getSquareSizes();
 	}
 
 	public boolean isRunTimesScalar() {
-		return runTimesScalar;
+		return MathUtil.getBoolean(get("runTimesScalar"));
 	}
 
 	public void setRunTimesScalar(boolean runTimesScalar) {
-		this.runTimesScalar = runTimesScalar;
+		put("runTimesScalar", runTimesScalar);
 	}
 
 	public boolean isRunPlusMatrix() {
-		return runPlusMatrix;
+		return MathUtil.getBoolean(get("runPlusMatrix"));
 	}
 
 	public void setRunPlusMatrix(boolean runPlusMatrix) {
-		this.runPlusMatrix = runPlusMatrix;
+		put("runPlusMatrix", runPlusMatrix);
 	}
 
 	public boolean isRunTranspose() {
-		return runTranspose;
+		return MathUtil.getBoolean(get("runTranspose"));
 	}
 
 	public void setRunTranspose(boolean runTranspose) {
-		this.runTranspose = runTranspose;
+		put("runTranspose", runTranspose);
 	}
 
 	public boolean isRunMtimes() {
-		return runMtimes;
+		return MathUtil.getBoolean(get("runMtimes"));
 	}
 
 	public void setRunMtimes(boolean runMtimes) {
-		this.runMtimes = runMtimes;
+		put("runMtimes", runMtimes);
 	}
 
 	public boolean isRunInv() {
-		return runInv;
+		return MathUtil.getBoolean(get("runInv"));
 	}
 
 	public void setRunInv(boolean runInv) {
-		this.runInv = runInv;
+		put("runInv", runInv);
 	}
 
 	public boolean isRunSolveSquare() {
-		return runSolveSquare;
+		return MathUtil.getBoolean(get("runSolveSquare"));
 	}
 
 	public void setRunSolveSquare(boolean runSolveSquare) {
-		this.runSolveSquare = runSolveSquare;
+		put("runSolveSquare", runSolveSquare);
 	}
 
 	public boolean isRunSolveTall() {
-		return runSolveTall;
+		return MathUtil.getBoolean(get("runSolveTall"));
 	}
 
 	public void setRunSolveTall(boolean runSolveTall) {
-		this.runSolveTall = runSolveTall;
+		put("runSolveTall", runSolveTall);
 	}
 
 	public boolean isRunSVD() {
-		return runSVD;
+		return MathUtil.getBoolean(get("runSVD"));
 	}
 
 	public void setRunSVD(boolean runSVD) {
-		this.runSVD = runSVD;
+		put("runSVD", runSVD);
 	}
 
 	public boolean isSingleThreaded() {
-		return singleThreaded;
+		return MathUtil.getBoolean(get("singleThreaded"));
 	}
 
 	public void setSingleThreaded(boolean singleThreaded) {
-		this.singleThreaded = singleThreaded;
+		put("singleThreaded", singleThreaded);
 	}
 
 	public boolean isLargeMatrices() {
-		return largeMatrices;
+		return MathUtil.getBoolean(get("largeMatrices"));
 	}
 
 	public void setLargeMatrices(boolean largeMatrices) {
-		this.largeMatrices = largeMatrices;
-		defaultSizes = "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
-		transposeSizes = defaultSizes;
-		timesSizes = defaultSizes;
-		plusSizes = defaultSizes;
-		mtimesSizes = defaultSizes;
-		invSizes = defaultSizes;
-		solveSquareSizes = defaultSizes;
-		solveTallSizes = "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000,3000x1500,4000x2000,5000x2500,6000x3000,7000x3500,8000x4000,9000x4500,10000x5000";
-		svdSizes = defaultSizes;
-		eigSizes = defaultSizes;
-		qrSizes = defaultSizes;
-		luSizes = defaultSizes;
-		cholSizes = defaultSizes;
+		put("largeMatrices", largeMatrices);
 	}
 
 	public boolean isRunEig() {
-		return runEig;
+		return MathUtil.getBoolean(get("runEig"));
 	}
 
 	public void setRunEig(boolean runEig) {
-		this.runEig = runEig;
+		put("runEig", runEig);
 	}
 
 	public boolean isRunChol() {
-		return runChol;
+		return MathUtil.getBoolean(get("runChol"));
 	}
 
 	public void setRunChol(boolean runChol) {
-		this.runChol = runChol;
+		put("runChol", runChol);
 	}
 
 	public boolean isRunLU() {
-		return runLU;
+		return MathUtil.getBoolean(get("runLU"));
 	}
 
 	public void setRunLU(boolean runLU) {
-		this.runLU = runLU;
+		put("runLU", runLU);
 	}
 
 	public boolean isRunQR() {
-		return runQR;
+		return MathUtil.getBoolean(get("runQR"));
 	}
 
 	public void setRunQR(boolean runQR) {
-		this.runQR = runQR;
+		put("runQR", runQR);
 	}
 
 	public int getBurnInRuns() {
-		return burnInRuns;
+		return MathUtil.getInt(get("burnInRuns"));
 	}
 
 	public int getDefaultTrialCount() {
-		return defaultTrialCount;
+		return MathUtil.getInt(get("defaultTrialCount"));
 	}
 
 	public void setDefaultTrialCount(int defaultTrialCount) {
-		this.defaultTrialCount = defaultTrialCount;
+		put("defaultTrialCount", defaultTrialCount);
 	}
 
 	public int getMaxTrialCount() {
-		return maxTrialCount;
+		return MathUtil.getInt(get("maxTrialCount"));
 	}
 
 	public void setMaxTrialCount(int maxTrialCount) {
-		this.maxTrialCount = maxTrialCount;
+		put("maxTrialCount", maxTrialCount);
 	}
 
 	public void setBurnInRuns(int burnInRuns) {
-		this.burnInRuns = burnInRuns;
+		put("burnInRuns", burnInRuns);
 	}
 
 	public int getRuns() {
-		return runs;
+		return MathUtil.getInt(get("runs"));
 	}
 
 	public void setRuns(int runs) {
-		this.runs = runs;
+		put("runs", runs);
 	}
 
-	public String getDefaultSizes() {
-		return defaultSizes;
+	public String getSquareSizes() {
+		if (isLargeMatrices()) {
+			return "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
+		} else {
+			return "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000";
+		}
 	}
 
-	public void setDefaultSizes(String defaultSizes) {
-		this.defaultSizes = defaultSizes;
+	public String getTallSizes() {
+		if (isLargeMatrices()) {
+			return "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000,3000x1500,4000x2000,5000x2500,6000x3000,7000x3500,8000x4000,9000x4500,10000x5000";
+		} else {
+			return "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000";
+		}
 	}
 
 	public String getTransposeSizes() {
-		return transposeSizes;
-	}
-
-	public void setTransposeSizes(String transposeSizes) {
-		this.transposeSizes = transposeSizes;
+		return getSquareSizes();
 	}
 
 	public String getTimesSizes() {
-		return timesSizes;
-	}
-
-	public void setTimesSizes(String timesSizes) {
-		this.timesSizes = timesSizes;
+		return getSquareSizes();
 	}
 
 	public String getPlusSizes() {
-		return plusSizes;
-	}
-
-	public void setPlusSizes(String plusSizes) {
-		this.plusSizes = plusSizes;
+		return getSquareSizes();
 	}
 
 	public String getMtimesSizes() {
-		return mtimesSizes;
-	}
-
-	public void setMtimesSizes(String mtimesSizes) {
-		this.mtimesSizes = mtimesSizes;
+		return getSquareSizes();
 	}
 
 	public String getInvSizes() {
-		return invSizes;
-	}
-
-	public void setInvSizes(String invSizes) {
-		this.invSizes = invSizes;
+		return getSquareSizes();
 	}
 
 	public String getSolveSquareSizes() {
-		return solveSquareSizes;
-	}
-
-	public void setSolveSquareSizes(String solveSquareSizes) {
-		this.solveSquareSizes = solveSquareSizes;
+		return getSquareSizes();
 	}
 
 	public String getSolveTallSizes() {
-		return solveTallSizes;
-	}
-
-	public void setSolveTallSizes(String solveTallSizes) {
-		this.solveTallSizes = solveTallSizes;
+		return getTallSizes();
 	}
 
 	public String getSVDSizes() {
-		return svdSizes;
-	}
-
-	public void setSVDSizes(String svdSizes) {
-		this.svdSizes = svdSizes;
+		return getSquareSizes();
 	}
 
 	public String getEigSizes() {
-		return eigSizes;
-	}
-
-	public void setEigSizes(String eigSizes) {
-		this.eigSizes = eigSizes;
+		return getSquareSizes();
 	}
 
 	public String getQRSizes() {
-		return qrSizes;
-	}
-
-	public void setQRSizes(String qrSizes) {
-		this.qrSizes = qrSizes;
+		return getSquareSizes();
 	}
 
 	public String getLUSizes() {
-		return luSizes;
-	}
-
-	public void setLUSizes(String luSizes) {
-		this.luSizes = luSizes;
+		return getSquareSizes();
 	}
 
 	public String getCholSizes() {
-		return cholSizes;
-	}
-
-	public void setCholSizes(String cholSizes) {
-		this.cholSizes = cholSizes;
+		return getSquareSizes();
 	}
 
 	public boolean isRunDefaultDenseDoubleMatrix2D() {
@@ -605,59 +496,58 @@ public class BenchmarkConfig {
 	}
 
 	public int getMaxTime() {
-		return maxTime;
+		return MathUtil.getInt(get("maxTime"));
 	}
 
 	public void setMaxTime(int maxTime) {
-		this.maxTime = maxTime;
+		put("maxTime", maxTime);
 	}
 
 	public double getMaxStd() {
-		return maxStd;
+		return MathUtil.getDouble(get("maxStd"));
 	}
 
 	public void setMaxStd(double maxStd) {
-		this.maxStd = maxStd;
+		put("maxStd", maxStd);
 	}
 
 	public boolean isGCMemory() {
-		return gcMemory;
+		return MathUtil.getBoolean(get("gcMemory"));
 	}
 
 	public void setGCMemory(boolean gcMemory) {
-		this.gcMemory = gcMemory;
+		put("gcMemory", gcMemory);
 	}
 
 	public boolean isPurgeMemory() {
-		return purgeMemory;
+		return MathUtil.getBoolean(get("purgeMemory"));
 	}
 
 	public void setPurgeMemory(boolean purgeMemory) {
-		this.purgeMemory = purgeMemory;
+		put("purgeMemory", purgeMemory);
 	}
 
 	public boolean isShuffle() {
-		return shuffle;
+		return MathUtil.getBoolean(get("shuffle"));
 	}
 
 	public void setShuffle(boolean shuffle) {
-		this.shuffle = shuffle;
+		put("shuffle", shuffle);
 	}
 
 	public boolean isReverse() {
-		return reverse;
+		return MathUtil.getBoolean(get("reverse"));
 	}
 
 	public void setReverse(boolean reverse) {
-		this.reverse = reverse;
+		put("reverse", reverse);
 	}
 
 	public String getName() {
-		return name;
+		return StringUtil.getString(get("name"));
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		put("name", name);
 	}
-
 }

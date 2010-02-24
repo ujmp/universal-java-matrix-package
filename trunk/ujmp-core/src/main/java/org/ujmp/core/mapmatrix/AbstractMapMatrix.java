@@ -62,6 +62,8 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	public final void setObject(Object key, int row, int column) {
 	}
 
+	public abstract MapMatrix<K, V> copy();
+
 	// TODO: concurrentmodification exceptions can come from here
 	@SuppressWarnings("unchecked")
 	private final Object getKey(int index) {
@@ -91,7 +93,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return getMap().get(key);
 	}
 
-	
 	public final boolean isEmpty() {
 		return getMap().isEmpty();
 	}
@@ -125,7 +126,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return getMap().values();
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.MAP;
 	}

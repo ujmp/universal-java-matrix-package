@@ -25,9 +25,9 @@ package org.ujmp.gui.util;
 
 import java.awt.Component;
 import java.awt.Cursor;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -47,16 +47,25 @@ public class GraphicsExecutor {
 
 	private static final int count = Runtime.getRuntime().availableProcessors();
 
-	private static List<Executor> executors = new ArrayList<Executor>(count);
+	private static final List<Executor> executors = new LinkedList<Executor>();
 
-	static {
-		for (int i = 0; i < count; i++) {
+	public static synchronized void shutDown() {
+		for (Executor ex : executors) {
+			try {
+				ex.shutdownNow();
+			} catch (Exception e) {
+			}
+		}
+		executors.clear();
+	}
+
+	public static synchronized final void scheduleUpdate(
+			CanBeRepainted component) {
+		while (executors.size() < Runtime.getRuntime().availableProcessors()) {
 			Executor executor = new Executor();
 			executors.add(executor);
 		}
-	}
 
-	public static final void scheduleUpdate(CanBeRepainted component) {
 		Component c = (Component) component;
 		while (c != null && !(c instanceof JFrame)) {
 			c = c.getParent();
@@ -109,13 +118,14 @@ class UpdateTask implements Runnable {
 
 class Executor extends ThreadPoolExecutor {
 
+	private static final LowPriorityThreadFactory factory = new LowPriorityThreadFactory();
+
 	private final Set<CanBeRepainted> waitingTasks = Collections
 			.synchronizedSet(new HashSet<CanBeRepainted>());
 
 	public Executor() {
 		super(1, 1, 0L, TimeUnit.MILLISECONDS,
-				new LinkedBlockingQueue<Runnable>(),
-				new LowPriorityThreadFactory());
+				new LinkedBlockingQueue<Runnable>(), factory);
 	}
 
 	public void setFinished(CanBeRepainted component) {

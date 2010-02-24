@@ -26,7 +26,6 @@ package org.ujmp.core.mapmatrix;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 	private static final long serialVersionUID = -1764575977190231155L;
 
@@ -40,9 +39,15 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 		this.map = map;
 	}
 
-	
 	public Map<K, V> getMap() {
 		return map;
+	}
+
+	@Override
+	public MapMatrix<K, V> copy() {
+		MapMatrix<K, V> ret = new DefaultMapMatrix<K, V>();
+		ret.putAll(map);
+		return ret;
 	}
 
 }

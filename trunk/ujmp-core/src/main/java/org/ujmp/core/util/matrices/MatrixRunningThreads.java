@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -6988423129848472319L;
@@ -40,9 +41,12 @@ public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
 		setLabel("Running Threads");
 	}
 
-	
 	public Map<Object, Object> getMap() {
 		return ThreadMap.getInstance();
+	}
+
+	public MapMatrix<Object, Object> copy() {
+		return new MatrixRunningThreads();
 	}
 
 }

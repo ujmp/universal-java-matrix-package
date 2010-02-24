@@ -37,6 +37,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
@@ -76,7 +77,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	public static final String MD5 = "MD5";
 
-	private Map<String, Object> map = null;
+	private FileMap map = null;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
 		map = new FileMap(file, parameters);
@@ -86,7 +87,6 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		map = new FileMap(fileFormat, file, parameters);
 	}
 
-	
 	public Map<String, Object> getMap() {
 		return map;
 	}
@@ -142,27 +142,26 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			map.put(FILEFORMAT, this.fileformat);
 		}
 
-		
+		public File getFile() {
+			return file;
+		}
+
 		public void clear() {
 			map.clear();
 		}
 
-		
 		public boolean containsKey(Object key) {
 			return map.containsKey(key);
 		}
 
-		
 		public boolean containsValue(Object value) {
 			return map.containsValue(value);
 		}
 
-		
 		public Set<java.util.Map.Entry<String, Object>> entrySet() {
 			throw new MatrixException("not implemented");
 		}
 
-		
 		public Object get(Object key) {
 			if (CONTENT.equals(key)) {
 				if (fileformat == null) {
@@ -203,41 +202,43 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			return map.get(key);
 		}
 
-		
 		public boolean isEmpty() {
 			return map.isEmpty();
 		}
 
-		
 		public Set<String> keySet() {
 			return map.keySet();
 		}
 
-		
 		public Object put(String key, Object value) {
 			return map.put(key, value);
 		}
 
-		
 		public void putAll(Map<? extends String, ? extends Object> m) {
 			map.putAll(m);
 		}
 
-		
 		public Object remove(Object key) {
 			return map.remove(key);
 		}
 
-		
 		public int size() {
 			return map.size();
 		}
 
-		
 		public Collection<Object> values() {
 			throw new MatrixException("not implemented");
 		}
 
 	}
 
+	public MapMatrix<String, Object> copy() {
+		try {
+			MapMatrix<String, Object> ret;
+			ret = new FileMatrix(map.getFile());
+			return ret;
+		} catch (IOException e) {
+			throw new MatrixException(e);
+		}
+	}
 }

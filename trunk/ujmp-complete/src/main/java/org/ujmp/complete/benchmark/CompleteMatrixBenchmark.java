@@ -46,6 +46,7 @@ import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
+import org.ujmp.core.util.CommandLineUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
@@ -180,42 +181,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String name = null;
-		boolean shuffle = false;
-		boolean reverse = false;
-		boolean singleThreaded = false;
-		boolean largeMatrices = false;
-
-		if (args != null) {
-			List<String> arglist = new ArrayList<String>(Arrays.asList(args));
-			arglist.remove("--benchmark");
-			if (arglist.contains("--shuffle")) {
-				shuffle = true;
-				arglist.remove("--shuffle");
-			}
-			if (arglist.contains("--reverse")) {
-				reverse = true;
-				arglist.remove("--reverse");
-			}
-			if (arglist.contains("--singleThreaded")) {
-				singleThreaded = true;
-				arglist.remove("--singleThreaded");
-			}
-			if (arglist.contains("--largeMatrices")) {
-				largeMatrices = true;
-				arglist.remove("--largeMatrices");
-			}
-			if (!arglist.isEmpty()) {
-				name = arglist.get(0);
-			}
-		}
-
 		CompleteMatrixBenchmark mb = new CompleteMatrixBenchmark();
-		mb.getConfig().setShuffle(shuffle);
-		mb.getConfig().setReverse(reverse);
-		mb.getConfig().setSingleThreaded(singleThreaded);
-		mb.getConfig().setLargeMatrices(largeMatrices);
-		mb.setName(name);
+		CommandLineUtil.parse(mb.getConfig(), args);
 		mb.runAll();
 		mb.evaluate();
 	}

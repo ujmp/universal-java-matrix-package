@@ -25,6 +25,7 @@
 				<include>org.ujmp:ujmp-jackcess</include>
 				<include>org.ujmp:ujmp-jama</include>
 				<include>org.ujmp:ujmp-jampack</include>
+				<include>org.ujmp:ujmp-jblas</include>
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>org.ujmp:ujmp-jexcelapi</include>
 				<include>org.ujmp:ujmp-jfreechart</include>

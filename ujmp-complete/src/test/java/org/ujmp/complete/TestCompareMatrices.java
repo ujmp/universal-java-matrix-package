@@ -26,6 +26,7 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jampack.JampackDenseDoubleMatrix2D;
+import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 import org.ujmp.jlinalg.JLinAlgDenseDoubleMatrix2D;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 import org.ujmp.jsci.JSciDenseDoubleMatrix2D;
@@ -63,6 +64,7 @@ public class TestCompareMatrices extends TestCase {
 		ALLFLOATMATRIXCLASSES.add(CommonsMathBlockDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JamaDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JLinAlgDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(JBlasDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JMatricesDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JSciDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JScienceDenseDoubleMatrix2D.class);

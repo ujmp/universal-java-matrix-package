@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 2008-2010 by Holger Arndt
+ * 
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership and licensing.
@@ -35,6 +37,8 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 	private boolean runDefaultDenseDoubleMatrix2D = true;
 
 	private boolean runArrayDenseDoubleMatrix2D = false;
+
+	private boolean runJBlasDenseDoubleMatrix2D = true;
 
 	private boolean runMTJDenseDoubleMatrix2D = true;
 
@@ -545,6 +549,14 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public String getName() {
 		return StringUtil.getString(get("name"));
+	}
+
+	public boolean isRunJBlasDenseDoubleMatrix2D() {
+		return runJBlasDenseDoubleMatrix2D;
+	}
+
+	public void setRunJBlasDenseDoubleMatrix2D(boolean runJBlas) {
+		this.runJBlasDenseDoubleMatrix2D = runJBlas;
 	}
 
 	public void setName(String name) {

@@ -48,6 +48,9 @@
 
 				<include>org.ujmp:ujmp-jampack</include>
 				<include>jampack:jampack</include>
+				
+				<include>org.ujmp:ujmp-jblas</include>
+				<include>jampack:jblas</include>
 
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>mysql-connector-java:mysql-connector-java</include>

@@ -44,7 +44,7 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>((int) size[ROW],
 				(int) size[COLUMN], DoubleWrapper.FACTORY);
 		for (long[] c : availableCoordinates()) {
-			setAsDouble(0, c);
+			setDouble(0, c);
 		}
 	}
 

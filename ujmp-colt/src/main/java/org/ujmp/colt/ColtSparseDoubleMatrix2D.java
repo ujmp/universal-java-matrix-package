@@ -57,7 +57,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	public ColtSparseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			setAsDouble(source.getAsDouble(c), c);
+			setDouble(source.getAsDouble(c), c);
 		}
 	}
 

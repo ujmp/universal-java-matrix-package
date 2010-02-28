@@ -93,6 +93,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jblas</artifactId>
+			<version>${version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 			<version>${version}</version>
 			<scope>compile</scope>
@@ -347,6 +354,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jblas</artifactId>
+			<version>${version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 			<version>${version}</version>
 			<type>test-jar</type>
@@ -543,6 +558,7 @@
 		<module>../ujmp-jackcess</module>
 		<module>../ujmp-jama</module>
 		<module>../ujmp-jampack</module>
+		<module>../ujmp-jblas</module>
 		<module>../ujmp-jdbc</module>
 		<module>../ujmp-jfreechart</module>
 		<module>../ujmp-jexcelapi</module>

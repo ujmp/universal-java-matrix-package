@@ -24,6 +24,7 @@
 package org.ujmp.core.calculation;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.Ops;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasDoubleArray;
@@ -34,6 +35,8 @@ import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.concurrent.PFor;
 
 public interface Mtimes<S, T, U> {
+
+	public static int THRESHOLD = 20;
 
 	public static Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
 
@@ -66,7 +69,7 @@ public interface Mtimes<S, T, U> {
 				return;
 			}
 
-			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
@@ -144,7 +147,7 @@ public interface Mtimes<S, T, U> {
 				return;
 			}
 
-			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
@@ -262,7 +265,7 @@ public interface Mtimes<S, T, U> {
 				return;
 			}
 
-			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
@@ -316,17 +319,24 @@ public interface Mtimes<S, T, U> {
 
 		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 				final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasDoubleArray2D && source2 instanceof HasDoubleArray2D
+			if (source1 instanceof HasDoubleArray && source2 instanceof HasDoubleArray
+					&& target instanceof HasDoubleArray) {
+				if (Ops.MTIMES_JBLAS != null && target.getRowCount() >= THRESHOLD
+						&& target.getColumnCount() >= THRESHOLD) {
+					Ops.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
+							(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
+				} else {
+					gemmDoubleArrayParallel(1.0, ((HasDoubleArray) source1).getDoubleArray(),
+							(int) source1.getRowCount(), (int) source1.getColumnCount(), 1.0,
+							((HasDoubleArray) source2).getDoubleArray(), (int) source2
+									.getRowCount(), (int) source2.getColumnCount(),
+							((HasDoubleArray) target).getDoubleArray());
+				}
+			} else if (source1 instanceof HasDoubleArray2D && source2 instanceof HasDoubleArray2D
 					&& target instanceof HasDoubleArray2D) {
 				calcDoubleArray2D(((HasDoubleArray2D) source1).getDoubleArray2D(),
 						((HasDoubleArray2D) source2).getDoubleArray2D(),
 						((HasDoubleArray2D) target).getDoubleArray2D());
-			} else if (source1 instanceof HasDoubleArray && source2 instanceof HasDoubleArray
-					&& target instanceof HasDoubleArray) {
-				gemmDoubleArrayParallel(1.0, ((HasDoubleArray) source1).getDoubleArray(),
-						(int) source1.getRowCount(), (int) source1.getColumnCount(), 1.0,
-						((HasDoubleArray) source2).getDoubleArray(), (int) source2.getRowCount(),
-						(int) source2.getColumnCount(), ((HasDoubleArray) target).getDoubleArray());
 			} else {
 				gemmDenseDoubleMatrix2D(1.0, source1, 1.0, source2, target);
 			}
@@ -345,7 +355,7 @@ public interface Mtimes<S, T, U> {
 			for (int i = C.length; --i != -1;) {
 				C[i] = 0;
 			}
-			if (C.length >= 10000) {
+			if (m1RowCount >= THRESHOLD && m2ColumnCount >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
@@ -411,7 +421,7 @@ public interface Mtimes<S, T, U> {
 				throw new MatrixException("matrices have wrong size");
 			}
 
-			if (rowCount * retColumnCount >= 500) {
+			if (rowCount >= THRESHOLD && retColumnCount >= THRESHOLD) {
 				new PFor(0, retColumnCount - 1) {
 					@Override
 					public void step(int i) {
@@ -462,7 +472,7 @@ public interface Mtimes<S, T, U> {
 				return;
 			}
 
-			if (C.getRowCount() >= 100 && C.getColumnCount() >= 100) {
+			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override

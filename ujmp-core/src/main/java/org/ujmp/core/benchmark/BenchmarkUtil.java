@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 2008-2010 by Holger Arndt
+ * 
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership and licensing.
@@ -70,8 +72,8 @@ public abstract class BenchmarkUtil {
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols && c <= r; c++) {
 				double f = random.nextDouble() - 0.5;
-				matrix.setDouble(f - 0.5, r, c);
-				matrix.setDouble(f - 0.5, c, r);
+				matrix.setDouble(f, r, c);
+				matrix.setDouble(f, c, r);
 			}
 		}
 	}

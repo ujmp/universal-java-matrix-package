@@ -176,6 +176,12 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>jblas</groupId>
+				<artifactId>jblas</artifactId>
+				<version>1.0.1</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jfreechart</groupId>
 				<artifactId>jfreechart</artifactId>
 				<version>1.0.13</version>
@@ -334,7 +340,7 @@
 			<dependency>
 				<groupId>ojalgo</groupId>
 				<artifactId>ojalgo</artifactId>
-				<version>28.37</version>
+				<version>28.38</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -453,6 +459,8 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-itext/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jackcess/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jama/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jampack/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jblas/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jdbc/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jexcelapi/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jlinalg/apidocs</link>

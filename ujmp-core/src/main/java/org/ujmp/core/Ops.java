@@ -76,4 +76,19 @@ public abstract class Ops {
 	public static Chol<Matrix> CHOL = Chol.INSTANCE;
 
 	public static Eig<Matrix> EIG = Eig.INSTANCE;
+
+	public static Mtimes<Matrix, Matrix, Matrix> MTIMES_JBLAS = null;
+
+	static {
+		init();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void init() {
+		try {
+			MTIMES_JBLAS = (Mtimes<Matrix, Matrix, Matrix>) Class.forName(
+					"org.ujmp.jblas.calculation.Mtimes").newInstance();
+		} catch (Throwable t) {
+		}
+	}
 }

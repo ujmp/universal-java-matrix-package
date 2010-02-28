@@ -53,7 +53,7 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public JMathArrayDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			setAsDouble(source.getAsDouble(c), c);
+			setDouble(source.getAsDouble(c), c);
 		}
 	}
 

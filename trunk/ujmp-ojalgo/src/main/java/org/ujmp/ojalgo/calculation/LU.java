@@ -47,8 +47,7 @@ public class LU implements
 			}
 			lu.compute(matrix);
 			final Matrix l = new OjalgoDenseDoubleMatrix2D(lu.getL());
-			final Matrix u = new OjalgoDenseDoubleMatrix2D(lu
-					.getRowEchelonForm());
+			final Matrix u = new OjalgoDenseDoubleMatrix2D(lu.getU());
 			final int m = (int) source.getRowCount();
 			final int[] piv = lu.getPivotOrder();
 			final Matrix p = new OjalgoDenseDoubleMatrix2D(m, m);

@@ -50,7 +50,7 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public OrbitalDenseDoubleMatrix2D(final Matrix m) {
 		this(m.getSize());
 		for (final long[] c : m.allCoordinates()) {
-			this.setAsDouble(m.getAsDouble(c), c);
+			setDouble(m.getAsDouble(c), c);
 		}
 	}
 

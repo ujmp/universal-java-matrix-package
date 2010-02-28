@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ojalgo.concurrent.ProcessorCount;
 import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
@@ -55,6 +56,7 @@ import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
+import org.ujmp.jblas.benchmark.JBlasDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jfreechart.ChartConfiguration;
 import org.ujmp.jfreechart.MatrixChartPanel;
 import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
@@ -123,6 +125,9 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		if (getConfig().isRunJLinAlgDenseDoubleMatrix2D()) {
 			list.add(new JLinAlgDenseDoubleMatrix2DBenchmark());
 		}
+		if (getConfig().isRunJBlasDenseDoubleMatrix2D()) {
+			list.add(new JBlasDenseDoubleMatrix2DBenchmark());
+		}
 		if (getConfig().isRunJampackDenseDoubleMatrix2D()) {
 			list.add(new JampackDenseDoubleMatrix2DBenchmark());
 		}
@@ -153,7 +158,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 		if (getConfig().isSingleThreaded()) {
 			UJMPSettings.setNumberOfThreads(1);
-			// ConcurrentUtils.AVAILABLE_PROCESSORS = 1;
+			ProcessorCount.RUNTIME = 1;
 			ConcurrencyUtils.setNumberOfThreads(1);
 		}
 

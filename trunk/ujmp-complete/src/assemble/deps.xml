@@ -29,6 +29,7 @@
 				<include>commons-lang:commons-lang</include>
 				<include>jama:jama</include>
 				<include>jampack:jampack</include>
+				<include>jblas:jblas</include>
 				<include>mysql-connector-java:mysql-connector-java</include>
 				<include>postgresql:postgresql</include>
 				<include>derby:derby</include>

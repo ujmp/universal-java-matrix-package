@@ -44,7 +44,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public JSciDenseDoubleMatrix2D(Matrix source) throws MatrixException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
-			setAsDouble(source.getAsDouble(c), c);
+			setDouble(source.getAsDouble(c), c);
 		}
 	}
 

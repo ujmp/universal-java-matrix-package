@@ -1210,6 +1210,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 			// only symmetric matrices
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
+			// only symmetric matrices
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
@@ -1230,6 +1234,10 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			// only symmetric matrices
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			// only symmetric matrices
 			return;
 		}
@@ -1396,6 +1404,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(2, 4);
@@ -1415,6 +1426,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix a = createMatrix(160, 120);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			return;
 		}
 
@@ -1734,6 +1748,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
+			return;
+		}
 		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
 			return;
 		}
@@ -1811,6 +1828,9 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {

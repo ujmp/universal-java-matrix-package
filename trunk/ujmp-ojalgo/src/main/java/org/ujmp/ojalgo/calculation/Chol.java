@@ -47,7 +47,7 @@ public class Chol
 						.getWrappedObject();
 			}
 			chol.compute(matrix);
-			return new OjalgoDenseDoubleMatrix2D(chol.getR().transpose());
+			return new OjalgoDenseDoubleMatrix2D(chol.getL());
 		} catch (Throwable t) {
 			return org.ujmp.core.doublematrix.calculation.general.decomposition.Chol.UJMP
 					.calc(source);

@@ -58,6 +58,10 @@
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>../ujmp-jblas/src/main/java</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>../ujmp-jdbc/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>

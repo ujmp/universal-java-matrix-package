@@ -21,9 +21,24 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.interfaces;
+package org.ujmp.core.implementations;
 
-public interface HasByteArray {
+import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
+import org.ujmp.core.exceptions.MatrixException;
 
-	public byte[] getByteArray();
+public class TestDefaultDenseDoubleMatrixMultiD extends AbstractMatrixTest {
+
+	public Matrix createMatrix(long... size) throws MatrixException {
+		return new DefaultDenseDoubleMatrixMultiD(size);
+	}
+
+	public Matrix createMatrix(Matrix source) throws MatrixException {
+		return new DefaultDenseDoubleMatrixMultiD(source);
+	}
+
+	public boolean isTestLarge() {
+		return false;
+	}
+
 }

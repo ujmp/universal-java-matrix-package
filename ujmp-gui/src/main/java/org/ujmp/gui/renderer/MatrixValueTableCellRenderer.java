@@ -33,7 +33,6 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
@@ -57,7 +56,7 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		Color c = ColorUtil.fromObject(value);
 
 		try {
-			setToolTipText(TooltipUtil.getTooltip(m.getMatrix(), row, column));
+			setToolTipText(TooltipUtil.getTooltip(m, row, column));
 		} catch (ConcurrentModificationException e) {
 			// not too bad
 		}

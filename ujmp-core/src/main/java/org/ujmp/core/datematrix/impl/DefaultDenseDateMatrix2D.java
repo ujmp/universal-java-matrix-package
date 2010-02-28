@@ -28,9 +28,9 @@ import java.util.Date;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasDateArray;
+import org.ujmp.core.interfaces.HasColumnMajorDateArray1D;
 
-public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implements HasDateArray {
+public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implements HasColumnMajorDateArray1D {
 	private static final long serialVersionUID = -3145074963888564555L;
 
 	private Date[] values = null;
@@ -124,7 +124,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 	}
 
 	
-	public Date[] getDateArray() {
+	public Date[] getColumnMajorDateArray1D() {
 		return values;
 	}
 

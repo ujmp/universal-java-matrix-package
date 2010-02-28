@@ -27,8 +27,8 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
@@ -99,13 +99,13 @@ public interface Transpose<T> {
 	public static Transpose<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Transpose<DenseDoubleMatrix2D>() {
 
 		public void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
-			if (source instanceof HasDoubleArray2D && target instanceof HasDoubleArray2D) {
-				calc(((HasDoubleArray2D) source).getDoubleArray2D(), ((HasDoubleArray2D) target)
-						.getDoubleArray2D());
-			} else if (source instanceof HasDoubleArray && target instanceof HasDoubleArray) {
+			if (source instanceof HasColumnMajorDoubleArray1D && target instanceof HasColumnMajorDoubleArray1D) {
 				calc((int) source.getRowCount(), (int) source.getColumnCount(),
-						((HasDoubleArray) source).getDoubleArray(), ((HasDoubleArray) target)
-								.getDoubleArray());
+						((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) target)
+								.getColumnMajorDoubleArray1D());
+			} else if (source instanceof HasRowMajorDoubleArray2D && target instanceof HasRowMajorDoubleArray2D) {
+				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
+						.getRowMajorDoubleArray2D());
 			} else {
 				for (int r = (int) source.getRowCount(); --r != -1;) {
 					for (int c = (int) source.getColumnCount(); --c != -1;) {

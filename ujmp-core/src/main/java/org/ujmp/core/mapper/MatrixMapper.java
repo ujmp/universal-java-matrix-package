@@ -65,6 +65,7 @@ import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
 import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix;
 import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -257,7 +258,7 @@ public class MatrixMapper implements ClassMapper {
 			setSparseDateMatrixMultiDClassName(DefaultSparseDateMatrix.class.getName());
 
 			setDenseDoubleMatrix2DClassName(DefaultDenseDoubleMatrix2D.class.getName());
-			setDenseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
+			setDenseDoubleMatrixMultiDClassName(DefaultDenseDoubleMatrixMultiD.class.getName());
 			setSparseDoubleMatrix2DClassName(DefaultSparseDoubleMatrix.class.getName());
 			setSparseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
 

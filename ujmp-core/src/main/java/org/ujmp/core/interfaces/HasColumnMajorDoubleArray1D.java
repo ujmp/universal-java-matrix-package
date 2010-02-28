@@ -23,7 +23,7 @@
 
 package org.ujmp.core.interfaces;
 
-public interface HasCharArray {
+public interface HasColumnMajorDoubleArray1D {
 
-	public char[] getCharArray();
+	public double[] getColumnMajorDoubleArray1D();
 }

@@ -245,9 +245,14 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		return (int) matrix.getColumnCount();
 	}
 
+	// works only for 2D
 	public String getColumnName(int columnIndex) {
-		String label = matrix.getColumnLabel(columnIndex);
-		return label == null || "".equals(label) ? "" + columnIndex : label;
+		if (matrix.getDimensionCount() == 2) {
+			String label = matrix.getColumnLabel(columnIndex);
+			return label == null || "".equals(label) ? "" + columnIndex : label;
+		} else {
+			return "";
+		}
 	}
 
 	public int getRowCount() {
@@ -287,9 +292,14 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		return matrix.allCoordinates();
 	}
 
+	// works only for 2D
 	public final String getRowName(int row) {
-		String label = matrix.getRowLabel(row);
-		return label == null || "".equals(label) ? "" + row : label;
+		if (matrix.getDimensionCount() == 2) {
+			String label = matrix.getRowLabel(row);
+			return label == null || "".equals(label) ? "" + row : label;
+		} else {
+			return "";
+		}
 	}
 
 	public int getZCount() {

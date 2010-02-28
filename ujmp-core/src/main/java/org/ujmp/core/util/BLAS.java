@@ -73,8 +73,8 @@ public abstract class BLAS {
 		final int arows = (int) A.getRowCount();
 		final int bcols = (int) B.getColumnCount();
 		final int brows = (int) B.getRowCount();
-		final double[] avalues = A.getDoubleArray();
-		final double[] bvalues = B.getDoubleArray();
+		final double[] avalues = A.getColumnMajorDoubleArray1D();
+		final double[] bvalues = B.getColumnMajorDoubleArray1D();
 		final double[] cvalues = new double[arows * bcols];
 		BLAS.dgemm(arows, bcols, acols, alpha, avalues, 0, arows, bvalues, 0, brows, beta, cvalues,
 				0, arows);

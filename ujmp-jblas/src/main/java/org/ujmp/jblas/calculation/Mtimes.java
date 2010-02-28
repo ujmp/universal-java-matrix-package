@@ -26,7 +26,7 @@ package org.ujmp.jblas.calculation;
 import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.interfaces.HasDoubleArray;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
 public class Mtimes implements
@@ -37,19 +37,19 @@ public class Mtimes implements
 		DoubleMatrix m2 = null;
 		if (source1 instanceof JBlasDenseDoubleMatrix2D) {
 			m1 = ((JBlasDenseDoubleMatrix2D) source1).getWrappedObject();
-		} else if (source1 instanceof HasDoubleArray) {
+		} else if (source1 instanceof HasColumnMajorDoubleArray1D) {
 			m1 = new JBlasDenseDoubleMatrix2D(source1.getRowCount(), source1
-					.getColumnCount(), ((HasDoubleArray) source1)
-					.getDoubleArray()).getWrappedObject();
+					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source1)
+					.getColumnMajorDoubleArray1D()).getWrappedObject();
 		} else {
 			m1 = new JBlasDenseDoubleMatrix2D(source1).getWrappedObject();
 		}
 		if (source2 instanceof JBlasDenseDoubleMatrix2D) {
 			m2 = ((JBlasDenseDoubleMatrix2D) source2).getWrappedObject();
-		} else if (source2 instanceof HasDoubleArray) {
+		} else if (source2 instanceof HasColumnMajorDoubleArray1D) {
 			m2 = new JBlasDenseDoubleMatrix2D(source2.getRowCount(), source2
-					.getColumnCount(), ((HasDoubleArray) source2)
-					.getDoubleArray()).getWrappedObject();
+					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source2)
+					.getColumnMajorDoubleArray1D()).getWrappedObject();
 		} else {
 			m2 = new JBlasDenseDoubleMatrix2D(source2).getWrappedObject();
 		}
@@ -57,10 +57,10 @@ public class Mtimes implements
 			DoubleMatrix t = ((JBlasDenseDoubleMatrix2D) target)
 					.getWrappedObject();
 			m1.mmuli(m2, t);
-		} else if (target instanceof HasDoubleArray) {
+		} else if (target instanceof HasColumnMajorDoubleArray1D) {
 			DoubleMatrix t = new DoubleMatrix((int) target.getRowCount(),
-					(int) target.getColumnCount(), ((HasDoubleArray) target)
-							.getDoubleArray());
+					(int) target.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
+							.getColumnMajorDoubleArray1D());
 			m1.mmuli(m2, t);
 		} else if (target instanceof DenseDoubleMatrix2D) {
 			DenseDoubleMatrix2D t = (DenseDoubleMatrix2D) target;

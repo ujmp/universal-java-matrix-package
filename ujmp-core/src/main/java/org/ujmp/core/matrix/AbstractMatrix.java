@@ -152,8 +152,8 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
@@ -625,15 +625,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		final int rows = (int) getRowCount();
 		final int columns = (int) getColumnCount();
 		final double[][] values = new double[rows][columns];
-		if (this instanceof HasDoubleArray) {
-			final double[] m = ((HasDoubleArray) this).getDoubleArray();
+		if (this instanceof HasColumnMajorDoubleArray1D) {
+			final double[] m = ((HasColumnMajorDoubleArray1D) this).getColumnMajorDoubleArray1D();
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < columns; c++) {
 					values[r][c] = m[c * rows + r];
 				}
 			}
-		} else if (this instanceof HasDoubleArray2D) {
-			final double[][] m = ((HasDoubleArray2D) this).getDoubleArray2D();
+		} else if (this instanceof HasRowMajorDoubleArray2D) {
+			final double[][] m = ((HasRowMajorDoubleArray2D) this).getRowMajorDoubleArray2D();
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < columns; c++) {
 					values[r][c] = m[r][c];

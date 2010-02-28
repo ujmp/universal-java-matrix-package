@@ -23,7 +23,7 @@
 
 package org.ujmp.core.interfaces;
 
-public interface HasDoubleArray2D {
+public interface HasRowMajorDoubleArray2D {
 
-	public double[][] getDoubleArray2D();
+	public double[][] getRowMajorDoubleArray2D();
 }

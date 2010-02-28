@@ -26,10 +26,10 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 
 public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
-		HasDoubleArray2D {
+		HasRowMajorDoubleArray2D {
 	private static final long serialVersionUID = 3132491298449205914L;
 
 	private double[][] values = null;
@@ -119,7 +119,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return false;
 	}
 
-	public double[][] getDoubleArray2D() {
+	public double[][] getRowMajorDoubleArray2D() {
 		return values;
 	}
 

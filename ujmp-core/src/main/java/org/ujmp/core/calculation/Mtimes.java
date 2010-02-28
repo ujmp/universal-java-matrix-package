@@ -27,8 +27,8 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.Ops;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
@@ -319,24 +319,27 @@ public interface Mtimes<S, T, U> {
 
 		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 				final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasDoubleArray && source2 instanceof HasDoubleArray
-					&& target instanceof HasDoubleArray) {
+			if (source1 instanceof HasColumnMajorDoubleArray1D
+					&& source2 instanceof HasColumnMajorDoubleArray1D
+					&& target instanceof HasColumnMajorDoubleArray1D) {
 				if (Ops.MTIMES_JBLAS != null && target.getRowCount() >= THRESHOLD
 						&& target.getColumnCount() >= THRESHOLD) {
 					Ops.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
 							(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
 				} else {
-					gemmDoubleArrayParallel(1.0, ((HasDoubleArray) source1).getDoubleArray(),
-							(int) source1.getRowCount(), (int) source1.getColumnCount(), 1.0,
-							((HasDoubleArray) source2).getDoubleArray(), (int) source2
-									.getRowCount(), (int) source2.getColumnCount(),
-							((HasDoubleArray) target).getDoubleArray());
+					gemmDoubleArrayParallel(1.0, ((HasColumnMajorDoubleArray1D) source1)
+							.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(),
+							(int) source1.getColumnCount(), 1.0,
+							((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
+							(int) source2.getRowCount(), (int) source2.getColumnCount(),
+							((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 				}
-			} else if (source1 instanceof HasDoubleArray2D && source2 instanceof HasDoubleArray2D
-					&& target instanceof HasDoubleArray2D) {
-				calcDoubleArray2D(((HasDoubleArray2D) source1).getDoubleArray2D(),
-						((HasDoubleArray2D) source2).getDoubleArray2D(),
-						((HasDoubleArray2D) target).getDoubleArray2D());
+			} else if (source1 instanceof HasRowMajorDoubleArray2D
+					&& source2 instanceof HasRowMajorDoubleArray2D
+					&& target instanceof HasRowMajorDoubleArray2D) {
+				calcDoubleArray2D(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 			} else {
 				gemmDenseDoubleMatrix2D(1.0, source1, 1.0, source2, target);
 			}

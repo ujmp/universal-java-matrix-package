@@ -23,9 +23,7 @@
 
 package org.ujmp.core.interfaces;
 
-import java.util.Date;
+public interface HasColumnMajorByteArray1D {
 
-public interface HasDateArray {
-
-	public Date[] getDateArray();
+	public byte[] getColumnMajorByteArray1D();
 }

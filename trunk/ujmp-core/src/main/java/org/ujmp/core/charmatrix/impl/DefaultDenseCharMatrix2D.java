@@ -27,9 +27,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasCharArray;
+import org.ujmp.core.interfaces.HasColumnMajorCharArray1D;
 
-public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implements HasCharArray {
+public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implements HasColumnMajorCharArray1D {
 	private static final long serialVersionUID = 5579846181111172177L;
 
 	private char[] values = null;
@@ -159,7 +159,7 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 	}
 
 	
-	public char[] getCharArray() {
+	public char[] getColumnMajorCharArray1D() {
 		return values;
 	}
 

@@ -18,7 +18,9 @@ import org.ujmp.core.bigdecimalmatrix.impl.DefaultSparseBigDecimalMatrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
+import org.ujmp.core.doublematrix.impl.MortonDenseDoubleMartrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultSparseFloatMatrix;
@@ -51,6 +53,8 @@ public class TestCompareMatrices extends TestCase {
 		ALLFLOATMATRIXCLASSES = new ArrayList<Class<? extends Matrix>>();
 		ALLFLOATMATRIXCLASSES.add(DefaultDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ArrayDenseDoubleMatrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(MortonDenseDoubleMartrix2D.class);
+		ALLFLOATMATRIXCLASSES.add(DefaultDenseDoubleMatrixMultiD.class);
 		ALLFLOATMATRIXCLASSES.add(DefaultSparseDoubleMatrix.class);
 		ALLFLOATMATRIXCLASSES.add(DefaultDenseBigDecimalMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ArrayDenseBigDecimalMatrix2D.class);

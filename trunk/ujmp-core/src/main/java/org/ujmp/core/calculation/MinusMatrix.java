@@ -27,8 +27,8 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
@@ -124,14 +124,14 @@ public interface MinusMatrix<T> {
 
 		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 				final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasDoubleArray2D && source2 instanceof HasDoubleArray2D
-					&& target instanceof HasDoubleArray2D) {
-				calc(((HasDoubleArray2D) source1).getDoubleArray2D(), ((HasDoubleArray2D) source2)
-						.getDoubleArray2D(), ((HasDoubleArray2D) target).getDoubleArray2D());
-			} else if (source1 instanceof HasDoubleArray && source2 instanceof HasDoubleArray
-					&& target instanceof HasDoubleArray) {
-				calc(((HasDoubleArray) source1).getDoubleArray(), ((HasDoubleArray) source2)
-						.getDoubleArray(), ((HasDoubleArray) target).getDoubleArray());
+			if (source1 instanceof HasRowMajorDoubleArray2D && source2 instanceof HasRowMajorDoubleArray2D
+					&& target instanceof HasRowMajorDoubleArray2D) {
+				calc(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
+						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+			} else if (source1 instanceof HasColumnMajorDoubleArray1D && source2 instanceof HasColumnMajorDoubleArray1D
+					&& target instanceof HasColumnMajorDoubleArray1D) {
+				calc(((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) source2)
+						.getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 			} else {
 				for (int r = (int) source1.getRowCount(); --r != -1;) {
 					for (int c = (int) source1.getColumnCount(); --c != -1;) {

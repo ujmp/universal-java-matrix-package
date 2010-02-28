@@ -27,8 +27,8 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.interfaces.HasDoubleArray;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
@@ -143,12 +143,12 @@ public interface TimesScalar<T> {
 
 		public void calc(final DenseDoubleMatrix2D source, final double factor,
 				final DenseDoubleMatrix2D target) {
-			if (source instanceof HasDoubleArray2D && target instanceof HasDoubleArray2D) {
-				calc(((HasDoubleArray2D) source).getDoubleArray2D(), factor,
-						((HasDoubleArray2D) target).getDoubleArray2D());
-			} else if (source instanceof HasDoubleArray && target instanceof HasDoubleArray) {
-				calc(((HasDoubleArray) source).getDoubleArray(), factor, ((HasDoubleArray) target)
-						.getDoubleArray());
+			if (source instanceof HasRowMajorDoubleArray2D && target instanceof HasRowMajorDoubleArray2D) {
+				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), factor,
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+			} else if (source instanceof HasColumnMajorDoubleArray1D && target instanceof HasColumnMajorDoubleArray1D) {
+				calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), factor, ((HasColumnMajorDoubleArray1D) target)
+						.getColumnMajorDoubleArray1D());
 			} else {
 				for (int r = (int) source.getRowCount(); --r != -1;) {
 					for (int c = (int) source.getColumnCount(); --c != -1;) {

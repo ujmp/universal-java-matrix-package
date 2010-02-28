@@ -30,7 +30,7 @@ import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasDoubleArray2D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.util.UJMPSettings;
 
 /**
@@ -1012,7 +1012,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	public DenseDoubleMatrix2D calcNew() throws MatrixException {
 		Matrix source = getSource();
 		ArrayDenseDoubleMatrix2D matrix = new ArrayDenseDoubleMatrix2D(source);
-		return inverse(matrix.getDoubleArray2D());
+		return inverse(matrix.getRowMajorDoubleArray2D());
 	}
 
 	public DenseDoubleMatrix2D calcOrig() throws MatrixException {
@@ -1021,8 +1021,8 @@ public class Ginv extends AbstractDoubleCalculation {
 			throw new MatrixException("ORIG only possible for square matrices");
 		}
 
-		if (source instanceof HasDoubleArray2D) {
-			return inverse(((HasDoubleArray2D) source).getDoubleArray2D());
+		if (source instanceof HasRowMajorDoubleArray2D) {
+			return inverse(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D());
 		} else if (source instanceof DenseDoubleMatrix2D) {
 			return inverse((DenseDoubleMatrix2D) source);
 		} else {

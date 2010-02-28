@@ -31,6 +31,8 @@ public class AllTests extends TestSuite {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		suite.addTestSuite(TestDenseFileMatrix2D.class);
 		suite.addTestSuite(TestDefaultDenseDoubleMatrix2D.class);
+		suite.addTestSuite(TestMortonDenseDoubleMatrix2D.class);
+		suite.addTestSuite(TestDefaultDenseDoubleMatrixMultiD.class);
 		suite.addTestSuite(TestArrayDenseDoubleMatrix2D.class);
 		suite.addTestSuite(TestDefaultDenseObjectMatrix2D.class);
 		suite.addTestSuite(TestDefaultDenseStringMatrix2D.class);

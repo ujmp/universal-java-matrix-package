@@ -27,9 +27,9 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasByteArray;
+import org.ujmp.core.interfaces.HasColumnMajorByteArray1D;
 
-public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements HasByteArray {
+public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements HasColumnMajorByteArray1D {
 	private static final long serialVersionUID = -7637602510970244322L;
 
 	private byte[] values = null;
@@ -159,7 +159,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 	}
 
 	
-	public byte[] getByteArray() {
+	public byte[] getColumnMajorByteArray1D() {
 		return values;
 	}
 

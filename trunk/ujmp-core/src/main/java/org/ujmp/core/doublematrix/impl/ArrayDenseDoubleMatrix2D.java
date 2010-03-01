@@ -59,6 +59,10 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		values = new double[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
+	public ArrayDenseDoubleMatrix2D(long rows, long cols) {
+		values = new double[(int) rows][(int) cols];
+	}
+
 	public ArrayDenseDoubleMatrix2D(double[] v) {
 		this.values = new double[v.length][1];
 		for (int r = v.length; --r != -1;) {

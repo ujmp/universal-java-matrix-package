@@ -27,10 +27,10 @@ import java.io.Serializable;
 
 import org.ujmp.core.exceptions.MatrixException;
 
-public interface Matrix2DFactory extends Serializable {
+public interface MatrixMultiDFactory extends Serializable {
 
-	public DenseMatrix2D dense(long rows, long columns) throws MatrixException;
+	public DenseMatrix dense(long... size) throws MatrixException;
 
-	public SparseMatrix sparse(long rows, long columns) throws MatrixException;
+	public DenseMatrix zeros(long... size) throws MatrixException;
 
 }

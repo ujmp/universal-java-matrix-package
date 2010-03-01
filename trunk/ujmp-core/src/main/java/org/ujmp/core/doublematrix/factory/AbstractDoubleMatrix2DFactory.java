@@ -23,15 +23,14 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix;
+import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 
 public abstract class AbstractDoubleMatrix2DFactory implements DoubleMatrix2DFactory {
 	private static final long serialVersionUID = -5687600829342008537L;
 
-	
-	public DenseDoubleMatrix2D zeros(long rows, long columns) throws MatrixException {
-		return dense(rows, columns);
+	// this should return a 2d sparse implementation
+	public final SparseDoubleMatrix sparse(long rows, long columns) {
+		return new DefaultSparseDoubleMatrix(rows, columns);
 	}
-
 }

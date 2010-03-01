@@ -23,10 +23,14 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrixMultiDFactory;
+import org.ujmp.core.doublematrix.factory.DoubleMatrixMultiDFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface DoubleMatrix extends GenericMatrix<Double> {
+
+	public static DoubleMatrixMultiDFactory Factory = new DefaultDoubleMatrixMultiDFactory();
 
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored

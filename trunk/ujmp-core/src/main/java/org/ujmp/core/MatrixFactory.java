@@ -41,10 +41,11 @@ import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Pascal;
@@ -420,6 +421,10 @@ public abstract class MatrixFactory {
 	}
 
 	public static Matrix dense(ValueType valueType, long... size) throws MatrixException {
+		if (ValueType.DOUBLE.equals(valueType)) {
+			return dense(size);
+		}
+
 		try {
 			Constructor<?> con = null;
 
@@ -441,9 +446,6 @@ public abstract class MatrixFactory {
 					break;
 				case DATE:
 					con = matrixMapper.getDenseDateMatrix2DConstructor();
-					break;
-				case DOUBLE:
-					con = matrixMapper.getDenseDoubleMatrix2DConstructor();
 					break;
 				case FLOAT:
 					con = matrixMapper.getDenseFloatMatrix2DConstructor();
@@ -486,9 +488,6 @@ public abstract class MatrixFactory {
 					break;
 				case DATE:
 					con = matrixMapper.getDenseDateMatrixMultiDConstructor();
-					break;
-				case DOUBLE:
-					con = matrixMapper.getDenseDoubleMatrixMultiDConstructor();
 					break;
 				case FLOAT:
 					con = matrixMapper.getDenseFloatMatrixMultiDConstructor();
@@ -761,26 +760,12 @@ public abstract class MatrixFactory {
 	}
 
 	public static Matrix dense(long... size) throws MatrixException {
-		try {
-			Constructor<?> con = null;
-
-			switch (size.length) {
-			case 0:
-				throw new MatrixException("Size not defined");
-			case 1:
-				throw new MatrixException("Size must be at least 2-dimensional");
-			case 2:
-				con = matrixMapper.getDenseDoubleMatrix2DConstructor();
-				break;
-			default:
-				con = matrixMapper.getDenseDoubleMatrixMultiDConstructor();
-			}
-
-			return (Matrix) con.newInstance(size);
-
-		} catch (Exception e) {
-			throw new MatrixException("could not create matrix with size ["
-					+ Coordinates.toString(size).replaceAll(",", "x") + "]", e);
+		if (size.length == 2) {
+			return DoubleMatrix2D.Factory.dense(size[ROW], size[COLUMN]);
+		} else if (size.length > 2) {
+			return DoubleMatrix.Factory.dense(size);
+		} else {
+			throw new MatrixException("Size must be at least 2-dimensional");
 		}
 	}
 

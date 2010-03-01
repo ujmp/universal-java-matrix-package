@@ -701,7 +701,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), EIG, OWLPACK);
 		setAsString(no(), CHOL, OWLPACK);
 
-		setAsString(small("0.9.2"), VERSION, PARALLELCOLT);
+		setAsString(small("0.9.3"), VERSION, PARALLELCOLT);
 		setAsString(small("2010"), DATE, PARALLELCOLT);
 		setAsString(small("BSD"), LICENCE, PARALLELCOLT);
 		setAsString(yes(), JAVA14, PARALLELCOLT);

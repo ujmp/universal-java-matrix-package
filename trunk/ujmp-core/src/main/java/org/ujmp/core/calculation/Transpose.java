@@ -42,7 +42,12 @@ public interface Transpose<T> {
 			if (source == target) {
 				throw new MatrixException("cannot transpose into original matrix");
 			}
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+				Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
+						(DenseDoubleMatrix2D) target);
+			} else if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+				Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
+			} else if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
 				Transpose.DENSEMATRIX.calc((DenseMatrix) source, (DenseMatrix) target);
 			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 				Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
@@ -99,13 +104,15 @@ public interface Transpose<T> {
 	public static Transpose<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Transpose<DenseDoubleMatrix2D>() {
 
 		public void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
-			if (source instanceof HasColumnMajorDoubleArray1D && target instanceof HasColumnMajorDoubleArray1D) {
+			if (source instanceof HasColumnMajorDoubleArray1D
+					&& target instanceof HasColumnMajorDoubleArray1D) {
 				calc((int) source.getRowCount(), (int) source.getColumnCount(),
-						((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) target)
-								.getColumnMajorDoubleArray1D());
-			} else if (source instanceof HasRowMajorDoubleArray2D && target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
-						.getRowMajorDoubleArray2D());
+						((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(),
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+			} else if (source instanceof HasRowMajorDoubleArray2D
+					&& target instanceof HasRowMajorDoubleArray2D) {
+				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 			} else {
 				for (int r = (int) source.getRowCount(); --r != -1;) {
 					for (int c = (int) source.getColumnCount(); --c != -1;) {

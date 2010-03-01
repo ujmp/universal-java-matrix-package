@@ -41,7 +41,15 @@ public interface PlusMatrix<T> {
 	public static PlusMatrix<Matrix> INSTANCE = new PlusMatrix<Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
-			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
+			if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
+					&& target instanceof DenseDoubleMatrix2D) {
+				PlusMatrix.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
+						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
+			} else if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
+					&& target instanceof DenseMatrix2D) {
+				PlusMatrix.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
+						(DenseMatrix2D) target);
+			} else if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
 					&& target instanceof DenseMatrix) {
 				PlusMatrix.DENSEMATRIX.calc((DenseMatrix) source1, (DenseMatrix) source2,
 						(DenseMatrix) target);
@@ -124,14 +132,18 @@ public interface PlusMatrix<T> {
 
 		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 				final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasRowMajorDoubleArray2D && source2 instanceof HasRowMajorDoubleArray2D
+			if (source1 instanceof HasRowMajorDoubleArray2D
+					&& source2 instanceof HasRowMajorDoubleArray2D
 					&& target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else if (source1 instanceof HasColumnMajorDoubleArray1D && source2 instanceof HasColumnMajorDoubleArray1D
+				calc(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+			} else if (source1 instanceof HasColumnMajorDoubleArray1D
+					&& source2 instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calc(((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) source2)
-						.getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+				calc(((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(),
+						((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 			} else {
 				for (int r = (int) source1.getRowCount(); --r != -1;) {
 					for (int c = (int) source1.getColumnCount(); --c != -1;) {

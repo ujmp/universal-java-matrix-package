@@ -23,11 +23,63 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.DivideMatrix;
+import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.MinusMatrix;
+import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.Mtimes;
+import org.ujmp.core.calculation.PlusMatrix;
+import org.ujmp.core.calculation.PlusScalar;
+import org.ujmp.core.calculation.TimesMatrix;
+import org.ujmp.core.calculation.TimesScalar;
+import org.ujmp.core.calculation.Transpose;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DoubleMatrix2DFactory;
 import org.ujmp.core.matrix.DenseMatrix2D;
 
 public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D {
 
-	public static DoubleMatrix2DFactory Factory = new DefaultDoubleMatrix2DFactory();
+	public static DoubleMatrix2DFactory factory = new DefaultDoubleMatrix2DFactory();
+
+	public static Transpose<DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
+
+	public static PlusMatrix<DenseDoubleMatrix2D> plusMatrix = PlusMatrix.DENSEDOUBLEMATRIX2D;
+
+	public static MinusMatrix<DenseDoubleMatrix2D> minusMatrix = MinusMatrix.DENSEDOUBLEMATRIX2D;
+
+	public static TimesMatrix<DenseDoubleMatrix2D> timesMatrix = TimesMatrix.DENSEDOUBLEMATRIX2D;
+
+	public static DivideMatrix<DenseDoubleMatrix2D> divideMatrix = DivideMatrix.DENSEDOUBLEMATRIX2D;
+
+	public static PlusScalar<DenseDoubleMatrix2D> plusScalar = PlusScalar.DENSEDOUBLEMATRIX2D;
+
+	public static MinusScalar<DenseDoubleMatrix2D> minusScalar = MinusScalar.DENSEDOUBLEMATRIX2D;
+
+	public static TimesScalar<DenseDoubleMatrix2D> timesScalar = TimesScalar.DENSEDOUBLEMATRIX2D;
+
+	public static DivideScalar<DenseDoubleMatrix2D> divideScalar = DivideScalar.DENSEDOUBLEMATRIX2D;
+
+	public static Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> mtimes = Mtimes.DENSEDOUBLEMATRIX2D;
+
+	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
+
+	public static LU<Matrix> lu = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
+
+	public static QR<Matrix> qr = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
+
+	public static Inv<Matrix> inv = Inv.INSTANCE;
+
+	public static Solve<Matrix> solve = Solve.INSTANCE;
+
+	public static Chol<Matrix> chol = Chol.INSTANCE;
+
+	public static Eig<Matrix> eig = Eig.INSTANCE;
 }

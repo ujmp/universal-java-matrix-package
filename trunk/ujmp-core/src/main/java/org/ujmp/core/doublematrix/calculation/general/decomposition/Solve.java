@@ -33,9 +33,9 @@ public interface Solve<T> {
 
 	public T calc(T a, T b);
 
-	public static Solve<Matrix> MATRIX = new Solve<Matrix>() {
+	public static final Solve<Matrix> MATRIX = new Solve<Matrix>() {
 
-		public Matrix calc(Matrix a, Matrix b) {
+		public final Matrix calc(Matrix a, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (a.getRowCount() >= THRESHOLD && a.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(a, b);
@@ -52,19 +52,19 @@ public interface Solve<T> {
 		}
 	};
 
-	public static Solve<Matrix> INSTANCE = MATRIX;
+	public static final Solve<Matrix> INSTANCE = MATRIX;
 
-	public static Solve<Matrix> UJMP = new Solve<Matrix>() {
+	public static final Solve<Matrix> UJMP = new Solve<Matrix>() {
 
-		public Matrix calc(Matrix a, Matrix b) {
+		public final Matrix calc(Matrix a, Matrix b) {
 			return a.isSquare() ? LU.INSTANCE.solve(a, b) : QR.INSTANCE.solve(a, b);
 		}
 	};
 
-	public static Solve<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final Solve<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static Solve<Matrix> MATRIXLARGESINGLETHREADED = new Solve<Matrix>() {
-		public Matrix calc(Matrix a, Matrix b) {
+	public static final Solve<Matrix> MATRIXLARGESINGLETHREADED = new Solve<Matrix>() {
+		public final Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = DecompositionOps.SOLVE_OJALGO;
 			if (solve == null) {
 				solve = DecompositionOps.SOLVE_OJALGO;
@@ -82,7 +82,7 @@ public interface Solve<T> {
 		}
 	};
 
-	public static Solve<Matrix> MATRIXLARGEMULTITHREADED = new Solve<Matrix>() {
+	public static final Solve<Matrix> MATRIXLARGEMULTITHREADED = new Solve<Matrix>() {
 		public Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = DecompositionOps.SOLVE_OJALGO;
 			if (solve == null) {
@@ -98,5 +98,5 @@ public interface Solve<T> {
 		}
 	};
 
-	public static Solve<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final Solve<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 }

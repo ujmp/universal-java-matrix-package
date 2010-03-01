@@ -36,9 +36,9 @@ public interface Inv<T> {
 
 	public T calc(T source);
 
-	public static Inv<Matrix> MATRIX = new Inv<Matrix>() {
+	public static final Inv<Matrix> MATRIX = new Inv<Matrix>() {
 
-		public Matrix calc(Matrix source) {
+		public final Matrix calc(Matrix source) {
 			if (source.getDimensionCount() != 2 || source.getRowCount() != source.getColumnCount()) {
 				throw new MatrixException(
 						"inverse only possible for square matrices. use pinv or ginv instead");
@@ -59,9 +59,9 @@ public interface Inv<T> {
 		}
 	};
 
-	public Inv<Matrix> UJMP = new Inv<Matrix>() {
-		public Matrix calc(Matrix source) {
-			DenseDoubleMatrix2D b = DoubleMatrix2D.Factory.dense(source.getRowCount(), source
+	public final Inv<Matrix> UJMP = new Inv<Matrix>() {
+		public final Matrix calc(Matrix source) {
+			DenseDoubleMatrix2D b = DoubleMatrix2D.factory.dense(source.getRowCount(), source
 					.getRowCount());
 			for (int i = (int) source.getRowCount(); --i >= 0;) {
 				b.setDouble(1.0, i, i);
@@ -70,12 +70,12 @@ public interface Inv<T> {
 		}
 	};
 
-	public Inv<Matrix> INSTANCE = MATRIX;
+	public final Inv<Matrix> INSTANCE = MATRIX;
 
-	public static Inv<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final Inv<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
-		public Matrix calc(Matrix source) {
+	public static final Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
+		public final Matrix calc(Matrix source) {
 			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
 			if (inv == null) {
 				inv = DecompositionOps.INV_EJML;
@@ -93,7 +93,7 @@ public interface Inv<T> {
 		}
 	};
 
-	public static Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
+	public static final Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
 			if (inv == null) {
@@ -112,6 +112,6 @@ public interface Inv<T> {
 		}
 	};
 
-	public static Inv<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final Inv<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
 }

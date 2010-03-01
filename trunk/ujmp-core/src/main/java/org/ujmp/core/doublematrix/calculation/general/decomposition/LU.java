@@ -29,9 +29,9 @@ public interface LU<T> {
 
 	public static int THRESHOLD = 700;
 
-	public static LU<Matrix> MATRIX = new LU<Matrix>() {
+	public static final LU<Matrix> MATRIX = new LU<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
@@ -47,7 +47,7 @@ public interface LU<T> {
 			}
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
@@ -64,29 +64,29 @@ public interface LU<T> {
 		}
 	};
 
-	public static LU<Matrix> INSTANCE = MATRIX;
+	public static final LU<Matrix> INSTANCE = MATRIX;
 
-	public static LU<Matrix> UJMP = new LU<Matrix>() {
+	public static final LU<Matrix> UJMP = new LU<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			LUMatrix lu = new LUMatrix(source);
 			return new Matrix[] { lu.getL(), lu.getU(), lu.getP() };
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			LUMatrix lu = new LUMatrix(source);
 			return lu.solve(b);
 		}
 	};
 
-	public static LU<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final LU<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
-	public static LU<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final LU<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static LU<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
+	public static final LU<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
 
-	public static LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
-		public Matrix[] calc(Matrix source) {
+	public static final LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
+		public final Matrix[] calc(Matrix source) {
 			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
 			if (lu == null) {
 				lu = UJMP;
@@ -94,7 +94,7 @@ public interface LU<T> {
 			return lu.calc(source);
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
 			if (lu == null) {
 				lu = UJMP;
@@ -104,11 +104,6 @@ public interface LU<T> {
 	};
 
 	public class LUMatrix {
-
-		/*
-		 * ------------------------ Class variables ------------------------
-		 */
-
 		/**
 		 * Array for internal storage of decomposition.
 		 * 
@@ -321,7 +316,7 @@ public interface LU<T> {
 		}
 
 		public Matrix getP() {
-			DenseDoubleMatrix2D p = DoubleMatrix2D.Factory.dense(m, m);
+			DenseDoubleMatrix2D p = DoubleMatrix2D.factory.dense(m, m);
 			for (int i = 0; i < m; i++) {
 				p.setDouble(1, i, piv[i]);
 			}

@@ -43,7 +43,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix implements
 		DenseDoubleMatrix2D {
 
-	public static DoubleMatrix2DFactory Factory = DoubleMatrix2D.Factory;
+	public static DoubleMatrix2DFactory factory = DoubleMatrix2D.factory;
 
 	private static final long serialVersionUID = 4518790844453035022L;
 
@@ -93,7 +93,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), m2.getColumnCount());
+			final DenseDoubleMatrix2D result = factory.dense(getRowCount(), m2.getColumnCount());
 			Mtimes.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
@@ -103,7 +103,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public Matrix times(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+			final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 			TimesMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
@@ -113,7 +113,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public Matrix divide(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+			final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 			DivideMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
@@ -123,7 +123,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public Matrix plus(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+			final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 			PlusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
@@ -133,7 +133,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public Matrix minus(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+			final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 			MinusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
@@ -142,31 +142,31 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 	}
 
 	public Matrix minus(double v) {
-		final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+		final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 		MinusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix plus(double v) {
-		final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+		final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 		PlusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix times(double v) {
-		final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+		final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 		TimesScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix divide(double v) {
-		final DenseDoubleMatrix2D result = Factory.dense(getRowCount(), getColumnCount());
+		final DenseDoubleMatrix2D result = factory.dense(getRowCount(), getColumnCount());
 		DivideScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix transpose() {
-		final DenseDoubleMatrix2D result = Factory.dense(getColumnCount(), getRowCount());
+		final DenseDoubleMatrix2D result = factory.dense(getColumnCount(), getRowCount());
 		Transpose.DENSEDOUBLEMATRIX2D.calc(this, result);
 		return result;
 	}

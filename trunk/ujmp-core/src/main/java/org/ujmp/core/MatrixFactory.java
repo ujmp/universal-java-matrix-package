@@ -44,8 +44,6 @@ import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrix;
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Pascal;
@@ -98,8 +96,9 @@ import org.ujmp.core.util.matrices.MatrixSystemTime;
 
 /**
  * This class provides a factory for matrix generation. Use
- * <code>dense(rows, columns)</code> or <code>sparse(rows, columns)</code> to
- * create empty matrices.
+ * <code>Matrix.factory.dense(rows, columns)</code> or
+ * <code>Matrix.factory.sparse(rows, columns)</code> to create empty matrices.
+ * 
  * 
  * 
  * 
@@ -340,7 +339,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix correlatedColumns(int rows, int columns, double correlationFactor)
 			throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(rows, columns);
+		Matrix ret = Matrix.factory.dense(rows, columns);
 
 		Matrix orig = MatrixFactory.randn(rows, 1);
 
@@ -556,7 +555,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix createVectorForClass(int classID, int classCount)
 			throws MatrixException {
-		Matrix matrix = MatrixFactory.zeros(classCount, 1);
+		Matrix matrix = MatrixFactory.dense(classCount, 1);
 		matrix.setAsDouble(1.0, classID, 0);
 		return matrix;
 	}
@@ -640,6 +639,10 @@ public abstract class MatrixFactory {
 				password);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>Matrix.factory</code>
+	 */
 	public final static Matrix sparse(long... size) throws MatrixException {
 		return sparse(ValueType.DOUBLE, size);
 	}
@@ -755,18 +758,20 @@ public abstract class MatrixFactory {
 		}
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be replaced by
+	 *             <code>Matrix.factory.dense(long... size)</code>
+	 */
 	public static Matrix zeros(long... size) throws MatrixException {
 		return dense(size);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>Matrix.factory</code>
+	 */
 	public static Matrix dense(long... size) throws MatrixException {
-		if (size.length == 2) {
-			return DoubleMatrix2D.Factory.dense(size[ROW], size[COLUMN]);
-		} else if (size.length > 2) {
-			return DoubleMatrix.Factory.dense(size);
-		} else {
-			throw new MatrixException("Size must be at least 2-dimensional");
-		}
+		return Matrix.factory.dense(size);
 	}
 
 	public static final Matrix linkToFile(FileFormat format, File file, Object... parameters)
@@ -853,9 +858,9 @@ public abstract class MatrixFactory {
 
 	public static Matrix like(Matrix matrix, long... size) {
 		if (matrix.isSparse()) {
-			return MatrixFactory.sparse(size);
+			return Matrix.factory.sparse(size);
 		} else {
-			return MatrixFactory.dense(size);
+			return Matrix.factory.dense(size);
 		}
 	}
 

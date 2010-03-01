@@ -402,7 +402,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		byte[] data = SerializationUtil.serialize(m);
 		Matrix m2 = (Matrix) SerializationUtil.deserialize(data);
 		if (m2.isTransient()) {
-			Matrix m0 = MatrixFactory.zeros(2, 2);
+			Matrix m0 = Matrix.factory.dense(2, 2);
 			assertEquals(getLabel(), m0, m2);
 		} else {
 			assertEquals(getLabel(), m, m2);
@@ -1948,6 +1948,34 @@ public abstract class AbstractMatrixTest extends TestCase {
 	public void testCholRandSmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(10, 10);
+		int rows = (int) temp.getRowCount();
+		int cols = (int) temp.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				temp.setDouble(random.nextDouble(), r, c);
+			}
+		}
+		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+
+		// only SPD
+		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+
+		// some error?
+		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
+			return;
+		}
+
+		Matrix chol = result.chol();
+		Matrix prod = chol.mtimes(chol.transpose());
+
+		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
+	}
+
+	public void testCholRandVerySmall() throws Exception {
+		Random random = new Random(System.nanoTime());
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(2, 2);
 		int rows = (int) temp.getRowCount();
 		int cols = (int) temp.getColumnCount();
 		for (int r = 0; r < rows; r++) {

@@ -41,41 +41,44 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 
+/**
+ * @deprecated use <code>Matrix.[operation]</code> instead
+ */
 public abstract class Ops {
 
-	public static Transpose<Matrix> TRANSPOSE = Transpose.INSTANCE;
+	public static Transpose<Matrix> transpose = Transpose.INSTANCE;
 
-	public static PlusMatrix<Matrix> PLUSMATRIX = PlusMatrix.INSTANCE;
+	public static PlusMatrix<Matrix> plusMatrix = PlusMatrix.INSTANCE;
 
-	public static MinusMatrix<Matrix> MINUSMATRIX = MinusMatrix.INSTANCE;
+	public static MinusMatrix<Matrix> minusMatrix = MinusMatrix.INSTANCE;
 
-	public static TimesMatrix<Matrix> TIMESMATRIX = TimesMatrix.INSTANCE;
+	public static TimesMatrix<Matrix> timesMatrix = TimesMatrix.INSTANCE;
 
-	public static DivideMatrix<Matrix> DIVIDEMATRIX = DivideMatrix.INSTANCE;
+	public static DivideMatrix<Matrix> divideMatrix = DivideMatrix.INSTANCE;
 
-	public static PlusScalar<Matrix> PLUSSCALAR = PlusScalar.INSTANCE;
+	public static PlusScalar<Matrix> plusScalar = PlusScalar.INSTANCE;
 
-	public static MinusScalar<Matrix> MINUSSCALAR = MinusScalar.INSTANCE;
+	public static MinusScalar<Matrix> minusScalar = MinusScalar.INSTANCE;
 
-	public static TimesScalar<Matrix> TIMESSCALAR = TimesScalar.INSTANCE;
+	public static TimesScalar<Matrix> timesScalar = TimesScalar.INSTANCE;
 
-	public static DivideScalar<Matrix> DIVIDESCALAR = DivideScalar.INSTANCE;
+	public static DivideScalar<Matrix> divideScalar = DivideScalar.INSTANCE;
 
-	public static Mtimes<Matrix, Matrix, Matrix> MTIMES = Mtimes.INSTANCE;
+	public static Mtimes<Matrix, Matrix, Matrix> mtimes = Mtimes.INSTANCE;
 
-	public static SVD<Matrix> SVD = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
+	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 
-	public static LU<Matrix> LU = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
+	public static LU<Matrix> lu = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
 
-	public static QR<Matrix> QR = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
+	public static QR<Matrix> qr = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
 
-	public static Inv<Matrix> INV = Inv.INSTANCE;
+	public static Inv<Matrix> inv = Inv.INSTANCE;
 
-	public static Solve<Matrix> SOLVE = Solve.INSTANCE;
+	public static Solve<Matrix> solve = Solve.INSTANCE;
 
-	public static Chol<Matrix> CHOL = Chol.INSTANCE;
+	public static Chol<Matrix> chol = Chol.INSTANCE;
 
-	public static Eig<Matrix> EIG = Eig.INSTANCE;
+	public static Eig<Matrix> eig = Eig.INSTANCE;
 
 	public static Mtimes<Matrix, Matrix, Matrix> MTIMES_JBLAS = null;
 

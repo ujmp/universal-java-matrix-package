@@ -47,9 +47,9 @@ public interface Chol<T> {
 
 	public static int THRESHOLD = 700;
 
-	public static Chol<Matrix> MATRIX = new Chol<Matrix>() {
+	public static final Chol<Matrix> MATRIX = new Chol<Matrix>() {
 
-		public Matrix calc(Matrix source) {
+		public final Matrix calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
@@ -65,7 +65,7 @@ public interface Chol<T> {
 			}
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
@@ -82,28 +82,28 @@ public interface Chol<T> {
 		}
 	};
 
-	public static Chol<Matrix> INSTANCE = MATRIX;
+	public static final Chol<Matrix> INSTANCE = MATRIX;
 
-	public static Chol<Matrix> UJMP = new Chol<Matrix>() {
+	public static final Chol<Matrix> UJMP = new Chol<Matrix>() {
 
-		public Matrix calc(Matrix source) {
+		public final Matrix calc(Matrix source) {
 			CholMatrix chol = new CholMatrix(source);
 			return chol.getL();
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			CholMatrix chol = new CholMatrix(source);
 			return chol.solve(b);
 		}
 	};
 
-	public static Chol<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final Chol<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
-	public static Chol<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final Chol<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static Chol<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
+	public static final Chol<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
 
-	public static Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
+	public static final Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Chol<Matrix> chol = DecompositionOps.CHOL_OJALGO;
 			if (chol == null) {
@@ -112,7 +112,7 @@ public interface Chol<T> {
 			return chol.calc(source);
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			Chol<Matrix> chol = DecompositionOps.CHOL_OJALGO;
 			if (chol == null) {
 				chol = UJMP;
@@ -122,12 +122,7 @@ public interface Chol<T> {
 	};
 
 	class CholMatrix {
-
 		private static final long serialVersionUID = 400514872358216115L;
-
-		/*
-		 * ------------------------ Class variables ------------------------
-		 */
 
 		/**
 		 * Array for internal storage of decomposition.

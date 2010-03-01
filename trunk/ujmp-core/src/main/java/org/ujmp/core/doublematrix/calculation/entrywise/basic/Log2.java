@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.entrywise.basic;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -35,14 +34,13 @@ public class Log2 extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double v = getSource().getAsDouble(coordinates);
 		return Math.log(v) / Math.log(2.0);
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getSize());
+		Matrix ret = Matrix.factory.dense(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			double v = source.getAsDouble(c);
 			ret.setAsDouble(Math.log(v) / Math.log(2.0), c);

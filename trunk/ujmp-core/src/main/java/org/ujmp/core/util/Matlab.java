@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 
 public class Matlab {
@@ -164,7 +163,7 @@ public class Matlab {
 			String rawText = execute("fprintf(1,'%55.55f\\n'," + label + ")");
 			String[] rawValues = rawText.split("\n");
 
-			Matrix matrix = MatrixFactory.zeros(rows, cols);
+			Matrix matrix = Matrix.factory.dense(rows, cols);
 
 			int i = 0;
 			for (int c = 0; c < cols; c++) {

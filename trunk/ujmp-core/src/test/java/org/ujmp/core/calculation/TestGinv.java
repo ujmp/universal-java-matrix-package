@@ -28,7 +28,6 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
 
 /**
@@ -53,12 +52,12 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testSet() {
-		Matrix matrix = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix);
 	}
 
 	public void testGet() {
-		Matrix matrix = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix);
 		for (int row = 0; row < M1ROWS; ++row) {
 			for (int col = 0; col < M1COLS; ++col) {
@@ -69,7 +68,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testIdentity() {
-		Matrix matrix = MatrixFactory.dense(M2ROWS, M2COLS);
+		Matrix matrix = Matrix.factory.dense(M2ROWS, M2COLS);
 		for (int i = 0; i < M2ROWS; i++) {
 			matrix.setAsDouble(1, i, i);
 		}
@@ -86,27 +85,27 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testEquals() {
-		Matrix matrix1 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
-		Matrix matrix2 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix2 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix2);
 		boolean result = matrix1.equals(matrix2);
 		assertTrue(result);
 	}
 
 	public void testNotEqualsSize() {
-		Matrix matrix1 = MatrixFactory.dense(M2ROWS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M2ROWS, M1COLS);
 		setValues(matrix1);
-		Matrix matrix2 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix2 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix2);
 		boolean result = matrix1.equals(matrix2);
 		assertFalse(result);
 	}
 
 	public void testNotEqualsValue() {
-		Matrix matrix1 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
-		Matrix matrix2 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix2 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix2);
 		matrix2.setAsDouble(1.00001 * matrix2.getAsDouble(1, 1), 1, 1);
 		boolean result = matrix1.equals(matrix2);
@@ -114,11 +113,11 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testMatrixDot() {
-		Matrix matrix1 = MatrixFactory.dense(M1COLS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M1COLS, M1COLS);
 		for (int i = 0; i < M1COLS; i++) {
 			matrix1.setAsDouble(1, i, i);
 		}
-		Matrix matrix2 = MatrixFactory.dense(M1COLS, M1COLS);
+		Matrix matrix2 = Matrix.factory.dense(M1COLS, M1COLS);
 		for (int i = 0; i < M1COLS; i++) {
 			matrix2.setAsDouble(1, i, i);
 		}
@@ -127,7 +126,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testPlusScalar() {
-		Matrix matrix1 = MatrixFactory.dense(M2ROWS, M2ROWS);
+		Matrix matrix1 = Matrix.factory.dense(M2ROWS, M2ROWS);
 		for (int i = 0; i < M2ROWS; i++) {
 			matrix1.setAsDouble(1, i, i);
 		}
@@ -144,7 +143,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testTimesScalar() {
-		Matrix matrix1 = MatrixFactory.dense(M1ROWS, M1ROWS);
+		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1ROWS);
 		for (int i = 0; i < M1ROWS; i++) {
 			matrix1.setAsDouble(1, i, i);
 		}
@@ -173,18 +172,18 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testMultiply() {
-		Matrix matrix1 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setIdentity(matrix1);
-		Matrix matrix2 = MatrixFactory.dense(M2ROWS, M2COLS);
+		Matrix matrix2 = Matrix.factory.dense(M2ROWS, M2COLS);
 		setIdentity(matrix2);
 		Matrix result = matrix1.mtimes(matrix2);
-		Matrix desire = MatrixFactory.dense(M1ROWS, M2COLS);
+		Matrix desire = Matrix.factory.dense(M1ROWS, M2COLS);
 		setIdentity(desire);
 		assertTrue(result.equals(desire));
 	}
 
 	public void testCopy() {
-		Matrix matrix1 = MatrixFactory.dense(M1ROWS, M1COLS);
+		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
 		Matrix matrix2 = matrix1.copy();
 		assertTrue(matrix1.equals(matrix2));
@@ -196,7 +195,7 @@ public class TestGinv extends TestCase {
 	 * 
 	 */
 	public void testReduce() {
-		Matrix a = MatrixFactory.dense(5, 5); // must be a square HusoMatrix
+		Matrix a = Matrix.factory.dense(5, 5); // must be a square HusoMatrix
 		a.setAsDouble(1, 0, 0);
 		a.setAsDouble(1, 0, 1);
 		a.setAsDouble(1, 0, 2);
@@ -225,7 +224,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testSquareInverse() {
-		Matrix a = MatrixFactory.dense(3, 3); // example from ucla.edu
+		Matrix a = Matrix.factory.dense(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);
 		a.setAsDouble(2, 0, 1);
 		a.setAsDouble(2, 0, 2);
@@ -249,7 +248,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testSquareArbitrariness() {
-		Matrix a = MatrixFactory.dense(3, 3); // example from ucla.edu
+		Matrix a = Matrix.factory.dense(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);
 		a.setAsDouble(2, 0, 1);
 		a.setAsDouble(2, 0, 2);
@@ -269,7 +268,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testNonSquareInverse() {
-		Matrix a = MatrixFactory.dense(3, 4);
+		Matrix a = Matrix.factory.dense(3, 4);
 		a.setAsDouble(4, 0, 0);
 		a.setAsDouble(2, 0, 1);
 		a.setAsDouble(2, 0, 2);
@@ -301,7 +300,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testNonSquareInverse2() {
-		Matrix a = MatrixFactory.dense(3, 3);
+		Matrix a = Matrix.factory.dense(3, 3);
 		a.setAsDouble(4, 0, 0);
 		a.setAsDouble(2, 0, 1);
 		a.setAsDouble(2, 0, 2);
@@ -325,7 +324,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testNonSquareArbitrariness() {
-		Matrix a = MatrixFactory.dense(2, 3);
+		Matrix a = Matrix.factory.dense(2, 3);
 		a.setAsDouble(2, 0, 0);
 		a.setAsDouble(1, 0, 1);
 		a.setAsDouble(-1, 0, 2);
@@ -341,7 +340,7 @@ public class TestGinv extends TestCase {
 	public void testRandomInverses() {
 		Random rand = new Random(System.currentTimeMillis());
 		for (int count = 0; count < 10000; ++count) {
-			Matrix a = MatrixFactory.dense(1 + Math.abs(rand.nextInt()) % 6, 1 + Math.abs(rand
+			Matrix a = Matrix.factory.dense(1 + Math.abs(rand.nextInt()) % 6, 1 + Math.abs(rand
 					.nextInt()) % 6);
 			for (int row = 0; row < a.getRowCount(); ++row) {
 				for (int col = 0; col < a.getColumnCount(); ++col) {
@@ -367,7 +366,7 @@ public class TestGinv extends TestCase {
 	}
 
 	public void testSquareInverse2() {
-		Matrix a = MatrixFactory.dense(3, 3);
+		Matrix a = Matrix.factory.dense(3, 3);
 		a.setAsDouble(2, 0, 0);
 		a.setAsDouble(2, 0, 1);
 		a.setAsDouble(4, 0, 2);

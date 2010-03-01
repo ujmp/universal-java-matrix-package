@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
@@ -62,7 +61,7 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 	}
 
 	private Matrix getDistanceMatrix() {
-		Matrix distanceMatrix = MatrixFactory.zeros(getSource().getRowCount(), getSource()
+		Matrix distanceMatrix = Matrix.factory.dense(getSource().getRowCount(), getSource()
 				.getRowCount());
 		for (int r = 0; r < getSource().getRowCount(); r++) {
 			for (int c = 0; c < getSource().getRowCount(); c++) {
@@ -91,7 +90,6 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 		return neighbors;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (distanceMatrix == null) {
 			distanceMatrix = getDistanceMatrix();

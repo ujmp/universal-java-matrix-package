@@ -28,9 +28,9 @@ public interface QR<T> {
 
 	public T solve(T source, T b);
 
-	public static QR<Matrix> MATRIX = new QR<Matrix>() {
+	public static final QR<Matrix> MATRIX = new QR<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
@@ -46,7 +46,7 @@ public interface QR<T> {
 			}
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
@@ -63,8 +63,8 @@ public interface QR<T> {
 		}
 	};
 
-	public static QR<Matrix> MATRIXLARGESINGLETHREADED = new QR<Matrix>() {
-		public Matrix[] calc(Matrix source) {
+	public static final QR<Matrix> MATRIXLARGESINGLETHREADED = new QR<Matrix>() {
+		public final Matrix[] calc(Matrix source) {
 			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
 				qr = DecompositionOps.QR_EJML;
@@ -78,7 +78,7 @@ public interface QR<T> {
 			return qr.calc(source);
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
 				qr = DecompositionOps.QR_EJML;
@@ -93,8 +93,8 @@ public interface QR<T> {
 		}
 	};
 
-	public static QR<Matrix> MATRIXLARGEMULTITHREADED = new QR<Matrix>() {
-		public Matrix[] calc(Matrix source) {
+	public static final QR<Matrix> MATRIXLARGEMULTITHREADED = new QR<Matrix>() {
+		public final Matrix[] calc(Matrix source) {
 			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
 				qr = DecompositionOps.QR_EJML;
@@ -108,7 +108,7 @@ public interface QR<T> {
 			return qr.calc(source);
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
 			if (qr == null) {
 				qr = DecompositionOps.QR_EJML;
@@ -123,11 +123,11 @@ public interface QR<T> {
 		}
 	};
 
-	public static QR<Matrix> INSTANCE = MATRIX;
+	public static final QR<Matrix> INSTANCE = MATRIX;
 
-	public static QR<Matrix> UJMP = new QR<Matrix>() {
+	public static final QR<Matrix> UJMP = new QR<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			if (source.getRowCount() >= source.getColumnCount()) {
 				QRMatrix qr = new QRMatrix(source);
 				return new Matrix[] { qr.getQ(), qr.getR() };
@@ -136,7 +136,7 @@ public interface QR<T> {
 			}
 		}
 
-		public Matrix solve(Matrix source, Matrix b) {
+		public final Matrix solve(Matrix source, Matrix b) {
 			if (source.getRowCount() >= source.getColumnCount()) {
 				QRMatrix qr = new QRMatrix(source);
 				return qr.solve(b);
@@ -146,16 +146,11 @@ public interface QR<T> {
 		}
 	};
 
-	public static QR<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final QR<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
-	public static QR<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final QR<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public class QRMatrix {
-
-		/*
-		 * ------------------------ Class variables ------------------------
-		 */
-
 		private static final long serialVersionUID = 2137461328307048867L;
 
 		/**

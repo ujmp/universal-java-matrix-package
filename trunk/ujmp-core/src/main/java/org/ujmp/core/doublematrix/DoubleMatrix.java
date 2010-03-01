@@ -30,7 +30,7 @@ import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface DoubleMatrix extends GenericMatrix<Double> {
 
-	public static DoubleMatrixMultiDFactory Factory = new DefaultDoubleMatrixMultiDFactory();
+	public static DoubleMatrixMultiDFactory factory = new DefaultDoubleMatrixMultiDFactory();
 
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored

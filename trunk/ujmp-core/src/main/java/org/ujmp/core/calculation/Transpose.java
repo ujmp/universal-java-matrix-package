@@ -36,9 +36,9 @@ import org.ujmp.core.util.concurrent.PFor;
 
 public interface Transpose<T> {
 
-	public static Transpose<Matrix> INSTANCE = new Transpose<Matrix>() {
+	public static final Transpose<Matrix> INSTANCE = new Transpose<Matrix>() {
 
-		public void calc(final Matrix source, final Matrix target) {
+		public final void calc(final Matrix source, final Matrix target) {
 			if (source == target) {
 				throw new MatrixException("cannot transpose into original matrix");
 			}
@@ -60,9 +60,9 @@ public interface Transpose<T> {
 		}
 	};
 
-	public static Transpose<DenseMatrix> DENSEMATRIX = new Transpose<DenseMatrix>() {
+	public static final Transpose<DenseMatrix> DENSEMATRIX = new Transpose<DenseMatrix>() {
 
-		public void calc(final DenseMatrix source, final DenseMatrix target) {
+		public final void calc(final DenseMatrix source, final DenseMatrix target) {
 			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 				Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
 			} else {
@@ -74,9 +74,9 @@ public interface Transpose<T> {
 		}
 	};
 
-	public static Transpose<SparseMatrix> SPARSEMATRIX = new Transpose<SparseMatrix>() {
+	public static final Transpose<SparseMatrix> SPARSEMATRIX = new Transpose<SparseMatrix>() {
 
-		public void calc(final SparseMatrix source, final SparseMatrix target) {
+		public final void calc(final SparseMatrix source, final SparseMatrix target) {
 			for (long[] c : source.availableCoordinates()) {
 				Object o = source.getAsObject(c);
 				target.setAsObject(o, Coordinates.transpose(c));
@@ -84,9 +84,9 @@ public interface Transpose<T> {
 		}
 	};
 
-	public static Transpose<DenseMatrix2D> DENSEMATRIX2D = new Transpose<DenseMatrix2D>() {
+	public static final Transpose<DenseMatrix2D> DENSEMATRIX2D = new Transpose<DenseMatrix2D>() {
 
-		public void calc(final DenseMatrix2D source, final DenseMatrix2D target) {
+		public final void calc(final DenseMatrix2D source, final DenseMatrix2D target) {
 			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
 				Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
 						(DenseDoubleMatrix2D) target);
@@ -101,9 +101,9 @@ public interface Transpose<T> {
 		}
 	};
 
-	public static Transpose<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Transpose<DenseDoubleMatrix2D>() {
+	public static final Transpose<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Transpose<DenseDoubleMatrix2D>() {
 
-		public void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
+		public final void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
 			if (source instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
 				calc((int) source.getRowCount(), (int) source.getColumnCount(),
@@ -122,7 +122,7 @@ public interface Transpose<T> {
 			}
 		}
 
-		private void calc(final double[][] source, final double[][] target) {
+		private final void calc(final double[][] source, final double[][] target) {
 			final int retcols = source.length;
 			final int retrows = source[0].length;
 			if (retcols * retrows > 10000) {
@@ -143,7 +143,7 @@ public interface Transpose<T> {
 			}
 		}
 
-		private void calc(final int rows, final int cols, final double[] source,
+		private final void calc(final int rows, final int cols, final double[] source,
 				final double[] target) {
 			if (source.length > 10000) {
 				new PFor(0, rows - 1) {

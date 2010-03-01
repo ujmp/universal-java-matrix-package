@@ -33,7 +33,7 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testZerosConstructors0D() throws Exception {
 		try {
-			MatrixFactory.zeros();
+			Matrix.factory.dense();
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -43,7 +43,7 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testZerosConstructors1D() throws Exception {
 		try {
-			MatrixFactory.zeros(4);
+			Matrix.factory.dense(4);
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -80,7 +80,7 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testSparseConstructors0D() throws Exception {
 		try {
-			MatrixFactory.sparse();
+			Matrix.factory.sparse();
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -90,7 +90,7 @@ public class MatrixFactoryTest extends TestCase {
 
 	public void testSparseConstructors1D() throws Exception {
 		try {
-			MatrixFactory.sparse(4);
+			Matrix.factory.sparse(4);
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;

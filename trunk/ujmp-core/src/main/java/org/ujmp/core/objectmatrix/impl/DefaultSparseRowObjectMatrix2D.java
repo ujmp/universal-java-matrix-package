@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
@@ -56,20 +55,18 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	
 	public Object getObject(long row, long column) throws MatrixException {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
-	
 	public Object getObject(int row, int column) throws MatrixException {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
-	
+
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
 		for (Long r : rows.keySet()) {
@@ -89,12 +86,10 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	
 	public double getAsDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}
@@ -117,7 +112,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return size;
 	}
 
-	
 	public void setSize(long... size) {
 		if (this.size[COLUMN] != size[COLUMN]) {
 			for (Matrix m : rows.values()) {
@@ -131,12 +125,11 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return rows.get(row);
 	}
 
-	
 	public Matrix max(Ret returnType, int dimension) throws MatrixException {
 		if (returnType == Ret.NEW) {
 
 			if (dimension == ROW) {
-				Matrix ret = MatrixFactory.zeros(1, getColumnCount());
+				Matrix ret = Matrix.factory.dense(1, getColumnCount());
 				for (long[] c : availableCoordinates()) {
 					double v = getAsDouble(c);
 					if (v > ret.getAsDouble(0, c[COLUMN])) {
@@ -145,7 +138,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 				}
 				return ret;
 			} else if (dimension == COLUMN) {
-				Matrix ret = MatrixFactory.zeros(getRowCount(), 1);
+				Matrix ret = Matrix.factory.dense(getRowCount(), 1);
 				for (long[] c : availableCoordinates()) {
 					double v = getAsDouble(c);
 					if (v > ret.getAsDouble(c[ROW], 0)) {
@@ -159,7 +152,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		throw new MatrixException("not supported");
 	}
 
-	
 	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
@@ -167,12 +159,10 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return super.selectRows(returnType, rows);
 	}
 
-	
 	public Map<Long, Matrix> getWrappedObject() {
 		return rows;
 	}
 
-	
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.rows = object;
 	}

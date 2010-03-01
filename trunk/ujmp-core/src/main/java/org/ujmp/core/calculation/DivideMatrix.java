@@ -38,9 +38,9 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public interface DivideMatrix<T> {
 
-	public static DivideMatrix<Matrix> INSTANCE = new DivideMatrix<Matrix>() {
+	public static final DivideMatrix<Matrix> INSTANCE = new DivideMatrix<Matrix>() {
 
-		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
+		public final void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
 					&& target instanceof DenseMatrix) {
 				DivideMatrix.DENSEMATRIX.calc((DenseMatrix) source1, (DenseMatrix) source2,
@@ -60,9 +60,9 @@ public interface DivideMatrix<T> {
 		}
 	};
 
-	public static DivideMatrix<DenseMatrix> DENSEMATRIX = new DivideMatrix<DenseMatrix>() {
+	public static final DivideMatrix<DenseMatrix> DENSEMATRIX = new DivideMatrix<DenseMatrix>() {
 
-		public void calc(final DenseMatrix source1, final DenseMatrix source2,
+		public final void calc(final DenseMatrix source1, final DenseMatrix source2,
 				final DenseMatrix target) {
 			if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
 					&& target instanceof DenseMatrix2D) {
@@ -79,9 +79,9 @@ public interface DivideMatrix<T> {
 		}
 	};
 
-	public static DivideMatrix<SparseMatrix> SPARSEMATRIX = new DivideMatrix<SparseMatrix>() {
+	public static final DivideMatrix<SparseMatrix> SPARSEMATRIX = new DivideMatrix<SparseMatrix>() {
 
-		public void calc(final SparseMatrix source1, final SparseMatrix source2,
+		public final void calc(final SparseMatrix source1, final SparseMatrix source2,
 				final SparseMatrix target) {
 			// copy all elements in source1 to target
 			for (long[] c : source1.availableCoordinates()) {
@@ -99,9 +99,9 @@ public interface DivideMatrix<T> {
 
 	};
 
-	public static DivideMatrix<DenseMatrix2D> DENSEMATRIX2D = new DivideMatrix<DenseMatrix2D>() {
+	public static final DivideMatrix<DenseMatrix2D> DENSEMATRIX2D = new DivideMatrix<DenseMatrix2D>() {
 
-		public void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
+		public final void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
 				final DenseMatrix2D target) {
 			if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
 					&& target instanceof DenseDoubleMatrix2D) {
@@ -120,18 +120,22 @@ public interface DivideMatrix<T> {
 		}
 	};
 
-	public static DivideMatrix<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideMatrix<DenseDoubleMatrix2D>() {
+	public static final DivideMatrix<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideMatrix<DenseDoubleMatrix2D>() {
 
-		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
-				final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasRowMajorDoubleArray2D && source2 instanceof HasRowMajorDoubleArray2D
-					&& target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else if (source1 instanceof HasColumnMajorDoubleArray1D && source2 instanceof HasColumnMajorDoubleArray1D
+		public final void calc(final DenseDoubleMatrix2D source1,
+				final DenseDoubleMatrix2D source2, final DenseDoubleMatrix2D target) {
+			if (source1 instanceof HasColumnMajorDoubleArray1D
+					&& source2 instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calc(((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) source2)
-						.getColumnMajorDoubleArray1D(), ((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+				calc(((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(),
+						((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+			} else if (source1 instanceof HasRowMajorDoubleArray2D
+					&& source2 instanceof HasRowMajorDoubleArray2D
+					&& target instanceof HasRowMajorDoubleArray2D) {
+				calc(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 			} else {
 				for (int r = (int) source1.getRowCount(); --r != -1;) {
 					for (int c = (int) source1.getColumnCount(); --c != -1;) {
@@ -141,7 +145,7 @@ public interface DivideMatrix<T> {
 			}
 		}
 
-		private void calc(final double[][] source1, final double[][] source2,
+		private final void calc(final double[][] source1, final double[][] source2,
 				final double[][] target) {
 			if (UJMPSettings.getNumberOfThreads() > 1 && source1.length >= 100
 					&& source1[0].length >= 100) {
@@ -170,7 +174,8 @@ public interface DivideMatrix<T> {
 			}
 		}
 
-		private void calc(final double[] source1, final double[] source2, final double[] target) {
+		private final void calc(final double[] source1, final double[] source2,
+				final double[] target) {
 			final int length = source1.length;
 			for (int i = 0; i < length; i++) {
 				target[i] = source1[i] / source2[i];

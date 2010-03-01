@@ -24,7 +24,6 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
@@ -49,7 +48,7 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.NOTAVAILABLE;
 			}
-			x = DoubleMatrix2D.Factory.dense(size[1], size[0]);
+			x = DoubleMatrix2D.factory.dense(size[1], size[0]);
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, a);
 			BenchmarkUtil.rand(benchmarkSeed, run, 1, x);
 			b1 = new DefaultDenseDoubleMatrix2D(a).mtimes(new DefaultDenseDoubleMatrix2D(x));

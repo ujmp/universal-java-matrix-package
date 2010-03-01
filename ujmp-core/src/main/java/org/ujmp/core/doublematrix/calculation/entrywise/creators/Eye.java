@@ -39,13 +39,12 @@ public class Eye extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) {
 		return coordinates[ROW] == coordinates[COLUMN] ? 1.0 : 0.0;
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getSize());
+		Matrix ret = Matrix.factory.dense(source.getSize());
 		long[] c = Coordinates.copyOf(source.getSize());
 		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
 			Arrays.fill(c, i);

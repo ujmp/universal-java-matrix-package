@@ -36,13 +36,12 @@ public class Ones extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) {
 		return 1.0;
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getSize());
+		Matrix ret = Matrix.factory.dense(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(1.0, c);
 		}

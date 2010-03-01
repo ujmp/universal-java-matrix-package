@@ -38,9 +38,9 @@ public interface Mtimes<S, T, U> {
 
 	public static int THRESHOLD = 20;
 
-	public static Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
+	public static final Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
 
-		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
+		public final void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 			if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
 					&& target instanceof DenseDoubleMatrix2D) {
 				Mtimes.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
@@ -62,8 +62,8 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void gemm(final double alpha, final Matrix A, final double beta, final Matrix B,
-				final Matrix C) {
+		private final void gemm(final double alpha, final Matrix A, final double beta,
+				final Matrix B, final Matrix C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
 			final int m2RowCount = (int) B.getRowCount();
@@ -127,9 +127,9 @@ public interface Mtimes<S, T, U> {
 		}
 	};
 
-	public static Mtimes<DenseMatrix, DenseMatrix, DenseMatrix> DENSEMATRIX = new Mtimes<DenseMatrix, DenseMatrix, DenseMatrix>() {
+	public static final Mtimes<DenseMatrix, DenseMatrix, DenseMatrix> DENSEMATRIX = new Mtimes<DenseMatrix, DenseMatrix, DenseMatrix>() {
 
-		public void calc(final DenseMatrix source1, final DenseMatrix source2,
+		public final void calc(final DenseMatrix source1, final DenseMatrix source2,
 				final DenseMatrix target) {
 			if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
 					&& target instanceof DenseMatrix2D) {
@@ -140,7 +140,7 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void gemm(final double alpha, final DenseMatrix A, final double beta,
+		private final void gemm(final double alpha, final DenseMatrix A, final double beta,
 				final DenseMatrix B, final DenseMatrix C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
@@ -205,9 +205,9 @@ public interface Mtimes<S, T, U> {
 		}
 	};
 
-	public static Mtimes<SparseMatrix, Matrix, Matrix> SPARSEMATRIX1 = new Mtimes<SparseMatrix, Matrix, Matrix>() {
+	public static final Mtimes<SparseMatrix, Matrix, Matrix> SPARSEMATRIX1 = new Mtimes<SparseMatrix, Matrix, Matrix>() {
 
-		public void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
+		public final void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
 			target.clear();
 			for (long[] c1 : source1.availableCoordinates()) {
 				final double v1 = source1.getAsDouble(c1);
@@ -225,9 +225,9 @@ public interface Mtimes<S, T, U> {
 		}
 	};
 
-	public static Mtimes<Matrix, SparseMatrix, Matrix> SPARSEMATRIX2 = new Mtimes<Matrix, SparseMatrix, Matrix>() {
+	public static final Mtimes<Matrix, SparseMatrix, Matrix> SPARSEMATRIX2 = new Mtimes<Matrix, SparseMatrix, Matrix>() {
 
-		public void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
+		public final void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
 			target.clear();
 			for (long[] c2 : source2.availableCoordinates()) {
 				final double v2 = source2.getAsDouble(c2);
@@ -245,9 +245,9 @@ public interface Mtimes<S, T, U> {
 		}
 	};
 
-	public static Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D>() {
+	public static final Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new Mtimes<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D>() {
 
-		public void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
+		public final void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
 				final DenseMatrix2D target) {
 			if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
 					&& target instanceof DenseDoubleMatrix2D) {
@@ -258,7 +258,7 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void gemm(final double alpha, final DenseMatrix2D A, final double beta,
+		private final void gemm(final double alpha, final DenseMatrix2D A, final double beta,
 				final DenseMatrix2D B, final DenseMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
@@ -323,10 +323,10 @@ public interface Mtimes<S, T, U> {
 		}
 	};
 
-	public static Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D>() {
+	public static final Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D>() {
 
-		public void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
-				final DenseDoubleMatrix2D target) {
+		public final void calc(final DenseDoubleMatrix2D source1,
+				final DenseDoubleMatrix2D source2, final DenseDoubleMatrix2D target) {
 			if (source1 instanceof HasColumnMajorDoubleArray1D
 					&& source2 instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
@@ -353,7 +353,7 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void gemmDoubleArrayParallel(final double alpha, final double[] A,
+		private final void gemmDoubleArrayParallel(final double alpha, final double[] A,
 				final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
 				final int m2RowCount, final int m2ColumnCount, final double[] C) {
 			if (m1ColumnCount != m2RowCount) {
@@ -422,7 +422,7 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void calcDoubleArray2D(final double[][] m1, final double[][] m2,
+		private final void calcDoubleArray2D(final double[][] m1, final double[][] m2,
 				final double[][] ret) {
 			final int rowCount = m1.length;
 			final int columnCount = m1[0].length;
@@ -468,7 +468,7 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private void gemmDenseDoubleMatrix2D(final double alpha, final DenseDoubleMatrix2D A,
+		private final void gemmDenseDoubleMatrix2D(final double alpha, final DenseDoubleMatrix2D A,
 				final double beta, final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();

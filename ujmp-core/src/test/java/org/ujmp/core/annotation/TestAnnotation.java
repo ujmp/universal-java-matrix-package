@@ -26,12 +26,11 @@ package org.ujmp.core.annotation;
 import junit.framework.TestCase;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public class TestAnnotation extends TestCase {
 
 	public void testReverseAnnotation() throws Exception {
-		Matrix m = MatrixFactory.dense(10, 10);
+		Matrix m = Matrix.factory.dense(10, 10);
 		m.setColumnLabel(3, "col3");
 		m.setRowLabel(3, "row3");
 		m.setColumnLabel(5, "col5");

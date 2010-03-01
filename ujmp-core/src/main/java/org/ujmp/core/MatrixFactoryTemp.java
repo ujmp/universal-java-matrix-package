@@ -21,31 +21,29 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core;
 
-import java.io.Serializable;
-
-import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.MatrixFactoryRoot;
 
-public interface MatrixFactoryRoot extends Serializable {
+public class MatrixFactoryTemp implements MatrixFactoryRoot {
+	private static final long serialVersionUID = -6788016781517917785L;
 
-	public static final int ROW = Matrix.ROW;
+	public Matrix dense(long... size) throws MatrixException {
+		if (size.length == 2) {
+			return DoubleMatrix2D.factory.dense(size[ROW], size[COLUMN]);
+		} else if (size.length > 2) {
+			return DoubleMatrix.factory.dense(size);
+		} else {
+			throw new MatrixException("Size must be at least 2-dimensional");
+		}
+	}
 
-	public static final int COLUMN = Matrix.COLUMN;
-
-	public static final int Y = Matrix.Y;
-
-	public static final int X = Matrix.X;
-
-	public static final int Z = Matrix.Z;
-
-	public static final int ALL = Matrix.ALL;
-
-	public static final int NONE = Matrix.NONE;
-
-	public Matrix dense(long... size) throws MatrixException;
-
-	public Matrix sparse(long... size) throws MatrixException;
+	public Matrix sparse(long... size) throws MatrixException {
+		return MatrixFactory.sparse(ValueType.DOUBLE, size);
+	}
 
 }

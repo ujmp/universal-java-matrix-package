@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -35,13 +34,12 @@ public class Cosh extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return Math.cosh(getSource().getAsDouble(coordinates));
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getSize());
+		Matrix ret = Matrix.factory.dense(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.cosh(source.getAsDouble(c)), c);
 		}

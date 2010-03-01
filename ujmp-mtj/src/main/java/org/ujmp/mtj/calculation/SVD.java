@@ -26,7 +26,6 @@ package org.ujmp.mtj.calculation;
 import no.uib.cipr.matrix.DenseMatrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 
@@ -48,7 +47,7 @@ public class SVD
 			Matrix u = new MTJDenseDoubleMatrix2D(svd.getU());
 			Matrix v = new MTJDenseDoubleMatrix2D(svd.getVt()).transpose();
 			double[] svs = svd.getS();
-			Matrix s = MatrixFactory.sparse(source.getSize());
+			Matrix s = Matrix.factory.sparse(source.getSize());
 			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 				s.setAsDouble(svs[i], i, i);
 			}

@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
@@ -41,7 +40,6 @@ public class Cumsum extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (cumsum == null) {
 			createMatrix();
@@ -51,7 +49,7 @@ public class Cumsum extends AbstractDoubleCalculation {
 
 	private void createMatrix() {
 		Matrix source = getSource();
-		Matrix m = MatrixFactory.zeros(source.getSize());
+		Matrix m = Matrix.factory.dense(source.getSize());
 		for (long c = 0; c < source.getColumnCount(); c++) {
 			double sum = 0;
 			for (long r = 0; r < source.getRowCount(); r++) {

@@ -34,7 +34,6 @@ public class Inv
 
 	public static Inv INSTANCE = new Inv();
 
-	@Override
 	public Matrix calc(Matrix source) {
 		try {
 			DenseMatrix64F matrix = null;

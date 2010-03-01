@@ -29,7 +29,7 @@ import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
 
-	public static DoubleMatrix2DFactory Factory = new DefaultDoubleMatrix2DFactory();
+	public static DoubleMatrix2DFactory factory = new DefaultDoubleMatrix2DFactory();
 
 	public double getDouble(long row, long column);
 

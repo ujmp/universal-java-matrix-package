@@ -51,9 +51,9 @@ public interface Eig<T> {
 
 	public T[] calc(T source);
 
-	public static Eig<Matrix> MATRIX = new Eig<Matrix>() {
+	public static final Eig<Matrix> MATRIX = new Eig<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
@@ -70,7 +70,7 @@ public interface Eig<T> {
 		}
 	};
 
-	public static Eig<Matrix> MATRIXLARGESINGLETHREADED = new Eig<Matrix>() {
+	public static final Eig<Matrix> MATRIXLARGESINGLETHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
 			Eig<Matrix> eig = DecompositionOps.EIG_OJALGO;
 			if (eig == null) {
@@ -80,7 +80,7 @@ public interface Eig<T> {
 		}
 	};
 
-	public static Eig<Matrix> MATRIXLARGEMULTITHREADED = new Eig<Matrix>() {
+	public static final Eig<Matrix> MATRIXLARGEMULTITHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
 			Eig<Matrix> eig = DecompositionOps.EIG_OJALGO;
 			if (eig == null) {
@@ -90,19 +90,19 @@ public interface Eig<T> {
 		}
 	};
 
-	public static Eig<Matrix> INSTANCE = MATRIX;
+	public static final Eig<Matrix> INSTANCE = MATRIX;
 
-	public static Eig<Matrix> UJMP = new Eig<Matrix>() {
+	public static final Eig<Matrix> UJMP = new Eig<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			EigMatrix qr = new EigMatrix(source);
 			return new Matrix[] { qr.getV(), qr.getD() };
 		}
 	};
 
-	public static Eig<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final Eig<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
-	public static Eig<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final Eig<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	class EigMatrix {
 		private static final long serialVersionUID = -4312402808395971553L;

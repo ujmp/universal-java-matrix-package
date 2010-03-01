@@ -43,7 +43,6 @@ import javax.swing.JFrame;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.Ops;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
@@ -843,7 +842,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
 		Matrix result = MatrixFactory.like(this, getRowCount(), matrix.getColumnCount());
-		Ops.MTIMES.calc(this, matrix, result);
+		Matrix.mtimes.calc(this, matrix, result);
 		return result;
 	}
 
@@ -1010,9 +1009,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			result = this.getClass().getConstructor(long[].class).newInstance(
 					Coordinates.transpose(getSize()));
 		} catch (Exception e) {
-			result = MatrixFactory.dense(Coordinates.transpose(getSize()));
+			result = Matrix.factory.dense(Coordinates.transpose(getSize()));
 		}
-		Ops.TRANSPOSE.calc(this, result);
+		Matrix.transpose.calc(this, result);
 		return result;
 	}
 
@@ -1651,7 +1650,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(getSize());
+		Matrix ret = Matrix.factory.dense(getSize());
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
 			if (MathUtil.isNaNOrInfinite(v)) {

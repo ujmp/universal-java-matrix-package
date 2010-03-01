@@ -48,9 +48,9 @@ public interface SVD<T> {
 
 	public T[] calc(T source);
 
-	public static SVD<Matrix> MATRIX = new SVD<Matrix>() {
+	public static final SVD<Matrix> MATRIX = new SVD<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
@@ -67,21 +67,21 @@ public interface SVD<T> {
 		}
 	};
 
-	public static SVD<Matrix> INSTANCE = MATRIX;
+	public static final SVD<Matrix> INSTANCE = MATRIX;
 
-	public static SVD<Matrix> UJMP = new SVD<Matrix>() {
+	public static final SVD<Matrix> UJMP = new SVD<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			SVDMatrix svd = new SVDMatrix(source);
 			return new Matrix[] { svd.getU(), svd.getS(), svd.getV() };
 		}
 	};
 
-	public static SVD<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
+	public static final SVD<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static SVD<Matrix> MATRIXLARGESINGLETHREADED = new SVD<Matrix>() {
+	public static final SVD<Matrix> MATRIXLARGESINGLETHREADED = new SVD<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			SVD<Matrix> svd = DecompositionOps.SVD_MTJ;
 			if (svd == null) {
 				svd = DecompositionOps.SVD_OJALGO;
@@ -93,11 +93,11 @@ public interface SVD<T> {
 		}
 	};
 
-	public static SVD<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
+	public static final SVD<Matrix> MATRIXSMALLMULTITHREADED = UJMP;
 
-	public static SVD<Matrix> MATRIXLARGEMULTITHREADED = new SVD<Matrix>() {
+	public static final SVD<Matrix> MATRIXLARGEMULTITHREADED = new SVD<Matrix>() {
 
-		public Matrix[] calc(Matrix source) {
+		public final Matrix[] calc(Matrix source) {
 			SVD<Matrix> svd = DecompositionOps.SVD_OJALGO;
 			if (svd == null) {
 				svd = DecompositionOps.SVD_MTJ;

@@ -27,7 +27,6 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -42,7 +41,6 @@ public class MandelbrotMatrixAction extends MatrixAction {
 				"creates a matrix from the mandelbrot set");
 	}
 
-	
 	public Object call() throws MatrixException {
 		double xoffset = -.5;
 		double yoffset = 0;
@@ -50,7 +48,7 @@ public class MandelbrotMatrixAction extends MatrixAction {
 		int cells = 500;
 		int iterations = 20;
 
-		Matrix m = MatrixFactory.dense(cells, cells);
+		Matrix m = Matrix.factory.dense(cells, cells);
 		for (int column = 0; column < cells; column++) {
 			for (int row = 0; row < cells; row++) {
 				double x0 = xoffset - size / 2 + size * column / cells;

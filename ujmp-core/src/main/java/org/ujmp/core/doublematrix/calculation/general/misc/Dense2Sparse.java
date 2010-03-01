@@ -24,12 +24,11 @@
 package org.ujmp.core.doublematrix.calculation.general.misc;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public class Dense2Sparse {
 
 	public static Matrix calc(Matrix indices) {
-		Matrix m = MatrixFactory.sparse(1, 1);
+		Matrix m = Matrix.factory.sparse(1, 1);
 
 		long mrow = 1;
 		long mcol = 1;

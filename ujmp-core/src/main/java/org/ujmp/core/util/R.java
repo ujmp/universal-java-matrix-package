@@ -31,7 +31,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 
 public class R {
@@ -192,7 +191,7 @@ public class R {
 			String rawText = execute("cat(" + label + ")");
 			String[] rawValues = rawText.split("\n")[1].split("[\\s]+");
 
-			Matrix matrix = MatrixFactory.zeros(rows, cols);
+			Matrix matrix = Matrix.factory.dense(rows, cols);
 
 			int i = 0;
 			for (int r = 0; r < rows; r++) {

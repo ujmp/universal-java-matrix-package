@@ -41,7 +41,13 @@ public interface TimesScalar<T> {
 	public static TimesScalar<Matrix> INSTANCE = new TimesScalar<Matrix>() {
 
 		public void calc(final Matrix source, final BigDecimal factor, final Matrix target) {
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+				TimesScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, factor,
+						(DenseDoubleMatrix2D) target);
+			} else if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+				TimesScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, factor,
+						(DenseDoubleMatrix2D) target);
+			} else if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
 				TimesScalar.DENSEMATRIX.calc((DenseMatrix) source, factor, (DenseMatrix) target);
 			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 				TimesScalar.SPARSEMATRIX.calc((SparseMatrix) source, factor, (SparseMatrix) target);
@@ -143,12 +149,14 @@ public interface TimesScalar<T> {
 
 		public void calc(final DenseDoubleMatrix2D source, final double factor,
 				final DenseDoubleMatrix2D target) {
-			if (source instanceof HasRowMajorDoubleArray2D && target instanceof HasRowMajorDoubleArray2D) {
+			if (source instanceof HasRowMajorDoubleArray2D
+					&& target instanceof HasRowMajorDoubleArray2D) {
 				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), factor,
 						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else if (source instanceof HasColumnMajorDoubleArray1D && target instanceof HasColumnMajorDoubleArray1D) {
-				calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), factor, ((HasColumnMajorDoubleArray1D) target)
-						.getColumnMajorDoubleArray1D());
+			} else if (source instanceof HasColumnMajorDoubleArray1D
+					&& target instanceof HasColumnMajorDoubleArray1D) {
+				calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), factor,
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 			} else {
 				for (int r = (int) source.getRowCount(); --r != -1;) {
 					for (int c = (int) source.getColumnCount(); --c != -1;) {

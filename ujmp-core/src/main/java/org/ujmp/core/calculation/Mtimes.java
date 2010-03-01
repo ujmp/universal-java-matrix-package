@@ -41,7 +41,15 @@ public interface Mtimes<S, T, U> {
 	public static Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
 
 		public void calc(final Matrix source1, final Matrix source2, final Matrix target) {
-			if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
+			if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
+					&& target instanceof DenseDoubleMatrix2D) {
+				Mtimes.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
+						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
+			} else if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
+					&& target instanceof DenseMatrix2D) {
+				Mtimes.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
+						(DenseMatrix2D) target);
+			} else if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix
 					&& target instanceof DenseMatrix) {
 				Mtimes.DENSEMATRIX.calc((DenseMatrix) source1, (DenseMatrix) source2,
 						(DenseMatrix) target);

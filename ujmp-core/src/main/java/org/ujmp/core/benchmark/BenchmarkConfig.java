@@ -48,7 +48,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	private boolean runOwlpackDenseDoubleMatrix2D = false;
 
-	private boolean runJScienceDenseDoubleMatrix2D = true;
+	private boolean runJScienceDenseDoubleMatrix2D = false;
 
 	private boolean runJSciDenseDoubleMatrix2D = false;
 
@@ -56,15 +56,15 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	private boolean runJLinAlgDenseDoubleMatrix2D = false;
 
-	private boolean runParallelColtDenseDoubleMatrix2D = true;
+	private boolean runParallelColtDenseDoubleMatrix2D = false;
 
-	private boolean runColtDenseDoubleMatrix2D = true;
+	private boolean runColtDenseDoubleMatrix2D = false;
 
 	private boolean runSSTDenseDoubleMatrix2D = false;
 
 	private boolean runCommonsMathArrayDenseDoubleMatrix2D = false;
 
-	private boolean runCommonsMathBlockDenseDoubleMatrix2D = true;
+	private boolean runCommonsMathBlockDenseDoubleMatrix2D = false;
 
 	private boolean runEJMLDenseDoubleMatrix2D = true;
 
@@ -86,25 +86,25 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("reverse", false);
 		put("shuffle", false);
 		put("gcMemory", true);
-		put("purgeMemory", true);
+		put("purgeMemory", false);
 
 		put("burnInRuns", 3);
 		put("runs", 25);
 		put("defaultTrialCount", 1);
-		put("maxTrialCount", 5);
+		put("maxTrialCount", 2);
 		put("maxTime", 10000); // maximal time for one operation
 		put("maxStd", 10); // maximal standard deviation results may vary
 
-		put("runTimesScalar", true);
-		put("runPlusMatrix", true);
-		put("runTranspose", true);
+		put("runTimesScalar", false);
+		put("runPlusMatrix", false);
+		put("runTranspose", false);
 		put("runMtimes", true);
-		put("runInv", true);
-		put("runSolveSquare", true);
-		put("runSolveTall", true);
-		put("runSVD", true);
-		put("runEig", true);
-		put("runChol", true);
+		put("runInv", false);
+		put("runSolveSquare", false);
+		put("runSolveTall", false);
+		put("runSVD", false);
+		put("runEig", false);
+		put("runChol", false);
 		put("runLU", false);
 		put("runQR", false);
 	}

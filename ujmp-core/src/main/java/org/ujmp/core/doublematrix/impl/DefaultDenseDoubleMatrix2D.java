@@ -63,6 +63,13 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		this.values = new double[rows * cols];
 	}
 
+	public DefaultDenseDoubleMatrix2D(long rows, long cols) {
+		this.rows = (int) rows;
+		this.cols = (int) cols;
+		this.size = new long[] { rows, cols };
+		this.values = new double[this.rows * this.cols];
+	}
+
 	public DefaultDenseDoubleMatrix2D(double[] v, int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;

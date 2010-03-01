@@ -21,16 +21,16 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core.doublematrix.factory;
 
-import java.io.Serializable;
-
+import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.MatrixMultiDFactory;
 
-public interface Matrix2DFactory extends Serializable {
+public interface DoubleMatrixMultiDFactory extends MatrixMultiDFactory {
 
-	public DenseMatrix2D dense(long rows, long columns) throws MatrixException;
+	public DenseDoubleMatrix dense(long... size) throws MatrixException;
 
-	public SparseMatrix sparse(long rows, long columns) throws MatrixException;
+	public DenseDoubleMatrix zeros(long... size) throws MatrixException;
 
 }

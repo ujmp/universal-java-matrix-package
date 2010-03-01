@@ -64,11 +64,7 @@ import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix;
 import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
 import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix;
 import org.ujmp.core.datematrix.stub.AbstractSparseDateMatrix2D;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
@@ -126,8 +122,6 @@ public class MatrixMapper implements ClassMapper {
 
 	private Constructor<?> denseDateMatrix2DConstructor = null;
 
-	private Constructor<?> denseDoubleMatrix2DConstructor = null;
-
 	private Constructor<?> denseFloatMatrix2DConstructor = null;
 
 	private Constructor<?> denseIntMatrix2DConstructor = null;
@@ -147,8 +141,6 @@ public class MatrixMapper implements ClassMapper {
 	private Constructor<?> denseCharMatrixMultiDConstructor = null;
 
 	private Constructor<?> denseDateMatrixMultiDConstructor = null;
-
-	private Constructor<?> denseDoubleMatrixMultiDConstructor = null;
 
 	private Constructor<?> denseFloatMatrixMultiDConstructor = null;
 
@@ -257,8 +249,6 @@ public class MatrixMapper implements ClassMapper {
 			setSparseDateMatrix2DClassName(DefaultSparseDateMatrix.class.getName());
 			setSparseDateMatrixMultiDClassName(DefaultSparseDateMatrix.class.getName());
 
-			setDenseDoubleMatrix2DClassName(DefaultDenseDoubleMatrix2D.class.getName());
-			setDenseDoubleMatrixMultiDClassName(DefaultDenseDoubleMatrixMultiD.class.getName());
 			setSparseDoubleMatrix2DClassName(DefaultSparseDoubleMatrix.class.getName());
 			setSparseDoubleMatrixMultiDClassName(DefaultSparseDoubleMatrix.class.getName());
 
@@ -306,32 +296,6 @@ public class MatrixMapper implements ClassMapper {
 			logger.log(Level.SEVERE, "Default Matrix classes not found, this should never happen",
 					e);
 		}
-	}
-
-	public void setDenseDoubleMatrix2DClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDoubleMatrix2D.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultDenseDoubleMatrix2D.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDoubleMatrix2DConstructor = matrixClass.getConstructor(LONGARRAY);
-	}
-
-	public void setDenseDoubleMatrixMultiDClassName(String className) throws Exception {
-		matrixClasses.put(AbstractDenseDoubleMatrix.class, className);
-		Class<?> matrixClass = null;
-		try {
-			matrixClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			matrixClass = DefaultSparseDoubleMatrix.class;
-			logger.log(Level.WARNING, "Could not find " + className + ", using " + matrixClass
-					+ " instead.");
-		}
-		denseDoubleMatrixMultiDConstructor = matrixClass.getConstructor(LONGARRAY);
 	}
 
 	public void setSparseDoubleMatrix2DClassName(String className) throws Exception {
@@ -1004,10 +968,6 @@ public class MatrixMapper implements ClassMapper {
 		return denseDateMatrix2DConstructor;
 	}
 
-	public Constructor<?> getDenseDoubleMatrix2DConstructor() {
-		return denseDoubleMatrix2DConstructor;
-	}
-
 	public Constructor<?> getDenseFloatMatrix2DConstructor() {
 		return denseFloatMatrix2DConstructor;
 	}
@@ -1046,10 +1006,6 @@ public class MatrixMapper implements ClassMapper {
 
 	public Constructor<?> getDenseDateMatrixMultiDConstructor() {
 		return denseDateMatrixMultiDConstructor;
-	}
-
-	public Constructor<?> getDenseDoubleMatrixMultiDConstructor() {
-		return denseDoubleMatrixMultiDConstructor;
 	}
 
 	public Constructor<?> getDenseFloatMatrixMultiDConstructor() {

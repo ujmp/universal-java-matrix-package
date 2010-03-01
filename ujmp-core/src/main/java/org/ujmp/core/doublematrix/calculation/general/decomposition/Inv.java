@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
@@ -60,7 +61,7 @@ public interface Inv<T> {
 
 	public Inv<Matrix> UJMP = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
-			DenseDoubleMatrix2D b = DenseDoubleMatrix2D.factory.dense(source.getRowCount(), source
+			DenseDoubleMatrix2D b = DoubleMatrix2D.Factory.dense(source.getRowCount(), source
 					.getRowCount());
 			for (int i = (int) source.getRowCount(); --i >= 0;) {
 				b.setDouble(1.0, i, i);

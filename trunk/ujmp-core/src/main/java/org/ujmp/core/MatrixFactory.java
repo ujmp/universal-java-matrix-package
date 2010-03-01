@@ -859,11 +859,18 @@ public abstract class MatrixFactory {
 	}
 
 	public static Matrix like(Matrix matrix) {
-		try {
-			Constructor<?> con = matrix.getClass().getConstructor(long[].class);
-			return (Matrix) con.newInstance(matrix.getSize());
-		} catch (Throwable e) {
+		if (matrix.isSparse()) {
+			return MatrixFactory.sparse(matrix.getSize());
+		} else {
 			return MatrixFactory.dense(matrix.getSize());
+		}
+	}
+
+	public static Matrix like(Matrix matrix, long... size) {
+		if (matrix.isSparse()) {
+			return MatrixFactory.sparse(size);
+		} else {
+			return MatrixFactory.dense(size);
 		}
 	}
 

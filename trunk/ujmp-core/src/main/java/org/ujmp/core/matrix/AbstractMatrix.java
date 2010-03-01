@@ -153,8 +153,8 @@ import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
-import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.HasLabel;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
 import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
@@ -842,19 +842,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		Matrix result = null;
-		try {
-			if (matrix instanceof SparseMatrix) {
-				result = matrix.getClass().getConstructor(long[].class).newInstance(
-						new long[] { getRowCount(), matrix.getColumnCount() });
-			} else {
-				result = this.getClass().getConstructor(long[].class).newInstance(
-						new long[] { getRowCount(), matrix.getColumnCount() });
-
-			}
-		} catch (Exception e) {
-			result = MatrixFactory.dense(getRowCount(), matrix.getColumnCount());
-		}
+		Matrix result = MatrixFactory.like(this, getRowCount(), matrix.getColumnCount());
 		Ops.MTIMES.calc(this, matrix, result);
 		return result;
 	}

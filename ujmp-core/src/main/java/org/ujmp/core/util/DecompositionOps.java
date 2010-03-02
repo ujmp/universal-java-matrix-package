@@ -49,6 +49,8 @@ public abstract class DecompositionOps {
 
 	public static Inv<Matrix> INV_OJALGO = null;
 
+	public static Inv<Matrix> INV_JBLAS = null;
+
 	public static Inv<Matrix> INV_MTJ = null;
 
 	public static Solve<Matrix> SOLVE_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.INSTANCE;
@@ -59,6 +61,8 @@ public abstract class DecompositionOps {
 
 	public static Solve<Matrix> SOLVE_MTJ = null;
 
+	public static Solve<Matrix> SOLVE_JBLAS = null;
+
 	public static LU<Matrix> LU_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
 
 	public static LU<Matrix> LU_EJML = null;
@@ -66,6 +70,8 @@ public abstract class DecompositionOps {
 	public static LU<Matrix> LU_OJALGO = null;
 
 	public static LU<Matrix> LU_MTJ = null;
+
+	public static LU<Matrix> LU_JBLAS = null;
 
 	public static QR<Matrix> QR_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
 
@@ -83,6 +89,8 @@ public abstract class DecompositionOps {
 
 	public static Chol<Matrix> CHOL_MTJ = null;
 
+	public static Chol<Matrix> CHOL_JBLAS = null;
+
 	public static Eig<Matrix> EIG_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Eig.INSTANCE;
 
 	public static Eig<Matrix> EIG_EJML = null;
@@ -90,6 +98,8 @@ public abstract class DecompositionOps {
 	public static Eig<Matrix> EIG_OJALGO = null;
 
 	public static Eig<Matrix> EIG_MTJ = null;
+
+	public static Eig<Matrix> EIG_JBLAS = null;
 
 	static {
 		init();
@@ -107,113 +117,234 @@ public abstract class DecompositionOps {
 
 	public static void initSVD() {
 		try {
-			SVD_EJML = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SVD_EJML = (SVD<Matrix>) Class.forName("org.ujmp.ejml.calculation.SVD")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			SVD_OJALGO = (SVD<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.SVD")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				SVD_OJALGO = (SVD<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.SVD")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			SVD_MTJ = (SVD<Matrix>) Class.forName("org.ujmp.mtj.calculation.SVD").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SVD_MTJ = (SVD<Matrix>) Class.forName("org.ujmp.mtj.calculation.SVD").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initInv() {
 		try {
-			INV_EJML = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				INV_EJML = (Inv<Matrix>) Class.forName("org.ujmp.ejml.calculation.Inv")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			INV_OJALGO = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				INV_OJALGO = (Inv<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Inv")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			INV_MTJ = (Inv<Matrix>) Class.forName("org.ujmp.mtj.calculation.Inv").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				INV_JBLAS = (Inv<Matrix>) Class.forName("org.ujmp.jblas.calculation.Inv")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				INV_MTJ = (Inv<Matrix>) Class.forName("org.ujmp.mtj.calculation.Inv").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initSolve() {
 		try {
-			SOLVE_EJML = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
-					.newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SOLVE_EJML = (Solve<Matrix>) Class.forName("org.ujmp.ejml.calculation.Solve")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			SOLVE_OJALGO = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				SOLVE_OJALGO = (Solve<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Solve")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			SOLVE_MTJ = (Solve<Matrix>) Class.forName("org.ujmp.mtj.calculation.Solve")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				SOLVE_JBLAS = (Solve<Matrix>) Class.forName("org.ujmp.jblas.calculation.Solve")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SOLVE_MTJ = (Solve<Matrix>) Class.forName("org.ujmp.mtj.calculation.Solve")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initLU() {
 		try {
-			LU_EJML = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				LU_EJML = (LU<Matrix>) Class.forName("org.ujmp.ejml.calculation.LU").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			LU_OJALGO = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				LU_OJALGO = (LU<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.LU")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			LU_MTJ = (LU<Matrix>) Class.forName("org.ujmp.mtj.calculation.LU").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				LU_MTJ = (LU<Matrix>) Class.forName("org.ujmp.mtj.calculation.LU").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				LU_JBLAS = (LU<Matrix>) Class.forName("org.ujmp.jblas.calculation.LU")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initQR() {
 		try {
-			QR_EJML = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				QR_EJML = (QR<Matrix>) Class.forName("org.ujmp.ejml.calculation.QR").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			QR_OJALGO = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				QR_OJALGO = (QR<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.QR")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			QR_MTJ = (QR<Matrix>) Class.forName("org.ujmp.mtj.calculation.QR").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				QR_MTJ = (QR<Matrix>) Class.forName("org.ujmp.mtj.calculation.QR").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initChol() {
 		try {
-			CHOL_EJML = (Chol<Matrix>) Class.forName("org.ujmp.ejml.calculation.Chol")
-					.newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				CHOL_EJML = (Chol<Matrix>) Class.forName("org.ujmp.ejml.calculation.Chol")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			CHOL_OJALGO = (Chol<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Chol")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				CHOL_OJALGO = (Chol<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Chol")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			CHOL_MTJ = (Chol<Matrix>) Class.forName("org.ujmp.mtj.calculation.Chol").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				CHOL_MTJ = (Chol<Matrix>) Class.forName("org.ujmp.mtj.calculation.Chol")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				CHOL_JBLAS = (Chol<Matrix>) Class.forName("org.ujmp.jblas.calculation.Chol")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}
 
 	public static void initEig() {
 		try {
-			EIG_EJML = (Eig<Matrix>) Class.forName("org.ujmp.ejml.calculation.Eig").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				EIG_EJML = (Eig<Matrix>) Class.forName("org.ujmp.ejml.calculation.Eig")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			EIG_OJALGO = (Eig<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Eig")
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
 					.newInstance();
+			if (p.isAvailable()) {
+				EIG_OJALGO = (Eig<Matrix>) Class.forName("org.ujmp.ojalgo.calculation.Eig")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 		try {
-			EIG_MTJ = (Eig<Matrix>) Class.forName("org.ujmp.mtj.calculation.Eig").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				EIG_MTJ = (Eig<Matrix>) Class.forName("org.ujmp.mtj.calculation.Eig").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				EIG_JBLAS = (Eig<Matrix>) Class.forName("org.ujmp.jblas.calculation.Eig")
+						.newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}

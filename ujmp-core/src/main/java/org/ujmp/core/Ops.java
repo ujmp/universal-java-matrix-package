@@ -40,6 +40,7 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.util.AbstractPlugin;
 
 /**
  * @deprecated use <code>Matrix.[operation]</code> instead
@@ -89,8 +90,12 @@ public abstract class Ops {
 	@SuppressWarnings("unchecked")
 	public static void init() {
 		try {
-			MTIMES_JBLAS = (Mtimes<Matrix, Matrix, Matrix>) Class.forName(
-					"org.ujmp.jblas.calculation.Mtimes").newInstance();
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				MTIMES_JBLAS = (Mtimes<Matrix, Matrix, Matrix>) Class.forName(
+						"org.ujmp.jblas.calculation.Mtimes").newInstance();
+			}
 		} catch (Throwable t) {
 		}
 	}

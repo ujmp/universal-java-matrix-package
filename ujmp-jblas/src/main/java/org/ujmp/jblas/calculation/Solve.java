@@ -21,15 +21,12 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.ojalgo.calculation;
+package org.ujmp.jblas.calculation;
 
-import org.ojalgo.matrix.decomposition.LU;
-import org.ojalgo.matrix.decomposition.LUDecomposition;
-import org.ojalgo.matrix.decomposition.QR;
-import org.ojalgo.matrix.decomposition.QRDecomposition;
-import org.ojalgo.matrix.store.PrimitiveDenseStore;
+import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
-import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
 public class Solve
 		implements
@@ -38,28 +35,29 @@ public class Solve
 	public static Solve INSTANCE = new Solve();
 
 	public Matrix calc(Matrix a, Matrix b) {
-		PrimitiveDenseStore a2 = null;
-		PrimitiveDenseStore b2 = null;
-		if (a instanceof OjalgoDenseDoubleMatrix2D) {
-			a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
+		DoubleMatrix a2 = null;
+		DoubleMatrix b2 = null;
+		if (a instanceof JBlasDenseDoubleMatrix2D) {
+			a2 = ((JBlasDenseDoubleMatrix2D) a).getWrappedObject();
+		} else if (a instanceof HasColumnMajorDoubleArray1D) {
+			a2 = new JBlasDenseDoubleMatrix2D(a.getRowCount(), a
+					.getColumnCount(), ((HasColumnMajorDoubleArray1D) a)
+					.getColumnMajorDoubleArray1D()).getWrappedObject();
 		} else {
-			a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
+			a2 = new JBlasDenseDoubleMatrix2D(a).getWrappedObject();
 		}
-		if (b instanceof OjalgoDenseDoubleMatrix2D) {
-			b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
+		if (b instanceof JBlasDenseDoubleMatrix2D) {
+			b2 = ((JBlasDenseDoubleMatrix2D) b).getWrappedObject();
+		} else if (b instanceof HasColumnMajorDoubleArray1D) {
+			b2 = new JBlasDenseDoubleMatrix2D(b.getRowCount(), b
+					.getColumnCount(), ((HasColumnMajorDoubleArray1D) b)
+					.getColumnMajorDoubleArray1D()).getWrappedObject();
 		} else {
-			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
+			b2 = new JBlasDenseDoubleMatrix2D(b).getWrappedObject();
 		}
 		try {
-			if (a.isSquare()) {
-				final LU<Double> lu = LUDecomposition.makePrimitive();
-				lu.compute(a2);
-				return new OjalgoDenseDoubleMatrix2D(lu.solve(b2));
-			} else {
-				final QR<Double> qr = QRDecomposition.makePrimitive();
-				qr.compute(a2);
-				return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
-			}
+			DoubleMatrix x = org.jblas.Solve.solve(a2, b2);
+			return new JBlasDenseDoubleMatrix2D(x);
 		} catch (final Throwable t) {
 			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMPSQUARE
 					.calc(a, b);

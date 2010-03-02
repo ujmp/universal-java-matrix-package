@@ -31,6 +31,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.jblas.calculation.Inv;
 
 public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DoubleMatrix> {
@@ -60,9 +61,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix inv() throws MatrixException {
-		DoubleMatrix I = DoubleMatrix.eye(matrix.getRows());
-		DoubleMatrix result = Solve.solve(matrix, I);
-		return new JBlasDenseDoubleMatrix2D(result);
+		return Inv.INSTANCE.calc(this);
 	}
 
 	public double getDouble(long row, long column) {
@@ -94,7 +93,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public final Matrix copy() throws MatrixException {
-		Matrix m = new JBlasDenseDoubleMatrix2D(matrix.copy(getWrappedObject()));
+		Matrix m = new JBlasDenseDoubleMatrix2D(matrix.dup());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
 		}

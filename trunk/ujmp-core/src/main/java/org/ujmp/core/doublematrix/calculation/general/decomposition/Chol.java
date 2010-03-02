@@ -45,7 +45,7 @@ public interface Chol<T> {
 
 	public T solve(T source, T b);
 
-	public static int THRESHOLD = 700;
+	public static int THRESHOLD = 100;
 
 	public static final Chol<Matrix> MATRIX = new Chol<Matrix>() {
 
@@ -101,11 +101,9 @@ public interface Chol<T> {
 
 	public static final Chol<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static final Chol<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
-
-	public static final Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
+	public static final Chol<Matrix> MATRIXLARGESINGLETHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_OJALGO;
+			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
 			if (chol == null) {
 				chol = UJMP;
 			}
@@ -113,7 +111,7 @@ public interface Chol<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_OJALGO;
+			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
 			if (chol == null) {
 				chol = UJMP;
 			}
@@ -121,7 +119,31 @@ public interface Chol<T> {
 		}
 	};
 
-	class CholMatrix {
+	public static final Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
+		public Matrix calc(Matrix source) {
+			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
+			if (chol == null) {
+				chol = DecompositionOps.CHOL_OJALGO;
+			}
+			if (chol == null) {
+				chol = UJMP;
+			}
+			return chol.calc(source);
+		}
+
+		public final Matrix solve(Matrix source, Matrix b) {
+			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
+			if (chol == null) {
+				chol = DecompositionOps.CHOL_OJALGO;
+			}
+			if (chol == null) {
+				chol = UJMP;
+			}
+			return chol.solve(source, b);
+		}
+	};
+
+	final class CholMatrix {
 		private static final long serialVersionUID = 400514872358216115L;
 
 		/**

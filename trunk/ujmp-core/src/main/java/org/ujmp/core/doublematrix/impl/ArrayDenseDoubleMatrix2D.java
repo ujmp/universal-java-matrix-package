@@ -32,7 +32,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		HasRowMajorDoubleArray2D {
 	private static final long serialVersionUID = 3132491298449205914L;
 
-	private double[][] values = null;
+	private final double[][] values;
 
 	public ArrayDenseDoubleMatrix2D(Matrix m) throws MatrixException {
 		if (m instanceof ArrayDenseDoubleMatrix2D) {

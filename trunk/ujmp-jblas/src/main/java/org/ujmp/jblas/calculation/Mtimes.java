@@ -33,8 +33,8 @@ public class Mtimes implements
 		org.ujmp.core.calculation.Mtimes<Matrix, Matrix, Matrix> {
 
 	public void calc(Matrix source1, Matrix source2, Matrix target) {
-		DoubleMatrix m1 = null;
-		DoubleMatrix m2 = null;
+		final DoubleMatrix m1;
+		final DoubleMatrix m2;
 		if (source1 instanceof JBlasDenseDoubleMatrix2D) {
 			m1 = ((JBlasDenseDoubleMatrix2D) source1).getWrappedObject();
 		} else if (source1 instanceof HasColumnMajorDoubleArray1D) {
@@ -54,26 +54,26 @@ public class Mtimes implements
 			m2 = new JBlasDenseDoubleMatrix2D(source2).getWrappedObject();
 		}
 		if (target instanceof JBlasDenseDoubleMatrix2D) {
-			DoubleMatrix t = ((JBlasDenseDoubleMatrix2D) target)
+			final DoubleMatrix t = ((JBlasDenseDoubleMatrix2D) target)
 					.getWrappedObject();
 			m1.mmuli(m2, t);
 		} else if (target instanceof HasColumnMajorDoubleArray1D) {
-			DoubleMatrix t = new DoubleMatrix((int) target.getRowCount(),
+			final DoubleMatrix t = new DoubleMatrix((int) target.getRowCount(),
 					(int) target.getColumnCount(),
 					((HasColumnMajorDoubleArray1D) target)
 							.getColumnMajorDoubleArray1D());
 			m1.mmuli(m2, t);
 		} else if (target instanceof DenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D t = (DenseDoubleMatrix2D) target;
-			DoubleMatrix r = new DoubleMatrix((int) source1.getRowCount(),
-					(int) source2.getColumnCount());
+			final DenseDoubleMatrix2D t = (DenseDoubleMatrix2D) target;
+			final DoubleMatrix r = new DoubleMatrix(
+					(int) source1.getRowCount(), (int) source2.getColumnCount());
 			m1.mmuli(m2, r);
 			for (long[] c : target.allCoordinates()) {
 				t.setDouble(r.get((int) c[0], (int) c[1]), c);
 			}
 		} else {
-			DoubleMatrix r = new DoubleMatrix((int) source1.getRowCount(),
-					(int) source2.getColumnCount());
+			final DoubleMatrix r = new DoubleMatrix(
+					(int) source1.getRowCount(), (int) source2.getColumnCount());
 			m1.mmuli(m2, r);
 			for (long[] c : target.allCoordinates()) {
 				target.setAsDouble(r.get((int) c[0], (int) c[1]), c);

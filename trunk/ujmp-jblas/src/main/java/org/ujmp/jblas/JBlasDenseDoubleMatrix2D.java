@@ -23,15 +23,16 @@
 
 package org.ujmp.jblas;
 
-import org.jblas.Decompose;
 import org.jblas.DoubleMatrix;
-import org.jblas.Eigen;
-import org.jblas.Solve;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.jblas.calculation.Chol;
+import org.ujmp.jblas.calculation.Eig;
 import org.ujmp.jblas.calculation.Inv;
+import org.ujmp.jblas.calculation.LU;
+import org.ujmp.jblas.calculation.Solve;
 
 public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DoubleMatrix> {
@@ -105,23 +106,15 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] lu() {
-		Decompose.LUDecomposition<DoubleMatrix> lu = Decompose.lu(matrix);
-		Matrix l = new JBlasDenseDoubleMatrix2D(lu.l);
-		Matrix u = new JBlasDenseDoubleMatrix2D(lu.u);
-		Matrix p = new JBlasDenseDoubleMatrix2D(lu.p.transpose());
-		return new Matrix[] { l, u, p };
+		return LU.INSTANCE.calc(this);
 	}
 
 	public Matrix[] eig() {
-		DoubleMatrix[] eig = Eigen.symmetricEigenvectors(matrix);
-		Matrix v = new JBlasDenseDoubleMatrix2D(eig[0]);
-		Matrix d = new JBlasDenseDoubleMatrix2D(eig[1]);
-		return new Matrix[] { v, d };
+		return Eig.INSTANCE.calc(this);
 	}
 
 	public Matrix chol() {
-		DoubleMatrix r = Decompose.cholesky(matrix);
-		return new JBlasDenseDoubleMatrix2D(r.transpose());
+		return Chol.INSTANCE.calc(this);
 	}
 
 	public Matrix mtimes(Matrix m) {
@@ -182,13 +175,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix solve(Matrix b) {
-		if (b instanceof JBlasDenseDoubleMatrix2D) {
-			JBlasDenseDoubleMatrix2D b2 = (JBlasDenseDoubleMatrix2D) b;
-			DoubleMatrix x = Solve.solve(matrix, b2.getWrappedObject());
-			return new JBlasDenseDoubleMatrix2D(x);
-		} else {
-			return super.solve(b);
-		}
+		return Solve.INSTANCE.calc(this, b);
 	}
 
 }

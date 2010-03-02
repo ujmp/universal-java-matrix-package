@@ -38,6 +38,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray1D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ejml.calculation.Inv;
 import org.ujmp.ejml.calculation.QR;
@@ -45,7 +46,7 @@ import org.ujmp.ejml.calculation.SVD;
 import org.ujmp.ejml.calculation.Solve;
 
 public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<DenseMatrix64F> {
+		implements Wrapper<DenseMatrix64F>, HasRowMajorDoubleArray1D {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private transient DenseMatrix64F matrix = null;
@@ -267,6 +268,10 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		s.writeObject(matrix.numRows);
 		s.writeObject(matrix.numCols);
 		s.writeObject(matrix.data);
+	}
+
+	public double[] getRowMajorDoubleArray1D() {
+		return matrix.getData();
 	}
 
 }

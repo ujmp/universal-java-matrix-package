@@ -47,7 +47,7 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface Eig<T> {
 
-	public static int THRESHOLD = 300;
+	public static int THRESHOLD = 100;
 
 	public T[] calc(T source);
 
@@ -72,7 +72,10 @@ public interface Eig<T> {
 
 	public static final Eig<Matrix> MATRIXLARGESINGLETHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
-			Eig<Matrix> eig = DecompositionOps.EIG_OJALGO;
+			Eig<Matrix> eig = DecompositionOps.EIG_JBLAS;
+			if (eig == null) {
+				eig = DecompositionOps.EIG_EJML;
+			}
 			if (eig == null) {
 				eig = UJMP;
 			}
@@ -82,7 +85,13 @@ public interface Eig<T> {
 
 	public static final Eig<Matrix> MATRIXLARGEMULTITHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
-			Eig<Matrix> eig = DecompositionOps.EIG_OJALGO;
+			Eig<Matrix> eig = DecompositionOps.EIG_JBLAS;
+			if (eig == null) {
+				eig = DecompositionOps.EIG_OJALGO;
+			}
+			if (eig == null) {
+				eig = DecompositionOps.EIG_EJML;
+			}
 			if (eig == null) {
 				eig = UJMP;
 			}
@@ -104,15 +113,17 @@ public interface Eig<T> {
 
 	public static final Eig<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	class EigMatrix {
+	final class EigMatrix {
 		private static final long serialVersionUID = -4312402808395971553L;
+
+		private static final double EPSILON = Math.pow(2.0, -52.0);
 
 		/**
 		 * Row and column dimension (square matrix).
 		 * 
 		 * @serial matrix dimension.
 		 */
-		private int n;
+		private final int n;
 
 		/**
 		 * Symmetry flag.
@@ -126,35 +137,35 @@ public interface Eig<T> {
 		 * 
 		 * @serial internal storage of eigenvalues.
 		 */
-		private double[] d, e;
+		private final double[] d, e;
 
 		/**
 		 * Array for internal storage of eigenvectors.
 		 * 
 		 * @serial internal storage of eigenvectors.
 		 */
-		private double[][] V;
+		private final double[][] V;
 
 		/**
 		 * Array for internal storage of nonsymmetric Hessenberg form.
 		 * 
 		 * @serial internal storage of nonsymmetric Hessenberg form.
 		 */
-		private double[][] H;
+		private final double[][] H;
 
 		/**
 		 * Working storage for nonsymmetric algorithm.
 		 * 
 		 * @serial working storage for nonsymmetric algorithm.
 		 */
-		private double[] ort;
+		private final double[] ort;
 
 		/*
 		 * ------------------------ Private Methods ------------------------
 		 */
 
 		// Symmetric Householder reduction to tridiagonal form.
-		private void tred2() {
+		private final void tred2() {
 
 			// This is derived from the Algol procedures tred2 by
 			// Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -220,7 +231,7 @@ public interface Eig<T> {
 						e[j] /= h;
 						f += e[j] * d[j];
 					}
-					double hh = f / (h + h);
+					final double hh = f / (h + h);
 					for (int j = 0; j < i; j++) {
 						e[j] -= hh * d[j];
 					}
@@ -242,7 +253,7 @@ public interface Eig<T> {
 			for (int i = 0; i < n - 1; i++) {
 				V[n - 1][i] = V[i][i];
 				V[i][i] = 1.0;
-				double h = d[i + 1];
+				final double h = d[i + 1];
 				if (h != 0.0) {
 					for (int k = 0; k <= i; k++) {
 						d[k] = V[k][i + 1] / h;
@@ -271,7 +282,7 @@ public interface Eig<T> {
 
 		// Symmetric tridiagonal QL algorithm.
 
-		private void tql2() {
+		private final void tql2() {
 
 			// This is derived from the Algol procedures tql2, by
 			// Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -285,7 +296,6 @@ public interface Eig<T> {
 
 			double f = 0.0;
 			double tst1 = 0.0;
-			double eps = Math.pow(2.0, -52.0);
 			for (int l = 0; l < n; l++) {
 
 				// Find small subdiagonal element
@@ -293,7 +303,7 @@ public interface Eig<T> {
 				tst1 = Math.max(tst1, Math.abs(d[l]) + Math.abs(e[l]));
 				int m = l;
 				while (m < n) {
-					if (Math.abs(e[m]) <= eps * tst1) {
+					if (Math.abs(e[m]) <= EPSILON * tst1) {
 						break;
 					}
 					m++;
@@ -317,7 +327,7 @@ public interface Eig<T> {
 						}
 						d[l] = e[l] / (p + r);
 						d[l + 1] = e[l] * (p + r);
-						double dl1 = d[l + 1];
+						final double dl1 = d[l + 1];
 						double h = g - d[l];
 						for (int i = l + 2; i < n; i++) {
 							d[i] -= h;
@@ -360,7 +370,7 @@ public interface Eig<T> {
 
 						// Check for convergence.
 
-					} while (Math.abs(e[l]) > eps * tst1);
+					} while (Math.abs(e[l]) > EPSILON * tst1);
 				}
 				d[l] = d[l] + f;
 				e[l] = 0.0;
@@ -390,18 +400,16 @@ public interface Eig<T> {
 		}
 
 		// Nonsymmetric reduction to Hessenberg form.
-
-		private void orthes() {
+		private final void orthes() {
 
 			// This is derived from the Algol procedures orthes and ortran,
 			// by Martin and Wilkinson, Handbook for Auto. Comp.,
 			// Vol.ii-Linear Algebra, and the corresponding
 			// Fortran subroutines in EISPACK.
 
-			int low = 0;
-			int high = n - 1;
+			final int high = n - 1;
 
-			for (int m = low + 1; m <= high - 1; m++) {
+			for (int m = 1; m <= high - 1; m++) {
 
 				// Scale column.
 
@@ -462,7 +470,7 @@ public interface Eig<T> {
 				}
 			}
 
-			for (int m = high - 1; m >= low + 1; m--) {
+			for (int m = high - 1; m >= 1; m--) {
 				if (H[m][m - 1] != 0.0) {
 					for (int i = m + 1; i <= high; i++) {
 						ort[i] = H[i][m - 1];
@@ -486,7 +494,7 @@ public interface Eig<T> {
 
 		private transient double cdivr, cdivi;
 
-		private void cdiv(double xr, double xi, double yr, double yi) {
+		private final void cdiv(double xr, double xi, double yr, double yi) {
 			double r, d;
 			if (Math.abs(yr) > Math.abs(yi)) {
 				r = yi / yr;
@@ -503,7 +511,7 @@ public interface Eig<T> {
 
 		// Nonsymmetric reduction from Hessenberg to real Schur form.
 
-		private void hqr2() {
+		private final void hqr2() {
 
 			// This is derived from the Algol procedure hqr2,
 			// by Martin and Wilkinson, Handbook for Auto. Comp.,
@@ -512,11 +520,11 @@ public interface Eig<T> {
 
 			// Initialize
 
-			int nn = this.n;
+			final int nn = this.n;
 			int n = nn - 1;
 			int low = 0;
 			int high = nn - 1;
-			double eps = Math.pow(2.0, -52.0);
+
 			double exshift = 0.0;
 			double p = 0, q = 0, r = 0, s = 0, z = 0, t, w, x, y;
 
@@ -546,7 +554,7 @@ public interface Eig<T> {
 					if (s == 0.0) {
 						s = norm;
 					}
-					if (Math.abs(H[l][l - 1]) < eps * s) {
+					if (Math.abs(H[l][l - 1]) < EPSILON * s) {
 						break;
 					}
 					l--;
@@ -695,7 +703,7 @@ public interface Eig<T> {
 						if (m == l) {
 							break;
 						}
-						if (Math.abs(H[m][m - 1]) * (Math.abs(q) + Math.abs(r)) < eps
+						if (Math.abs(H[m][m - 1]) * (Math.abs(q) + Math.abs(r)) < EPSILON
 								* (Math.abs(p) * (Math.abs(H[m - 1][m - 1]) + Math.abs(z) + Math
 										.abs(H[m + 1][m + 1])))) {
 							break;
@@ -815,7 +823,7 @@ public interface Eig<T> {
 								if (w != 0.0) {
 									H[i][n] = -r / w;
 								} else {
-									H[i][n] = -r / (eps * norm);
+									H[i][n] = -r / (EPSILON * norm);
 								}
 
 								// Solve real equations
@@ -836,7 +844,7 @@ public interface Eig<T> {
 							// Overflow control
 
 							t = Math.abs(H[i][n]);
-							if ((eps * t) * t > 1) {
+							if ((EPSILON * t) * t > 1) {
 								for (int j = i; j <= n; j++) {
 									H[j][n] = H[j][n] / t;
 								}
@@ -890,7 +898,7 @@ public interface Eig<T> {
 								vr = (d[i] - p) * (d[i] - p) + e[i] * e[i] - q * q;
 								vi = (d[i] - p) * 2.0 * q;
 								if (vr == 0.0 & vi == 0.0) {
-									vr = eps
+									vr = EPSILON
 											* norm
 											* (Math.abs(w) + Math.abs(q) + Math.abs(x)
 													+ Math.abs(y) + Math.abs(z));
@@ -911,7 +919,7 @@ public interface Eig<T> {
 							// Overflow control
 
 							t = Math.max(Math.abs(H[i][n - 1]), Math.abs(H[i][n]));
-							if ((eps * t) * t > 1) {
+							if ((EPSILON * t) * t > 1) {
 								for (int j = i; j <= n; j++) {
 									H[j][n - 1] = H[j][n - 1] / t;
 									H[j][n] = H[j][n] / t;
@@ -963,6 +971,8 @@ public interface Eig<T> {
 			V = new double[n][n];
 			d = new double[n];
 			e = new double[n];
+			H = new double[n][n];
+			ort = new double[n];
 
 			issymmetric = true;
 			for (int j = 0; (j < n) & issymmetric; j++) {
@@ -985,8 +995,6 @@ public interface Eig<T> {
 				tql2();
 
 			} else {
-				H = new double[n][n];
-				ort = new double[n];
 
 				for (int j = 0; j < n; j++) {
 					for (int i = 0; i < n; i++) {
@@ -1012,7 +1020,7 @@ public interface Eig<T> {
 		 * @return V
 		 */
 
-		public Matrix getV() {
+		public final Matrix getV() {
 			return MatrixFactory.linkToArray(V);
 		}
 
@@ -1022,7 +1030,7 @@ public interface Eig<T> {
 		 * @return real(diag(D))
 		 */
 
-		public double[] getRealEigenvalues() {
+		public final double[] getRealEigenvalues() {
 			return d;
 		}
 
@@ -1032,7 +1040,7 @@ public interface Eig<T> {
 		 * @return imag(diag(D))
 		 */
 
-		public double[] getImagEigenvalues() {
+		public final double[] getImagEigenvalues() {
 			return e;
 		}
 
@@ -1042,8 +1050,8 @@ public interface Eig<T> {
 		 * @return D
 		 */
 
-		public Matrix getD() {
-			double[][] D = new double[n][n];
+		public final Matrix getD() {
+			final double[][] D = new double[n][n];
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
 					D[i][j] = 0.0;

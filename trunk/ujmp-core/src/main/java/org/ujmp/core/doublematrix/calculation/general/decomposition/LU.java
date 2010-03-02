@@ -27,7 +27,7 @@ public interface LU<T> {
 
 	public T solve(T source, T b);
 
-	public static int THRESHOLD = 700;
+	public static int THRESHOLD = 100;
 
 	public static final LU<Matrix> MATRIX = new LU<Matrix>() {
 
@@ -83,11 +83,9 @@ public interface LU<T> {
 
 	public static final LU<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
-	public static final LU<Matrix> MATRIXLARGESINGLETHREADED = UJMP;
-
-	public static final LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
+	public static final LU<Matrix> MATRIXLARGESINGLETHREADED = new LU<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
+			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
 			if (lu == null) {
 				lu = UJMP;
 			}
@@ -95,7 +93,10 @@ public interface LU<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = DecompositionOps.LU_OJALGO;
+			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
+			if (lu == null) {
+				lu = DecompositionOps.LU_OJALGO;
+			}
 			if (lu == null) {
 				lu = UJMP;
 			}
@@ -103,13 +104,37 @@ public interface LU<T> {
 		}
 	};
 
-	public class LUMatrix {
+	public static final LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
+		public final Matrix[] calc(Matrix source) {
+			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
+			if (lu == null) {
+				lu = DecompositionOps.LU_OJALGO;
+			}
+			if (lu == null) {
+				lu = UJMP;
+			}
+			return lu.calc(source);
+		}
+
+		public final Matrix solve(Matrix source, Matrix b) {
+			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
+			if (lu == null) {
+				lu = DecompositionOps.LU_OJALGO;
+			}
+			if (lu == null) {
+				lu = UJMP;
+			}
+			return lu.solve(source, b);
+		}
+	};
+
+	final class LUMatrix {
 		/**
 		 * Array for internal storage of decomposition.
 		 * 
 		 * @serial internal array storage.
 		 */
-		private double[][] LU;
+		private final double[][] LU;
 
 		/**
 		 * Row and column dimensions, and pivot sign.
@@ -118,14 +143,15 @@ public interface LU<T> {
 		 * @serial row dimension.
 		 * @serial pivot sign.
 		 */
-		private int m, n, pivsign;
+		private final int m, n;
+		private int pivsign;
 
 		/**
 		 * Internal storage of pivot vector.
 		 * 
 		 * @serial pivot vector.
 		 */
-		private int[] piv;
+		private final int[] piv;
 
 		/*
 		 * ------------------------ Constructor ------------------------
@@ -138,7 +164,6 @@ public interface LU<T> {
 		 *            Rectangular matrix
 		 * @return Structure to access L, U and piv.
 		 */
-
 		public LUMatrix(Matrix A) {
 
 			// Use a "left-looking", dot-product, Crout/Doolittle algorithm.
@@ -253,7 +278,7 @@ public interface LU<T> {
 		 * @return true if U, and hence A, is nonsingular.
 		 */
 
-		public boolean isNonsingular() {
+		public final boolean isNonsingular() {
 			for (int j = 0; j < n; j++) {
 				if (LU[j][j] == 0)
 					return false;
@@ -267,7 +292,7 @@ public interface LU<T> {
 		 * @return L
 		 */
 
-		public Matrix getL() {
+		public final Matrix getL() {
 			final int min = Math.min(m, n);
 			final double[][] L = new double[m][min];
 			for (int i = 0; i < m; i++) {
@@ -288,7 +313,7 @@ public interface LU<T> {
 		 * @return U
 		 */
 
-		public Matrix getU() {
+		public final Matrix getU() {
 			final int min = Math.min(m, n);
 			final double[][] U = new double[min][n];
 			for (int i = 0; i < min; i++) {
@@ -307,16 +332,16 @@ public interface LU<T> {
 		 * @return piv
 		 */
 
-		public int[] getPivot() {
-			int[] p = new int[m];
+		public final int[] getPivot() {
+			final int[] p = new int[m];
 			for (int i = 0; i < m; i++) {
 				p[i] = piv[i];
 			}
 			return p;
 		}
 
-		public Matrix getP() {
-			DenseDoubleMatrix2D p = DoubleMatrix2D.factory.dense(m, m);
+		public final Matrix getP() {
+			final DenseDoubleMatrix2D p = DoubleMatrix2D.factory.dense(m, m);
 			for (int i = 0; i < m; i++) {
 				p.setDouble(1, i, piv[i]);
 			}
@@ -329,8 +354,8 @@ public interface LU<T> {
 		 * @return (double) piv
 		 */
 
-		public double[] getDoublePivot() {
-			double[] vals = new double[m];
+		public final double[] getDoublePivot() {
+			final double[] vals = new double[m];
 			for (int i = 0; i < m; i++) {
 				vals[i] = (double) piv[i];
 			}
@@ -345,7 +370,7 @@ public interface LU<T> {
 		 *                Matrix must be square
 		 */
 
-		public double det() {
+		public final double det() {
 			if (m != n) {
 				throw new IllegalArgumentException("Matrix must be square.");
 			}
@@ -368,7 +393,7 @@ public interface LU<T> {
 		 *                Matrix is singular.
 		 */
 
-		public Matrix solve(Matrix B) {
+		public final Matrix solve(Matrix B) {
 			if (B.getRowCount() != m) {
 				throw new IllegalArgumentException("Matrix row dimensions must agree.");
 			}

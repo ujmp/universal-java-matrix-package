@@ -233,7 +233,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	private transient GUIObject guiObject = null;
 
-	private long id = 0;
+	private final long id;
 
 	private Annotation annotation = null;
 

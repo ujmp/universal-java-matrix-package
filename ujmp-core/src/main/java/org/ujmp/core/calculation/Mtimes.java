@@ -36,7 +36,7 @@ import org.ujmp.core.util.concurrent.PFor;
 
 public interface Mtimes<S, T, U> {
 
-	public static int THRESHOLD = 20;
+	public static int THRESHOLD = 100;
 
 	public static final Mtimes<Matrix, Matrix, Matrix> INSTANCE = new Mtimes<Matrix, Matrix, Matrix>() {
 

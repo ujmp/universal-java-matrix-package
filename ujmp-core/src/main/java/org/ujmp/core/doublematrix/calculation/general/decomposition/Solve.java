@@ -29,7 +29,7 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface Solve<T> {
 
-	public static int SQUARETHRESHOLD = 20;
+	public static int SQUARETHRESHOLD = 100;
 
 	public static int TALLTHRESHOLD = 100;
 

@@ -32,7 +32,7 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface Inv<T> {
 
-	public static int THRESHOLD = 20;
+	public static int THRESHOLD = 100;
 
 	public T calc(T source);
 

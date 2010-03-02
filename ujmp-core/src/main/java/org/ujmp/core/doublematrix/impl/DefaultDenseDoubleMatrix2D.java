@@ -32,13 +32,13 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		HasColumnMajorDoubleArray1D {
 	private static final long serialVersionUID = -3605416349143850650L;
 
-	private double[] values = null;
+	private final double[] values;
 
-	private long[] size = null;
+	private final long[] size;
 
-	private int rows = 0;
+	private final int rows;
 
-	private int cols = 0;
+	private final int cols;
 
 	public DefaultDenseDoubleMatrix2D(Matrix m) throws MatrixException {
 		this.rows = (int) m.getRowCount();

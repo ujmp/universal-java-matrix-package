@@ -158,7 +158,7 @@ public interface QR<T> {
 		 * 
 		 * @serial internal array storage.
 		 */
-		private double[][] QR;
+		private final double[][] QR;
 
 		/**
 		 * Row and column dimensions.
@@ -166,14 +166,14 @@ public interface QR<T> {
 		 * @serial column dimension.
 		 * @serial row dimension.
 		 */
-		private int m, n;
+		private final int m, n;
 
 		/**
 		 * Array for internal storage of diagonal of R.
 		 * 
 		 * @serial diagonal of R.
 		 */
-		private double[] Rdiag;
+		private final double[] Rdiag;
 
 		/*
 		 * ------------------------ Constructor ------------------------
@@ -189,7 +189,6 @@ public interface QR<T> {
 		 */
 
 		public QRMatrix(Matrix A) {
-			// Initialize.
 			QR = A.toDoubleArray();
 			m = (int) A.getRowCount();
 			n = (int) A.getColumnCount();
@@ -239,7 +238,7 @@ public interface QR<T> {
 		 * @return true if R, and hence A, has full rank.
 		 */
 
-		public boolean isFullRank() {
+		public final boolean isFullRank() {
 			for (int j = 0; j < n; j++) {
 				if (Rdiag[j] == 0)
 					return false;
@@ -253,7 +252,7 @@ public interface QR<T> {
 		 * @return Lower trapezoidal matrix whose columns define the reflections
 		 */
 
-		public Matrix getH() {
+		public final Matrix getH() {
 			final double[][] H = new double[m][n];
 			for (int i = 0; i < m; i++) {
 				for (int j = 0; j < n; j++) {
@@ -271,8 +270,8 @@ public interface QR<T> {
 		 * @return R
 		 */
 
-		public Matrix getR() {
-			double[][] R = new double[n][n];
+		public final Matrix getR() {
+			final double[][] R = new double[n][n];
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
 					if (i < j) {
@@ -293,7 +292,7 @@ public interface QR<T> {
 		 * @return Q
 		 */
 
-		public Matrix getQ() {
+		public final Matrix getQ() {
 			final double[][] Q = new double[m][n];
 			for (int k = n - 1; k >= 0; k--) {
 				for (int i = 0; i < m; i++) {
@@ -328,7 +327,7 @@ public interface QR<T> {
 		 *                Matrix is rank deficient.
 		 */
 
-		public Matrix solve(Matrix B) {
+		public final Matrix solve(Matrix B) {
 			if (B.getRowCount() != m) {
 				throw new IllegalArgumentException("Matrix row dimensions must agree.");
 			}

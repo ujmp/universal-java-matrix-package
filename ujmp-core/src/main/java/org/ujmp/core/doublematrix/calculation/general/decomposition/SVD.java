@@ -48,17 +48,19 @@ public interface SVD<T> {
 
 	public T[] calc(T source);
 
+	public static int THRESHOLD = 100;
+
 	public static final SVD<Matrix> MATRIX = new SVD<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
 			if (UJMPSettings.getNumberOfThreads() == 1) {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
 					return MATRIXSMALLSINGLETHREADED.calc(source);
 				}
 			} else {
-				if (source.getRowCount() >= 100 && source.getColumnCount() >= 100) {
+				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGEMULTITHREADED.calc(source);
 				} else {
 					return MATRIXSMALLMULTITHREADED.calc(source);
@@ -109,7 +111,10 @@ public interface SVD<T> {
 		}
 	};
 
-	class SVDMatrix {
+	final class SVDMatrix {
+		private static final double EPSILON = Math.pow(2.0, -52.0);
+
+		private static final double TINY = Math.pow(2.0, -966.0);
 
 		/**
 		 * Arrays for internal storage of U and V.
@@ -117,14 +122,14 @@ public interface SVD<T> {
 		 * @serial internal storage of U.
 		 * @serial internal storage of V.
 		 */
-		private double[][] U, V;
+		private final double[][] U, V;
 
 		/**
 		 * Array for internal storage of singular values.
 		 * 
 		 * @serial internal storage of singular values.
 		 */
-		private double[] s;
+		private final double[] s;
 
 		/**
 		 * Row and column dimensions.
@@ -133,7 +138,7 @@ public interface SVD<T> {
 		 * @serial column dimension.
 		 * @serial U column dimension.
 		 */
-		private int m, n, ncu;
+		private final int m, n, ncu;
 
 		/**
 		 * Column specification of matrix U
@@ -141,7 +146,7 @@ public interface SVD<T> {
 		 * @serial U column dimension toggle
 		 */
 
-		private boolean thin;
+		private final boolean thin;
 
 		/*
 		 * ------------------------ Old Constructor ------------------------
@@ -187,10 +192,8 @@ public interface SVD<T> {
 
 			ncu = thin ? Math.min(m, n) : m;
 			s = new double[Math.min(m + 1, n)];
-			if (wantu)
-				U = new double[m][ncu];
-			if (wantv)
-				V = new double[n][n];
+			U = new double[m][ncu];
+			V = new double[n][n];
 			final double[] e = new double[n];
 			final double[] work = new double[m];
 
@@ -373,10 +376,9 @@ public interface SVD<T> {
 
 			// Main iteration loop for the singular values.
 
-			int pp = p - 1;
+			final int pp = p - 1;
 			int iter = 0;
-			double eps = Math.pow(2.0, -52.0);
-			double tiny = Math.pow(2.0, -966.0);
+
 			while (p > 0) {
 				int k, kase;
 
@@ -396,7 +398,7 @@ public interface SVD<T> {
 					if (k == -1) {
 						break;
 					}
-					if (Math.abs(e[k]) <= tiny + eps * (Math.abs(s[k]) + Math.abs(s[k + 1]))) {
+					if (Math.abs(e[k]) <= TINY + EPSILON * (Math.abs(s[k]) + Math.abs(s[k + 1]))) {
 						e[k] = 0.0;
 						break;
 					}
@@ -411,7 +413,7 @@ public interface SVD<T> {
 						}
 						double t = (ks != p ? Math.abs(e[ks]) : 0.)
 								+ (ks != k + 1 ? Math.abs(e[ks - 1]) : 0.);
-						if (Math.abs(s[ks]) <= tiny + eps * t) {
+						if (Math.abs(s[ks]) <= TINY + EPSILON * t) {
 							s[ks] = 0.0;
 							break;
 						}
@@ -485,15 +487,16 @@ public interface SVD<T> {
 
 					// Calculate the shift.
 
-					double scale = Math.max(Math.max(Math.max(Math.max(Math.abs(s[p - 1]), Math
-							.abs(s[p - 2])), Math.abs(e[p - 2])), Math.abs(s[k])), Math.abs(e[k]));
-					double sp = s[p - 1] / scale;
-					double spm1 = s[p - 2] / scale;
-					double epm1 = e[p - 2] / scale;
-					double sk = s[k] / scale;
-					double ek = e[k] / scale;
-					double b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0;
-					double c = (sp * epm1) * (sp * epm1);
+					final double scale = Math.max(Math.max(Math.max(Math.max(Math.abs(s[p - 1]),
+							Math.abs(s[p - 2])), Math.abs(e[p - 2])), Math.abs(s[k])), Math
+							.abs(e[k]));
+					final double sp = s[p - 1] / scale;
+					final double spm1 = s[p - 2] / scale;
+					final double epm1 = e[p - 2] / scale;
+					final double sk = s[k] / scale;
+					final double ek = e[k] / scale;
+					final double b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0;
+					final double c = (sp * epm1) * (sp * epm1);
 					double shift = 0.0;
 					if ((b != 0.0) | (c != 0.0)) {
 						shift = Math.sqrt(b * b + c);
@@ -604,7 +607,7 @@ public interface SVD<T> {
 		 * @return U
 		 */
 
-		public Matrix getU() {
+		public final Matrix getU() {
 			final double[][] x = new double[m][m >= n ? (thin ? Math.min(m + 1, n) : ncu) : ncu];
 
 			for (int r = 0; r < m; r++) {
@@ -622,7 +625,7 @@ public interface SVD<T> {
 		 * @return V
 		 */
 
-		public Matrix getV() {
+		public final Matrix getV() {
 			return V == null ? null : MatrixFactory.linkToArray(V);
 		}
 
@@ -632,7 +635,7 @@ public interface SVD<T> {
 		 * @return diagonal of S.
 		 */
 
-		public double[] getSingularValues() {
+		public final double[] getSingularValues() {
 			return s;
 		}
 
@@ -642,7 +645,7 @@ public interface SVD<T> {
 		 * @return S
 		 */
 
-		public Matrix getS() {
+		public final Matrix getS() {
 			final double[][] X = new double[m >= n ? (thin ? n : ncu) : ncu][n];
 			for (int i = Math.min(m, n); --i >= 0;)
 				X[i][i] = s[i];
@@ -655,8 +658,8 @@ public interface SVD<T> {
 		 * @return S+
 		 */
 
-		public Matrix getreciprocalS() {
-			double[][] X = new double[n][m >= n ? (thin ? n : ncu) : ncu];
+		public final Matrix getreciprocalS() {
+			final double[][] X = new double[n][m >= n ? (thin ? n : ncu) : ncu];
 			for (int i = Math.min(m, n) - 1; i >= 0; i--)
 				X[i][i] = s[i] == 0.0 ? 0.0 : 1.0 / s[i];
 			return MatrixFactory.linkToArray(X);
@@ -672,12 +675,12 @@ public interface SVD<T> {
 		 * @return A+
 		 */
 
-		public Matrix inverse(boolean omit) {
-			double[][] inverse = new double[n][m];
+		public final Matrix inverse(boolean omit) {
+			final double[][] inverse = new double[n][m];
 			if (rank() > 0) {
-				double[] reciprocalS = new double[s.length];
+				final double[] reciprocalS = new double[s.length];
 				if (omit) {
-					double tol = Math.max(m, n) * s[0] * Math.pow(2.0, -52.0);
+					double tol = Math.max(m, n) * s[0] * EPSILON;
 					for (int i = s.length - 1; i >= 0; i--)
 						reciprocalS[i] = Math.abs(s[i]) < tol ? 0.0 : 1.0 / s[i];
 				} else
@@ -698,7 +701,7 @@ public interface SVD<T> {
 		 * @return max(S)
 		 */
 
-		public double norm2() {
+		public final double norm2() {
 			return s[0];
 		}
 
@@ -708,7 +711,7 @@ public interface SVD<T> {
 		 * @return max(S)/min(S)
 		 */
 
-		public double cond() {
+		public final double cond() {
 			return s[0] / s[Math.min(m, n) - 1];
 		}
 
@@ -718,8 +721,8 @@ public interface SVD<T> {
 		 * @return Number of nonnegligible singular values.
 		 */
 
-		public int rank() {
-			double tol = Math.max(m, n) * s[0] * Math.pow(2.0, -52.0);
+		public final int rank() {
+			final double tol = Math.max(m, n) * s[0] * EPSILON;
 			int r = 0;
 			for (int i = 0; i < s.length; i++) {
 				if (s[i] > tol) {

@@ -24,31 +24,32 @@
 package org.ujmp.jblas.calculation;
 
 import org.jblas.DoubleMatrix;
-import org.jblas.Solve;
+import org.jblas.Eigen;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class Inv
+public class Eig
 		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
+		org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
 
-	public static final Inv INSTANCE = new Inv();
+	public static Eig INSTANCE = new Eig();
 
-	public Matrix calc(Matrix source) {
-		final DoubleMatrix m1;
+	public Matrix[] calc(Matrix source) {
+		final DoubleMatrix matrix;
 		if (source instanceof JBlasDenseDoubleMatrix2D) {
-			m1 = ((JBlasDenseDoubleMatrix2D) source).getWrappedObject();
+			matrix = ((JBlasDenseDoubleMatrix2D) source).getWrappedObject();
 		} else if (source instanceof HasColumnMajorDoubleArray1D) {
-			m1 = new JBlasDenseDoubleMatrix2D(source.getRowCount(), source
+			matrix = new JBlasDenseDoubleMatrix2D(source.getRowCount(), source
 					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source)
 					.getColumnMajorDoubleArray1D()).getWrappedObject();
 		} else {
-			m1 = new JBlasDenseDoubleMatrix2D(source).getWrappedObject();
+			matrix = new JBlasDenseDoubleMatrix2D(source).getWrappedObject();
 		}
-
-		final DoubleMatrix I = DoubleMatrix.eye(m1.getRows());
-		final DoubleMatrix result = Solve.solve(m1, I);
-		return new JBlasDenseDoubleMatrix2D(result);
+		final DoubleMatrix[] eig = Eigen.symmetricEigenvectors(matrix);
+		final Matrix e = new JBlasDenseDoubleMatrix2D(eig[0]);
+		final Matrix d = new JBlasDenseDoubleMatrix2D(eig[1]);
+		return new Matrix[] { e, d };
 	}
+
 }

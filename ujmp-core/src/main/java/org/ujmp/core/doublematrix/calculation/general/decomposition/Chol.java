@@ -151,14 +151,14 @@ public interface Chol<T> {
 		 * 
 		 * @serial internal array storage.
 		 */
-		private double[][] L;
+		private final double[][] L;
 
 		/**
 		 * Row and column dimension (square matrix).
 		 * 
 		 * @serial matrix dimension.
 		 */
-		private int n;
+		private final int n;
 
 		/**
 		 * Symmetric and positive definite flag.
@@ -180,8 +180,6 @@ public interface Chol<T> {
 		 */
 
 		public CholMatrix(Matrix Arg) {
-
-			// Initialize.
 			final double[][] A = Arg.toDoubleArray();
 			n = (int) Arg.getRowCount();
 			L = new double[n][n];
@@ -267,7 +265,7 @@ public interface Chol<T> {
 		 * @return true if A is symmetric and positive definite.
 		 */
 
-		public boolean isSPD() {
+		public final boolean isSPD() {
 			return isspd;
 		}
 
@@ -277,7 +275,7 @@ public interface Chol<T> {
 		 * @return L
 		 */
 
-		public Matrix getL() {
+		public final Matrix getL() {
 			return MatrixFactory.linkToArray(L);
 		}
 
@@ -293,7 +291,7 @@ public interface Chol<T> {
 		 *                Matrix is not symmetric positive definite.
 		 */
 
-		public Matrix solve(Matrix B) {
+		public final Matrix solve(Matrix B) {
 			if (B.getRowCount() != n) {
 				throw new IllegalArgumentException("Matrix row dimensions must agree.");
 			}

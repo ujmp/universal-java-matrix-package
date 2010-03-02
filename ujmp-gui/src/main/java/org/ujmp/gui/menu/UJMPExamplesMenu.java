@@ -29,6 +29,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import org.ujmp.gui.actions.IrisMatrixAction;
 import org.ujmp.gui.actions.MandelbrotMatrixAction;
 import org.ujmp.gui.actions.PascalMatrixAction;
 import org.ujmp.gui.actions.SunSpotDataMatrixAction;
@@ -49,6 +50,7 @@ public class UJMPExamplesMenu extends JMenu {
 		public MatrixExamplesMenu() {
 			super("Matrix");
 			add(new JMenuItem(new WelcomeMatrixAction(this, null, null)));
+			add(new JMenuItem(new IrisMatrixAction(this, null, null)));
 			add(new JMenuItem(new MandelbrotMatrixAction(this, null, null)));
 			add(new JMenuItem(new SunSpotDataMatrixAction(this, null, null)));
 			add(new JMenuItem(new PascalMatrixAction(this, null, null)));

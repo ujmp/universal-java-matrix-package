@@ -32,7 +32,7 @@ import org.ujmp.core.util.UJMPSettings;
 
 public interface Inv<T> {
 
-	public static int THRESHOLD = 100;
+	public static int THRESHOLD = 20;
 
 	public T calc(T source);
 
@@ -76,15 +76,15 @@ public interface Inv<T> {
 
 	public static final Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
 		public final Matrix calc(Matrix source) {
-			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
+			Inv<Matrix> inv = DecompositionOps.INV_JBLAS;
+			if (inv == null) {
+				inv = DecompositionOps.INV_OJALGO;
+			}
 			if (inv == null) {
 				inv = DecompositionOps.INV_EJML;
 			}
 			if (inv == null) {
 				inv = DecompositionOps.INV_MTJ;
-			}
-			if (inv == null) {
-				inv = DecompositionOps.INV_OJALGO;
 			}
 			if (inv == null) {
 				inv = UJMP;
@@ -95,7 +95,7 @@ public interface Inv<T> {
 
 	public static final Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = DecompositionOps.INV_OJALGO;
+			Inv<Matrix> inv = DecompositionOps.INV_JBLAS;
 			if (inv == null) {
 				inv = DecompositionOps.INV_OJALGO;
 			}

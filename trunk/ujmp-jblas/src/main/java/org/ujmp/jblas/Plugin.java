@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jblas.DoubleMatrix;
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
@@ -51,6 +52,23 @@ public class Plugin extends AbstractPlugin {
 
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
+	}
+
+	/**
+	 * perform an additional check whether the native library has been loaded
+	 * successfully or not
+	 */
+	public boolean isAvailable() {
+		if (super.isAvailable()) {
+			try {
+				new DoubleMatrix(2, 1).mmul(new DoubleMatrix(1, 2));
+				return true;
+			} catch (Throwable t) {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 }

@@ -53,7 +53,7 @@ public class Solve
 			CommonOps.solve(a2, b2, x);
 			return new EJMLDenseDoubleMatrix2D(x);
 		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMP
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMPSQUARE
 					.calc(a, b);
 		}
 

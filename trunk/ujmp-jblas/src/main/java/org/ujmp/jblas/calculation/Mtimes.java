@@ -59,7 +59,8 @@ public class Mtimes implements
 			m1.mmuli(m2, t);
 		} else if (target instanceof HasColumnMajorDoubleArray1D) {
 			DoubleMatrix t = new DoubleMatrix((int) target.getRowCount(),
-					(int) target.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
+					(int) target.getColumnCount(),
+					((HasColumnMajorDoubleArray1D) target)
 							.getColumnMajorDoubleArray1D());
 			m1.mmuli(m2, t);
 		} else if (target instanceof DenseDoubleMatrix2D) {

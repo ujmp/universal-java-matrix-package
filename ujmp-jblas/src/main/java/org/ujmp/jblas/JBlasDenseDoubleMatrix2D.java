@@ -135,7 +135,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			matrix.addi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			return new JBlasDenseDoubleMatrix2D(r);
 		} else {
-			return super.mtimes(m);
+			return super.plus(m);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			matrix.subi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			return new JBlasDenseDoubleMatrix2D(r);
 		} else {
-			return super.mtimes(m);
+			return super.minus(m);
 		}
 	}
 

@@ -43,6 +43,7 @@ import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
@@ -160,6 +161,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			UJMPSettings.setNumberOfThreads(1);
 			ProcessorCount.RUNTIME = 1;
 			ConcurrencyUtils.setNumberOfThreads(1);
+			System.setProperty("ATLAS_NUM_THREADS", "1");
 		}
 
 		if (getConfig().isShuffle()) {
@@ -289,6 +291,10 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				try {
 					long jamaRow = allmeans.getRowForLabel(JamaDenseDoubleMatrix2D.class
 							.getSimpleName());
+					if (jamaRow < 0) {
+						jamaRow = allmeans.getRowForLabel(DefaultDenseDoubleMatrix2D.class
+								.getSimpleName());
+					}
 					Matrix row = allmeans.selectRows(Ret.NEW, jamaRow);
 					Matrix m = MatrixFactory.vertCat(row, allmeans.getRowCount());
 					Matrix scaled = allmeans.divide(Ret.NEW, false, m).power(Ret.NEW, -1)

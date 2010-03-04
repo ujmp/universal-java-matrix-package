@@ -204,7 +204,7 @@ public interface Chol<T> {
 				}
 				d = Aj[j] - d;
 				isspd = isspd & (d > 0.0);
-				Lrowj[j] = StrictMath.sqrt(StrictMath.max(d, 0.0));
+				Lrowj[j] = Math.sqrt(Math.max(d, 0.0));
 				for (int k = j + 1; k < n; k++) {
 					Lrowj[k] = 0.0;
 				}

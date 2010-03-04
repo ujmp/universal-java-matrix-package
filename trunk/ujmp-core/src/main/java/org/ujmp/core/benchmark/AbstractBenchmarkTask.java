@@ -149,7 +149,9 @@ public abstract class AbstractBenchmarkTask {
 				Matrix.ROW), resultDiff);
 		try {
 			temp.exportToFile(FileFormat.CSV, resultFile);
-			diff.exportToFile(FileFormat.CSV, diffFile);
+			if (!diff.containsMissingValues()) {
+				diff.exportToFile(FileFormat.CSV, diffFile);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

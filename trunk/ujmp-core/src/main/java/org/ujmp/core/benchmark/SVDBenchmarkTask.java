@@ -69,7 +69,7 @@ public class SVDBenchmarkTask extends AbstractBenchmarkTask {
 
 	@Override
 	public String getTaskName() {
-		return "SVD";
+		return "svd";
 	}
 
 }

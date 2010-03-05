@@ -96,7 +96,7 @@ public class PlotSettings {
 
 	private boolean showYGrid = true;
 
-	private boolean showRunningAverage = true;
+	private boolean showRunningAverage = false;
 
 	private int runningAverageLength = 60;
 

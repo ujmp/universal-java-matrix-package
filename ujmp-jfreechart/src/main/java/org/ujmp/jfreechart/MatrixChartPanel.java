@@ -57,8 +57,7 @@ public class MatrixChartPanel extends AbstractChartPanel {
 		super(matrix, config);
 	}
 
-	public void redraw() {
-		super.redraw();
+	public synchronized void redraw() {
 		Dataset dataset = null;
 		dataset = new XYSeriesCollectionWrapper(getMatrix());
 		// dataset = new CategoryDatasetWrapper(getMatrix());
@@ -78,16 +77,26 @@ public class MatrixChartPanel extends AbstractChartPanel {
 		XYPlot plot = getChart().getXYPlot();
 
 		if (getConfig().isLogScaleDomain()) {
-			NumberAxis axis = new LogarithmicAxis(null);
-			plot.setDomainAxis(axis);
+			try {
+				NumberAxis axis = new LogarithmicAxis(null);
+				plot.setDomainAxis(axis);
+			} catch (Exception e) {
+				NumberAxis axis = new NumberAxis();
+				plot.setDomainAxis(axis);
+			}
 		} else {
 			NumberAxis axis = new NumberAxis();
 			plot.setDomainAxis(axis);
 		}
 
 		if (getConfig().isLogScaleRange()) {
-			NumberAxis axis = new LogarithmicAxis(null);
-			plot.setRangeAxis(axis);
+			try {
+				NumberAxis axis = new LogarithmicAxis(null);
+				plot.setRangeAxis(axis);
+			} catch (Exception e) {
+				NumberAxis axis = new NumberAxis();
+				plot.setRangeAxis(axis);
+			}
 		} else {
 			NumberAxis axis = new NumberAxis();
 			plot.setRangeAxis(axis);

@@ -30,6 +30,7 @@ import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class XYSeriesWrapper extends XYSeries {

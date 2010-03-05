@@ -42,6 +42,7 @@ import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
@@ -58,8 +59,6 @@ import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jblas.benchmark.JBlasDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jfreechart.ChartConfiguration;
-import org.ujmp.jfreechart.MatrixChartPanel;
 import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
@@ -284,8 +283,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				}
 				allmeans.getAnnotation().setDimensionMatrix(Matrix.COLUMN, matrixLabels);
 			} catch (Exception e) {
-				System.err.println("could not evaluate mean results for " + benchmarkName + ": "
-						+ e);
+				e.printStackTrace();
 			}
 			if (!allmeans.getLabel().contains("diff")) {
 				try {
@@ -295,62 +293,42 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 						jamaRow = allmeans.getRowForLabel(DefaultDenseDoubleMatrix2D.class
 								.getSimpleName());
 					}
+					Matrix valueCount = Matrix.factory.dense(1, allmeans.getColumnCount());
+					for (int c = 0; c < valueCount.getColumnCount(); c++) {
+						int s = extractSize(allmeans.getColumnLabel(c));
+						if (allmeans.getLabel().contains("tall")) {
+							valueCount.setAsInt(s * s / 2, 0, c);
+						} else {
+							valueCount.setAsInt(s * s, 0, c);
+						}
+					}
+					valueCount = MatrixFactory.vertCat(valueCount, allmeans.getRowCount());
+					Matrix perCell = allmeans.divide(Ret.NEW, false, valueCount).transpose(Ret.NEW);
+					perCell.setLabel(allmeans.getLabel() + "-percell");
+					for (int r = 0; r < perCell.getRowCount(); r++) {
+						perCell.setRowLabel(r, perCell.getRowLabel(r).split("x")[0]);
+					}
+					export(perCell);
 					Matrix row = allmeans.selectRows(Ret.NEW, jamaRow);
 					Matrix m = MatrixFactory.vertCat(row, allmeans.getRowCount());
 					Matrix scaled = allmeans.divide(Ret.NEW, false, m).power(Ret.NEW, -1)
 							.transpose(Ret.NEW);
+					scaled.setLabel(allmeans.getLabel() + "-scaled");
 					for (int r = 0; r < scaled.getRowCount(); r++) {
 						scaled.setRowLabel(r, scaled.getRowLabel(r).split("x")[0]);
 					}
-					scaled.showGUI();
-					ChartConfiguration config = new ChartConfiguration();
-					config.setLogScaleRange(true);
-					config.setLogScaleDomain(true);
-					MatrixChartPanel cp = new MatrixChartPanel(scaled, config);
-					cp.export(FileFormat.PDF, new File(BenchmarkUtil.getResultDir(getConfig())
-							+ benchmarkName + "-scaled.pdf"));
-					cp.export(FileFormat.JPG, new File(BenchmarkUtil.getResultDir(getConfig())
-							+ benchmarkName + "-scaled.jpg"));
-					Matrix firstScaled = MatrixFactory.horCat(MatrixFactory.linkToValue(scaled
-							.getLabel()), scaled.getAnnotation().getDimensionMatrix(Matrix.ROW));
-					Matrix lastScaled = MatrixFactory.horCat(scaled.getAnnotation()
-							.getDimensionMatrix(Matrix.COLUMN), scaled);
-					Matrix matrixScaled = MatrixFactory.vertCat(firstScaled, lastScaled);
-					matrixScaled.exportToFile(FileFormat.CSV, new File(BenchmarkUtil
-							.getResultDir(getConfig())
-							+ benchmarkName + "-scaled.csv"));
-					try {
-						matrixScaled.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-								.getResultDir(getConfig())
-								+ benchmarkName + "-scaled.xls"));
-					} catch (Exception e) {
-					}
+					export(scaled);
 				} catch (Exception e) {
 				}
-			} else {
-				allmeans.transpose(Ret.NEW).showGUI();
 			}
 
-			Matrix firstMean = MatrixFactory.horCat(MatrixFactory.linkToValue(allmeans.getLabel()),
-					allmeans.getAnnotation().getDimensionMatrix(Matrix.ROW));
-			Matrix lastMean = MatrixFactory.horCat(allmeans.getAnnotation().getDimensionMatrix(
-					Matrix.COLUMN), allmeans);
-			Matrix matrixMean = MatrixFactory.vertCat(firstMean, lastMean);
-			matrixMean.exportToFile(FileFormat.CSV, new File(BenchmarkUtil
-					.getResultDir(getConfig())
-					+ benchmarkName + "-mean.csv"));
-			try {
-				matrixMean.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-						.getResultDir(getConfig())
-						+ benchmarkName + "-mean.xls"));
-			} catch (Exception e) {
-			}
+			export(allmeans.transpose(Ret.NEW));
 
 			Matrix allstds = null;
 			Matrix stdPercent = null;
 			try {
 				allstds = MatrixFactory.vertCat(stds);
-				stdPercent = allstds.divide(allmeans).times(100);
+				stdPercent = allstds.divide(Ret.NEW, false, allmeans).times(Ret.NEW, false, 100);
 				allstds.setLabel(benchmarkName + "-std");
 				stdPercent.setLabel(benchmarkName + "-stdpercent");
 				ListMatrix<String> stdLabels = new DefaultListMatrix<String>();
@@ -363,31 +341,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				System.err
 						.println("could not evaluate std results for " + benchmarkName + ": " + e);
 			}
-			Matrix firstStd = MatrixFactory.horCat(MatrixFactory.linkToValue(allstds.getLabel()),
-					allstds.getAnnotation().getDimensionMatrix(Matrix.ROW));
-			Matrix lastStd = MatrixFactory.horCat(allstds.getAnnotation().getDimensionMatrix(
-					Matrix.COLUMN), allstds);
-			Matrix lastStdPercent = MatrixFactory.horCat(allstds.getAnnotation()
-					.getDimensionMatrix(Matrix.COLUMN), stdPercent);
-			Matrix matrixStd = MatrixFactory.vertCat(firstStd, lastStd);
-			matrixStd.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ benchmarkName + "-std.csv"));
-			try {
-				matrixStd.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-						.getResultDir(getConfig())
-						+ benchmarkName + "-std.xls"));
-			} catch (Exception e) {
-			}
-			Matrix matrixStdPercent = MatrixFactory.vertCat(firstStd, lastStdPercent);
-			matrixStdPercent.exportToFile(FileFormat.CSV, new File(BenchmarkUtil
-					.getResultDir(getConfig())
-					+ benchmarkName + "-stdpercent.csv"));
-			try {
-				matrixStdPercent.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-						.getResultDir(getConfig())
-						+ benchmarkName + "-stdpercent.xls"));
-			} catch (Exception e) {
-			}
+			export(allstds.transpose(Ret.NEW));
+			export(stdPercent.transpose(Ret.NEW));
 
 			Matrix allmins = null;
 			try {
@@ -402,19 +357,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				System.err
 						.println("could not evaluate min results for " + benchmarkName + ": " + e);
 			}
-			Matrix firstMin = MatrixFactory.horCat(MatrixFactory.linkToValue(allmins.getLabel()),
-					allmins.getAnnotation().getDimensionMatrix(Matrix.ROW));
-			Matrix lastMin = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
-					Matrix.COLUMN), allmins);
-			Matrix matrixMin = MatrixFactory.vertCat(firstMin, lastMin);
-			matrixMin.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ benchmarkName + "-min.csv"));
-			try {
-				matrixMin.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-						.getResultDir(getConfig())
-						+ benchmarkName + "-min.xls"));
-			} catch (Exception e) {
-			}
+			export(allmins.transpose(Ret.NEW));
 
 			Matrix allmaxs = null;
 			try {
@@ -429,23 +372,66 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				System.err
 						.println("could not evaluate max results for " + benchmarkName + ": " + e);
 			}
-			Matrix firstMax = MatrixFactory.horCat(MatrixFactory.linkToValue(allmaxs.getLabel()),
-					allmaxs.getAnnotation().getDimensionMatrix(Matrix.ROW));
-			Matrix lastMax = MatrixFactory.horCat(allmins.getAnnotation().getDimensionMatrix(
-					Matrix.COLUMN), allmaxs);
-			Matrix matrixMax = MatrixFactory.vertCat(firstMax, lastMax);
-			matrixMax.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ benchmarkName + "-max.csv"));
-			try {
-				matrixMax.exportToFile(FileFormat.XLS, new File(BenchmarkUtil
-						.getResultDir(getConfig())
-						+ benchmarkName + "-max.xls"));
-			} catch (Exception e) {
-			}
+			export(allmaxs.transpose(Ret.NEW));
 
 			System.out.println(allmeans);
 			System.out.println();
 		}
+	}
+
+	private void export(Matrix matrix) {
+		String name = matrix.getLabel();
+		for (int r = 0; r < matrix.getRowCount(); r++) {
+			matrix.setRowLabel(r, String.valueOf(extractSize(matrix.getRowLabel(r))));
+		}
+		Matrix firstPart = MatrixFactory.horCat(MatrixFactory.linkToValue(matrix.getLabel()),
+				matrix.getAnnotation().getDimensionMatrix(Matrix.ROW));
+		Matrix lastPart = MatrixFactory.horCat(matrix.getAnnotation().getDimensionMatrix(
+				Matrix.COLUMN), matrix);
+		Matrix complete = MatrixFactory.vertCat(firstPart, lastPart);
+		try {
+			complete.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())
+					+ name + ".csv"));
+		} catch (Exception e) {
+		}
+		try {
+			complete.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir(getConfig())
+					+ name + ".xls"));
+		} catch (Exception e) {
+		}
+		try {
+			Matrix plt = complete.deleteRows(Ret.NEW, 0);
+			plt.setColumnLabel(0, "matrix size");
+			for (int c = 1; c < plt.getColumnCount(); c++) {
+				plt.setColumnLabel(c, matrix.getColumnLabel(c - 1));
+			}
+			plt.setLabel(matrix.getLabel());
+			Object[] params = null;
+			if (matrix.getLabel().contains("stdpercent")) {
+				params = new Object[] { "xy", "logx", };
+			} else {
+				params = new Object[] { "xy", "logx", "logy" };
+			}
+			plt.exportToFile(FileFormat.PLT, new File(BenchmarkUtil.getResultDir(getConfig())
+					+ name + ".plt"), params);
+		} catch (Exception e) {
+		}
+		// ChartConfiguration config = new ChartConfiguration();
+		// config.setLogScaleRange(true);
+		// config.setLogScaleDomain(true);
+		// MatrixChartPanel cp = new MatrixChartPanel(matrix, config);
+		// try {
+		// cp.export(FileFormat.PDF, new
+		// File(BenchmarkUtil.getResultDir(getConfig()) + name
+		// + ".pdf"));
+		// } catch (Exception e) {
+		// }
+		// try {
+		// cp.export(FileFormat.JPG, new
+		// File(BenchmarkUtil.getResultDir(getConfig()) + name
+		// + ".jpg"));
+		// } catch (Exception e) {
+		// }
 	}
 
 	@Override
@@ -458,4 +444,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		return null;
 	}
 
+	private int extractSize(String s) {
+		if (s != null && !"null".equals(s)) {
+			if (s.contains("x")) {
+				return (int) Coordinates.parseString(s)[0];
+			} else {
+				return Integer.parseInt(s);
+			}
+		} else {
+			return 0;
+		}
+	}
 }

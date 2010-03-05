@@ -77,8 +77,8 @@ public abstract class AbstractBenchmarkTask {
 		boolean stopped = false;
 		for (int s = 0; !stopped && s < sizes.length; s++) {
 			long[] size = Coordinates.parseString(sizes[s]);
-			resultTime.setColumnLabel(s, Coordinates.toString('x', size));
-			resultDiff.setColumnLabel(s, Coordinates.toString('x', size));
+			resultTime.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
+			resultDiff.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
 			double bestStd = Double.MAX_VALUE;
 			int tmpTrialCount = config.getDefaultTrialCount();
 			DenseDoubleMatrix2D tmpTime = DoubleMatrix2D.factory.dense(config.getRuns(), 1);

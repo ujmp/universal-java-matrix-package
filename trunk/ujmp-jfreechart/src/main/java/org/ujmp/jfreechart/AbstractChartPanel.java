@@ -50,26 +50,45 @@ public abstract class AbstractChartPanel extends ChartPanel implements
 		super(null, true);
 		this.matrix = matrix;
 		this.config = config;
+		setPreferredSize(new Dimension(800, 600));
+		setMaximumDrawWidth(2000);
+		setMaximumDrawHeight(2000);
+		redraw();
 	}
 
 	public synchronized void renderGraph(Graphics2D g2d) {
 		Rectangle2D r = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
+		try {
+			redraw();
+		} catch (Exception e) {
+		}
 		getChart().draw(g2d, r);
 	}
 
-	public void export(FileFormat fileFormat, File file) {
+	public synchronized void export(FileFormat fileFormat, File file) {
 		JFrame frame = null;
 		if (isVisible()) {
 			frame = new JFrame();
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setContentPane(this);
 			frame.setSize(800, 600);
 			frame.setVisible(true);
-			redraw();
+			try {
+				redraw();
+				repaint();
+			} catch (Exception e) {
+			}
 		}
 		if (FileFormat.JPG.equals(fileFormat)) {
-			ExportJPEG.save(file, this);
+			try {
+				ExportJPEG.save(file, this);
+			} catch (Exception e) {
+			}
 		} else if (FileFormat.PDF.equals(fileFormat)) {
-			ExportPDF.save(file, this);
+			try {
+				ExportPDF.save(file, this);
+			} catch (Exception e) {
+			}
 		} else {
 			throw new MatrixException("FileFormat not yet supported: "
 					+ fileFormat);
@@ -78,59 +97,56 @@ public abstract class AbstractChartPanel extends ChartPanel implements
 			frame.setVisible(false);
 			frame = null;
 		}
-
 	}
 
-	public synchronized void redraw() {
-		setPreferredSize(new Dimension(800, 600));
+	// public synchronized void redraw() {
 
-		setMaximumDrawWidth(2000);
-		setMaximumDrawHeight(2000);
+	// ((MatrixGUIObject) m.getGUIObject()).getRowSelectionModel()
+	// .addListSelectionListener(this);
 
-		// ((MatrixGUIObject) m.getGUIObject()).getRowSelectionModel()
-		// .addListSelectionListener(this);
+	// addComponentListener(this);
 
-		// addComponentListener(this);
+	// updatePopupMenu();
 
-		// updatePopupMenu();
+	// dataset.addChangeListener(this);
 
-		// dataset.addChangeListener(this);
+	// if (showBorder) {
+	// setBorder(BorderFactory.createTitledBorder("Chart"));
+	// }
 
-		// if (showBorder) {
-		// setBorder(BorderFactory.createTitledBorder("Chart"));
-		// }
+	// chart.setBackgroundPaint(UIManager.getColor("Panel.background"));
 
-		// chart.setBackgroundPaint(UIManager.getColor("Panel.background"));
+	// plot.addChangeListener(this);
+	//
+	// zeroMarker.setPaint(new Color(0, 0, 0, 128));
+	// plot.addRangeMarker(zeroMarker, Layer.FOREGROUND);
+	//
+	// try {
+	// plot.addRangeMarker(dataset.getMeanMarker(0));
+	// plot.addRangeMarker(dataset.getStandardDeviationMarker(0));
+	// plot.addRangeMarker(dataset.getMinMaxMarker(0));
+	// } catch (Exception e) {
+	// System.out.println("error in VariableChartPanel");
+	// }
 
-		// plot.addChangeListener(this);
-		//
-		// zeroMarker.setPaint(new Color(0, 0, 0, 128));
-		// plot.addRangeMarker(zeroMarker, Layer.FOREGROUND);
-		//
-		// try {
-		// plot.addRangeMarker(dataset.getMeanMarker(0));
-		// plot.addRangeMarker(dataset.getStandardDeviationMarker(0));
-		// plot.addRangeMarker(dataset.getMinMaxMarker(0));
-		// } catch (Exception e) {
-		// System.out.println("error in VariableChartPanel");
-		// }
+	// rangeSelection.setPaint(new Color(200, 200, 235, 128));
+	// rangeSelection.setLabelPaint(new Color(0, 0, 0));
+	// rangeSelection.setLabelAnchor(RectangleAnchor.TOP);
+	// rangeSelection.setLabelTextAnchor(TextAnchor.TOP_CENTER);
+	// rangeSelection.setOutlinePaint(new Color(50, 50, 235));
+	// plot.addDomainMarker(rangeSelection, Layer.FOREGROUND);
 
-		// rangeSelection.setPaint(new Color(200, 200, 235, 128));
-		// rangeSelection.setLabelPaint(new Color(0, 0, 0));
-		// rangeSelection.setLabelAnchor(RectangleAnchor.TOP);
-		// rangeSelection.setLabelTextAnchor(TextAnchor.TOP_CENTER);
-		// rangeSelection.setOutlinePaint(new Color(50, 50, 235));
-		// plot.addDomainMarker(rangeSelection, Layer.FOREGROUND);
+	// legend = chart.getLegend();
+	// chart.clearSubtitles();
+	// }
 
-		// legend = chart.getLegend();
-		// chart.clearSubtitles();
-	}
+	public abstract void redraw();
 
-	public ChartConfiguration getConfig() {
+	public synchronized ChartConfiguration getConfig() {
 		return config;
 	}
 
-	public void setConfig(ChartConfiguration config) {
+	public synchronized void setConfig(ChartConfiguration config) {
 		this.config = config;
 		redraw();
 	}
@@ -139,7 +155,7 @@ public abstract class AbstractChartPanel extends ChartPanel implements
 		return matrix;
 	}
 
-	public void setMatrix(MatrixGUIObject matrix) {
+	public synchronized void setMatrix(MatrixGUIObject matrix) {
 		this.matrix = matrix;
 		redraw();
 	}

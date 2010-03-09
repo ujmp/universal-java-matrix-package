@@ -37,14 +37,20 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class ImportMatrixXLS {
 
 	public static final Matrix fromFile(File file, Object... parameters)
 			throws MatrixException, IOException {
 		try {
+			int sheetNr = 0;
+			if (parameters != null && parameters.length > 0) {
+				sheetNr = MathUtil.getInt(parameters[0]);
+			}
 			Workbook workbook = Workbook.getWorkbook(file);
-			Sheet sheet = workbook.getSheet(0);
+			Sheet sheet = workbook.getSheet(sheetNr);
+
 			int rows = sheet.getRows();
 			int columns = sheet.getColumns();
 			Matrix matrix = MatrixFactory

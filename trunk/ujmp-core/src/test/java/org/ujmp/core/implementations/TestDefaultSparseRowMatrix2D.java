@@ -38,6 +38,6 @@ public class TestDefaultSparseRowMatrix2D extends AbstractMatrixTest {
 	}
 
 	public boolean isTestLarge() {
-		return true;
+		return false;
 	}
 }

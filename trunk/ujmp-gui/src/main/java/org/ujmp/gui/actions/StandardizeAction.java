@@ -23,11 +23,8 @@
 
 package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
@@ -42,14 +39,11 @@ public class StandardizeAction extends MatrixAction {
 		putValue(Action.NAME, "Standardize");
 		putValue(Action.SHORT_DESCRIPTION,
 				"Rescales all entries to mean 0 and standard deviation 1");
-		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_1,
-				KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() throws MatrixException {
 		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(),
-				getDimension(), getIgnoreMissing());
+				getDimension());
 		m.showGUI();
 		return m;
 	}

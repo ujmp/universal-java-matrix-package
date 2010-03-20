@@ -66,6 +66,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 		put("runDefaultDenseDoubleMatrix2D", true);
 		put("runArrayDenseDoubleMatrix2D", false);
+		put("runBlockDenseDoubleMatrix2D", true);
 		put("runJBlasDenseDoubleMatrix2D", true);
 		put("runMTJDenseDoubleMatrix2D", true);
 		put("runOjalgoDenseDoubleMatrix2D", true);
@@ -320,8 +321,16 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getBoolean(get("runArrayDenseDoubleMatrix2D"));
 	}
 
+	public boolean isRunBlockDenseDoubleMatrix2D() {
+		return MathUtil.getBoolean(get("runBlockDenseDoubleMatrix2D"));
+	}
+
 	public void setRunArrayDenseDoubleMatrix2D(boolean runArrayDenseDoubleMatrix2D) {
 		put("runArrayDenseDoubleMatrix2D", runArrayDenseDoubleMatrix2D);
+	}
+
+	public void setRunBlockDenseDoubleMatrix2D(boolean runBlockDenseDoubleMatrix2D) {
+		put("runBlockDenseDoubleMatrix2D", runBlockDenseDoubleMatrix2D);
 	}
 
 	public boolean isRunMTJDenseDoubleMatrix2D() {

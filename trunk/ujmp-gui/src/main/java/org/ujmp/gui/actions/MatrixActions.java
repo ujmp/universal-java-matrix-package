@@ -87,6 +87,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new MeanAction(c, m, v)));
 			add(new JMenuItem(new VarianceAction(c, m, v)));
 			add(new JMenuItem(new StandardDeviationAction(c, m, v)));
+			add(new JMenuItem(new UniqueValueCountAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new DiffAction(c, m, v)));
 			add(new JMenuItem(new ProdAction(c, m, v)));
@@ -128,6 +129,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JSeparator());
 			add(new JMenuItem(new CenterAction(c, m, v)));
 			add(new JMenuItem(new StandardizeAction(c, m, v)));
+			add(new JMenuItem(new NormalizeAction(c, m, v)));
 			add(new JMenuItem(new FadeInAction(c, m, v)));
 			add(new JMenuItem(new FadeOutAction(c, m, v)));
 			add(new JSeparator());

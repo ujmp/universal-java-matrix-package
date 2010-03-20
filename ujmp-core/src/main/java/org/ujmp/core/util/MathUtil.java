@@ -48,6 +48,9 @@ public abstract class MathUtil {
 
 	private static final double ROOT2PI = Math.sqrt(2 * Math.PI);
 
+	private static final double COFGAMMALN[] = { 76.18009172947146, -86.50532032941677,
+			24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5 };
+
 	private static long seed = System.nanoTime();
 
 	private static Random random = new Random();
@@ -1023,5 +1026,19 @@ public abstract class MathUtil {
 			}
 		}
 		return guess;
+	}
+
+	/**
+	 * from numerical recipes in c (p. 214)
+	 */
+	public static final double gammaln(double x) {
+		double ser = 1.00000000090015;
+		double y = x;
+		double tmp = x + 5.5;
+		tmp -= (x + 0.5) * Math.log(tmp);
+		for (int j = 0; j < +5; j++) {
+			ser += COFGAMMALN[j] / ++y;
+		}
+		return -tmp + Math.log(ser * 2.5066282751072975 / x);
 	}
 }

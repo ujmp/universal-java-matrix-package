@@ -51,12 +51,11 @@ public interface MiscGeneralDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @param dimension
 	 *            The axis along which to calculate
-	 * @param ignoreNaN
-	 *            should missing values be ignored
 	 * @return Matrix with zero mean and unit variance.
 	 */
-	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN)
-			throws MatrixException;
+	public Matrix standardize(Ret returnType, int dimension) throws MatrixException;
+
+	public Matrix normalize(Ret returnType, int dimension) throws MatrixException;
 
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException;
 

@@ -31,6 +31,7 @@ import java.util.Random;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -40,6 +41,7 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
 public abstract class AbstractMatrixTest extends TestCase {
 
@@ -53,11 +55,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	public String getLabel() {
 		return this.getClass().getSimpleName();
-	}
-
-	public Matrix getZeroSizeMatrix() throws Exception {
-		Matrix m = createMatrix(0, 0);
-		return m;
 	}
 
 	public Matrix getTestMatrix() throws Exception {
@@ -123,16 +120,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 		long[] c9 = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c9, new long[] { 2, 2 }));
 		assertFalse(getLabel(), ci.hasNext());
-		if (m instanceof Erasable) {
-			((Erasable) m).erase();
-		}
-	}
-
-	public void testZeroSize() throws Exception {
-		Matrix m = getZeroSizeMatrix();
-		assertTrue(getLabel(), Coordinates.equals(m.getSize(), new long[] { 0, 0 }));
-		assertEquals(getLabel(), 0, m.getRowCount());
-		assertEquals(getLabel(), 0, m.getColumnCount());
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
@@ -439,6 +426,14 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
 		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
 		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+
+		m.setAsDouble(0.0, 0, 1);
+		m.setAsDouble(4.0, 1, 0);
+
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
+		assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1));
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
 		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
 
 		if (m instanceof Erasable) {
@@ -1241,6 +1236,19 @@ public abstract class AbstractMatrixTest extends TestCase {
 			// only symmetric matrices
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
+			try {
+				// only symmetric matrices when JBlas is used
+				Class.forName("org.ujmp.jblas.Plugin");
+				return;
+			} catch (Throwable t) {
+			}
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
+			// doesn't habe own eig function
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
@@ -1720,6 +1728,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 3000)
 	public void testQRRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;

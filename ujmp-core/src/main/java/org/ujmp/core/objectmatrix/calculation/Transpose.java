@@ -46,12 +46,18 @@ public class Transpose extends AbstractObjectCalculation {
 		super(m);
 		this.swap1 = swap1;
 		this.swap2 = swap2;
-		Annotation aold = m.getAnnotation();
-		if (aold != null) {
-			Annotation a = new DefaultAnnotation(getSize());
-			a.setMatrixAnnotation(aold.getMatrixAnnotation());
-			for (int i = 0; i < m.getDimensionCount(); i++) {
-				Matrix am = aold.getDimensionMatrix(i);
+		if (getAnnotation() != null) {
+			setAnnotation(transposeAnnotation(m.getAnnotation(), getSize(), swap1, swap2));
+		}
+	}
+
+	public static Annotation transposeAnnotation(Annotation aorig, long[] newSize, int swap1,
+			int swap2) {
+		if (aorig != null) {
+			Annotation a = new DefaultAnnotation(newSize);
+			a.setMatrixAnnotation(aorig.getMatrixAnnotation());
+			for (int i = 0; i < newSize.length; i++) {
+				Matrix am = aorig.getDimensionMatrix(i);
 				am = am.transpose(Ret.NEW, swap1, swap2);
 				if (i == swap1) {
 					a.setDimensionMatrix(swap2, am);
@@ -61,8 +67,9 @@ public class Transpose extends AbstractObjectCalculation {
 					a.setDimensionMatrix(i, am);
 				}
 			}
-			setAnnotation(a);
+			return a;
 		}
+		return null;
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
@@ -107,6 +114,10 @@ public class Transpose extends AbstractObjectCalculation {
 
 		public void remove() {
 		}
+	}
+
+	public static Annotation transposeAnnotation(Annotation annotation, long[] newSize) {
+		return transposeAnnotation(annotation, newSize, ROW, COLUMN);
 	}
 
 }

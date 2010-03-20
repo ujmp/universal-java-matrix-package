@@ -124,6 +124,7 @@ import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeIn;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeOut;
+import org.ujmp.core.doublematrix.calculation.general.misc.Normalize;
 import org.ujmp.core.doublematrix.calculation.general.misc.Standardize;
 import org.ujmp.core.doublematrix.calculation.general.misc.TfIdf;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.AddMissing;
@@ -183,6 +184,7 @@ import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.calculation.Unique;
+import org.ujmp.core.objectmatrix.calculation.UniqueValueCount;
 import org.ujmp.core.objectmatrix.impl.ReshapedObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
@@ -384,9 +386,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new IndexOfMin(dimension, this).calc(returnType);
 	}
 
-	public Matrix standardize(Ret returnType, int dimension, boolean ignoreNaN)
-			throws MatrixException {
-		return new Standardize(ignoreNaN, dimension, this).calc(returnType);
+	public Matrix standardize(Ret returnType, int dimension) throws MatrixException {
+		return new Standardize(dimension, this).calc(returnType);
+	}
+
+	public Matrix normalize(Ret returnType, int dimension) throws MatrixException {
+		return new Normalize(dimension, this).calc(returnType);
 	}
 
 	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) throws MatrixException {
@@ -1418,6 +1423,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix unique(Ret returnType) throws MatrixException {
 		return new Unique(this).calc(returnType);
+	}
+
+	public Matrix uniqueValueCount(Ret returnType, int dimension) throws MatrixException {
+		return new UniqueValueCount(this, dimension).calc(returnType);
 	}
 
 	public Matrix bootstrap(Ret returnType, int count) throws MatrixException {

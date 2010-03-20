@@ -35,20 +35,16 @@ public class Standardize extends AbstractDoubleCalculation {
 
 	private Matrix sigma = null;
 
-	private boolean ignoreNaN = false;
-
-	public Standardize(boolean ignoreNaN, int dimension, Matrix matrix) {
+	public Standardize(int dimension, Matrix matrix) {
 		super(dimension, matrix);
-		this.ignoreNaN = ignoreNaN;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (center == null) {
-			center = new Center(ignoreNaN, getDimension(), getSource()).calcNew();
+			center = new Center(true, getDimension(), getSource()).calcNew();
 		}
 		if (sigma == null) {
-			sigma = new Std(getDimension(), ignoreNaN, center).calcNew();
+			sigma = new Std(getDimension(), true, center).calcNew();
 		}
 		switch (getDimension()) {
 		case ALL:

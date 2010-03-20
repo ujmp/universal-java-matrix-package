@@ -40,6 +40,7 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.BenchmarkUtil;
+import org.ujmp.core.benchmark.BlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
@@ -91,6 +92,9 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		}
 		if (getConfig().isRunArrayDenseDoubleMatrix2D()) {
 			list.add(new ArrayDenseDoubleMatrix2DBenchmark());
+		}
+		if (getConfig().isRunBlockDenseDoubleMatrix2D()) {
+			list.add(new BlockDenseDoubleMatrix2DBenchmark());
 		}
 		if (getConfig().isRunSSTDenseDoubleMatrix2D()) {
 			list.add(new SSTDenseDoubleMatrix2DBenchmark());

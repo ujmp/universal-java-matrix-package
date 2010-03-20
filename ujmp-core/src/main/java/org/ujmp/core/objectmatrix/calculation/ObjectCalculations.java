@@ -66,6 +66,8 @@ public interface ObjectCalculations {
 
 	public Matrix unique(Ret returnType) throws MatrixException;
 
+	public Matrix uniqueValueCount(Ret returnType, int dimension) throws MatrixException;
+
 	public Matrix tril(Ret returnType, int k) throws MatrixException;
 
 	public Matrix triu(Ret returnType, int k) throws MatrixException;

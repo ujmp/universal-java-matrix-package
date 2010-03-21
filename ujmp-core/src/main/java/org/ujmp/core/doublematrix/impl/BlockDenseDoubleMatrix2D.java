@@ -512,9 +512,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	 * @return c - a new matrix
 	 */
 	public BlockDenseDoubleMatrix2D mtimes(final BlockDenseDoubleMatrix2D b) {
-		if (2 * this.layout.rows * b.layout.rows * b.layout.columns < 100000) {
-			return multiplySingleThread(b);
-		}
+//		if (2 * this.layout.rows * b.layout.rows * b.layout.columns < 1000) {
+//			return multiplySingleThread(b);
+//		}
 		return mtimes(b, defaultExecutorReference.getExecutorService());
 	}
 

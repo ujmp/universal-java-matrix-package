@@ -23,8 +23,10 @@
 
 package org.ujmp.core.calculation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -33,10 +35,10 @@ import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeLS;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
-public class TestMissingValueImputation extends TestCase {
+public class TestMissingValueImputation {
 
+	@Test(timeout = 1000)
 	public void testImputeMissingValues() throws Exception {
-
 		for (ImputationMethod method : ImputationMethod.values()) {
 
 			if (ImputationMethod.BPCA.equals(method)) {

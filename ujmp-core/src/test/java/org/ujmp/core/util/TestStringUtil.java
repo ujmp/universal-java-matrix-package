@@ -23,14 +23,13 @@
 
 package org.ujmp.core.util;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class TestStringUtil extends TestCase {
+public class TestStringUtil {
 
+	@Test(timeout = 1000)
 	public void testParseSelectionMatlab() {
-
 		try {
 			long[][] sel = StringUtil.parseSelection(":,2", new long[] { 3, 4 });
 		} catch (MatrixException e) {
@@ -39,7 +38,6 @@ public class TestStringUtil extends TestCase {
 		}
 
 		throw new RuntimeException("Matlab selection is available. Add tests");
-
 	}
 
 }

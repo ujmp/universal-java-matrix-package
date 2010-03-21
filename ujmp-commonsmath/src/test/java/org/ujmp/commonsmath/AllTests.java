@@ -23,15 +23,11 @@
 
 package org.ujmp.commonsmath;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestCommonsMathArrayDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestCommonsMathBlockDenseDoubleMatrix2D.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestCommonsMathArrayDenseDoubleMatrix2D.class,
+		TestCommonsMathBlockDenseDoubleMatrix2D.class })
+public class AllTests {
 }

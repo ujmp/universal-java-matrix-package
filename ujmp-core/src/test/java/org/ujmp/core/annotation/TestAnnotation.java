@@ -23,12 +23,14 @@
 
 package org.ujmp.core.annotation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 
-public class TestAnnotation extends TestCase {
+public class TestAnnotation {
 
+	@Test(timeout = 1000)
 	public void testReverseAnnotation() throws Exception {
 		Matrix m = Matrix.factory.dense(10, 10);
 		m.setColumnLabel(3, "col3");

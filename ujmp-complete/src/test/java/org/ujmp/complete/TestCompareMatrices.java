@@ -1,11 +1,12 @@
 package org.ujmp.complete;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.colt.ColtDenseDoubleMatrix2D;
 import org.ujmp.colt.ColtSparseDoubleMatrix2D;
 import org.ujmp.commonsmath.CommonsMathArrayDenseDoubleMatrix2D;
@@ -44,7 +45,7 @@ import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
 import org.ujmp.sst.SSTDenseDoubleMatrix2D;
 import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 
-public class TestCompareMatrices extends TestCase {
+public class TestCompareMatrices {
 
 	private static final double TOLERANCE = 1e-4;
 
@@ -103,6 +104,7 @@ public class TestCompareMatrices extends TestCase {
 
 	}
 
+	@Test(timeout = 5000)
 	public void testMtimesSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(10, 5);
 		Matrix ref2 = MatrixFactory.randn(5, 15);
@@ -110,6 +112,12 @@ public class TestCompareMatrices extends TestCase {
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
 			try {
+				// JBlas not supported for 64 bit on windows
+				if (System.getProperty("os.name").toLowerCase().contains("windows")
+						&& System.getProperty("java.vm.name").contains("64")
+						&& mclass.getName().startsWith("org.ujmp.jblas")) {
+					continue;
+				}
 				Matrix m1 = getMatrix(mclass, ref1);
 				Matrix m2 = getMatrix(mclass, ref2);
 				Matrix m3 = m1.mtimes(m2);
@@ -120,6 +128,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 10000)
 	public void testMtimesLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = MatrixFactory.randn(100, 102);
@@ -127,6 +136,12 @@ public class TestCompareMatrices extends TestCase {
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
 			try {
+				// JBlas not supported for 64 bit on windows
+				if (System.getProperty("os.name").toLowerCase().contains("windows")
+						&& System.getProperty("java.vm.name").contains("64")
+						&& mclass.getName().startsWith("org.ujmp.jblas")) {
+					continue;
+				}
 				Matrix m1 = getMatrix(mclass, ref1);
 				Matrix m2 = getMatrix(mclass, ref2);
 				Matrix m3 = m1.mtimes(m2);
@@ -137,6 +152,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusMatrixSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		Matrix ref2 = MatrixFactory.randn(11, 10);
@@ -154,6 +170,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testPlusMatrixLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = MatrixFactory.randn(101, 100);
@@ -171,6 +188,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusMatrixSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		Matrix ref2 = MatrixFactory.randn(11, 10);
@@ -188,6 +206,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testMinusMatrixLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = MatrixFactory.randn(101, 100);
@@ -205,6 +224,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTimesMatrixSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		Matrix ref2 = MatrixFactory.randn(11, 10);
@@ -222,6 +242,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testTimesMatrixLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = MatrixFactory.randn(101, 100);
@@ -239,6 +260,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTimesScalarSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
@@ -255,6 +277,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusScalarSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
@@ -271,6 +294,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testPlusScalarLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
@@ -287,6 +311,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testMinusScalarLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
@@ -303,6 +328,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusScalarSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
@@ -319,6 +345,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testDivideScalarSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
@@ -335,6 +362,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testDivideScalarLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
@@ -351,6 +379,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testTimesScalarLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
@@ -367,6 +396,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testDivideMatrixSmall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(11, 10);
 		Matrix ref2 = MatrixFactory.randn(11, 10);
@@ -384,6 +414,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testDivideMatrixLarge() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = MatrixFactory.randn(101, 100);
@@ -401,6 +432,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testInverse() throws Exception {
 		Matrix ref1 = Matrix.factory.dense(3, 3);
 		ref1.setAsDouble(1.0, 0, 0);
@@ -416,6 +448,13 @@ public class TestCompareMatrices extends TestCase {
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
 			try {
+				// JBlas not supported for 64 bit on windows
+				if (System.getProperty("os.name").toLowerCase().contains("windows")
+						&& System.getProperty("java.vm.name").contains("64")
+						&& mclass.getName().startsWith("org.ujmp.jblas")) {
+					continue;
+				}
+
 				Matrix m1 = getMatrix(mclass, ref1);
 
 				if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -434,6 +473,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeSmallSquare() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(10, 10);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
@@ -449,6 +489,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeSmallTall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(15, 10);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
@@ -464,6 +505,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeSmallWide() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(10, 15);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
@@ -479,6 +521,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testTransposeLargeSquare() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 101);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
@@ -494,6 +537,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testTransposeLargeTall() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(101, 100);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
@@ -509,6 +553,7 @@ public class TestCompareMatrices extends TestCase {
 		}
 	}
 
+	@Test(timeout = 5000)
 	public void testTransposeLargeWide() throws Exception {
 		Matrix ref1 = MatrixFactory.randn(100, 101);
 		Matrix ref2 = ref1.transpose(Ret.LINK);

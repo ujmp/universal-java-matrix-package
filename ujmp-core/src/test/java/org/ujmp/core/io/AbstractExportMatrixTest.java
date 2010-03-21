@@ -23,18 +23,20 @@
 
 package org.ujmp.core.io;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStream;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 
-public abstract class AbstractExportMatrixTest extends TestCase {
+public abstract class AbstractExportMatrixTest {
 
 	public abstract FileFormat getFormat();
 
@@ -46,10 +48,10 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 		return this.getClass().getSimpleName();
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToFile() throws Exception {
-
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
-		//file.deleteOnExit();
+		// file.deleteOnExit();
 
 		Matrix m = getMatrix();
 		m.exportToFile(getFormat(), file);
@@ -64,11 +66,10 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 		file.delete();
 
 		assertFalse(getLabel(), file.exists());
-
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToStream() throws Exception {
-
 		File file = File.createTempFile("testExportToStream" + getFormat(), "."
 				+ getFormat().name().toLowerCase());
 		file.deleteOnExit();
@@ -85,11 +86,10 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 		file.delete();
 		assertFalse(getLabel(), file.exists());
-
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToWriter() throws Exception {
-
 		File file = File.createTempFile("testExportToWriter", "."
 				+ getFormat().name().toLowerCase());
 		file.deleteOnExit();
@@ -106,24 +106,21 @@ public abstract class AbstractExportMatrixTest extends TestCase {
 
 		file.delete();
 		assertFalse(getLabel(), file.exists());
-
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToString() throws Exception {
-
 		Matrix m = getMatrix();
 		String s = m.exportToString(getFormat());
 
 		assertTrue(getLabel(), s != null);
 		assertTrue(getLabel(), s.length() > 0);
-
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToClipboard() throws Exception {
-
 		Matrix m = getMatrix();
 		m.exportToClipboard(getFormat());
-
 	}
 
 }

@@ -23,15 +23,18 @@
 
 package org.ujmp.bpca;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
-public class TestBPCA extends TestCase {
+public class TestBPCA {
 
+	@Test(timeout = 5000)
 	public void testBPCA() throws Exception {
 		Matrix m = MatrixFactory.randn(30, 30);
 		m.addMissing(Ret.ORIG, Matrix.ALL, 0.1);

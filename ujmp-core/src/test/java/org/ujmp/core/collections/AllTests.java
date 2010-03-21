@@ -23,23 +23,12 @@
 
 package org.ujmp.core.collections;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestArrayIndexList.class);
-		suite.addTestSuite(TestCachedMap.class);
-		suite.addTestSuite(TestHashMapList.class);
-		suite.addTestSuite(TestLazyMap.class);
-		suite.addTestSuite(TestRingBufferList.class);
-		suite.addTestSuite(TestSerializedObjectMap.class);
-		suite.addTestSuite(TestSoftHashMap.class);
-		suite.addTestSuite(TestSoftHashMapList.class);
-		suite.addTestSuite(TestSortedListSet.class);
-		suite.addTestSuite(TestTextMap.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestArrayIndexList.class, TestTextMap.class, TestSortedListSet.class,
+		TestSoftHashMapList.class, TestSoftHashMap.class, TestSerializedObjectMap.class,
+		TestRingBufferList.class, TestLazyMap.class, TestCachedMap.class, TestHashMapList.class })
+public class AllTests {
 }

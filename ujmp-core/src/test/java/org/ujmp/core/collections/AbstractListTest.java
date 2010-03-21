@@ -23,14 +23,17 @@
 
 package org.ujmp.core.collections;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 import java.util.List;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.core.util.SerializationUtil;
 
-public abstract class AbstractListTest extends TestCase {
+public abstract class AbstractListTest {
 
 	public abstract List<String> createList() throws Exception;
 
@@ -38,6 +41,7 @@ public abstract class AbstractListTest extends TestCase {
 		return this.getClass().getSimpleName();
 	}
 
+	@Test(timeout = 1000)
 	public void testClear() throws Exception {
 		List<String> m = createList();
 		assertTrue(getLabel(), m.isEmpty());
@@ -53,6 +57,7 @@ public abstract class AbstractListTest extends TestCase {
 		assertTrue(getLabel(), m.isEmpty());
 	}
 
+	@Test(timeout = 1000)
 	public void testContains() throws Exception {
 		List<String> m = createList();
 		assertFalse(getLabel(), m.contains("a"));
@@ -72,6 +77,7 @@ public abstract class AbstractListTest extends TestCase {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Test(timeout = 1000)
 	public void testSerialize() throws Exception {
 		List<String> m = createList();
 		m.add("a");

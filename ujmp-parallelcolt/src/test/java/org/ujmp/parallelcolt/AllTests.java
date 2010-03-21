@@ -23,15 +23,11 @@
 
 package org.ujmp.parallelcolt;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestParallelColtDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestParallelColtSparseDoubleMatrix2D.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestParallelColtDenseDoubleMatrix2D.class,
+		TestParallelColtSparseDoubleMatrix2D.class })
+public class AllTests {
 }

@@ -23,15 +23,10 @@
 
 package org.ujmp.lucene;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestLuceneMap.class);
-		suite.addTestSuite(TestLuceneSparseObjectMatrix.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestLuceneMap.class, TestLuceneSparseObjectMatrix.class })
+public class AllTests {
 }

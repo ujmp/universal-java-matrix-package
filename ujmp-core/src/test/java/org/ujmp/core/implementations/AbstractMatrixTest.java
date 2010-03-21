@@ -23,13 +23,15 @@
 
 package org.ujmp.core.implementations;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import junit.framework.TestCase;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
@@ -41,9 +43,8 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
-import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
-public abstract class AbstractMatrixTest extends TestCase {
+public abstract class AbstractMatrixTest {
 
 	public static final double TOLERANCE = 1e-7;
 
@@ -67,6 +68,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		return m;
 	}
 
+	@Test(timeout = 1000)
 	public void testExtractAnnotation() throws Exception {
 		Matrix m1 = MatrixFactory.randn(5, 5);
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
@@ -98,6 +100,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	// Test interface CoordinateFunctions
+	@Test(timeout = 1000)
 	public void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrix(3, 3);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
@@ -125,6 +128,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testAvailableCoordinateIterator2D() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -160,6 +164,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 	}
 
+	@Test(timeout = 1000)
 	public void testSelectedCoordinatesString() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -190,6 +195,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSelectedCoordinates() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -222,6 +228,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testGetCoordinatesOfMaximum() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMaximum();
@@ -240,6 +247,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testGetCoordinatesOfMininim() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMinimum();
@@ -258,6 +266,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testContains() throws Exception {
 		Matrix m = getTestMatrix();
 		assertTrue(m.contains(0, 0));
@@ -291,6 +300,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSize() throws Exception {
 		Matrix m = createMatrix(20, 10);
 		assertEquals(getLabel(), 20, m.getRowCount());
@@ -301,6 +311,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testClone() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -323,6 +334,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testAnnotation() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -349,6 +361,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testCountMissingValues() throws Exception {
 		Matrix m = createMatrix(4, 4);
 		m = m.zeros(Ret.ORIG);
@@ -363,23 +376,24 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix m2 = m.countMissing(Ret.NEW, Matrix.COLUMN);
 		Matrix m3 = m.countMissing(Ret.NEW, Matrix.ALL);
 
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 2));
-		assertEquals(getLabel(), 0.0, m1.getAsDouble(0, 3));
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), 0.0, m1.getAsDouble(0, 3), TOLERANCE);
 
-		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(2, 0));
-		assertEquals(getLabel(), 2.0, m2.getAsDouble(3, 0));
+		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m2.getAsDouble(3, 0), TOLERANCE);
 
-		assertEquals(getLabel(), 6.0, m3.getAsDouble(0, 0));
+		assertEquals(getLabel(), 6.0, m3.getAsDouble(0, 0), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSerialize() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -400,6 +414,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testToDoubleArray() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -407,40 +422,42 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		double[][] values = m.toDoubleArray();
-		assertEquals(getLabel(), 1.0, values[0][0]);
-		assertEquals(getLabel(), 2.0, values[0][1]);
-		assertEquals(getLabel(), 3.0, values[1][0]);
-		assertEquals(getLabel(), 4.0, values[1][1]);
+		assertEquals(getLabel(), 1.0, values[0][0], TOLERANCE);
+		assertEquals(getLabel(), 2.0, values[0][1], TOLERANCE);
+		assertEquals(getLabel(), 3.0, values[1][0], TOLERANCE);
+		assertEquals(getLabel(), 4.0, values[1][1], TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSetAndGet() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		m.setAsDouble(0.0, 0, 1);
 		m.setAsDouble(4.0, 1, 0);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -449,15 +466,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.plus(1.0);
 
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -467,6 +484,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -478,15 +496,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.plus(1.0);
 
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -496,6 +514,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 		Matrix m2 = createMatrix(2, 2);
@@ -509,20 +528,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(1.0, 1, 1);
 		Matrix r = m1.plus(m2);
 
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 1), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -535,6 +554,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -551,20 +571,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(1.0, 1, 1);
 		Matrix r = m1.plus(m2);
 
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(1, 1), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -577,6 +597,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeSmall() throws Exception {
 		// TODO: check labels
 		Matrix m = createMatrix(2, 3);
@@ -589,25 +610,26 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix r = m.transpose();
 		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
 		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 2));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1));
-		assertEquals(getLabel(), 6.0, m.getAsDouble(1, 2));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, m.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), 6.0, m.getAsDouble(1, 2), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -623,18 +645,19 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix r = m.transpose();
 		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
 		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeNewSmall() throws Exception {
 		Matrix m = createMatrix(2, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -649,12 +672,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix r = m.transpose(Ret.NEW);
 		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
 		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1), TOLERANCE);
 		assertEquals(getLabel(), "label", r.getLabel());
 		assertEquals(getLabel(), "row1", r.getColumnLabel(1));
 		assertEquals(getLabel(), "col2", r.getRowLabel(2));
@@ -664,6 +687,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTransposeLinkSmall() throws Exception {
 		Matrix m = createMatrix(2, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -678,12 +702,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix r = m.transpose(Ret.LINK);
 		assertEquals(getLabel(), m.getRowCount(), r.getColumnCount());
 		assertEquals(getLabel(), m.getColumnCount(), r.getRowCount());
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, r.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(2, 1), TOLERANCE);
 		assertEquals(getLabel(), "label", r.getLabel());
 		assertEquals(getLabel(), "row1", r.getColumnLabel(1));
 		assertEquals(getLabel(), "col2", r.getRowLabel(2));
@@ -693,13 +717,14 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testEmpty() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		if (m instanceof AbstractDoubleMatrix) {
-			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 0));
-			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1));
-			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 0));
-			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 1));
+			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 0), TOLERANCE);
+			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1), TOLERANCE);
+			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 0), TOLERANCE);
+			assertEquals(getLabel(), 0.0, m.getAsDouble(1, 1), TOLERANCE);
 		} else {
 			assertEquals(getLabel(), null, m.getAsObject(0, 0));
 			assertEquals(getLabel(), null, m.getAsObject(0, 1));
@@ -712,6 +737,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -719,15 +745,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.minus(1.0);
-		assertEquals(getLabel(), 0.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -737,6 +763,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -747,15 +774,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.minus(1.0);
-		assertEquals(getLabel(), 0.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 3.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -765,6 +792,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTimesScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -772,15 +800,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.times(2.0);
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 8.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 8.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -790,6 +818,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTimesScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -800,15 +829,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.times(2.0);
-		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 6.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 8.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 2.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 6.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 8.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -818,6 +847,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testDivideScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -825,15 +855,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.divide(2.0);
-		assertEquals(getLabel(), 0.5, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.5, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.5, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.5, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -843,6 +873,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testDivideScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -853,15 +884,15 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		Matrix r = m.divide(2.0);
-		assertEquals(getLabel(), 0.5, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.5, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.5, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.5, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m.getAsDouble(1, 1), TOLERANCE);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -871,6 +902,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 		Matrix m2 = createMatrix(2, 2);
@@ -883,20 +915,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(2.0, 1, 0);
 		m2.setAsDouble(3.0, 1, 1);
 		Matrix r = m1.minus(m2);
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 1), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -909,6 +941,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMinusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -924,20 +957,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		m2.setAsDouble(2.0, 1, 0);
 		m2.setAsDouble(3.0, 1, 1);
 		Matrix r = m1.minus(m2);
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 0));
-		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, r.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), 1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 2.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 1));
+		assertEquals(getLabel(), 0.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(1, 1), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -950,8 +983,17 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMTimesSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
+			return;
+		}
+
 		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
@@ -968,24 +1010,24 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 		assertEquals(getLabel(), 2, m3.getRowCount());
 		assertEquals(getLabel(), 3, m3.getColumnCount());
-		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
-		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1));
-		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2));
-		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
-		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
-		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2), TOLERANCE);
 
-		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2));
-		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1));
-		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -996,11 +1038,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMTimesLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix m1 = createMatrix(105, 110);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
+			return;
+		}
+
 		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
@@ -1017,24 +1068,24 @@ public abstract class AbstractMatrixTest extends TestCase {
 
 		assertEquals(getLabel(), 105, m3.getRowCount());
 		assertEquals(getLabel(), 120, m3.getColumnCount());
-		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0));
-		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1));
-		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2));
-		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0));
-		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1));
-		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2));
+		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), -19.0, m3.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 26.0, m3.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), -33.0, m3.getAsDouble(1, 2), TOLERANCE);
 
-		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0));
-		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1));
-		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0));
-		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1));
+		assertEquals(getLabel(), -1.0, m1.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), 2.0, m1.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), -3.0, m1.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 4.0, m1.getAsDouble(1, 1), TOLERANCE);
 
-		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0));
-		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1));
-		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2));
-		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0));
-		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1));
-		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2));
+		assertEquals(getLabel(), 1.0, m2.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(getLabel(), -2.0, m2.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(getLabel(), 3.0, m2.getAsDouble(0, 2), TOLERANCE);
+		assertEquals(getLabel(), -4.0, m2.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(getLabel(), 5.0, m2.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(getLabel(), -6.0, m2.getAsDouble(1, 2), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
@@ -1045,10 +1096,17 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testInvRandSmall() throws Exception {
 		Matrix m1 = createMatrix(10, 10);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
 			return;
 		}
 
@@ -1062,6 +1120,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testInvRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1069,6 +1128,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		Matrix m1 = createMatrix(120, 120);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
 			return;
 		}
 
@@ -1120,6 +1185,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testPinvSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
@@ -1161,6 +1227,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testGinvSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
@@ -1194,6 +1261,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testEigRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -1218,6 +1286,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 2000)
 	public void testEigRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1258,8 +1327,17 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testEigSymmSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Random random = new Random();
 		int rows = (int) a.getRowCount();
 		int cols = (int) a.getColumnCount();
@@ -1279,11 +1357,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 2000)
 	public void testEigSymmLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrix(110, 110);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Random random = new Random();
 		int rows = (int) a.getRowCount();
 		int cols = (int) a.getColumnCount();
@@ -1303,6 +1390,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
@@ -1325,6 +1413,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1338,6 +1432,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1363,6 +1458,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1376,8 +1477,17 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testSolveRandSquareSmall() throws Exception {
 		Matrix a = createMatrix(2, 2);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(2, 4);
 		x.randn(Ret.ORIG);
@@ -1389,11 +1499,19 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testSolveRandSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrix(120, 120);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(120, 140);
@@ -1406,6 +1524,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testSolveRandTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 2);
 
@@ -1427,6 +1546,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 2000)
 	public void testSolveRandTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1451,6 +1571,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLURandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -1472,6 +1593,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		a.rand(Ret.ORIG);
 		Matrix[] lu = a.lu();
@@ -1481,6 +1608,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLURandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1505,6 +1633,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		a.rand(Ret.ORIG);
 		Matrix[] lu = a.lu();
@@ -1514,6 +1648,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -1536,6 +1671,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1549,6 +1690,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1574,6 +1716,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1587,6 +1735,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -1624,6 +1773,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1637,6 +1792,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testLUFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1677,6 +1833,12 @@ public abstract class AbstractMatrixTest extends TestCase {
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
 			return;
 		}
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -1690,6 +1852,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
@@ -1703,6 +1866,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1719,6 +1883,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 		a.rand(Ret.ORIG);
@@ -1728,7 +1893,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 3000)
+	@Test(timeout = 1000)
 	public void testQRRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1741,6 +1906,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -1817,6 +1983,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1896,6 +2063,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -1914,6 +2082,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testQRTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1935,6 +2104,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testCholSmall() throws Exception {
 		Matrix a = createMatrix(MatrixFactory.pascal(5, 5));
 
@@ -1948,12 +2118,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Matrix chol = a.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(a).doubleValue(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testCholRandSmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(10, 10);
@@ -1976,12 +2154,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testCholRandVerySmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(2, 2);
@@ -2004,12 +2190,20 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testCholRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2035,6 +2229,13 @@ public abstract class AbstractMatrixTest extends TestCase {
 			return;
 		}
 
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -2042,6 +2243,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 	}
 
 	// test example from wikipedia
+	@Test(timeout = 1000)
 	public void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrix(4, 5);
 
@@ -2085,6 +2287,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
@@ -2120,6 +2323,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2158,6 +2362,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDSquareRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -2189,6 +2394,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDSquareRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2223,6 +2429,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -2263,6 +2470,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2306,6 +2514,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -2346,6 +2555,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSVDTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;

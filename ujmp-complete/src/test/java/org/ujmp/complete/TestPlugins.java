@@ -23,13 +23,16 @@
 
 package org.ujmp.complete;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
-public class TestPlugins extends TestCase {
+public class TestPlugins {
 
+	@Test(timeout = 5000)
 	public void testPlugins() {
 		Matrix m = new UJMPPluginsMatrix();
 		for (int r = 0; r < m.getRowCount(); r++) {

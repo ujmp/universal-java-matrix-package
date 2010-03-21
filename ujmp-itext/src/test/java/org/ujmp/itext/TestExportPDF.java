@@ -23,18 +23,23 @@
 
 package org.ujmp.itext;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import javax.swing.JButton;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class TestExportPDF extends TestCase {
+public class TestExportPDF {
 
+	@Test(timeout = 3000)
 	public void testExport() {
 		JButton b = new JButton("test");
 		b.setSize(100, 100);
-		File file = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "test.pdf");
+		File file = new File(System.getProperty("java.io.tmpdir")
+				+ System.getProperty("file.separator") + "test.pdf");
 		ExportPDF.save(file, b);
 
 		assertTrue(file.exists());

@@ -23,20 +23,12 @@
 
 package org.ujmp.core.io;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixCSV.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixSPARSECSV.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixXLS.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixHTML.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixM.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixMAT.class);
-		suite.addTestSuite(org.ujmp.core.io.TestExportMatrixMDB.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestExportMatrixCSV.class, TestExportMatrixXLS.class,
+		TestExportMatrixSPARSECSV.class, TestExportMatrixMAT.class, TestExportMatrixMDB.class,
+		TestExportMatrixHTML.class, TestExportMatrixM.class })
+public class AllTests {
 }

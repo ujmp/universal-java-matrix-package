@@ -23,15 +23,18 @@
 
 package org.ujmp.core.collections;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 
-public abstract class AbstractMapTest extends TestCase {
+public abstract class AbstractMapTest {
 
 	public abstract Map<String, String> createMap() throws Exception;
 
@@ -39,6 +42,7 @@ public abstract class AbstractMapTest extends TestCase {
 		return this.getClass().getSimpleName();
 	}
 
+	@Test(timeout = 1000)
 	public void testPutAndGet() throws Exception {
 		Map<String, String> m = createMap();
 		m.put("a", "test1");
@@ -51,6 +55,7 @@ public abstract class AbstractMapTest extends TestCase {
 	}
 
 	// TODO
+	@Test(timeout = 1000)
 	public void testClear() throws Exception {
 		Map<String, String> m = createMap();
 		assertTrue(getLabel(), m.isEmpty());
@@ -67,6 +72,7 @@ public abstract class AbstractMapTest extends TestCase {
 	}
 
 	// TODO
+	@Test(timeout = 1000)
 	public void testContainsKey() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsKey("a"));
@@ -86,6 +92,7 @@ public abstract class AbstractMapTest extends TestCase {
 	}
 
 	// TODO
+	@Test(timeout = 1000)
 	public void testContainsValue() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsValue("test1"));
@@ -106,6 +113,7 @@ public abstract class AbstractMapTest extends TestCase {
 
 	// TODO
 	@SuppressWarnings("unchecked")
+	@Test(timeout = 1000)
 	public void testSerialize() throws Exception {
 		Map<String, String> m = createMap();
 		m.put("a", "test1");

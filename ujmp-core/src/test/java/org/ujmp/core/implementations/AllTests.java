@@ -23,23 +23,14 @@
 
 package org.ujmp.core.implementations;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestDenseFileMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestMortonDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseDoubleMatrixMultiD.class);
-		suite.addTestSuite(TestArrayDenseDoubleMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseObjectMatrix2D.class);
-		suite.addTestSuite(TestDefaultDenseStringMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseRowMatrix2D.class);
-		suite.addTestSuite(TestDefaultSparseColumnMatrix2D.class);
-		suite.addTestSuite(TestDefaultTiledObjectMatrix2D.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestDenseFileMatrix2D.class, TestArrayDenseDoubleMatrix2D.class,
+		TestDefaultDenseDoubleMatrix2D.class, TestDefaultDenseObjectMatrix2D.class,
+		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnMatrix2D.class,
+		TestDefaultSparseRowMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
+		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class })
+public class AllTests {
 }

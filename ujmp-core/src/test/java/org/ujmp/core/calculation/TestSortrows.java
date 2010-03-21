@@ -23,14 +23,15 @@
 
 package org.ujmp.core.calculation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 
-public class TestSortrows extends TestCase {
+public class TestSortrows {
 
 	private Matrix getMatrix(ValueType valueType) {
 		Matrix m = MatrixFactory.zeros(valueType, 4, 4);
@@ -173,6 +174,7 @@ public class TestSortrows extends TestCase {
 		return m;
 	}
 
+	@Test(timeout = 1000)
 	public void testSortDoubleNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -180,6 +182,7 @@ public class TestSortrows extends TestCase {
 		assertEquals(getResult(ValueType.DOUBLE), m2);
 	}
 
+	@Test(timeout = 1000)
 	public void testSortStringNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -195,6 +198,7 @@ public class TestSortrows extends TestCase {
 	// assertEquals(getResult(ValueType.STRING), m2);
 	// }
 
+	@Test(timeout = 1000)
 	public void testSortBigDecimalNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -218,6 +222,7 @@ public class TestSortrows extends TestCase {
 	// assertEquals(getResult(ValueType.BIGDECIMAL), m2);
 	// }
 
+	@Test(timeout = 1000)
 	public void testSortDoubleReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
@@ -225,6 +230,7 @@ public class TestSortrows extends TestCase {
 		assertEquals(getResultReverse(ValueType.DOUBLE), m2);
 	}
 
+	@Test(timeout = 1000)
 	public void testSortStringReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
@@ -240,6 +246,7 @@ public class TestSortrows extends TestCase {
 	// assertEquals(getResultReverse(ValueType.STRING), m2);
 	// }
 
+	@Test(timeout = 1000)
 	public void testSortBigDecimalReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);

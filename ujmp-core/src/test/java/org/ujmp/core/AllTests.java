@@ -23,21 +23,13 @@
 
 package org.ujmp.core;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(MatrixFactoryTest.class);
-		suite.addTest(org.ujmp.core.doublematrix.impl.AllTests.suite());
-		suite.addTest(org.ujmp.core.calculation.AllTests.suite());
-		suite.addTest(org.ujmp.core.collections.AllTests.suite());
-		suite.addTest(org.ujmp.core.implementations.AllTests.suite());
-		suite.addTest(org.ujmp.core.io.AllTests.suite());
-		suite.addTest(org.ujmp.core.util.AllTests.suite());
-		suite.addTest(org.ujmp.core.annotation.AllTests.suite());
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { MatrixFactoryTest.class, org.ujmp.core.doublematrix.impl.AllTests.class,
+		org.ujmp.core.calculation.AllTests.class, org.ujmp.core.collections.AllTests.class,
+		org.ujmp.core.implementations.AllTests.class, org.ujmp.core.io.AllTests.class,
+		org.ujmp.core.util.AllTests.class, org.ujmp.core.annotation.AllTests.class })
+public class AllTests {
 }

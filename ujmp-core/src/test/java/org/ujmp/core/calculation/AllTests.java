@@ -23,19 +23,12 @@
 
 package org.ujmp.core.calculation;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTest(org.ujmp.core.calculation.string.AllTests.suite());
-		suite.addTestSuite(TestMissingValueImputation.class);
-		suite.addTestSuite(TestConcatenation.class);
-		suite.addTestSuite(TestMtimes.class);
-		suite.addTestSuite(TestGinv.class);
-		suite.addTestSuite(TestSortrows.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { org.ujmp.core.calculation.string.AllTests.class,
+		TestMissingValueImputation.class, TestSortrows.class, TestGinv.class,
+		TestConcatenation.class, TestMtimes.class })
+public class AllTests {
 }

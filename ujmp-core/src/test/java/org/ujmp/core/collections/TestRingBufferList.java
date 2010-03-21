@@ -23,10 +23,13 @@
 
 package org.ujmp.core.collections;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TestRingBufferList extends TestCase {
+import org.junit.Test;
 
+public class TestRingBufferList {
+
+	@Test(timeout = 1000)
 	public void testAdd() {
 		RingBufferList<Integer> rl = new RingBufferList<Integer>(4);
 
@@ -59,7 +62,6 @@ public class TestRingBufferList extends TestCase {
 		rl.add(5);
 		assertEquals(4, rl.size());
 		assertEquals(5, (int) rl.get(3));
-
 	}
 
 }

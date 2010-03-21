@@ -23,21 +23,23 @@
 
 package org.ujmp.core.io;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixM extends AbstractExportMatrixTest {
 
-	
 	public FileFormat getFormat() {
 		return FileFormat.M;
 	}
 
-	
+	@Test(timeout = 1000)
 	public void testExportToFile() throws Exception {
-
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
 		file.deleteOnExit();
 
@@ -49,7 +51,6 @@ public class TestExportMatrixM extends AbstractExportMatrixTest {
 
 		file.delete();
 		assertFalse(getLabel(), file.exists());
-
 	}
 
 }

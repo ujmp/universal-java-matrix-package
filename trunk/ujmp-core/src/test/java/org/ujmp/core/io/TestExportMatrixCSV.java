@@ -27,7 +27,6 @@ import org.ujmp.core.enums.FileFormat;
 
 public class TestExportMatrixCSV extends AbstractExportMatrixTest {
 
-	
 	public FileFormat getFormat() {
 		return FileFormat.CSV;
 	}

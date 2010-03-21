@@ -23,6 +23,7 @@
 
 package org.ujmp.sst;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
@@ -38,6 +39,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testAnnotation() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -47,6 +49,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testAvailableCoordinateIterator2D() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -56,6 +59,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testClone() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -65,6 +69,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testContains() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -74,6 +79,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testCoordinateIterator2D() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -83,6 +89,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testCountMissingValues() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -92,6 +99,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testEmpty() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -101,6 +109,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testGetCoordinatesOfMaximum() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -110,6 +119,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testGetCoordinatesOfMininim() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -119,6 +129,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testGinvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -128,6 +139,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testInvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -137,6 +149,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testMinusScalarSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -146,6 +159,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testMTimesSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -155,6 +169,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testPlusScalarSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -164,6 +179,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSelectedCoordinates() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -173,6 +189,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSelectedCoordinatesString() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -182,6 +199,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSerialize() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -191,6 +209,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSetAndGet() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -200,6 +219,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSize() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -209,6 +229,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testToDoubleArray() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -218,6 +239,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testTransposeSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -227,6 +249,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testPinvSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -236,6 +259,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testSVDFatSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
@@ -245,6 +269,7 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 	}
 
 	@Override
+	@Test(timeout = 1000)
 	public void testQRSquareSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {

@@ -23,56 +23,27 @@
 
 package org.ujmp.complete;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-
-		suite.addTestSuite(org.ujmp.complete.TestPlugins.class);
-		suite.addTestSuite(org.ujmp.complete.TestCompareMatrices.class);
-		suite.addTest(org.ujmp.core.AllTests.suite());
-		suite.addTest(org.ujmp.gui.AllTests.suite());
-		suite.addTest(org.ujmp.bpca.AllTests.suite());
-		suite.addTest(org.ujmp.colt.AllTests.suite());
-		suite.addTest(org.ujmp.commonsmath.AllTests.suite());
-		suite.addTest(org.ujmp.hadoop.AllTests.suite());
-		suite.addTest(org.ujmp.itext.AllTests.suite());
-		suite.addTest(org.ujmp.jackcess.AllTests.suite());
-		suite.addTest(org.ujmp.jama.AllTests.suite());
-		suite.addTest(org.ujmp.jampack.AllTests.suite());
-		suite.addTest(org.ujmp.jblas.AllTests.suite());
-		suite.addTest(org.ujmp.jdbc.AllTests.suite());
-		suite.addTest(org.ujmp.jexcelapi.AllTests.suite());
-		suite.addTest(org.ujmp.jfreechart.AllTests.suite());
-		suite.addTest(org.ujmp.jlinalg.AllTests.suite());
-		suite.addTest(org.ujmp.jmathplot.AllTests.suite());
-		suite.addTest(org.ujmp.jmatharray.AllTests.suite());
-		suite.addTest(org.ujmp.jmatio.AllTests.suite());
-		suite.addTest(org.ujmp.jmatrices.AllTests.suite());
-		suite.addTest(org.ujmp.jsci.AllTests.suite());
-		suite.addTest(org.ujmp.jscience.AllTests.suite());
-		suite.addTest(org.ujmp.jung.AllTests.suite());
-		suite.addTest(org.ujmp.lsimpute.AllTests.suite());
-		suite.addTest(org.ujmp.lucene.AllTests.suite());
-		suite.addTest(org.ujmp.mail.AllTests.suite());
-		suite.addTest(org.ujmp.mantissa.AllTests.suite());
-		suite.addTest(org.ujmp.mtj.AllTests.suite());
-		suite.addTest(org.ujmp.ojalgo.AllTests.suite());
-		suite.addTest(org.ujmp.orbital.AllTests.suite());
-		suite.addTest(org.ujmp.owlpack.AllTests.suite());
-		suite.addTest(org.ujmp.parallelcolt.AllTests.suite());
-		suite.addTest(org.ujmp.pdfbox.AllTests.suite());
-		suite.addTest(org.ujmp.vecmath.AllTests.suite());
-
-		// some libraries do not support Java 5
-		if (!"1.5".equals(System.getProperty("java.specification.version"))) {
-			suite.addTest(org.ujmp.ejml.AllTests.suite());
-			suite.addTest(org.ujmp.sst.AllTests.suite());
-		}
-
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { org.ujmp.complete.TestPlugins.class,
+		org.ujmp.complete.TestCompareMatrices.class, org.ujmp.core.AllTests.class,
+		org.ujmp.gui.AllTests.class, org.ujmp.bpca.AllTests.class, org.ujmp.hadoop.AllTests.class,
+		org.ujmp.colt.AllTests.class, org.ujmp.jackcess.AllTests.class,
+		org.ujmp.itext.AllTests.class, org.ujmp.jampack.AllTests.class,
+		org.ujmp.jama.AllTests.class, org.ujmp.jfreechart.AllTests.class,
+		org.ujmp.jexcelapi.AllTests.class, org.ujmp.jdbc.AllTests.class,
+		org.ujmp.jlinalg.AllTests.class, org.ujmp.jmatharray.AllTests.class,
+		org.ujmp.jmathplot.AllTests.class, org.ujmp.jblas.AllTests.class,
+		org.ujmp.commonsmath.AllTests.class, org.ujmp.jmatrices.AllTests.class,
+		org.ujmp.jmatio.AllTests.class, org.ujmp.parallelcolt.AllTests.class,
+		org.ujmp.jsci.AllTests.class, org.ujmp.jscience.AllTests.class,
+		org.ujmp.jung.AllTests.class, org.ujmp.lsimpute.AllTests.class,
+		org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
+		org.ujmp.mantissa.AllTests.class, org.ujmp.mtj.AllTests.class,
+		org.ujmp.ojalgo.AllTests.class, org.ujmp.orbital.AllTests.class,
+		org.ujmp.owlpack.AllTests.class, org.ujmp.pdfbox.AllTests.class,
+		org.ujmp.vecmath.AllTests.class, org.ujmp.ejml.AllTests.class, org.ujmp.sst.AllTests.class })
+public class AllTests {
 }

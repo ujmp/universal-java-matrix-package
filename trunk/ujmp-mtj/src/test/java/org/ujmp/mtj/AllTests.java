@@ -23,14 +23,10 @@
 
 package org.ujmp.mtj;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestMTJDenseDoubleMatrix2D.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestMTJDenseDoubleMatrix2D.class })
+public class AllTests {
 }

@@ -23,16 +23,11 @@
 
 package org.ujmp.core.doublematrix.impl;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestBlockDenseDouble2DMatrix.class);
-		suite.addTestSuite(TestBlockMultiply.class);
-		suite.addTestSuite(TestSBLayoutDense2DMatrix.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestBlockDenseDouble2DMatrix.class, TestBlockMultiply.class,
+		TestBlockMultiply.class })
+public class AllTests {
 }

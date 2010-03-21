@@ -23,6 +23,7 @@
 
 package org.ujmp.core.io;
 
+import org.junit.Test;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -32,6 +33,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		return FileFormat.XLS;
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToFile() throws Exception {
 		try {
 			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
@@ -43,6 +45,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToStream() throws Exception {
 		try {
 			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
@@ -54,6 +57,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -63,6 +67,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();
@@ -72,6 +77,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
+	@Test(timeout = 1000)
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();

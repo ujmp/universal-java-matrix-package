@@ -23,15 +23,17 @@
 
 package org.ujmp.jmatio;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 
-public class Test3D extends TestCase {
+public class Test3D {
 
+	@Test(timeout = 1000)
 	public void testIndexCalc() {
 		MLDoubleMatrix mlDouble = new MLDoubleMatrix(3, 4, 5);
 		assertEquals(0, mlDouble.getIndex(0, 0, 0));
@@ -49,7 +51,7 @@ public class Test3D extends TestCase {
 		assertEquals(59, mlDouble.getIndex(2, 3, 4));
 	}
 
-	@Test
+	@Test(timeout = 1000)
 	public void testUJMP() {
 		Matrix original = MatrixFactory.rand(ValueType.DOUBLE, 3, 4, 5);
 		MLDoubleMatrix mlDouble = new MLDoubleMatrix(original);

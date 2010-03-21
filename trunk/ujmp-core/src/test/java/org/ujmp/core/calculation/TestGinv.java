@@ -23,10 +23,14 @@
 
 package org.ujmp.core.calculation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Random;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
 
@@ -36,12 +40,13 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
  * @author Rand Huso
  * @author Holger Arndt
  */
-public class TestGinv extends TestCase {
+public class TestGinv {
 	private static final int M1ROWS = 2;
 	private static final int M1COLS = 3;
 	private static final int M2ROWS = 3;
 	private static final int M2COLS = 4;
 	private static final double PRODUCT = 2.54;
+	private static final double TOLERANCE = 1e-7;
 
 	private void setValues(Matrix matrix) {
 		for (int row = 0; row < matrix.getRowCount(); ++row) {
@@ -51,11 +56,13 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSet() {
 		Matrix matrix = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix);
 	}
 
+	@Test(timeout = 1000)
 	public void testGet() {
 		Matrix matrix = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix);
@@ -67,6 +74,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testIdentity() {
 		Matrix matrix = Matrix.factory.dense(M2ROWS, M2COLS);
 		for (int i = 0; i < M2ROWS; i++) {
@@ -76,14 +84,15 @@ public class TestGinv extends TestCase {
 		for (int row = 0; row < matrix.getRowCount(); ++row) {
 			for (int col = 0; col < matrix.getColumnCount(); ++col) {
 				if (row == col) {
-					assertEquals(1.0, matrix.getAsDouble(row, col));
+					assertEquals(1.0, matrix.getAsDouble(row, col), TOLERANCE);
 				} else {
-					assertEquals(0.0, matrix.getAsDouble(row, col));
+					assertEquals(0.0, matrix.getAsDouble(row, col), TOLERANCE);
 				}
 			}
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testEquals() {
 		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -93,6 +102,7 @@ public class TestGinv extends TestCase {
 		assertTrue(result);
 	}
 
+	@Test(timeout = 1000)
 	public void testNotEqualsSize() {
 		Matrix matrix1 = Matrix.factory.dense(M2ROWS, M1COLS);
 		setValues(matrix1);
@@ -102,6 +112,7 @@ public class TestGinv extends TestCase {
 		assertFalse(result);
 	}
 
+	@Test(timeout = 1000)
 	public void testNotEqualsValue() {
 		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -112,6 +123,7 @@ public class TestGinv extends TestCase {
 		assertFalse(result);
 	}
 
+	@Test(timeout = 1000)
 	public void testMatrixDot() {
 		Matrix matrix1 = Matrix.factory.dense(M1COLS, M1COLS);
 		for (int i = 0; i < M1COLS; i++) {
@@ -125,6 +137,7 @@ public class TestGinv extends TestCase {
 		assertEquals(M1COLS, result, 0.0001);
 	}
 
+	@Test(timeout = 1000)
 	public void testPlusScalar() {
 		Matrix matrix1 = Matrix.factory.dense(M2ROWS, M2ROWS);
 		for (int i = 0; i < M2ROWS; i++) {
@@ -142,6 +155,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testTimesScalar() {
 		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1ROWS);
 		for (int i = 0; i < M1ROWS; i++) {
@@ -171,6 +185,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testMultiply() {
 		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setIdentity(matrix1);
@@ -182,6 +197,7 @@ public class TestGinv extends TestCase {
 		assertTrue(result.equals(desire));
 	}
 
+	@Test(timeout = 1000)
 	public void testCopy() {
 		Matrix matrix1 = Matrix.factory.dense(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -194,6 +210,7 @@ public class TestGinv extends TestCase {
 	 * solution. This is a canned test.
 	 * 
 	 */
+	@Test(timeout = 1000)
 	public void testReduce() {
 		Matrix a = Matrix.factory.dense(5, 5); // must be a square HusoMatrix
 		a.setAsDouble(1, 0, 0);
@@ -216,13 +233,14 @@ public class TestGinv extends TestCase {
 		a.setAsDouble(1, 4, 3);
 		a.setAsDouble(1, 4, 4);
 		Matrix response = Ginv.reduce(a);
-		assertEquals(1.0, response.getAsDouble(0, 0));
-		assertEquals(4.0, response.getAsDouble(1, 0));
-		assertEquals(0.0, response.getAsDouble(2, 0));
-		assertEquals(3.0, response.getAsDouble(3, 0));
-		assertEquals(2.0, response.getAsDouble(4, 0));
+		assertEquals(1.0, response.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(4.0, response.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(0.0, response.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(3.0, response.getAsDouble(3, 0), TOLERANCE);
+		assertEquals(2.0, response.getAsDouble(4, 0), TOLERANCE);
 	}
 
+	@Test(timeout = 1000)
 	public void testSquareInverse() {
 		Matrix a = Matrix.factory.dense(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);
@@ -247,6 +265,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSquareArbitrariness() {
 		Matrix a = Matrix.factory.dense(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);
@@ -267,6 +286,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testNonSquareInverse() {
 		Matrix a = Matrix.factory.dense(3, 4);
 		a.setAsDouble(4, 0, 0);
@@ -299,6 +319,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testNonSquareInverse2() {
 		Matrix a = Matrix.factory.dense(3, 3);
 		a.setAsDouble(4, 0, 0);
@@ -323,6 +344,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testNonSquareArbitrariness() {
 		Matrix a = Matrix.factory.dense(2, 3);
 		a.setAsDouble(2, 0, 0);
@@ -337,6 +359,7 @@ public class TestGinv extends TestCase {
 		assertTrue(a.equals(a.mtimes(a12a)));
 	}
 
+	@Test(timeout = 1000)
 	public void testRandomInverses() {
 		Random rand = new Random(System.currentTimeMillis());
 		for (int count = 0; count < 10000; ++count) {
@@ -365,6 +388,7 @@ public class TestGinv extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSquareInverse2() {
 		Matrix a = Matrix.factory.dense(3, 3);
 		a.setAsDouble(2, 0, 0);

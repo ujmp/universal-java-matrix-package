@@ -23,14 +23,17 @@
 
 package org.ujmp.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class MatrixFactoryTest extends TestCase {
+public class MatrixFactoryTest {
 
+	@Test(timeout = 1000)
 	public void testZerosConstructors0D() throws Exception {
 		try {
 			Matrix.factory.dense();
@@ -41,6 +44,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testZerosConstructors1D() throws Exception {
 		try {
 			Matrix.factory.dense(4);
@@ -51,6 +55,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testZerosConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
@@ -60,6 +65,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testZerosConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
@@ -69,6 +75,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testZerosConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {
@@ -78,6 +85,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSparseConstructors0D() throws Exception {
 		try {
 			Matrix.factory.sparse();
@@ -88,6 +96,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSparseConstructors1D() throws Exception {
 		try {
 			Matrix.factory.sparse(4);
@@ -98,6 +107,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSparseConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
@@ -107,6 +117,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSparseConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
@@ -116,6 +127,7 @@ public class MatrixFactoryTest extends TestCase {
 		}
 	}
 
+	@Test(timeout = 1000)
 	public void testSparseConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {

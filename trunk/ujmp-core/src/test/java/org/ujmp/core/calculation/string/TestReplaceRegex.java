@@ -26,8 +26,8 @@ package org.ujmp.core.calculation.string;
 import java.util.regex.Pattern;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -35,7 +35,7 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 
-public class TestReplaceRegex extends TestCase {
+public class TestReplaceRegex {
 
 	private static Matrix getTestMatrix() throws MatrixException {
 		Matrix m = MatrixFactory.zeros(ValueType.STRING, 2, 2);
@@ -55,6 +55,7 @@ public class TestReplaceRegex extends TestCase {
 		return m;
 	}
 
+	@Test(timeout = 1000)
 	public void testConstructor1() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, "ab", "fgr");
@@ -62,6 +63,7 @@ public class TestReplaceRegex extends TestCase {
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
+	@Test(timeout = 1000)
 	public void testConstructor2() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, Pattern.compile("ab"), "fgr");
@@ -69,12 +71,14 @@ public class TestReplaceRegex extends TestCase {
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
+	@Test(timeout = 1000)
 	public void testCalc1() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, "ab", "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
+	@Test(timeout = 1000)
 	public void testCalc2() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, Pattern.compile("ab"), "fgr");

@@ -23,16 +23,10 @@
 
 package org.ujmp.jmatio;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestSuite {
-
-	public static TestSuite suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		suite.addTestSuite(TestMLDoubleMatrix.class);
-		suite.addTestSuite(TestExportMAT.class);
-		suite.addTestSuite(Test3D.class);
-		return suite;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { TestMLDoubleMatrix.class, TestExportMAT.class, Test3D.class })
+public class AllTests {
 }

@@ -23,8 +23,11 @@
 
 package org.ujmp.jackcess;
 
+import org.junit.Test;
+
 public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
 
+	@Test(timeout = 1000)
 	public void testMatrix() throws Exception {
 		// nothing to do for now
 		return;

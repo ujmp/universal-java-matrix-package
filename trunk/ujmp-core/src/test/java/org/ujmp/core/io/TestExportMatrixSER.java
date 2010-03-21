@@ -23,17 +23,17 @@
 
 package org.ujmp.core.io;
 
+import org.junit.Test;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class TestExportMatrixSER extends AbstractExportMatrixTest {
 
-	
 	public FileFormat getFormat() {
 		return FileFormat.SER;
 	}
 
-	
+	@Test(timeout = 1000)
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -43,7 +43,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	
+	@Test(timeout = 1000)
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();
@@ -53,7 +53,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	
+	@Test(timeout = 1000)
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();

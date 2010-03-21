@@ -34,7 +34,7 @@ import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposit
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleEigenvalueDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleLUDecomposition;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleQRDecomposition;
-import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleSingularValueDecompositionDC;
+import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleSingularValueDecomposition;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
 
@@ -153,7 +153,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public Matrix[] svd() {
-		DenseDoubleSingularValueDecompositionDC svd = new DenseDoubleSingularValueDecompositionDC(
+		DenseDoubleSingularValueDecomposition svd = new DenseDoubleSingularValueDecomposition(
 				matrix, true, false);
 		Matrix u = new ParallelColtDenseDoubleMatrix2D(svd.getU());
 		Matrix s = new ParallelColtDenseDoubleMatrix2D(svd.getS());

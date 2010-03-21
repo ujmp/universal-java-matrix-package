@@ -23,14 +23,16 @@
 
 package org.ujmp.core.calculation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 
-public class TestMtimes extends TestCase {
+public class TestMtimes {
 
+	@Test(timeout = 1000)
 	public void test1() {
 		Matrix a = MatrixFactory
 				.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
@@ -43,6 +45,7 @@ public class TestMtimes extends TestCase {
 		assertEquals(c_correct, c1);
 	}
 
+	@Test(timeout = 1000)
 	public void test2() {
 		Matrix a = MatrixFactory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix b = MatrixFactory.linkToArray(new double[][] { { 1, 2 }, { 4, 5 }, { 7, 8 } });
@@ -53,13 +56,13 @@ public class TestMtimes extends TestCase {
 		assertEquals(c_correct, c1);
 	}
 
+	@Test(timeout = 1000)
 	public void test3() {
 		Matrix a = MatrixFactory.linkToArray(new double[][] { { 1, 2 }, { 4, 5 }, { 7, 8 } });
 		Matrix b = MatrixFactory.linkToArray(new double[][] { { 4, 5, 6 }, { 7, 8, 9 } });
 
 		Matrix c_correct = a.mtimes(Ret.NEW, true, b);
 		Matrix c1 = a.mtimes(b);
-		;
 
 		assertEquals(c_correct, c1);
 	}

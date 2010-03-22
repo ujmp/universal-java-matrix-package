@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -67,20 +66,11 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		this.matrixAnnotation = matrixAnnotation;
 	}
 
-	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.randn(4, 5);
-		m.setLabel("test");
-		m.setColumnLabel(2, "col2");
-		m.setRowLabel(1, "row1");
-		System.out.println(m.plus(Ret.LINK, true, -2));
-	}
-
-	@Override
 	public Annotation clone() {
 		Annotation a = new DefaultAnnotation(getSize());
 		a.setMatrixAnnotation(getMatrixAnnotation());
 		for (int i = 0; i < getDimensionCount(); i++) {
-			a.setDimensionMatrix(i, getDimensionMatrix(i).copy());
+			a.setDimensionMatrix(i, getDimensionMatrix(i).clone());
 		}
 		return a;
 	}

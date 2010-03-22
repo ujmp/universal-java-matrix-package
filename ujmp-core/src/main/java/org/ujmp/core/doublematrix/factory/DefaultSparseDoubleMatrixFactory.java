@@ -26,8 +26,10 @@ package org.ujmp.core.doublematrix.factory;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public class DefaultSparseDoubleMatrixFactory implements SparseDoubleMatrixFactory {
+public class DefaultSparseDoubleMatrixFactory extends AbstractMatrixFactory implements
+		SparseDoubleMatrixFactory {
 	private static final long serialVersionUID = 585217920532855160L;
 
 	public SparseDoubleMatrix zeros(long... size) throws MatrixException {

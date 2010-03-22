@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
@@ -77,7 +76,7 @@ public class TestMissingValueImputation {
 				}
 			}
 
-			Matrix orig = MatrixFactory.randn(10, 10);
+			Matrix orig = Matrix.factory.randn(10, 10);
 			orig.addMissing(Ret.ORIG, Matrix.ALL, 0.05);
 			assertTrue(method.toString(), orig.containsMissingValues());
 			Matrix m = orig.impute(Ret.NEW, method);

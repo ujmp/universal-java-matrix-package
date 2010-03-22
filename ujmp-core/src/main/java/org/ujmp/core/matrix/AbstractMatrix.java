@@ -335,7 +335,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Math.sqrt(sum);
 	}
 
-	public final Matrix clone() throws CloneNotSupportedException {
+	public Matrix clone() {
 		return copy();
 	}
 
@@ -442,6 +442,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Center(ignoreNaN, dimension, this).calc(returnType);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be removed.
+	 *             use <code>matrix.clone()</code> instead
+	 */
 	public Matrix copy() throws MatrixException {
 		return Convert.calcNew(this);
 	}

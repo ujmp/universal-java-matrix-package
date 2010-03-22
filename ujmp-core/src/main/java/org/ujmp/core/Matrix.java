@@ -135,4 +135,6 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public MatrixFactoryRoot getFactory();
 
+	public Matrix clone();
+
 }

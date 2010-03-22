@@ -59,6 +59,7 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
+import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.intmatrix.impl.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
@@ -82,7 +83,7 @@ import org.ujmp.core.objectmatrix.calculation.Repmat;
 import org.ujmp.core.objectmatrix.calculation.WelcomeMatrix;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.objectmatrix.impl.SimpleDenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.impl.SynchronizedObjectMatrix;
+import org.ujmp.core.objectmatrix.impl.SynchronizedGenericMatrix;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.impl.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
@@ -188,47 +189,47 @@ public abstract class MatrixFactory {
 	}
 
 	public static final Matrix importFromArray(boolean[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(byte[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(char[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(Date[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(double[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(float[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(int[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(long[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(Object[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(short[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final Matrix importFromArray(String[]... values) {
-		return linkToArray(values).copy();
+		return linkToArray(values).clone();
 	}
 
 	public static final DenseBooleanMatrix2D linkToArray(boolean[]... values) {
@@ -319,10 +320,18 @@ public abstract class MatrixFactory {
 		return new SimpleDenseStringMatrix2D(values);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be removed.
+	 *             use <code>matrix.clone()</code> instead
+	 */
 	public static final Matrix copyFromMatrix(Matrix matrix) throws MatrixException {
 		return Convert.calcNew(matrix);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>DenseMatrix.factory.rand</code>
+	 */
 	public static final Matrix randn(long... size) throws MatrixException {
 		return Randn.calc(size);
 	}
@@ -331,6 +340,10 @@ public abstract class MatrixFactory {
 		return Randn.calc(valueType, size);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>DenseMatrix.factory.rand</code>
+	 */
 	public static final Matrix rand(long... size) throws MatrixException {
 		return Rand.calc(size);
 	}
@@ -527,6 +540,10 @@ public abstract class MatrixFactory {
 
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>DenseMatrix.factory.ones</code>
+	 */
 	public static Matrix ones(long... size) throws MatrixException {
 		return Ones.calc(size);
 	}
@@ -539,6 +556,10 @@ public abstract class MatrixFactory {
 		return Ones.calc(valueType, size);
 	}
 
+	/**
+	 * @deprecated Please do not use this method anymore, it will be moved to
+	 *             <code>DenseMatrix.factory.eye</code>
+	 */
 	public static Matrix eye(long... size) throws MatrixException {
 		return Eye.calc(size);
 	}
@@ -610,8 +631,8 @@ public abstract class MatrixFactory {
 	 *            the source Matrix
 	 * @return a synchronized Matrix
 	 */
-	public static final SynchronizedObjectMatrix synchronizedMatrix(Matrix matrix) {
-		return new SynchronizedObjectMatrix(matrix);
+	public static final <T> SynchronizedGenericMatrix<T> synchronizedMatrix(GenericMatrix<T> matrix) {
+		return new SynchronizedGenericMatrix<T>(matrix);
 	}
 
 	public static final DenseDoubleMatrix2D linkToBinaryFile(String filename, int rowCount,
@@ -770,7 +791,7 @@ public abstract class MatrixFactory {
 
 	/**
 	 * @deprecated Please do not use this method anymore, it will be moved to
-	 *             <code>DenseMatrix.factory</code>
+	 *             <code>DenseMatrix.factory.zeros</code>
 	 */
 	public static Matrix dense(long... size) throws MatrixException {
 		return DenseMatrix.factory.zeros(size);
@@ -801,7 +822,7 @@ public abstract class MatrixFactory {
 		return ImportMatrix.fromFile(format, file, parameters);
 	}
 
-	public static Matrix importFromClipboard(FileFormat format, Object... parameters)
+	public static final Matrix importFromClipboard(FileFormat format, Object... parameters)
 			throws MatrixException {
 		return ImportMatrix.fromClipboard(format, parameters);
 	}

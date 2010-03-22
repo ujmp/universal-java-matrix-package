@@ -26,8 +26,10 @@ package org.ujmp.core.doublematrix.factory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public class DefaultDenseDoubleMatrixFactory implements DenseDoubleMatrixFactory {
+public class DefaultDenseDoubleMatrixFactory extends AbstractMatrixFactory implements
+		DenseDoubleMatrixFactory {
 	private static final long serialVersionUID = -3522250062306401611L;
 
 	public DenseDoubleMatrix zeros(long... size) throws MatrixException {

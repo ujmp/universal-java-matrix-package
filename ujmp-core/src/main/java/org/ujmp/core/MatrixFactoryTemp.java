@@ -26,9 +26,9 @@ package org.ujmp.core;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public class MatrixFactoryTemp implements MatrixFactoryRoot {
+public class MatrixFactoryTemp extends AbstractMatrixFactory {
 	private static final long serialVersionUID = -6788016781517917785L;
 
 	public Matrix zeros(long... size) throws MatrixException {

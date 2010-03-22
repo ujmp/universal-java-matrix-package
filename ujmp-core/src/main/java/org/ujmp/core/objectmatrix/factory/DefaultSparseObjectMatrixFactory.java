@@ -24,10 +24,12 @@
 package org.ujmp.core.objectmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
-public class DefaultSparseObjectMatrixFactory implements SparseObjectMatrix2DFactory {
+public class DefaultSparseObjectMatrixFactory extends AbstractMatrixFactory implements
+		SparseObjectMatrix2DFactory {
 	private static final long serialVersionUID = -6541311028759572913L;
 
 	public SparseObjectMatrix2D zeros(long rows, long columns) throws MatrixException {

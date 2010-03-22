@@ -201,7 +201,7 @@ public class TestGinv {
 	public void testCopy() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix1);
-		Matrix matrix2 = matrix1.copy();
+		Matrix matrix2 = matrix1.clone();
 		assertTrue(matrix1.equals(matrix2));
 	}
 
@@ -265,7 +265,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSquareArbitrariness() {
 		Matrix a = Matrix.factory.zeros(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);

@@ -41,7 +41,7 @@ public abstract class AbstractExportMatrixTest {
 	public abstract FileFormat getFormat();
 
 	public Matrix getMatrix() {
-		return MatrixFactory.rand(5, 8);
+		return Matrix.factory.rand(5, 8);
 	}
 
 	public String getLabel() {

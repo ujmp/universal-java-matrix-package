@@ -24,10 +24,12 @@
 package org.ujmp.core.objectmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
-public class DefaultDenseObjectMatrix2DFactory implements DenseObjectMatrix2DFactory {
+public class DefaultDenseObjectMatrix2DFactory extends AbstractMatrixFactory implements
+		DenseObjectMatrix2DFactory {
 	private static final long serialVersionUID = 3619615205620126281L;
 
 	public DenseObjectMatrix2D zeros(long rows, long columns) throws MatrixException {

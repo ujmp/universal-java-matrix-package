@@ -29,4 +29,6 @@ public interface CoreObject extends Serializable, Clearable, Cloneable, HasGUIOb
 
 	public long getCoreObjectId();
 
+	public CoreObject clone();
+
 }

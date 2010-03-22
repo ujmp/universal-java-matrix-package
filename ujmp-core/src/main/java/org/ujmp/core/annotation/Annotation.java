@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
 
-public interface Annotation extends Serializable {
+public interface Annotation extends Serializable, Cloneable {
 
 	public long[] getSize();
 

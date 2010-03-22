@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.coordinates.Coordinates;
@@ -71,17 +70,6 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 
 	public long[] getSize() {
 		return size;
-	}
-
-	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.randn(5, 5);
-		m.setLabel("test");
-		m.setColumnLabel(3, "col3");
-		m.setRowLabel(2, "row2");
-		m.setAsDouble(Double.NaN, 2, 2);
-		m.setAsDouble(Double.NEGATIVE_INFINITY, 3, 2);
-		System.out.println(m);
-		System.out.println(m.extractAnnotation(Ret.NEW, Matrix.ROW));
 	}
 
 }

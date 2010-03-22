@@ -24,11 +24,12 @@
 package org.ujmp.colt;
 
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class ColtDenseDoubleMatrix2DFactory implements
-		DenseDoubleMatrix2DFactory {
+public class ColtDenseDoubleMatrix2DFactory extends
+		AbstractDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1951543109603957820L;
 
 	public DenseDoubleMatrix2D zeros(long rows, long columns)

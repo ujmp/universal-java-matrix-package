@@ -32,7 +32,7 @@ public class MantissaDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = 7414828578642066439L;
 
 	
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new MantissaDenseDoubleMatrix2D(rows, columns);
 	}

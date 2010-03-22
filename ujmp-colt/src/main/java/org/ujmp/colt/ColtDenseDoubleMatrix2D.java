@@ -43,6 +43,8 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
+	private static ColtDenseDoubleMatrix2DFactory factory = new ColtDenseDoubleMatrix2DFactory();
+
 	private DenseDoubleMatrix2D matrix = null;
 
 	public ColtDenseDoubleMatrix2D(long... size) {
@@ -246,6 +248,10 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
+	}
+
+	public ColtDenseDoubleMatrix2DFactory getFactory() {
+		return factory;
 	}
 
 }

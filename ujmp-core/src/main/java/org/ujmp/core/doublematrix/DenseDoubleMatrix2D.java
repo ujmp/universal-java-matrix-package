@@ -41,13 +41,13 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
-import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrix2DFactory;
-import org.ujmp.core.doublematrix.factory.DoubleMatrix2DFactory;
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
+import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.matrix.DenseMatrix2D;
 
 public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D {
 
-	public static DoubleMatrix2DFactory factory = new DefaultDoubleMatrix2DFactory();
+	public static DenseDoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
 
 	public static Transpose<DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
 
@@ -82,4 +82,6 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 	public static Chol<Matrix> chol = Chol.INSTANCE;
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
+
+	public DenseDoubleMatrix2DFactory getFactory();
 }

@@ -44,7 +44,7 @@ public class Eye extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = Matrix.factory.dense(source.getSize());
+		Matrix ret = Matrix.factory.create(source.getSize());
 		long[] c = Coordinates.copyOf(source.getSize());
 		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
 			Arrays.fill(c, i);

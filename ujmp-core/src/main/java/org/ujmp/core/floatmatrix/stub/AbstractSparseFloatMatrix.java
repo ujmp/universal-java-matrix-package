@@ -24,15 +24,19 @@
 package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.floatmatrix.SparseFloatMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix implements
 		SparseFloatMatrix {
 
 	private static final long serialVersionUID = -344661054715207894L;
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}
 
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

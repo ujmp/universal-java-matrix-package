@@ -25,6 +25,8 @@ package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix implements
 		DenseCharMatrix2D {
@@ -43,24 +45,24 @@ public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix 
 		setChar(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Character getObject(long row, long column) {
 		return getChar(row, column);
 	}
 
-	
 	public final Character getObject(int row, int column) {
 		return getChar(row, column);
 	}
 
-	
 	public final void setObject(Character value, long row, long column) {
 		setChar(value, row, column);
 	}
 
-	
 	public final void setObject(Character value, int row, int column) {
 		setChar(value, row, column);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

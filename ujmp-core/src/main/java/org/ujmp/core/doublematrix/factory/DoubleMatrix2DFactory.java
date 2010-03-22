@@ -23,14 +23,13 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.SparseDoubleMatrix;
-import org.ujmp.core.matrix.Matrix2DFactory;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.matrix.factory.Matrix2DFactory;
 
-public interface DoubleMatrix2DFactory extends Matrix2DFactory {
+public interface DoubleMatrix2DFactory extends Matrix2DFactory, DoubleMatrixFactory {
 
-	public DenseDoubleMatrix2D dense(long rows, long columns);
+	public DoubleMatrix2D create(long rows, long columns);
 
-	public SparseDoubleMatrix sparse(long rows, long columns);
+	public DoubleMatrix2D create(long... size);
 
 }

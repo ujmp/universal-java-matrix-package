@@ -24,14 +24,17 @@
 package org.ujmp.core.objectmatrix.factory;
 
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
-public class DefaultObjectMatrix2DFactory extends AbstractObjectMatrix2DFactory {
+public class DefaultDenseObjectMatrix2DFactory implements DenseObjectMatrix2DFactory {
 	private static final long serialVersionUID = 3619615205620126281L;
 
-	
-	public ObjectMatrix2D dense(long rows, long columns) throws MatrixException {
+	public DenseObjectMatrix2D create(long rows, long columns) throws MatrixException {
 		return new DefaultDenseObjectMatrix2D(rows, columns);
+	}
+
+	public DenseObjectMatrix2D create(long... size) throws MatrixException {
+		return new DefaultDenseObjectMatrix2D(size);
 	}
 }

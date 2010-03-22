@@ -27,10 +27,14 @@ import java.util.Date;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.datematrix.DateMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrix2DFactory;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseDateMatrix2D extends AbstractSparseDateMatrix implements
 		DateMatrix2D {
 	private static final long serialVersionUID = 2181329606929093563L;
+
+	public static SparseObjectMatrix2DFactory factory = new DefaultSparseObjectMatrix2DFactory();
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -44,23 +48,23 @@ public abstract class AbstractSparseDateMatrix2D extends AbstractSparseDateMatri
 		setDate(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public Date getObject(long row, long column) {
 		return getDate(row, column);
 	}
 
-	
 	public Date getObject(int row, int column) {
 		return getDate(row, column);
 	}
 
-	
 	public void setObject(Date value, long row, long column) {
 		setDate(value, row, column);
 	}
 
-	
 	public void setObject(Date value, int row, int column) {
 		setDate(value, row, column);
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return factory;
 	}
 }

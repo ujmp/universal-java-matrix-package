@@ -21,16 +21,13 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.factory;
+package org.ujmp.core.matrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.DenseMatrix;
 
-public class DefaultDoubleMatrixMultiDFactory extends AbstractDoubleMatrixMultiDFactory {
-	private static final long serialVersionUID = -7258235660923655168L;
+public interface DenseMatrixFactory extends MatrixFactoryRoot {
 
-	public DenseDoubleMatrix dense(long... size) {
-		return new DefaultDenseDoubleMatrixMultiD(size);
-	}
+	public DenseMatrix create(long... size) throws MatrixException;
 
 }

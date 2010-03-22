@@ -32,7 +32,7 @@ public class JamaDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = 4390694808314618187L;
 
 	
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new JamaDenseDoubleMatrix2D(rows, columns);
 	}

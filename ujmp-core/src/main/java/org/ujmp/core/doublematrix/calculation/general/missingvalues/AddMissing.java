@@ -29,6 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class AddMissing extends AbstractDoubleCalculation {
@@ -50,8 +51,7 @@ public class AddMissing extends AbstractDoubleCalculation {
 
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (missingValues == null) {
-
-			missingValues = Matrix.factory.sparse(getSource().getSize());
+			missingValues = SparseMatrix.factory.create(getSource().getSize());
 
 			switch (getDimension()) {
 			case ALL:

@@ -24,7 +24,12 @@
 package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
+import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 
 public interface ObjectMatrix extends GenericMatrix<Object> {
 
+	public static ObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
+
+	public ObjectMatrixFactory getFactory();
 }

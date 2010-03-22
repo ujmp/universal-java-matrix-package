@@ -166,6 +166,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Convert;
@@ -185,6 +186,7 @@ import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.objectmatrix.calculation.UniqueValueCount;
+import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.impl.ReshapedObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
@@ -206,6 +208,8 @@ import org.ujmp.core.util.UJMPSettings;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
+
+	public static MatrixFactoryRoot factory = new DefaultDenseObjectMatrixFactory();
 
 	private static long runningId = 0;
 
@@ -1014,7 +1018,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			result = this.getClass().getConstructor(long[].class).newInstance(
 					Coordinates.transpose(getSize()));
 		} catch (Exception e) {
-			result = Matrix.factory.dense(Coordinates.transpose(getSize()));
+			result = Matrix.factory.create(Coordinates.transpose(getSize()));
 		}
 		Matrix.transpose.calc(this, result);
 		return result;
@@ -1659,7 +1663,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException {
-		Matrix ret = Matrix.factory.dense(getSize());
+		Matrix ret = Matrix.factory.create(getSize());
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
 			if (MathUtil.isNaNOrInfinite(v)) {
@@ -2259,6 +2263,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 		}
 		return false;
+	}
+
+	public MatrixFactoryRoot getFactory() {
+		return factory;
 	}
 
 }

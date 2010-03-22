@@ -25,18 +25,25 @@ package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix implements
 		DenseObjectMatrix {
 	private static final long serialVersionUID = -4546702335648155424L;
 
+	public static DenseObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
+
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrixFactory getFactory() {
+		return factory;
 	}
 
 }

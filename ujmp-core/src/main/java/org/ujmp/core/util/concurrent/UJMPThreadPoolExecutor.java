@@ -28,8 +28,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.ujmp.core.util.UJMPSettings;
 
 public class UJMPThreadPoolExecutor extends ThreadPoolExecutor {
+
+	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
 
 	public UJMPThreadPoolExecutor(String name, int corePoolSize, int maximumPoolSize,
 			long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, int priority,
@@ -47,6 +50,23 @@ public class UJMPThreadPoolExecutor extends ThreadPoolExecutor {
 			long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
 		this(name, maximumPoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
 				Thread.NORM_PRIORITY, true);
+	}
+
+	public static final ThreadPoolExecutor getInstance() {
+		return getInstance(UJMPSettings.getNumberOfThreads(), UJMPSettings.getNumberOfThreads());
+	}
+
+	public static final ThreadPoolExecutor getInstance(final int corePoolSize,
+			final int maximumPoolSize) {
+		ThreadPoolExecutor es = executors.get();
+		if (es == null) {
+			synchronized (executors) {
+				es = new UJMPThreadPoolExecutor(Thread.currentThread().getName(), corePoolSize,
+						maximumPoolSize);
+				executors.set(es);
+			}
+		}
+		return es;
 	}
 
 }

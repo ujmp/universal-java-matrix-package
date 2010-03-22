@@ -23,30 +23,18 @@
 
 package org.ujmp.core.util.concurrent;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.ujmp.core.util.UJMPSettings;
+
 public abstract class PForEquidistant {
 
-	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
+	private final Object[] objects;
 
-	private static final ThreadLocal<List<Future<Object>>> futures = new ThreadLocal<List<Future<Object>>>();
-
-	private Object[] objects = null;
-
-	private static int processors = 2;
-
-	static {
-		try {
-			processors = Runtime.getRuntime().availableProcessors();
-		} catch (Throwable t) {
-		}
-	}
-
-	public PForEquidistant(int threads, int first, int last, Object... objects) {
+	public PForEquidistant(final int threads, final int first, final int last,
+			final Object... objects) {
 		this.objects = objects;
 
 		if (threads < 2) {
@@ -54,63 +42,48 @@ public abstract class PForEquidistant {
 				step(i);
 			}
 		} else {
-			ThreadPoolExecutor es = executors.get();
-			if (es == null) {
-				es = new UJMPThreadPoolExecutor(this.getClass().getName(), threads, threads);
-				executors.set(es);
-			} else {
-				es.setCorePoolSize(threads);
-				es.setMaximumPoolSize(threads);
-			}
+			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads, threads);
+			es.setCorePoolSize(threads);
+			es.setMaximumPoolSize(threads);
 
-			List<Future<Object>> list = futures.get();
-			if (list == null) {
-				list = new LinkedList<Future<Object>>();
-				futures.set(list);
-			}
+			final Future<?>[] list = new Future[threads];
 
 			for (int i = 0; i < threads; i++) {
-				list.add(es.submit(new StepCallable(first + i, last, threads)));
+				list[i] = es.submit(new StepCallable(first + i, last, threads));
 			}
 
-			for (Future<Object> f : list) {
+			for (Future<?> f : list) {
 				try {
 					f.get();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-
-			list.clear();
-			es.setCorePoolSize(0);
 		}
 	}
 
-	public PForEquidistant(int first, int last, Object... objects) {
-		this(processors, first, last, objects);
+	public PForEquidistant(final int first, final int last, final Object... objects) {
+		this(UJMPSettings.getNumberOfThreads(), first, last, objects);
 	}
 
-	public abstract void step(int i);
+	public abstract void step(final int i);
 
-	public final Object getObject(int i) {
+	public final Object getObject(final int i) {
 		return objects[i];
 	}
 
 	class StepCallable implements Callable<Object> {
+		private final int first;
+		private final int last;
+		private final int stepsize;
 
-		private int first = 0;
-
-		private int last = 0;
-
-		private int stepsize = 0;
-
-		public StepCallable(int first, int last, int stepsize) {
+		public StepCallable(final int first, final int last, final int stepsize) {
 			this.first = first;
 			this.last = last;
 			this.stepsize = stepsize;
 		}
 
-		public Object call() throws Exception {
+		public final Void call() throws Exception {
 			try {
 				for (int i = first; i <= last; i += stepsize) {
 					step(i);

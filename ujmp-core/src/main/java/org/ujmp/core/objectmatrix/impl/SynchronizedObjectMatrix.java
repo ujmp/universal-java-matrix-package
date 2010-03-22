@@ -25,9 +25,9 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
-public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
+public class SynchronizedObjectMatrix extends AbstractSparseObjectMatrix {
 	private static final long serialVersionUID = -4456493053286654056L;
 
 	private Matrix matrix = null;
@@ -67,10 +67,6 @@ public class SynchronizedObjectMatrix extends AbstractObjectMatrix {
 
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public final StorageType getStorageType() {
-		return matrix.getStorageType();
 	}
 
 }

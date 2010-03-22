@@ -1041,4 +1041,18 @@ public abstract class MathUtil {
 		}
 		return -tmp + Math.log(ser * 2.5066282751072975 / x);
 	}
+
+	public static final int multiDindex(long[] size, long[] pos) {
+		int sum = 0;
+		int prod = 1;
+		final int d = pos.length;
+		for (int k = 0; k < d; k++) {
+			prod = 1;
+			for (int l = k + 1; l < d; l++) {
+				prod *= size[l];
+			}
+			sum += prod * pos[k];
+		}
+		return sum;
+	}
 }

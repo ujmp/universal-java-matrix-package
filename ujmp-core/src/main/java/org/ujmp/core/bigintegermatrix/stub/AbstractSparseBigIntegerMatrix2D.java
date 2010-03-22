@@ -28,6 +28,8 @@ import java.math.BigInteger;
 import org.ujmp.core.bigintegermatrix.SparseBigIntegerMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseBigIntegerMatrix2D extends AbstractSparseBigIntegerMatrix
 		implements SparseBigIntegerMatrix2D {
@@ -59,6 +61,10 @@ public abstract class AbstractSparseBigIntegerMatrix2D extends AbstractSparseBig
 
 	public final void setObject(BigInteger o, int row, int column) throws MatrixException {
 		setBigInteger(o, row, column);
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
 	}
 
 }

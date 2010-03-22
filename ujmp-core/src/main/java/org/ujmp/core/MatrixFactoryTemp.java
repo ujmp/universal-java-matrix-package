@@ -27,16 +27,16 @@ import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrix.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 
 public class MatrixFactoryTemp implements MatrixFactoryRoot {
 	private static final long serialVersionUID = -6788016781517917785L;
 
-	public Matrix dense(long... size) throws MatrixException {
+	public Matrix create(long... size) throws MatrixException {
 		if (size.length == 2) {
-			return DoubleMatrix2D.factory.dense(size[ROW], size[COLUMN]);
+			return DoubleMatrix2D.factory.create(size[ROW], size[COLUMN]);
 		} else if (size.length > 2) {
-			return DoubleMatrix.factory.dense(size);
+			return DoubleMatrix.factory.create(size);
 		} else {
 			throw new MatrixException("Size must be at least 2-dimensional");
 		}

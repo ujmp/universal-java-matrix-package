@@ -28,10 +28,14 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> implements
 		ObjectMatrix {
 	private static final long serialVersionUID = -1130331544425728230L;
+
+	public static SparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
 
 	public DefaultSparseObjectMatrix(Matrix m) throws MatrixException {
 		super(m, -1);
@@ -49,9 +53,12 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
+	}
+
+	public SparseObjectMatrixFactory getFactory() {
+		return factory;
 	}
 
 }

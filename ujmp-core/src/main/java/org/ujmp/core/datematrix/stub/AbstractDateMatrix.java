@@ -33,37 +33,30 @@ import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> implements DateMatrix {
 	private static final long serialVersionUID = -7141035755618677879L;
 
-	
 	public final Date getObject(long... coordinates) throws MatrixException {
 		return getDate(coordinates);
 	}
 
-	
 	public final void setObject(Date o, long... coordinates) throws MatrixException {
 		setDate(o, coordinates);
 	}
 
-	
 	public final Date getAsDate(long... coordinates) throws MatrixException {
 		return getDate(coordinates);
 	}
 
-	
 	public final void setAsDate(Date value, long... coordinates) throws MatrixException {
 		setDate(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getDate(coordinates).getTime();
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setDate(new Date((long) value), coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.DATE;
 	}

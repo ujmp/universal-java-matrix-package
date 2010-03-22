@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 
 public class TestBlockMultiply extends TestCase {
 

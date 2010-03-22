@@ -42,23 +42,20 @@ public abstract class AbstractDenseShortMatrix2D extends AbstractDenseShortMatri
 		setShort(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Short getObject(long row, long column) {
 		return getShort(row, column);
 	}
 
-	
 	public final Short getObject(int row, int column) {
 		return getShort(row, column);
 	}
 
-	
 	public final void setObject(Short value, long row, long column) {
 		setShort(value, row, column);
 	}
 
-	
 	public final void setObject(Short value, int row, int column) {
 		setShort(value, row, column);
 	}
+
 }

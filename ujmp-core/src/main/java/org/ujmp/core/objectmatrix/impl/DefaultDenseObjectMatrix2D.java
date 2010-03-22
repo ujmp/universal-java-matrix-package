@@ -74,12 +74,10 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 		return size;
 	}
 
-	
 	public long getRowCount() {
 		return rows;
 	}
 
-	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -100,7 +98,6 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		Object[] result = new Object[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -111,7 +108,6 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 		return m;
 	}
 
-	
 	public final Matrix transpose() {
 		final Object[] result = new Object[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -122,7 +118,6 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 		return new DefaultDenseObjectMatrix2D(result, cols, rows);
 	}
 
-	
 	public Object[] getObjectArray() {
 		return values;
 	}

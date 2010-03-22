@@ -25,6 +25,8 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.genericmatrix.DenseGenericMatrix2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix<A>
 		implements DenseGenericMatrix2D<A> {
@@ -35,13 +37,16 @@ public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGener
 		return new CoordinateIterator2D(getSize());
 	}
 
-	
 	public final A getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
 	public final void setObject(A value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

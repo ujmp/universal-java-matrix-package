@@ -33,9 +33,9 @@ import java.net.DatagramSocket;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
-public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
+public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 	private static final long serialVersionUID = 3907994158174208114L;
 
 	private static final int BUFFERSIZE = 512;
@@ -81,10 +81,6 @@ public class ServerObjectMatrixUDP extends AbstractObjectMatrix {
 
 	public long getValueCount() {
 		return matrix.getValueCount();
-	}
-
-	public final StorageType getStorageType() {
-		return matrix.getStorageType();
 	}
 
 	public void setAsDouble(double value, long... coordinates) throws MatrixException {

@@ -26,6 +26,8 @@ package org.ujmp.core.booleanmatrix.stub;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix implements
 		DenseBooleanMatrix2D {
@@ -58,6 +60,10 @@ public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanM
 
 	public final void setObject(Boolean o, int row, int column) throws MatrixException {
 		setBoolean(o, row, column);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

@@ -99,7 +99,7 @@ public class ImputeEM extends AbstractDoubleCalculation {
 
 				List<Future<Long>> futures = new ArrayList<Future<Long>>();
 
-				imputed = Matrix.factory.dense(x.getSize());
+				imputed = Matrix.factory.create(x.getSize());
 
 				long t0 = System.currentTimeMillis();
 

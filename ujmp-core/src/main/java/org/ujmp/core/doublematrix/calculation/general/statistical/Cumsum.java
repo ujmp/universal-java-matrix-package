@@ -49,7 +49,7 @@ public class Cumsum extends AbstractDoubleCalculation {
 
 	private void createMatrix() {
 		Matrix source = getSource();
-		Matrix m = Matrix.factory.dense(source.getSize());
+		Matrix m = Matrix.factory.create(source.getSize());
 		for (long c = 0; c < source.getColumnCount(); c++) {
 			double sum = 0;
 			for (long r = 0; r < source.getRowCount(); r++) {

@@ -25,6 +25,8 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
 		implements SparseGenericMatrix2D<A> {
@@ -39,4 +41,7 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

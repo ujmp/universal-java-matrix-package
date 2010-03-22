@@ -32,7 +32,6 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		ShortMatrix {
 	private static final long serialVersionUID = 34811716349836913L;
 
-	
 	public final Short getObject(long... coordinates) throws MatrixException {
 		return getShort(coordinates);
 	}
@@ -41,27 +40,22 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 		setShort(o, coordinates);
 	}
 
-	
 	public final short getAsShort(long... coordinates) throws MatrixException {
 		return getShort(coordinates);
 	}
 
-	
 	public final void setAsShort(short value, long... coordinates) throws MatrixException {
 		setShort(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getShort(coordinates);
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setShort((short) value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

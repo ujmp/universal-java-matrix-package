@@ -25,6 +25,8 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
+import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrixFactory;
+import org.ujmp.core.doublematrix.factory.SparseDoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
@@ -33,6 +35,8 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> implements
 		SparseDoubleMatrix {
 	private static final long serialVersionUID = -1168427818140098524L;
+
+	public static SparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
 
 	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {
 		super(m, -1);
@@ -50,19 +54,20 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
 	public void setDouble(double value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
+	}
+
+	public SparseDoubleMatrixFactory getFactory() {
+		return factory;
 	}
 
 }

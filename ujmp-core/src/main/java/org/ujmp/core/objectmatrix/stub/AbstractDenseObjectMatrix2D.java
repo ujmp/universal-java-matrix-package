@@ -25,22 +25,29 @@ package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrix2DFactory;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMatrix implements
 		DenseObjectMatrix2D {
 	private static final long serialVersionUID = -4318215251761676880L;
 
+	public static DenseObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
+
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	
 	public final Object getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
 	public final void setObject(Object value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return factory;
 	}
 
 }

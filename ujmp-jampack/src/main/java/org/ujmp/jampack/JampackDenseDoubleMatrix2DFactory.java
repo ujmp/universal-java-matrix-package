@@ -31,7 +31,7 @@ public class JampackDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -9135903625272489384L;
 
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new JampackDenseDoubleMatrix2D(rows, columns);
 	}

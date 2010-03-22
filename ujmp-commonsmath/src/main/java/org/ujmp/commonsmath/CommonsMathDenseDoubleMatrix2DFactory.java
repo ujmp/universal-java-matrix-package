@@ -37,7 +37,7 @@ public class CommonsMathDenseDoubleMatrix2DFactory extends
 
 	public static final CommonsMathDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathDenseDoubleMatrix2DFactory();
 
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new CommonsMathArrayDenseDoubleMatrix2D(rows, columns);
 	}

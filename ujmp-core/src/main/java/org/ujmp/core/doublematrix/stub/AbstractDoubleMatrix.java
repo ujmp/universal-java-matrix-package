@@ -24,14 +24,17 @@
 package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
+import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
 public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double> implements
 		DoubleMatrix {
-
 	private static final long serialVersionUID = 8234957657491264944L;
+
+	public DoubleMatrixFactory factory = new DefaultDenseDoubleMatrixFactory();
 
 	public final Double getObject(long... coordinates) throws MatrixException {
 		return getAsDouble(coordinates);
@@ -51,6 +54,10 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
+	}
+
+	public DoubleMatrixFactory getFactory() {
+		return factory;
 	}
 
 }

@@ -30,13 +30,14 @@ import org.junit.Test;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.SparseMatrix;
 
 public class MatrixFactoryTest {
 
 	@Test(timeout = 1000)
 	public void testZerosConstructors0D() throws Exception {
 		try {
-			Matrix.factory.dense();
+			Matrix.factory.create();
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -47,7 +48,7 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testZerosConstructors1D() throws Exception {
 		try {
-			Matrix.factory.dense(4);
+			Matrix.factory.create(4);
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -88,7 +89,7 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testSparseConstructors0D() throws Exception {
 		try {
-			Matrix.factory.sparse();
+			SparseMatrix.factory.create();
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -99,7 +100,7 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testSparseConstructors1D() throws Exception {
 		try {
-			Matrix.factory.sparse(4);
+			SparseMatrix.factory.create(4);
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;

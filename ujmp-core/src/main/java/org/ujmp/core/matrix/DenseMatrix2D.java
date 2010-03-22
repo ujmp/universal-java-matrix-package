@@ -23,6 +23,9 @@
 
 package org.ujmp.core.matrix;
 
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+
 public interface DenseMatrix2D extends DenseMatrix, Matrix2D {
 
+	public DenseMatrix2DFactory getFactory();
 }

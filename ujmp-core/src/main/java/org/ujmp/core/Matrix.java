@@ -50,7 +50,7 @@ import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
 import org.ujmp.core.io.ExportMatrixInterface;
-import org.ujmp.core.matrix.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 
 /**
  * <code>Matrix</code> is the main class for storing any type of data. You have
@@ -132,5 +132,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 	public static Chol<Matrix> chol = Chol.INSTANCE;
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
+
+	public MatrixFactoryRoot getFactory();
 
 }

@@ -23,6 +23,8 @@
 
 package org.ujmp.core.shortmatrix.stub;
 
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.shortmatrix.SparseShortMatrix;
 
 public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix implements
@@ -32,6 +34,10 @@ public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix impl
 
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
 	}
 
 }

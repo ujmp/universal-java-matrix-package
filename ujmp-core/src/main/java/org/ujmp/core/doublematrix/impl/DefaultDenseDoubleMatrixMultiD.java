@@ -27,6 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 	private static final long serialVersionUID = 2875235320924485070L;
@@ -67,26 +68,12 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 		return size;
 	}
 
-	private final int index(long... pos) {
-		int sum = 0;
-		int prod = 1;
-		final int d = pos.length;
-		for (int k = 0; k < d; k++) {
-			prod = 1;
-			for (int l = k + 1; l < d; l++) {
-				prod *= size[l];
-			}
-			sum += prod * pos[k];
-		}
-		return sum;
-	}
-
 	public final double getDouble(long... pos) {
-		return values[index(pos)];
+		return values[MathUtil.multiDindex(size, pos)];
 	}
 
 	public final void setDouble(double value, long... pos) {
-		values[index(pos)] = value;
+		values[MathUtil.multiDindex(size, pos)] = value;
 	}
 
 }

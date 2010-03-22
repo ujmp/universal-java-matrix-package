@@ -24,14 +24,18 @@
 package org.ujmp.core.bigintegermatrix.stub;
 
 import org.ujmp.core.bigintegermatrix.SparseBigIntegerMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public abstract class AbstractSparseBigIntegerMatrix extends AbstractBigIntegerMatrix implements
 		SparseBigIntegerMatrix {
 	private static final long serialVersionUID = -8859258493587027853L;
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}
 
+	public SparseObjectMatrixFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

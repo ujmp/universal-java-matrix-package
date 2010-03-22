@@ -25,9 +25,9 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.calculation.ObjectCalculation;
-import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
-public class ObjectCalculationMatrix extends AbstractObjectMatrix {
+public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = -2992446453080748754L;
 
 	private ObjectCalculation calculation = null;
@@ -35,10 +35,6 @@ public class ObjectCalculationMatrix extends AbstractObjectMatrix {
 	public ObjectCalculationMatrix(ObjectCalculation calculation) {
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
-	}
-
-	public boolean contains(long... coordinates) {
-		return calculation.contains(coordinates);
 	}
 
 	public Iterable<long[]> availableCoordinates() {

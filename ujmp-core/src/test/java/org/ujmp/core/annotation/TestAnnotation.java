@@ -32,7 +32,7 @@ public class TestAnnotation {
 
 	@Test(timeout = 1000)
 	public void testReverseAnnotation() throws Exception {
-		Matrix m = Matrix.factory.dense(10, 10);
+		Matrix m = Matrix.factory.create(10, 10);
 		m.setColumnLabel(3, "col3");
 		m.setRowLabel(3, "row3");
 		m.setColumnLabel(5, "col5");

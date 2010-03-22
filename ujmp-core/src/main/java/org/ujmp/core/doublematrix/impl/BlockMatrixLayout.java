@@ -34,25 +34,29 @@ import java.util.Arrays;
 public final class BlockMatrixLayout implements Serializable {
 	private static final long serialVersionUID = -8859436115773664956L;
 
+	public enum BlockOrder {
+		ROWMAJOR, COLUMNMAJOR;
+	}
+
 	/** Total size of a block (area). */
-	final int blockArea;
+	protected final int blockArea;
 
 	/** Length of one side (stripe) of a square block. */
-	final int blockStripe;
+	protected final int blockStripe;
 
 	/** Number of columns of matrix. */
-	final int columns;
+	protected final int columns;
 
 	/**
 	 * Whether this block is laid out in row-major (true) or column-major
 	 * (false) order.
 	 */
-	final boolean rowMajor;
+	protected final boolean rowMajor;
 
 	/** Number of rows of matrix. */
-	final int rows;
+	protected final int rows;
 
-	BlockMatrixLayout(final int rows, final int columns, final int blockStripe,
+	protected BlockMatrixLayout(final int rows, final int columns, final int blockStripe,
 			final BlockOrder blockOrder) {
 
 		this.blockStripe = Math.min(rows, blockStripe);
@@ -78,33 +82,35 @@ public final class BlockMatrixLayout implements Serializable {
 	 * @param column
 	 * @return block containing given row, column
 	 */
-	final double[] getBlock(BlockDenseDoubleMatrix2D matrix, int row, int column) {
+	protected final double[] getBlock(final BlockDenseDoubleMatrix2D matrix, final int row,
+			final int column) {
 		return matrix.getBlockData(row, column);
 	}
 
-	final int getBlockIndexByColumn(final int lrow, final int lcol) {
+	protected final int getBlockIndexByColumn(final int lrow, final int lcol) {
 		return rowMajor ? (lcol * blockStripe + lrow) : (lrow * blockStripe + lcol);
 	}
 
-	final int getBlockIndexByRow(final int lrow, final int lcol) {
+	protected final int getBlockIndexByRow(final int lrow, final int lcol) {
 		return rowMajor ? (lrow * blockStripe + lcol) : (lcol * blockStripe + lrow);
 	}
 
-	final int getBlockNumber(int row, int col) {
+	protected final int getBlockNumber(final int row, final int col) {
 		return (col / blockStripe) + (row / blockStripe) * (columns / blockStripe);
 	}
 
-	final int getIndexInBlock(int row, int col) {
+	protected final int getIndexInBlock(final int row, final int col) {
 		return getBlockIndexByRow(row % blockStripe, col % blockStripe);
 	}
 
-	final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart, int colStart) {
-		double[] block = getBlock(matrix, rowStart, colStart);
+	protected final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart,
+			final int colStart) {
+		final double[] block = getBlock(matrix, rowStart, colStart);
 		if (!rowMajor) {
 			return block;
 		}
 
-		double[] targetBlock = new double[blockArea];
+		final double[] targetBlock = new double[blockArea];
 		// transpose block
 		for (int i = 0; i < blockStripe; i++) {
 			for (int j = 0; j < blockStripe; j++) {
@@ -116,14 +122,14 @@ public final class BlockMatrixLayout implements Serializable {
 		return targetBlock;
 	}
 
-	final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix, final int rowStart,
-			int colStart) {
-		double[] block = getBlock(matrix, rowStart, colStart);
+	protected final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix,
+			final int rowStart, final int colStart) {
+		final double[] block = getBlock(matrix, rowStart, colStart);
 		if (rowMajor) {
 			return block;
 		}
 
-		double[] targetBlock = new double[blockArea];
+		final double[] targetBlock = new double[blockArea];
 		// transpose block
 		for (int i = 0; i < blockStripe; i++) {
 			for (int j = 0; j < blockStripe; j++) {
@@ -137,7 +143,7 @@ public final class BlockMatrixLayout implements Serializable {
 
 	@Override
 	public String toString() {
-		int[] rowLayout = new int[blockStripe];
+		final int[] rowLayout = new int[blockStripe];
 		StringBuilder b = new StringBuilder(blockArea * 4 + 40);
 		String msg = "\n(rows=%s, columns=%s, blockSize=%s):\n";
 		b.append(String.format(msg, rows, columns, blockStripe));

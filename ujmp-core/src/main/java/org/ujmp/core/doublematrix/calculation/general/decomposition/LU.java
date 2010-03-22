@@ -3,7 +3,6 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -341,7 +340,7 @@ public interface LU<T> {
 		}
 
 		public final Matrix getP() {
-			final DenseDoubleMatrix2D p = DoubleMatrix2D.factory.dense(m, m);
+			final DenseDoubleMatrix2D p = DenseDoubleMatrix2D.factory.create(m, m);
 			for (int i = 0; i < m; i++) {
 				p.setDouble(1, i, piv[i]);
 			}

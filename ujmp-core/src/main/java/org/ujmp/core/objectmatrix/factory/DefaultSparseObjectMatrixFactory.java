@@ -21,16 +21,20 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.factory;
+package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.matrix.MatrixMultiDFactory;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
-public interface DoubleMatrixMultiDFactory extends MatrixMultiDFactory {
+public class DefaultSparseObjectMatrixFactory implements SparseObjectMatrix2DFactory {
+	private static final long serialVersionUID = -6541311028759572913L;
 
-	public DenseDoubleMatrix dense(long... size) throws MatrixException;
+	public SparseObjectMatrix2D create(long rows, long columns) throws MatrixException {
+		return new DefaultSparseRowObjectMatrix2D(rows, columns);
+	}
 
-	public DenseDoubleMatrix zeros(long... size) throws MatrixException;
-
+	public SparseObjectMatrix2D create(long... size) throws MatrixException {
+		return new DefaultSparseRowObjectMatrix2D(size);
+	}
 }

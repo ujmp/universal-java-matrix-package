@@ -25,23 +25,29 @@ package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrix2DFactory;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseObjectMatrix2D extends AbstractSparseObjectMatrix implements
 		SparseObjectMatrix2D {
-
 	private static final long serialVersionUID = -3775915270985688066L;
+
+	public static SparseObjectMatrix2DFactory factory = new DefaultSparseObjectMatrix2DFactory();
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	
 	public final Object getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
 	public final void setObject(Object value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return factory;
 	}
 
 }

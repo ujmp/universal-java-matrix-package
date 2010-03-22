@@ -23,8 +23,13 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
+import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
 import org.ujmp.core.matrix.DenseMatrix;
 
 public interface DenseDoubleMatrix extends DoubleMatrix, DenseMatrix {
 
+	public static DenseDoubleMatrixFactory factory = new DefaultDenseDoubleMatrixFactory();
+
+	public DenseDoubleMatrixFactory getFactory();
 }

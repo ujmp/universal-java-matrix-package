@@ -42,6 +42,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest {
@@ -70,28 +71,28 @@ public abstract class AbstractMatrixTest {
 
 	@Test(timeout = 1000)
 	public void testExtractAnnotation() throws Exception {
-		Matrix m1 = MatrixFactory.randn(5, 5);
+		Matrix m1 = DenseMatrix.factory.randn(5, 5);
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		Matrix m3 = m2.includeAnnotation(Ret.NEW, Matrix.ROW);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = MatrixFactory.randn(5, 5);
+		m1 = DenseMatrix.factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.ROW);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = MatrixFactory.randn(5, 5);
+		m1 = DenseMatrix.factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.NEW, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.NEW, Matrix.COLUMN);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = MatrixFactory.randn(5, 5);
+		m1 = DenseMatrix.factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.COLUMN);
@@ -325,7 +326,7 @@ public abstract class AbstractMatrixTest {
 		m.setRowLabel(1, "row1");
 		m.setColumnLabel(0, "column0");
 		m.setColumnLabel(1, "column1");
-		Matrix m2 = m.copy();
+		Matrix m2 = m.clone();
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
 
@@ -1116,7 +1117,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = MatrixFactory.eye(m1.getSize());
+		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 	}
 
@@ -1143,7 +1144,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = MatrixFactory.eye(m1.getSize());
+		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 	}
 

@@ -53,6 +53,15 @@ public class Eye extends AbstractDoubleCalculation {
 		return ret;
 	}
 
+	public static Matrix calcOrig(Matrix source) throws MatrixException {
+		long[] c = new long[source.getSize().length];
+		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
+			source.setAsDouble(1.0, c);
+			Arrays.fill(c, i + 1);
+		}
+		return source;
+	}
+
 	public static Matrix calc(long... size) throws MatrixException {
 		return calc(ValueType.DOUBLE, size);
 	}

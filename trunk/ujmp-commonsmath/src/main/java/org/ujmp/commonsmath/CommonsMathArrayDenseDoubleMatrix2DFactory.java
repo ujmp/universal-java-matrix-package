@@ -24,11 +24,12 @@
 package org.ujmp.commonsmath;
 
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class CommonsMathArrayDenseDoubleMatrix2DFactory implements
-		DenseDoubleMatrix2DFactory {
+public class CommonsMathArrayDenseDoubleMatrix2DFactory extends
+		AbstractDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1547834540689903004L;
 
 	public static final CommonsMathArrayDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathArrayDenseDoubleMatrix2DFactory();

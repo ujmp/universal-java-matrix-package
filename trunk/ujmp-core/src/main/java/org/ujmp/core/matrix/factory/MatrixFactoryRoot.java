@@ -45,4 +45,12 @@ public interface MatrixFactoryRoot extends Serializable {
 
 	public Matrix zeros(final long... size);
 
+	public Matrix ones(final long... size);
+
+	public Matrix rand(final long... size);
+
+	public Matrix randn(final long... size);
+
+	public Matrix eye(final long... size);
+
 }

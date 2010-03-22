@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
@@ -997,7 +996,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 */
 	public static Matrix arbitrariness(Matrix source, Matrix inverse) {
 		Matrix intermediate = inverse.mtimes(source);
-		return MatrixFactory.eye(intermediate.getSize()).minus(intermediate);
+		return Matrix.factory.eye(intermediate.getSize()).minus(intermediate);
 	}
 
 	public double getDouble(long... coordinates) throws MatrixException {

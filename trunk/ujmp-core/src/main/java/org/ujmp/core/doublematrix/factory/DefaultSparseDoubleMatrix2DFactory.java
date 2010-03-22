@@ -27,7 +27,8 @@ import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultSparseRowDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class DefaultSparseDoubleMatrix2DFactory implements SparseDoubleMatrix2DFactory {
+public class DefaultSparseDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFactory implements
+		SparseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1416876387997698948L;
 
 	public SparseDoubleMatrix2D zeros(long... size) throws MatrixException {

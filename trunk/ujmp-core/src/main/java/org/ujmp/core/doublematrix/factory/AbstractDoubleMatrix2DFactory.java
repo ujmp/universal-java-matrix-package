@@ -24,11 +24,13 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public abstract class AbstractDoubleMatrix2DFactory implements DoubleMatrix2DFactory {
+public abstract class AbstractDoubleMatrix2DFactory extends AbstractMatrixFactory implements
+		DoubleMatrix2DFactory {
 	private static final long serialVersionUID = -2262202653249931934L;
 
-	public final DoubleMatrix2D zeros(long... size) {
+	public DoubleMatrix2D zeros(final long... size) {
 		return zeros(size[ROW], size[COLUMN]);
 	}
 }

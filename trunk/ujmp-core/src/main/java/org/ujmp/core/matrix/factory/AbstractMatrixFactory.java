@@ -21,26 +21,37 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.commonsmath;
+package org.ujmp.core.matrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.AbstractDoubleMatrix2DFactory;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 
-public class CommonsMathBlockDenseDoubleMatrix2DFactory extends
-		AbstractDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
-	private static final long serialVersionUID = 559376231363321539L;
+public abstract class AbstractMatrixFactory implements MatrixFactoryRoot {
+	private static final long serialVersionUID = -3618488741326819828L;
 
-	public static final CommonsMathBlockDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathBlockDenseDoubleMatrix2DFactory();
-
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
-		return new CommonsMathBlockDenseDoubleMatrix2D(rows, columns);
+	public Matrix rand(final long... size) {
+		final Matrix m = zeros(size);
+		m.rand(Ret.ORIG);
+		return m;
 	}
 
-	public DenseDoubleMatrix2D zeros(long... size) throws MatrixException {
-		return new CommonsMathBlockDenseDoubleMatrix2D(size);
+	public Matrix randn(final long... size) {
+		final Matrix m = zeros(size);
+		m.randn(Ret.ORIG);
+		return m;
+	}
+
+	public Matrix ones(final long... size) {
+		final Matrix m = zeros(size);
+		m.ones(Ret.ORIG);
+		return m;
+	}
+
+	public Matrix eye(final long... size) {
+		final Matrix m = zeros(size);
+		Eye.calcOrig(m);
+		return m;
 	}
 
 }

@@ -26,7 +26,8 @@ package org.ujmp.core.doublematrix.factory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
-public class DefaultDenseDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
+public class DefaultDenseDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFactory implements
+		DenseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -3755160039410460427L;
 
 	public DenseDoubleMatrix2D zeros(long rows, long columns) {

@@ -179,13 +179,13 @@ public class ImputeEM extends AbstractDoubleCalculation {
 		}
 
 		Matrix xdel = x.deleteRows(Ret.NEW, missingRows);
-		Matrix bias1 = MatrixFactory.ones(xdel.getRowCount(), 1);
+		Matrix bias1 = Matrix.factory.ones(xdel.getRowCount(), 1);
 		Matrix xtrain = MatrixFactory.horCat(xdel, bias1);
 		Matrix ytrain = y.deleteRows(Ret.NEW, missingRows);
 
 		Matrix xinv = xtrain.pinv();
 		Matrix b = xinv.mtimes(ytrain);
-		Matrix bias2 = MatrixFactory.ones(x.getRowCount(), 1);
+		Matrix bias2 = Matrix.factory.ones(x.getRowCount(), 1);
 		Matrix yPredicted = MatrixFactory.horCat(x, bias2).mtimes(b);
 
 		// set non-missing values back to original values

@@ -25,14 +25,14 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
+import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
-public class SynchronizedObjectMatrix extends AbstractSparseObjectMatrix {
+public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	private static final long serialVersionUID = -4456493053286654056L;
 
 	private Matrix matrix = null;
 
-	public SynchronizedObjectMatrix(Matrix source) {
+	public SynchronizedGenericMatrix(Matrix source) {
 		this.matrix = source;
 		setAnnotation(source.getAnnotation());
 	}
@@ -53,11 +53,12 @@ public class SynchronizedObjectMatrix extends AbstractSparseObjectMatrix {
 		matrix.setAsDouble(value, coordinates);
 	}
 
-	public synchronized Object getObject(long... c) throws MatrixException {
-		return matrix.getAsObject(c);
+	@SuppressWarnings("unchecked")
+	public synchronized T getObject(long... c) throws MatrixException {
+		return (T) matrix.getAsObject(c);
 	}
 
-	public synchronized void setObject(Object value, long... c) throws MatrixException {
+	public synchronized void setObject(T value, long... c) throws MatrixException {
 		matrix.setAsObject(value, c);
 	}
 
@@ -67,6 +68,10 @@ public class SynchronizedObjectMatrix extends AbstractSparseObjectMatrix {
 
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
+	}
+
+	public synchronized StorageType getStorageType() {
+		return matrix.getStorageType();
 	}
 
 }

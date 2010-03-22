@@ -126,10 +126,8 @@ public interface ObjectCalculations {
 	public Matrix flipdim(Ret returnType, int dimension);
 
 	/**
-	 * Creates a copy of the matrix. Annotation is linked by default.
-	 * 
-	 * @return Matrix with the same entries
-	 * @see clone()
+	 * @deprecated Please do not use this method anymore, it will be removed.
+	 *             use <code>matrix.clone()</code> instead
 	 */
 	public Matrix copy() throws MatrixException;
 

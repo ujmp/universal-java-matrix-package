@@ -24,8 +24,8 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.matrix.DenseMatrix;
 
 public class InvBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -59,7 +59,7 @@ public class InvBenchmarkTask extends AbstractBenchmarkTask {
 				return BenchmarkResult.ERROR;
 			}
 			Matrix result = m.mtimes(r);
-			double diff = BenchmarkUtil.difference(result, MatrixFactory.eye(m.getSize()));
+			double diff = BenchmarkUtil.difference(result, DenseMatrix.factory.eye(m.getSize()));
 			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
 		} catch (Throwable e) {
 			System.out.print("e");

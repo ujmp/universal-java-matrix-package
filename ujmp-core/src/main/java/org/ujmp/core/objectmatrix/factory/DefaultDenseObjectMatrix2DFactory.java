@@ -30,11 +30,11 @@ import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 public class DefaultDenseObjectMatrix2DFactory implements DenseObjectMatrix2DFactory {
 	private static final long serialVersionUID = 3619615205620126281L;
 
-	public DenseObjectMatrix2D create(long rows, long columns) throws MatrixException {
+	public DenseObjectMatrix2D zeros(long rows, long columns) throws MatrixException {
 		return new DefaultDenseObjectMatrix2D(rows, columns);
 	}
 
-	public DenseObjectMatrix2D create(long... size) throws MatrixException {
+	public DenseObjectMatrix2D zeros(long... size) throws MatrixException {
 		return new DefaultDenseObjectMatrix2D(size);
 	}
 }

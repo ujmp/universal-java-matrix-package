@@ -29,6 +29,6 @@ import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 
 public interface SparseObjectMatrixFactory extends SparseMatrixFactory, ObjectMatrixFactory {
 
-	public SparseObjectMatrix create(long... size) throws MatrixException;
+	public SparseObjectMatrix zeros(long... size) throws MatrixException;
 
 }

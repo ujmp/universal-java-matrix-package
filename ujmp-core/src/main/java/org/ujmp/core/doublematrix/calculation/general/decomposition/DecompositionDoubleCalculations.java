@@ -37,6 +37,22 @@ public interface DecompositionDoubleCalculations {
 	public Matrix inv() throws MatrixException;
 
 	/**
+	 * Calculates the inverse of the Matrix using either LUDecomposition (for
+	 * square matrices) or QRDecomposition (otherwise).
+	 * 
+	 * @return Inverse of the matrix
+	 */
+	public Matrix invSymm() throws MatrixException;
+
+	/**
+	 * Calculates the inverse of a positive definite Matrix using Cholesky
+	 * Decomposition.
+	 * 
+	 * @return Inverse of the matrix
+	 */
+	public Matrix invPosDef() throws MatrixException;
+
+	/**
 	 * Solve A*X = B
 	 * 
 	 * @param b
@@ -44,6 +60,24 @@ public interface DecompositionDoubleCalculations {
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
 	public Matrix solve(Matrix b) throws MatrixException;
+
+	/**
+	 * Solve A*X = B
+	 * 
+	 * @param b
+	 *            right hand side
+	 * @return solution for X if A is square, least squares solution otherwise
+	 */
+	public Matrix solveSymm(Matrix b) throws MatrixException;
+
+	/**
+	 * Solve A*X = B
+	 * 
+	 * @param b
+	 *            right hand side
+	 * @return solution for X if A is square, least squares solution otherwise
+	 */
+	public Matrix solvePosDef(Matrix b) throws MatrixException;
 
 	/**
 	 * Calculates the pseudo inverse of the Matrix using Singular Value
@@ -80,6 +114,13 @@ public interface DecompositionDoubleCalculations {
 	 * @return Eigen decomposition of the matrix.
 	 */
 	public Matrix[] eig() throws MatrixException;
+
+	/**
+	 * Calculates the Eigen decomposition of a symmetric matrix.
+	 * 
+	 * @return Eigen decomposition of the matrix.
+	 */
+	public Matrix[] eigSymm() throws MatrixException;
 
 	/**
 	 * Calculates a QR decomposition of the matrix.

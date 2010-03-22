@@ -29,6 +29,6 @@ import org.ujmp.core.objectmatrix.ObjectMatrix;
 
 public interface ObjectMatrixFactory extends MatrixFactoryRoot {
 
-	public ObjectMatrix create(long... size) throws MatrixException;
+	public ObjectMatrix zeros(long... size) throws MatrixException;
 
 }

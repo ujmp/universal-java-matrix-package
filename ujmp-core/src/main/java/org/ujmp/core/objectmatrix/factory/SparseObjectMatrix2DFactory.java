@@ -30,8 +30,8 @@ import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 public interface SparseObjectMatrix2DFactory extends SparseMatrix2DFactory,
 		SparseObjectMatrixFactory, ObjectMatrix2DFactory {
 
-	public SparseObjectMatrix2D create(long... size) throws MatrixException;
+	public SparseObjectMatrix2D zeros(long... size) throws MatrixException;
 
-	public SparseObjectMatrix2D create(long rows, long cols) throws MatrixException;
+	public SparseObjectMatrix2D zeros(long rows, long cols) throws MatrixException;
 
 }

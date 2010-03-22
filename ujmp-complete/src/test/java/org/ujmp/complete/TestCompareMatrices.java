@@ -434,7 +434,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testInverse() throws Exception {
-		Matrix ref1 = Matrix.factory.create(3, 3);
+		Matrix ref1 = Matrix.factory.zeros(3, 3);
 		ref1.setAsDouble(1.0, 0, 0);
 		ref1.setAsDouble(2.0, 1, 0);
 		ref1.setAsDouble(3.0, 2, 0);

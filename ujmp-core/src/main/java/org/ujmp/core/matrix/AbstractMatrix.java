@@ -406,7 +406,23 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Inv.INSTANCE.calc(this);
 	}
 
+	public Matrix invSymm() throws MatrixException {
+		return Inv.INSTANCE.calc(this);
+	}
+
+	public Matrix invPosDef() throws MatrixException {
+		return Inv.INSTANCE.calc(this);
+	}
+
 	public Matrix solve(Matrix b) {
+		return Solve.INSTANCE.calc(this, b);
+	}
+
+	public Matrix solveSymm(Matrix b) {
+		return Solve.INSTANCE.calc(this, b);
+	}
+
+	public Matrix solvePosDef(Matrix b) {
 		return Solve.INSTANCE.calc(this, b);
 	}
 
@@ -1018,7 +1034,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			result = this.getClass().getConstructor(long[].class).newInstance(
 					Coordinates.transpose(getSize()));
 		} catch (Exception e) {
-			result = Matrix.factory.create(Coordinates.transpose(getSize()));
+			result = Matrix.factory.zeros(Coordinates.transpose(getSize()));
 		}
 		Matrix.transpose.calc(this, result);
 		return result;
@@ -1663,7 +1679,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException {
-		Matrix ret = Matrix.factory.create(getSize());
+		Matrix ret = Matrix.factory.zeros(getSize());
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
 			if (MathUtil.isNaNOrInfinite(v)) {
@@ -1756,6 +1772,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix[] eig() throws MatrixException {
+		return Eig.INSTANCE.calc(this);
+	}
+
+	public Matrix[] eigSymm() throws MatrixException {
 		return Eig.INSTANCE.calc(this);
 	}
 

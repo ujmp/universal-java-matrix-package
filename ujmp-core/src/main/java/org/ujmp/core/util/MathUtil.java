@@ -48,6 +48,10 @@ public abstract class MathUtil {
 
 	private static final double ROOT2PI = Math.sqrt(2 * Math.PI);
 
+	private static final double LOG10 = Math.log(10.0);
+
+	private static final double LOG2 = Math.log(2.0);
+
 	private static final double COFGAMMALN[] = { 76.18009172947146, -86.50532032941677,
 			24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5 };
 
@@ -165,12 +169,12 @@ public abstract class MathUtil {
 		random.setSeed(seed);
 	}
 
-	public static double log2(double d) {
-		return Math.log(d) / Math.log(2.0);
+	public static final double log2(final double d) {
+		return Math.log(d) / LOG2;
 	}
 
-	public static double log10(double d) {
-		return Math.log(d) / Math.log(10.0);
+	public static final double log10(final double d) {
+		return Math.log(d) / LOG10;
 	}
 
 	public static int hash(int h) {

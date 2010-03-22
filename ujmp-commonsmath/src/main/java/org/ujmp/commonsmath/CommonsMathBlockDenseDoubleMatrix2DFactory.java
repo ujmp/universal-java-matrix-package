@@ -33,12 +33,12 @@ public class CommonsMathBlockDenseDoubleMatrix2DFactory implements
 
 	public static final CommonsMathBlockDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathBlockDenseDoubleMatrix2DFactory();
 
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new CommonsMathBlockDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D create(long... size) throws MatrixException {
+	public DenseDoubleMatrix2D zeros(long... size) throws MatrixException {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 

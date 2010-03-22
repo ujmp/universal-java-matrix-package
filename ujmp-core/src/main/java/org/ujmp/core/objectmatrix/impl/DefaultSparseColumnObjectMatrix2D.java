@@ -120,7 +120,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		if (returnType == Ret.NEW) {
 
 			if (dimension == ROW) {
-				Matrix ret = Matrix.factory.create(1, getColumnCount());
+				Matrix ret = Matrix.factory.zeros(1, getColumnCount());
 				for (long[] c : availableCoordinates()) {
 					double v = getAsDouble(c);
 					if (v > ret.getAsDouble(0, c[COLUMN])) {
@@ -129,7 +129,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 				}
 				return ret;
 			} else if (dimension == COLUMN) {
-				Matrix ret = Matrix.factory.create(getRowCount(), 1);
+				Matrix ret = Matrix.factory.zeros(getRowCount(), 1);
 				for (long[] c : availableCoordinates()) {
 					double v = getAsDouble(c);
 					if (v > ret.getAsDouble(c[ROW], 0)) {

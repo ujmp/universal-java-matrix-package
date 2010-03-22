@@ -191,7 +191,7 @@ public class R {
 			String rawText = execute("cat(" + label + ")");
 			String[] rawValues = rawText.split("\n")[1].split("[\\s]+");
 
-			Matrix matrix = Matrix.factory.create(rows, cols);
+			Matrix matrix = Matrix.factory.zeros(rows, cols);
 
 			int i = 0;
 			for (int r = 0; r < rows; r++) {

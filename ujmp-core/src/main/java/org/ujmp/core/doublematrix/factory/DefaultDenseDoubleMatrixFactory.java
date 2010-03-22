@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultDenseDoubleMatrixFactory implements DenseDoubleMatrixFactory {
 	private static final long serialVersionUID = -3522250062306401611L;
 
-	public DenseDoubleMatrix create(long... size) throws MatrixException {
+	public DenseDoubleMatrix zeros(long... size) throws MatrixException {
 		return new DefaultDenseDoubleMatrixMultiD(size);
 	}
 }

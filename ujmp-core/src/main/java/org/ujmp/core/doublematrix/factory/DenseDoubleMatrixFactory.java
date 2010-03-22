@@ -28,6 +28,6 @@ import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
 public interface DenseDoubleMatrixFactory extends DenseMatrixFactory, DoubleMatrixFactory {
 
-	public DenseDoubleMatrix create(long... size);
+	public DenseDoubleMatrix zeros(long... size);
 
 }

@@ -181,7 +181,7 @@ public class Octave {
 			String rawText = execute("fprintf(1,'%55.55f\\n'," + label + ")");
 			String[] rawValues = rawText.split("\n");
 
-			Matrix matrix = Matrix.factory.create(rows, cols);
+			Matrix matrix = Matrix.factory.zeros(rows, cols);
 
 			int i = 0;
 			for (int c = 0; c < cols; c++) {

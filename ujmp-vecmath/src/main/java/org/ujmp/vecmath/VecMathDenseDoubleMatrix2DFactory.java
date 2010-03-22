@@ -31,7 +31,7 @@ public class VecMathDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 8234576107068440158L;
 
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(rows, columns);
 	}

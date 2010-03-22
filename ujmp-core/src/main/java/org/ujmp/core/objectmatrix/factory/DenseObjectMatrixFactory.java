@@ -29,6 +29,6 @@ import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 
 public interface DenseObjectMatrixFactory extends DenseMatrixFactory, ObjectMatrixFactory {
 
-	public DenseObjectMatrix create(long... size) throws MatrixException;
+	public DenseObjectMatrix zeros(long... size) throws MatrixException;
 
 }

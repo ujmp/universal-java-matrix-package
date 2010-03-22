@@ -30,8 +30,8 @@ import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 public interface DenseDoubleMatrix2DFactory extends DenseMatrix2DFactory, DenseDoubleMatrixFactory,
 		DoubleMatrix2DFactory {
 
-	public DenseDoubleMatrix2D create(long... size) throws MatrixException;
+	public DenseDoubleMatrix2D zeros(long... size) throws MatrixException;
 
-	public DenseDoubleMatrix2D create(long rows, long cols) throws MatrixException;
+	public DenseDoubleMatrix2D zeros(long rows, long cols) throws MatrixException;
 
 }

@@ -32,7 +32,7 @@ public class OjalgoDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = -2350372463029926450L;
 
 	
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new OjalgoDenseDoubleMatrix2D(rows, columns);
 	}

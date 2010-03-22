@@ -31,12 +31,12 @@ public class ColtDenseDoubleMatrix2DFactory implements
 		DenseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1951543109603957820L;
 
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new ColtDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D create(long... size) throws MatrixException {
+	public DenseDoubleMatrix2D zeros(long... size) throws MatrixException {
 		return new ColtDenseDoubleMatrix2D(size);
 	}
 

@@ -51,7 +51,7 @@ public class AddMissing extends AbstractDoubleCalculation {
 
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (missingValues == null) {
-			missingValues = SparseMatrix.factory.create(getSource().getSize());
+			missingValues = SparseMatrix.factory.zeros(getSource().getSize());
 
 			switch (getDimension()) {
 			case ALL:
@@ -83,7 +83,7 @@ public class AddMissing extends AbstractDoubleCalculation {
 				}
 			}
 		}
-		if (missingValues.contains(coordinates)) {
+		if (MathUtil.isNaNOrInfinite(missingValues.getAsDouble(coordinates))) {
 			return Double.NaN;
 		} else {
 			return getSource().getAsDouble(coordinates);

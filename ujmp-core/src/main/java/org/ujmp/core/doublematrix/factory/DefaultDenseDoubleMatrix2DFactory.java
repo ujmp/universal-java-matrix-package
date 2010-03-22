@@ -29,11 +29,11 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 public class DefaultDenseDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = -3755160039410460427L;
 
-	public DenseDoubleMatrix2D create(long rows, long columns) {
+	public DenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new DefaultDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D create(long... size) {
+	public DenseDoubleMatrix2D zeros(long... size) {
 		return new DefaultDenseDoubleMatrix2D(size);
 	}
 }

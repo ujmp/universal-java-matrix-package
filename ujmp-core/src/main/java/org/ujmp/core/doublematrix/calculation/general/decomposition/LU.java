@@ -340,7 +340,7 @@ public interface LU<T> {
 		}
 
 		public final Matrix getP() {
-			final DenseDoubleMatrix2D p = DenseDoubleMatrix2D.factory.create(m, m);
+			final DenseDoubleMatrix2D p = DenseDoubleMatrix2D.factory.zeros(m, m);
 			for (int i = 0; i < m; i++) {
 				p.setDouble(1, i, piv[i]);
 			}

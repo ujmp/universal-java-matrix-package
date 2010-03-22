@@ -32,7 +32,7 @@ public class ParallelColtDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = -6399863648885565273L;
 
 	
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(rows, columns);
 	}

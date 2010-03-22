@@ -37,7 +37,7 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testZerosConstructors0D() throws Exception {
 		try {
-			Matrix.factory.create();
+			Matrix.factory.zeros();
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -48,7 +48,7 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testZerosConstructors1D() throws Exception {
 		try {
-			Matrix.factory.create(4);
+			Matrix.factory.zeros(4);
 			throw new Exception("should give an exception");
 		} catch (MatrixException e) {
 			return;
@@ -89,9 +89,9 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testSparseConstructors0D() throws Exception {
 		try {
-			SparseMatrix.factory.create();
+			SparseMatrix.factory.zeros();
 			throw new Exception("should give an exception");
-		} catch (MatrixException e) {
+		} catch (Exception e) {
 			return;
 			// error is expected
 		}
@@ -100,9 +100,9 @@ public class MatrixFactoryTest {
 	@Test(timeout = 1000)
 	public void testSparseConstructors1D() throws Exception {
 		try {
-			SparseMatrix.factory.create(4);
+			SparseMatrix.factory.zeros(4);
 			throw new Exception("should give an exception");
-		} catch (MatrixException e) {
+		} catch (Exception e) {
 			return;
 			// error is expected
 		}

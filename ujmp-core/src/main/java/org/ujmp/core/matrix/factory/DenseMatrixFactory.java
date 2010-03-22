@@ -28,6 +28,6 @@ import org.ujmp.core.matrix.DenseMatrix;
 
 public interface DenseMatrixFactory extends MatrixFactoryRoot {
 
-	public DenseMatrix create(long... size) throws MatrixException;
+	public DenseMatrix zeros(long... size) throws MatrixException;
 
 }

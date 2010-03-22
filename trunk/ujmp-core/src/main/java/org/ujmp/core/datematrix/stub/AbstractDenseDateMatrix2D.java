@@ -27,6 +27,8 @@ import java.util.Date;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseDateMatrix2D extends AbstractDenseDateMatrix implements
 		DenseDateMatrix2D {
@@ -44,24 +46,24 @@ public abstract class AbstractDenseDateMatrix2D extends AbstractDenseDateMatrix 
 		setDate(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public Date getObject(long row, long column) {
 		return getDate(row, column);
 	}
 
-	
 	public Date getObject(int row, int column) {
 		return getDate(row, column);
 	}
 
-	
 	public void setObject(Date value, long row, long column) {
 		setDate(value, row, column);
 	}
 
-	
 	public void setObject(Date value, int row, int column) {
 		setDate(value, row, column);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

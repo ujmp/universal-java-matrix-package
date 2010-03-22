@@ -25,6 +25,8 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.coordinates.CoordinateIterator;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix;
+import org.ujmp.core.matrix.factory.SparseMatrixFactory;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 
 public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
 		SparseGenericMatrix<A> {
@@ -39,4 +41,7 @@ public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatr
 		return new CoordinateIterator(getSize());
 	}
 
+	public SparseMatrixFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

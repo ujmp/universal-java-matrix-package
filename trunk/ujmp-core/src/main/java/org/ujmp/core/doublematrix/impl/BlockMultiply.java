@@ -22,6 +22,8 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
+import static org.ujmp.core.util.VerifyUtil.verify;
+
 import java.util.concurrent.Callable;
 
 /**
@@ -73,7 +75,7 @@ class BlockMultiply implements Callable<Void> {
 	 * @param toK
 	 *            - end column K in B
 	 */
-	BlockMultiply(final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
+	protected BlockMultiply(final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
 			final BlockDenseDoubleMatrix2D c, final int fromM, final int toM, final int fromN,
 			final int toN, final int fromK, final int toK) {
 		super();
@@ -106,7 +108,7 @@ class BlockMultiply implements Callable<Void> {
 	 * (If matrices have been created optimally, B should already be
 	 * column-major)
 	 */
-	void multiply() {
+	protected final void multiply() {
 		final int step = blockStripeSize, blockSize = blockStripeSize * blockStripeSize;
 
 		for (int m = fromM; m < toM; m += step) {
@@ -143,7 +145,8 @@ class BlockMultiply implements Callable<Void> {
 	 * @param c
 	 *            - block from result matrix {@link #matrixC}
 	 */
-	private void multiplyAxB(double[] aBlock, double[] bBlock, double[] cBlock, final int step) {
+	private static void multiplyAxB(final double[] aBlock, final double[] bBlock,
+			final double[] cBlock, final int step) {
 		final int blockStripeMini = step % 3;
 		final int blockStripeMaxi = step / 3;
 		final int blockArea = step * step;
@@ -172,9 +175,9 @@ class BlockMultiply implements Callable<Void> {
 		}
 	}
 
-	private void verifyInput(final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
-			final BlockDenseDoubleMatrix2D c, final int fromM, final int toM, final int fromN,
-			final int toN, final int fromK, final int toK) {
+	private static void verifyInput(final BlockDenseDoubleMatrix2D a,
+			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c, final int fromM,
+			final int toM, final int fromN, final int toN, final int fromK, final int toK) {
 		verify(a != null, "a cannot be null");
 		verify(b != null, "b cannot be null");
 		verify(c != null, "c cannot be null");
@@ -192,9 +195,4 @@ class BlockMultiply implements Callable<Void> {
 				"Invalid argument : b.columns != c.columns");
 	}
 
-	private void verify(boolean test, String message) {
-		if (!test) {
-			throw new IllegalArgumentException(message);
-		}
-	}
 }

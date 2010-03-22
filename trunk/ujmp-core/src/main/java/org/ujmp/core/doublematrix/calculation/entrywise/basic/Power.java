@@ -52,7 +52,7 @@ public class Power extends AbstractDoubleCalculation {
 		if (power.isScalar() && !Coordinates.equals(source.getSize(), power.getSize())) {
 			power = MatrixFactory.fill(power.getAsDouble(0, 0), source.getSize());
 		}
-		Matrix ret = Matrix.factory.dense(source.getSize());
+		Matrix ret = Matrix.factory.create(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.pow(source.getAsDouble(c), power.getAsDouble(c)), c);
 		}
@@ -60,7 +60,7 @@ public class Power extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source, double power) throws MatrixException {
-		Matrix ret = Matrix.factory.dense(source.getSize());
+		Matrix ret = Matrix.factory.create(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.pow(source.getAsDouble(c), power), c);
 		}

@@ -24,14 +24,19 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.SparseCharMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseCharMatrix extends AbstractCharMatrix implements
 		SparseCharMatrix {
 	private static final long serialVersionUID = 3907833890262323770L;
 
-	
 	public final StorageType getStorageType() {
-		return StorageType.DENSE;
+		return StorageType.SPARSE;
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
 	}
 
 }

@@ -28,6 +28,8 @@ import java.util.List;
 
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements
 		GraphMatrix<N, E> {
@@ -144,7 +146,6 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		removeDirectedEdge(index1, index2);
 	}
 
-	
 	public Iterable<long[]> availableCoordinates() {
 		// TODO: improve
 		return super.availableCoordinates();
@@ -162,7 +163,6 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return getEdgeValue(row, column);
 	}
 
-	
 	public long getValueCount() {
 		return getEdgeList().size();
 	}
@@ -212,12 +212,14 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		setUndirectedEdge(edgeObject, index1, index2);
 	}
 
-	
 	public abstract void clear();
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.GRAPH;
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
 	}
 
 }

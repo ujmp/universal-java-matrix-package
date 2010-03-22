@@ -24,6 +24,8 @@
 package org.ujmp.core.shortmatrix.stub;
 
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.shortmatrix.DenseShortMatrix;
 
 public abstract class AbstractDenseShortMatrix extends AbstractShortMatrix implements
@@ -34,9 +36,12 @@ public abstract class AbstractDenseShortMatrix extends AbstractShortMatrix imple
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

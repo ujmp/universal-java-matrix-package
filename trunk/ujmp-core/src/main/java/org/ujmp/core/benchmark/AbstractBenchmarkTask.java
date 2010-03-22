@@ -29,7 +29,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.matrix.Matrix2D;
@@ -81,10 +80,10 @@ public abstract class AbstractBenchmarkTask {
 			resultDiff.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
 			double bestStd = Double.MAX_VALUE;
 			int tmpTrialCount = config.getDefaultTrialCount();
-			DenseDoubleMatrix2D tmpTime = DoubleMatrix2D.factory.dense(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestTime = DoubleMatrix2D.factory.dense(config.getRuns(), 1);
-			DenseDoubleMatrix2D tmpDiff = DoubleMatrix2D.factory.dense(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestDiff = DoubleMatrix2D.factory.dense(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpTime = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpDiff = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
 			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
 				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
 				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");

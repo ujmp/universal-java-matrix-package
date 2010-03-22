@@ -32,6 +32,6 @@ public interface StringMatrix2DFactory extends Serializable {
 
 	public StringMatrix2D dense(long rows, long columns) throws MatrixException;
 
-	public StringMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public StringMatrix2D dense(long... size) throws MatrixException;
 
 }

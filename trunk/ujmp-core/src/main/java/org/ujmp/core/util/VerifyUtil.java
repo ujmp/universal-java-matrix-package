@@ -21,16 +21,23 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core.util;
 
-import java.io.Serializable;
+import java.util.Arrays;
 
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.Matrix;
 
-public interface Matrix2DFactory extends Serializable {
+public abstract class VerifyUtil {
 
-	public DenseMatrix2D dense(long rows, long columns) throws MatrixException;
+	public static final void verify(boolean test, String message, Object... messageArgs) {
+		if (!test) {
+			String text = (messageArgs == null || messageArgs.length == 0) ? message : String
+					.format(message, messageArgs);
+			throw new IllegalArgumentException(text);
+		}
+	}
 
-	public SparseMatrix sparse(long rows, long columns) throws MatrixException;
-
+	public static final void haveSameSize(final Matrix m1, final Matrix m2) {
+		verify(Arrays.equals(m1.getSize(), m2.getSize()), "matrices have different sizes");
+	}
 }

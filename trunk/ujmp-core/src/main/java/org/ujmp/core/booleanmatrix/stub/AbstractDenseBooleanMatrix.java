@@ -25,19 +25,23 @@ package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix implements
 		DenseBooleanMatrix {
-
 	private static final long serialVersionUID = 1884839957291665282L;
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrixFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

@@ -25,6 +25,8 @@ package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.bytematrix.DenseByteMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix implements DenseByteMatrix {
 	private static final long serialVersionUID = -3579091070306434169L;
@@ -33,8 +35,11 @@ public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix impleme
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrixFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 }

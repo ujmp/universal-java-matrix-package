@@ -48,7 +48,7 @@ public class MandelbrotMatrixAction extends MatrixAction {
 		int cells = 500;
 		int iterations = 20;
 
-		Matrix m = Matrix.factory.dense(cells, cells);
+		Matrix m = Matrix.factory.create(cells, cells);
 		for (int column = 0; column < cells; column++) {
 			for (int row = 0; row < cells; row++) {
 				double x0 = xoffset - size / 2 + size * column / cells;

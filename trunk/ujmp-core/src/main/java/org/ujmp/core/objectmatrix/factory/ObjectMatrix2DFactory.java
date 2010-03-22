@@ -23,15 +23,14 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.Matrix2DFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
-public interface ObjectMatrix2DFactory extends Serializable {
+public interface ObjectMatrix2DFactory extends Matrix2DFactory, ObjectMatrixFactory {
 
-	public ObjectMatrix2D dense(long rows, long columns) throws MatrixException;
+	public ObjectMatrix2D create(long rows, long columns) throws MatrixException;
 
-	public ObjectMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public ObjectMatrix2D create(long... size) throws MatrixException;
 
 }

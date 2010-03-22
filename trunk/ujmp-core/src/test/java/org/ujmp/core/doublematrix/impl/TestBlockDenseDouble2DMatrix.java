@@ -3,6 +3,7 @@ package org.ujmp.core.doublematrix.impl;
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 
 public class TestBlockDenseDouble2DMatrix extends TestCase {
 

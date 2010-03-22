@@ -25,6 +25,8 @@ package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.DenseCharMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix implements DenseCharMatrix {
 
@@ -34,9 +36,11 @@ public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix impleme
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
 	}
 
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
+	}
 }

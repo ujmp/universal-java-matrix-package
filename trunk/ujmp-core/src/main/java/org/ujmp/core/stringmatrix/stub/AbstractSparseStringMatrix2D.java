@@ -43,23 +43,20 @@ public abstract class AbstractSparseStringMatrix2D extends AbstractSparseStringM
 		setString(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final String getObject(long row, long column) {
 		return getString(row, column);
 	}
 
-	
 	public final String getObject(int row, int column) {
 		return getString(row, column);
 	}
 
-	
 	public final void setObject(String value, long row, long column) {
 		setString(value, row, column);
 	}
 
-	
 	public final void setObject(String value, int row, int column) {
 		setString(value, row, column);
 	}
+
 }

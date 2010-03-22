@@ -25,6 +25,8 @@ package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.bytematrix.SparseByteMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseByteMatrix2D extends AbstractSparseByteMatrix implements
 		SparseByteMatrix2D {
@@ -43,24 +45,24 @@ public abstract class AbstractSparseByteMatrix2D extends AbstractSparseByteMatri
 		setByte(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Byte getObject(long row, long column) {
 		return getByte(row, column);
 	}
 
-	
 	public final Byte getObject(int row, int column) {
 		return getByte(row, column);
 	}
 
-	
 	public final void setObject(Byte value, long row, long column) {
 		setByte(value, row, column);
 	}
 
-	
 	public final void setObject(Byte value, int row, int column) {
 		setByte(value, row, column);
+	}
+
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
 	}
 
 }

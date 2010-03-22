@@ -24,7 +24,9 @@
 package org.ujmp.core.matrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.SparseMatrixFactory;
 
 public interface SparseMatrix extends Matrix {
 
+	public SparseMatrixFactory getFactory();
 }

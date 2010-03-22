@@ -25,19 +25,23 @@ package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix implements
 		DenseFloatMatrix {
-
 	private static final long serialVersionUID = -2069841946241388853L;
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

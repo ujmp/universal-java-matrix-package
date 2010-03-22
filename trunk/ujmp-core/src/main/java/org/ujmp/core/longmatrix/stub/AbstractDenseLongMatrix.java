@@ -25,6 +25,8 @@ package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.longmatrix.DenseLongMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseLongMatrix extends AbstractLongMatrix implements DenseLongMatrix {
 	private static final long serialVersionUID = -2604308460484616556L;
@@ -33,9 +35,12 @@ public abstract class AbstractDenseLongMatrix extends AbstractLongMatrix impleme
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

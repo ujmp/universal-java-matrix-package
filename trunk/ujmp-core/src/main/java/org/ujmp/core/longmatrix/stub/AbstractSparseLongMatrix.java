@@ -24,6 +24,8 @@
 package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.longmatrix.SparseLongMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix implements
 		SparseLongMatrix {
@@ -33,4 +35,7 @@ public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix implem
 		return StorageType.SPARSE;
 	}
 
+	public SparseObjectMatrix2DFactory getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

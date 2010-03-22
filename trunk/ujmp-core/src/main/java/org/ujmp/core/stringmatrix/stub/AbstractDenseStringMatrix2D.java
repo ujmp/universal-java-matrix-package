@@ -25,11 +25,14 @@ package org.ujmp.core.stringmatrix.stub;
 
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
+import org.ujmp.core.stringmatrix.factory.StringMatrix2DFactory;
 
 public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMatrix implements
 		DenseStringMatrix2D {
-
 	private static final long serialVersionUID = -8819833075778572302L;
+
+	public static StringMatrix2DFactory factory = new DefaultStringMatrix2DFactory();
 
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -43,23 +46,20 @@ public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMat
 		setString(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final String getObject(long row, long column) {
 		return getString(row, column);
 	}
 
-	
 	public final String getObject(int row, int column) {
 		return getString(row, column);
 	}
 
-	
 	public final void setObject(String value, long row, long column) {
 		setString(value, row, column);
 	}
 
-	
 	public final void setObject(String value, int row, int column) {
 		setString(value, row, column);
 	}
+
 }

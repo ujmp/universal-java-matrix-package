@@ -32,7 +32,7 @@ public class JSciDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = -9135903625272489384L;
 
 	
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new JSciDenseDoubleMatrix2D(rows, columns);
 	}

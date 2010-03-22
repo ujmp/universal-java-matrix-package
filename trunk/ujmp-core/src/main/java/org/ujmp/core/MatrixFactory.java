@@ -71,6 +71,8 @@ import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
+import org.ujmp.core.matrix.DenseMatrix;
+import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
@@ -339,7 +341,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix correlatedColumns(int rows, int columns, double correlationFactor)
 			throws MatrixException {
-		Matrix ret = Matrix.factory.dense(rows, columns);
+		Matrix ret = Matrix.factory.create(rows, columns);
 
 		Matrix orig = MatrixFactory.randn(rows, 1);
 
@@ -771,7 +773,7 @@ public abstract class MatrixFactory {
 	 *             <code>Matrix.factory</code>
 	 */
 	public static Matrix dense(long... size) throws MatrixException {
-		return Matrix.factory.dense(size);
+		return Matrix.factory.create(size);
 	}
 
 	public static final Matrix linkToFile(FileFormat format, File file, Object... parameters)
@@ -858,9 +860,9 @@ public abstract class MatrixFactory {
 
 	public static Matrix like(Matrix matrix, long... size) {
 		if (matrix.isSparse()) {
-			return Matrix.factory.sparse(size);
+			return SparseMatrix.factory.create(size);
 		} else {
-			return Matrix.factory.dense(size);
+			return DenseMatrix.factory.create(size);
 		}
 	}
 

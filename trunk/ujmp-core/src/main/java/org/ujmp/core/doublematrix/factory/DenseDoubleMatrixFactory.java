@@ -24,13 +24,10 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
-public abstract class AbstractDoubleMatrixMultiDFactory implements DoubleMatrixMultiDFactory {
-	private static final long serialVersionUID = 5236933930313809725L;
+public interface DenseDoubleMatrixFactory extends DenseMatrixFactory, DoubleMatrixFactory {
 
-	public DenseDoubleMatrix zeros(long... size) throws MatrixException {
-		return dense(size);
-	}
+	public DenseDoubleMatrix create(long... size);
 
 }

@@ -23,14 +23,14 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrixMultiDFactory;
-import org.ujmp.core.doublematrix.factory.DoubleMatrixMultiDFactory;
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
+import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface DoubleMatrix extends GenericMatrix<Double> {
 
-	public static DoubleMatrixMultiDFactory factory = new DefaultDoubleMatrixMultiDFactory();
+	public static DoubleMatrixFactory factory = new DefaultDenseDoubleMatrixFactory();
 
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored
@@ -55,4 +55,5 @@ public interface DoubleMatrix extends GenericMatrix<Double> {
 	 */
 	public void setDouble(double value, long... coordinates) throws MatrixException;
 
+	public DoubleMatrixFactory getFactory();
 }

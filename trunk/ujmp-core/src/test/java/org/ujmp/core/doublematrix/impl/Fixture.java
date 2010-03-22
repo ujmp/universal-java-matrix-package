@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 
 /**
  * Test Fixture
@@ -62,7 +63,8 @@ public class Fixture {
 		return createArrayMatrixWithRandomData(rows, cols, 31);
 	}
 
-	public static final double[][] createArrayMatrixWithRandomData(final int rows, final int cols, final int seed) {
+	public static final double[][] createArrayMatrixWithRandomData(final int rows, final int cols,
+			final int seed) {
 		Random rnd = new Random(seed);
 		double[][] lgData = new double[rows][cols];
 		for (int i = 0; i < rows; i++) {
@@ -111,8 +113,8 @@ public class Fixture {
 		System.out.println(b);
 	}
 
-	protected static BlockDenseDoubleMatrix2D createBlockRowLayout(final double[][] myData, final int blockSize,
-			final BlockOrder blockOrder) {
+	protected static BlockDenseDoubleMatrix2D createBlockRowLayout(final double[][] myData,
+			final int blockSize, final BlockOrder blockOrder) {
 		assert myData != null && myData.length > 0 : "Invalid matrix; must have myData.length>0";
 		BlockDenseDoubleMatrix2D mat = new BlockDenseDoubleMatrix2D(myData, blockSize, blockOrder);
 		return mat;
@@ -128,9 +130,10 @@ public class Fixture {
 
 	protected static int SEED = 33;
 
-	public static BlockDenseDoubleMatrix2D createBlockRowLayoutWithGeneratedData(int i, int j, int blockSize,
-			final BlockOrder blockOrder) {
-		return createBlockRowLayout(createArrayMatrixWithRandomData(i, j, SEED), blockSize, blockOrder);
+	public static BlockDenseDoubleMatrix2D createBlockRowLayoutWithGeneratedData(int i, int j,
+			int blockSize, final BlockOrder blockOrder) {
+		return createBlockRowLayout(createArrayMatrixWithRandomData(i, j, SEED), blockSize,
+				blockOrder);
 	}
 
 	public static Matrix createDenseMatrixWithGeneratedData(int i, int j) {
@@ -155,29 +158,30 @@ public class Fixture {
 		for (int j = 0; j < cols; j++) {
 			for (int i = 0; i < rows; i++) {
 				if (a.getAsDouble(i, j) != b.getAsDouble(i, j)) {
-					assertTrue(String.format("(i, j)=(%s, %s): expected [%s], was [%s]", i, j, a.getAsDouble(i, j), b.getAsDouble(
-							i, j)), false);
+					assertTrue(String.format("(i, j)=(%s, %s): expected [%s], was [%s]", i, j, a
+							.getAsDouble(i, j), b.getAsDouble(i, j)), false);
 				}
 
 			}
 		}
 		if (b.getRowCount() > a.getRowCount() || b.getColumnCount() > a.getColumnCount()) {
-			System.out.format("\n\tMatrix (2) has been padded.  (1)[%s, %s] , (2)[%s, %s] \n", rows, cols, b.getRowCount(), b
-					.getColumnCount());
+			System.out.format("\n\tMatrix (2) has been padded.  (1)[%s, %s] , (2)[%s, %s] \n",
+					rows, cols, b.getRowCount(), b.getColumnCount());
 		}
 	}
 
-	public static Callable<BlockDenseDoubleMatrix2D> createBlockMultiplier(final BlockDenseDoubleMatrix2D a,
-			final BlockDenseDoubleMatrix2D b) {
+	public static Callable<BlockDenseDoubleMatrix2D> createBlockMultiplier(
+			final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b) {
 		Callable<BlockDenseDoubleMatrix2D> run = createMultiplier(a, b);
-		Callable<BlockDenseDoubleMatrix2D> multiplyTimer = new TimerDecorator<BlockDenseDoubleMatrix2D>(a.getRowCount(), a
-				.getColumnCount(), b.getColumnCount(), run);
+		Callable<BlockDenseDoubleMatrix2D> multiplyTimer = new TimerDecorator<BlockDenseDoubleMatrix2D>(
+				a.getRowCount(), a.getColumnCount(), b.getColumnCount(), run);
 		return multiplyTimer;
 	}
 
 	public static <M extends Matrix> Callable<M> createBlockMultiplier(final M a, final M b) {
 		Callable<M> run = createMultiplier(a, b);
-		Callable<M> multiplyTimer = new TimerDecorator<M>(a.getRowCount(), a.getColumnCount(), b.getColumnCount(), run);
+		Callable<M> multiplyTimer = new TimerDecorator<M>(a.getRowCount(), a.getColumnCount(), b
+				.getColumnCount(), run);
 		return multiplyTimer;
 	}
 
@@ -190,8 +194,8 @@ public class Fixture {
 		return run;
 	}
 
-	public static Callable<BlockDenseDoubleMatrix2D> createMultiplier(final BlockDenseDoubleMatrix2D a,
-			final BlockDenseDoubleMatrix2D b) {
+	public static Callable<BlockDenseDoubleMatrix2D> createMultiplier(
+			final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b) {
 		final Callable<BlockDenseDoubleMatrix2D> run = new Callable<BlockDenseDoubleMatrix2D>() {
 			public BlockDenseDoubleMatrix2D call() throws Exception {
 				return a.mtimes(b);

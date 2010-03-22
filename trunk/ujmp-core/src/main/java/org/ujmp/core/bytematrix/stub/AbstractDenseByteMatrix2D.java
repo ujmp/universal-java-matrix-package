@@ -25,6 +25,8 @@ package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix implements
 		DenseByteMatrix2D {
@@ -43,24 +45,24 @@ public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix 
 		setByte(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Byte getObject(long row, long column) {
 		return getByte(row, column);
 	}
 
-	
 	public final Byte getObject(int row, int column) {
 		return getByte(row, column);
 	}
 
-	
 	public final void setObject(Byte value, long row, long column) {
 		setByte(value, row, column);
 	}
 
-	
 	public final void setObject(Byte value, int row, int column) {
 		setByte(value, row, column);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

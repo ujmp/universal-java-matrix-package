@@ -25,6 +25,8 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.genericmatrix.DenseGenericMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
 		DenseGenericMatrix<A> {
@@ -35,9 +37,12 @@ public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatri
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

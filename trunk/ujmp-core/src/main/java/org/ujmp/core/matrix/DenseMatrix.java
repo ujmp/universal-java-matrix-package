@@ -24,7 +24,10 @@
 package org.ujmp.core.matrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
 public interface DenseMatrix extends Matrix {
+
+	public DenseMatrixFactory getFactory();
 
 }

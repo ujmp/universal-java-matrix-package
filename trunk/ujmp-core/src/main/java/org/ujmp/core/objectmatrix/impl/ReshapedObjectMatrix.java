@@ -28,9 +28,9 @@ import java.util.Iterator;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
-public class ReshapedObjectMatrix extends AbstractObjectMatrix {
+public class ReshapedObjectMatrix extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = -4298270756453090584L;
 
 	private Matrix source = null;
@@ -43,10 +43,6 @@ public class ReshapedObjectMatrix extends AbstractObjectMatrix {
 		this.source = source;
 		this.newSize = newSize;
 		this.oldSize = source.getSize();
-	}
-
-	public boolean contains(long... coordinates) {
-		return false;
 	}
 
 	private class CoordinateIterable implements Iterable<long[]> {

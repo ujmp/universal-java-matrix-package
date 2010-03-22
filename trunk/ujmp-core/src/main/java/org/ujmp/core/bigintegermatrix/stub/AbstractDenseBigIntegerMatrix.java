@@ -25,6 +25,8 @@ package org.ujmp.core.bigintegermatrix.stub;
 
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseBigIntegerMatrix extends AbstractBigIntegerMatrix implements
 		DenseBigIntegerMatrix {
@@ -34,9 +36,12 @@ public abstract class AbstractDenseBigIntegerMatrix extends AbstractBigIntegerMa
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	
 	public final StorageType getStorageType() {
 		return StorageType.DENSE;
+	}
+
+	public DenseObjectMatrixFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

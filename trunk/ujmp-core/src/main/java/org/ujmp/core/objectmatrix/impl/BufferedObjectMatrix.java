@@ -32,9 +32,9 @@ import java.util.Set;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
-public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flushable {
+public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements Flushable {
 	private static final long serialVersionUID = 7750549087897737457L;
 
 	private Matrix inputBuffer = null;
@@ -91,10 +91,6 @@ public class BufferedObjectMatrix extends AbstractObjectMatrix implements Flusha
 
 	public synchronized long getValueCount() {
 		return original.getValueCount();
-	}
-
-	public final StorageType getStorageType() {
-		return inputBuffer.getStorageType();
 	}
 
 	public synchronized void setObject(Object value, long... coordinates) throws MatrixException {

@@ -26,25 +26,27 @@ package org.ujmp.core.objectmatrix.stub;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements
 		ObjectMatrix {
 	private static final long serialVersionUID = -2861884195413889506L;
 
-	
 	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
 	public void setAsDouble(double v, long... coordinates) {
 		setObject(v, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
+	}
+
+	public ObjectMatrixFactory getFactory() {
+		return ObjectMatrix.factory;
 	}
 
 }

@@ -73,7 +73,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 				firstGuess = getSource().impute(Ret.NEW, ImputationMethod.RowMean);
 			}
 
-			imputed = Matrix.factory.dense(x.getSize());
+			imputed = Matrix.factory.create(x.getSize());
 
 			ExecutorService executor = Executors.newFixedThreadPool(1);
 			List<Future<Long>> futures = new ArrayList<Future<Long>>();

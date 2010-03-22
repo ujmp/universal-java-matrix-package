@@ -60,7 +60,7 @@ public class Randn extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source, double mean, double sigma) throws MatrixException {
-		Matrix ret = Matrix.factory.dense(source.getSize());
+		Matrix ret = Matrix.factory.create(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(mean, sigma), c);
 		}

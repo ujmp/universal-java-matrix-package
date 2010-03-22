@@ -297,7 +297,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 						jamaRow = allmeans.getRowForLabel(DefaultDenseDoubleMatrix2D.class
 								.getSimpleName());
 					}
-					Matrix valueCount = Matrix.factory.dense(1, allmeans.getColumnCount());
+					Matrix valueCount = Matrix.factory.create(1, allmeans.getColumnCount());
 					for (int c = 0; c < valueCount.getColumnCount(); c++) {
 						int s = extractSize(allmeans.getColumnLabel(c));
 						if (allmeans.getLabel().contains("tall")) {

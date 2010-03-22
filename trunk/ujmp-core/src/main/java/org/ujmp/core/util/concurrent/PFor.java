@@ -23,30 +23,17 @@
 
 package org.ujmp.core.util.concurrent;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.ujmp.core.util.UJMPSettings;
+
 public abstract class PFor {
 
-	private static final ThreadLocal<ThreadPoolExecutor> executors = new ThreadLocal<ThreadPoolExecutor>();
+	private final Object[] objects;
 
-	private static final ThreadLocal<List<Future<Object>>> futures = new ThreadLocal<List<Future<Object>>>();
-
-	private Object[] objects = null;
-
-	private static int processors = 2;
-
-	static {
-		try {
-			processors = Runtime.getRuntime().availableProcessors();
-		} catch (Throwable t) {
-		}
-	}
-
-	public PFor(int threads, int first, int last, Object... objects) {
+	public PFor(final int threads, final int first, final int last, final Object... objects) {
 		this.objects = objects;
 
 		if (threads < 2) {
@@ -54,65 +41,49 @@ public abstract class PFor {
 				step(i);
 			}
 		} else {
-			ThreadPoolExecutor es = executors.get();
-			if (es == null) {
-				es = new UJMPThreadPoolExecutor(this.getClass().getName(), threads, threads);
-				executors.set(es);
-			} else {
-				es.setCorePoolSize(threads);
-				es.setMaximumPoolSize(threads);
-			}
+			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads, threads);
+			es.setCorePoolSize(threads);
+			es.setMaximumPoolSize(threads);
 
-			List<Future<Object>> list = futures.get();
-			if (list == null) {
-				list = new LinkedList<Future<Object>>();
-				futures.set(list);
-			}
-
-			last++;
-			double stepsize = (double) (last - first) / threads;
+			final Future<?>[] list = new Future[threads];
+			final double stepsize = (double) (last + 1 - first) / threads;
 
 			for (int i = 0; i < threads; i++) {
 				int starti = (int) Math.ceil(first + i * stepsize);
 				int endi = (int) Math.ceil(first + (i + 1) * stepsize);
-				list.add(es.submit(new StepCallable(starti, endi)));
+				list[i] = es.submit(new StepCallable(starti, endi));
 			}
 
-			for (Future<Object> f : list) {
+			for (Future<?> f : list) {
 				try {
 					f.get();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-
-			list.clear();
-			es.setCorePoolSize(0);
 		}
 	}
 
-	public PFor(int first, int last, Object... objects) {
-		this(processors + 1, first, last, objects);
+	public PFor(final int first, final int last, final Object... objects) {
+		this(UJMPSettings.getNumberOfThreads(), first, last, objects);
 	}
 
-	public abstract void step(int i);
+	public abstract void step(final int i);
 
-	public final Object getObject(int i) {
+	public final Object getObject(final int i) {
 		return objects[i];
 	}
 
 	class StepCallable implements Callable<Object> {
+		private final int first;
+		private final int last;
 
-		private int first = 0;
-
-		private int last = 0;
-
-		public StepCallable(int first, int last) {
+		public StepCallable(final int first, final int last) {
 			this.first = first;
 			this.last = last;
 		}
 
-		public Object call() throws Exception {
+		public final Void call() throws Exception {
 			try {
 				for (int i = first; i < last; i++) {
 					step(i);

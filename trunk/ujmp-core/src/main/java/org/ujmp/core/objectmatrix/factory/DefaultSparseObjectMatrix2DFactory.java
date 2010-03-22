@@ -21,31 +21,20 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core.objectmatrix.factory;
 
-import java.io.Serializable;
-
-import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
-public interface MatrixFactoryRoot extends Serializable {
+public class DefaultSparseObjectMatrix2DFactory implements SparseObjectMatrix2DFactory {
+	private static final long serialVersionUID = -5593278693528246537L;
 
-	public static final int ROW = Matrix.ROW;
+	public SparseObjectMatrix2D create(long rows, long columns) throws MatrixException {
+		return new DefaultSparseRowObjectMatrix2D(rows, columns);
+	}
 
-	public static final int COLUMN = Matrix.COLUMN;
-
-	public static final int Y = Matrix.Y;
-
-	public static final int X = Matrix.X;
-
-	public static final int Z = Matrix.Z;
-
-	public static final int ALL = Matrix.ALL;
-
-	public static final int NONE = Matrix.NONE;
-
-	public Matrix dense(long... size) throws MatrixException;
-
-	public Matrix sparse(long... size) throws MatrixException;
-
+	public SparseObjectMatrix2D create(long... size) throws MatrixException {
+		return new DefaultSparseRowObjectMatrix2D(size);
+	}
 }

@@ -26,11 +26,14 @@ package org.ujmp.commonsmath;
 import org.apache.commons.math.linear.BlockRealMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class CommonsMathBlockDenseDoubleMatrix2D extends
 		AbstractCommonsMathDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4040628102089767983L;
+
+	public static final DenseDoubleMatrix2DFactory factory = new CommonsMathBlockDenseDoubleMatrix2DFactory();
 
 	public CommonsMathBlockDenseDoubleMatrix2D(long... size) {
 		super(Coordinates.isZero(size) ? null : new BlockRealMatrix(
@@ -107,6 +110,10 @@ public class CommonsMathBlockDenseDoubleMatrix2D extends
 
 	public Matrix solve(Matrix b) {
 		return super.solve(b);
+	}
+
+	public DenseDoubleMatrix2DFactory getFactory() {
+		return factory;
 	}
 
 }

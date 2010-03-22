@@ -24,14 +24,20 @@
 package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix implements
 		SparseObjectMatrix {
 	private static final long serialVersionUID = -8252625246356993341L;
 
-	
+	public static SparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
+
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;
 	}
 
+	public SparseObjectMatrixFactory getFactory() {
+		return factory;
+	}
 }

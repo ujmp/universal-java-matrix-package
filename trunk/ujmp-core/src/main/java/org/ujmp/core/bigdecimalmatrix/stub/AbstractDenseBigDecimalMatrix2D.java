@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix2D;
 import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix
 		implements DenseBigDecimalMatrix2D {
@@ -59,6 +61,10 @@ public abstract class AbstractDenseBigDecimalMatrix2D extends AbstractDenseBigDe
 
 	public final void setObject(BigDecimal o, int row, int column) throws MatrixException {
 		setBigDecimal(o, row, column);
+	}
+
+	public DenseObjectMatrix2DFactory getFactory() {
+		return DenseObjectMatrix2D.factory;
 	}
 
 }

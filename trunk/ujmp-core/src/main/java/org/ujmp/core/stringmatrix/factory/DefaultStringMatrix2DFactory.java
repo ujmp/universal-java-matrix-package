@@ -30,9 +30,12 @@ import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 public class DefaultStringMatrix2DFactory extends AbstractStringMatrix2DFactory {
 	private static final long serialVersionUID = 9070985885433278717L;
 
-	
 	public StringMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseStringMatrix2D(rows, columns);
+	}
+
+	public StringMatrix2D dense(long... size) throws MatrixException {
+		return new DefaultDenseStringMatrix2D(size);
 	}
 
 }

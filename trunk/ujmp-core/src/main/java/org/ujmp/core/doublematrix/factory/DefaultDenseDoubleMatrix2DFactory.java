@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 by Frode Carlsen
+ * Copyright (C) 2008-2010 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -20,13 +20,20 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA  02110-1301  USA
  */
-package org.ujmp.core.doublematrix.impl;
 
-/**
- * Enum describing the layout of the blocks in a matrix.
- * 
- * @author Frode Carlsen
- */
-public enum BlockOrder {
-	ROWMAJOR, COLUMNMAJOR;
+package org.ujmp.core.doublematrix.factory;
+
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+
+public class DefaultDenseDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
+	private static final long serialVersionUID = -3755160039410460427L;
+
+	public DenseDoubleMatrix2D create(long rows, long columns) {
+		return new DefaultDenseDoubleMatrix2D(rows, columns);
+	}
+
+	public DenseDoubleMatrix2D create(long... size) {
+		return new DefaultDenseDoubleMatrix2D(size);
+	}
 }

@@ -403,7 +403,7 @@ public abstract class AbstractMatrixTest {
 		byte[] data = SerializationUtil.serialize(m);
 		Matrix m2 = (Matrix) SerializationUtil.deserialize(data);
 		if (m2.isTransient()) {
-			Matrix m0 = Matrix.factory.dense(2, 2);
+			Matrix m0 = Matrix.factory.create(2, 2);
 			assertEquals(getLabel(), m0, m2);
 		} else {
 			assertEquals(getLabel(), m, m2);

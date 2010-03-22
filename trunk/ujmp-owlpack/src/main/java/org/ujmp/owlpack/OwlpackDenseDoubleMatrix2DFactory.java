@@ -31,7 +31,7 @@ public class OwlpackDenseDoubleMatrix2DFactory extends
 		AbstractDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 4500192997324878408L;
 
-	public DenseDoubleMatrix2D dense(long rows, long columns)
+	public DenseDoubleMatrix2D create(long rows, long columns)
 			throws MatrixException {
 		return new OwlpackDenseDoubleMatrix2D(rows, columns);
 	}

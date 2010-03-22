@@ -32,7 +32,7 @@ public class MTJDenseDoubleMatrix2DFactory extends
 	private static final long serialVersionUID = 5802820376630425258L;
 
 	
-	public DenseDoubleMatrix2D create(long rows, long columns)
+	public DenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new MTJDenseDoubleMatrix2D(rows, columns);
 	}

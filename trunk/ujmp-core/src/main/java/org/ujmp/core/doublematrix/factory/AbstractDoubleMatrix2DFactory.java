@@ -28,7 +28,7 @@ import org.ujmp.core.doublematrix.DoubleMatrix2D;
 public abstract class AbstractDoubleMatrix2DFactory implements DoubleMatrix2DFactory {
 	private static final long serialVersionUID = -2262202653249931934L;
 
-	public final DoubleMatrix2D create(long... size) {
-		return create(size[ROW], size[COLUMN]);
+	public final DoubleMatrix2D zeros(long... size) {
+		return zeros(size[ROW], size[COLUMN]);
 	}
 }

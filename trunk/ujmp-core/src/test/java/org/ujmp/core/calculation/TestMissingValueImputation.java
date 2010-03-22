@@ -37,7 +37,7 @@ import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.Imput
 
 public class TestMissingValueImputation {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testImputeMissingValues() throws Exception {
 		for (ImputationMethod method : ImputationMethod.values()) {
 
@@ -79,7 +79,7 @@ public class TestMissingValueImputation {
 
 			Matrix orig = MatrixFactory.randn(10, 10);
 			orig.addMissing(Ret.ORIG, Matrix.ALL, 0.05);
-			assertTrue(orig.containsMissingValues());
+			assertTrue(method.toString(), orig.containsMissingValues());
 			Matrix m = orig.impute(Ret.NEW, method);
 			assertFalse(method.toString(), m.containsMissingValues());
 			assertTrue(method.toString(), Coordinates.equals(m.getSize(), orig.getSize()));

@@ -341,7 +341,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix correlatedColumns(int rows, int columns, double correlationFactor)
 			throws MatrixException {
-		Matrix ret = Matrix.factory.create(rows, columns);
+		Matrix ret = Matrix.factory.zeros(rows, columns);
 
 		Matrix orig = MatrixFactory.randn(rows, 1);
 
@@ -643,7 +643,7 @@ public abstract class MatrixFactory {
 
 	/**
 	 * @deprecated Please do not use this method anymore, it will be moved to
-	 *             <code>Matrix.factory</code>
+	 *             <code>SparseMatrix.factory</code>
 	 */
 	public final static Matrix sparse(long... size) throws MatrixException {
 		return sparse(ValueType.DOUBLE, size);
@@ -762,7 +762,7 @@ public abstract class MatrixFactory {
 
 	/**
 	 * @deprecated Please do not use this method anymore, it will be replaced by
-	 *             <code>Matrix.factory.dense(long... size)</code>
+	 *             <code>DenseMatrix.factory.zeros(long... size)</code>
 	 */
 	public static Matrix zeros(long... size) throws MatrixException {
 		return dense(size);
@@ -770,10 +770,10 @@ public abstract class MatrixFactory {
 
 	/**
 	 * @deprecated Please do not use this method anymore, it will be moved to
-	 *             <code>Matrix.factory</code>
+	 *             <code>DenseMatrix.factory</code>
 	 */
 	public static Matrix dense(long... size) throws MatrixException {
-		return Matrix.factory.create(size);
+		return DenseMatrix.factory.zeros(size);
 	}
 
 	public static final Matrix linkToFile(FileFormat format, File file, Object... parameters)
@@ -860,9 +860,9 @@ public abstract class MatrixFactory {
 
 	public static Matrix like(Matrix matrix, long... size) {
 		if (matrix.isSparse()) {
-			return SparseMatrix.factory.create(size);
+			return SparseMatrix.factory.zeros(size);
 		} else {
-			return DenseMatrix.factory.create(size);
+			return DenseMatrix.factory.zeros(size);
 		}
 	}
 

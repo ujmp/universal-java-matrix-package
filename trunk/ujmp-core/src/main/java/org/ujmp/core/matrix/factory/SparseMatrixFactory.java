@@ -28,6 +28,6 @@ import org.ujmp.core.matrix.SparseMatrix;
 
 public interface SparseMatrixFactory extends MatrixFactoryRoot {
 
-	public SparseMatrix create(long... size) throws MatrixException;
+	public SparseMatrix zeros(long... size) throws MatrixException;
 
 }

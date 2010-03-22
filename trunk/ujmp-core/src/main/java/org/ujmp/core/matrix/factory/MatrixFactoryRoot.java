@@ -26,7 +26,6 @@ package org.ujmp.core.matrix.factory;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface MatrixFactoryRoot extends Serializable {
 
@@ -44,6 +43,6 @@ public interface MatrixFactoryRoot extends Serializable {
 
 	public static final int NONE = Matrix.NONE;
 
-	public Matrix create(long... size) throws MatrixException;
+	public Matrix zeros(final long... size);
 
 }

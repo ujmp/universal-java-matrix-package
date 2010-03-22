@@ -41,7 +41,7 @@ public class Ones extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = Matrix.factory.create(source.getSize());
+		Matrix ret = Matrix.factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(1.0, c);
 		}

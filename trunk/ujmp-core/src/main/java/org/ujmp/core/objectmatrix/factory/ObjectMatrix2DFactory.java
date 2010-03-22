@@ -29,8 +29,8 @@ import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public interface ObjectMatrix2DFactory extends Matrix2DFactory, ObjectMatrixFactory {
 
-	public ObjectMatrix2D create(long rows, long columns) throws MatrixException;
+	public ObjectMatrix2D zeros(long rows, long columns) throws MatrixException;
 
-	public ObjectMatrix2D create(long... size) throws MatrixException;
+	public ObjectMatrix2D zeros(long... size) throws MatrixException;
 
 }

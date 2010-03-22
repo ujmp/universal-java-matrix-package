@@ -30,7 +30,7 @@ import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrixMultiD;
 public class DefaultDenseObjectMatrixFactory implements DenseObjectMatrixFactory {
 	private static final long serialVersionUID = 2613102688458521347L;
 
-	public DenseObjectMatrix create(long... size) throws MatrixException {
+	public DenseObjectMatrix zeros(long... size) throws MatrixException {
 		return new DefaultDenseObjectMatrixMultiD(size);
 	}
 }

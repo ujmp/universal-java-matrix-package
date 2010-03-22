@@ -29,6 +29,6 @@ import org.ujmp.core.matrix.factory.SparseMatrixFactory;
 
 public interface SparseDoubleMatrixFactory extends SparseMatrixFactory, DoubleMatrixFactory {
 
-	public SparseDoubleMatrix create(long... size) throws MatrixException;
+	public SparseDoubleMatrix zeros(long... size) throws MatrixException;
 
 }

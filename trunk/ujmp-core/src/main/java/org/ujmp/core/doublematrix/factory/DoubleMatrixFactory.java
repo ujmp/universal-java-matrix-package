@@ -29,6 +29,6 @@ import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 
 public interface DoubleMatrixFactory extends MatrixFactoryRoot {
 
-	public DoubleMatrix create(long... size) throws MatrixException;
+	public DoubleMatrix zeros(long... size) throws MatrixException;
 
 }

@@ -60,7 +60,7 @@ public class Rand extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source, double min, double max) throws MatrixException {
-		Matrix ret = Matrix.factory.create(source.getSize());
+		Matrix ret = Matrix.factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextUniform(min, max), c);
 		}

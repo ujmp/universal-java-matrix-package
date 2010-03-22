@@ -80,10 +80,10 @@ public abstract class AbstractBenchmarkTask {
 			resultDiff.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
 			double bestStd = Double.MAX_VALUE;
 			int tmpTrialCount = config.getDefaultTrialCount();
-			DenseDoubleMatrix2D tmpTime = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
-			DenseDoubleMatrix2D tmpDiff = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.factory.create(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D tmpDiff = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
 			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
 				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
 				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");

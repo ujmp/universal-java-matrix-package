@@ -33,6 +33,7 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.VerifyUtil;
 
 public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A> {
 	private static final long serialVersionUID = -7139128532871448340L;
@@ -48,7 +49,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
-		this.size = Coordinates.copyOf(m.getSize());
+		this(m.getSize());
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
 		for (long[] c : m.allCoordinates()) {
 			setObject(m.getAsObject(c), c);
@@ -56,11 +57,12 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public DefaultSparseGenericMatrix(long... size) {
+		VerifyUtil.verify(size.length > 1, "matrix must have at least two dimensions");
 		this.size = Coordinates.copyOf(size);
 	}
 
 	public DefaultSparseGenericMatrix(int maximumNumberOfEntries, long... size) {
-		this.size = Coordinates.copyOf(size);
+		this(size);
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
 	}
 

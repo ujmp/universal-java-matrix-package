@@ -28,8 +28,8 @@ import org.ujmp.core.matrix.factory.Matrix2DFactory;
 
 public interface DoubleMatrix2DFactory extends Matrix2DFactory, DoubleMatrixFactory {
 
-	public DoubleMatrix2D create(long rows, long columns);
+	public DoubleMatrix2D zeros(long rows, long columns);
 
-	public DoubleMatrix2D create(long... size);
+	public DoubleMatrix2D zeros(long... size);
 
 }

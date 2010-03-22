@@ -39,7 +39,7 @@ public class Floor extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calcNew(Matrix source) throws MatrixException {
-		Matrix ret = Matrix.factory.create(source.getSize());
+		Matrix ret = Matrix.factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.floor(source.getAsDouble(c)), c);
 		}

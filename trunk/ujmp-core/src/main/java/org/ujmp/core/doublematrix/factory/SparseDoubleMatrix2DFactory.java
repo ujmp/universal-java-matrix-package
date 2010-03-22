@@ -29,8 +29,8 @@ import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
 public interface SparseDoubleMatrix2DFactory extends SparseMatrix2DFactory,
 		SparseDoubleMatrixFactory, DoubleMatrix2DFactory {
 
-	public SparseDoubleMatrix2D create(long... size);
+	public SparseDoubleMatrix2D zeros(long... size);
 
-	public SparseDoubleMatrix2D create(long rows, long cols);
+	public SparseDoubleMatrix2D zeros(long rows, long cols);
 
 }

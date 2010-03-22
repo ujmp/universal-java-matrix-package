@@ -23,13 +23,12 @@
 
 package org.ujmp.core.matrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.matrix.Matrix2D;
 
 public interface Matrix2DFactory extends MatrixFactoryRoot {
 
-	public Matrix2D create(long rows, long columns) throws MatrixException;
+	public Matrix2D zeros(final long rows, final long columns);
 
-	public Matrix2D create(long... size) throws MatrixException;
+	public Matrix2D zeros(final long... size);
 
 }

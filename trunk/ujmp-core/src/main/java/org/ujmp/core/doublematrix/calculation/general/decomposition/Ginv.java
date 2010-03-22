@@ -90,7 +90,7 @@ public class Ginv extends AbstractDoubleCalculation {
 			DenseDoubleMatrix2D matrix2, long timesInner) {
 		long timesRows = matrix1.getRowCount();
 		long timesCols = matrix2.getColumnCount();
-		DenseDoubleMatrix2D response = DenseDoubleMatrix2D.factory.create(timesRows, timesCols);
+		DenseDoubleMatrix2D response = DenseDoubleMatrix2D.factory.zeros(timesRows, timesCols);
 		for (long row = 0; row < timesRows; row++) {
 			for (long col = 0; col < timesCols; col++) {
 				for (long inner = 0; inner < timesInner; inner++) {
@@ -337,9 +337,9 @@ public class Ginv extends AbstractDoubleCalculation {
 		double epsilon = UJMPSettings.getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
-		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.factory.create(cols, cols);
+		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.factory.zeros(cols, cols);
 		s.eye(Ret.ORIG);
-		DenseDoubleMatrix2D t = DenseDoubleMatrix2D.factory.create(rows, rows);
+		DenseDoubleMatrix2D t = DenseDoubleMatrix2D.factory.zeros(rows, rows);
 		t.eye(Ret.ORIG);
 		long maxDiag = Math.min(rows, cols);
 
@@ -402,9 +402,9 @@ public class Ginv extends AbstractDoubleCalculation {
 		double epsilon = UJMPSettings.getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
-		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.factory.create(cols, cols);
+		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.factory.zeros(cols, cols);
 		s.eye(Ret.ORIG);
-		DenseDoubleMatrix2D t = DenseDoubleMatrix2D.factory.create(rows, rows);
+		DenseDoubleMatrix2D t = DenseDoubleMatrix2D.factory.zeros(rows, rows);
 		t.eye(Ret.ORIG);
 		long maxDiag = Math.min(rows, cols);
 
@@ -964,7 +964,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 *         banding
 	 */
 	public static Matrix reduce(Matrix source) {
-		Matrix response = Matrix.factory.create(source.getRowCount(), 1);
+		Matrix response = Matrix.factory.zeros(source.getRowCount(), 1);
 		for (int row = 0; row < source.getRowCount(); ++row) {
 			response.setAsDouble(row, row, 0);
 		}

@@ -30,11 +30,11 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultSparseDoubleMatrix2DFactory implements SparseDoubleMatrix2DFactory {
 	private static final long serialVersionUID = 1416876387997698948L;
 
-	public SparseDoubleMatrix2D create(long... size) throws MatrixException {
+	public SparseDoubleMatrix2D zeros(long... size) throws MatrixException {
 		return new DefaultSparseRowDoubleMatrix2D(size);
 	}
 
-	public SparseDoubleMatrix2D create(long rows, long cols) throws MatrixException {
+	public SparseDoubleMatrix2D zeros(long rows, long cols) throws MatrixException {
 		return new DefaultSparseRowDoubleMatrix2D(rows, cols);
 	}
 }

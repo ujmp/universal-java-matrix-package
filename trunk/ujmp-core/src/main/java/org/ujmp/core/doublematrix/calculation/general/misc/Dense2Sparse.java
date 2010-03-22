@@ -29,7 +29,7 @@ import org.ujmp.core.matrix.SparseMatrix;
 public class Dense2Sparse {
 
 	public static Matrix calc(Matrix indices) {
-		Matrix m = SparseMatrix.factory.create(1, 1);
+		Matrix m = SparseMatrix.factory.zeros(1, 1);
 
 		long mrow = 1;
 		long mcol = 1;

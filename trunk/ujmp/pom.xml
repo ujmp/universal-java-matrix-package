@@ -340,7 +340,7 @@
 			<dependency>
 				<groupId>ojalgo</groupId>
 				<artifactId>ojalgo</artifactId>
-				<version>28.38</version>
+				<version>29.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

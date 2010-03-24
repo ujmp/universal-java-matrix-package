@@ -75,14 +75,17 @@ public interface Inv<T> {
 
 	public static final Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
 		public final Matrix calc(Matrix source) {
-			Inv<Matrix> inv = DecompositionOps.INV_JBLAS;
-			if (inv == null) {
+			Inv<Matrix> inv = null;
+			if (UJMPSettings.isUseJBlas()) {
+				inv = DecompositionOps.INV_JBLAS;
+			}
+			if (inv == null && UJMPSettings.isUseOjalgo()) {
 				inv = DecompositionOps.INV_OJALGO;
 			}
-			if (inv == null) {
+			if (inv == null && UJMPSettings.isUseEJML()) {
 				inv = DecompositionOps.INV_EJML;
 			}
-			if (inv == null) {
+			if (inv == null && UJMPSettings.isUseMTJ()) {
 				inv = DecompositionOps.INV_MTJ;
 			}
 			if (inv == null) {
@@ -94,14 +97,17 @@ public interface Inv<T> {
 
 	public static final Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
-			Inv<Matrix> inv = DecompositionOps.INV_JBLAS;
-			if (inv == null) {
+			Inv<Matrix> inv = null;
+			if (UJMPSettings.isUseJBlas()) {
+				inv = DecompositionOps.INV_JBLAS;
+			}
+			if (inv == null && UJMPSettings.isUseOjalgo()) {
 				inv = DecompositionOps.INV_OJALGO;
 			}
-			if (inv == null) {
+			if (inv == null && UJMPSettings.isUseEJML()) {
 				inv = DecompositionOps.INV_EJML;
 			}
-			if (inv == null) {
+			if (inv == null && UJMPSettings.isUseMTJ()) {
 				inv = DecompositionOps.INV_MTJ;
 			}
 			if (inv == null) {

@@ -41,7 +41,7 @@ import java.util.concurrent.Callable;
  * 
  * @author Frode Carlsen
  */
-class BlockMultiply implements Callable<Void> {
+public class BlockMultiply implements Callable<Void> {
 
 	/** Length of one side of a block of data. */
 	private final int blockStripeSize;
@@ -75,7 +75,7 @@ class BlockMultiply implements Callable<Void> {
 	 * @param toK
 	 *            - end column K in B
 	 */
-	protected BlockMultiply(final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
+	public BlockMultiply(final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
 			final BlockDenseDoubleMatrix2D c, final int fromM, final int toM, final int fromN,
 			final int toN, final int fromK, final int toK) {
 		super();

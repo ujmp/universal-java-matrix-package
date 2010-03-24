@@ -84,8 +84,11 @@ public interface SVD<T> {
 	public static final SVD<Matrix> MATRIXLARGESINGLETHREADED = new SVD<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = DecompositionOps.SVD_MTJ;
-			if (svd == null) {
+			SVD<Matrix> svd = null;
+			if (UJMPSettings.isUseMTJ()) {
+				svd = DecompositionOps.SVD_MTJ;
+			}
+			if (svd == null && UJMPSettings.isUseOjalgo()) {
 				svd = DecompositionOps.SVD_OJALGO;
 			}
 			if (svd == null) {
@@ -100,8 +103,11 @@ public interface SVD<T> {
 	public static final SVD<Matrix> MATRIXLARGEMULTITHREADED = new SVD<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			SVD<Matrix> svd = DecompositionOps.SVD_OJALGO;
-			if (svd == null) {
+			SVD<Matrix> svd = null;
+			if (UJMPSettings.isUseOjalgo()) {
+				svd = DecompositionOps.SVD_OJALGO;
+			}
+			if (svd == null && UJMPSettings.isUseMTJ()) {
 				svd = DecompositionOps.SVD_MTJ;
 			}
 			if (svd == null) {

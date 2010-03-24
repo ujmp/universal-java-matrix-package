@@ -656,28 +656,29 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (this instanceof HasColumnMajorDoubleArray1D) {
 			final double[] m = ((HasColumnMajorDoubleArray1D) this).getColumnMajorDoubleArray1D();
 			for (int r = 0; r < rows; r++) {
+				final double[] valuesr = values[r];
 				for (int c = 0; c < columns; c++) {
-					values[r][c] = m[c * rows + r];
+					valuesr[c] = m[c * rows + r];
 				}
 			}
 		} else if (this instanceof HasRowMajorDoubleArray2D) {
 			final double[][] m = ((HasRowMajorDoubleArray2D) this).getRowMajorDoubleArray2D();
 			for (int r = 0; r < rows; r++) {
-				for (int c = 0; c < columns; c++) {
-					values[r][c] = m[r][c];
-				}
+				System.arraycopy(m[r], 0, values[r], 0, columns);
 			}
 		} else if (this instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D m = (DenseDoubleMatrix2D) this;
 			for (int r = 0; r < rows; r++) {
+				final double[] valuesr = values[r];
 				for (int c = 0; c < columns; c++) {
-					values[r][c] = m.getDouble(r, c);
+					valuesr[c] = m.getDouble(r, c);
 				}
 			}
 		} else {
 			for (int r = 0; r < rows; r++) {
+				final double[] valuesr = values[r];
 				for (int c = 0; c < columns; c++) {
-					values[r][c] = getAsDouble(r, c);
+					valuesr[c] = getAsDouble(r, c);
 				}
 			}
 		}

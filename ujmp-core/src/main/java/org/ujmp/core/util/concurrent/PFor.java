@@ -41,9 +41,7 @@ public abstract class PFor {
 				step(i);
 			}
 		} else {
-			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads, threads);
-			es.setCorePoolSize(threads);
-			es.setMaximumPoolSize(threads);
+			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads);
 
 			final Future<?>[] list = new Future[threads];
 			final double stepsize = (double) (last + 1 - first) / threads;

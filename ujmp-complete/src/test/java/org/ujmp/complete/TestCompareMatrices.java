@@ -12,7 +12,6 @@ import org.ujmp.colt.ColtSparseDoubleMatrix2D;
 import org.ujmp.commonsmath.CommonsMathArrayDenseDoubleMatrix2D;
 import org.ujmp.commonsmath.CommonsMathBlockDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bigdecimalmatrix.impl.ArrayDenseBigDecimalMatrix2D;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultSparseBigDecimalMatrix;
@@ -106,8 +105,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testMtimesSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 5);
-		Matrix ref2 = MatrixFactory.randn(5, 15);
+		Matrix ref1 = Matrix.factory.randn(10, 5);
+		Matrix ref2 = Matrix.factory.randn(5, 15);
 		Matrix ref3 = ref1.mtimes(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -128,10 +127,10 @@ public class TestCompareMatrices {
 		}
 	}
 
-	@Test(timeout = 15000)
+	@Test(timeout = 25000)
 	public void testMtimesLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(100, 102);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
+		Matrix ref2 = Matrix.factory.randn(100, 102);
 		Matrix ref3 = ref1.mtimes(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -154,8 +153,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testPlusMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
-		Matrix ref2 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
+		Matrix ref2 = Matrix.factory.randn(11, 10);
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -172,8 +171,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testPlusMatrixLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
+		Matrix ref2 = Matrix.factory.randn(101, 100);
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -190,8 +189,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testMinusMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
-		Matrix ref2 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
+		Matrix ref2 = Matrix.factory.randn(11, 10);
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -208,8 +207,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testMinusMatrixLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
+		Matrix ref2 = Matrix.factory.randn(101, 100);
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -226,8 +225,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testTimesMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
-		Matrix ref2 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
+		Matrix ref2 = Matrix.factory.randn(11, 10);
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -244,8 +243,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testTimesMatrixLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
+		Matrix ref2 = Matrix.factory.randn(101, 100);
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -262,7 +261,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testTimesScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
@@ -279,7 +278,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testPlusScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
@@ -296,7 +295,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testPlusScalarLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.plus(Ret.LINK, true, ref2);
 
@@ -313,7 +312,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testMinusScalarLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
@@ -330,7 +329,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testMinusScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.minus(Ret.LINK, true, ref2);
 
@@ -347,7 +346,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testDivideScalarSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
@@ -364,7 +363,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testDivideScalarLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
@@ -381,7 +380,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testTimesScalarLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
 		double ref2 = MathUtil.nextDouble();
 		Matrix ref3 = ref1.times(Ret.LINK, true, ref2);
 
@@ -398,8 +397,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testDivideMatrixSmall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(11, 10);
-		Matrix ref2 = MatrixFactory.randn(11, 10);
+		Matrix ref1 = Matrix.factory.randn(11, 10);
+		Matrix ref2 = Matrix.factory.randn(11, 10);
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -416,8 +415,8 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testDivideMatrixLarge() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
-		Matrix ref2 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
+		Matrix ref2 = Matrix.factory.randn(101, 100);
 		Matrix ref3 = ref1.divide(Ret.LINK, true, ref2);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -475,7 +474,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testTransposeSmallSquare() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 10);
+		Matrix ref1 = Matrix.factory.randn(10, 10);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -491,7 +490,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testTransposeSmallTall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(15, 10);
+		Matrix ref1 = Matrix.factory.randn(15, 10);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -507,7 +506,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 1000)
 	public void testTransposeSmallWide() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(10, 15);
+		Matrix ref1 = Matrix.factory.randn(10, 15);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -523,7 +522,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testTransposeLargeSquare() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 101);
+		Matrix ref1 = Matrix.factory.randn(101, 101);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -539,7 +538,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testTransposeLargeTall() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(101, 100);
+		Matrix ref1 = Matrix.factory.randn(101, 100);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {
@@ -555,7 +554,7 @@ public class TestCompareMatrices {
 
 	@Test(timeout = 5000)
 	public void testTransposeLargeWide() throws Exception {
-		Matrix ref1 = MatrixFactory.randn(100, 101);
+		Matrix ref1 = Matrix.factory.randn(100, 101);
 		Matrix ref2 = ref1.transpose(Ret.LINK);
 
 		for (Class<? extends Matrix> mclass : ALLFLOATMATRIXCLASSES) {

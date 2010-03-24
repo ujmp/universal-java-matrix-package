@@ -72,8 +72,11 @@ public interface Eig<T> {
 
 	public static final Eig<Matrix> MATRIXLARGESINGLETHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
-			Eig<Matrix> eig = DecompositionOps.EIG_JBLAS;
-			if (eig == null) {
+			Eig<Matrix> eig = null;
+			if (UJMPSettings.isUseJBlas()) {
+				eig = DecompositionOps.EIG_JBLAS;
+			}
+			if (eig == null && UJMPSettings.isUseEJML()) {
 				eig = DecompositionOps.EIG_EJML;
 			}
 			if (eig == null) {
@@ -85,11 +88,14 @@ public interface Eig<T> {
 
 	public static final Eig<Matrix> MATRIXLARGEMULTITHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
-			Eig<Matrix> eig = DecompositionOps.EIG_JBLAS;
-			if (eig == null) {
+			Eig<Matrix> eig = null;
+			if (UJMPSettings.isUseJBlas()) {
+				eig = DecompositionOps.EIG_JBLAS;
+			}
+			if (eig == null && UJMPSettings.isUseOjalgo()) {
 				eig = DecompositionOps.EIG_OJALGO;
 			}
-			if (eig == null) {
+			if (eig == null && UJMPSettings.isUseEJML()) {
 				eig = DecompositionOps.EIG_EJML;
 			}
 			if (eig == null) {
@@ -172,8 +178,10 @@ public interface Eig<T> {
 			// Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
 			// Fortran subroutine in EISPACK.
 
+			final double[] Vn1 = V[n - 1];
+
 			for (int j = 0; j < n; j++) {
-				d[j] = V[n - 1][j];
+				d[j] = Vn1[j];
 			}
 
 			// Householder reduction to tridiagonal form.
@@ -251,7 +259,7 @@ public interface Eig<T> {
 			// Accumulate transformations.
 
 			for (int i = 0; i < n - 1; i++) {
-				V[n - 1][i] = V[i][i];
+				Vn1[i] = V[i][i];
 				V[i][i] = 1.0;
 				final double h = d[i + 1];
 				if (h != 0.0) {
@@ -273,10 +281,10 @@ public interface Eig<T> {
 				}
 			}
 			for (int j = 0; j < n; j++) {
-				d[j] = V[n - 1][j];
-				V[n - 1][j] = 0.0;
+				d[j] = Vn1[j];
+				Vn1[j] = 0.0;
 			}
-			V[n - 1][n - 1] = 1.0;
+			Vn1[n - 1] = 1.0;
 			e[0] = 0.0;
 		}
 

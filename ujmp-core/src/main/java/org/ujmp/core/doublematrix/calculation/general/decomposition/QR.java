@@ -65,11 +65,14 @@ public interface QR<T> {
 
 	public static final QR<Matrix> MATRIXLARGESINGLETHREADED = new QR<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
-			if (qr == null) {
+			QR<Matrix> qr = null;
+			if (UJMPSettings.isUseOjalgo()) {
+				qr = DecompositionOps.QR_OJALGO;
+			}
+			if (qr == null && UJMPSettings.isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null) {
+			if (qr == null && UJMPSettings.isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -79,11 +82,14 @@ public interface QR<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
-			if (qr == null) {
+			QR<Matrix> qr = null;
+			if (UJMPSettings.isUseOjalgo()) {
+				qr = DecompositionOps.QR_OJALGO;
+			}
+			if (qr == null && UJMPSettings.isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null) {
+			if (qr == null && UJMPSettings.isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -95,11 +101,14 @@ public interface QR<T> {
 
 	public static final QR<Matrix> MATRIXLARGEMULTITHREADED = new QR<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
-			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
-			if (qr == null) {
+			QR<Matrix> qr = null;
+			if (UJMPSettings.isUseOjalgo()) {
+				qr = DecompositionOps.QR_OJALGO;
+			}
+			if (qr == null && UJMPSettings.isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null) {
+			if (qr == null && UJMPSettings.isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -109,11 +118,14 @@ public interface QR<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			QR<Matrix> qr = DecompositionOps.QR_OJALGO;
-			if (qr == null) {
+			QR<Matrix> qr = null;
+			if (UJMPSettings.isUseOjalgo()) {
+				qr = DecompositionOps.QR_OJALGO;
+			}
+			if (qr == null && UJMPSettings.isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null) {
+			if (qr == null && UJMPSettings.isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {

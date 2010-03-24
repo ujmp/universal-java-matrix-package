@@ -87,7 +87,7 @@ public class TestBlockMultiply extends TestCase {
 		BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayout(Fixture.MAT_B1, 3, bOrder);
 		System.out.println(b);
 
-		BlockDenseDoubleMatrix2D c = a.mtimes(b);
+		BlockDenseDoubleMatrix2D c = (BlockDenseDoubleMatrix2D) a.mtimes(b);
 
 		System.out.println(c);
 		Fixture.assertMatrixEquals2DIntArray(c, Fixture.C_2x3_RESULT);
@@ -100,7 +100,7 @@ public class TestBlockMultiply extends TestCase {
 		BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayout(Fixture.MAT_A, 2,
 				BlockOrder.COLUMNMAJOR);
 
-		BlockDenseDoubleMatrix2D c = a.mtimes(b);
+		BlockDenseDoubleMatrix2D c = (BlockDenseDoubleMatrix2D) a.mtimes(b);
 
 		out.format("\n\n\na = \n%s", a.getBlockLayout());
 		out.format("\n\n\nb = \n%s", b.getBlockLayout());
@@ -170,7 +170,7 @@ public class TestBlockMultiply extends TestCase {
 				BlockOrder.COLUMNMAJOR);
 		System.out.println(b);
 
-		BlockDenseDoubleMatrix2D c = a.mtimes(b);
+		BlockDenseDoubleMatrix2D c = (BlockDenseDoubleMatrix2D) a.mtimes(b);
 
 		System.out.println(c);
 
@@ -188,7 +188,7 @@ public class TestBlockMultiply extends TestCase {
 				BlockOrder.COLUMNMAJOR);
 		System.out.println(b);
 
-		BlockDenseDoubleMatrix2D c = a.mtimes(b);
+		BlockDenseDoubleMatrix2D c = (BlockDenseDoubleMatrix2D) a.mtimes(b);
 
 		System.out.println(c);
 		Fixture.assertMatrixEquals2DIntArray(c, Fixture.C_2x3_RESULT);

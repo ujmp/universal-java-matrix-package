@@ -25,25 +25,18 @@ package org.ujmp.core.doublematrix.impl;
 import static org.ujmp.core.util.VerifyUtil.verify;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
-import org.ujmp.core.util.concurrent.UJMPThreadPoolExecutor;
 
 /**
  * A dense 2D matrix with square block layout. The data in the matrix is
@@ -191,9 +184,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	/** number of blocks in this matrix */
 	private final int numberOfBlocks;
 
-	/** length of one block */
-	private final int blockLength;
-
 	/** Layout of matrix and blocks. */
 	protected BlockMatrixLayout layout;
 
@@ -265,13 +255,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 		numberOfBlocks = paddedRows / blockStripeSize * paddedCols / blockStripeSize;
 		this.data = new double[numberOfBlocks][];
-
-		blockLength = layout.blockArea;
-
-		// claim memory
-		for (int i = 0; i < numberOfBlocks; i++) {
-			this.data[i] = new double[blockLength];
-		}
 	}
 
 	/**
@@ -339,11 +322,26 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 *            - proposed default block size.
 	 */
 	public BlockDenseDoubleMatrix2D(Matrix m, int blockStripeSize) {
-		this((int) m.getRowCount(), (int) m.getColumnCount(), blockStripeSize, BlockOrder.ROWMAJOR);
+		this(m, blockStripeSize, BlockOrder.ROWMAJOR);
+	}
+
+	/**
+	 * Constructor which takes a Matrix and a proposed default block stripe
+	 * size.
+	 * 
+	 * @param m
+	 *            - matrix containing existing values.
+	 * @param blockStripeSize
+	 *            - proposed default block size.
+	 * @param blockOrder
+	 *            row major or column major
+	 */
+	public BlockDenseDoubleMatrix2D(Matrix m, int blockStripeSize, BlockOrder blockOrder) {
+		this((int) m.getRowCount(), (int) m.getColumnCount(), blockStripeSize, blockOrder);
 
 		if (m instanceof DenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D mDense = (DenseDoubleMatrix2D) m;
-			int mRows = (int) mDense.getRowCount(), mColumns = (int) mDense.getColumnCount();
+			final DenseDoubleMatrix2D mDense = (DenseDoubleMatrix2D) m;
+			final int mRows = (int) mDense.getRowCount(), mColumns = (int) mDense.getColumnCount();
 			for (int i = 0; i < mRows; i++) {
 				for (int j = 0; j < mColumns; j++) {
 					setDouble(mDense.getDouble(i, j), i, j);
@@ -357,33 +355,23 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	}
 
 	protected void addBlockData(final int row, final int column, final double[] newData) {
-		final double[] block = data[layout.getBlockNumber(row, column)];
-		synchronized (block) {
-			for (int i = 0; i < blockLength; i++) {
-				block[i] += newData[i];
+		int blockNumber = layout.getBlockNumber(row, column);
+
+		if (null == data[blockNumber]) {
+			// init first block
+			synchronized (data) {
+				if (null == data[blockNumber]) {
+					data[blockNumber] = newData;
+					return;
+				}
 			}
 		}
-	}
 
-	/**
-	 * Submit a number of tasks and wait for completion.
-	 * 
-	 * @param tasks
-	 *            - to submit to executor
-	 * @param executor
-	 *            - to use
-	 */
-	private void executeWait(final List<Callable<Void>> tasks, final ExecutorService executor) {
-		try {
-			for (Future<Void> f : executor.invokeAll(tasks)) {
-				f.get();
+		double[] block = data[blockNumber];
+		synchronized (block) {
+			for (int i = block.length; --i >= 0;) {
+				block[i] += newData[i];
 			}
-		} catch (ExecutionException e) {
-			String msg = "Execution exception - while awaiting completion of matrix multiplication.";
-			throw new RuntimeException(msg, e);
-		} catch (final InterruptedException e) {
-			String msg = "Interrupted - while awaiting completion of matrix multiplication.";
-			throw new RuntimeException(msg, e);
 		}
 	}
 
@@ -433,7 +421,14 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * @return double[] block where the given row,column is held.
 	 */
 	protected final double[] getBlockData(final int row, final int column) {
-		return data[layout.getBlockNumber(row, column)];
+		int blockNumber = layout.getBlockNumber(row, column);
+		double[] block = data[blockNumber];
+
+		if (null == block) {
+			block = new double[layout.blockArea];
+			data[blockNumber] = block;
+		}
+		return block;
 	}
 
 	/**
@@ -449,7 +444,11 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	}
 
 	public double getDouble(final int row, final int col) {
-		return data[layout.getBlockNumber(row, col)][layout.getIndexInBlock(row, col)];
+		double[] block = data[layout.getBlockNumber(row, col)];
+		if (null == block) {
+			return 0.0d;
+		}
+		return block[layout.getIndexInBlock(row, col)];
 	}
 
 	public double getDouble(long row, long column) {
@@ -461,85 +460,17 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	}
 
 	/**
-	 * Multiply two BlockMatrices
-	 * 
-	 * @param b
-	 *            - rhs of the multiplication
-	 * @return c - a new matrix
+	 * Shortcut to create a BlockMatrix for target
 	 */
-	public BlockDenseDoubleMatrix2D mtimes(final BlockDenseDoubleMatrix2D b) {
-		if (this.getRowCount() >= 100 && this.getColumnCount() >= 100) {
-			return mtimes(b, UJMPThreadPoolExecutor.getInstance());
+	public Matrix mtimes(Matrix m2) {
+		if (m2 instanceof DenseDoubleMatrix2D) {
+			final DenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D((int) getRowCount(),
+					(int) m2.getColumnCount(), layout.blockStripe, BlockOrder.ROWMAJOR);
+			Mtimes.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
+			return result;
 		} else {
-			return multiplySingleThread(b);
+			return super.mtimes(m2);
 		}
-	}
-
-	/**
-	 * Multiply two matrices concurrently with the given Executor to handle
-	 * parallel tasks.
-	 * 
-	 * @param b
-	 *            - matrix to multiply this with.
-	 * @param executorService
-	 *            - to handle concurrent multiplication tasks.
-	 * @return new matrix C containing result of matrix multiplication C = A x
-	 *         B.
-	 */
-	private BlockDenseDoubleMatrix2D mtimes(final BlockDenseDoubleMatrix2D b,
-			final ExecutorService executorService) {
-		verifyMatrix(b);
-
-		final BlockDenseDoubleMatrix2D a = this, c = newMatrix(this.layout.rows, b.layout.columns);
-		final List<Callable<Void>> tasks = new LinkedList<Callable<Void>>();
-
-		final int kMax = (int) b.getColumnCount();
-		final int jMax = (int) a.getColumnCount();
-		final int iMax = (int) a.getRowCount();
-
-		final int bColSlice = Math.min(layout.blockStripe, kMax);
-		final int aColSlice = Math.min(layout.blockStripe, jMax);
-		final int aRowSlice = Math.min(layout.blockStripe, iMax);
-
-		// Number of blocks to take for each concurrent task.
-		final int blocksPerTask = 2;
-
-		for (int k = 0, kStride; k < kMax; k += kStride) {
-			kStride = Math.min(blocksPerTask * bColSlice, kMax - k);
-
-			for (int j = 0, jStride; j < jMax; j += jStride) {
-				jStride = Math.min(blocksPerTask * aColSlice, jMax - j);
-
-				for (int i = 0, iStride; i < iMax; i += iStride) {
-					iStride = Math.min(blocksPerTask * aRowSlice, iMax - i);
-
-					tasks.add(new BlockMultiply(a, b, c, i, (i + iStride), j, (j + jStride), k,
-							(k + kStride)));
-				}
-
-			}
-		}
-
-		// wait for all tasks to complete.
-		executeWait(tasks, executorService);
-
-		return c;
-	}
-
-	private BlockDenseDoubleMatrix2D multiplySingleThread(final BlockDenseDoubleMatrix2D b) {
-		verifyMatrix(b);
-
-		BlockDenseDoubleMatrix2D a = this;
-		BlockDenseDoubleMatrix2D c = newMatrix(this.layout.rows, b.layout.columns);
-
-		new BlockMultiply(a, b, c, 0, a.layout.rows, 0, a.layout.columns, 0, b.layout.columns)
-				.multiply();
-
-		return c;
-	}
-
-	private BlockDenseDoubleMatrix2D newMatrix(final int rows, final int cols) {
-		return new BlockDenseDoubleMatrix2D(rows, cols, layout.blockStripe, BlockOrder.ROWMAJOR);
 	}
 
 	public void setDouble(double value, int row, int column) {
@@ -562,7 +493,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	}
 
 	@Override
-	public BlockDenseDoubleMatrix2D copy() {
+	public BlockDenseDoubleMatrix2D clone() {
 		return new BlockDenseDoubleMatrix2D(this);
 	}
 
@@ -610,18 +541,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		}
 	}
 
-	private void verifyMatrix(final BlockDenseDoubleMatrix2D b) {
-		BlockMatrixLayout al = this.layout, bl = b.layout;
-		verify(al.columns == bl.rows, "b.rows != this.columns");
-		verify(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s", al.blockStripe,
-				bl.blockStripe);
-	}
-
 	public final double[][] getBlockDoubleArray2D() {
 		return data;
 	}
 
-	public DenseDoubleMatrix2DFactory getFactory() {
-		return factory;
-	}
-}
+};

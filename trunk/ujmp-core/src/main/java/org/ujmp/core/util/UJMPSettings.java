@@ -32,6 +32,18 @@ public abstract class UJMPSettings {
 
 	private static int numberOfThreads = 1;
 
+	private static boolean useJBlas = true;
+
+	private static boolean useOjalgo = true;
+
+	private static boolean useEJML = true;
+
+	private static boolean useParallelColt = true;
+
+	private static boolean useMTJ = true;
+
+	private static boolean useCommonsMath = true;
+
 	private static MathContext mathContext = MathContext.DECIMAL128;
 
 	public static MathContext getDefaultMathContext() {
@@ -158,6 +170,89 @@ public abstract class UJMPSettings {
 
 	public static void setLocale(Locale locale) {
 		Locale.setDefault(locale);
+	}
+
+	public static void setUseCommonsMath(boolean useCommonsMath) {
+		UJMPSettings.useCommonsMath = useCommonsMath;
+	}
+
+	public static boolean isUseCommonsMath() {
+		return useCommonsMath;
+	}
+
+	/**
+	 * @param useJBlas
+	 *            the useJBlas to set
+	 */
+	public static void setUseJBlas(boolean useJBlas) {
+		UJMPSettings.useJBlas = useJBlas;
+	}
+
+	/**
+	 * @return useJBlas
+	 */
+	public static boolean isUseJBlas() {
+		return useJBlas;
+	}
+
+	/**
+	 * @param useOjalgo
+	 *            the useOjalgo to set
+	 */
+	public static void setUseOjalgo(boolean useOjalgo) {
+		UJMPSettings.useOjalgo = useOjalgo;
+	}
+
+	/**
+	 * @return useOjalgo
+	 */
+	public static boolean isUseOjalgo() {
+		return useOjalgo;
+	}
+
+	/**
+	 * @param useEJML
+	 *            the useEJML to set
+	 */
+	public static void setUseEJML(boolean useEJML) {
+		UJMPSettings.useEJML = useEJML;
+	}
+
+	/**
+	 * @return useEJML
+	 */
+	public static boolean isUseEJML() {
+		return useEJML;
+	}
+
+	/**
+	 * @param useParallelColt
+	 *            the useParallelColt to set
+	 */
+	public static void setUseParallelColt(boolean useParallelColt) {
+		UJMPSettings.useParallelColt = useParallelColt;
+	}
+
+	/**
+	 * @return useParallelColt
+	 */
+	public static boolean isUseParallelColt() {
+		return useParallelColt;
+	}
+
+	/**
+	 * @param useMTJ
+	 *            the useMTJ to set
+	 */
+	public static void setUseMTJ(boolean useMTJ) {
+		UJMPSettings.useMTJ = useMTJ;
+	}
+
+	/**
+	 * @return useMTJ
+	 */
+	public static boolean isUseMTJ() {
+		return useMTJ;
 	}
 
 }

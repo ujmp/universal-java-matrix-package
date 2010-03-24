@@ -53,15 +53,14 @@ public class UJMPThreadPoolExecutor extends ThreadPoolExecutor {
 	}
 
 	public static final ThreadPoolExecutor getInstance() {
-		return getInstance(UJMPSettings.getNumberOfThreads(), UJMPSettings.getNumberOfThreads());
+		return getInstance(UJMPSettings.getNumberOfThreads());
 	}
 
-	public static final ThreadPoolExecutor getInstance(final int corePoolSize,
-			final int maximumPoolSize) {
+	public static final ThreadPoolExecutor getInstance(final int maximumPoolSize) {
 		ThreadPoolExecutor es = executors.get();
 		if (es == null) {
 			synchronized (executors) {
-				es = new UJMPThreadPoolExecutor(Thread.currentThread().getName(), corePoolSize,
+				es = new UJMPThreadPoolExecutor(Thread.currentThread().getName(), 0,
 						maximumPoolSize);
 				executors.set(es);
 			}

@@ -27,6 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPSettings;
 
 public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
@@ -69,6 +70,13 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 			System.out.println("===============================================================");
 
 			long t0 = System.currentTimeMillis();
+
+			UJMPSettings.setUseCommonsMath(config.isUseCommonsMath());
+			UJMPSettings.setUseMTJ(config.isUseMTJ());
+			UJMPSettings.setUseEJML(config.isUseEJML());
+			UJMPSettings.setUseJBlas(config.isUseJBlas());
+			UJMPSettings.setUseOjalgo(config.isUseOjalgo());
+			UJMPSettings.setUseParallelColt(config.isUseParallelColt());
 
 			if (config.isRunTimesScalar()) {
 				new TimesScalarBenchmarkTask(benchmarkSeed, getMatrixClass(), getConfig()).run();

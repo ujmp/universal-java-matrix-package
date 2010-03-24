@@ -303,9 +303,9 @@ public abstract class AbstractMatrixTest {
 
 	@Test(timeout = 1000)
 	public void testSize() throws Exception {
-		Matrix m = createMatrix(20, 10);
-		assertEquals(getLabel(), 20, m.getRowCount());
-		assertEquals(getLabel(), 10, m.getColumnCount());
+		Matrix m = createMatrix(21, 12);
+		assertEquals(getLabel(), 21, m.getRowCount());
+		assertEquals(getLabel(), 12, m.getColumnCount());
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -490,7 +490,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(120, 120);
+		Matrix m = createMatrix(119, 119);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -560,8 +560,8 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(120, 110);
-		Matrix m2 = createMatrix(120, 110);
+		Matrix m1 = createMatrix(121, 111);
+		Matrix m2 = createMatrix(121, 111);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -636,7 +636,7 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		// TODO: check labels
-		Matrix m = createMatrix(110, 100);
+		Matrix m = createMatrix(111, 101);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 0, 2);
@@ -769,7 +769,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(120, 110);
+		Matrix m = createMatrix(124, 114);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -824,7 +824,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(120, 110);
+		Matrix m = createMatrix(128, 113);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -947,8 +947,8 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(120, 110);
-		Matrix m2 = createMatrix(120, 110);
+		Matrix m1 = createMatrix(123, 109);
+		Matrix m2 = createMatrix(123, 109);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -1039,12 +1039,12 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMTimesLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(105, 110);
+		Matrix m1 = createMatrix(109, 111);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1057,7 +1057,7 @@ public abstract class AbstractMatrixTest {
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
 		m1.setAsDouble(4.0, 1, 1);
-		Matrix m2 = createMatrix(110, 120);
+		Matrix m2 = createMatrix(111, 127);
 		m2.setAsDouble(1.0, 0, 0);
 		m2.setAsDouble(-2.0, 0, 1);
 		m2.setAsDouble(3.0, 0, 2);
@@ -1067,8 +1067,8 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m3 = m1.mtimes(m2);
 
-		assertEquals(getLabel(), 105, m3.getRowCount());
-		assertEquals(getLabel(), 120, m3.getColumnCount());
+		assertEquals(getLabel(), 109, m3.getRowCount());
+		assertEquals(getLabel(), 127, m3.getColumnCount());
 		assertEquals(getLabel(), -9.0, m3.getAsDouble(0, 0), TOLERANCE);
 		assertEquals(getLabel(), 12.0, m3.getAsDouble(0, 1), TOLERANCE);
 		assertEquals(getLabel(), -15.0, m3.getAsDouble(0, 2), TOLERANCE);
@@ -1126,7 +1126,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(120, 120);
+		Matrix m1 = createMatrix(128, 128);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1363,7 +1363,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(110, 110);
+		Matrix a = createMatrix(111, 111);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1438,7 +1438,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(110, 110);
+		Matrix a = createMatrix(116, 116);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -1505,7 +1505,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(120, 120);
+		Matrix a = createMatrix(125, 125);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1515,7 +1515,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(120, 140);
+		Matrix x = createMatrix(125, 142);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -1552,7 +1552,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(160, 120);
+		Matrix a = createMatrix(169, 121);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
 			return;
@@ -1562,7 +1562,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(120, 140);
+		Matrix x = createMatrix(121, 143);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -1614,7 +1614,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(110, 110);
+		Matrix a = createMatrix(112, 112);
 
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
@@ -1696,7 +1696,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(160, 140);
+		Matrix a = createMatrix(161, 142);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -1798,7 +1798,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(140, 160);
+		Matrix a = createMatrix(141, 162);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
@@ -1872,7 +1872,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(150, 150);
+		Matrix a = createMatrix(151, 151);
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -1886,7 +1886,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test(timeout = 1000)
 	public void testQRRandSmall() throws Exception {
-		Matrix a = createMatrix(10, 10);
+		Matrix a = createMatrix(7, 7);
 		a.rand(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -1899,7 +1899,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(120, 120);
+		Matrix a = createMatrix(123, 123);
 		a.rand(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -2088,7 +2088,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(160, 140);
+		Matrix a = createMatrix(168, 143);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
 			return;
@@ -2329,7 +2329,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(5, 5);
+		Matrix a = createMatrix(107, 107);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -2400,7 +2400,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(110, 110);
+		Matrix a = createMatrix(109, 109);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -2476,7 +2476,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(120, 140);
+		Matrix a = createMatrix(123, 142);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -2491,6 +2491,10 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+		// error in implementation
+		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
 
@@ -2561,7 +2565,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(140, 120);
+		Matrix a = createMatrix(140, 121);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -2576,6 +2580,10 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+		// error in implementation
+		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
 

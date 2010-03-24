@@ -103,7 +103,10 @@ public interface Chol<T> {
 
 	public static final Chol<Matrix> MATRIXLARGESINGLETHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
+			Chol<Matrix> chol = null;
+			if (UJMPSettings.isUseJBlas()) {
+				chol = DecompositionOps.CHOL_JBLAS;
+			}
 			if (chol == null) {
 				chol = UJMP;
 			}
@@ -111,7 +114,10 @@ public interface Chol<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
+			Chol<Matrix> chol = null;
+			if (UJMPSettings.isUseJBlas()) {
+				chol = DecompositionOps.CHOL_JBLAS;
+			}
 			if (chol == null) {
 				chol = UJMP;
 			}
@@ -121,8 +127,11 @@ public interface Chol<T> {
 
 	public static final Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
-			if (chol == null) {
+			Chol<Matrix> chol = null;
+			if (UJMPSettings.isUseJBlas()) {
+				chol = DecompositionOps.CHOL_JBLAS;
+			}
+			if (chol == null && UJMPSettings.isUseOjalgo()) {
 				chol = DecompositionOps.CHOL_OJALGO;
 			}
 			if (chol == null) {
@@ -132,8 +141,11 @@ public interface Chol<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			Chol<Matrix> chol = DecompositionOps.CHOL_JBLAS;
-			if (chol == null) {
+			Chol<Matrix> chol = null;
+			if (UJMPSettings.isUseJBlas()) {
+				chol = DecompositionOps.CHOL_JBLAS;
+			}
+			if (chol == null && UJMPSettings.isUseOjalgo()) {
 				chol = DecompositionOps.CHOL_OJALGO;
 			}
 			if (chol == null) {

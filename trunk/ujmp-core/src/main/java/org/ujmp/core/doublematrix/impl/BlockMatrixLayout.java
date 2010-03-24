@@ -42,10 +42,10 @@ public final class BlockMatrixLayout implements Serializable {
 	protected final int blockArea;
 
 	/** Length of one side (stripe) of a square block. */
-	protected final int blockStripe;
+	public final int blockStripe;
 
 	/** Number of columns of matrix. */
-	protected final int columns;
+	public final int columns;
 
 	/**
 	 * Whether this block is laid out in row-major (true) or column-major
@@ -54,7 +54,7 @@ public final class BlockMatrixLayout implements Serializable {
 	protected final boolean rowMajor;
 
 	/** Number of rows of matrix. */
-	protected final int rows;
+	public final int rows;
 
 	protected BlockMatrixLayout(final int rows, final int columns, final int blockStripe,
 			final BlockOrder blockOrder) {

@@ -89,14 +89,14 @@ public class Fixture {
 		}
 	}
 
-	public static void assertMatrixEquals2DIntArray(BlockDenseDoubleMatrix2D mat, double[][] arr2) {
+	public static void assertMatrixEquals2DIntArray(Matrix mat, double[][] arr2) {
 		if (mat == null || arr2 == null) {
 			throw new AssertionError("arrays are different");
 		}
 		for (int i = 0; i < arr2.length; i++) {
 			double[] row2 = arr2[i];
 			for (int j = 0; j < arr2[0].length; j++) {
-				assertEquals(row2[j], mat.getDouble(i, j));
+				assertEquals(row2[j], mat.getAsDouble(i, j));
 			}
 		}
 	}
@@ -198,7 +198,7 @@ public class Fixture {
 			final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b) {
 		final Callable<BlockDenseDoubleMatrix2D> run = new Callable<BlockDenseDoubleMatrix2D>() {
 			public BlockDenseDoubleMatrix2D call() throws Exception {
-				return a.mtimes(b);
+				return (BlockDenseDoubleMatrix2D) a.mtimes(b);
 			};
 		};
 		return run;

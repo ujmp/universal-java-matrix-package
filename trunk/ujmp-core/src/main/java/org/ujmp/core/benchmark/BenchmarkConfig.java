@@ -87,6 +87,13 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runJMatricesDenseDoubleMatrix2D", false);
 		put("runMantissaDenseDoubleMatrix2D", false);
 		put("runVecMathDenseDoubleMatrix2D", false);
+
+		put("useJBlas", true);
+		put("useOjalgo", true);
+		put("useEJML", true);
+		put("useMTJ", true);
+		put("useParallelColt", true);
+		put("useCommonsMath", true);
 	}
 
 	public String getSvdSizes() {
@@ -545,6 +552,54 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public void setRunJBlasDenseDoubleMatrix2D(boolean runJBlas) {
 		put("runJBlasDenseDoubleMatrix2D", runJBlas);
+	}
+
+	public void setUseJBlas(boolean use) {
+		put("useJBlas", use);
+	}
+
+	public boolean isUseJBlas() {
+		return MathUtil.getBoolean(get("useJBlas"));
+	}
+
+	public void setUseMTJ(boolean use) {
+		put("useMTJ", use);
+	}
+
+	public boolean isUseMTJ() {
+		return MathUtil.getBoolean(get("useMTJ"));
+	}
+
+	public void setUseOjalgo(boolean use) {
+		put("useOjalgo", use);
+	}
+
+	public boolean isUseOjalgo() {
+		return MathUtil.getBoolean(get("useOjalgo"));
+	}
+
+	public void setUseEJML(boolean use) {
+		put("useEJML", use);
+	}
+
+	public boolean isUseEJML() {
+		return MathUtil.getBoolean(get("useEJML"));
+	}
+
+	public void setUseParallelColt(boolean use) {
+		put("useParallelColt", use);
+	}
+
+	public boolean isUseParallelColt() {
+		return MathUtil.getBoolean(get("useParallelColt"));
+	}
+
+	public void setUseCommonsMath(boolean use) {
+		put("useCommonsMath", use);
+	}
+
+	public boolean isUseCommonsMath() {
+		return MathUtil.getBoolean(get("useCommonsMath"));
 	}
 
 	public void setName(String name) {

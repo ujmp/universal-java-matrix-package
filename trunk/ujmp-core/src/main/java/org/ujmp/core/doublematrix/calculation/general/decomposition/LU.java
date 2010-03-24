@@ -84,7 +84,10 @@ public interface LU<T> {
 
 	public static final LU<Matrix> MATRIXLARGESINGLETHREADED = new LU<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
+			LU<Matrix> lu = null;
+			if (UJMPSettings.isUseJBlas()) {
+				lu = DecompositionOps.LU_JBLAS;
+			}
 			if (lu == null) {
 				lu = UJMP;
 			}
@@ -92,8 +95,11 @@ public interface LU<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
-			if (lu == null) {
+			LU<Matrix> lu = null;
+			if (UJMPSettings.isUseJBlas()) {
+				lu = DecompositionOps.LU_JBLAS;
+			}
+			if (lu == null && UJMPSettings.isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {
@@ -105,8 +111,11 @@ public interface LU<T> {
 
 	public static final LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
-			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
-			if (lu == null) {
+			LU<Matrix> lu = null;
+			if (UJMPSettings.isUseJBlas()) {
+				lu = DecompositionOps.LU_JBLAS;
+			}
+			if (lu == null && UJMPSettings.isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {
@@ -116,8 +125,11 @@ public interface LU<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			LU<Matrix> lu = DecompositionOps.LU_JBLAS;
-			if (lu == null) {
+			LU<Matrix> lu = null;
+			if (UJMPSettings.isUseJBlas()) {
+				lu = DecompositionOps.LU_JBLAS;
+			}
+			if (lu == null && UJMPSettings.isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {

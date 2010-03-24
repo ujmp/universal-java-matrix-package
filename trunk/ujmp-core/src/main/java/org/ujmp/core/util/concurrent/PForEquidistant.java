@@ -42,9 +42,7 @@ public abstract class PForEquidistant {
 				step(i);
 			}
 		} else {
-			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads, threads);
-			es.setCorePoolSize(threads);
-			es.setMaximumPoolSize(threads);
+			final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance(threads);
 
 			final Future<?>[] list = new Future[threads];
 

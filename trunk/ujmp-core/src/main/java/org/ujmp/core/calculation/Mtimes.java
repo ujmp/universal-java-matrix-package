@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 by Holger Arndt
+ * Copyright (C) 2008-2010 by Holger Arndt, Frode Carlsen
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,17 +23,44 @@
 
 package org.ujmp.core.calculation;
 
+import static org.ujmp.core.util.VerifyUtil.verify;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.ujmp.core.Matrix;
 import org.ujmp.core.Ops;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.BlockMatrixLayout;
+import org.ujmp.core.doublematrix.impl.BlockMultiply;
+import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
+import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PFor;
+import org.ujmp.core.util.concurrent.UJMPThreadPoolExecutor;
 
+/**
+ * Contains matrix multiplication methods for different matrix implementations
+ * 
+ * @author Holger Arndt
+ * @author Frode Carlsen
+ * 
+ * @param <S>
+ *            first source
+ * @param <T>
+ *            second source
+ * @param <U>
+ *            target
+ */
 public interface Mtimes<S, T, U> {
 
 	public static int THRESHOLD = 100;
@@ -327,211 +354,232 @@ public interface Mtimes<S, T, U> {
 
 		public final void calc(final DenseDoubleMatrix2D source1,
 				final DenseDoubleMatrix2D source2, final DenseDoubleMatrix2D target) {
-			if (source1 instanceof HasColumnMajorDoubleArray1D
-					&& source2 instanceof HasColumnMajorDoubleArray1D
-					&& target instanceof HasColumnMajorDoubleArray1D) {
-				if (Ops.MTIMES_JBLAS != null && target.getRowCount() >= THRESHOLD
-						&& target.getColumnCount() >= THRESHOLD) {
+			verify(source1 != null, "a == null");
+			verify(source2 != null, "b == null");
+			verify(target != null, "c == null");
+			verify(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
+			verify(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
+			verify(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
+			if (source1.getRowCount() >= THRESHOLD && source2.getColumnCount() >= THRESHOLD) {
+				if (Ops.MTIMES_JBLAS != null && UJMPSettings.isUseJBlas()) {
 					Ops.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
 							(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
 				} else {
-					gemmDoubleArrayParallel(1.0, ((HasColumnMajorDoubleArray1D) source1)
+					calcBlockMatrixMultiThreaded(source1, source2, target);
+				}
+			} else {
+				if (source1 instanceof HasColumnMajorDoubleArray1D
+						&& source2 instanceof HasColumnMajorDoubleArray1D
+						&& target instanceof HasColumnMajorDoubleArray1D) {
+					gemmDoubleArraySingleThreaded(1.0, ((HasColumnMajorDoubleArray1D) source1)
 							.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(),
 							(int) source1.getColumnCount(), 1.0,
 							((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
 							(int) source2.getRowCount(), (int) source2.getColumnCount(),
 							((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+				} else if (source1 instanceof HasRowMajorDoubleArray2D
+						&& source2 instanceof HasRowMajorDoubleArray2D
+						&& target instanceof HasRowMajorDoubleArray2D) {
+					calcDoubleArray2DSingleThreaded(((HasRowMajorDoubleArray2D) source1)
+							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
+							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
+							.getRowMajorDoubleArray2D());
+				} else {
+					gemmDenseDoubleMatrix2DSingleThreaded(1.0, source1, 1.0, source2, target);
 				}
-			} else if (source1 instanceof HasRowMajorDoubleArray2D
-					&& source2 instanceof HasRowMajorDoubleArray2D
-					&& target instanceof HasRowMajorDoubleArray2D) {
-				calcDoubleArray2D(((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
-						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
-						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else {
-				gemmDenseDoubleMatrix2D(1.0, source1, 1.0, source2, target);
 			}
 		}
 
-		private final void gemmDoubleArrayParallel(final double alpha, final double[] A,
-				final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
-				final int m2RowCount, final int m2ColumnCount, final double[] C) {
-			if (m1ColumnCount != m2RowCount) {
-				throw new MatrixException("matrices have wrong size");
+		private void calcBlockMatrixMultiThreaded(DenseDoubleMatrix2D source1,
+				DenseDoubleMatrix2D source2, DenseDoubleMatrix2D target) {
+			BlockDenseDoubleMatrix2D a = null;
+			BlockDenseDoubleMatrix2D b = null;
+			BlockDenseDoubleMatrix2D c = null;
+			if (source1 instanceof BlockDenseDoubleMatrix2D) {
+				a = (BlockDenseDoubleMatrix2D) source1;
+			} else {
+				a = new BlockDenseDoubleMatrix2D(source1);
+			}
+			if (source2 instanceof BlockDenseDoubleMatrix2D
+					&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) source2)
+							.getBlockStripeSize()) {
+				b = (BlockDenseDoubleMatrix2D) source2;
+			} else {
+				b = new BlockDenseDoubleMatrix2D(source2, a.getBlockStripeSize());
+			}
+			final int arows = (int) a.getRowCount();
+			final int bcols = (int) b.getColumnCount();
+			if (target instanceof BlockDenseDoubleMatrix2D
+					&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) target)
+							.getBlockStripeSize()) {
+				c = (BlockDenseDoubleMatrix2D) target;
+			} else {
+				c = new BlockDenseDoubleMatrix2D(arows, bcols, a.getBlockStripeSize(),
+						BlockOrder.ROWMAJOR);
 			}
 
+			blockMultiplyMultiThreaded(a, b, c);
+
+			if (c != target) {
+				for (int i = arows; --i != -1;) {
+					for (int j = bcols; --j != -1;) {
+						target.setDouble(c.getDouble(i, j), i, j);
+					}
+				}
+			}
+		}
+
+		private final void gemmDoubleArraySingleThreaded(final double alpha, final double[] A,
+				final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
+				final int m2RowCount, final int m2ColumnCount, final double[] C) {
 			if (alpha == 0 || beta == 0) {
 				return;
 			}
 			for (int i = C.length; --i != -1;) {
 				C[i] = 0;
 			}
-			if (m1RowCount >= THRESHOLD && m2ColumnCount >= THRESHOLD) {
-				new PFor(0, m2ColumnCount - 1) {
 
-					@Override
-					public void step(int i) {
-						final int jcolTimesM1RowCount = i * m1RowCount;
-						final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-						if (beta == 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C[irow + jcolTimesM1RowCount] = 0.0;
-							}
-						} else {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C[irow + jcolTimesM1RowCount] *= beta;
-							}
-						}
-						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
-							if (temp != 0.0) {
-								final int lcolTimesM1RowCount = lcol * m1RowCount;
-								for (int irow = 0; irow < m1RowCount; ++irow) {
-									C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
-											* temp;
-								}
-							}
-						}
-
+			for (int i = 0; i < m2ColumnCount; i++) {
+				final int jcolTimesM1RowCount = i * m1RowCount;
+				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+				if (beta == 1.0) {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C[irow + jcolTimesM1RowCount] = 0.0;
 					}
-				};
-			} else {
-				for (int i = 0; i < m2ColumnCount; i++) {
-					final int jcolTimesM1RowCount = i * m1RowCount;
-					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-					if (beta == 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C[irow + jcolTimesM1RowCount] = 0.0;
-						}
-					} else {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C[irow + jcolTimesM1RowCount] *= beta;
-						}
+				} else {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C[irow + jcolTimesM1RowCount] *= beta;
 					}
-					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
-						if (temp != 0.0) {
-							final int lcolTimesM1RowCount = lcol * m1RowCount;
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
-										* temp;
-							}
+				}
+				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+					final double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+					if (temp != 0.0) {
+						final int lcolTimesM1RowCount = lcol * m1RowCount;
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount] * temp;
 						}
 					}
 				}
 			}
 		}
 
-		private final void calcDoubleArray2D(final double[][] m1, final double[][] m2,
-				final double[][] ret) {
-			final int rowCount = m1.length;
+		private final void calcDoubleArray2DSingleThreaded(final double[][] m1,
+				final double[][] m2, final double[][] ret) {
 			final int columnCount = m1[0].length;
-			final int retColumnCount = m2[0].length;
+			final double[] columns = new double[columnCount];
 
-			if (columnCount != m2.length) {
-				throw new MatrixException("matrices have wrong size");
-			}
-
-			if (rowCount >= THRESHOLD && retColumnCount >= THRESHOLD) {
-				new PFor(0, retColumnCount - 1) {
-					@Override
-					public void step(int i) {
-						final double[] columns = new double[columnCount];
-						for (int k = columnCount; --k != -1;) {
-							columns[k] = m2[k][i];
-						}
-						for (int r = rowCount; --r != -1;) {
-							double sum = 0;
-							final double[] row = m1[r];
-							for (int k = columnCount; --k != -1;) {
-								sum += row[k] * columns[k];
-							}
-							ret[r][i] = sum;
-						}
-					}
-				};
-			} else {
-				final double[] columns = new double[columnCount];
-				for (int c = retColumnCount; --c != -1;) {
+			for (int c = m2[0].length; --c != -1;) {
+				for (int k = columnCount; --k != -1;) {
+					columns[k] = m2[k][c];
+				}
+				for (int r = m1.length; --r != -1;) {
+					double sum = 0;
+					final double[] row = m1[r];
 					for (int k = columnCount; --k != -1;) {
-						columns[k] = m2[k][c];
+						sum += row[k] * columns[k];
 					}
-					for (int r = rowCount; --r != -1;) {
-						double sum = 0;
-						final double[] row = m1[r];
-						for (int k = columnCount; --k != -1;) {
-							sum += row[k] * columns[k];
-						}
-						ret[r][c] = sum;
-					}
+					ret[r][c] = sum;
 				}
 			}
 		}
 
-		private final void gemmDenseDoubleMatrix2D(final double alpha, final DenseDoubleMatrix2D A,
-				final double beta, final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
+		private final void gemmDenseDoubleMatrix2DSingleThreaded(final double alpha,
+				final DenseDoubleMatrix2D A, final double beta, final DenseDoubleMatrix2D B,
+				final DenseDoubleMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
-			final int m2RowCount = (int) B.getRowCount();
 			final int m2ColumnCount = (int) B.getColumnCount();
-
-			if (m1ColumnCount != m2RowCount) {
-				throw new MatrixException("matrices have wrong size");
-			}
 
 			if (alpha == 0 || beta == 0) {
 				return;
 			}
 
-			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
-				new PFor(0, m2ColumnCount - 1) {
-
-					@Override
-					public void step(int i) {
-						if (beta != 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setDouble(C.getDouble(irow, i) * beta, irow, i);
-							}
-						} else {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setDouble(0.0, irow, i);
-							}
-						}
-						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B.getDouble(lcol, i);
-							if (temp != 0.0) {
-								for (int irow = 0; irow < m1RowCount; ++irow) {
-									C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol)
-											* temp, irow, i);
-								}
-							}
-						}
+			for (int i = 0; i < m2ColumnCount; i++) {
+				if (beta != 1.0) {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setDouble(C.getDouble(irow, i) * beta, irow, i);
 					}
-				};
-			} else {
-				for (int i = 0; i < m2ColumnCount; i++) {
-					if (beta != 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setDouble(C.getDouble(irow, i) * beta, irow, i);
-						}
-					} else {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setDouble(0.0, irow, i);
-						}
+				} else {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setDouble(0.0, irow, i);
 					}
-					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B.getDouble(lcol, i);
-						if (temp != 0.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,
-										irow, i);
-							}
+				}
+				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+					final double temp = alpha * B.getDouble(lcol, i);
+					if (temp != 0.0) {
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,
+									irow, i);
 						}
 					}
 				}
 			}
 		}
 
+		/**
+		 * Multiply two matrices concurrently with the given Executor to handle
+		 * parallel tasks.
+		 * 
+		 * @param b
+		 *            - matrix to multiply this with.
+		 * @param executorService
+		 *            - to handle concurrent multiplication tasks.
+		 * @return new matrix C containing result of matrix multiplication C = A
+		 *         x B.
+		 */
+		private BlockDenseDoubleMatrix2D blockMultiplyMultiThreaded(
+				final BlockDenseDoubleMatrix2D a, final BlockDenseDoubleMatrix2D b,
+				final BlockDenseDoubleMatrix2D c) {
+			final BlockMatrixLayout al = a.getBlockLayout();
+			final BlockMatrixLayout bl = b.getBlockLayout();
+			verify(al.columns == bl.rows, "b.rows != this.columns");
+			verify(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s",
+					al.blockStripe, bl.blockStripe);
+
+			final List<Callable<Void>> tasks = new LinkedList<Callable<Void>>();
+
+			final int kMax = (int) b.getColumnCount();
+			final int jMax = (int) a.getColumnCount();
+			final int iMax = (int) a.getRowCount();
+
+			final int bColSlice = Math.min(al.blockStripe, kMax);
+			final int aColSlice = Math.min(al.blockStripe, jMax);
+			final int aRowSlice = Math.min(al.blockStripe, iMax);
+
+			// Number of blocks to take for each concurrent task.
+			final int blocksPerTask = 2;
+
+			for (int k = 0, kStride; k < kMax; k += kStride) {
+				kStride = Math.min(blocksPerTask * bColSlice, kMax - k);
+
+				for (int j = 0, jStride; j < jMax; j += jStride) {
+					jStride = Math.min(blocksPerTask * aColSlice, jMax - j);
+
+					for (int i = 0, iStride; i < iMax; i += iStride) {
+						iStride = Math.min(blocksPerTask * aRowSlice, iMax - i);
+
+						tasks.add(new BlockMultiply(a, b, c, i, (i + iStride), j, (j + jStride), k,
+								(k + kStride)));
+					}
+
+				}
+			}
+
+			// wait for all tasks to complete.
+			try {
+				for (Future<Void> f : UJMPThreadPoolExecutor.getInstance().invokeAll(tasks)) {
+					f.get();
+				}
+			} catch (ExecutionException e) {
+				String msg = "Execution exception - while awaiting completion of matrix multiplication.";
+				throw new RuntimeException(msg, e);
+			} catch (final InterruptedException e) {
+				String msg = "Interrupted - while awaiting completion of matrix multiplication.";
+				throw new RuntimeException(msg, e);
+			}
+
+			return c;
+		}
 	};
 
 	public void calc(S source1, T source2, U target);

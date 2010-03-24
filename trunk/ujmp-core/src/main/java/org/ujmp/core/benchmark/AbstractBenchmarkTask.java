@@ -90,19 +90,23 @@ public abstract class AbstractBenchmarkTask {
 				System.out.flush();
 
 				for (int i = 0; !stopped && i < config.getBurnInRuns(); i++) {
+					long t0 = System.currentTimeMillis();
 					BenchmarkResult r = task(matrixClass, benchmarkSeed + c, i, size);
 					double t = r.getTime();
-					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
+					long t1 = System.currentTimeMillis();
+					if (t == 0.0 || Double.isNaN(t) || t1 - t0 > config.getMaxTime()) {
 						stopped = true;
 					}
 					System.out.print("#");
 					System.out.flush();
 				}
 				for (int i = 0; !stopped && i < config.getRuns(); i++) {
+					long t0 = System.currentTimeMillis();
 					BenchmarkResult r = task(matrixClass, benchmarkSeed + c, i, size);
 					double t = r.getTime();
 					double diff = r.getDifference();
-					if (t == 0.0 || Double.isNaN(t) || t > config.getMaxTime()) {
+					long t1 = System.currentTimeMillis();
+					if (t == 0.0 || Double.isNaN(t) || t1 - t0 > config.getMaxTime()) {
 						stopped = true;
 					}
 					tmpTime.setAsDouble(t, i, 0);

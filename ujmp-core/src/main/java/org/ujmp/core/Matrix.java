@@ -24,6 +24,8 @@
 package org.ujmp.core;
 
 import org.ujmp.core.annotation.HasAnnotation;
+import org.ujmp.core.calculation.Calculation1;
+import org.ujmp.core.calculation.Calculation2;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
@@ -99,7 +101,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public static final int NONE = -1;
 
-	public static Transpose<Matrix> transpose = Transpose.INSTANCE;
+	public static Calculation1<Matrix> transpose = Transpose.MATRIX;
 
 	public static PlusMatrix<Matrix> plusMatrix = PlusMatrix.INSTANCE;
 
@@ -107,7 +109,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public static TimesMatrix<Matrix> timesMatrix = TimesMatrix.INSTANCE;
 
-	public static DivideMatrix<Matrix> divideMatrix = DivideMatrix.INSTANCE;
+	public static Calculation2<Matrix> divideMatrix = DivideMatrix.MATRIX;
 
 	public static PlusScalar<Matrix> plusScalar = PlusScalar.INSTANCE;
 

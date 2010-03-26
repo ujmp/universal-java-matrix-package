@@ -489,7 +489,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix divide(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		DivideMatrix.INSTANCE.calc(this, m, result);
+		DivideMatrix.MATRIX.calc(this, m, result);
 		return result;
 	}
 

@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusScalar;
@@ -114,7 +113,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 	public Matrix divide(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D result = factory.zeros(getRowCount(), getColumnCount());
-			DivideMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
+			DenseDoubleMatrix2D.divideMatrix.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
 		} else {
 			return super.divide(m2);

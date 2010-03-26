@@ -24,6 +24,8 @@
 package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation1;
+import org.ujmp.core.calculation.Calculation2;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
@@ -53,7 +55,7 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static DenseDoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
 
-	public static Transpose<DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
+	public static Calculation1<DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
 
 	public static PlusMatrix<DenseDoubleMatrix2D> plusMatrix = PlusMatrix.DENSEDOUBLEMATRIX2D;
 
@@ -61,7 +63,7 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static TimesMatrix<DenseDoubleMatrix2D> timesMatrix = TimesMatrix.DENSEDOUBLEMATRIX2D;
 
-	public static DivideMatrix<DenseDoubleMatrix2D> divideMatrix = DivideMatrix.DENSEDOUBLEMATRIX2D;
+	public static Calculation2<DenseDoubleMatrix2D> divideMatrix = DivideMatrix.DENSEDOUBLEMATRIX2D;
 
 	public static PlusScalar<DenseDoubleMatrix2D> plusScalar = PlusScalar.DENSEDOUBLEMATRIX2D;
 

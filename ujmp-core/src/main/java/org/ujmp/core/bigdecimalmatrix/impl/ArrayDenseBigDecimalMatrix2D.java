@@ -24,6 +24,7 @@
 package org.ujmp.core.bigdecimalmatrix.impl;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
@@ -57,6 +58,9 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 
 	public ArrayDenseBigDecimalMatrix2D(long... size) {
 		values = new BigDecimal[(int) size[ROW]][(int) size[COLUMN]];
+		for (int r = values.length; --r != -1;) {
+			Arrays.fill(values[r], BigDecimal.ZERO);
+		}
 	}
 
 	public ArrayDenseBigDecimalMatrix2D(BigDecimal... v) {
@@ -70,12 +74,10 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}

@@ -45,12 +45,12 @@ public interface DecompositionDoubleCalculations {
 	public Matrix invSymm() throws MatrixException;
 
 	/**
-	 * Calculates the inverse of a positive definite Matrix using Cholesky
-	 * Decomposition.
+	 * Calculates the inverse of a symmetric positive definite Matrix using
+	 * Cholesky Decomposition.
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix invPosDef() throws MatrixException;
+	public Matrix invSPD() throws MatrixException;
 
 	/**
 	 * Solve A*X = B
@@ -77,7 +77,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solvePosDef(Matrix b) throws MatrixException;
+	public Matrix solveSPD(Matrix b) throws MatrixException;
 
 	/**
 	 * Calculates the pseudo inverse of the Matrix using Singular Value

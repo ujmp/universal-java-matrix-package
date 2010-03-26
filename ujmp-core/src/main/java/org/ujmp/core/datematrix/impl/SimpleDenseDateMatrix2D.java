@@ -23,9 +23,11 @@
 
 package org.ujmp.core.datematrix.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -57,6 +59,9 @@ public class SimpleDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 
 	public SimpleDenseDateMatrix2D(long... size) {
 		values = new Date[(int) size[ROW]][(int) size[COLUMN]];
+		for (int r = values.length; --r != -1;) {
+			Arrays.fill(values[r], DateMatrix.DATE0);
+		}
 	}
 
 	public SimpleDenseDateMatrix2D(Date[] v) {
@@ -70,12 +75,10 @@ public class SimpleDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -96,7 +99,6 @@ public class SimpleDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		Date[][] result = new Date[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

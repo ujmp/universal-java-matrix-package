@@ -103,7 +103,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	private static int deriveDefaultBlockStripeSize(final int rows, final int cols) {
 		// TODO pick a suitable size
-		return Math.min(150, Math.min(rows, cols));
+		return Math.min(Mtimes.THRESHOLD, Math.min(rows, cols));
 	}
 
 	/** Pad out the given dimension to fit with the blockStripeSize. */
@@ -304,7 +304,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				m.layout.rowMajor ? BlockOrder.ROWMAJOR : BlockOrder.COLUMNMAJOR);
 		for (int i = m.numberOfBlocks; --i != -1;) {
 			final double[] block = m.data[i];
-			this.data[i] = Arrays.copyOf(block, block.length);
+			if (block != null) {
+				this.data[i] = Arrays.copyOf(block, block.length);
+			}
 		}
 		Annotation a = m.getAnnotation();
 		if (a != null) {
@@ -543,6 +545,173 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	public final double[][] getBlockDoubleArray2D() {
 		return data;
+	}
+
+	public Matrix plus(double value) {
+		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+		for (int i = result.data.length; --i != -1;) {
+			double[] block = result.data[i];
+			if (block == null) {
+				block = new double[result.layout.blockArea];
+			}
+			for (int j = result.layout.blockArea; --j != -1;) {
+				block[j] += value;
+			}
+		}
+		return result;
+	}
+
+	public Matrix plus(Matrix value) {
+		if (value instanceof BlockDenseDoubleMatrix2D) {
+			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
+			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
+					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockStripe == layout.blockStripe) {
+				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+				for (int i = result.data.length; --i != -1;) {
+					final double[] block2 = b.data[i];
+					if (block2 == null) {
+						continue;
+					}
+					if (result.data[i] == null) {
+						result.data[i] = new double[result.layout.blockArea];
+					}
+					final double[] block = result.data[i];
+					for (int j = result.layout.blockArea; --j != -1;) {
+						block[j] += block2[j];
+					}
+				}
+				return result;
+			}
+		}
+		return super.plus(value);
+	}
+
+	public Matrix minus(Matrix value) {
+		if (value instanceof BlockDenseDoubleMatrix2D) {
+			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
+			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
+					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockStripe == layout.blockStripe) {
+				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+				for (int i = result.data.length; --i != -1;) {
+					final double[] block2 = b.data[i];
+					if (block2 == null) {
+						continue;
+					}
+					if (result.data[i] == null) {
+						result.data[i] = new double[result.layout.blockArea];
+					}
+					final double[] block = result.data[i];
+					for (int j = result.layout.blockArea; --j != -1;) {
+						block[j] -= block2[j];
+					}
+				}
+				return result;
+			}
+		}
+		return super.minus(value);
+	}
+
+	public Matrix times(Matrix value) {
+		if (value instanceof BlockDenseDoubleMatrix2D) {
+			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
+			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
+					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockStripe == layout.blockStripe) {
+				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+				for (int i = result.data.length; --i != -1;) {
+					final double[] block2 = b.data[i];
+					if (block2 == null) {
+						// multiply with 0.0, clear block in result
+						result.data[i] = null;
+					} else {
+						final double[] block = result.data[i];
+						if (block == null) {
+							// multiply with 0.0
+							continue;
+						}
+						for (int j = result.layout.blockArea; --j != -1;) {
+							block[j] *= block2[j];
+						}
+					}
+				}
+				return result;
+			}
+		}
+		return super.times(value);
+	}
+
+	public Matrix divide(Matrix value) {
+		if (value instanceof BlockDenseDoubleMatrix2D) {
+			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
+			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
+					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockStripe == layout.blockStripe) {
+				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+				for (int i = result.data.length; --i != -1;) {
+					final double[] block2 = b.data[i];
+					if (block2 == null) {
+						// divide by 0.0, fill block with NaN
+						if (result.data[i] == null) {
+							result.data[i] = new double[layout.blockArea];
+						}
+						Arrays.fill(result.data[i], Double.NaN);
+					} else {
+						final double[] block = result.data[i];
+						if (block == null) {
+							// divide 0.0 by x = 0.0: nothing to do
+							continue;
+						}
+						for (int j = result.layout.blockArea; --j != -1;) {
+							block[j] /= block2[j];
+						}
+					}
+				}
+				return result;
+			}
+		}
+		return super.times(value);
+	}
+
+	public Matrix minus(double value) {
+		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+		for (int i = result.data.length; --i != -1;) {
+			double[] block = result.data[i];
+			if (block == null) {
+				block = new double[result.layout.blockArea];
+			}
+			for (int j = result.layout.blockArea; --j != -1;) {
+				block[j] -= value;
+			}
+		}
+		return result;
+	}
+
+	public Matrix times(double value) {
+		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+		for (int i = result.data.length; --i != -1;) {
+			final double[] block = result.data[i];
+			if (block != null) {
+				for (int j = result.layout.blockArea; --j != -1;) {
+					block[j] *= value;
+				}
+			}
+		}
+		return result;
+	}
+
+	public Matrix divide(double value) {
+		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+		for (int i = result.data.length; --i != -1;) {
+			final double[] block = result.data[i];
+			if (block != null) {
+				for (int j = result.layout.blockArea; --j != -1;) {
+					block[j] /= value;
+				}
+			}
+		}
+		return result;
 	}
 
 };

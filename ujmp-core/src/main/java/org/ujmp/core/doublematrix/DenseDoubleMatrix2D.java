@@ -37,10 +37,14 @@ import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.InvSymm;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSymm;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.matrix.DenseMatrix2D;
@@ -77,7 +81,15 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static Inv<Matrix> inv = Inv.INSTANCE;
 
+	public static InvSymm<Matrix> invSymm = InvSymm.INSTANCE;
+
+	public static InvSPD<Matrix> invSPD = InvSPD.INSTANCE;
+
 	public static Solve<Matrix> solve = Solve.INSTANCE;
+
+	public static SolveSymm<Matrix> solveSymm = SolveSymm.INSTANCE;
+
+	public static SolveSPD<Matrix> solveSPD = SolveSPD.INSTANCE;
 
 	public static Chol<Matrix> chol = Chol.INSTANCE;
 

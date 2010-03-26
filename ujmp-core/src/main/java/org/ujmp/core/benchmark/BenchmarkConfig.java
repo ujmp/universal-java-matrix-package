@@ -56,6 +56,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runTranspose", true);
 		put("runMtimes", true);
 		put("runInv", true);
+		put("runInvSPD", true);
 		put("runSolveSquare", true);
 		put("runSolveTall", true);
 		put("runSVD", true);

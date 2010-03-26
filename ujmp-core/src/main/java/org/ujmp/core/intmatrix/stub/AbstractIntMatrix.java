@@ -23,16 +23,18 @@
 
 package org.ujmp.core.intmatrix.stub;
 
+import static org.ujmp.core.util.VerifyUtil.verify;
+
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
 
 	private static final long serialVersionUID = -5153569448031492210L;
 
-	
 	public final Integer getObject(long... coordinates) throws MatrixException {
 		return getInt(coordinates);
 	}
@@ -41,27 +43,23 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 		setInt(o, coordinates);
 	}
 
-	
 	public final int getAsInt(long... coordinates) throws MatrixException {
 		return getInt(coordinates);
 	}
 
-	
 	public final void setAsInt(int value, long... coordinates) throws MatrixException {
 		setInt(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getInt(coordinates);
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		verify(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setInt((int) value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}

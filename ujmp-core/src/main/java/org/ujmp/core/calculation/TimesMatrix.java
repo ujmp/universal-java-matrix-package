@@ -85,15 +85,9 @@ public interface TimesMatrix<T> {
 				final SparseMatrix target) {
 			// copy all elements in source1 to target
 			for (long[] c : source1.availableCoordinates()) {
-				BigDecimal svalue = source1.getAsBigDecimal(c);
-				target.setAsBigDecimal(svalue, c);
-			}
-			// calculate sum with source2
-			for (long[] c : source2.availableCoordinates()) {
-				BigDecimal v1 = target.getAsBigDecimal(c);
+				BigDecimal v1 = source1.getAsBigDecimal(c);
 				BigDecimal v2 = source2.getAsBigDecimal(c);
-				BigDecimal result = MathUtil.times(v1, v2);
-				target.setAsBigDecimal(result, c);
+				target.setAsBigDecimal(MathUtil.times(v1, v2), c);
 			}
 		}
 

@@ -21,29 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util;
+package org.ujmp.ejml.calculation;
 
-import java.util.Arrays;
-
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.ops.CovarianceOps;
 import org.ujmp.core.Matrix;
+import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
-public abstract class VerifyUtil {
+public class InvSPD
+		implements
+		org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
 
-	public static final void verify(boolean test, String message, Object... messageArgs) {
-		if (!test) {
-			String text = (messageArgs == null || messageArgs.length == 0) ? message : String
-					.format(message, messageArgs);
-			throw new IllegalArgumentException(text);
+	public static InvSPD INSTANCE = new InvSPD();
+
+	public Matrix calc(Matrix source) {
+		try {
+			DenseMatrix64F matrix = null;
+			if (source instanceof EJMLDenseDoubleMatrix2D) {
+				matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
+			} else {
+				matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
+			}
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
+					matrix.numCols);
+			CovarianceOps.invert(matrix, ret);
+			return new EJMLDenseDoubleMatrix2D(ret);
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD.UJMP
+					.calc(source);
 		}
 	}
 
-	public static final void verify(boolean test, String message) {
-		if (!test) {
-			throw new IllegalArgumentException(message);
-		}
-	}
-
-	public static final void haveSameSize(final Matrix m1, final Matrix m2) {
-		verify(Arrays.equals(m1.getSize(), m2.getSize()), "matrices have different sizes");
-	}
 }

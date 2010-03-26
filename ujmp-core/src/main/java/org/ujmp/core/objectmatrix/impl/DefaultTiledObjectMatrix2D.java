@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.impl;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
@@ -34,27 +33,12 @@ import org.ujmp.core.objectmatrix.stub.AbstractMapToTiledMatrix2DWrapper;
 public class DefaultTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper {
 	private static final long serialVersionUID = 6745798685307431625L;
 
-	private Map<Coordinates, ObjectMatrix2D> values = null;
-
 	public DefaultTiledObjectMatrix2D(long... size) {
-		super(size);
+		super(new HashMap<Coordinates, ObjectMatrix2D>(), size);
 	}
 
 	public DefaultTiledObjectMatrix2D(Matrix source) {
-		super(source);
-	}
-
-	
-	public Map<Coordinates, ObjectMatrix2D> getMap() {
-		if (values == null) {
-			values = new HashMap<Coordinates, ObjectMatrix2D>();
-		}
-		return values;
-	}
-
-	
-	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
-		this.values = map;
+		super(new HashMap<Coordinates, ObjectMatrix2D>(), source);
 	}
 
 }

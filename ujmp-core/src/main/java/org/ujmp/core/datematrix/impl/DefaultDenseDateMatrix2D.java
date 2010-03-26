@@ -23,14 +23,17 @@
 
 package org.ujmp.core.datematrix.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.stub.AbstractDenseDateMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDateArray1D;
 
-public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implements HasColumnMajorDateArray1D {
+public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implements
+		HasColumnMajorDateArray1D {
 	private static final long serialVersionUID = -3145074963888564555L;
 
 	private Date[] values = null;
@@ -62,6 +65,7 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		this.cols = (int) size[COLUMN];
 		this.size = new long[] { rows, cols };
 		this.values = new Date[rows * cols];
+		Arrays.fill(values, DateMatrix.DATE0);
 	}
 
 	public DefaultDenseDateMatrix2D(Date[] v, int rows, int cols) {
@@ -75,12 +79,10 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return size;
 	}
 
-	
 	public long getRowCount() {
 		return rows;
 	}
 
-	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -101,7 +103,6 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		values[column * rows + row] = value;
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		Date[] result = new Date[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -112,7 +113,6 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return m;
 	}
 
-	
 	public final Matrix transpose() {
 		final Date[] result = new Date[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -123,7 +123,6 @@ public class DefaultDenseDateMatrix2D extends AbstractDenseDateMatrix2D implemen
 		return new DefaultDenseDateMatrix2D(result, cols, rows);
 	}
 
-	
 	public Date[] getColumnMajorDateArray1D() {
 		return values;
 	}

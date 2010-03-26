@@ -36,6 +36,7 @@ import java.util.Random;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
@@ -47,7 +48,7 @@ import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest {
 
-	public static final double TOLERANCE = 1e-7;
+	public static final double TOLERANCE = 1e-6;
 
 	public abstract Matrix createMatrix(long... size) throws Exception;
 
@@ -69,7 +70,7 @@ public abstract class AbstractMatrixTest {
 		return m;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExtractAnnotation() throws Exception {
 		Matrix m1 = DenseMatrix.factory.randn(5, 5);
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
@@ -101,7 +102,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	// Test interface CoordinateFunctions
-	@Test(timeout = 1000)
+	@Test
 	public void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrix(3, 3);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
@@ -129,7 +130,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testAvailableCoordinateIterator2D() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -165,7 +166,7 @@ public abstract class AbstractMatrixTest {
 
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSelectedCoordinatesString() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -196,7 +197,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSelectedCoordinates() throws Exception {
 		Matrix m = getTestMatrix();
 
@@ -229,7 +230,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testGetCoordinatesOfMaximum() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMaximum();
@@ -248,7 +249,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testGetCoordinatesOfMininim() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMinimum();
@@ -267,7 +268,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testContains() throws Exception {
 		Matrix m = getTestMatrix();
 		assertTrue(m.contains(0, 0));
@@ -301,7 +302,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSize() throws Exception {
 		Matrix m = createMatrix(21, 12);
 		assertEquals(getLabel(), 21, m.getRowCount());
@@ -312,7 +313,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testClone() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -335,7 +336,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testAnnotation() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -362,7 +363,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCountMissingValues() throws Exception {
 		Matrix m = createMatrix(4, 4);
 		m = m.zeros(Ret.ORIG);
@@ -394,7 +395,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSerialize() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -415,7 +416,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testToDoubleArray() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -433,7 +434,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSetAndGet() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -458,7 +459,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPlusScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -485,7 +486,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPlusScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -515,7 +516,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPlusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 		Matrix m2 = createMatrix(2, 2);
@@ -555,7 +556,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPlusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -598,7 +599,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTransposeSmall() throws Exception {
 		// TODO: check labels
 		Matrix m = createMatrix(2, 3);
@@ -630,7 +631,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTransposeLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -658,7 +659,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTransposeNewSmall() throws Exception {
 		Matrix m = createMatrix(2, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -688,7 +689,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTransposeLinkSmall() throws Exception {
 		Matrix m = createMatrix(2, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -718,7 +719,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testEmpty() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		if (m instanceof AbstractDoubleMatrix) {
@@ -738,7 +739,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMinusScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -764,7 +765,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMinusScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -793,7 +794,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTimesScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -819,7 +820,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTimesScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -848,7 +849,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testDivideScalarSmall() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -874,7 +875,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testDivideScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -903,7 +904,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMinusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 		Matrix m2 = createMatrix(2, 2);
@@ -942,7 +943,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMinusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -984,7 +985,223 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
+	public void test0PlusXMatrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m2.randn(Ret.ORIG);
+		Matrix m3 = m1.plus(m2);
+		assertEquals(getLabel(), m2, m3);
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void testXPlus0MatrixMatrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m1.randn(Ret.ORIG);
+		Matrix m3 = m1.plus(m2);
+		assertEquals(getLabel(), m1, m3);
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0Plus0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		Matrix m3 = m1.plus(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0Minus0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		Matrix m3 = m1.minus(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void testXMinus0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m1.randn(Ret.ORIG);
+		Matrix m3 = m1.minus(m2);
+		assertEquals(getLabel(), m1, m3);
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0MinusXMatrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m2.randn(Ret.ORIG);
+		Matrix m3 = m1.minus(m2);
+		Matrix m4 = m2.times(-1);
+		assertEquals(getLabel(), m4, m3);
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+		if (m4 instanceof Erasable) {
+			((Erasable) m4).erase();
+		}
+	}
+
+	@Test
+	public void test0TimesXMatrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m2.randn(Ret.ORIG);
+		Matrix m3 = m1.times(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void testXTimes0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m1.randn(Ret.ORIG);
+		Matrix m3 = m1.times(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0Times0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		Matrix m3 = m1.times(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0Divide0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		Matrix m3 = m1.divide(m2);
+		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void testXDivide0Matrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m1.randn(Ret.ORIG);
+		Matrix m3 = m1.divide(m2);
+		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
+	public void test0DivideXMatrix() throws Exception {
+		Matrix m1 = createMatrix(5, 7);
+		Matrix m2 = createMatrix(5, 7);
+		m2.randn(Ret.ORIG);
+		Matrix m3 = m1.divide(m2);
+		assertTrue(getLabel(), m3.isEmpty());
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+	}
+
+	@Test
 	public void testMTimesSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 
@@ -1097,7 +1314,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testInvRandSmall() throws Exception {
 		Matrix m1 = createMatrix(10, 10);
 
@@ -1121,7 +1338,29 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
+	public void testInvSPDRandSmall() throws Exception {
+		Matrix m1 = createMatrix(10, 10);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
+			return;
+		}
+
+		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, m1);
+
+		Matrix m2 = m1.invSPD();
+		Matrix m3 = m1.mtimes(m2);
+		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
+		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+	}
+
+	@Test
 	public void testInvRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1143,6 +1382,31 @@ public abstract class AbstractMatrixTest {
 		} while (m1.isSingular());
 
 		Matrix m2 = m1.inv();
+		Matrix m3 = m1.mtimes(m2);
+		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
+		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+	}
+
+	@Test
+	public void testInvSPDRandLarge() throws Exception {
+		if (!isTestLarge()) {
+			return;
+		}
+		Matrix m1 = createMatrix(128, 128);
+
+		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
+				&& System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")) {
+			// not working on 64 bit windows
+			return;
+		}
+
+		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, m1);
+
+		Matrix m2 = m1.invSPD();
 		Matrix m3 = m1.mtimes(m2);
 		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
@@ -1186,7 +1450,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPinvSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
@@ -1228,7 +1492,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testGinvSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
@@ -1262,7 +1526,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testEigRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -1287,7 +1551,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 2000)
+	@Test
 	public void testEigRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1328,7 +1592,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testEigSymmSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -1358,7 +1622,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 2000)
+	@Test
 	public void testEigSymmLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1391,7 +1655,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
@@ -1433,7 +1697,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1478,7 +1742,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSolveRandSquareSmall() throws Exception {
 		Matrix a = createMatrix(2, 2);
 
@@ -1500,7 +1764,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSolveRandSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1525,7 +1789,57 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
+	public void testSolveRandSPDLarge() throws Exception {
+		if (!isTestLarge()) {
+			return;
+		}
+		Matrix a = createMatrix(125, 125);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
+		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
+		Matrix x = createMatrix(125, 125);
+		x.randn(Ret.ORIG);
+		Matrix b = a.mtimes(x);
+
+		Matrix x2 = a.solveSPD(b);
+		Matrix prod = a.mtimes(x2);
+
+		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+	}
+
+	@Test
+	public void testSolveRandSPDSmall() throws Exception {
+		if (!isTestLarge()) {
+			return;
+		}
+		Matrix a = createMatrix(15, 15);
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
+		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
+		Matrix x = createMatrix(15, 15);
+		x.randn(Ret.ORIG);
+		Matrix b = a.mtimes(x);
+
+		Matrix x2 = a.solveSPD(b);
+		Matrix prod = a.mtimes(x2);
+
+		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+	}
+
+	@Test
 	public void testSolveRandTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 2);
 
@@ -1547,7 +1861,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 2000)
+	@Test
 	public void testSolveRandTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1572,7 +1886,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLURandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -1609,7 +1923,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLURandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1649,7 +1963,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -1691,7 +2005,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1736,7 +2050,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -1793,7 +2107,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testLUFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1853,7 +2167,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
@@ -1867,7 +2181,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1884,7 +2198,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRRandSmall() throws Exception {
 		Matrix a = createMatrix(7, 7);
 		a.rand(Ret.ORIG);
@@ -1894,7 +2208,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -1907,7 +2221,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -1984,7 +2298,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2064,7 +2378,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -2083,7 +2397,7 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testQRTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2105,9 +2419,10 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCholSmall() throws Exception {
-		Matrix a = createMatrix(MatrixFactory.pascal(5, 5));
+		Matrix pascal = MatrixFactory.pascal(5, 5);
+		Matrix a = createMatrix(pascal);
 
 		// only SPD
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
@@ -2129,10 +2444,10 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = a.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(0.0, prod.minus(a).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, prod.minus(a).doubleValue(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCholRandSmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(10, 10);
@@ -2165,10 +2480,10 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCholRandVerySmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(2, 2);
@@ -2201,10 +2516,10 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCholRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2244,7 +2559,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	// test example from wikipedia
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrix(4, 5);
 
@@ -2288,7 +2603,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
@@ -2324,7 +2639,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2363,7 +2678,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDSquareRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
@@ -2395,7 +2710,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDSquareRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2430,7 +2745,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDFatSmall() throws Exception {
 		Matrix a = createMatrix(4, 6);
 
@@ -2471,7 +2786,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
@@ -2519,7 +2834,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDTallSmall() throws Exception {
 		Matrix a = createMatrix(6, 4);
 
@@ -2560,7 +2875,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSVDTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;

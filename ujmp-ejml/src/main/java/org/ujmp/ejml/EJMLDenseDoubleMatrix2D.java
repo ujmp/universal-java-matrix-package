@@ -113,6 +113,10 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return Inv.INSTANCE.calc(this);
 	}
 
+	public Matrix invSPD() {
+		return Inv.INSTANCE.calc(this);
+	}
+
 	public double det() {
 		return CommonOps.det(matrix);
 	}

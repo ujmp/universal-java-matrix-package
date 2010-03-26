@@ -23,6 +23,7 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
@@ -43,11 +44,10 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	private long[] size = null;
 
+	private Map<Coordinates, ObjectMatrix2D> values = null;
+
 	public AbstractMapToTiledMatrix2DWrapper(Matrix m) {
-		this.size = Coordinates.copyOf(m.getSize());
-		for (long[] c : m.allCoordinates()) {
-			setObject(m.getAsObject(c), c);
-		}
+		this(new HashMap<Coordinates, ObjectMatrix2D>(), m);
 	}
 
 	public AbstractMapToTiledMatrix2DWrapper(Matrix m, int maximumNumberOfEntries2) {
@@ -61,8 +61,32 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		this.size = Coordinates.copyOf(size);
 	}
 
+	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, long[] size) {
+		this(size);
+		setMap(map);
+	}
+
+	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, Matrix source) {
+		setMap(map);
+		this.size = Coordinates.copyOf(source.getSize());
+		for (long[] c : source.allCoordinates()) {
+			setObject(source.getAsObject(c), c);
+		}
+	}
+
 	public synchronized Object getObject(int row, int column) throws MatrixException {
 		return getObject((long) row, (long) column);
+	}
+
+	public Map<Coordinates, ObjectMatrix2D> getMap() {
+		if (values == null) {
+			values = new HashMap<Coordinates, ObjectMatrix2D>();
+		}
+		return values;
+	}
+
+	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
+		this.values = map;
 	}
 
 	public synchronized Object getObject(long row, long column) throws MatrixException {
@@ -79,13 +103,9 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		return getMap();
 	}
 
-	public abstract Map<Coordinates, ObjectMatrix2D> getMap();
-
 	public void setWrappedObject(Map<Coordinates, ObjectMatrix2D> object) {
 		setMap(object);
 	}
-
-	public abstract void setMap(Map<Coordinates, ObjectMatrix2D> map);
 
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -109,9 +129,9 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
 			m = new DefaultDenseObjectMatrix2D(tileSize[ROW], tileSize[COLUMN]);
+			getMap().put(c, m);
 		}
 		m.setObject(o, row % tileSize[ROW], column % tileSize[COLUMN]);
-		getMap().put(c, m);
 	}
 
 	public long[] getSize() {

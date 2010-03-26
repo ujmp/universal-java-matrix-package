@@ -21,29 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util;
+package org.ujmp.ojalgo.calculation;
 
-import java.util.Arrays;
-
+import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
+import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
+import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public abstract class VerifyUtil {
+public class InvSPD
+		implements
+		org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
 
-	public static final void verify(boolean test, String message, Object... messageArgs) {
-		if (!test) {
-			String text = (messageArgs == null || messageArgs.length == 0) ? message : String
-					.format(message, messageArgs);
-			throw new IllegalArgumentException(text);
+	public static InvSPD INSTANCE = new InvSPD();
+
+	public Matrix calc(Matrix source) {
+		try {
+			MatrixStore<Double> matrix = null;
+			if (source instanceof OjalgoDenseDoubleMatrix2D) {
+				matrix = ((OjalgoDenseDoubleMatrix2D) source)
+						.getWrappedObject();
+			} else {
+				matrix = new OjalgoDenseDoubleMatrix2D(source)
+						.getWrappedObject();
+			}
+			return new OjalgoDenseDoubleMatrix2D(CholeskyDecomposition
+					.makePrimitive().invert(matrix));
+		} catch (Throwable t) {
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD.UJMP
+					.calc(source);
 		}
 	}
 
-	public static final void verify(boolean test, String message) {
-		if (!test) {
-			throw new IllegalArgumentException(message);
-		}
-	}
-
-	public static final void haveSameSize(final Matrix m1, final Matrix m2) {
-		verify(Arrays.equals(m1.getSize(), m2.getSize()), "matrices have different sizes");
-	}
 }

@@ -23,45 +23,42 @@
 
 package org.ujmp.core.bytematrix.stub;
 
+import static org.ujmp.core.util.VerifyUtil.verify;
+
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 701344082157040644L;
 
-	
 	public final Byte getObject(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	
 	public final void setObject(Byte o, long... coordinates) throws MatrixException {
 		setByte(o, coordinates);
 	}
 
-	
 	public final byte getAsByte(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	
 	public final void setAsByte(byte value, long... coordinates) throws MatrixException {
 		setByte(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getByte(coordinates);
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+		verify(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setByte((byte) value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

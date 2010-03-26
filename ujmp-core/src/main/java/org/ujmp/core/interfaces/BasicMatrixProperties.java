@@ -61,7 +61,7 @@ public interface BasicMatrixProperties {
 
 	public boolean isSymmetric();
 
-	public boolean isPositiveDefinite() throws MatrixException;
+	public boolean isSPD() throws MatrixException;
 
 	public boolean isEmpty() throws MatrixException;
 

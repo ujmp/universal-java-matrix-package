@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class UJMPFormat extends Format {
@@ -184,7 +186,11 @@ public class UJMPFormat extends Format {
 			for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
 					&& cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
 				Object o = m.getAsObject(cursor);
-				toAppendTo = format(o, toAppendTo, pos);
+				if (o == null && (m instanceof BigDecimalMatrix || m instanceof DateMatrix)) {
+					toAppendTo = format(Double.NaN, toAppendTo, pos);
+				} else {
+					toAppendTo = format(o, toAppendTo, pos);
+				}
 				if (cursor[Matrix.COLUMN] < columnCount - 1) {
 					toAppendTo.append(' ');
 				}

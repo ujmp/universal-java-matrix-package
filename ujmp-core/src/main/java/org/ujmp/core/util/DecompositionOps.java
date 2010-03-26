@@ -27,10 +27,12 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD;
 
 @SuppressWarnings("unchecked")
 public abstract class DecompositionOps {
@@ -53,6 +55,16 @@ public abstract class DecompositionOps {
 
 	public static Inv<Matrix> INV_MTJ = null;
 
+	public static InvSPD<Matrix> INVSPD_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD.INSTANCE;
+
+	public static InvSPD<Matrix> INVSPD_EJML = null;
+
+	public static InvSPD<Matrix> INVSPD_OJALGO = null;
+
+	public static InvSPD<Matrix> INVSPD_JBLAS = null;
+
+	public static InvSPD<Matrix> INVSPD_MTJ = null;
+
 	public static Solve<Matrix> SOLVE_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.INSTANCE;
 
 	public static Solve<Matrix> SOLVE_EJML = null;
@@ -62,6 +74,16 @@ public abstract class DecompositionOps {
 	public static Solve<Matrix> SOLVE_MTJ = null;
 
 	public static Solve<Matrix> SOLVE_JBLAS = null;
+
+	public static SolveSPD<Matrix> SOLVESPD_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD.INSTANCE;
+
+	public static SolveSPD<Matrix> SOLVESPD_EJML = null;
+
+	public static SolveSPD<Matrix> SOLVESPD_OJALGO = null;
+
+	public static SolveSPD<Matrix> SOLVESPD_MTJ = null;
+
+	public static SolveSPD<Matrix> SOLVESPD_JBLAS = null;
 
 	public static LU<Matrix> LU_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
 
@@ -108,7 +130,9 @@ public abstract class DecompositionOps {
 	public static void init() {
 		initSVD();
 		initInv();
+		initInvSPD();
 		initSolve();
+		initSolveSPD();
 		initLU();
 		initQR();
 		initChol();
@@ -178,6 +202,43 @@ public abstract class DecompositionOps {
 		}
 	}
 
+	public static void initInvSPD() {
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				INVSPD_EJML = (InvSPD<Matrix>) Class.forName("org.ujmp.ejml.calculation.InvSPD")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				INVSPD_OJALGO = (InvSPD<Matrix>) Class
+						.forName("org.ujmp.ojalgo.calculation.InvSPD").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				INVSPD_JBLAS = (InvSPD<Matrix>) Class.forName("org.ujmp.jblas.calculation.InvSPD")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				INVSPD_MTJ = (InvSPD<Matrix>) Class.forName("org.ujmp.mtj.calculation.InvSPD")
+						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+	}
+
 	public static void initSolve() {
 		try {
 			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
@@ -210,6 +271,43 @@ public abstract class DecompositionOps {
 			if (p.isAvailable()) {
 				SOLVE_MTJ = (Solve<Matrix>) Class.forName("org.ujmp.mtj.calculation.Solve")
 						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+	}
+
+	public static void initSolveSPD() {
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ejml.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SOLVESPD_EJML = (SolveSPD<Matrix>) Class.forName(
+						"org.ujmp.ejml.calculation.SolveSPD").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.ojalgo.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				SOLVESPD_OJALGO = (SolveSPD<Matrix>) Class.forName(
+						"org.ujmp.ojalgo.calculation.SolveSPD").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				SOLVESPD_JBLAS = (SolveSPD<Matrix>) Class.forName(
+						"org.ujmp.jblas.calculation.SolveSPD").newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.mtj.Plugin").newInstance();
+			if (p.isAvailable()) {
+				SOLVESPD_MTJ = (SolveSPD<Matrix>) Class
+						.forName("org.ujmp.mtj.calculation.SolveSPD").newInstance();
 			}
 		} catch (Throwable t) {
 		}

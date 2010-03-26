@@ -58,7 +58,15 @@ elseif(number==5)
     m2=inv(m1);
     t=toc;
     diff=norm(eye(cursize(1))-(m2*m1),'fro');
-elseif(number==6)
+elseif(number==6) 
+    % calculates cholesky decomposition instead of inverse
+    m1=rand(cursize);
+    m2=m1*m1';
+    tic;
+    m3=chol(m2);
+    t=toc;
+    diff=norm(m3'*m3-m2,'fro');
+elseif(number==7)
     a=rand(cursize)-0.5;
     x=rand(cursize)-0.5;
     b=a*x;
@@ -66,7 +74,7 @@ elseif(number==6)
     x2=a\b;
     t=toc;
     diff=norm(x-x2,'fro');
-elseif(number==7)
+elseif(number==8)
     cursize=[cursize(1)*2,cursize(2)];
     a=rand(cursize)-0.5;
     x=rand(cursize(2),cursize(1))-0.5;
@@ -75,13 +83,13 @@ elseif(number==7)
     x2=a\b;
     t=toc;
     diff=norm(x-x2,'fro');
-elseif(number==8)
+elseif(number==9)
     a=rand(cursize)-0.5;
     tic;
     [u,s,v]=svd(a);
     t=toc;
     diff=norm(u*s*v'-a,'fro');
-elseif(number==9)
+elseif(number==10)
     a=zeros(cursize);
     rows=size(a,1);
     cols=size(a,2);

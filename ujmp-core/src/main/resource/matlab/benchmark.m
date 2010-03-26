@@ -29,7 +29,8 @@ burninruns=3;
 runs=25;
 maxStd=10;
 maxTrials=20;
-tasks=9;
+maxTime=10000;
+tasks=10;
 sizes=[2,2;3,3;4,4;5,5;10,10;20,20;50,50;100,100;200,200;500,500;1000,1000;2000,2000];
 
 clc;
@@ -37,7 +38,7 @@ clc;
 mkdir('results');
 mkdir('results/',version);
 
-for task=1:tasks
+for task=6:tasks
     stopped=0;
 
     alltime=[];
@@ -54,12 +55,14 @@ for task=1:tasks
     elseif(task==5)
         taskname='inv';
     elseif(task==6)
-        taskname='solveSquare';
+        taskname='invSPD';
     elseif(task==7)
-        taskname='solveTall';
+        taskname='solveSquare';
     elseif(task==8)
-        taskname='svd';
+        taskname='solveTall';
     elseif(task==9)
+        taskname='svd';
+    elseif(task==10)
         taskname='eig';
     end;
 
@@ -83,7 +86,7 @@ for task=1:tasks
                 if(stopped==0)
                     fprintf('#');
                     [t,diff]=benchmarktask(task,cursize);
-                    if(isnan(t))
+                    if(isnan(t)||t*1000>maxTime)
                         stopped=1;
                     end;
                 end;
@@ -93,7 +96,7 @@ for task=1:tasks
                 if(stopped==0)
                     fprintf('.');
                     [t,delta]=benchmarktask(task,cursize);
-                    if(isnan(t))
+                    if(isnan(t)||t*1000>maxTime)
                         stopped=1;
                     else
                         ts(i,1)=t*1000;

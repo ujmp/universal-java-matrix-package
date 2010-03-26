@@ -92,6 +92,16 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 				.dense(new LUDecompositionImpl(matrix).getSolver().getInverse());
 	}
 
+	public Matrix invSPD() {
+		try {
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+					.dense(new CholeskyDecompositionImpl(matrix).getSolver()
+							.getInverse());
+		} catch (Exception e) {
+			throw new MatrixException(e);
+		}
+	}
+
 	public Matrix[] lu() {
 		LUDecomposition lu = new LUDecompositionImpl(matrix);
 		Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
@@ -208,6 +218,22 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 			}
 		} else {
 			return super.solve(b);
+		}
+	}
+
+	public Matrix solveSPD(Matrix b) {
+		try {
+			if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
+				AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
+				RealMatrix ret = new CholeskyDecompositionImpl(matrix)
+						.getSolver().solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
+						.dense(ret);
+			} else {
+				return super.solve(b);
+			}
+		} catch (Exception e) {
+			throw new MatrixException(e);
 		}
 	}
 }

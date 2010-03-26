@@ -70,6 +70,11 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
+	public Matrix invSPD() throws MatrixException {
+		return new JamaDenseDoubleMatrix2D(matrix.solve(Jama.Matrix.identity(
+				matrix.getRowDimension(), matrix.getRowDimension())));
+	}
+
 	public Matrix[] svd() throws MatrixException {
 		if (getColumnCount() > getRowCount()) {
 			SingularValueDecomposition svd = new SingularValueDecomposition(
@@ -211,6 +216,16 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			JamaDenseDoubleMatrix2D b2 = (JamaDenseDoubleMatrix2D) b;
 			Jama.Matrix x = matrix.solve(b2.matrix);
 			return new JamaDenseDoubleMatrix2D(x);
+		} else {
+			return super.solve(b);
+		}
+	}
+
+	public Matrix solveSPD(Matrix b) {
+		if (b instanceof JamaDenseDoubleMatrix2D) {
+			JamaDenseDoubleMatrix2D b2 = (JamaDenseDoubleMatrix2D) b;
+			CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+			return new JamaDenseDoubleMatrix2D(chol.solve(b2.matrix));
 		} else {
 			return super.solve(b);
 		}

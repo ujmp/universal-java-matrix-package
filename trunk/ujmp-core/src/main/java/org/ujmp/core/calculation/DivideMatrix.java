@@ -83,14 +83,10 @@ public interface DivideMatrix<T> {
 
 		public final void calc(final SparseMatrix source1, final SparseMatrix source2,
 				final SparseMatrix target) {
-			// copy all elements in source1 to target
-			for (long[] c : source1.availableCoordinates()) {
-				BigDecimal svalue = source1.getAsBigDecimal(c);
-				target.setAsBigDecimal(svalue, c);
-			}
-			// calculate difference with source2
-			for (long[] c : source2.availableCoordinates()) {
-				BigDecimal v1 = target.getAsBigDecimal(c);
+			// have to iterate over all values in source2 to perform division by
+			// zero
+			for (long[] c : source2.allCoordinates()) {
+				BigDecimal v1 = source1.getAsBigDecimal(c);
 				BigDecimal v2 = source2.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.divide(v1, v2);
 				target.setAsBigDecimal(result, c);

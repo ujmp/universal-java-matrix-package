@@ -31,6 +31,7 @@ import no.uib.cipr.matrix.DenseCholesky;
 import no.uib.cipr.matrix.DenseLU;
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.EVD;
+import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.QR;
 
 import org.ujmp.core.Matrix;
@@ -246,5 +247,11 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public Matrix invSPD() {
+		DenseCholesky chol = DenseCholesky.factorize(getWrappedObject());
+		return new MTJDenseDoubleMatrix2D(chol.solve(Matrices.identity(matrix
+				.numRows())));
 	}
 }

@@ -36,9 +36,10 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
-public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
+public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Erasable {
 	private static final long serialVersionUID = 1754729146021609978L;
 
 	private transient BufferedRandomAccessFile randomAccessFile = null;
@@ -101,7 +102,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 	public DenseFileMatrix2D(File file, long rowCount, long columnCount, long offset, int dataType,
 			boolean readOnly) throws IOException {
 		if (file == null) {
-			file = File.createTempFile("denseFileMatrix", "dat");
+			file = File.createTempFile("denseFileMatrix", ".dat");
 			file.deleteOnExit();
 		}
 		this.file = file;
@@ -508,6 +509,10 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D {
 				return;
 			}
 		}
+	}
+
+	public void erase() throws IOException {
+		file.delete();
 	}
 
 }

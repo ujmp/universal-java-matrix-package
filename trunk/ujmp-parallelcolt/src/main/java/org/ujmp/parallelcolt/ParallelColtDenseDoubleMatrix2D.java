@@ -28,6 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.tdouble.DoubleFactory2D;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.algo.decomposition.DenseDoubleCholeskyDecomposition;
@@ -169,7 +170,6 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		return new Matrix[] { v, d };
 	}
 
-	// deadlock?
 	public Matrix[] qr() {
 		DenseDoubleQRDecomposition qr = new DenseDoubleQRDecomposition(matrix);
 		Matrix q = new ParallelColtDenseDoubleMatrix2D(qr.getQ(false));
@@ -196,7 +196,6 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
-	// deadlock?
 	public Matrix chol() {
 		DenseDoubleCholeskyDecomposition chol = new DenseDoubleCholeskyDecomposition(
 				matrix);
@@ -221,5 +220,26 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public Matrix solveSPD(Matrix b) {
+		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
+			ParallelColtDenseDoubleMatrix2D b2 = new ParallelColtDenseDoubleMatrix2D(
+					b);
+			DenseDoubleCholeskyDecomposition chol = new DenseDoubleCholeskyDecomposition(
+					matrix);
+			chol.solve(b2.matrix);
+			return b2;
+		} else {
+			return super.solve(b);
+		}
+	}
+
+	public Matrix invSPD() {
+		DenseDoubleCholeskyDecomposition chol = new DenseDoubleCholeskyDecomposition(
+				matrix);
+		DoubleMatrix2D ret = DoubleFactory2D.dense.identity(matrix.rows());
+		chol.solve(ret);
+		return new ParallelColtDenseDoubleMatrix2D(ret);
 	}
 }

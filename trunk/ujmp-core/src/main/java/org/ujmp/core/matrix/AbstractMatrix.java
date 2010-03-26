@@ -114,12 +114,14 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Ginv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Pinv;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Princomp;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD;
 import org.ujmp.core.doublematrix.calculation.general.misc.Center;
 import org.ujmp.core.doublematrix.calculation.general.misc.DiscretizeToColumns;
 import org.ujmp.core.doublematrix.calculation.general.misc.FadeIn;
@@ -410,8 +412,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Inv.INSTANCE.calc(this);
 	}
 
-	public Matrix invPosDef() throws MatrixException {
-		return Inv.INSTANCE.calc(this);
+	public Matrix invSPD() throws MatrixException {
+		return InvSPD.INSTANCE.calc(this);
 	}
 
 	public Matrix solve(Matrix b) {
@@ -422,8 +424,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Solve.INSTANCE.calc(this, b);
 	}
 
-	public Matrix solvePosDef(Matrix b) {
-		return Solve.INSTANCE.calc(this, b);
+	public Matrix solveSPD(Matrix b) {
+		return SolveSPD.INSTANCE.calc(this, b);
 	}
 
 	public Matrix ginv() throws MatrixException {
@@ -930,7 +932,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
 		if (value == null) {
-			setAsDouble(0, coordinates);
+			setAsDouble(Double.NaN, coordinates);
 		} else {
 			setAsDouble(value.doubleValue(), coordinates);
 		}
@@ -938,7 +940,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		if (value == null) {
-			setAsLong(0, coordinates);
+			setAsLong(0l, coordinates);
 		} else {
 			setAsLong(value.longValue(), coordinates);
 		}
@@ -1173,7 +1175,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return rank;
 	}
 
-	public final boolean isPositiveDefinite() {
+	public final boolean isSPD() {
 		if (getDimensionCount() != 2) {
 			return false;
 		}

@@ -78,8 +78,7 @@ public abstract class BenchmarkUtil {
 		}
 	}
 
-	public static void randPositiveDefinite(long benchmarkSeed, int run, int id,
-			DoubleMatrix2D matrix) {
+	public static void randPositiveDefinite(long benchmarkSeed, int run, int id, Matrix matrix) {
 		Random random = new Random(benchmarkSeed + (run + 2) * 31 * 31 + (id + 1) * 31);
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(matrix.getSize());
 		int rows = (int) temp.getRowCount();
@@ -92,7 +91,7 @@ public abstract class BenchmarkUtil {
 		DenseDoubleMatrix2D result = (DenseDoubleMatrix2D) temp.mtimes(temp.transpose());
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
-				matrix.setDouble(result.getDouble(r, c), r, c);
+				matrix.setAsDouble(result.getDouble(r, c), r, c);
 			}
 		}
 	}

@@ -30,6 +30,8 @@ import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface DateMatrix extends GenericMatrix<Date> {
 
+	public static final Date DATE0 = new Date(0);
+
 	/**
 	 * Returns a Date representation of an entry in the matrix. The stored value
 	 * will be converted to a Date object as good as possible.

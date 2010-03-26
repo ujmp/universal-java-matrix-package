@@ -69,6 +69,10 @@ public abstract class AbstractMapTest {
 		m.clear();
 		assertEquals(getLabel(), 0, m.size());
 		assertTrue(getLabel(), m.isEmpty());
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	// TODO
@@ -89,6 +93,10 @@ public abstract class AbstractMapTest {
 		m.clear();
 		assertFalse(getLabel(), m.containsKey("a"));
 		assertFalse(getLabel(), m.containsKey("b"));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	// TODO
@@ -109,6 +117,10 @@ public abstract class AbstractMapTest {
 		m.clear();
 		assertFalse(getLabel(), m.containsValue("test1"));
 		assertFalse(getLabel(), m.containsValue("test2"));
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	// TODO
@@ -122,6 +134,10 @@ public abstract class AbstractMapTest {
 			byte[] data = SerializationUtil.serialize((Serializable) m);
 			Map<String, String> m2 = (Map<String, String>) SerializationUtil.deserialize(data);
 			assertEquals(getLabel(), m, m2);
+		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
 		}
 	}
 

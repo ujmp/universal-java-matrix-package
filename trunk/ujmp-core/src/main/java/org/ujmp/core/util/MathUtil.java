@@ -238,17 +238,17 @@ public abstract class MathUtil {
 		return random.nextDouble();
 	}
 
-	public static double ignoreNaN(double v) {
+	public static final double ignoreNaN(final double v) {
 		return Double.isNaN(v) || (v == Double.POSITIVE_INFINITY)
 				|| (v == Double.NEGATIVE_INFINITY) ? 0.0 : v;
 	}
 
-	public static boolean isNaNOrInfinite(double v) {
+	public static final boolean isNaNOrInfinite(final double v) {
 		return Double.isNaN(v) || (v == Double.POSITIVE_INFINITY)
 				|| (v == Double.NEGATIVE_INFINITY);
 	}
 
-	public static boolean isNaNOrInfinite(Object o) {
+	public static final boolean isNaNOrInfinite(final Object o) {
 		return Double.valueOf(Double.NaN).equals(o)
 				|| Double.valueOf(Double.POSITIVE_INFINITY).equals(o)
 				|| Double.valueOf(Double.NEGATIVE_INFINITY).equals(o);
@@ -624,7 +624,11 @@ public abstract class MathUtil {
 			return (BigInteger) o;
 		}
 		if (o instanceof Number) {
-			return BigInteger.valueOf(((Number) o).longValue());
+			if (MathUtil.isNaNOrInfinite(o)) {
+				throw new IllegalArgumentException("NaN, Inf and -Inf not allowed for BigInteger");
+			} else {
+				return BigInteger.valueOf(((Number) o).longValue());
+			}
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).bigIntegerValue();
@@ -644,7 +648,17 @@ public abstract class MathUtil {
 		}
 		if (o instanceof Number) {
 			double val = ((Number) o).doubleValue();
-			return MathUtil.isNaNOrInfinite(val) ? null : BigDecimal.valueOf(val);
+			if (MathUtil.isNaNOrInfinite(val)) {
+				return null;
+			} else if (val == 0) {
+				return BigDecimal.ZERO;
+			} else if (val == 1) {
+				return BigDecimal.ONE;
+			} else if (val == 10) {
+				return BigDecimal.TEN;
+			} else {
+				return BigDecimal.valueOf(val);
+			}
 		}
 		if (o instanceof Matrix) {
 			return ((Matrix) o).bigDecimalValue();
@@ -740,7 +754,7 @@ public abstract class MathUtil {
 
 	public static long getLong(Object o) {
 		if (o == null) {
-			return 0;
+			throw new IllegalArgumentException("null cannot be converted to long");
 		}
 		if (o instanceof Long) {
 			return (Long) o;
@@ -984,7 +998,9 @@ public abstract class MathUtil {
 	}
 
 	public static final BigDecimal divide(BigDecimal v1, BigDecimal v2) {
-		if (v1 != null && v2 != null) {
+		if (BigDecimal.ZERO.equals(v2)) {
+			return null;
+		} else if (v1 != null && v2 != null) {
 			return v1.divide(v2, getDefaultMathContext());
 		} else {
 			return null;

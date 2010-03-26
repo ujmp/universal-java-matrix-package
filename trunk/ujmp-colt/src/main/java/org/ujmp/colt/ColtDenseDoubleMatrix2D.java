@@ -28,6 +28,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
+import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
@@ -105,8 +106,8 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix inv() {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) new Algebra()
-				.inverse(matrix));
+		return new ColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) Algebra.DEFAULT.inverse(matrix));
 	}
 
 	public Matrix solve(Matrix b) {
@@ -124,6 +125,23 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public Matrix solveSPD(Matrix b) {
+		if (b instanceof ColtDenseDoubleMatrix2D) {
+			ColtDenseDoubleMatrix2D b2 = (ColtDenseDoubleMatrix2D) b;
+			DoubleMatrix2D ret = new CholeskyDecomposition(matrix)
+					.solve(b2.matrix);
+			return new ColtDenseDoubleMatrix2D(ret);
+		} else {
+			return super.solve(b);
+		}
+	}
+
+	public Matrix invSPD() {
+		DoubleMatrix2D ret = new CholeskyDecomposition(matrix)
+				.solve(DoubleFactory2D.dense.identity(matrix.rows()));
+		return new ColtDenseDoubleMatrix2D(ret);
 	}
 
 	public Matrix plus(double value) {

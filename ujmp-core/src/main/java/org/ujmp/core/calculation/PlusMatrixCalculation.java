@@ -23,8 +23,7 @@
 
 package org.ujmp.core.calculation;
 
-public interface Calculation1<T> {
+public interface PlusMatrixCalculation<Source1, Source2, Target> {
 
-	public void calc(T source, T target);
-
+	public void calc(Source1 source1, Source2 source2, Target target);
 }

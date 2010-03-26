@@ -64,13 +64,8 @@ import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
-import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusScalar;
-import org.ujmp.core.calculation.PlusMatrix;
-import org.ujmp.core.calculation.PlusScalar;
-import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
@@ -483,13 +478,13 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix times(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		TimesMatrix.INSTANCE.calc(this, m, result);
+		Matrix.timesMatrix.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix divide(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		DivideMatrix.MATRIX.calc(this, m, result);
+		Matrix.divideMatrix.calc(this, m, result);
 		return result;
 	}
 
@@ -1122,13 +1117,13 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix plus(double value) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		PlusScalar.INSTANCE.calc(this, value, result);
+		Matrix.plusScalar.calc(this, value, result);
 		return result;
 	}
 
 	public Matrix plus(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		PlusMatrix.INSTANCE.calc(this, m, result);
+		Matrix.plusMatrix.calc(this, m, result);
 		return result;
 	}
 
@@ -1140,7 +1135,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix minus(Matrix m) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		MinusMatrix.INSTANCE.calc(this, m, result);
+		Matrix.minusMatrix.calc(this, m, result);
 		return result;
 	}
 

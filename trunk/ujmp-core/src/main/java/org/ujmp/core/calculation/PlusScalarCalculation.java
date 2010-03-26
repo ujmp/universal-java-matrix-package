@@ -23,8 +23,11 @@
 
 package org.ujmp.core.calculation;
 
-public interface Calculation2<T> {
+import java.math.BigDecimal;
 
-	public void calc(T source1, T source2, T target);
+public interface PlusScalarCalculation<Source1, Target> {
 
+	public void calc(Source1 source1, double source2, Target target);
+
+	public void calc(Source1 source1, BigDecimal source2, Target target);
 }

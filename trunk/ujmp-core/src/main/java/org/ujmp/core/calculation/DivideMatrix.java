@@ -38,18 +38,19 @@ import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class DivideMatrix {
 
-	public static final Calculation2<Matrix> MATRIX = new DivideMatrixMatrix();
+	public static final DivideMatrixCalculation<Matrix, Matrix, Matrix> MATRIX = new DivideMatrixMatrix();
 
-	public static final Calculation2<DenseMatrix> DENSEMATRIX = new DivideMatrixDenseMatrix();
+	public static final DivideMatrixCalculation<DenseMatrix, DenseMatrix, DenseMatrix> DENSEMATRIX = new DivideMatrixDenseMatrix();
 
-	public static final Calculation2<DenseMatrix2D> DENSEMATRIX2D = new DivideMatrixDenseMatrix2D();
+	public static final DivideMatrixCalculation<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new DivideMatrixDenseMatrix2D();
 
-	public static final Calculation2<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideMatrixDenseDoubleMatrix2D();
+	public static final DivideMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideMatrixDenseDoubleMatrix2D();
 
-	public static final Calculation2<SparseMatrix> SPARSEMATRIX = new DivideMatrixSparseMatrix();
+	public static final DivideMatrixCalculation<SparseMatrix, SparseMatrix, SparseMatrix> SPARSEMATRIX = new DivideMatrixSparseMatrix();
 }
 
-class DivideMatrixDenseMatrix implements Calculation2<DenseMatrix> {
+class DivideMatrixDenseMatrix implements
+		DivideMatrixCalculation<DenseMatrix, DenseMatrix, DenseMatrix> {
 	public final void calc(final DenseMatrix source1, final DenseMatrix source2,
 			final DenseMatrix target) {
 		if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
@@ -68,7 +69,8 @@ class DivideMatrixDenseMatrix implements Calculation2<DenseMatrix> {
 
 }
 
-class DivideMatrixDenseMatrix2D implements Calculation2<DenseMatrix2D> {
+class DivideMatrixDenseMatrix2D implements
+		DivideMatrixCalculation<DenseMatrix2D, DenseMatrix2D, DenseMatrix2D> {
 
 	public final void calc(final DenseMatrix2D source1, final DenseMatrix2D source2,
 			final DenseMatrix2D target) {
@@ -89,7 +91,8 @@ class DivideMatrixDenseMatrix2D implements Calculation2<DenseMatrix2D> {
 	}
 }
 
-class DivideMatrixDenseDoubleMatrix2D implements Calculation2<DenseDoubleMatrix2D> {
+class DivideMatrixDenseDoubleMatrix2D implements
+		DivideMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> {
 
 	public final void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 			final DenseDoubleMatrix2D target) {
@@ -152,7 +155,8 @@ class DivideMatrixDenseDoubleMatrix2D implements Calculation2<DenseDoubleMatrix2
 
 }
 
-class DivideMatrixSparseMatrix implements Calculation2<SparseMatrix> {
+class DivideMatrixSparseMatrix implements
+		DivideMatrixCalculation<SparseMatrix, SparseMatrix, SparseMatrix> {
 
 	public final void calc(final SparseMatrix source1, final SparseMatrix source2,
 			final SparseMatrix target) {
@@ -167,9 +171,7 @@ class DivideMatrixSparseMatrix implements Calculation2<SparseMatrix> {
 	}
 }
 
-class DivideMatrixMatrix implements Calculation2<Matrix> {
-
-	public static final Calculation2<Matrix> INSTANCE = new DivideMatrixMatrix();
+class DivideMatrixMatrix implements DivideMatrixCalculation<Matrix, Matrix, Matrix> {
 
 	public final void calc(final Matrix source1, final Matrix source2, final Matrix target) {
 		if (source1 instanceof DenseMatrix && source2 instanceof DenseMatrix

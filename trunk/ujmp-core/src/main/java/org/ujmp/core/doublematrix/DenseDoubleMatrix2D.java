@@ -24,18 +24,22 @@
 package org.ujmp.core.doublematrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation1;
-import org.ujmp.core.calculation.Calculation2;
 import org.ujmp.core.calculation.DivideMatrix;
+import org.ujmp.core.calculation.DivideMatrixCalculation;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
+import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.PlusMatrix;
+import org.ujmp.core.calculation.PlusMatrixCalculation;
 import org.ujmp.core.calculation.PlusScalar;
+import org.ujmp.core.calculation.PlusScalarCalculation;
 import org.ujmp.core.calculation.TimesMatrix;
+import org.ujmp.core.calculation.TimesMatrixCalculation;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
+import org.ujmp.core.calculation.TransposeCalculation;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
@@ -55,17 +59,17 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static DenseDoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
 
-	public static Calculation1<DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
+	public static TransposeCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
 
-	public static PlusMatrix<DenseDoubleMatrix2D> plusMatrix = PlusMatrix.DENSEDOUBLEMATRIX2D;
+	public static PlusMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> plusMatrix = PlusMatrix.DENSEDOUBLEMATRIX2D;
 
-	public static MinusMatrix<DenseDoubleMatrix2D> minusMatrix = MinusMatrix.DENSEDOUBLEMATRIX2D;
+	public static MinusMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> minusMatrix = MinusMatrix.DENSEDOUBLEMATRIX2D;
 
-	public static TimesMatrix<DenseDoubleMatrix2D> timesMatrix = TimesMatrix.DENSEDOUBLEMATRIX2D;
+	public static TimesMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> timesMatrix = TimesMatrix.DENSEDOUBLEMATRIX2D;
 
-	public static Calculation2<DenseDoubleMatrix2D> divideMatrix = DivideMatrix.DENSEDOUBLEMATRIX2D;
+	public static DivideMatrixCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> divideMatrix = DivideMatrix.DENSEDOUBLEMATRIX2D;
 
-	public static PlusScalar<DenseDoubleMatrix2D> plusScalar = PlusScalar.DENSEDOUBLEMATRIX2D;
+	public static PlusScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> plusScalar = PlusScalar.DENSEDOUBLEMATRIX2D;
 
 	public static MinusScalar<DenseDoubleMatrix2D> minusScalar = MinusScalar.DENSEDOUBLEMATRIX2D;
 

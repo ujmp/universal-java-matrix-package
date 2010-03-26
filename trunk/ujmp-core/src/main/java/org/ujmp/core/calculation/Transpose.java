@@ -36,19 +36,19 @@ import org.ujmp.core.util.concurrent.PFor;
 
 public class Transpose {
 
-	public static final Calculation1<Matrix> MATRIX = new TransposeMatrix();
+	public static final TransposeCalculation<Matrix, Matrix> MATRIX = new TransposeMatrix();
 
-	public static final Calculation1<DenseMatrix> DENSEMATRIX = new TransposeDenseMatrix();
+	public static final TransposeCalculation<DenseMatrix, DenseMatrix> DENSEMATRIX = new TransposeDenseMatrix();
 
-	public static final Calculation1<DenseMatrix2D> DENSEMATRIX2D = new TransposeDenseMatrix2D();
+	public static final TransposeCalculation<DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new TransposeDenseMatrix2D();
 
-	public static final Calculation1<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new TransposeDenseDoubleMatrix2D();
+	public static final TransposeCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new TransposeDenseDoubleMatrix2D();
 
-	public static final Calculation1<SparseMatrix> SPARSEMATRIX = new TransposeSparseMatrix();
+	public static final TransposeCalculation<SparseMatrix, SparseMatrix> SPARSEMATRIX = new TransposeSparseMatrix();
 
 }
 
-class TransposeMatrix implements Calculation1<Matrix> {
+class TransposeMatrix implements TransposeCalculation<Matrix, Matrix> {
 
 	public final void calc(final Matrix source, final Matrix target) {
 		if (source == target) {
@@ -72,7 +72,7 @@ class TransposeMatrix implements Calculation1<Matrix> {
 	}
 };
 
-class TransposeDenseMatrix implements Calculation1<DenseMatrix> {
+class TransposeDenseMatrix implements TransposeCalculation<DenseMatrix, DenseMatrix> {
 
 	public final void calc(final DenseMatrix source, final DenseMatrix target) {
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
@@ -86,7 +86,7 @@ class TransposeDenseMatrix implements Calculation1<DenseMatrix> {
 	}
 };
 
-class TransposeSparseMatrix implements Calculation1<SparseMatrix> {
+class TransposeSparseMatrix implements TransposeCalculation<SparseMatrix, SparseMatrix> {
 
 	public final void calc(final SparseMatrix source, final SparseMatrix target) {
 		for (long[] c : source.availableCoordinates()) {
@@ -96,7 +96,7 @@ class TransposeSparseMatrix implements Calculation1<SparseMatrix> {
 	}
 };
 
-class TransposeDenseMatrix2D implements Calculation1<DenseMatrix2D> {
+class TransposeDenseMatrix2D implements TransposeCalculation<DenseMatrix2D, DenseMatrix2D> {
 
 	public final void calc(final DenseMatrix2D source, final DenseMatrix2D target) {
 		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
@@ -113,7 +113,8 @@ class TransposeDenseMatrix2D implements Calculation1<DenseMatrix2D> {
 	}
 };
 
-class TransposeDenseDoubleMatrix2D implements Calculation1<DenseDoubleMatrix2D> {
+class TransposeDenseDoubleMatrix2D implements
+		TransposeCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> {
 
 	public final void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
 		if (source instanceof HasColumnMajorDoubleArray1D

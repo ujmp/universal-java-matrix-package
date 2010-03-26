@@ -23,18 +23,22 @@
 
 package org.ujmp.core;
 
-import org.ujmp.core.calculation.Calculation1;
-import org.ujmp.core.calculation.Calculation2;
 import org.ujmp.core.calculation.DivideMatrix;
+import org.ujmp.core.calculation.DivideMatrixCalculation;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
+import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.PlusMatrix;
+import org.ujmp.core.calculation.PlusMatrixCalculation;
 import org.ujmp.core.calculation.PlusScalar;
+import org.ujmp.core.calculation.PlusScalarCalculation;
 import org.ujmp.core.calculation.TimesMatrix;
+import org.ujmp.core.calculation.TimesMatrixCalculation;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
+import org.ujmp.core.calculation.TransposeCalculation;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
@@ -49,17 +53,17 @@ import org.ujmp.core.util.AbstractPlugin;
  */
 public abstract class Ops {
 
-	public static Calculation1<Matrix> transpose = Transpose.MATRIX;
+	public static TransposeCalculation<Matrix, Matrix> transpose = Transpose.MATRIX;
 
-	public static PlusMatrix<Matrix> plusMatrix = PlusMatrix.INSTANCE;
+	public static PlusMatrixCalculation<Matrix, Matrix, Matrix> plusMatrix = PlusMatrix.MATRIX;
 
-	public static MinusMatrix<Matrix> minusMatrix = MinusMatrix.INSTANCE;
+	public static MinusMatrixCalculation<Matrix, Matrix, Matrix> minusMatrix = MinusMatrix.MATRIX;
 
-	public static TimesMatrix<Matrix> timesMatrix = TimesMatrix.INSTANCE;
+	public static TimesMatrixCalculation<Matrix, Matrix, Matrix> timesMatrix = TimesMatrix.MATRIX;
 
-	public static Calculation2<Matrix> divideMatrix = DivideMatrix.MATRIX;
+	public static DivideMatrixCalculation<Matrix, Matrix, Matrix> divideMatrix = DivideMatrix.MATRIX;
 
-	public static PlusScalar<Matrix> plusScalar = PlusScalar.INSTANCE;
+	public static PlusScalarCalculation<Matrix, Matrix> plusScalar = PlusScalar.MATRIX;
 
 	public static MinusScalar<Matrix> minusScalar = MinusScalar.INSTANCE;
 

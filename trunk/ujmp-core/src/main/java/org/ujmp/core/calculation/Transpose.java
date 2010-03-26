@@ -34,137 +34,145 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.concurrent.PFor;
 
-public interface Transpose<T> {
+public class Transpose {
 
-	public static final Transpose<Matrix> INSTANCE = new Transpose<Matrix>() {
+	public static final Calculation1<Matrix> MATRIX = new TransposeMatrix();
 
-		public final void calc(final Matrix source, final Matrix target) {
-			if (source == target) {
-				throw new MatrixException("cannot transpose into original matrix");
-			}
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
-						(DenseDoubleMatrix2D) target);
-			} else if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
-			} else if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
-				Transpose.DENSEMATRIX.calc((DenseMatrix) source, (DenseMatrix) target);
-			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-				Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					Object o = source.getAsObject(c);
-					target.setAsObject(o, Coordinates.transpose(c));
-				}
-			}
+	public static final Calculation1<DenseMatrix> DENSEMATRIX = new TransposeDenseMatrix();
+
+	public static final Calculation1<DenseMatrix2D> DENSEMATRIX2D = new TransposeDenseMatrix2D();
+
+	public static final Calculation1<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new TransposeDenseDoubleMatrix2D();
+
+	public static final Calculation1<SparseMatrix> SPARSEMATRIX = new TransposeSparseMatrix();
+
+}
+
+class TransposeMatrix implements Calculation1<Matrix> {
+
+	public final void calc(final Matrix source, final Matrix target) {
+		if (source == target) {
+			throw new MatrixException("cannot transpose into original matrix");
 		}
-	};
-
-	public static final Transpose<DenseMatrix> DENSEMATRIX = new Transpose<DenseMatrix>() {
-
-		public final void calc(final DenseMatrix source, final DenseMatrix target) {
-			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					Object o = source.getAsObject(c);
-					target.setAsObject(o, Coordinates.transpose(c));
-				}
-			}
-		}
-	};
-
-	public static final Transpose<SparseMatrix> SPARSEMATRIX = new Transpose<SparseMatrix>() {
-
-		public final void calc(final SparseMatrix source, final SparseMatrix target) {
-			for (long[] c : source.availableCoordinates()) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
+					(DenseDoubleMatrix2D) target);
+		} else if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
+		} else if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			Transpose.DENSEMATRIX.calc((DenseMatrix) source, (DenseMatrix) target);
+		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
+			Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
 				Object o = source.getAsObject(c);
 				target.setAsObject(o, Coordinates.transpose(c));
 			}
 		}
-	};
+	}
+};
 
-	public static final Transpose<DenseMatrix2D> DENSEMATRIX2D = new Transpose<DenseMatrix2D>() {
+class TransposeDenseMatrix implements Calculation1<DenseMatrix> {
 
-		public final void calc(final DenseMatrix2D source, final DenseMatrix2D target) {
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
-						(DenseDoubleMatrix2D) target);
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						Object o = source.getAsObject(r, c);
-						target.setAsObject(o, c, r);
-					}
+	public final void calc(final DenseMatrix source, final DenseMatrix target) {
+		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
+				Object o = source.getAsObject(c);
+				target.setAsObject(o, Coordinates.transpose(c));
+			}
+		}
+	}
+};
+
+class TransposeSparseMatrix implements Calculation1<SparseMatrix> {
+
+	public final void calc(final SparseMatrix source, final SparseMatrix target) {
+		for (long[] c : source.availableCoordinates()) {
+			Object o = source.getAsObject(c);
+			target.setAsObject(o, Coordinates.transpose(c));
+		}
+	}
+};
+
+class TransposeDenseMatrix2D implements Calculation1<DenseMatrix2D> {
+
+	public final void calc(final DenseMatrix2D source, final DenseMatrix2D target) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
+					(DenseDoubleMatrix2D) target);
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					Object o = source.getAsObject(r, c);
+					target.setAsObject(o, c, r);
 				}
 			}
 		}
-	};
+	}
+};
 
-	public static final Transpose<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new Transpose<DenseDoubleMatrix2D>() {
+class TransposeDenseDoubleMatrix2D implements Calculation1<DenseDoubleMatrix2D> {
 
-		public final void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
-			if (source instanceof HasColumnMajorDoubleArray1D
-					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calc((int) source.getRowCount(), (int) source.getColumnCount(),
-						((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(),
-						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
-			} else if (source instanceof HasRowMajorDoubleArray2D
-					&& target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(),
-						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						target.setDouble(source.getDouble(r, c), c, r);
-					}
+	public final void calc(final DenseDoubleMatrix2D source, final DenseDoubleMatrix2D target) {
+		if (source instanceof HasColumnMajorDoubleArray1D
+				&& target instanceof HasColumnMajorDoubleArray1D) {
+			calc((int) source.getRowCount(), (int) source.getColumnCount(),
+					((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(),
+					((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+		} else if (source instanceof HasRowMajorDoubleArray2D
+				&& target instanceof HasRowMajorDoubleArray2D) {
+			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(),
+					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					target.setDouble(source.getDouble(r, c), c, r);
 				}
 			}
 		}
+	}
 
-		private final void calc(final double[][] source, final double[][] target) {
-			final int retcols = source.length;
-			final int retrows = source[0].length;
-			if (retcols * retrows > 10000) {
-				new PFor(0, retrows - 1) {
-					@Override
-					public void step(int i) {
-						for (int c = 0; c < retcols; c++) {
-							target[i][c] = source[c][i];
-						}
-					}
-				};
-			} else {
-				for (int r = 0; r < retrows; r++) {
+	private final void calc(final double[][] source, final double[][] target) {
+		final int retcols = source.length;
+		final int retrows = source[0].length;
+		if (retcols * retrows > 10000) {
+			new PFor(0, retrows - 1) {
+				@Override
+				public void step(int i) {
 					for (int c = 0; c < retcols; c++) {
-						target[r][c] = source[c][r];
+						target[i][c] = source[c][i];
 					}
+				}
+			};
+		} else {
+			for (int r = 0; r < retrows; r++) {
+				for (int c = 0; c < retcols; c++) {
+					target[r][c] = source[c][r];
 				}
 			}
 		}
+	}
 
-		private final void calc(final int rows, final int cols, final double[] source,
-				final double[] target) {
-			if (source.length > 10000) {
-				new PFor(0, rows - 1) {
+	private final void calc(final int rows, final int cols, final double[] source,
+			final double[] target) {
+		if (source.length > 10000) {
+			new PFor(0, rows - 1) {
 
-					@Override
-					public void step(int i) {
-						for (int r = 0; r < cols; r++) {
-							target[i * cols + r] = source[r * rows + i];
-						}
-					}
-				};
-			} else {
-				for (int c = 0; c < rows; c++) {
+				@Override
+				public void step(int i) {
 					for (int r = 0; r < cols; r++) {
-						target[c * cols + r] = source[r * rows + c];
+						target[i * cols + r] = source[r * rows + i];
 					}
+				}
+			};
+		} else {
+			for (int c = 0; c < rows; c++) {
+				for (int r = 0; r < cols; r++) {
+					target[c * cols + r] = source[r * rows + c];
 				}
 			}
 		}
-	};
-
-	public void calc(T source, T target);
-
-}
+	}
+};

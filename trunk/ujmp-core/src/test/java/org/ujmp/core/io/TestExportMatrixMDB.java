@@ -33,7 +33,7 @@ public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 		return FileFormat.MDB;
 	}
 
-	@Test(timeout = 2000)
+	@Test
 	public void testExportToFile() throws Exception {
 		try {
 			Class.forName("org.ujmp.jackcess.ExportMatrixMDB");
@@ -43,7 +43,7 @@ public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToStream() throws Exception {
 		try {
 			super.testExportToStream();
@@ -53,7 +53,7 @@ public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -63,7 +63,7 @@ public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();
@@ -73,7 +73,7 @@ public class TestExportMatrixMDB extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();

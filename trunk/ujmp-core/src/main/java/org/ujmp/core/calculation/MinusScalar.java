@@ -36,168 +36,169 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
-public interface MinusScalar<T> {
+public class MinusScalar {
+	public static final MinusScalarCalculation<Matrix, Matrix> MATRIX = new MinusScalarMatrix();
 
-	public static final MinusScalar<Matrix> INSTANCE = new MinusScalar<Matrix>() {
+	public static final MinusScalarCalculation<DenseMatrix, DenseMatrix> DENSEMATRIX = new MinusScalarDenseMatrix();
 
-		public final void calc(final Matrix source, final BigDecimal value, final Matrix target) {
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
-				MinusScalar.DENSEMATRIX.calc((DenseMatrix) source, value, (DenseMatrix) target);
-			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-				MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					BigDecimal svalue = source.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.minus(svalue, value);
-					target.setAsBigDecimal(result, c);
-				}
-			}
-		}
+	public static final MinusScalarCalculation<DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new MinusScalarDenseMatrix2D();
 
-		public final void calc(final Matrix source, final double value, final Matrix target) {
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
-				MinusScalar.DENSEMATRIX.calc((DenseMatrix) source, value, (DenseMatrix) target);
-			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-				MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
-			} else {
-				calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
-			}
-		}
-	};
+	public static final MinusScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new MinusScalarDenseDoubleMatrix2D();
 
-	public static final MinusScalar<DenseMatrix> DENSEMATRIX = new MinusScalar<DenseMatrix>() {
+	public static final MinusScalarCalculation<SparseMatrix, SparseMatrix> SPARSEMATRIX = new MinusScalarSparseMatrix();
+}
 
-		public final void calc(final DenseMatrix source, final BigDecimal value,
-				final DenseMatrix target) {
-			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value,
-						(DenseMatrix2D) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					BigDecimal svalue = source.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.minus(svalue, value);
-					target.setAsBigDecimal(result, c);
-				}
-			}
-		}
+class MinusScalarMatrix implements MinusScalarCalculation<Matrix, Matrix> {
 
-		public final void calc(final DenseMatrix source, final double value,
-				final DenseMatrix target) {
-			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value,
-						(DenseMatrix2D) target);
-			} else {
-				calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
-			}
-		}
-	};
-
-	public static final MinusScalar<SparseMatrix> SPARSEMATRIX = new MinusScalar<SparseMatrix>() {
-
-		public final void calc(final SparseMatrix source, final BigDecimal value,
-				final SparseMatrix target) {
-			for (long[] c : source.availableCoordinates()) {
+	public final void calc(final Matrix source, final BigDecimal value, final Matrix target) {
+		if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			MinusScalar.DENSEMATRIX.calc((DenseMatrix) source, value, (DenseMatrix) target);
+		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
+			MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
 				BigDecimal svalue = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.minus(svalue, value);
 				target.setAsBigDecimal(result, c);
 			}
 		}
+	}
 
-		public final void calc(SparseMatrix source, double value, SparseMatrix target) {
+	public final void calc(final Matrix source, final double value, final Matrix target) {
+		if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			MinusScalar.DENSEMATRIX.calc((DenseMatrix) source, value, (DenseMatrix) target);
+		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
+			MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
+		} else {
 			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
 		}
-	};
+	}
+};
 
-	public static final MinusScalar<DenseMatrix2D> DENSEMATRIX2D = new MinusScalar<DenseMatrix2D>() {
+class MinusScalarDenseMatrix implements MinusScalarCalculation<DenseMatrix, DenseMatrix> {
 
-		public final void calc(final DenseMatrix2D source, final BigDecimal value,
-				final DenseMatrix2D target) {
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
-						(DenseDoubleMatrix2D) target);
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						BigDecimal svalue = source.getAsBigDecimal(r, c);
-						BigDecimal result = MathUtil.minus(svalue, value);
-						target.setAsBigDecimal(result, r, c);
-					}
+	public final void calc(final DenseMatrix source, final BigDecimal value,
+			final DenseMatrix target) {
+		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value, (DenseMatrix2D) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
+				BigDecimal svalue = source.getAsBigDecimal(c);
+				BigDecimal result = MathUtil.minus(svalue, value);
+				target.setAsBigDecimal(result, c);
+			}
+		}
+	}
+
+	public final void calc(final DenseMatrix source, final double value, final DenseMatrix target) {
+		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value, (DenseMatrix2D) target);
+		} else {
+			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+		}
+	}
+};
+
+class MinusScalarSparseMatrix implements MinusScalarCalculation<SparseMatrix, SparseMatrix> {
+
+	public final void calc(final SparseMatrix source, final BigDecimal value,
+			final SparseMatrix target) {
+		for (long[] c : source.availableCoordinates()) {
+			BigDecimal svalue = source.getAsBigDecimal(c);
+			BigDecimal result = MathUtil.minus(svalue, value);
+			target.setAsBigDecimal(result, c);
+		}
+	}
+
+	public final void calc(SparseMatrix source, double value, SparseMatrix target) {
+		calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+	}
+};
+
+class MinusScalarDenseMatrix2D implements MinusScalarCalculation<DenseMatrix2D, DenseMatrix2D> {
+
+	public final void calc(final DenseMatrix2D source, final BigDecimal value,
+			final DenseMatrix2D target) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
+					(DenseDoubleMatrix2D) target);
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					BigDecimal svalue = source.getAsBigDecimal(r, c);
+					BigDecimal result = MathUtil.minus(svalue, value);
+					target.setAsBigDecimal(result, r, c);
 				}
 			}
 		}
+	}
 
-		public final void calc(final DenseMatrix2D source, final double value,
-				final DenseMatrix2D target) {
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
-						(DenseDoubleMatrix2D) target);
-			} else {
-				calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
-			}
+	public final void calc(final DenseMatrix2D source, final double value,
+			final DenseMatrix2D target) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
+					(DenseDoubleMatrix2D) target);
+		} else {
+			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
 		}
-	};
+	}
+};
 
-	public static final MinusScalar<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new MinusScalar<DenseDoubleMatrix2D>() {
+class MinusScalarDenseDoubleMatrix2D implements
+		MinusScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> {
 
-		public final void calc(DenseDoubleMatrix2D source, BigDecimal value,
-				DenseDoubleMatrix2D target) {
-			calc(source, value.doubleValue(), target);
-		}
+	public final void calc(DenseDoubleMatrix2D source, BigDecimal value, DenseDoubleMatrix2D target) {
+		calc(source, value.doubleValue(), target);
+	}
 
-		public final void calc(final DenseDoubleMatrix2D source, final double value,
-				final DenseDoubleMatrix2D target) {
-			if (source instanceof HasColumnMajorDoubleArray1D
-					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), value,
-						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
-			} else if (source instanceof HasRowMajorDoubleArray2D
-					&& target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), value,
-						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						target.setDouble(source.getDouble(r, c) - value, r, c);
-					}
+	public final void calc(final DenseDoubleMatrix2D source, final double value,
+			final DenseDoubleMatrix2D target) {
+		if (source instanceof HasColumnMajorDoubleArray1D
+				&& target instanceof HasColumnMajorDoubleArray1D) {
+			calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), value,
+					((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+		} else if (source instanceof HasRowMajorDoubleArray2D
+				&& target instanceof HasRowMajorDoubleArray2D) {
+			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), value,
+					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					target.setDouble(source.getDouble(r, c) - value, r, c);
 				}
 			}
 		}
+	}
 
-		private final void calc(final double[][] source, final double value, final double[][] target) {
-			if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
-					&& source[0].length >= 100) {
-				new PForEquidistant(0, source.length - 1) {
-					public void step(int i) {
-						double[] tsource = source[i];
-						double[] ttarget = target[i];
-						for (int c = source[0].length; --c != -1;) {
-							ttarget[c] = tsource[c] - value;
-						}
-					}
-				};
-			} else {
-				double[] tsource = null;
-				double[] ttarget = null;
-				for (int r = source.length; --r != -1;) {
-					tsource = source[r];
-					ttarget = target[r];
+	private final void calc(final double[][] source, final double value, final double[][] target) {
+		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
+				&& source[0].length >= 100) {
+			new PForEquidistant(0, source.length - 1) {
+				public void step(int i) {
+					double[] tsource = source[i];
+					double[] ttarget = target[i];
 					for (int c = source[0].length; --c != -1;) {
 						ttarget[c] = tsource[c] - value;
 					}
 				}
+			};
+		} else {
+			double[] tsource = null;
+			double[] ttarget = null;
+			for (int r = source.length; --r != -1;) {
+				tsource = source[r];
+				ttarget = target[r];
+				for (int c = source[0].length; --c != -1;) {
+					ttarget[c] = tsource[c] - value;
+				}
 			}
 		}
+	}
 
-		private final void calc(final double[] source, final double value, final double[] target) {
-			final int length = source.length;
-			for (int i = 0; i < length; i++) {
-				target[i] = source[i] - value;
-			}
+	private final void calc(final double[] source, final double value, final double[] target) {
+		final int length = source.length;
+		for (int i = 0; i < length; i++) {
+			target[i] = source[i] - value;
 		}
-	};
-
-	public void calc(T source, BigDecimal value, T target);
-
-	public void calc(T source, double value, T target);
-
-}
+	}
+};

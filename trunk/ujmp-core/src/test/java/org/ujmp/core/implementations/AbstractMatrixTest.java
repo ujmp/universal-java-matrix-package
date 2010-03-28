@@ -48,7 +48,7 @@ import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest {
 
-	public static final double TOLERANCE = 1e-6;
+	public static final double TOLERANCE = 1e-5;
 
 	public abstract Matrix createMatrix(long... size) throws Exception;
 

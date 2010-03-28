@@ -29,20 +29,21 @@ burninruns=3;
 runs=25;
 maxStd=10;
 maxTrials=20;
-maxTime=10000;
+maxTime=30000;
 tasks=10;
-sizes=[2,2;3,3;4,4;5,5;10,10;20,20;50,50;100,100;200,200;500,500;1000,1000;2000,2000];
+sizes=[2;3;4;5;10;20;50;100;200;500;1000;2000;3000;4000;5000];
+sizes=[sizes,sizes];
 
 clc;
 
 mkdir('results');
 mkdir('results/',version);
 
-for task=6:tasks
+for task=1:tasks
     stopped=0;
 
     alltime=[];
-    alldiffs=[];
+    alldeltas=[];
 
     if(task==1)
         taskname='timesScalar';
@@ -75,9 +76,7 @@ for task=6:tasks
         for trial=1:maxTrials
 
             ts=zeros(runs,1);
-            diffs=zeros(runs,1);
-
-
+            deltas=zeros(runs,1);
 
             fprintf('%s',taskname);
             fprintf(' [%dx%d] ',cursize(1),cursize(2));
@@ -85,9 +84,12 @@ for task=6:tasks
             for i=1:burninruns
                 if(stopped==0)
                     fprintf('#');
-                    [t,diff]=benchmarktask(task,cursize);
+                    [t,delta]=benchmarktask(task,cursize);
                     if(isnan(t)||t*1000>maxTime)
                         stopped=1;
+			t=NaN;
+			delta=NaN;
+			deltas(i,1)=delta;
                     end;
                 end;
             end;
@@ -98,23 +100,24 @@ for task=6:tasks
                     [t,delta]=benchmarktask(task,cursize);
                     if(isnan(t)||t*1000>maxTime)
                         stopped=1;
+			ts(i,1)=NaN;
+                        deltas(i,1)=NaN;
                     else
                         ts(i,1)=t*1000;
-                        diffs(i,1)=delta;
+                        deltas(i,1)=delta;
                     end;
-                end;
-            end;
-
-            if(stopped==1)
-                break;
+                else
+		    ts(i,1)=NaN;
+		    deltas(i,1)=NaN;
+		end;
             end;
 
             tempStd=std(ts)/mean(ts)*100;
 
             fprintf(' %f+-%f (+-%f%%)',mean(ts),std(ts),tempStd);
 
-            if(~isnan(mean(diff)))
-                fprintf(' diff:%e',mean(diffs));
+            if(~isnan(mean(delta)))
+                fprintf(' delta:%e',mean(deltas));
             end;
 
             if(tempStd>maxStd)
@@ -143,7 +146,7 @@ for task=6:tasks
         end;
 
         alltime=[alltime,bestTime];
-        alldiffs=[alldiffs,delta];
+        alldeltas=[alldeltas,delta];
 
     end;
 
@@ -152,10 +155,10 @@ for task=6:tasks
     fprintf(fid, ['%8f',repmat('\t%8f',1,size(alltime,2)-1),'\n'],alltime');
     fclose(fid);
 
-    if(~isnan(alldiffs))
+    if(~isnan(alldeltas))
         fid = fopen(['results/',version,'/',taskname,'-diff.csv'],'w');
-        fprintf(fid, ['%d',repmat('\t%d',1,size(alldiffs,2)-1),'\n'],sizes(:,1)');
-        fprintf(fid, ['%8e',repmat('\t%8e',1,size(alldiffs,2)-1),'\n'],alldiffs');
+        fprintf(fid, ['%d',repmat('\t%d',1,size(alldeltas,2)-1),'\n'],sizes(:,1)');
+        fprintf(fid, ['%8e',repmat('\t%8e',1,size(alldeltas,2)-1),'\n'],alldeltas');
         fclose(fid);
     end;
 

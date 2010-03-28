@@ -64,9 +64,6 @@ import org.ujmp.core.booleanmatrix.calculation.Xor;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.calculation.ToByteMatrix;
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.calculation.DivideScalar;
-import org.ujmp.core.calculation.MinusScalar;
-import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
@@ -472,7 +469,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix times(double factor) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		TimesScalar.INSTANCE.calc(this, factor, result);
+		Matrix.timesScalar.calc(this, factor, result);
 		return result;
 	}
 
@@ -490,7 +487,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix divide(double divisor) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		DivideScalar.INSTANCE.calc(this, divisor, result);
+		Matrix.divideScalar.calc(this, divisor, result);
 		return result;
 	}
 
@@ -1129,7 +1126,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix minus(double value) throws MatrixException {
 		Matrix result = MatrixFactory.like(this);
-		MinusScalar.INSTANCE.calc(this, value, result);
+		Matrix.minusScalar.calc(this, value, result);
 		return result;
 	}
 

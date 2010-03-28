@@ -161,7 +161,7 @@ class DivideMatrixSparseMatrix implements
 	public final void calc(final SparseMatrix source1, final SparseMatrix source2,
 			final SparseMatrix target) {
 		// have to iterate over all values in source2 to perform division by
-		// zero
+		// zero if necessary
 		for (long[] c : source2.allCoordinates()) {
 			BigDecimal v1 = source1.getAsBigDecimal(c);
 			BigDecimal v2 = source2.getAsBigDecimal(c);

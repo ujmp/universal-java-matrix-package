@@ -26,9 +26,11 @@ package org.ujmp.core;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideMatrixCalculation;
 import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.DivideScalarCalculation;
 import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.MinusScalarCalculation;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusMatrixCalculation;
@@ -37,6 +39,7 @@ import org.ujmp.core.calculation.PlusScalarCalculation;
 import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesMatrixCalculation;
 import org.ujmp.core.calculation.TimesScalar;
+import org.ujmp.core.calculation.TimesScalarCalculation;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.calculation.TransposeCalculation;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
@@ -65,11 +68,11 @@ public abstract class Ops {
 
 	public static PlusScalarCalculation<Matrix, Matrix> plusScalar = PlusScalar.MATRIX;
 
-	public static MinusScalar<Matrix> minusScalar = MinusScalar.INSTANCE;
+	public static MinusScalarCalculation<Matrix, Matrix> minusScalar = MinusScalar.MATRIX;
 
-	public static TimesScalar<Matrix> timesScalar = TimesScalar.INSTANCE;
+	public static TimesScalarCalculation<Matrix, Matrix> timesScalar = TimesScalar.MATRIX;
 
-	public static DivideScalar<Matrix> divideScalar = DivideScalar.INSTANCE;
+	public static DivideScalarCalculation<Matrix, Matrix> divideScalar = DivideScalar.MATRIX;
 
 	public static Mtimes<Matrix, Matrix, Matrix> mtimes = Mtimes.INSTANCE;
 

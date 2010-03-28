@@ -371,12 +371,12 @@ public interface Mtimes<S, T, U> {
 				if (source1 instanceof HasColumnMajorDoubleArray1D
 						&& source2 instanceof HasColumnMajorDoubleArray1D
 						&& target instanceof HasColumnMajorDoubleArray1D) {
-					gemmDoubleArraySingleThreaded(1.0, ((HasColumnMajorDoubleArray1D) source1)
+					gemmDoubleArraySingleThreaded(((HasColumnMajorDoubleArray1D) source1)
 							.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(),
-							(int) source1.getColumnCount(), 1.0,
-							((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
-							(int) source2.getRowCount(), (int) source2.getColumnCount(),
-							((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+							(int) source1.getColumnCount(), ((HasColumnMajorDoubleArray1D) source2)
+									.getColumnMajorDoubleArray1D(), (int) source2.getRowCount(),
+							(int) source2.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
+									.getColumnMajorDoubleArray1D());
 				} else if (source1 instanceof HasRowMajorDoubleArray2D
 						&& source2 instanceof HasRowMajorDoubleArray2D
 						&& target instanceof HasRowMajorDoubleArray2D) {
@@ -385,7 +385,7 @@ public interface Mtimes<S, T, U> {
 							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
 							.getRowMajorDoubleArray2D());
 				} else {
-					gemmDenseDoubleMatrix2DSingleThreaded(1.0, source1, 1.0, source2, target);
+					gemmDenseDoubleMatrix2DSingleThreaded(source1, source2, target);
 				}
 			}
 		}
@@ -405,7 +405,8 @@ public interface Mtimes<S, T, U> {
 							.getBlockStripeSize()) {
 				b = (BlockDenseDoubleMatrix2D) source2;
 			} else {
-				b = new BlockDenseDoubleMatrix2D(source2, a.getBlockStripeSize());
+				b = new BlockDenseDoubleMatrix2D(source2, a.getBlockStripeSize(),
+						BlockOrder.COLUMNMAJOR);
 			}
 			final int arows = (int) a.getRowCount();
 			final int bcols = (int) b.getColumnCount();
@@ -421,20 +422,17 @@ public interface Mtimes<S, T, U> {
 			blockMultiplyMultiThreaded(a, b, c);
 
 			if (c != target) {
-				for (int i = arows; --i != -1;) {
-					for (int j = bcols; --j != -1;) {
+				for (int j = bcols; --j != -1;) {
+					for (int i = arows; --i != -1;) {
 						target.setDouble(c.getDouble(i, j), i, j);
 					}
 				}
 			}
 		}
 
-		private final void gemmDoubleArraySingleThreaded(final double alpha, final double[] A,
-				final int m1RowCount, final int m1ColumnCount, final double beta, final double[] B,
-				final int m2RowCount, final int m2ColumnCount, final double[] C) {
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
+		private final void gemmDoubleArraySingleThreaded(final double[] A, final int m1RowCount,
+				final int m1ColumnCount, final double[] B, final int m2RowCount,
+				final int m2ColumnCount, final double[] C) {
 			for (int i = C.length; --i != -1;) {
 				C[i] = 0;
 			}
@@ -442,17 +440,11 @@ public interface Mtimes<S, T, U> {
 			for (int i = 0; i < m2ColumnCount; i++) {
 				final int jcolTimesM1RowCount = i * m1RowCount;
 				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-				if (beta == 1.0) {
-					for (int irow = 0; irow < m1RowCount; ++irow) {
-						C[irow + jcolTimesM1RowCount] = 0.0;
-					}
-				} else {
-					for (int irow = 0; irow < m1RowCount; ++irow) {
-						C[irow + jcolTimesM1RowCount] *= beta;
-					}
+				for (int irow = 0; irow < m1RowCount; ++irow) {
+					C[irow + jcolTimesM1RowCount] = 0.0;
 				}
 				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-					final double temp = alpha * B[lcol + jcolTimesM1ColumnCount];
+					final double temp = B[lcol + jcolTimesM1ColumnCount];
 					if (temp != 0.0) {
 						final int lcolTimesM1RowCount = lcol * m1RowCount;
 						for (int irow = 0; irow < m1RowCount; ++irow) {
@@ -483,29 +475,18 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private final void gemmDenseDoubleMatrix2DSingleThreaded(final double alpha,
-				final DenseDoubleMatrix2D A, final double beta, final DenseDoubleMatrix2D B,
-				final DenseDoubleMatrix2D C) {
+		private final void gemmDenseDoubleMatrix2DSingleThreaded(final DenseDoubleMatrix2D A,
+				final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
 			final int m2ColumnCount = (int) B.getColumnCount();
 
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
-
 			for (int i = 0; i < m2ColumnCount; i++) {
-				if (beta != 1.0) {
-					for (int irow = 0; irow < m1RowCount; ++irow) {
-						C.setDouble(C.getDouble(irow, i) * beta, irow, i);
-					}
-				} else {
-					for (int irow = 0; irow < m1RowCount; ++irow) {
-						C.setDouble(0.0, irow, i);
-					}
+				for (int irow = 0; irow < m1RowCount; ++irow) {
+					C.setDouble(0.0, irow, i);
 				}
 				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-					final double temp = alpha * B.getDouble(lcol, i);
+					final double temp = B.getDouble(lcol, i);
 					if (temp != 0.0) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,

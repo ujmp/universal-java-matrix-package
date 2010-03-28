@@ -36,171 +36,172 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
-public interface DivideScalar<T> {
+public class DivideScalar {
+	public static final DivideScalarCalculation<Matrix, Matrix> MATRIX = new DivideScalarMatrix();
 
-	public static final DivideScalar<Matrix> INSTANCE = new DivideScalar<Matrix>() {
+	public static final DivideScalarCalculation<DenseMatrix, DenseMatrix> DENSEMATRIX = new DivideScalarDenseMatrix();
 
-		public final void calc(final Matrix source, final BigDecimal divisor, final Matrix target) {
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
-				DivideScalar.DENSEMATRIX.calc((DenseMatrix) source, divisor, (DenseMatrix) target);
-			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-				DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor,
-						(SparseMatrix) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					BigDecimal value = source.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.divide(value, divisor);
-					target.setAsBigDecimal(result, c);
-				}
-			}
-		}
+	public static final DivideScalarCalculation<DenseMatrix2D, DenseMatrix2D> DENSEMATRIX2D = new DivideScalarDenseMatrix2D();
 
-		public final void calc(final Matrix source, final double divisor, final Matrix target) {
-			if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
-				DivideScalar.DENSEMATRIX.calc((DenseMatrix) source, divisor, (DenseMatrix) target);
-			} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-				DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor,
-						(SparseMatrix) target);
-			} else {
-				calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
-			}
-		}
-	};
+	public static final DivideScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideScalarDenseDoubleMatrix2D();
 
-	public static final DivideScalar<DenseMatrix> DENSEMATRIX = new DivideScalar<DenseMatrix>() {
+	public static final DivideScalarCalculation<SparseMatrix, SparseMatrix> SPARSEMATRIX = new DivideScalarSparseMatrix();
+}
 
-		public final void calc(final DenseMatrix source, final BigDecimal divisor,
-				final DenseMatrix target) {
-			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				DivideScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, divisor,
-						(DenseMatrix2D) target);
-			} else {
-				for (long[] c : source.allCoordinates()) {
-					BigDecimal value = source.getAsBigDecimal(c);
-					BigDecimal result = MathUtil.divide(value, divisor);
-					target.setAsBigDecimal(result, c);
-				}
-			}
-		}
+class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 
-		public final void calc(final DenseMatrix source, final double divisor,
-				final DenseMatrix target) {
-			if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
-				DivideScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, divisor,
-						(DenseMatrix2D) target);
-			} else {
-				calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
-			}
-		}
-	};
-
-	public static final DivideScalar<SparseMatrix> SPARSEMATRIX = new DivideScalar<SparseMatrix>() {
-
-		public final void calc(final SparseMatrix source, final BigDecimal divisor,
-				final SparseMatrix target) {
-			for (long[] c : source.availableCoordinates()) {
+	public final void calc(final Matrix source, final BigDecimal divisor, final Matrix target) {
+		if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			DivideScalar.DENSEMATRIX.calc((DenseMatrix) source, divisor, (DenseMatrix) target);
+		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
+			DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor, (SparseMatrix) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.divide(value, divisor);
 				target.setAsBigDecimal(result, c);
 			}
 		}
+	}
 
-		public final void calc(SparseMatrix source, double divisor, SparseMatrix target) {
+	public final void calc(final Matrix source, final double divisor, final Matrix target) {
+		if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
+			DivideScalar.DENSEMATRIX.calc((DenseMatrix) source, divisor, (DenseMatrix) target);
+		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
+			DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor, (SparseMatrix) target);
+		} else {
 			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
 		}
-	};
+	}
+};
 
-	public static final DivideScalar<DenseMatrix2D> DENSEMATRIX2D = new DivideScalar<DenseMatrix2D>() {
+class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, DenseMatrix> {
 
-		public final void calc(final DenseMatrix2D source, final BigDecimal divisor,
-				final DenseMatrix2D target) {
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
-						(DenseDoubleMatrix2D) target);
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						BigDecimal value = source.getAsBigDecimal(r, c);
-						BigDecimal result = MathUtil.divide(value, divisor);
-						target.setAsBigDecimal(result, r, c);
-					}
+	public final void calc(final DenseMatrix source, final BigDecimal divisor,
+			final DenseMatrix target) {
+		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			DivideScalar.DENSEMATRIX2D
+					.calc((DenseMatrix2D) source, divisor, (DenseMatrix2D) target);
+		} else {
+			for (long[] c : source.allCoordinates()) {
+				BigDecimal value = source.getAsBigDecimal(c);
+				BigDecimal result = MathUtil.divide(value, divisor);
+				target.setAsBigDecimal(result, c);
+			}
+		}
+	}
+
+	public final void calc(final DenseMatrix source, final double divisor, final DenseMatrix target) {
+		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
+			DivideScalar.DENSEMATRIX2D
+					.calc((DenseMatrix2D) source, divisor, (DenseMatrix2D) target);
+		} else {
+			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+		}
+	}
+};
+
+class DivideScalarSparseMatrix implements DivideScalarCalculation<SparseMatrix, SparseMatrix> {
+
+	public final void calc(final SparseMatrix source, final BigDecimal divisor,
+			final SparseMatrix target) {
+		for (long[] c : source.availableCoordinates()) {
+			BigDecimal value = source.getAsBigDecimal(c);
+			BigDecimal result = MathUtil.divide(value, divisor);
+			target.setAsBigDecimal(result, c);
+		}
+	}
+
+	public final void calc(SparseMatrix source, double divisor, SparseMatrix target) {
+		calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+	}
+};
+
+class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D, DenseMatrix2D> {
+
+	public final void calc(final DenseMatrix2D source, final BigDecimal divisor,
+			final DenseMatrix2D target) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
+					(DenseDoubleMatrix2D) target);
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					BigDecimal value = source.getAsBigDecimal(r, c);
+					BigDecimal result = MathUtil.divide(value, divisor);
+					target.setAsBigDecimal(result, r, c);
 				}
 			}
 		}
+	}
 
-		public final void calc(final DenseMatrix2D source, final double divisor,
-				final DenseMatrix2D target) {
-			if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
-				DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
-						(DenseDoubleMatrix2D) target);
-			} else {
-				calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
-			}
+	public final void calc(final DenseMatrix2D source, final double divisor,
+			final DenseMatrix2D target) {
+		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+			DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
+					(DenseDoubleMatrix2D) target);
+		} else {
+			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
 		}
-	};
+	}
+};
 
-	public static final DivideScalar<DenseDoubleMatrix2D> DENSEDOUBLEMATRIX2D = new DivideScalar<DenseDoubleMatrix2D>() {
+class DivideScalarDenseDoubleMatrix2D implements
+		DivideScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> {
 
-		public final void calc(DenseDoubleMatrix2D source, BigDecimal divisor,
-				DenseDoubleMatrix2D target) {
-			calc(source, divisor.doubleValue(), target);
-		}
+	public final void calc(DenseDoubleMatrix2D source, BigDecimal divisor,
+			DenseDoubleMatrix2D target) {
+		calc(source, divisor.doubleValue(), target);
+	}
 
-		public final void calc(final DenseDoubleMatrix2D source, final double divisor,
-				final DenseDoubleMatrix2D target) {
-			if (source instanceof HasColumnMajorDoubleArray1D
-					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), divisor,
-						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
-			} else if (source instanceof HasRowMajorDoubleArray2D
-					&& target instanceof HasRowMajorDoubleArray2D) {
-				calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), divisor,
-						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
-			} else {
-				for (int r = (int) source.getRowCount(); --r != -1;) {
-					for (int c = (int) source.getColumnCount(); --c != -1;) {
-						target.setDouble(source.getDouble(r, c) / divisor, r, c);
-					}
+	public final void calc(final DenseDoubleMatrix2D source, final double divisor,
+			final DenseDoubleMatrix2D target) {
+		if (source instanceof HasColumnMajorDoubleArray1D
+				&& target instanceof HasColumnMajorDoubleArray1D) {
+			calc(((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D(), divisor,
+					((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
+		} else if (source instanceof HasRowMajorDoubleArray2D
+				&& target instanceof HasRowMajorDoubleArray2D) {
+			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), divisor,
+					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
+		} else {
+			for (int r = (int) source.getRowCount(); --r != -1;) {
+				for (int c = (int) source.getColumnCount(); --c != -1;) {
+					target.setDouble(source.getDouble(r, c) / divisor, r, c);
 				}
 			}
 		}
+	}
 
-		private final void calc(final double[][] source, final double divisor,
-				final double[][] target) {
-			if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
-					&& source[0].length >= 100) {
-				new PForEquidistant(0, source.length - 1) {
-					public void step(int i) {
-						double[] tsource = source[i];
-						double[] ttarget = target[i];
-						for (int c = source[0].length; --c != -1;) {
-							ttarget[c] = tsource[c] / divisor;
-						}
-					}
-				};
-			} else {
-				double[] tsource = null;
-				double[] ttarget = null;
-				for (int r = source.length; --r != -1;) {
-					tsource = source[r];
-					ttarget = target[r];
+	private final void calc(final double[][] source, final double divisor, final double[][] target) {
+		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
+				&& source[0].length >= 100) {
+			new PForEquidistant(0, source.length - 1) {
+				public void step(int i) {
+					double[] tsource = source[i];
+					double[] ttarget = target[i];
 					for (int c = source[0].length; --c != -1;) {
 						ttarget[c] = tsource[c] / divisor;
 					}
 				}
+			};
+		} else {
+			double[] tsource = null;
+			double[] ttarget = null;
+			for (int r = source.length; --r != -1;) {
+				tsource = source[r];
+				ttarget = target[r];
+				for (int c = source[0].length; --c != -1;) {
+					ttarget[c] = tsource[c] / divisor;
+				}
 			}
 		}
+	}
 
-		private final void calc(final double[] source, final double divisor, final double[] target) {
-			final int length = source.length;
-			for (int i = 0; i < length; i++) {
-				target[i] = source[i] / divisor;
-			}
+	private final void calc(final double[] source, final double divisor, final double[] target) {
+		final int length = source.length;
+		for (int i = 0; i < length; i++) {
+			target[i] = source[i] / divisor;
 		}
-	};
-
-	public void calc(T source, BigDecimal divisor, T target);
-
-	public void calc(T source, double divisor, T target);
-
-}
+	}
+};

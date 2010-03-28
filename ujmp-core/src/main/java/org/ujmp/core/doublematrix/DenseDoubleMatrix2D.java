@@ -27,9 +27,11 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideMatrixCalculation;
 import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.DivideScalarCalculation;
 import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.MinusScalarCalculation;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusMatrixCalculation;
@@ -38,6 +40,7 @@ import org.ujmp.core.calculation.PlusScalarCalculation;
 import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesMatrixCalculation;
 import org.ujmp.core.calculation.TimesScalar;
+import org.ujmp.core.calculation.TimesScalarCalculation;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.calculation.TransposeCalculation;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
@@ -71,11 +74,11 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static PlusScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> plusScalar = PlusScalar.DENSEDOUBLEMATRIX2D;
 
-	public static MinusScalar<DenseDoubleMatrix2D> minusScalar = MinusScalar.DENSEDOUBLEMATRIX2D;
+	public static MinusScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> minusScalar = MinusScalar.DENSEDOUBLEMATRIX2D;
 
-	public static TimesScalar<DenseDoubleMatrix2D> timesScalar = TimesScalar.DENSEDOUBLEMATRIX2D;
+	public static TimesScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> timesScalar = TimesScalar.DENSEDOUBLEMATRIX2D;
 
-	public static DivideScalar<DenseDoubleMatrix2D> divideScalar = DivideScalar.DENSEDOUBLEMATRIX2D;
+	public static DivideScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> divideScalar = DivideScalar.DENSEDOUBLEMATRIX2D;
 
 	public static Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> mtimes = Mtimes.DENSEDOUBLEMATRIX2D;
 

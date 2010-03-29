@@ -32,7 +32,7 @@ import java.util.Arrays;
  * @author Frode Carlsen
  */
 public final class BlockMatrixLayout implements Serializable {
-	private static final long serialVersionUID = -8859436115773664956L;
+	private static final long serialVersionUID = 2726685238884065594L;
 
 	public enum BlockOrder {
 		ROWMAJOR, COLUMNMAJOR;
@@ -56,10 +56,13 @@ public final class BlockMatrixLayout implements Serializable {
 	/** Number of rows of matrix. */
 	public final int rows;
 
-	protected BlockMatrixLayout(final int rows, final int columns, final int blockStripe,
+	/** threshold for when to stop using square blocks. */
+	private final int sqbColThreshold, sqbRowThreshold;
+
+	BlockMatrixLayout(final int rows, final int columns, final int blockStripe,
 			final BlockOrder blockOrder) {
 
-		this.blockStripe = Math.min(rows, blockStripe);
+		this.blockStripe = blockStripe;
 
 		if (rows <= 0 || columns <= 0 || blockStripe <= 0) {
 			throw new IllegalArgumentException(String.format(
@@ -70,6 +73,8 @@ public final class BlockMatrixLayout implements Serializable {
 		this.blockArea = blockStripe * blockStripe;
 		this.rows = rows;
 		this.columns = columns;
+		this.sqbColThreshold = (columns / blockStripe) * blockStripe;
+		this.sqbRowThreshold = (rows / blockStripe) * blockStripe;
 		this.rowMajor = (BlockOrder.ROWMAJOR == blockOrder);
 	}
 
@@ -82,59 +87,82 @@ public final class BlockMatrixLayout implements Serializable {
 	 * @param column
 	 * @return block containing given row, column
 	 */
-	protected final double[] getBlock(final BlockDenseDoubleMatrix2D matrix, final int row,
-			final int column) {
+	final double[] getBlock(BlockDenseDoubleMatrix2D matrix, int row, int column) {
 		return matrix.getBlockData(row, column);
 	}
 
-	protected final int getBlockIndexByColumn(final int lrow, final int lcol) {
-		return rowMajor ? (lcol * blockStripe + lrow) : (lrow * blockStripe + lcol);
+	final int getBlockIndexByColumn(final int lrow, final int lcol, final int numRows,
+			final int numCols) {
+		return rowMajor ? (lcol * numRows + lrow) : (lrow * numCols + lcol);
 	}
 
-	protected final int getBlockIndexByRow(final int lrow, final int lcol) {
-		return rowMajor ? (lrow * blockStripe + lcol) : (lcol * blockStripe + lrow);
+	final int getBlockIndexByRow(final int lrow, final int lcol, final int numRows,
+			final int numCols) {
+		return rowMajor ? (lrow * numCols + lcol) : (lcol * numRows + lrow);
 	}
 
-	protected final int getBlockNumber(final int row, final int col) {
-		return (col / blockStripe) + (row / blockStripe) * (columns / blockStripe);
+	final int getBlockNumber(int row, int col) {
+		return (col / blockStripe) + (row / blockStripe)
+				* (columns / blockStripe + (columns % blockStripe > 0 ? 1 : 0));
 	}
 
-	protected final int getIndexInBlock(final int row, final int col) {
-		return getBlockIndexByRow(row % blockStripe, col % blockStripe);
+	final int getIndexInBlock(int row, int col) {
+		int lrows = getRowsInBlock(row);
+		int lcols = getColumnsInBlock(col);
+		return getBlockIndexByRow(row % blockStripe, col % blockStripe, lrows, lcols);
 	}
 
-	protected final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart,
-			final int colStart) {
-		final double[] block = getBlock(matrix, rowStart, colStart);
+	final int getBlockSize(int row, int col) {
+		int lrows = getRowsInBlock(row);
+		int lcols = getColumnsInBlock(col);
+		return lrows * lcols;
+	}
+
+	final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart, int colStart) {
+		double[] block = getBlock(matrix, rowStart, colStart);
 		if (!rowMajor) {
 			return block;
 		}
 
-		final double[] targetBlock = new double[blockArea];
-		// transpose block
-		for (int i = 0; i < blockStripe; i++) {
-			for (int j = 0; j < blockStripe; j++) {
-				int tij = getBlockIndexByRow(i, j);
-				int bij = getBlockIndexByColumn(i, j);
+		double[] targetBlock = new double[block.length];
+		int lrows = getRowsInBlock(rowStart);
+		int lcols = getColumnsInBlock(colStart);
+
+		// transpose block, swap cols and rows
+		for (int i = 0; i < lcols; i++) {
+			for (int j = 0; j < lrows; j++) {
+				int tij = getBlockIndexByRow(i, j, lcols, lrows);
+				int bij = getBlockIndexByColumn(i, j, lcols, lrows);
 				targetBlock[tij] = block[bij];
 			}
 		}
 		return targetBlock;
 	}
 
-	protected final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix,
-			final int rowStart, final int colStart) {
-		final double[] block = getBlock(matrix, rowStart, colStart);
+	int getColumnsInBlock(int col) {
+		return (col >= sqbColThreshold) ? this.columns - this.sqbColThreshold : blockStripe;
+	}
+
+	int getRowsInBlock(final int row) {
+		return (row >= sqbRowThreshold) ? this.rows - this.sqbRowThreshold : blockStripe;
+	}
+
+	final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix, final int rowStart,
+			int colStart) {
+		double[] block = getBlock(matrix, rowStart, colStart);
 		if (rowMajor) {
 			return block;
 		}
 
-		final double[] targetBlock = new double[blockArea];
+		double[] targetBlock = new double[block.length];
+		int lrows = getRowsInBlock(rowStart);
+		int lcols = getColumnsInBlock(colStart);
+
 		// transpose block
-		for (int i = 0; i < blockStripe; i++) {
-			for (int j = 0; j < blockStripe; j++) {
-				int bij = getBlockIndexByRow(i, j);
-				int tij = getBlockIndexByColumn(i, j);
+		for (int i = 0; i < lrows; i++) {
+			for (int j = 0; j < lcols; j++) {
+				int bij = getBlockIndexByRow(i, j, lrows, lcols);
+				int tij = getBlockIndexByColumn(i, j, lrows, lcols);
 				targetBlock[tij] = block[bij];
 			}
 		}
@@ -143,14 +171,15 @@ public final class BlockMatrixLayout implements Serializable {
 
 	@Override
 	public String toString() {
-		final int[] rowLayout = new int[blockStripe];
+		int[] rowLayout = new int[blockStripe];
 		StringBuilder b = new StringBuilder(blockArea * 4 + 40);
 		String msg = "\n(rows=%s, columns=%s, blockSize=%s):\n";
 		b.append(String.format(msg, rows, columns, blockStripe));
+		int rows = blockStripe, cols = blockStripe;
 
-		for (int i = 0; i < blockStripe; i++) {
-			for (int j = 0; j < blockStripe; j++) {
-				rowLayout[j] = getBlockIndexByRow(i, j);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				rowLayout[j] = getBlockIndexByRow(i, j, rows, cols);
 			}
 			b.append(Arrays.toString(rowLayout)).append("\n");
 		}

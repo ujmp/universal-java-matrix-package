@@ -61,12 +61,12 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runSolveTall", true);
 		put("runSVD", true);
 		put("runEig", true);
-		put("runChol", true);
+		put("runChol", false);
 		put("runLU", false);
 		put("runQR", false);
 
 		put("runDefaultDenseDoubleMatrix2D", true);
-		put("runArrayDenseDoubleMatrix2D", false);
+		put("runArrayDenseDoubleMatrix2D", true);
 		put("runBlockDenseDoubleMatrix2D", true);
 		put("runJBlasDenseDoubleMatrix2D", true);
 		put("runMTJDenseDoubleMatrix2D", true);
@@ -80,7 +80,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runParallelColtDenseDoubleMatrix2D", true);
 		put("runColtDenseDoubleMatrix2D", true);
 		put("runSSTDenseDoubleMatrix2D", false);
-		put("runCommonsMathArrayDenseDoubleMatrix2D", false);
+		put("runCommonsMathArrayDenseDoubleMatrix2D", true);
 		put("runCommonsMathBlockDenseDoubleMatrix2D", true);
 		put("runEJMLDenseDoubleMatrix2D", true);
 		put("runJamaDenseDoubleMatrix2D", true);
@@ -90,6 +90,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runVecMathDenseDoubleMatrix2D", false);
 
 		put("useJBlas", true);
+		put("useBlockMatrixMultiply", true);
 		put("useOjalgo", true);
 		put("useEJML", true);
 		put("useMTJ", true);
@@ -585,6 +586,14 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public boolean isUseEJML() {
 		return MathUtil.getBoolean(get("useEJML"));
+	}
+
+	public boolean isUseBlockMatrixMultiply() {
+		return MathUtil.getBoolean(get("useBlockMatrixMultiply"));
+	}
+
+	public void setUseBlockMatrixMultiply(boolean use) {
+		put("useBlockMatrixMultiply", use);
 	}
 
 	public void setUseParallelColt(boolean use) {

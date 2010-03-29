@@ -112,8 +112,10 @@ public class BlockMultiply implements Callable<Void> {
 		final int step = blockStripeSize, blockSize = blockStripeSize * blockStripeSize;
 
 		for (int m = fromM; m < toM; m += step) {
+			int aRows = matrixA.layout.getRowsInBlock(m);
 
 			for (int k = fromK; k < toK; k += step) {
+				int bCols = matrixB.layout.getColumnsInBlock(k);
 
 				double[] cBlock = new double[blockSize];
 
@@ -125,7 +127,15 @@ public class BlockMultiply implements Callable<Void> {
 					double[] bBlock = matrixB.layout.toColMajorBlock(matrixB, n, k);
 
 					if (aBlock != null && bBlock != null) {
-						multiplyAxB(aBlock, bBlock, cBlock, step);
+						if (aBlock.length == blockSize && bBlock.length == blockSize) {
+							multiplyAxB(aBlock, bBlock, cBlock, step);
+						} else {
+							int aCols = aBlock.length / aRows;
+							int bRows = bBlock.length / bCols;
+							verify(aCols == bRows, "aCols!=bRows", aCols, bRows);
+							multiplyRowMajorTimesColumnMajorBlocks(aBlock, bBlock, cBlock, aRows,
+									aCols, bCols);
+						}
 					}
 				}
 
@@ -175,23 +185,36 @@ public class BlockMultiply implements Callable<Void> {
 		}
 	}
 
+	public void multiplyRowMajorTimesColumnMajorBlocks(double[] aBlock, double[] bBlock,
+			double[] cBlock, int aRows, int bRows, int bCols) {
+		final int aCols = bRows;
+
+		for (int i = 0; i < aRows; i++) {
+			for (int k = 0; k < bCols; k++) {
+				double sum = 0.0d;
+				for (int j = 0; j < bRows; j++) {
+					sum += aBlock[i * aCols + j] * bBlock[k * bRows + j];
+				}
+				cBlock[i * bCols + k] += sum;
+			}
+		}
+	}
+
 	private static void verifyInput(final BlockDenseDoubleMatrix2D a,
 			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c, final int fromM,
 			final int toM, final int fromN, final int toN, final int fromK, final int toK) {
 		verify(a != null, "a cannot be null");
 		verify(b != null, "b cannot be null");
 		verify(c != null, "c cannot be null");
-		verify(fromM <= a.getPaddedRowCount() && fromM >= 0, "Invalid argument : fromM");
-		verify(toM <= a.getPaddedRowCount() && toM >= fromM, "Invalid argument : fromM/toM");
-		verify(fromN <= a.getPaddedColumnCount() && fromN >= 0, "Invalid argument : fromN");
-		verify(toN <= a.getPaddedColumnCount() && toN >= fromN, "Invalid argument : fromN/toN");
-		verify(fromK <= b.getPaddedColumnCount() && fromK >= 0, "Invalid argument : fromK");
-		verify(toK <= b.getPaddedColumnCount() && toK >= fromK, "Invalid argument : fromK/toK");
-		verify(a.getPaddedColumnCount() == b.getPaddedRowCount(),
-				"Invalid argument : a.columns != b.rows");
-		verify(a.getPaddedRowCount() == c.getPaddedRowCount(),
-				"Invalid argument : a.rows != c.rows");
-		verify(b.getPaddedColumnCount() == c.getPaddedColumnCount(),
+		verify(fromM <= a.getRowCount() && fromM >= 0, "Invalid argument : fromM");
+		verify(toM <= a.getRowCount() && toM >= fromM, "Invalid argument : fromM/toM");
+		verify(fromN <= a.getColumnCount() && fromN >= 0, "Invalid argument : fromN");
+		verify(toN <= a.getColumnCount() && toN >= fromN, "Invalid argument : fromN/toN");
+		verify(fromK <= b.getColumnCount() && fromK >= 0, "Invalid argument : fromK");
+		verify(toK <= b.getColumnCount() && toK >= fromK, "Invalid argument : fromK/toK");
+		verify(a.getColumnCount() == b.getRowCount(), "Invalid argument : a.columns != b.rows");
+		verify(a.getRowCount() == c.getRowCount(), "Invalid argument : a.rows != c.rows");
+		verify(b.getColumnCount() == c.getColumnCount(),
 				"Invalid argument : b.columns != c.columns");
 	}
 

@@ -33,7 +33,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		return FileFormat.XLS;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToFile() throws Exception {
 		try {
 			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
@@ -45,7 +45,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToStream() throws Exception {
 		try {
 			Class.forName("org.ujmp.jexcelapi.ExportMatrixXLS");
@@ -57,7 +57,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -67,7 +67,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();
@@ -77,7 +77,7 @@ public class TestExportMatrixXLS extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();

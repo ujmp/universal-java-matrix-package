@@ -101,55 +101,11 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		HasBlockDoubleArray2D {
 	private static final long serialVersionUID = -5131649082019624021L;
 
-	private static int deriveDefaultBlockStripeSize(final int rows, final int cols) {
+	private static final int DEFAULT_BLOCK_SIZE = 100;
+
+	private static int deriveDefaultBlockStripeSize(int rows, int cols) {
 		// TODO pick a suitable size
-		return Math.min(Mtimes.THRESHOLD, Math.min(rows, cols));
-	}
-
-	/** Pad out the given dimension to fit with the blockStripeSize. */
-	private static int pad(final int i, final int blockStripeSize) {
-		return (i % blockStripeSize) > 0 ? (i / blockStripeSize) * blockStripeSize
-				+ blockStripeSize : i;
-	}
-
-	/**
-	 * Adjust the targetSize to better fit as a multiple of the dimension.
-	 * 
-	 * @param dim
-	 *            - the given dimension size (number of rows, or number of
-	 *            columns)
-	 * @param targetSize
-	 *            - the target block stripe size to fit.
-	 * @return new adjusted targetSize to be used instead, to reduce need for
-	 *         padding the matrix.
-	 */
-	public static int padBlockStripeSize(final int dim, final int targetSize) {
-		verify(dim > 0, "dim<=0");
-		verify(targetSize > 0, "targetSize<=0");
-
-		int newSize;
-		int fit = dim / targetSize; // does dim fit to targetSize
-		int remain = dim % targetSize; // remainder after fitting
-
-		if (fit == 0) {
-			return dim;
-		} else if (remain == 0) {
-			return targetSize;
-		}
-
-		// add or subtract from target size:
-		int adjCoeff = 1;
-		double remainPct = ((double) remain) / ((double) targetSize);
-		if (remainPct > 0.5) {
-			adjCoeff = -1;
-			remain = (targetSize - remain);
-			fit += 1; // increase with one block;
-		}
-
-		newSize = targetSize + adjCoeff * (remain / fit + (remain % fit) > 0 ? 1 : 0);
-
-		return newSize;
-
+		return (rows < DEFAULT_BLOCK_SIZE && cols < DEFAULT_BLOCK_SIZE) ? 50 : DEFAULT_BLOCK_SIZE;
 	}
 
 	/**
@@ -169,13 +125,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 *         dimensions.
 	 */
 	public static int selectBlockStripeSize(final int m, final int n, final int k) {
-		final int targetBlockSize = Math.min(Math.min(Math.min(m, k), n), 200);
+		return (n < DEFAULT_BLOCK_SIZE) ? n : DEFAULT_BLOCK_SIZE;
 		// naive
-		int m1 = padBlockStripeSize(m, targetBlockSize);
-		int n1 = padBlockStripeSize(n, targetBlockSize);
-		int k1 = padBlockStripeSize(k, targetBlockSize);
-		int blSize = Math.min(Math.min(m1, k1), n1);
-		return blSize;
 	}
 
 	/** Matrix data by block number. */
@@ -189,10 +140,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	/** Dimensions of the matrix. */
 	private final long[] size;
-
-	/** Dimensions of the matrix with padding. */
-	private final int paddedRows;
-	private final int paddedCols;
 
 	public BlockDenseDoubleMatrix2D(final double[][] values) {
 		this(values.length, values[0].length, BlockOrder.ROWMAJOR);
@@ -238,22 +185,16 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		verify(blockStripeSize > 0, "blockStripeSize<=0");
 		verify(blockOrder != null, "blockOrder == null");
 
-		// now pad matrix size
-		paddedRows = pad(rows, blockStripeSize);
-		paddedCols = pad(cols, blockStripeSize);
-
-		verify(paddedRows > 0, "dimRows<=0");
-		verify(paddedCols > 0, "dimCols<=0");
-
 		this.size = new long[] { rows, cols };
 
 		// layout structure for the blocks in the matrix
-		this.layout = new BlockMatrixLayout(paddedRows, paddedCols, blockStripeSize, blockOrder);
+		this.layout = new BlockMatrixLayout(rows, cols, blockStripeSize, blockOrder);
 
 		// pad out matrix size to match block size
 		// TODO try eliminate padding??
 
-		numberOfBlocks = paddedRows / blockStripeSize * paddedCols / blockStripeSize;
+		this.numberOfBlocks = (rows / blockStripeSize + (rows % blockStripeSize > 0 ? 1 : 0))
+				* (cols / blockStripeSize + (cols % blockStripeSize > 0 ? 1 : 0));
 		this.data = new double[numberOfBlocks][];
 	}
 
@@ -273,14 +214,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 */
 	public BlockDenseDoubleMatrix2D(final long... size) {
 		this(size[ROW], size[COLUMN], BlockOrder.ROWMAJOR);
-	}
-
-	protected final int getPaddedColumnCount() {
-		return paddedCols;
-	}
-
-	protected final int getPaddedRowCount() {
-		return paddedRows;
 	}
 
 	/**
@@ -344,8 +277,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (m instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D mDense = (DenseDoubleMatrix2D) m;
 			final int mRows = (int) mDense.getRowCount(), mColumns = (int) mDense.getColumnCount();
-			for (int i = 0; i < mRows; i++) {
-				for (int j = 0; j < mColumns; j++) {
+			for (int j = 0; j < mColumns; j++) {
+				for (int i = 0; i < mRows; i++) {
 					setDouble(mDense.getDouble(i, j), i, j);
 				}
 			}
@@ -371,7 +304,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 		double[] block = data[blockNumber];
 		synchronized (block) {
-			for (int i = block.length; --i >= 0;) {
+			for (int i = newData.length; --i >= 0;) {
 				block[i] += newData[i];
 			}
 		}
@@ -422,15 +355,15 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 *            - in matrix
 	 * @return double[] block where the given row,column is held.
 	 */
-	protected final double[] getBlockData(final int row, final int column) {
+	double[] getBlockData(int row, int column) {
 		int blockNumber = layout.getBlockNumber(row, column);
 		double[] block = data[blockNumber];
 
 		if (null == block) {
-			block = new double[layout.blockArea];
+			block = new double[layout.getBlockSize(row, column)];
 			data[blockNumber] = block;
 		}
-		return block;
+		return data[blockNumber];
 	}
 
 	/**
@@ -552,9 +485,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int i = result.data.length; --i != -1;) {
 			double[] block = result.data[i];
 			if (block == null) {
-				block = new double[result.layout.blockArea];
+				block = new double[layout.blockArea];
 			}
-			for (int j = result.layout.blockArea; --j != -1;) {
+			for (int j = block.length; --j != -1;) {
 				block[j] += value;
 			}
 		}
@@ -574,10 +507,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 						continue;
 					}
 					if (result.data[i] == null) {
-						result.data[i] = new double[result.layout.blockArea];
+						result.data[i] = new double[b.data[i].length];
 					}
 					final double[] block = result.data[i];
-					for (int j = result.layout.blockArea; --j != -1;) {
+					for (int j = block.length; --j != -1;) {
 						block[j] += block2[j];
 					}
 				}
@@ -594,16 +527,16 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 					&& b.layout.rowMajor == layout.rowMajor
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-				for (int i = result.data.length; --i != -1;) {
+				for (int i = data.length; --i != -1;) {
 					final double[] block2 = b.data[i];
 					if (block2 == null) {
 						continue;
 					}
 					if (result.data[i] == null) {
-						result.data[i] = new double[result.layout.blockArea];
+						result.data[i] = new double[b.data[i].length];
 					}
 					final double[] block = result.data[i];
-					for (int j = result.layout.blockArea; --j != -1;) {
+					for (int j = block.length; --j != -1;) {
 						block[j] -= block2[j];
 					}
 				}
@@ -631,7 +564,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 							// multiply with 0.0
 							continue;
 						}
-						for (int j = result.layout.blockArea; --j != -1;) {
+						for (int j = block.length; --j != -1;) {
 							block[j] *= block2[j];
 						}
 					}
@@ -663,7 +596,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 							// divide 0.0 by x = 0.0: nothing to do
 							continue;
 						}
-						for (int j = result.layout.blockArea; --j != -1;) {
+						for (int j = block.length; --j != -1;) {
 							block[j] /= block2[j];
 						}
 					}
@@ -679,9 +612,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int i = result.data.length; --i != -1;) {
 			double[] block = result.data[i];
 			if (block == null) {
-				block = new double[result.layout.blockArea];
+				block = new double[layout.blockArea];
 			}
-			for (int j = result.layout.blockArea; --j != -1;) {
+			for (int j = block.length; --j != -1;) {
 				block[j] -= value;
 			}
 		}
@@ -693,7 +626,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int i = result.data.length; --i != -1;) {
 			final double[] block = result.data[i];
 			if (block != null) {
-				for (int j = result.layout.blockArea; --j != -1;) {
+				for (int j = block.length; --j != -1;) {
 					block[j] *= value;
 				}
 			}
@@ -706,7 +639,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int i = result.data.length; --i != -1;) {
 			final double[] block = result.data[i];
 			if (block != null) {
-				for (int j = result.layout.blockArea; --j != -1;) {
+				for (int j = block.length; --j != -1;) {
 					block[j] /= value;
 				}
 			}

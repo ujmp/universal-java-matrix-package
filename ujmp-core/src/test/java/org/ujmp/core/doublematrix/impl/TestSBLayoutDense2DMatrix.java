@@ -22,11 +22,14 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 import org.junit.Test;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 
+@SuppressWarnings("unused")
 public class TestSBLayoutDense2DMatrix extends TestCase {
 
 	private static final int[][] LAYOUT_2x2 = new int[][]//
@@ -49,10 +52,11 @@ public class TestSBLayoutDense2DMatrix extends TestCase {
 		if (arrLayout == null || blockLayout == null) {
 			throw new AssertionError("blockLayout and arrLayout are different");
 		}
-		for (int i = 0; i < arrLayout.length; i++) {
-			for (int j = 0; j < arrLayout[i].length; j++) {
+		int aRows = arrLayout.length, aCols = arrLayout[0].length;
+		for (int i = 0; i < aRows; i++) {
+			for (int j = 0; j < aCols; j++) {
 				assertEquals(String.format("(i, j) = (%s, %s) : ", i, j), arrLayout[i][j],
-						blockLayout.getBlockIndexByColumn(i, j));
+						blockLayout.getBlockIndexByColumn(i, j, aRows, aCols));
 			}
 		}
 	}
@@ -74,8 +78,10 @@ public class TestSBLayoutDense2DMatrix extends TestCase {
 
 	@Test
 	public void testThatCreateLargeBlockSucceeds() throws Exception {
-		BlockMatrixLayout layout = new BlockMatrixLayout(10000, 10000, 10000, BlockOrder.ROWMAJOR);
-		int index = layout.getBlockIndexByRow(9998, 9999);
+		int blockStripe = 10000;
+		BlockMatrixLayout layout = new BlockMatrixLayout(10000, 10000, blockStripe,
+				BlockOrder.ROWMAJOR);
+		int index = layout.getBlockIndexByRow(9998, 9999, blockStripe, blockStripe);
 
 		assertEquals(99989999, index);
 
@@ -84,8 +90,8 @@ public class TestSBLayoutDense2DMatrix extends TestCase {
 
 	@Test
 	public void testThatLayout3x2RectangularBlockGivesCorrectLayout() throws Exception {
-		int blockSide = 3, rows = 20, cols = 15;
-		assertEqualsBlockLayout(getBlockLayout(blockSide, 3, 2), LAYOUT_3x2);
+		int blockSide = 3, rows = 3, cols = 2;
+		assertEqualsBlockLayout(getBlockLayout(blockSide, rows, cols), LAYOUT_3x2);
 	}
 
 	@Test
@@ -104,6 +110,66 @@ public class TestSBLayoutDense2DMatrix extends TestCase {
 	public void testThatLayoutMatrixWith2x2BlockGivesCorrectLayout() throws Exception {
 		int blockSide = 2, rows = 2, cols = 2;
 		assertEqualsBlockLayout(getBlockLayout(blockSide, rows, cols), LAYOUT_2x2);
+	}
+
+	private static final double[] rowMajor3x5D1 = new double[] { 1, 2, 3, 4, 5,//
+			6, 7, 8, 9, 10,//
+			11, 12, 13, 14, 15 };
+
+	@Test
+	public void testThatGetIndexInBlockReturnsCorrectResult() throws Exception {
+		double[] a = rowMajor3x5D1;
+		BlockMatrixLayout bml = new BlockMatrixLayout(3, 5, 3, BlockOrder.ROWMAJOR);
+
+		// test entries in square block
+		assertEquals(0, bml.getIndexInBlock(0, 0));
+		assertEquals(1, bml.getIndexInBlock(0, 1));
+		assertEquals(2, bml.getIndexInBlock(0, 2));
+		assertEquals(3, bml.getIndexInBlock(1, 0));
+		assertEquals(4, bml.getIndexInBlock(1, 1));
+		assertEquals(5, bml.getIndexInBlock(1, 2));
+
+		assertEquals(6, bml.getIndexInBlock(2, 0));
+		assertEquals(7, bml.getIndexInBlock(2, 1));
+		assertEquals(8, bml.getIndexInBlock(2, 2));
+
+		// test entries in remainder of block
+		assertEquals(0, bml.getIndexInBlock(0, 3));
+		assertEquals(1, bml.getIndexInBlock(0, 4));
+		assertEquals(2, bml.getIndexInBlock(1, 3));
+		assertEquals(3, bml.getIndexInBlock(1, 4));
+		assertEquals(4, bml.getIndexInBlock(2, 3));
+		assertEquals(5, bml.getIndexInBlock(2, 4));
+
+		System.out.println(Arrays.toString(a));
+	}
+
+	@Test
+	public void testThatGetBlockNumberReturnsCorrectResult() throws Exception {
+		double[] a = rowMajor3x5D1;
+		BlockMatrixLayout bml = new BlockMatrixLayout(3, 5, 3, BlockOrder.ROWMAJOR);
+
+		// test entries in square block
+		assertEquals(0, bml.getBlockNumber(0, 0));
+		assertEquals(0, bml.getBlockNumber(0, 1));
+		assertEquals(0, bml.getBlockNumber(0, 2));
+		assertEquals(0, bml.getBlockNumber(1, 0));
+		assertEquals(0, bml.getBlockNumber(1, 1));
+		assertEquals(0, bml.getBlockNumber(1, 2));
+
+		assertEquals(0, bml.getBlockNumber(2, 0));
+		assertEquals(0, bml.getBlockNumber(2, 1));
+		assertEquals(0, bml.getBlockNumber(2, 2));
+
+		// test entries in remainder of block
+		assertEquals(1, bml.getBlockNumber(0, 3));
+		assertEquals(1, bml.getBlockNumber(0, 4));
+		assertEquals(1, bml.getBlockNumber(1, 3));
+		assertEquals(1, bml.getBlockNumber(1, 4));
+		assertEquals(1, bml.getBlockNumber(2, 3));
+		assertEquals(1, bml.getBlockNumber(2, 4));
+
+		System.out.println(Arrays.toString(a));
 	}
 
 }

@@ -25,6 +25,7 @@ package org.ujmp.core.calculation;
 
 import static org.ujmp.core.util.VerifyUtil.verify;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -85,12 +86,11 @@ public interface Mtimes<S, T, U> {
 			} else if (source2 instanceof SparseMatrix) {
 				Mtimes.SPARSEMATRIX2.calc(source1, (SparseMatrix) source2, target);
 			} else {
-				gemm(1.0, source1, 1.0, source2, target);
+				gemm(source1, source2, target);
 			}
 		}
 
-		private final void gemm(final double alpha, final Matrix A, final double beta,
-				final Matrix B, final Matrix C) {
+		private final void gemm(final Matrix A, final Matrix B, final Matrix C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
 			final int m2RowCount = (int) B.getRowCount();
@@ -100,27 +100,17 @@ public interface Mtimes<S, T, U> {
 				throw new MatrixException("matrices have wrong size");
 			}
 
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
-
-			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
+			if (m1RowCount >= THRESHOLD && m1ColumnCount >= THRESHOLD && m2ColumnCount >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
 					public void step(int i) {
-						if (beta != 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-							}
-						} else {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(0.0, irow, i);
-							}
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0d, irow, i);
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B.getAsDouble(lcol, i);
-							if (temp != 0.0) {
+							final double temp = B.getAsDouble(lcol, i);
+							if (temp != 0.0d) {
 								for (int irow = 0; irow < m1RowCount; ++irow) {
 									C.setAsDouble(C.getAsDouble(irow, i)
 											+ A.getAsDouble(irow, lcol) * temp, irow, i);
@@ -131,18 +121,12 @@ public interface Mtimes<S, T, U> {
 				};
 			} else {
 				for (int i = 0; i < m2ColumnCount; i++) {
-					if (beta != 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-						}
-					} else {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(0.0, irow, i);
-						}
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setAsDouble(0.0d, irow, i);
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B.getAsDouble(lcol, i);
-						if (temp != 0.0) {
+						final double temp = B.getAsDouble(lcol, i);
+						if (temp != 0.0d) {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
 										* temp, irow, i);
@@ -163,12 +147,11 @@ public interface Mtimes<S, T, U> {
 				Mtimes.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
 						(DenseMatrix2D) target);
 			} else {
-				gemm(1.0, source1, 1.0, source2, target);
+				gemm(source1, source2, target);
 			}
 		}
 
-		private final void gemm(final double alpha, final DenseMatrix A, final double beta,
-				final DenseMatrix B, final DenseMatrix C) {
+		private final void gemm(final DenseMatrix A, final DenseMatrix B, final DenseMatrix C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
 			final int m2RowCount = (int) B.getRowCount();
@@ -178,27 +161,17 @@ public interface Mtimes<S, T, U> {
 				throw new MatrixException("matrices have wrong size");
 			}
 
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
-
-			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
+			if (m1RowCount >= THRESHOLD && m1ColumnCount >= THRESHOLD && m2ColumnCount >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
 					public void step(int i) {
-						if (beta != 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-							}
-						} else {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(0.0, irow, i);
-							}
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0d, irow, i);
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B.getAsDouble(lcol, i);
-							if (temp != 0.0) {
+							final double temp = B.getAsDouble(lcol, i);
+							if (temp != 0.0d) {
 								for (int irow = 0; irow < m1RowCount; ++irow) {
 									C.setAsDouble(C.getAsDouble(irow, i)
 											+ A.getAsDouble(irow, lcol) * temp, irow, i);
@@ -209,18 +182,12 @@ public interface Mtimes<S, T, U> {
 				};
 			} else {
 				for (int i = 0; i < m2ColumnCount; i++) {
-					if (beta != 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-						}
-					} else {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(0.0, irow, i);
-						}
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setAsDouble(0.0d, irow, i);
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B.getAsDouble(lcol, i);
-						if (temp != 0.0) {
+						final double temp = B.getAsDouble(lcol, i);
+						if (temp != 0.0d) {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
 										* temp, irow, i);
@@ -238,12 +205,12 @@ public interface Mtimes<S, T, U> {
 			target.clear();
 			for (long[] c1 : source1.availableCoordinates()) {
 				final double v1 = source1.getAsDouble(c1);
-				if (v1 != 0.0) {
+				if (v1 != 0.0d) {
 					for (long col2 = source2.getColumnCount(); --col2 != -1;) {
-						double v2 = source2.getAsDouble(c1[1], col2);
-						double temp = v1 * v2;
-						if (temp != 0.0) {
-							double v3 = target.getAsDouble(c1[0], col2);
+						final double v2 = source2.getAsDouble(c1[1], col2);
+						final double temp = v1 * v2;
+						if (temp != 0.0d) {
+							final double v3 = target.getAsDouble(c1[0], col2);
 							target.setAsDouble(v3 + temp, c1[0], col2);
 						}
 					}
@@ -258,12 +225,12 @@ public interface Mtimes<S, T, U> {
 			target.clear();
 			for (long[] c2 : source2.availableCoordinates()) {
 				final double v2 = source2.getAsDouble(c2);
-				if (v2 != 0.0) {
+				if (v2 != 0.0d) {
 					for (long row1 = source1.getRowCount(); --row1 != -1;) {
-						double v1 = source1.getAsDouble(row1, c2[0]);
-						double temp = v1 * v2;
-						if (temp != 0.0) {
-							double v3 = target.getAsDouble(row1, c2[1]);
+						final double v1 = source1.getAsDouble(row1, c2[0]);
+						final double temp = v1 * v2;
+						if (temp != 0.0d) {
+							final double v3 = target.getAsDouble(row1, c2[1]);
 							target.setAsDouble(v3 + temp, row1, c2[1]);
 						}
 					}
@@ -281,12 +248,11 @@ public interface Mtimes<S, T, U> {
 				Mtimes.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
 						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
 			} else {
-				gemm(1.0, source1, 1.0, source2, target);
+				gemm(source1, source2, target);
 			}
 		}
 
-		private final void gemm(final double alpha, final DenseMatrix2D A, final double beta,
-				final DenseMatrix2D B, final DenseMatrix2D C) {
+		private final void gemm(final DenseMatrix2D A, final DenseMatrix2D B, final DenseMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
 			final int m2RowCount = (int) B.getRowCount();
@@ -296,27 +262,17 @@ public interface Mtimes<S, T, U> {
 				throw new MatrixException("matrices have wrong size");
 			}
 
-			if (alpha == 0 || beta == 0) {
-				return;
-			}
-
-			if (C.getRowCount() >= THRESHOLD && C.getColumnCount() >= THRESHOLD) {
+			if (m1RowCount >= THRESHOLD && m1ColumnCount >= THRESHOLD && m2ColumnCount >= THRESHOLD) {
 				new PFor(0, m2ColumnCount - 1) {
 
 					@Override
 					public void step(int i) {
-						if (beta != 1.0) {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-							}
-						} else {
-							for (int irow = 0; irow < m1RowCount; ++irow) {
-								C.setAsDouble(0.0, irow, i);
-							}
+						for (int irow = 0; irow < m1RowCount; ++irow) {
+							C.setAsDouble(0.0d, irow, i);
 						}
 						for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-							double temp = alpha * B.getAsDouble(lcol, i);
-							if (temp != 0.0) {
+							final double temp = B.getAsDouble(lcol, i);
+							if (temp != 0.0d) {
 								for (int irow = 0; irow < m1RowCount; ++irow) {
 									C.setAsDouble(C.getAsDouble(irow, i)
 											+ A.getAsDouble(irow, lcol) * temp, irow, i);
@@ -327,18 +283,12 @@ public interface Mtimes<S, T, U> {
 				};
 			} else {
 				for (int i = 0; i < m2ColumnCount; i++) {
-					if (beta != 1.0) {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(C.getAsDouble(irow, i) * beta, irow, i);
-						}
-					} else {
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C.setAsDouble(0.0, irow, i);
-						}
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setAsDouble(0.0d, irow, i);
 					}
 					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
-						double temp = alpha * B.getAsDouble(lcol, i);
-						if (temp != 0.0) {
+						final double temp = B.getAsDouble(lcol, i);
+						if (temp != 0.0d) {
 							for (int irow = 0; irow < m1RowCount; ++irow) {
 								C.setAsDouble(C.getAsDouble(irow, i) + A.getAsDouble(irow, lcol)
 										* temp, irow, i);
@@ -360,12 +310,31 @@ public interface Mtimes<S, T, U> {
 			verify(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
 			verify(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
 			verify(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
-			if (source1.getRowCount() >= THRESHOLD && source2.getColumnCount() >= THRESHOLD) {
+			if (source1.getRowCount() >= THRESHOLD && source1.getColumnCount() >= THRESHOLD
+					&& source2.getColumnCount() >= THRESHOLD) {
 				if (Ops.MTIMES_JBLAS != null && UJMPSettings.isUseJBlas()) {
 					Ops.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
 							(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
-				} else {
+				} else if (UJMPSettings.isUseBlockMatrixMultiply()) {
 					calcBlockMatrixMultiThreaded(source1, source2, target);
+				} else if (source1 instanceof HasColumnMajorDoubleArray1D
+						&& source2 instanceof HasColumnMajorDoubleArray1D
+						&& target instanceof HasColumnMajorDoubleArray1D) {
+					calcDoubleArrayMultiThreaded(((HasColumnMajorDoubleArray1D) source1)
+							.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(),
+							(int) source1.getColumnCount(), ((HasColumnMajorDoubleArray1D) source2)
+									.getColumnMajorDoubleArray1D(), (int) source2.getRowCount(),
+							(int) source2.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
+									.getColumnMajorDoubleArray1D());
+				} else if (source1 instanceof HasRowMajorDoubleArray2D
+						&& source2 instanceof HasRowMajorDoubleArray2D
+						&& target instanceof HasRowMajorDoubleArray2D) {
+					calcDoubleArray2DMultiThreaded(((HasRowMajorDoubleArray2D) source1)
+							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
+							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
+							.getRowMajorDoubleArray2D());
+				} else {
+					calcDenseDoubleMatrix2DMultiThreaded(source1, source2, target);
 				}
 			} else {
 				if (source1 instanceof HasColumnMajorDoubleArray1D
@@ -385,7 +354,7 @@ public interface Mtimes<S, T, U> {
 							.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
 							.getRowMajorDoubleArray2D());
 				} else {
-					gemmDenseDoubleMatrix2DSingleThreaded(source1, source2, target);
+					calcDenseDoubleMatrix2DSingleThreaded(source1, source2, target);
 				}
 			}
 		}
@@ -433,19 +402,14 @@ public interface Mtimes<S, T, U> {
 		private final void gemmDoubleArraySingleThreaded(final double[] A, final int m1RowCount,
 				final int m1ColumnCount, final double[] B, final int m2RowCount,
 				final int m2ColumnCount, final double[] C) {
-			for (int i = C.length; --i != -1;) {
-				C[i] = 0;
-			}
 
-			for (int i = 0; i < m2ColumnCount; i++) {
-				final int jcolTimesM1RowCount = i * m1RowCount;
-				final int jcolTimesM1ColumnCount = i * m1ColumnCount;
-				for (int irow = 0; irow < m1RowCount; ++irow) {
-					C[irow + jcolTimesM1RowCount] = 0.0;
-				}
+			for (int j = 0; j < m2ColumnCount; j++) {
+				final int jcolTimesM1RowCount = j * m1RowCount;
+				final int jcolTimesM1ColumnCount = j * m1ColumnCount;
+				Arrays.fill(C, jcolTimesM1RowCount, jcolTimesM1RowCount + m1RowCount, 0.0d);
 				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 					final double temp = B[lcol + jcolTimesM1ColumnCount];
-					if (temp != 0.0) {
+					if (temp != 0.0d) {
 						final int lcolTimesM1RowCount = lcol * m1RowCount;
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount] * temp;
@@ -453,6 +417,29 @@ public interface Mtimes<S, T, U> {
 					}
 				}
 			}
+		}
+
+		private final void calcDoubleArrayMultiThreaded(final double[] A, final int m1RowCount,
+				final int m1ColumnCount, final double[] B, final int m2RowCount,
+				final int m2ColumnCount, final double[] C) {
+			new PFor(0, m2ColumnCount - 1) {
+				@Override
+				public void step(int i) {
+					final int jcolTimesM1RowCount = i * m1RowCount;
+					final int jcolTimesM1ColumnCount = i * m1ColumnCount;
+					Arrays.fill(C, jcolTimesM1RowCount, jcolTimesM1RowCount + m1RowCount, 0.0d);
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						final double temp = B[lcol + jcolTimesM1ColumnCount];
+						if (temp != 0.0d) {
+							final int lcolTimesM1RowCount = lcol * m1RowCount;
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount]
+										* temp;
+							}
+						}
+					}
+				}
+			};
 		}
 
 		private final void calcDoubleArray2DSingleThreaded(final double[][] m1,
@@ -465,7 +452,7 @@ public interface Mtimes<S, T, U> {
 					columns[k] = m2[k][c];
 				}
 				for (int r = m1.length; --r != -1;) {
-					double sum = 0;
+					double sum = 0.0d;
 					final double[] row = m1[r];
 					for (int k = columnCount; --k != -1;) {
 						sum += row[k] * columns[k];
@@ -475,7 +462,30 @@ public interface Mtimes<S, T, U> {
 			}
 		}
 
-		private final void gemmDenseDoubleMatrix2DSingleThreaded(final DenseDoubleMatrix2D A,
+		private final void calcDoubleArray2DMultiThreaded(final double[][] m1, final double[][] m2,
+				final double[][] ret) {
+			final int columnCount = m1[0].length;
+			final double[] columns = new double[columnCount];
+
+			new PFor(0, m2[0].length - 1) {
+				@Override
+				public void step(int i) {
+					for (int k = columnCount; --k != -1;) {
+						columns[k] = m2[k][i];
+					}
+					for (int r = m1.length; --r != -1;) {
+						double sum = 0.0d;
+						final double[] row = m1[r];
+						for (int k = columnCount; --k != -1;) {
+							sum += row[k] * columns[k];
+						}
+						ret[r][i] = sum;
+					}
+				}
+			};
+		}
+
+		private final void calcDenseDoubleMatrix2DSingleThreaded(final DenseDoubleMatrix2D A,
 				final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
 			final int m1RowCount = (int) A.getRowCount();
 			final int m1ColumnCount = (int) A.getColumnCount();
@@ -483,11 +493,11 @@ public interface Mtimes<S, T, U> {
 
 			for (int i = 0; i < m2ColumnCount; i++) {
 				for (int irow = 0; irow < m1RowCount; ++irow) {
-					C.setDouble(0.0, irow, i);
+					C.setDouble(0.0d, irow, i);
 				}
 				for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
 					final double temp = B.getDouble(lcol, i);
-					if (temp != 0.0) {
+					if (temp != 0.0d) {
 						for (int irow = 0; irow < m1RowCount; ++irow) {
 							C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,
 									irow, i);
@@ -495,6 +505,31 @@ public interface Mtimes<S, T, U> {
 					}
 				}
 			}
+		}
+
+		private final void calcDenseDoubleMatrix2DMultiThreaded(final DenseDoubleMatrix2D A,
+				final DenseDoubleMatrix2D B, final DenseDoubleMatrix2D C) {
+			final int m1RowCount = (int) A.getRowCount();
+			final int m1ColumnCount = (int) A.getColumnCount();
+			final int m2ColumnCount = (int) B.getColumnCount();
+
+			new PFor(0, m2ColumnCount - 1) {
+				@Override
+				public void step(int i) {
+					for (int irow = 0; irow < m1RowCount; ++irow) {
+						C.setDouble(0.0d, irow, i);
+					}
+					for (int lcol = 0; lcol < m1ColumnCount; ++lcol) {
+						final double temp = B.getDouble(lcol, i);
+						if (temp != 0.0d) {
+							for (int irow = 0; irow < m1RowCount; ++irow) {
+								C.setDouble(C.getDouble(irow, i) + A.getDouble(irow, lcol) * temp,
+										irow, i);
+							}
+						}
+					}
+				}
+			};
 		}
 
 		/**

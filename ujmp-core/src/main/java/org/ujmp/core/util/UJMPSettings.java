@@ -44,6 +44,8 @@ public abstract class UJMPSettings {
 
 	private static boolean useCommonsMath = true;
 
+	private static boolean useBlockMatrixMultiply = true;
+
 	private static MathContext mathContext = MathContext.DECIMAL128;
 
 	public static MathContext getDefaultMathContext() {
@@ -253,6 +255,14 @@ public abstract class UJMPSettings {
 	 */
 	public static boolean isUseMTJ() {
 		return useMTJ;
+	}
+
+	public static boolean isUseBlockMatrixMultiply() {
+		return useBlockMatrixMultiply;
+	}
+
+	public static void setUseBlockMatrixMultiply(boolean useBlockMatrix) {
+		UJMPSettings.useBlockMatrixMultiply = useBlockMatrix;
 	}
 
 }

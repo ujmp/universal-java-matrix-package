@@ -23,6 +23,9 @@
 
 package org.ujmp.core.benchmark;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -37,7 +40,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 	public BenchmarkConfig() {
 		put("name", null);
 
-		put("largeMatrices", false);
 		put("singleThreaded", false);
 		put("reverse", false);
 		put("shuffle", false);
@@ -50,6 +52,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("maxTrialCount", 5);
 		put("maxTime", 10000); // maximal time for one operation
 		put("maxStd", 10); // maximal standard deviation results may vary
+		put("maxSize", 10000); // maximal size of a matrix
 
 		put("runTimesScalar", true);
 		put("runPlusMatrix", true);
@@ -98,15 +101,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("useCommonsMath", true);
 	}
 
-	public String getSvdSizes() {
-		return getSquareSizes();
-	}
-
-	public String getQrSizes() {
-		return getSquareSizes();
-	}
-
-	public String getLuSizes() {
+	public List<long[]> getSVDSizes() {
 		return getSquareSizes();
 	}
 
@@ -146,8 +141,16 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getBoolean(get("runInv"));
 	}
 
+	public boolean isRunInvSPD() {
+		return MathUtil.getBoolean(get("runInvSPD"));
+	}
+
 	public void setRunInv(boolean runInv) {
 		put("runInv", runInv);
+	}
+
+	public void setRunInvSPD(boolean runInv) {
+		put("runInvSPD", runInv);
 	}
 
 	public boolean isRunSolveSquare() {
@@ -180,14 +183,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public void setSingleThreaded(boolean singleThreaded) {
 		put("singleThreaded", singleThreaded);
-	}
-
-	public boolean isLargeMatrices() {
-		return MathUtil.getBoolean(get("largeMatrices"));
-	}
-
-	public void setLargeMatrices(boolean largeMatrices) {
-		put("largeMatrices", largeMatrices);
 	}
 
 	public boolean isRunEig() {
@@ -254,67 +249,121 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runs", runs);
 	}
 
-	public String getSquareSizes() {
-		if (isLargeMatrices()) {
-			return "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000,3000x3000,4000x4000,5000x5000,6000x6000,7000x7000,8000x8000,9000x9000,10000x10000";
-		} else {
-			return "2x2,3x3,4x4,5x5,10x10,20x20,50x50,100x100,200x200,500x500,1000x1000,2000x2000";
+	public List<long[]> getSquareSizes() {
+		List<long[]> sizes = new LinkedList<long[]>();
+		int maxSize = getMaxSize();
+		sizes.add(new long[] { 2, 2 });
+		if (maxSize >= 3) {
+			sizes.add(new long[] { 3, 3 });
 		}
-	}
-
-	public String getTallSizes() {
-		if (isLargeMatrices()) {
-			return "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000,3000x1500,4000x2000,5000x2500,6000x3000,7000x3500,8000x4000,9000x4500,10000x5000";
-		} else {
-			return "4x2,6x3,8x4,10x5,20x10,40x20,100x50,200x100,400x200,1000x500,2000x1000,4000x2000";
+		if (maxSize >= 4) {
+			sizes.add(new long[] { 4, 4 });
 		}
+		if (maxSize >= 5) {
+			sizes.add(new long[] { 5, 5 });
+		}
+		if (maxSize >= 10) {
+			sizes.add(new long[] { 10, 10 });
+		}
+		if (maxSize >= 20) {
+			sizes.add(new long[] { 20, 20 });
+		}
+		if (maxSize >= 50) {
+			sizes.add(new long[] { 50, 50 });
+		}
+		if (maxSize >= 100) {
+			sizes.add(new long[] { 100, 100 });
+		}
+		if (maxSize >= 200) {
+			sizes.add(new long[] { 200, 200 });
+		}
+		if (maxSize >= 500) {
+			sizes.add(new long[] { 500, 500 });
+		}
+		if (maxSize >= 1000) {
+			sizes.add(new long[] { 1000, 1000 });
+		}
+		if (maxSize >= 2000) {
+			sizes.add(new long[] { 2000, 2000 });
+		}
+		if (maxSize >= 3000) {
+			sizes.add(new long[] { 3000, 3000 });
+		}
+		if (maxSize >= 4000) {
+			sizes.add(new long[] { 4000, 4000 });
+		}
+		if (maxSize >= 5000) {
+			sizes.add(new long[] { 5000, 5000 });
+		}
+		if (maxSize >= 6000) {
+			sizes.add(new long[] { 6000, 6000 });
+		}
+		if (maxSize >= 7000) {
+			sizes.add(new long[] { 7000, 7000 });
+		}
+		if (maxSize >= 8000) {
+			sizes.add(new long[] { 8000, 8000 });
+		}
+		if (maxSize >= 9000) {
+			sizes.add(new long[] { 9000, 9000 });
+		}
+		if (maxSize >= 10000) {
+			sizes.add(new long[] { 10000, 10000 });
+		}
+		return sizes;
 	}
 
-	public String getTransposeSizes() {
+	public List<long[]> getTallSizes() {
+		List<long[]> sizes = new LinkedList<long[]>();
+		for (long[] s : getSquareSizes()) {
+			s = s.clone();
+			s[0] *= 2;
+			sizes.add(s);
+		}
+		return sizes;
+	}
+
+	public List<long[]> getTransposeSizes() {
 		return getSquareSizes();
 	}
 
-	public String getTimesSizes() {
+	public List<long[]> getTimesSizes() {
 		return getSquareSizes();
 	}
 
-	public String getPlusSizes() {
+	public List<long[]> getPlusSizes() {
 		return getSquareSizes();
 	}
 
-	public String getMtimesSizes() {
+	public List<long[]> getMtimesSizes() {
 		return getSquareSizes();
 	}
 
-	public String getInvSizes() {
+	public List<long[]> getInvSizes() {
 		return getSquareSizes();
 	}
 
-	public String getSolveSquareSizes() {
+	public List<long[]> getSolveSquareSizes() {
 		return getSquareSizes();
 	}
 
-	public String getSolveTallSizes() {
+	public List<long[]> getSolveTallSizes() {
 		return getTallSizes();
 	}
 
-	public String getSVDSizes() {
+	public List<long[]> getEigSizes() {
 		return getSquareSizes();
 	}
 
-	public String getEigSizes() {
+	public List<long[]> getQRSizes() {
 		return getSquareSizes();
 	}
 
-	public String getQRSizes() {
+	public List<long[]> getLUSizes() {
 		return getSquareSizes();
 	}
 
-	public String getLUSizes() {
-		return getSquareSizes();
-	}
-
-	public String getCholSizes() {
+	public List<long[]> getCholSizes() {
 		return getSquareSizes();
 	}
 
@@ -500,8 +549,16 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getInt(get("maxTime"));
 	}
 
+	public int getMaxSize() {
+		return MathUtil.getInt(get("maxSize"));
+	}
+
 	public void setMaxTime(int maxTime) {
 		put("maxTime", maxTime);
+	}
+
+	public void setMaxSize(int maxSize) {
+		put("maxSize", maxSize);
 	}
 
 	public double getMaxStd() {

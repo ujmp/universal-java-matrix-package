@@ -24,6 +24,7 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
@@ -64,6 +65,32 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 			throw new MatrixException("You must start Java with more memory: -Xmx1024M");
 		}
 
+		// adjust maximal size to fit into memory:
+		// max memory for A*B=C (three matrices, 8 Byte for double)
+		int newMaxSize = (int) Math.sqrt(Runtime.getRuntime().maxMemory() / 24);
+		if (config.getMaxSize() > newMaxSize) {
+			config.setMaxSize(newMaxSize);
+		}
+
+		System.out.println("===============================================================");
+		System.out.println(" UJMP matrix benchmark");
+		System.out.println("===============================================================");
+		System.out.println(" Settings:");
+		System.out.println("   singleThreaded: " + config.isSingleThreaded());
+		System.out.println("   gcMemory: " + config.isGCMemory());
+		System.out.println("   purgeMemory: " + config.isPurgeMemory());
+		System.out.println("   burnInRuns: " + config.getBurnInRuns());
+		System.out.println("   runs: " + config.getRuns());
+		System.out.println("   maxTime: " + config.getMaxTime());
+		System.out.println("   maxStd: " + config.getMaxStd());
+		System.out.println("   minSize: "
+				+ Coordinates.toString('x', config.getSquareSizes().get(0)));
+		System.out.println("   maxSize: "
+				+ Coordinates.toString('x', config.getSquareSizes().get(
+						config.getSquareSizes().size() - 1)));
+
+		System.out.println();
+
 		try {
 			System.out.println("===============================================================");
 			System.out.println(createMatrix(1, 1).getClass().getSimpleName());
@@ -97,6 +124,10 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
 			if (config.isRunInv()) {
 				new InvBenchmarkTask(benchmarkSeed, getMatrixClass(), getConfig()).run();
+			}
+
+			if (config.isRunInvSPD()) {
+				new InvSPDBenchmarkTask(benchmarkSeed, getMatrixClass(), getConfig()).run();
 			}
 
 			if (config.isRunSolveSquare()) {

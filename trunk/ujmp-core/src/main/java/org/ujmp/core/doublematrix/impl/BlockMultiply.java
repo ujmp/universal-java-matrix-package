@@ -112,19 +112,19 @@ public class BlockMultiply implements Callable<Void> {
 		final int step = blockStripeSize, blockSize = blockStripeSize * blockStripeSize;
 
 		for (int m = fromM; m < toM; m += step) {
-			int aRows = matrixA.layout.getRowsInBlock(m);
+			final int aRows = matrixA.layout.getRowsInBlock(m);
 
 			for (int k = fromK; k < toK; k += step) {
-				int bCols = matrixB.layout.getColumnsInBlock(k);
+				final int bCols = matrixB.layout.getColumnsInBlock(k);
 
-				double[] cBlock = new double[blockSize];
+				final double[] cBlock = new double[blockSize];
 
 				for (int n = fromN; n < toN; n += step) {
 
 					// ensure a and b are in optimal block order before
 					// multiplication
-					double[] aBlock = matrixA.layout.toRowMajorBlock(matrixA, m, n);
-					double[] bBlock = matrixB.layout.toColMajorBlock(matrixB, n, k);
+					final double[] aBlock = matrixA.layout.toRowMajorBlock(matrixA, m, n);
+					final double[] bBlock = matrixB.layout.toColMajorBlock(matrixB, n, k);
 
 					if (aBlock != null && bBlock != null) {
 						if (aBlock.length == blockSize && bBlock.length == blockSize) {
@@ -132,7 +132,7 @@ public class BlockMultiply implements Callable<Void> {
 						} else {
 							int aCols = aBlock.length / aRows;
 							int bRows = bBlock.length / bCols;
-							verify(aCols == bRows, "aCols!=bRows", aCols, bRows);
+							verify(aCols == bRows, "aCols!=bRows");
 							multiplyRowMajorTimesColumnMajorBlocks(aBlock, bBlock, cBlock, aRows,
 									aCols, bCols);
 						}

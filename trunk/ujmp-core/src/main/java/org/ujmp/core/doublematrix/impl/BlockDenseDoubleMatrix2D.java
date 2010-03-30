@@ -295,14 +295,12 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (null == data[blockNumber]) {
 			// init first block
 			synchronized (data) {
-				if (null == data[blockNumber]) {
-					data[blockNumber] = newData;
-					return;
-				}
+				data[blockNumber] = newData;
+				return;
 			}
 		}
 
-		double[] block = data[blockNumber];
+		final double[] block = data[blockNumber];
 		synchronized (block) {
 			for (int i = newData.length; --i >= 0;) {
 				block[i] += newData[i];

@@ -24,6 +24,7 @@
 package org.ujmp.core.benchmark;
 
 import java.io.File;
+import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -40,15 +41,15 @@ public abstract class AbstractBenchmarkTask {
 
 	private Class<? extends Matrix> matrixClass = null;
 
-	private String[] sizes = null;
+	private List<long[]> sizes = null;
 
 	private long benchmarkSeed = 0;
 
 	public AbstractBenchmarkTask(long benchmarkSeed, Class<? extends Matrix> matrixClass,
-			String sizes, BenchmarkConfig config) {
+			List<long[]> sizes, BenchmarkConfig config) {
 		this.matrixClass = matrixClass;
 		this.config = config;
-		this.sizes = sizes.split(",");
+		this.sizes = sizes;
 	}
 
 	public BenchmarkConfig getConfig() {
@@ -66,16 +67,16 @@ public abstract class AbstractBenchmarkTask {
 			return;
 		}
 		Matrix2D resultTime = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
-				sizes.length);
+				sizes.size());
 		Matrix2D resultDiff = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
-				sizes.length);
+				sizes.size());
 
 		resultTime.setLabel(getMatrixLabel() + "-" + getTaskName());
 		resultDiff.setLabel(getMatrixLabel() + "-" + getTaskName() + "-diff");
 
 		boolean stopped = false;
-		for (int s = 0; !stopped && s < sizes.length; s++) {
-			long[] size = Coordinates.parseString(sizes[s]);
+		for (int s = 0; !stopped && s < sizes.size(); s++) {
+			long[] size = sizes.get(s);
 			resultTime.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
 			resultDiff.setColumnLabel(s, String.valueOf(size[Matrix.ROW]));
 			double bestStd = Double.MAX_VALUE;

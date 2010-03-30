@@ -29,7 +29,7 @@ import java.util.Arrays;
  * This class describes the layout (size, order) of a square block of data
  * within a {@link BlockDenseDoubleMatrix2D block matrix}.
  * 
- * @author Frode Carlsen
+ * @author Frode Carlsen, Holger Arndt
  */
 public final class BlockMatrixLayout implements Serializable {
 	private static final long serialVersionUID = 2726685238884065594L;
@@ -120,20 +120,29 @@ public final class BlockMatrixLayout implements Serializable {
 
 	final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart, int colStart) {
 		double[] block = getBlock(matrix, rowStart, colStart);
+
 		if (!rowMajor) {
 			return block;
 		}
 
-		double[] targetBlock = new double[block.length];
-		int lrows = getRowsInBlock(rowStart);
-		int lcols = getColumnsInBlock(colStart);
+		final double[] targetBlock = new double[block.length];
+		final int lrows = getRowsInBlock(rowStart);
+		final int lcols = getColumnsInBlock(colStart);
 
 		// transpose block, swap cols and rows
-		for (int i = 0; i < lcols; i++) {
-			for (int j = 0; j < lrows; j++) {
-				int tij = getBlockIndexByRow(i, j, lcols, lrows);
-				int bij = getBlockIndexByColumn(i, j, lcols, lrows);
-				targetBlock[tij] = block[bij];
+		if (rowMajor) {
+			for (int i = 0; i < lcols; i++) {
+				final int ilrows = i * lrows;
+				for (int j = 0; j < lrows; j++) {
+					targetBlock[ilrows + j] = block[j * lcols + i];
+				}
+			}
+		} else {
+			for (int i = 0; i < lcols; i++) {
+				final int ilrows = i * lrows;
+				for (int j = 0; j < lrows; j++) {
+					targetBlock[j * lcols + i] = block[ilrows + j];
+				}
 			}
 		}
 		return targetBlock;
@@ -149,21 +158,30 @@ public final class BlockMatrixLayout implements Serializable {
 
 	final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix, final int rowStart,
 			int colStart) {
-		double[] block = getBlock(matrix, rowStart, colStart);
+		final double[] block = getBlock(matrix, rowStart, colStart);
+
 		if (rowMajor) {
 			return block;
 		}
 
-		double[] targetBlock = new double[block.length];
-		int lrows = getRowsInBlock(rowStart);
-		int lcols = getColumnsInBlock(colStart);
+		final double[] targetBlock = new double[block.length];
+		final int lrows = getRowsInBlock(rowStart);
+		final int lcols = getColumnsInBlock(colStart);
 
 		// transpose block
-		for (int i = 0; i < lrows; i++) {
-			for (int j = 0; j < lcols; j++) {
-				int bij = getBlockIndexByRow(i, j, lrows, lcols);
-				int tij = getBlockIndexByColumn(i, j, lrows, lcols);
-				targetBlock[tij] = block[bij];
+		if (rowMajor) {
+			for (int i = 0; i < lrows; i++) {
+				final int ilcols = i * lcols;
+				for (int j = 0; j < lcols; j++) {
+					targetBlock[j * lrows + i] = block[ilcols + j];
+				}
+			}
+		} else {
+			for (int i = 0; i < lrows; i++) {
+				final int ilcols = i * lcols;
+				for (int j = 0; j < lcols; j++) {
+					targetBlock[ilcols + j] = block[j * lrows + i];
+				}
 			}
 		}
 		return targetBlock;

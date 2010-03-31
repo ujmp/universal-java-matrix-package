@@ -34,6 +34,7 @@ import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
 import org.ujmp.core.calculation.MinusScalarCalculation;
 import org.ujmp.core.calculation.Mtimes;
+import org.ujmp.core.calculation.MtimesCalculation;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusMatrixCalculation;
 import org.ujmp.core.calculation.PlusScalar;
@@ -126,7 +127,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public static DivideScalarCalculation<Matrix, Matrix> divideScalar = DivideScalar.MATRIX;
 
-	public static Mtimes<Matrix, Matrix, Matrix> mtimes = Mtimes.INSTANCE;
+	public static MtimesCalculation<Matrix, Matrix, Matrix> mtimes = Mtimes.MATRIX;
 
 	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 

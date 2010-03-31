@@ -33,6 +33,7 @@ import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
 import org.ujmp.core.calculation.MinusScalarCalculation;
 import org.ujmp.core.calculation.Mtimes;
+import org.ujmp.core.calculation.MtimesCalculation;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusMatrixCalculation;
 import org.ujmp.core.calculation.PlusScalar;
@@ -80,7 +81,7 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static DivideScalarCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> divideScalar = DivideScalar.DENSEDOUBLEMATRIX2D;
 
-	public static Mtimes<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> mtimes = Mtimes.DENSEDOUBLEMATRIX2D;
+	public static MtimesCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D, DenseDoubleMatrix2D> mtimes = Mtimes.DENSEDOUBLEMATRIX2D;
 
 	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 

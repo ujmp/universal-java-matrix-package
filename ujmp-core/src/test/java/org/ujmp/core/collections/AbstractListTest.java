@@ -41,7 +41,7 @@ public abstract class AbstractListTest {
 		return this.getClass().getSimpleName();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testClear() throws Exception {
 		List<String> m = createList();
 		assertTrue(getLabel(), m.isEmpty());
@@ -57,7 +57,7 @@ public abstract class AbstractListTest {
 		assertTrue(getLabel(), m.isEmpty());
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testContains() throws Exception {
 		List<String> m = createList();
 		assertFalse(getLabel(), m.contains("a"));
@@ -77,7 +77,7 @@ public abstract class AbstractListTest {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Test(timeout = 1000)
+	@Test
 	public void testSerialize() throws Exception {
 		List<String> m = createList();
 		m.add("a");

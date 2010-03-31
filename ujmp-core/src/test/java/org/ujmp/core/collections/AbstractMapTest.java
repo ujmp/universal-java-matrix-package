@@ -42,7 +42,7 @@ public abstract class AbstractMapTest {
 		return this.getClass().getSimpleName();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPutAndGet() throws Exception {
 		Map<String, String> m = createMap();
 		m.put("a", "test1");
@@ -55,7 +55,7 @@ public abstract class AbstractMapTest {
 	}
 
 	// TODO
-	@Test(timeout = 1000)
+	@Test
 	public void testClear() throws Exception {
 		Map<String, String> m = createMap();
 		assertTrue(getLabel(), m.isEmpty());
@@ -76,7 +76,7 @@ public abstract class AbstractMapTest {
 	}
 
 	// TODO
-	@Test(timeout = 1000)
+	@Test
 	public void testContainsKey() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsKey("a"));
@@ -100,7 +100,7 @@ public abstract class AbstractMapTest {
 	}
 
 	// TODO
-	@Test(timeout = 1000)
+	@Test
 	public void testContainsValue() throws Exception {
 		Map<String, String> m = createMap();
 		assertFalse(getLabel(), m.containsValue("test1"));
@@ -125,7 +125,7 @@ public abstract class AbstractMapTest {
 
 	// TODO
 	@SuppressWarnings("unchecked")
-	@Test(timeout = 1000)
+	@Test
 	public void testSerialize() throws Exception {
 		Map<String, String> m = createMap();
 		m.put("a", "test1");

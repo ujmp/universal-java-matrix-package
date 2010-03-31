@@ -33,7 +33,7 @@ public class TestExportMatrixMAT extends AbstractExportMatrixTest {
 		return FileFormat.MAT;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToFile() throws Exception {
 		try {
 			Class.forName("org.ujmp.jmatio.ExportMatrixMAT");
@@ -44,7 +44,7 @@ public class TestExportMatrixMAT extends AbstractExportMatrixTest {
 		super.testExportToFile();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToStream() throws Exception {
 		try {
 			super.testExportToStream();
@@ -54,7 +54,7 @@ public class TestExportMatrixMAT extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -64,7 +64,7 @@ public class TestExportMatrixMAT extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();
@@ -74,7 +74,7 @@ public class TestExportMatrixMAT extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();

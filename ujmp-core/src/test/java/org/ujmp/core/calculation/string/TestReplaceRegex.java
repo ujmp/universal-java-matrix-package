@@ -55,7 +55,7 @@ public class TestReplaceRegex {
 		return m;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testConstructor1() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, "ab", "fgr");
@@ -63,7 +63,7 @@ public class TestReplaceRegex {
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testConstructor2() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, Pattern.compile("ab"), "fgr");
@@ -71,14 +71,14 @@ public class TestReplaceRegex {
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCalc1() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, "ab", "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCalc2() throws MatrixException {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, Pattern.compile("ab"), "fgr");

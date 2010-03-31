@@ -48,7 +48,7 @@ public abstract class AbstractExportMatrixTest {
 		return this.getClass().getSimpleName();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToFile() throws Exception {
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
 		// file.deleteOnExit();
@@ -68,7 +68,7 @@ public abstract class AbstractExportMatrixTest {
 		assertFalse(getLabel(), file.exists());
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToStream() throws Exception {
 		File file = File.createTempFile("testExportToStream" + getFormat(), "."
 				+ getFormat().name().toLowerCase());
@@ -88,7 +88,7 @@ public abstract class AbstractExportMatrixTest {
 		assertFalse(getLabel(), file.exists());
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToWriter() throws Exception {
 		File file = File.createTempFile("testExportToWriter", "."
 				+ getFormat().name().toLowerCase());
@@ -108,7 +108,7 @@ public abstract class AbstractExportMatrixTest {
 		assertFalse(getLabel(), file.exists());
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToString() throws Exception {
 		Matrix m = getMatrix();
 		String s = m.exportToString(getFormat());
@@ -117,7 +117,7 @@ public abstract class AbstractExportMatrixTest {
 		assertTrue(getLabel(), s.length() > 0);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToClipboard() throws Exception {
 		Matrix m = getMatrix();
 		m.exportToClipboard(getFormat());

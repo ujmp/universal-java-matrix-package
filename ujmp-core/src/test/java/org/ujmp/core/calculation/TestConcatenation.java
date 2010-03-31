@@ -31,7 +31,7 @@ import org.ujmp.core.MatrixFactory;
 
 public class TestConcatenation {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testHorizontal() throws Exception {
 		Matrix m1 = MatrixFactory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix m2 = MatrixFactory.linkToArray(new double[][] { { 7, 8 }, { 9, 10 } });
@@ -42,7 +42,7 @@ public class TestConcatenation {
 		assertTrue(expected.equals(m));
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testVertical() throws Exception {
 		Matrix m1 = MatrixFactory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix m2 = MatrixFactory.linkToArray(new double[][] { { 7, 8, 9 } });
@@ -53,7 +53,7 @@ public class TestConcatenation {
 		assertTrue(expected.equals(m));
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testEmpty() throws Exception {
 		Matrix m1 = MatrixFactory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix m2 = MatrixFactory.emptyMatrix();

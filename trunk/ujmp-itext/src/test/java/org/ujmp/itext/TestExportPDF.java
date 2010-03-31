@@ -34,7 +34,7 @@ import org.junit.Test;
 
 public class TestExportPDF {
 
-	@Test(timeout = 3000)
+	@Test
 	public void testExport() {
 		JButton b = new JButton("test");
 		b.setSize(100, 100);

@@ -33,7 +33,7 @@ import org.ujmp.core.enums.ValueType;
 
 public class Test3D {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testIndexCalc() {
 		MLDoubleMatrix mlDouble = new MLDoubleMatrix(3, 4, 5);
 		assertEquals(0, mlDouble.getIndex(0, 0, 0));
@@ -51,7 +51,7 @@ public class Test3D {
 		assertEquals(59, mlDouble.getIndex(2, 3, 4));
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testUJMP() {
 		Matrix original = MatrixFactory.rand(ValueType.DOUBLE, 3, 4, 5);
 		MLDoubleMatrix mlDouble = new MLDoubleMatrix(original);

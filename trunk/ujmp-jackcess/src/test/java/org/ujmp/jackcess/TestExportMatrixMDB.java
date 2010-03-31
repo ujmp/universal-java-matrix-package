@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class TestExportMatrixMDB extends org.ujmp.core.io.TestExportMatrixMDB {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMatrix() throws Exception {
 		// nothing to do for now
 		return;

@@ -65,11 +65,15 @@ public abstract class DecompositionOps {
 
 	public static InvSPD<Matrix> INVSPD_MTJ = null;
 
+	public static InvSPD<Matrix> INVSPD_PARALLELCOLT = null;
+
 	public static Solve<Matrix> SOLVE_UJMP = org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.INSTANCE;
 
 	public static Solve<Matrix> SOLVE_EJML = null;
 
 	public static Solve<Matrix> SOLVE_OJALGO = null;
+
+	public static Solve<Matrix> SOLVE_PARALLELCOLT = null;
 
 	public static Solve<Matrix> SOLVE_MTJ = null;
 
@@ -237,6 +241,15 @@ public abstract class DecompositionOps {
 			}
 		} catch (Throwable t) {
 		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.parallelcolt.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				INVSPD_PARALLELCOLT = (InvSPD<Matrix>) Class.forName(
+						"org.ujmp.parallelcolt.calculation.InvSPD").newInstance();
+			}
+		} catch (Throwable t) {
+		}
 	}
 
 	public static void initSolve() {
@@ -271,6 +284,15 @@ public abstract class DecompositionOps {
 			if (p.isAvailable()) {
 				SOLVE_MTJ = (Solve<Matrix>) Class.forName("org.ujmp.mtj.calculation.Solve")
 						.newInstance();
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.parallelcolt.Plugin")
+					.newInstance();
+			if (p.isAvailable()) {
+				SOLVE_PARALLELCOLT = (Solve<Matrix>) Class.forName(
+						"org.ujmp.parallelcolt.calculation.Solve").newInstance();
 			}
 		} catch (Throwable t) {
 		}

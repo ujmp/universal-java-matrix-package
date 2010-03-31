@@ -153,6 +153,9 @@ public interface Solve<T> {
 	public static final Solve<Matrix> MATRIXTALLLARGEMULTITHREADED = new Solve<Matrix>() {
 		public Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = null;
+			if (UJMPSettings.isUseParallelColt()) {
+				solve = DecompositionOps.SOLVE_PARALLELCOLT;
+			}
 			if (UJMPSettings.isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}

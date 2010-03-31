@@ -107,6 +107,9 @@ public interface InvSPD<T> extends Inv<T> {
 			if (inv == null && UJMPSettings.isUseEJML()) {
 				inv = DecompositionOps.INVSPD_EJML;
 			}
+			if (inv == null && UJMPSettings.isUseParallelColt()) {
+				inv = DecompositionOps.INVSPD_PARALLELCOLT;
+			}
 			if (inv == null && UJMPSettings.isUseMTJ()) {
 				inv = DecompositionOps.INVSPD_MTJ;
 			}

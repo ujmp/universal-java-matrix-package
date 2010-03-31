@@ -32,6 +32,7 @@ import org.ujmp.core.calculation.MinusMatrixCalculation;
 import org.ujmp.core.calculation.MinusScalar;
 import org.ujmp.core.calculation.MinusScalarCalculation;
 import org.ujmp.core.calculation.Mtimes;
+import org.ujmp.core.calculation.MtimesCalculation;
 import org.ujmp.core.calculation.PlusMatrix;
 import org.ujmp.core.calculation.PlusMatrixCalculation;
 import org.ujmp.core.calculation.PlusScalar;
@@ -74,7 +75,7 @@ public abstract class Ops {
 
 	public static DivideScalarCalculation<Matrix, Matrix> divideScalar = DivideScalar.MATRIX;
 
-	public static Mtimes<Matrix, Matrix, Matrix> mtimes = Mtimes.INSTANCE;
+	public static MtimesCalculation<Matrix, Matrix, Matrix> mtimes = Mtimes.MATRIX;
 
 	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 
@@ -90,22 +91,5 @@ public abstract class Ops {
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	public static Mtimes<Matrix, Matrix, Matrix> MTIMES_JBLAS = null;
-
-	static {
-		init();
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void init() {
-		try {
-			AbstractPlugin p = (AbstractPlugin) Class.forName("org.ujmp.jblas.Plugin")
-					.newInstance();
-			if (p.isAvailable()) {
-				MTIMES_JBLAS = (Mtimes<Matrix, Matrix, Matrix>) Class.forName(
-						"org.ujmp.jblas.calculation.Mtimes").newInstance();
-			}
-		} catch (Throwable t) {
-		}
-	}
+	
 }

@@ -25,12 +25,12 @@ package org.ujmp.jblas.calculation;
 
 import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.MtimesCalculation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class Mtimes implements
-		org.ujmp.core.calculation.Mtimes<Matrix, Matrix, Matrix> {
+public class Mtimes implements MtimesCalculation<Matrix, Matrix, Matrix> {
 
 	public void calc(Matrix source1, Matrix source2, Matrix target) {
 		final DoubleMatrix m1;

@@ -174,7 +174,7 @@ public class TestSortrows {
 		return m;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortDoubleNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -182,7 +182,7 @@ public class TestSortrows {
 		assertEquals(getResult(ValueType.DOUBLE), m2);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortStringNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -198,7 +198,7 @@ public class TestSortrows {
 	// assertEquals(getResult(ValueType.STRING), m2);
 	// }
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortBigDecimalNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, false);
@@ -222,7 +222,7 @@ public class TestSortrows {
 	// assertEquals(getResult(ValueType.BIGDECIMAL), m2);
 	// }
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortDoubleReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.DOUBLE);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
@@ -230,7 +230,7 @@ public class TestSortrows {
 		assertEquals(getResultReverse(ValueType.DOUBLE), m2);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortStringReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.STRING);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);
@@ -246,7 +246,7 @@ public class TestSortrows {
 	// assertEquals(getResultReverse(ValueType.STRING), m2);
 	// }
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSortBigDecimalReverseNew() throws Exception {
 		Matrix m1 = getMatrix(ValueType.BIGDECIMAL);
 		Matrix m2 = m1.sortrows(Ret.NEW, 2, true);

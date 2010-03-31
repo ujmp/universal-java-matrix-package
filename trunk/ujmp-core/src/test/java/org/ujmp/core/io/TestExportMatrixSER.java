@@ -33,7 +33,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		return FileFormat.SER;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToWriter() throws Exception {
 		try {
 			super.testExportToWriter();
@@ -43,7 +43,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToString() throws Exception {
 		try {
 			super.testExportToString();
@@ -53,7 +53,7 @@ public class TestExportMatrixSER extends AbstractExportMatrixTest {
 		throw new Exception("this method should not be supported");
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToClipboard() throws Exception {
 		try {
 			super.testExportToClipboard();

@@ -32,7 +32,7 @@ import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
 public class TestPlugins {
 
-	@Test(timeout = 5000)
+	@Test
 	public void testPlugins() {
 		Matrix m = new UJMPPluginsMatrix();
 		for (int r = 0; r < m.getRowCount(); r++) {

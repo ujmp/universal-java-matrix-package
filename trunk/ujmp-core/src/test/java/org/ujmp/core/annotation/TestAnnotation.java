@@ -30,7 +30,7 @@ import org.ujmp.core.Matrix;
 
 public class TestAnnotation {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testReverseAnnotation() throws Exception {
 		Matrix m = Matrix.factory.zeros(10, 10);
 		m.setColumnLabel(3, "col3");

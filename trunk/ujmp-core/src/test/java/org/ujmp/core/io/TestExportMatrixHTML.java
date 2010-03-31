@@ -38,7 +38,7 @@ public class TestExportMatrixHTML extends AbstractExportMatrixTest {
 		return FileFormat.HTML;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToFile() throws Exception {
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
 		file.deleteOnExit();

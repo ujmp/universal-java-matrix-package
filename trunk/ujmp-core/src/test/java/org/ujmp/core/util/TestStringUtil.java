@@ -28,7 +28,7 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public class TestStringUtil {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testParseSelectionMatlab() {
 		try {
 			long[][] sel = StringUtil.parseSelection(":,2", new long[] { 3, 4 });

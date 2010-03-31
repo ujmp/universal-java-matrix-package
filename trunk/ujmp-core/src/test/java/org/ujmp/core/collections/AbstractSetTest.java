@@ -41,7 +41,7 @@ public abstract class AbstractSetTest {
 		return this.getClass().getSimpleName();
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testClear() throws Exception {
 		Set<String> m = createSet();
 		assertTrue(getLabel(), m.isEmpty());
@@ -57,7 +57,7 @@ public abstract class AbstractSetTest {
 		assertTrue(getLabel(), m.isEmpty());
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testContains() throws Exception {
 		Set<String> m = createSet();
 		assertFalse(getLabel(), m.contains("a"));
@@ -77,7 +77,7 @@ public abstract class AbstractSetTest {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Test(timeout = 1000)
+	@Test
 	public void testSerialize() throws Exception {
 		Set<String> m = createSet();
 		m.add("a");

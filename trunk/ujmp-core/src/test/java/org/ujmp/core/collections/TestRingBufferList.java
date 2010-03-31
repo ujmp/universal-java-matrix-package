@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class TestRingBufferList {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testAdd() {
 		RingBufferList<Integer> rl = new RingBufferList<Integer>(4);
 

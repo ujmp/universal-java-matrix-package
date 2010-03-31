@@ -38,7 +38,7 @@ public class TestExportMatrixM extends AbstractExportMatrixTest {
 		return FileFormat.M;
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testExportToFile() throws Exception {
 		File file = File.createTempFile("testExportToFile", "." + getFormat().name().toLowerCase());
 		file.deleteOnExit();

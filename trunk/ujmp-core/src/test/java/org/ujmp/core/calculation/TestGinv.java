@@ -56,13 +56,13 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSet() {
 		Matrix matrix = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testGet() {
 		Matrix matrix = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix);
@@ -74,7 +74,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testIdentity() {
 		Matrix matrix = Matrix.factory.zeros(M2ROWS, M2COLS);
 		for (int i = 0; i < M2ROWS; i++) {
@@ -92,7 +92,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testEquals() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -102,7 +102,7 @@ public class TestGinv {
 		assertTrue(result);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testNotEqualsSize() {
 		Matrix matrix1 = Matrix.factory.zeros(M2ROWS, M1COLS);
 		setValues(matrix1);
@@ -112,7 +112,7 @@ public class TestGinv {
 		assertFalse(result);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testNotEqualsValue() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -123,7 +123,7 @@ public class TestGinv {
 		assertFalse(result);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMatrixDot() {
 		Matrix matrix1 = Matrix.factory.zeros(M1COLS, M1COLS);
 		for (int i = 0; i < M1COLS; i++) {
@@ -137,7 +137,7 @@ public class TestGinv {
 		assertEquals(M1COLS, result, 0.0001);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testPlusScalar() {
 		Matrix matrix1 = Matrix.factory.zeros(M2ROWS, M2ROWS);
 		for (int i = 0; i < M2ROWS; i++) {
@@ -155,7 +155,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testTimesScalar() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1ROWS);
 		for (int i = 0; i < M1ROWS; i++) {
@@ -185,7 +185,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testMultiply() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setIdentity(matrix1);
@@ -197,7 +197,7 @@ public class TestGinv {
 		assertTrue(result.equals(desire));
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testCopy() {
 		Matrix matrix1 = Matrix.factory.zeros(M1ROWS, M1COLS);
 		setValues(matrix1);
@@ -210,7 +210,7 @@ public class TestGinv {
 	 * solution. This is a canned test.
 	 * 
 	 */
-	@Test(timeout = 1000)
+	@Test
 	public void testReduce() {
 		Matrix a = Matrix.factory.zeros(5, 5); // must be a square HusoMatrix
 		a.setAsDouble(1, 0, 0);
@@ -240,7 +240,7 @@ public class TestGinv {
 		assertEquals(2.0, response.getAsDouble(4, 0), TOLERANCE);
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSquareInverse() {
 		Matrix a = Matrix.factory.zeros(3, 3); // example from ucla.edu
 		a.setAsDouble(4, 0, 0);
@@ -286,7 +286,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testNonSquareInverse() {
 		Matrix a = Matrix.factory.zeros(3, 4);
 		a.setAsDouble(4, 0, 0);
@@ -319,7 +319,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testNonSquareInverse2() {
 		Matrix a = Matrix.factory.zeros(3, 3);
 		a.setAsDouble(4, 0, 0);
@@ -344,7 +344,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testNonSquareArbitrariness() {
 		Matrix a = Matrix.factory.zeros(2, 3);
 		a.setAsDouble(2, 0, 0);
@@ -359,7 +359,7 @@ public class TestGinv {
 		assertTrue(a.equals(a.mtimes(a12a)));
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testRandomInverses() {
 		Random rand = new Random(System.currentTimeMillis());
 		for (int count = 0; count < 10000; ++count) {
@@ -388,7 +388,7 @@ public class TestGinv {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSquareInverse2() {
 		Matrix a = Matrix.factory.zeros(3, 3);
 		a.setAsDouble(2, 0, 0);

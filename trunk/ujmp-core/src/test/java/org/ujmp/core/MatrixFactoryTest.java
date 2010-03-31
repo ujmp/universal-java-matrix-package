@@ -34,7 +34,7 @@ import org.ujmp.core.matrix.SparseMatrix;
 
 public class MatrixFactoryTest {
 
-	@Test(timeout = 1000)
+	@Test
 	public void testZerosConstructors0D() throws Exception {
 		try {
 			Matrix.factory.zeros();
@@ -45,7 +45,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testZerosConstructors1D() throws Exception {
 		try {
 			Matrix.factory.zeros(4);
@@ -56,7 +56,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testZerosConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
@@ -66,7 +66,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testZerosConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
@@ -76,7 +76,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testZerosConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {
@@ -86,7 +86,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSparseConstructors0D() throws Exception {
 		try {
 			SparseMatrix.factory.zeros();
@@ -97,7 +97,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSparseConstructors1D() throws Exception {
 		try {
 			SparseMatrix.factory.zeros(4);
@@ -108,7 +108,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSparseConstructors2D() throws Exception {
 		long[] size = new long[] { 4, 5 };
 		for (ValueType e : ValueType.values()) {
@@ -118,7 +118,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSparseConstructors3D() throws Exception {
 		long[] size = new long[] { 4, 5, 6 };
 		for (ValueType e : ValueType.values()) {
@@ -128,7 +128,7 @@ public class MatrixFactoryTest {
 		}
 	}
 
-	@Test(timeout = 1000)
+	@Test
 	public void testSparseConstructorsMultiD() throws Exception {
 		long[] size = new long[] { 4, 5, 6, 7, 8 };
 		for (ValueType e : ValueType.values()) {

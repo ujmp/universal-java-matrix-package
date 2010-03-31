@@ -28,15 +28,14 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
 public class TestBPCA {
 
-	@Test(timeout = 5000)
+	@Test
 	public void testBPCA() throws Exception {
-		Matrix m = MatrixFactory.randn(30, 30);
+		Matrix m = Matrix.factory.randn(30, 30);
 		m.addMissing(Ret.ORIG, Matrix.ALL, 0.1);
 		assertTrue(m.containsMissingValues());
 		m = m.impute(Ret.NEW, ImputationMethod.BPCA);

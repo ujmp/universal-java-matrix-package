@@ -36,9 +36,9 @@ public class LUBenchmarkTask extends AbstractBenchmarkTask {
 	@Override
 	public BenchmarkResult task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
 			long[] size) {
-		long t0, t1;
-		DoubleMatrix2D m = null;
-		Matrix[] r = null;
+		final long t0, t1, m0, m1;
+		final DoubleMatrix2D m;
+		Matrix[] r;
 		try {
 			m = BenchmarkUtil.createMatrix(matrixClass, size);
 			if (!m.getClass().getName().startsWith("org.ujmp.core")
@@ -49,9 +49,11 @@ public class LUBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, m);
 			BenchmarkUtil.purgeMemory(getConfig());
+			m0 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			t0 = System.nanoTime();
 			r = m.lu();
 			t1 = System.nanoTime();
+			m1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			if (r == null) {
 				System.out.print("e");
 				System.out.flush();
@@ -59,7 +61,7 @@ public class LUBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			Matrix result = r[0].mtimes(r[1]).mtimes(r[2]);
 			double diff = BenchmarkUtil.difference(result, m);
-			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, m1 - m0);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

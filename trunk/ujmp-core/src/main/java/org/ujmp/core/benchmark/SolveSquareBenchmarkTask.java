@@ -37,8 +37,8 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 	@Override
 	public BenchmarkResult task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
 			long[] size) {
-		long t0, t1;
-		DoubleMatrix2D a = null, x = null;
+		final long t0, t1, m0, m1;
+		final DoubleMatrix2D a, x;
 		Matrix b1 = null, b2 = null, result = null;
 		try {
 			a = BenchmarkUtil.createMatrix(matrixClass, size);
@@ -54,16 +54,18 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 			b1 = new DefaultDenseDoubleMatrix2D(a).mtimes(new DefaultDenseDoubleMatrix2D(x));
 			b2 = BenchmarkUtil.createMatrix(matrixClass, b1);
 			BenchmarkUtil.purgeMemory(getConfig());
+			m0 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			t0 = System.nanoTime();
 			result = a.solve(b2);
 			t1 = System.nanoTime();
+			m1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			if (result == null) {
 				System.out.print("e");
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
 			double diff = BenchmarkUtil.difference(result, x);
-			return new BenchmarkResult((t1 - t0) / 1000000.0, diff);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, m1 - m0);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

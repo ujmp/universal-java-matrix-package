@@ -26,21 +26,25 @@ package org.ujmp.core.benchmark;
 public class BenchmarkResult {
 
 	public static final BenchmarkResult NOTAVAILABLE = new BenchmarkResult(
-			BenchmarkConfig.NOTAVAILABLE);
+			BenchmarkConfig.NOTAVAILABLE, -1);
 
-	public static final BenchmarkResult ERROR = new BenchmarkResult(BenchmarkConfig.ERROR);
+	public static final BenchmarkResult ERROR = new BenchmarkResult(BenchmarkConfig.ERROR, -1);
 
 	private double time = 0.0;
 
 	private double difference = Double.NaN;
 
-	public BenchmarkResult(double time, double difference) {
+	private long mem = -1;
+
+	public BenchmarkResult(double time, double difference, long mem) {
 		this.time = time;
 		this.difference = difference;
+		this.mem = mem;
 	}
 
-	public BenchmarkResult(double time) {
+	public BenchmarkResult(double time, long mem) {
 		this.time = time;
+		this.mem = mem;
 	}
 
 	public double getTime() {
@@ -57,6 +61,14 @@ public class BenchmarkResult {
 
 	public void setDifference(double difference) {
 		this.difference = difference;
+	}
+
+	public long getMem() {
+		return mem;
+	}
+
+	public void setMem(long mem) {
+		this.mem = mem;
 	}
 
 }

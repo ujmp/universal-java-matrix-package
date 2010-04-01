@@ -37,6 +37,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
+import org.ujmp.core.util.concurrent.PFor;
 
 /**
  * A dense 2D matrix with square block layout. The data in the matrix is
@@ -478,16 +479,30 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return data;
 	}
 
-	public Matrix plus(double value) {
+	public Matrix plus(final double value) {
 		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-		for (int i = result.data.length; --i != -1;) {
-			double[] block = result.data[i];
-			if (block == null) {
-				block = new double[layout.blockArea];
+		if (result.data.length < 100) {
+			for (int i = result.data.length; --i != -1;) {
+				double[] block = result.data[i];
+				if (block == null) {
+					block = new double[layout.blockArea];
+				}
+				for (int j = block.length; --j != -1;) {
+					block[j] += value;
+				}
 			}
-			for (int j = block.length; --j != -1;) {
-				block[j] += value;
-			}
+		} else {
+			new PFor(0, result.data.length) {
+				public void step(int i) {
+					double[] block = result.data[i];
+					if (block == null) {
+						block = new double[layout.blockArea];
+					}
+					for (int j = block.length; --j != -1;) {
+						block[j] += value;
+					}
+				}
+			};
 		}
 		return result;
 	}
@@ -499,18 +514,36 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 					&& b.layout.rowMajor == layout.rowMajor
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-				for (int i = result.data.length; --i != -1;) {
-					final double[] block2 = b.data[i];
-					if (block2 == null) {
-						continue;
+				if (result.data.length < 100) {
+					for (int i = result.data.length; --i != -1;) {
+						final double[] block2 = b.data[i];
+						if (block2 == null) {
+							continue;
+						}
+						if (result.data[i] == null) {
+							result.data[i] = new double[b.data[i].length];
+						}
+						final double[] block = result.data[i];
+						for (int j = block.length; --j != -1;) {
+							block[j] += block2[j];
+						}
 					}
-					if (result.data[i] == null) {
-						result.data[i] = new double[b.data[i].length];
-					}
-					final double[] block = result.data[i];
-					for (int j = block.length; --j != -1;) {
-						block[j] += block2[j];
-					}
+				} else {
+					new PFor(0, result.data.length - 1) {
+						public void step(int i) {
+							final double[] block2 = b.data[i];
+							if (block2 == null) {
+								return;
+							}
+							if (result.data[i] == null) {
+								result.data[i] = new double[b.data[i].length];
+							}
+							final double[] block = result.data[i];
+							for (int j = block.length; --j != -1;) {
+								block[j] += block2[j];
+							}
+						}
+					};
 				}
 				return result;
 			}
@@ -525,18 +558,36 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 					&& b.layout.rowMajor == layout.rowMajor
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-				for (int i = data.length; --i != -1;) {
-					final double[] block2 = b.data[i];
-					if (block2 == null) {
-						continue;
+				if (result.data.length < 100) {
+					for (int i = data.length; --i != -1;) {
+						final double[] block2 = b.data[i];
+						if (block2 == null) {
+							continue;
+						}
+						if (result.data[i] == null) {
+							result.data[i] = new double[b.data[i].length];
+						}
+						final double[] block = result.data[i];
+						for (int j = block.length; --j != -1;) {
+							block[j] -= block2[j];
+						}
 					}
-					if (result.data[i] == null) {
-						result.data[i] = new double[b.data[i].length];
-					}
-					final double[] block = result.data[i];
-					for (int j = block.length; --j != -1;) {
-						block[j] -= block2[j];
-					}
+				} else {
+					new PFor(0, result.data.length - 1) {
+						public void step(int i) {
+							final double[] block2 = b.data[i];
+							if (block2 == null) {
+								return;
+							}
+							if (result.data[i] == null) {
+								result.data[i] = new double[b.data[i].length];
+							}
+							final double[] block = result.data[i];
+							for (int j = block.length; --j != -1;) {
+								block[j] -= block2[j];
+							}
+						}
+					};
 				}
 				return result;
 			}
@@ -551,21 +602,42 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 					&& b.layout.rowMajor == layout.rowMajor
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-				for (int i = result.data.length; --i != -1;) {
-					final double[] block2 = b.data[i];
-					if (block2 == null) {
-						// multiply with 0.0, clear block in result
-						result.data[i] = null;
-					} else {
-						final double[] block = result.data[i];
-						if (block == null) {
-							// multiply with 0.0
-							continue;
-						}
-						for (int j = block.length; --j != -1;) {
-							block[j] *= block2[j];
+				if (result.data.length < 100) {
+					for (int i = result.data.length; --i != -1;) {
+						final double[] block2 = b.data[i];
+						if (block2 == null) {
+							// multiply with 0.0, clear block in result
+							result.data[i] = null;
+						} else {
+							final double[] block = result.data[i];
+							if (block == null) {
+								// multiply with 0.0
+								continue;
+							}
+							for (int j = block.length; --j != -1;) {
+								block[j] *= block2[j];
+							}
 						}
 					}
+				} else {
+					new PFor(0, result.data.length - 1) {
+						public void step(int i) {
+							final double[] block2 = b.data[i];
+							if (block2 == null) {
+								// multiply with 0.0, clear block in result
+								result.data[i] = null;
+							} else {
+								final double[] block = result.data[i];
+								if (block == null) {
+									// multiply with 0.0
+									return;
+								}
+								for (int j = block.length; --j != -1;) {
+									block[j] *= block2[j];
+								}
+							}
+						}
+					};
 				}
 				return result;
 			}
@@ -580,67 +652,134 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 					&& b.layout.rowMajor == layout.rowMajor
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-				for (int i = result.data.length; --i != -1;) {
-					final double[] block2 = b.data[i];
-					if (block2 == null) {
-						// divide by 0.0, fill block with NaN
-						if (result.data[i] == null) {
-							result.data[i] = new double[layout.blockArea];
-						}
-						Arrays.fill(result.data[i], Double.NaN);
-					} else {
-						final double[] block = result.data[i];
-						if (block == null) {
-							// divide 0.0 by x = 0.0: nothing to do
-							continue;
-						}
-						for (int j = block.length; --j != -1;) {
-							block[j] /= block2[j];
+				if (result.data.length < 100) {
+					for (int i = result.data.length; --i != -1;) {
+						final double[] block2 = b.data[i];
+						if (block2 == null) {
+							// divide by 0.0, fill block with NaN
+							if (result.data[i] == null) {
+								result.data[i] = new double[layout.blockArea];
+							}
+							Arrays.fill(result.data[i], Double.NaN);
+						} else {
+							final double[] block = result.data[i];
+							if (block == null) {
+								// divide 0.0 by x = 0.0: nothing to do
+								continue;
+							}
+							for (int j = block.length; --j != -1;) {
+								block[j] /= block2[j];
+							}
 						}
 					}
+				} else {
+					new PFor(0, result.data.length - 1) {
+						public void step(int i) {
+							final double[] block2 = b.data[i];
+							if (block2 == null) {
+								// divide by 0.0, fill block with NaN
+								if (result.data[i] == null) {
+									result.data[i] = new double[layout.blockArea];
+								}
+								Arrays.fill(result.data[i], Double.NaN);
+							} else {
+								final double[] block = result.data[i];
+								if (block == null) {
+									// divide 0.0 by x = 0.0: nothing to do
+									return;
+								}
+								for (int j = block.length; --j != -1;) {
+									block[j] /= block2[j];
+								}
+							}
+						}
+					};
 				}
+
 				return result;
 			}
 		}
 		return super.times(value);
 	}
 
-	public Matrix minus(double value) {
+	public Matrix minus(final double value) {
 		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-		for (int i = result.data.length; --i != -1;) {
-			double[] block = result.data[i];
-			if (block == null) {
-				block = new double[layout.blockArea];
-			}
-			for (int j = block.length; --j != -1;) {
-				block[j] -= value;
-			}
-		}
-		return result;
-	}
-
-	public Matrix times(double value) {
-		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-		for (int i = result.data.length; --i != -1;) {
-			final double[] block = result.data[i];
-			if (block != null) {
+		if (result.data.length < 100) {
+			for (int i = result.data.length; --i != -1;) {
+				double[] block = result.data[i];
+				if (block == null) {
+					block = new double[layout.blockArea];
+				}
 				for (int j = block.length; --j != -1;) {
-					block[j] *= value;
+					block[j] -= value;
 				}
 			}
+		} else {
+			new PFor(0, result.data.length - 1) {
+				public void step(int i) {
+					double[] block = result.data[i];
+					if (block == null) {
+						block = new double[layout.blockArea];
+					}
+					for (int j = block.length; --j != -1;) {
+						block[j] -= value;
+					}
+				}
+			};
 		}
 		return result;
 	}
 
-	public Matrix divide(double value) {
+	public Matrix times(final double value) {
 		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
-		for (int i = result.data.length; --i != -1;) {
-			final double[] block = result.data[i];
-			if (block != null) {
+		if (result.data.length < 100) {
+			for (int i = result.data.length; --i != -1;) {
+				final double[] block = result.data[i];
+				if (block != null) {
+					for (int j = block.length; --j != -1;) {
+						block[j] *= value;
+					}
+				}
+			}
+		} else {
+			new PFor(0, result.data.length - 1) {
+				public void step(int i) {
+					final double[] block = result.data[i];
+					if (block != null) {
+						for (int j = block.length; --j != -1;) {
+							block[j] *= value;
+						}
+					}
+				}
+			};
+		}
+		return result;
+	}
+
+	public Matrix divide(final double value) {
+		final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
+		if (result.data.length < 100) {
+			for (int i = result.data.length; --i != -1;) {
+				double[] block = result.data[i];
+				if (block == null) {
+					block = new double[layout.blockArea];
+				}
 				for (int j = block.length; --j != -1;) {
 					block[j] /= value;
 				}
 			}
+		} else {
+			new PFor(0, result.data.length - 1) {
+				public void step(int i) {
+					double[] block = result.data[i];
+					if (block == null) {
+						block = new double[layout.blockArea];
+					}
+					for (int j = block.length; --j != -1;) {
+						block[j] /= value;
+					}
+				}
+			};
 		}
 		return result;
 	}

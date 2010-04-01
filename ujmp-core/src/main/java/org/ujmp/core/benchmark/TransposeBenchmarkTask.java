@@ -36,8 +36,8 @@ public class TransposeBenchmarkTask extends AbstractBenchmarkTask {
 	@Override
 	public BenchmarkResult task(Class<? extends Matrix> matrixClass, long benchmarkSeed, int run,
 			long[] size) {
-		long t0, t1;
-		DoubleMatrix2D m = null;
+		final long t0, t1, m0, m1;
+		final DoubleMatrix2D m;
 		Matrix r = null;
 		try {
 			m = BenchmarkUtil.createMatrix(matrixClass, size);
@@ -49,15 +49,17 @@ public class TransposeBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, m);
 			BenchmarkUtil.purgeMemory(getConfig());
+			m0 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			t0 = System.nanoTime();
 			r = m.transpose();
 			t1 = System.nanoTime();
+			m1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			if (r == null) {
 				System.out.print("e");
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			return new BenchmarkResult((t1 - t0) / 1000000.0);
+			return new BenchmarkResult((t1 - t0) / 1000000.0, m1 - m0);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

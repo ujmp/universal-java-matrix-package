@@ -25,6 +25,7 @@ package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.SerializationUtil;
 
 public class TransposeBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -59,7 +60,9 @@ public class TransposeBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.ERROR;
 			}
-			return new BenchmarkResult((t1 - t0) / 1000000.0, m1 - m0);
+			long mem = m1 - m0 - SerializationUtil.sizeOf(r);
+			mem = mem > 0 ? mem : 0;
+			return new BenchmarkResult((t1 - t0) / 1000000.0, mem);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

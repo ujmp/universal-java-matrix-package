@@ -26,6 +26,7 @@ package org.ujmp.core.benchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.util.SerializationUtil;
 
 public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -65,7 +66,10 @@ public class SolveSquareBenchmarkTask extends AbstractBenchmarkTask {
 				return BenchmarkResult.ERROR;
 			}
 			double diff = BenchmarkUtil.difference(result, x);
-			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, m1 - m0);
+			result = null;
+			long mem = m1 - m0 - SerializationUtil.sizeOf(result);
+			mem = mem > 0 ? mem : 0;
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, mem);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

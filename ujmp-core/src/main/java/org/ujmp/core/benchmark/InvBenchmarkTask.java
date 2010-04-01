@@ -24,8 +24,10 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.matrix.DenseMatrix;
+import org.ujmp.core.util.SerializationUtil;
 
 public class InvBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -62,7 +64,10 @@ public class InvBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			Matrix result = m.mtimes(r);
 			double diff = BenchmarkUtil.difference(result, DenseMatrix.factory.eye(m.getSize()));
-			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, m1 - m0);
+			result = null;
+			long mem = m1 - m0 - SerializationUtil.sizeOf(r);
+			mem = mem > 0 ? mem : 0;
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, mem);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

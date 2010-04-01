@@ -52,7 +52,8 @@ public abstract class SerializationUtil {
 		}
 	}
 
-	public static Object deserialize(InputStream inputStream) throws ClassNotFoundException, IOException {
+	public static Object deserialize(InputStream inputStream) throws ClassNotFoundException,
+			IOException {
 		ObjectInputStream in = null;
 		try {
 			// stream closed in the finally
@@ -83,6 +84,10 @@ public abstract class SerializationUtil {
 		ByteArrayInputStream bis = new ByteArrayInputStream(data);
 		Object o = deserialize(bis);
 		return o;
+	}
+
+	public static long sizeOf(Serializable o) throws IOException {
+		return serialize(o).length;
 	}
 
 }

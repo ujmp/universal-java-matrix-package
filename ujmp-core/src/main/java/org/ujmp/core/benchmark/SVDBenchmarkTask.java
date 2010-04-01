@@ -25,6 +25,7 @@ package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.SerializationUtil;
 
 public class SVDBenchmarkTask extends AbstractBenchmarkTask {
 
@@ -61,7 +62,10 @@ public class SVDBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			Matrix result = r[0].mtimes(r[1]).mtimes(r[2].transpose());
 			double diff = BenchmarkUtil.difference(result, m);
-			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, m1 - m0);
+			result = null;
+			long mem = m1 - m0 - SerializationUtil.sizeOf(r);
+			mem = mem > 0 ? mem : 0;
+			return new BenchmarkResult((t1 - t0) / 1000000.0, diff, mem);
 		} catch (Throwable e) {
 			System.out.print("e");
 			System.out.flush();

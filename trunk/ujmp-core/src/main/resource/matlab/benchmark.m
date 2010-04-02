@@ -30,7 +30,6 @@ runs=25;
 maxStd=10;
 maxTrials=20;
 maxTime=30000;
-tasks=10;
 sizes=[2;3;4;5;10;20;50;100;200;500;1000;2000;3000;4000;5000];
 sizes=[sizes,sizes];
 
@@ -39,11 +38,19 @@ clc;
 mkdir('results');
 mkdir('results/',version);
 
-for task=1:tasks
+for task=1:10
     stopped=0;
 
     alltime=[];
     alldeltas=[];
+
+    % chol not supported in FreeMat
+    if(task==6 && strcmp(version,'4.0'))
+       continue;
+    end;
+    if(task==6 && strcmp(version,'3.6'))
+       continue;
+    end;
 
     if(task==1)
         taskname='timesScalar';
@@ -89,7 +96,7 @@ for task=1:tasks
                         stopped=1;
 			t=NaN;
 			delta=NaN;
-			deltas(i,1)=delta;
+			deltas(:,1)=NaN;
                     end;
                 end;
             end;
@@ -101,14 +108,16 @@ for task=1:tasks
                     if(isnan(t)||t*1000>maxTime)
                         stopped=1;
 			ts(i,1)=NaN;
-                        deltas(i,1)=NaN;
+			delta=NaN;
+                        deltas(:,1)=NaN;
                     else
                         ts(i,1)=t*1000;
                         deltas(i,1)=delta;
                     end;
                 else
 		    ts(i,1)=NaN;
-		    deltas(i,1)=NaN;
+		    delta=NaN;
+		    deltas(:,1)=NaN;
 		end;
             end;
 

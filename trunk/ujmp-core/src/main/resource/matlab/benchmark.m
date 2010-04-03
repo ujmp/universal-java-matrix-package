@@ -30,8 +30,15 @@ runs=25;
 maxStd=10;
 maxTrials=20;
 maxTime=30000;
-sizes=[2;3;4;5;10;20;50;100;200;500;1000;2000;3000;4000;5000];
+sizes=[2;3;4;5;10;20;50;100;200;500;1000;2000;5000];
 sizes=[sizes,sizes];
+
+
+burninruns=0;
+runs=2;
+maxStd=10;
+maxTrials=1;
+maxTime=1000;
 
 clc;
 

@@ -286,26 +286,8 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		if (maxSize >= 2000) {
 			sizes.add(new long[] { 2000, 2000 });
 		}
-		if (maxSize >= 3000) {
-			sizes.add(new long[] { 3000, 3000 });
-		}
-		if (maxSize >= 4000) {
-			sizes.add(new long[] { 4000, 4000 });
-		}
 		if (maxSize >= 5000) {
 			sizes.add(new long[] { 5000, 5000 });
-		}
-		if (maxSize >= 6000) {
-			sizes.add(new long[] { 6000, 6000 });
-		}
-		if (maxSize >= 7000) {
-			sizes.add(new long[] { 7000, 7000 });
-		}
-		if (maxSize >= 8000) {
-			sizes.add(new long[] { 8000, 8000 });
-		}
-		if (maxSize >= 9000) {
-			sizes.add(new long[] { 9000, 9000 });
 		}
 		if (maxSize >= 10000) {
 			sizes.add(new long[] { 10000, 10000 });

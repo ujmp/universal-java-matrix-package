@@ -53,12 +53,15 @@ public class CommonsMathDenseDoubleMatrix2DFactory extends
 	}
 
 	public Matrix dense(RealMatrix matrix) {
-		if (matrix instanceof BlockRealMatrix) {
+		if (matrix == null) {
+			throw new MatrixException("matrix is null");
+		} else if (matrix instanceof BlockRealMatrix) {
 			return dense((BlockRealMatrix) matrix);
 		} else if (matrix instanceof Array2DRowRealMatrix) {
 			return dense((Array2DRowRealMatrix) matrix);
 		} else {
-			throw new MatrixException("not available");
+			throw new MatrixException("implementation not available: "
+					+ matrix.getClass());
 		}
 	}
 

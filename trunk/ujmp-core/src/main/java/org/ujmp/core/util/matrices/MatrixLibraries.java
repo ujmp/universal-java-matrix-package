@@ -292,8 +292,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), EIG, COLT);
 		setAsString(yes(), CHOL, COLT);
 
-		setAsString(small("2.0"), VERSION, COMMONSMATH);
-		setAsString(small("2009"), DATE, COMMONSMATH);
+		setAsString(small("2.1"), VERSION, COMMONSMATH);
+		setAsString(small("2010"), DATE, COMMONSMATH);
 		setAsString(small("Apache"), LICENCE, COMMONSMATH);
 		setAsString(no(), JAVA14, COMMONSMATH);
 		setAsString(yes(), JAVA5, COMMONSMATH);
@@ -321,7 +321,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
 		setAsString(yes(), CHOL, COMMONSMATH);
 
-		setAsString(small("0.10"), VERSION, EJML);
+		setAsString(small("0.11"), VERSION, EJML);
 		setAsString(small("2010"), DATE, EJML);
 		setAsString(small("LGPL"), LICENCE, EJML);
 		setAsString(no(), JAVA14, EJML);

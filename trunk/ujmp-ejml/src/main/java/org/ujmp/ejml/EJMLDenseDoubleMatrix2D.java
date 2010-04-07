@@ -191,7 +191,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix chol() {
-		CholeskyDecomposition chol = DecompositionFactory.chol(5);
+		CholeskyDecomposition chol = DecompositionFactory.chol();
 		chol.decompose(matrix);
 		Matrix l = new EJMLDenseDoubleMatrix2D(chol.getT(null));
 		return l;
@@ -263,7 +263,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		int rows = (Integer) s.readObject();
 		int columns = (Integer) s.readObject();
 		double[] values = (double[]) s.readObject();
-		matrix = new DenseMatrix64F(rows, columns, values, true);
+		matrix = new DenseMatrix64F(rows, columns, true, values);
 	}
 
 	private void writeObject(ObjectOutputStream s) throws IOException,

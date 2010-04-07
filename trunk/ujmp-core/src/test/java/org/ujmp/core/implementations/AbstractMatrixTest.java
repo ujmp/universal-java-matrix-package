@@ -48,7 +48,7 @@ import org.ujmp.core.util.SerializationUtil;
 
 public abstract class AbstractMatrixTest {
 
-	public static final double TOLERANCE = 1e-5;
+	public static final double TOLERANCE = 1e-3;
 
 	public abstract Matrix createMatrix(long... size) throws Exception;
 
@@ -1659,7 +1659,7 @@ public abstract class AbstractMatrixTest {
 	public void testLUSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
-		// skip libraries which do not support fat matrices
+		// skip libraries which do not support square matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
@@ -1704,7 +1704,7 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrix(116, 116);
 
-		// skip libraries which do not support fat matrices
+		// skip libraries which do not support square matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
@@ -1929,7 +1929,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrix(112, 112);
-
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
@@ -2564,9 +2563,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(4, 5);
 
 		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
 		}
@@ -2608,9 +2607,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(5, 5);
 
 		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
@@ -2647,9 +2646,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(107, 107);
 
 		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
@@ -2683,9 +2682,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(10, 10);
 
 		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
@@ -2718,9 +2717,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(109, 109);
 
 		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
@@ -2809,9 +2808,9 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		// error in implementation
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2898,9 +2897,9 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		// error in implementation
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
+		// if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
+		// return;
+		// }
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {

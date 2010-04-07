@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.ojalgo.access.Access2D;
 import org.ojalgo.array.ArrayUtils;
 import org.ojalgo.function.implementation.PrimitiveFunction;
 import org.ojalgo.matrix.BasicMatrix;
@@ -302,7 +303,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	@Override
 	public double[][] toDoubleArray() throws MatrixException {
-		return matrix.toRawCopy();
+		return ArrayUtils.toRawCopyOf((Access2D<Double>) matrix);
 	}
 
 	@Override

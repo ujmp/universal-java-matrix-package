@@ -25,22 +25,16 @@
 % Boston, MA  02110-1301  USA
 %
 
-burninruns=3;
+clear;
+clc;
+
+burnInRuns=3;
 runs=25;
 maxStd=10;
 maxTrials=20;
-maxTime=30000;
+maxTime=60000;
 sizes=[2;3;4;5;10;20;50;100;200;500;1000;2000;5000];
 sizes=[sizes,sizes];
-
-
-burninruns=0;
-runs=2;
-maxStd=10;
-maxTrials=1;
-maxTime=1000;
-
-clc;
 
 mkdir('results');
 mkdir('results/',version);
@@ -48,8 +42,8 @@ mkdir('results/',version);
 for task=1:10
     stopped=0;
 
-    alltime=[];
-    alldeltas=[];
+    allTimes=[];
+    allDeltas=[];
 
     % chol not supported in FreeMat
     if(task==6 && strcmp(version,'4.0'))
@@ -83,22 +77,23 @@ for task=1:10
 
     for s=1:(size(sizes,1))
 
-        cursize=sizes(s,:);
+        curSize=sizes(s,:);
         bestStd=1e16;
-        bestTime=[];
+        bestTimes=[];
+	bestDeltas=[];
 
         for trial=1:maxTrials
 
-            ts=zeros(runs,1);
+            times=zeros(runs,1);
             deltas=zeros(runs,1);
 
             fprintf('%s',taskname);
-            fprintf(' [%dx%d] ',cursize(1),cursize(2));
+            fprintf(' [%dx%d] ',curSize(1),curSize(2));
 
-            for i=1:burninruns
+            for i=1:burnInRuns
                 if(stopped==0)
                     fprintf('#');
-                    [t,delta]=benchmarktask(task,cursize);
+                    [t,delta]=benchmarktask(task,curSize);
                     if(isnan(t)||t*1000>maxTime)
                         stopped=1;
 			t=NaN;
@@ -111,26 +106,26 @@ for task=1:10
             for i=1:runs
                 if(stopped==0)
                     fprintf('.');
-                    [t,delta]=benchmarktask(task,cursize);
+                    [t,delta]=benchmarktask(task,curSize);
                     if(isnan(t)||t*1000>maxTime)
                         stopped=1;
-			ts(i,1)=NaN;
+			times(i,1)=NaN;
 			delta=NaN;
                         deltas(:,1)=NaN;
                     else
-                        ts(i,1)=t*1000;
+                        times(i,1)=t*1000;
                         deltas(i,1)=delta;
                     end;
                 else
-		    ts(i,1)=NaN;
+		    times(i,1)=NaN;
 		    delta=NaN;
 		    deltas(:,1)=NaN;
 		end;
             end;
 
-            tempStd=std(ts)/mean(ts)*100;
+            tempStd=std(times)/mean(times)*100;
 
-            fprintf(' %f+-%f (+-%f%%)',mean(ts),std(ts),tempStd);
+            fprintf(' %f+-%f (+-%f%%)',mean(times),std(times),tempStd);
 
             if(~isnan(mean(delta)))
                 fprintf(' delta:%e',mean(deltas));
@@ -140,41 +135,43 @@ for task=1:10
                 fprintf(' standard deviation too large, result discarded');
             end;
             
-            if(sum(ts<0)~=0)
+            if(sum(times<0)~=0)
                 fprintf(' time could not be measured, result discarded');
             end;
 
-            if(isempty(bestTime))
-                bestTime=ts;
+            if(isempty(bestTimes))
+                bestTimes=times;
+		bestDeltas=deltas;
             end;
 
-            if (tempStd<bestStd&&sum(ts<0)==0)
+            if (tempStd<bestStd&&sum(times<0)==0)
                 bestStd=tempStd;
-                bestTime=ts;
+                bestTimes=times;
+		bestDeltas=deltas;
             end;
 
             fprintf('\n');
 
-            if(tempStd<maxStd&&sum(ts<0)==0)
+            if(tempStd<maxStd&&sum(times<0)==0)
                 break;
             end;
 
         end;
 
-        alltime=[alltime,bestTime];
-        alldeltas=[alldeltas,delta];
+        allTimes=[allTimes,bestTimes];
+        allDeltas=[allDeltas,bestDeltas];
 
     end;
 
     fid = fopen(['results/',version,'/',taskname,'.csv'],'w');
-    fprintf(fid, ['%d',repmat('\t%d',1,size(alltime,2)-1),'\n'],sizes(:,1)');
-    fprintf(fid, ['%8f',repmat('\t%8f',1,size(alltime,2)-1),'\n'],alltime');
+    fprintf(fid, ['%d',repmat('\t%d',1,size(allTimes,2)-1),'\n'],sizes(:,1)');
+    fprintf(fid, ['%8f',repmat('\t%8f',1,size(allTimes,2)-1),'\n'],allTimes');
     fclose(fid);
 
-    if(~isnan(alldeltas))
+    if(sum(sum((isnan(allDeltas)-1)*-1))>0)
         fid = fopen(['results/',version,'/',taskname,'-diff.csv'],'w');
-        fprintf(fid, ['%d',repmat('\t%d',1,size(alldeltas,2)-1),'\n'],sizes(:,1)');
-        fprintf(fid, ['%8e',repmat('\t%8e',1,size(alldeltas,2)-1),'\n'],alldeltas');
+        fprintf(fid, ['%d',repmat('\t%d',1,size(allDeltas,2)-1),'\n'],sizes(:,1)');
+        fprintf(fid, ['%8e',repmat('\t%8e',1,size(allDeltas,2)-1),'\n'],allDeltas');
         fclose(fid);
     end;
 

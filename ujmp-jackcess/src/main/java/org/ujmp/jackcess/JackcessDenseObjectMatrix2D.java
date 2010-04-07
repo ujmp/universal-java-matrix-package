@@ -42,7 +42,7 @@ import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 import com.healthmarketscience.jackcess.TableBuilder;
 
-public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
+public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -6342663672866315180L;
 
 	private Database database = null;
@@ -53,18 +53,18 @@ public class DenseJackcessMatrix2D extends AbstractDenseObjectMatrix2D implement
 
 	Cursor cursor = null;
 
-	public DenseJackcessMatrix2D(File file, String tablename) throws IOException {
+	public JackcessDenseObjectMatrix2D(File file, String tablename) throws IOException {
 		database = Database.open(file);
 		table = database.getTable(tablename);
 		columns = table.getColumns();
 		cursor = Cursor.createCursor(table);
 	}
 
-	public DenseJackcessMatrix2D(File file, Matrix matrix) throws IOException {
+	public JackcessDenseObjectMatrix2D(File file, Matrix matrix) throws IOException {
 		this(file, "ujmp-matrix", matrix);
 	}
 
-	public DenseJackcessMatrix2D(File file, String tablename, Matrix matrix) throws IOException {
+	public JackcessDenseObjectMatrix2D(File file, String tablename, Matrix matrix) throws IOException {
 		try {
 			database = Database.create(file);
 

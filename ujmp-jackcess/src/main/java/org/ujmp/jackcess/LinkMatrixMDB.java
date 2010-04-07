@@ -32,7 +32,7 @@ import com.healthmarketscience.jackcess.Database;
 
 public class LinkMatrixMDB {
 
-	public static final DenseJackcessMatrix2D toFile(File file, Object... parameters)
+	public static final JackcessDenseObjectMatrix2D toFile(File file, Object... parameters)
 			throws MatrixException, IOException {
 		String tablename = null;
 		if (parameters.length != 0) {
@@ -42,7 +42,7 @@ public class LinkMatrixMDB {
 			tablename = db.getTableNames().iterator().next();
 			db.close();
 		}
-		return new DenseJackcessMatrix2D(file, tablename);
+		return new JackcessDenseObjectMatrix2D(file, tablename);
 	}
 
 }

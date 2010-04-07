@@ -33,7 +33,7 @@ public class ExportMatrixMDB {
 
 	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
 			MatrixException {
-		DenseJackcessMatrix2D mdb = new DenseJackcessMatrix2D(file, matrix);
+		JackcessDenseObjectMatrix2D mdb = new JackcessDenseObjectMatrix2D(file, matrix);
 		mdb.close();
 	}
 

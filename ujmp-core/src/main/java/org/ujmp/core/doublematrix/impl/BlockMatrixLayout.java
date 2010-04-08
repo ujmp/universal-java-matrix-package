@@ -130,21 +130,13 @@ public final class BlockMatrixLayout implements Serializable {
 		final int lcols = getColumnsInBlock(colStart);
 
 		// transpose block, swap cols and rows
-		if (rowMajor) {
-			for (int i = 0; i < lcols; i++) {
-				final int ilrows = i * lrows;
-				for (int j = 0; j < lrows; j++) {
-					targetBlock[ilrows + j] = block[j * lcols + i];
-				}
-			}
-		} else {
-			for (int i = 0; i < lcols; i++) {
-				final int ilrows = i * lrows;
-				for (int j = 0; j < lrows; j++) {
-					targetBlock[j * lcols + i] = block[ilrows + j];
-				}
+		for (int i = 0; i < lcols; i++) {
+			final int ilrows = i * lrows;
+			for (int j = 0; j < lrows; j++) {
+				targetBlock[ilrows + j] = block[j * lcols + i];
 			}
 		}
+
 		return targetBlock;
 	}
 
@@ -169,21 +161,13 @@ public final class BlockMatrixLayout implements Serializable {
 		final int lcols = getColumnsInBlock(colStart);
 
 		// transpose block
-		if (rowMajor) {
-			for (int i = 0; i < lrows; i++) {
-				final int ilcols = i * lcols;
-				for (int j = 0; j < lcols; j++) {
-					targetBlock[j * lrows + i] = block[ilcols + j];
-				}
-			}
-		} else {
-			for (int i = 0; i < lrows; i++) {
-				final int ilcols = i * lcols;
-				for (int j = 0; j < lcols; j++) {
-					targetBlock[ilcols + j] = block[j * lrows + i];
-				}
+		for (int i = 0; i < lrows; i++) {
+			final int ilcols = i * lcols;
+			for (int j = 0; j < lcols; j++) {
+				targetBlock[ilcols + j] = block[j * lrows + i];
 			}
 		}
+
 		return targetBlock;
 	}
 

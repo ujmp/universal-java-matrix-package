@@ -440,17 +440,19 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		final BlockDenseDoubleMatrix2D transMat = new BlockDenseDoubleMatrix2D(
 				(int) getColumnCount(), (int) getRowCount(), step, transOrder);
 
+		double[] block;
+
 		for (int i = 0; i < layout.rows; i += step) {
 			for (int j = 0; j < layout.columns; j += step) {
 				// shuffle blocks to new position
-				int blockNumberA = layout.getBlockNumber(i, j);
-				double[] block = this.data[blockNumberA];
+				final int blockNumberA = layout.getBlockNumber(i, j);
+				block = this.data[blockNumberA];
 
 				if (returnType == Ret.NEW && null != block) {
 					block = Arrays.copyOf(block, block.length);
 				}
 
-				int blockNumberB = transMat.layout.getBlockNumber(j, i);
+				final int blockNumberB = transMat.layout.getBlockNumber(j, i);
 				transMat.data[blockNumberB] = block;
 			}
 		}

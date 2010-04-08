@@ -117,7 +117,7 @@ public class BlockMultiply implements Callable<Void> {
 			for (int k = fromK; k < toK; k += step) {
 				final int bCols = matrixB.layout.getColumnsInBlock(k);
 
-				final double[] cBlock = new double[blockSize];
+				final double[] cBlock = new double[aRows * bCols];
 
 				for (int n = fromN; n < toN; n += step) {
 

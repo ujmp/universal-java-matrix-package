@@ -594,13 +594,14 @@ class MtimesDenseDoubleMatrix2D implements
 		final int aRowSlice = Math.min(al.blockStripe, iMax);
 
 		// Number of blocks to take for each concurrent task.
-		final int blocksPerTask = 2;
+		final int blocksPerTask = 1;
+		final int blocksPerTaskDimJ = selectBlocksPerTaskDimJ(al.blockStripe, iMax, jMax, kMax);
 
 		for (int k = 0, kStride; k < kMax; k += kStride) {
 			kStride = Math.min(blocksPerTask * bColSlice, kMax - k);
 
 			for (int j = 0, jStride; j < jMax; j += jStride) {
-				jStride = Math.min(blocksPerTask * aColSlice, jMax - j);
+				jStride = Math.min(blocksPerTaskDimJ * aColSlice, jMax - j);
 
 				for (int i = 0, iStride; i < iMax; i += iStride) {
 					iStride = Math.min(blocksPerTask * aRowSlice, iMax - i);
@@ -626,5 +627,20 @@ class MtimesDenseDoubleMatrix2D implements
 		}
 
 		return c;
+	}
+
+	// pick a suitable number of blocks to process per task for dimension J
+	// - if too small , then incurs extra gc and contention for synchronization
+	// - if set too large, then may not fully exploit parallelism
+	private int selectBlocksPerTaskDimJ(int blockStripe, int iMax, int jMax, int kMax) {
+		int adjust = (jMax % blockStripe > 0) ? 1 : 0;
+		if (jMax < (5 * blockStripe) || jMax <= iMax) {
+			// do not break this dimension into parallel tasks
+			return jMax / blockStripe + adjust;
+		} else {
+			// assume 2 parallell tasks
+			return Math.max(1, (jMax / blockStripe + adjust) / 2);
+		}
+		// may need something if jMax >>> iMax
 	}
 };

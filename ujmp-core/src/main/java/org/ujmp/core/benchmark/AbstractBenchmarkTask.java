@@ -91,7 +91,7 @@ public abstract class AbstractBenchmarkTask {
 		for (int s = 0; !stopped && s < sizes.size(); s++) {
 			long[] size = sizes.get(s);
 			double bestStd = Double.MAX_VALUE;
-			int tmpTrialCount = config.getDefaultTrialCount();
+			int tmpTrialCount = config.getMinTrialCount();
 			DenseDoubleMatrix2D curTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
 			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
 			DenseDoubleMatrix2D curDiff = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);

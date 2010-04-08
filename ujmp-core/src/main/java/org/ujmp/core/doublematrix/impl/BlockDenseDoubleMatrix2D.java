@@ -191,9 +191,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		// layout structure for the blocks in the matrix
 		this.layout = new BlockMatrixLayout(rows, cols, blockStripeSize, blockOrder);
 
-		// pad out matrix size to match block size
-		// TODO try eliminate padding??
-
 		this.numberOfBlocks = (rows / blockStripeSize + (rows % blockStripeSize > 0 ? 1 : 0))
 				* (cols / blockStripeSize + (cols % blockStripeSize > 0 ? 1 : 0));
 		this.data = new double[numberOfBlocks][];

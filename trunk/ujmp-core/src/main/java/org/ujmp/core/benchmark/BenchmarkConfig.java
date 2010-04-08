@@ -48,7 +48,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 		put("burnInRuns", 3);
 		put("runs", 25);
-		put("defaultTrialCount", 1);
+		put("minTrialCount", 1);
 		put("maxTrialCount", 5);
 		put("maxTime", 10000); // maximal time for one operation
 		put("maxStd", 10); // maximal standard deviation results may vary
@@ -69,30 +69,30 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runQR", false);
 
 		put("runDefaultDenseDoubleMatrix2D", true);
-		put("runArrayDenseDoubleMatrix2D", true);
+		//put("runArrayDenseDoubleMatrix2D", true);
 		put("runBlockDenseDoubleMatrix2D", true);
-		put("runJBlasDenseDoubleMatrix2D", true);
-		put("runMTJDenseDoubleMatrix2D", true);
+//		put("runJBlasDenseDoubleMatrix2D", true);
+//		put("runMTJDenseDoubleMatrix2D", true);
 		put("runOjalgoDenseDoubleMatrix2D", true);
-		put("runOrbitalDenseDoubleMatrix2D", false);
-		put("runOwlpackDenseDoubleMatrix2D", false);
-		put("runJScienceDenseDoubleMatrix2D", false);
-		put("runJSciDenseDoubleMatrix2D", false);
-		put("runJMathArrayDenseDoubleMatrix2D", false);
-		put("runJLinAlgDenseDoubleMatrix2D", false);
-		put("runParallelColtDenseDoubleMatrix2D", true);
-		put("runColtDenseDoubleMatrix2D", true);
-		put("runSSTDenseDoubleMatrix2D", false);
-		put("runCommonsMathArrayDenseDoubleMatrix2D", true);
-		put("runCommonsMathBlockDenseDoubleMatrix2D", true);
-		put("runEJMLDenseDoubleMatrix2D", true);
-		put("runJamaDenseDoubleMatrix2D", true);
-		put("runJampackDenseDoubleMatrix2D", false);
-		put("runJMatricesDenseDoubleMatrix2D", false);
-		put("runMantissaDenseDoubleMatrix2D", false);
-		put("runVecMathDenseDoubleMatrix2D", false);
-
-		put("useJBlas", true);
+//		put("runOrbitalDenseDoubleMatrix2D", false);
+//		put("runOwlpackDenseDoubleMatrix2D", false);
+//		put("runJScienceDenseDoubleMatrix2D", false);
+//		put("runJSciDenseDoubleMatrix2D", false);
+//		put("runJMathArrayDenseDoubleMatrix2D", false);
+//		put("runJLinAlgDenseDoubleMatrix2D", false);
+//		put("runParallelColtDenseDoubleMatrix2D", true);
+//		put("runColtDenseDoubleMatrix2D", true);
+//		put("runSSTDenseDoubleMatrix2D", false);
+//		put("runCommonsMathArrayDenseDoubleMatrix2D", true);
+//		put("runCommonsMathBlockDenseDoubleMatrix2D", true);
+//		put("runEJMLDenseDoubleMatrix2D", true);
+//		put("runJamaDenseDoubleMatrix2D", true);
+//		put("runJampackDenseDoubleMatrix2D", false);
+//		put("runJMatricesDenseDoubleMatrix2D", false);
+//		put("runMantissaDenseDoubleMatrix2D", false);
+//		put("runVecMathDenseDoubleMatrix2D", false);
+//
+//		put("useJBlas", true);
 		put("useBlockMatrixMultiply", true);
 		put("useOjalgo", true);
 		put("useEJML", true);
@@ -221,12 +221,12 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getInt(get("burnInRuns"));
 	}
 
-	public int getDefaultTrialCount() {
-		return MathUtil.getInt(get("defaultTrialCount"));
+	public int getMinTrialCount() {
+		return MathUtil.getInt(get("minTrialCount"));
 	}
 
-	public void setDefaultTrialCount(int defaultTrialCount) {
-		put("defaultTrialCount", defaultTrialCount);
+	public void setMinTrialCount(int minTrialCount) {
+		put("minTrialCount", minTrialCount);
 	}
 
 	public int getMaxTrialCount() {

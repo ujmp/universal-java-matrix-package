@@ -26,12 +26,12 @@ package org.ujmp.core.datematrix;
 import java.util.Date;
 
 import org.ujmp.core.datematrix.factory.DateMatrix2DFactory;
-import org.ujmp.core.datematrix.factory.DefaultDataMatrix2DFactory;
+import org.ujmp.core.datematrix.factory.DefaultDateMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface DateMatrix2D extends DateMatrix, GenericMatrix2D<Date> {
 
-	public static DateMatrix2DFactory factory = new DefaultDataMatrix2DFactory();
+	public static DateMatrix2DFactory factory = new DefaultDateMatrix2DFactory();
 
 	public Date getDate(long row, long column);
 

@@ -31,10 +31,14 @@ public class DefaultDenseDoubleMatrix2DFactory extends AbstractDoubleMatrix2DFac
 	private static final long serialVersionUID = -3755160039410460427L;
 
 	public DenseDoubleMatrix2D zeros(long rows, long columns) {
+		// if (rows >= 100 && columns >= 100) {
+		// return new BlockDenseDoubleMatrix2D(rows, columns);
+		// } else {
 		return new DefaultDenseDoubleMatrix2D(rows, columns);
+		// }
 	}
 
 	public DenseDoubleMatrix2D zeros(long... size) {
-		return new DefaultDenseDoubleMatrix2D(size);
+		return this.zeros(size[ROW], size[COLUMN]);
 	}
 }

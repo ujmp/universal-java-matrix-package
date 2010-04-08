@@ -27,10 +27,9 @@ import org.ujmp.core.datematrix.DateMatrix2D;
 import org.ujmp.core.datematrix.impl.DefaultDenseDateMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 
-public class DefaultDataMatrix2DFactory extends AbstractDateMatrix2DFactory {
+public class DefaultDateMatrix2DFactory extends AbstractDateMatrix2DFactory {
 	private static final long serialVersionUID = -5667354703208641968L;
 
-	
 	public DateMatrix2D dense(long rows, long columns) throws MatrixException {
 		return new DefaultDenseDateMatrix2D(rows, columns);
 	}

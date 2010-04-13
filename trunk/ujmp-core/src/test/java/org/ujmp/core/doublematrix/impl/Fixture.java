@@ -113,25 +113,36 @@ public class Fixture {
 	}
 
 	protected static BlockDenseDoubleMatrix2D createBlockRowLayout(final double[][] myData,
-			final int blockSize, final BlockOrder blockOrder) {
+			final BlockOrder blockOrder) {
 		assert myData != null && myData.length > 0 : "Invalid matrix; must have myData.length>0";
-		BlockDenseDoubleMatrix2D mat = new BlockDenseDoubleMatrix2D(myData, blockSize, blockOrder);
+		int rows = myData.length;
+		int cols = myData[0].length;
+		BlockDenseDoubleMatrix2D mat = new BlockDenseDoubleMatrix2D(rows, cols, blockOrder);
+		mat.fill(myData);
 		return mat;
 	}
 
-	protected static int BLOCKSIZE = 200;
+	protected static BlockDenseDoubleMatrix2D createBlockRowLayout(final double[][] myData,
+			final int blockStripeSize, final BlockOrder blockOrder) {
+		assert myData != null && myData.length > 0 : "Invalid matrix; must have myData.length>0";
+		int rows = myData.length;
+		int cols = myData[0].length;
+		BlockDenseDoubleMatrix2D mat = new BlockDenseDoubleMatrix2D(rows, cols, blockStripeSize,
+				blockOrder);
+		mat.fill(myData);
+		return mat;
+	}
 
-	protected static int LARGE_N = 2000;
-
-	protected static int M = 1000;
-
-	protected static int N = 1200;
-
-	protected static int SEED = 33;
+	private static final int SEED = 33;
 
 	public static BlockDenseDoubleMatrix2D createBlockRowLayoutWithGeneratedData(int i, int j,
-			int blockSize, final BlockOrder blockOrder) {
-		return createBlockRowLayout(createArrayMatrixWithRandomData(i, j, SEED), blockSize,
+			final BlockOrder blockOrder) {
+		return createBlockRowLayout(createArrayMatrixWithRandomData(i, j, SEED), blockOrder);
+	}
+
+	public static BlockDenseDoubleMatrix2D createBlockRowLayoutWithGeneratedData(int i, int j,
+			int blockStripeSize, final BlockOrder blockOrder) {
+		return createBlockRowLayout(createArrayMatrixWithRandomData(i, j, SEED), blockStripeSize,
 				blockOrder);
 	}
 
@@ -184,6 +195,7 @@ public class Fixture {
 		return multiplyTimer;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <M extends Matrix> Callable<M> createMultiplier(final M a, final M b) {
 		final Callable<M> run = new Callable<M>() {
 			public M call() throws Exception {
@@ -203,7 +215,6 @@ public class Fixture {
 		return run;
 	}
 
-	static final double[][] C_2x3_RESULT = new double[][]//
-	{ { 30, 36 }, { 66, 81 } };
+	static final double[][] C_2x3_RESULT = new double[][] { { 30, 36 }, { 66, 81 } };
 
 }

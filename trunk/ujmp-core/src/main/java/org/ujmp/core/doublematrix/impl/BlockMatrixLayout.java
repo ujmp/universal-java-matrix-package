@@ -34,8 +34,13 @@ import java.util.Arrays;
 public final class BlockMatrixLayout implements Serializable {
 	private static final long serialVersionUID = 2726685238884065594L;
 
+	/** Enum describing the layout of a block of data. */
 	public enum BlockOrder {
 		ROWMAJOR, COLUMNMAJOR;
+
+		public BlockOrder transpose() {
+			return (this == ROWMAJOR) ? COLUMNMAJOR : ROWMAJOR;
+		}
 	}
 
 	/** Total size of a block (area). */
@@ -51,7 +56,13 @@ public final class BlockMatrixLayout implements Serializable {
 	 * Whether this block is laid out in row-major (true) or column-major
 	 * (false) order.
 	 */
-	protected final boolean rowMajor;
+	public final BlockOrder blockOrder;
+
+	/** number of blocks in this matrix */
+	final int numberOfBlocks;
+
+	/** @see #blockOrder */
+	private final boolean rowMajor;
 
 	/** Number of rows of matrix. */
 	public final int rows;
@@ -75,7 +86,10 @@ public final class BlockMatrixLayout implements Serializable {
 		this.columns = columns;
 		this.sqbColThreshold = (columns / blockStripe) * blockStripe;
 		this.sqbRowThreshold = (rows / blockStripe) * blockStripe;
-		this.rowMajor = (BlockOrder.ROWMAJOR == blockOrder);
+		this.blockOrder = blockOrder;
+		this.rowMajor = (blockOrder == BlockOrder.ROWMAJOR);
+		this.numberOfBlocks = (rows / blockStripe + (rows % blockStripe > 0 ? 1 : 0))
+				* (columns / blockStripe + (columns % blockStripe > 0 ? 1 : 0));
 	}
 
 	/**
@@ -120,10 +134,13 @@ public final class BlockMatrixLayout implements Serializable {
 
 	final double[] toColMajorBlock(BlockDenseDoubleMatrix2D matrix, final int rowStart, int colStart) {
 		double[] block = getBlock(matrix, rowStart, colStart);
-
 		if (!rowMajor) {
 			return block;
 		}
+		return toColMajorBlock(block, rowStart, colStart);
+	}
+
+	final double[] toColMajorBlock(double[] block, final int rowStart, int colStart) {
 
 		final double[] targetBlock = new double[block.length];
 		final int lrows = getRowsInBlock(rowStart);
@@ -151,10 +168,13 @@ public final class BlockMatrixLayout implements Serializable {
 	final double[] toRowMajorBlock(final BlockDenseDoubleMatrix2D matrix, final int rowStart,
 			int colStart) {
 		final double[] block = getBlock(matrix, rowStart, colStart);
-
 		if (rowMajor) {
 			return block;
 		}
+		return toRowMajorBlock(block, rowStart, colStart);
+	}
+
+	final double[] toRowMajorBlock(final double[] block, final int rowStart, int colStart) {
 
 		final double[] targetBlock = new double[block.length];
 		final int lrows = getRowsInBlock(rowStart);

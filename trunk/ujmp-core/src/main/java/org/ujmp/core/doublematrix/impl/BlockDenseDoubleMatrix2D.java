@@ -79,13 +79,7 @@ import org.ujmp.core.util.concurrent.PFor;
  * <p>
  * The blocks may be square and can be configured by the user at runtime.
  * However, matrix multiplication performance will be sensitive to the choice of
- * block size, depending on the amount of CPU cache available on the system. In
- * addition, should the given matrix not exactly fit within a multiple of the
- * block size, then the matrix will be padded out with zeros. Thus, if the block
- * size is chosen poorly, additional effort will be incurred.
- * <p>
- * As a starting point, a square block with a stripe size of 200 may be a
- * reasonable choice.
+ * block size, depending on the amount of CPU cache available on the system.
  * <p>
  * 
  * @see I. 'Efficient Matrix Multiplication Using Cache Conscious Data Layouts';
@@ -100,6 +94,7 @@ import org.ujmp.core.util.concurrent.PFor;
  */
 public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasBlockDoubleArray2D {
+
 	private static final long serialVersionUID = -5131649082019624021L;
 
 	private static final int DEFAULT_BLOCK_SIZE = 100;
@@ -109,32 +104,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return (rows < DEFAULT_BLOCK_SIZE && cols < DEFAULT_BLOCK_SIZE) ? 50 : DEFAULT_BLOCK_SIZE;
 	}
 
-	/**
-	 * Derive the best fit block stripe size based on the given dimensions of
-	 * two matrices mxn and nxk.
-	 * 
-	 * @param m
-	 *            - rows of first matrix
-	 * @param n
-	 *            - columns of first matrix and rows of second matrix
-	 * @param k
-	 *            - columns of second matrix
-	 * @param targetSize
-	 *            - target block size
-	 * @param x
-	 * @return best fit block stripe size for the 2 matrices with specified
-	 *         dimensions.
-	 */
-	public static int selectBlockStripeSize(final int m, final int n, final int k) {
-		return (n < DEFAULT_BLOCK_SIZE) ? n : DEFAULT_BLOCK_SIZE;
-		// naive
-	}
-
 	/** Matrix data by block number. */
 	private double[][] data;
-
-	/** number of blocks in this matrix */
-	private final int numberOfBlocks;
 
 	/** Layout of matrix and blocks. */
 	protected BlockMatrixLayout layout;
@@ -178,6 +149,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 *            - number of columns of the matrix.
 	 * @param blockStripeSize
 	 *            - length of one side of a square block.
+	 * @throws IllegalArgumentException
+	 *             if rows, cols or blockStripeSize are 0 or less, or blockOrder
+	 *             is null.
 	 */
 	public BlockDenseDoubleMatrix2D(final int rows, final int cols, final int blockStripeSize,
 			final BlockOrder blockOrder) {
@@ -191,9 +165,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		// layout structure for the blocks in the matrix
 		this.layout = new BlockMatrixLayout(rows, cols, blockStripeSize, blockOrder);
 
-		this.numberOfBlocks = (rows / blockStripeSize + (rows % blockStripeSize > 0 ? 1 : 0))
-				* (cols / blockStripeSize + (cols % blockStripeSize > 0 ? 1 : 0));
-		this.data = new double[numberOfBlocks][];
+		this.data = new double[this.layout.numberOfBlocks][];
 	}
 
 	/**
@@ -204,6 +176,21 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public BlockDenseDoubleMatrix2D(final long rows, final long cols, final BlockOrder blockOrder) {
 		this((int) rows, (int) cols, deriveDefaultBlockStripeSize((int) rows, (int) cols),
 				blockOrder);
+	}
+
+	/**
+	 * Create a new matrix with the specified size, and specified block stripe
+	 * size.
+	 * 
+	 * @param rows
+	 *            - number of rows of the matrix.
+	 * @param cols
+	 *            - number of columns of the matrix.
+	 * @throws IllegalArgumentException
+	 *             if rows, cols are 0 or less.
+	 */
+	public BlockDenseDoubleMatrix2D(final int rows, final int cols) {
+		this(rows, cols, deriveDefaultBlockStripeSize(rows, cols), BlockOrder.ROWMAJOR);
 	}
 
 	/**
@@ -231,9 +218,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * structure from. <br>
 	 */
 	public BlockDenseDoubleMatrix2D(final BlockDenseDoubleMatrix2D m) {
-		this((int) m.size[ROW], (int) m.size[COLUMN], m.layout.blockStripe,
-				m.layout.rowMajor ? BlockOrder.ROWMAJOR : BlockOrder.COLUMNMAJOR);
-		for (int i = m.numberOfBlocks; --i != -1;) {
+		this((int) m.size[ROW], (int) m.size[COLUMN], m.layout.blockStripe, m.layout.blockOrder);
+		for (int i = m.layout.numberOfBlocks; --i != -1;) {
 			final double[] block = m.data[i];
 			if (block != null) {
 				this.data[i] = Arrays.copyOf(block, block.length);
@@ -431,8 +417,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	@Override
 	public Matrix transpose(final Ret returnType) {
 		// swap rows, column dimensions and block order
-		final BlockOrder transOrder = (layout.rowMajor ? BlockOrder.COLUMNMAJOR
+		final BlockOrder transOrder = (BlockOrder.ROWMAJOR == layout.blockOrder ? BlockOrder.COLUMNMAJOR
 				: BlockOrder.ROWMAJOR);
+
 		final int step = layout.blockStripe;
 		final BlockDenseDoubleMatrix2D transMat = new BlockDenseDoubleMatrix2D(
 				(int) getColumnCount(), (int) getRowCount(), step, transOrder);
@@ -510,7 +497,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (value instanceof BlockDenseDoubleMatrix2D) {
 			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
 			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
-					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockOrder == layout.blockOrder
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
 				if (result.data.length < 100) {
@@ -554,7 +541,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (value instanceof BlockDenseDoubleMatrix2D) {
 			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
 			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
-					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockOrder == layout.blockOrder
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
 				if (result.data.length < 100) {
@@ -598,7 +585,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (value instanceof BlockDenseDoubleMatrix2D) {
 			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
 			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
-					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockOrder == layout.blockOrder
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
 				if (result.data.length < 100) {
@@ -648,7 +635,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		if (value instanceof BlockDenseDoubleMatrix2D) {
 			final BlockDenseDoubleMatrix2D b = (BlockDenseDoubleMatrix2D) value;
 			if (b.layout.rows == layout.rows && b.layout.columns == layout.columns
-					&& b.layout.rowMajor == layout.rowMajor
+					&& b.layout.blockOrder == layout.blockOrder
 					&& b.layout.blockStripe == layout.blockStripe) {
 				final BlockDenseDoubleMatrix2D result = new BlockDenseDoubleMatrix2D(this);
 				if (result.data.length < 100) {
@@ -781,6 +768,46 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			};
 		}
 		return result;
+	}
+
+	/**
+	 * Change layout of blocks in this matrix (e.g. switch form rowmajor to
+	 * columnmajor).
+	 * 
+	 * @param order
+	 *            - new block layout order.
+	 * @return old BlockOrder.
+	 */
+	public BlockOrder setBlockOrder(BlockOrder order) {
+		verify(order != null, "block order cannot be null");
+
+		if (order == layout.blockOrder) {
+			return order; // quick exit, already same
+		}
+
+		BlockMatrixLayout newLayout = new BlockMatrixLayout(layout.rows, layout.columns,
+				layout.blockStripe, order);
+
+		// swap order of each block
+		for (int r = 0; r < layout.rows; r += layout.blockStripe) {
+			for (int c = 0; c < layout.columns; c += layout.blockStripe) {
+
+				int blockNumber = layout.getBlockNumber(r, c);
+				if (data[blockNumber] == null) {
+					continue;
+				} else if (order == BlockOrder.ROWMAJOR) {
+					data[blockNumber] = layout.toRowMajorBlock(data[blockNumber], r, c);
+				} else {
+					data[blockNumber] = layout.toColMajorBlock(data[blockNumber], r, c);
+				}
+
+			}
+		}
+
+		BlockOrder oldLayout = this.layout.blockOrder;
+		this.layout = newLayout;
+		return oldLayout;
+
 	}
 
 };

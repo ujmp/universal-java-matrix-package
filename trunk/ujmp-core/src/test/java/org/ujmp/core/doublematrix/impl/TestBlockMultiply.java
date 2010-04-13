@@ -35,10 +35,10 @@ import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 public class TestBlockMultiply extends TestCase {
 
 	public static void multiplyCompare(int m, int n, int k) throws Exception {
-		int blockSize = BlockDenseDoubleMatrix2D.selectBlockStripeSize(m, n, k);
-		BlockDenseDoubleMatrix2D a = Fixture.createBlockRowLayoutWithGeneratedData(m, n, blockSize,
+
+		BlockDenseDoubleMatrix2D a = Fixture.createBlockRowLayoutWithGeneratedData(m, n,
 				BlockOrder.ROWMAJOR);
-		BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayoutWithGeneratedData(n, k, blockSize,
+		BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayoutWithGeneratedData(n, k,
 				BlockOrder.COLUMNMAJOR);
 		Matrix d = Fixture.createDenseMatrixWithGeneratedData(m, n);
 		Matrix e = Fixture.createDenseMatrixWithGeneratedData(n, k);
@@ -113,17 +113,6 @@ public class TestBlockMultiply extends TestCase {
 		Fixture.assertMatrixEquals2DIntArray(c, Fixture.MAT_C);
 	}
 
-	/**
-	 * takes too long
-	 */
-	// @Test
-	// public void
-	// testThatMultiply1000x1000x1000xwithSquareBlockGivesCorrectResult() throws
-	// Exception {
-	// int m = 1000, n = 1000, k = 1000;
-	// multiplyCompare(m, n, k);
-	// }
-
 	@Test
 	public void testThatMultiply1000x100x1000xwithSquareBlockGivesCorrectResult() throws Exception {
 		int m = 1000, n = 100, k = 1000;
@@ -142,16 +131,28 @@ public class TestBlockMultiply extends TestCase {
 		multiplyCompare(m, n, k);
 	}
 
-	/**
-	 * takes too long
-	 */
-	// @Test
-	// public void
-	// testThatMultiply1001x1001x1001xwithSquareBlockGivesCorrectResult() throws
-	// Exception {
-	// int m = 1001, n = 1001, k = 1001;
-	// multiplyCompare(m, n, k);
-	// }
+	@Test
+	public void testThatMultiply110x120x115xwithSquareBlockGivesCorrectResult() throws Exception {
+		int m = 110, n = 120, k = 115;
+		multiplyCompare(m, n, k);
+	}
+
+	@Test
+	public void testThatMultiplyThenSubtractGivesCorrectBlockSize() throws Exception {
+
+		BlockDenseDoubleMatrix2D a = new BlockDenseDoubleMatrix2D(new double[][] { { 1, 2, 3 },
+				{ 1, 2, 4 }, { 1, 2, 6 } }, 2, BlockOrder.ROWMAJOR);
+
+		BlockDenseDoubleMatrix2D b = new BlockDenseDoubleMatrix2D(new double[][] { { 1 }, { 2 },
+				{ 3 } }, 2, BlockOrder.COLUMNMAJOR);
+
+		BlockDenseDoubleMatrix2D c = new BlockDenseDoubleMatrix2D(new double[][] { { 1 }, { 2 },
+				{ 3 } }, 2, BlockOrder.ROWMAJOR);
+
+		BlockDenseDoubleMatrix2D axb = (BlockDenseDoubleMatrix2D) a.mtimes(b);
+		System.out.println(axb);
+		System.out.println(axb.minus(c));
+	}
 
 	@Test
 	public void testThatMultiply100x100x100xwithSquareBlockGivesCorrectResult() throws Exception {

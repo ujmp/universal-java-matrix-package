@@ -1056,6 +1056,34 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
+	public void testToDoubleArraySmall() throws Exception {
+		Matrix m = createMatrix(6, 7);
+		m.randn(Ret.ORIG);
+
+		double[][] array = m.toDoubleArray();
+
+		for (int r = 0; r < m.getRowCount(); r++) {
+			for (int c = 0; c < m.getColumnCount(); c++) {
+				assertEquals(getLabel(), m.getAsDouble(r, c), array[r][c], 0.0);
+			}
+		}
+	}
+
+	@Test
+	public void testToDoubleArrayLarge() throws Exception {
+		Matrix m = createMatrix(106, 117);
+		m.randn(Ret.ORIG);
+
+		double[][] array = m.toDoubleArray();
+
+		for (int r = 0; r < m.getRowCount(); r++) {
+			for (int c = 0; c < m.getColumnCount(); c++) {
+				assertEquals(getLabel(), m.getAsDouble(r, c), array[r][c], 0.0);
+			}
+		}
+	}
+
+	@Test
 	public void testXMinus0Matrix() throws Exception {
 		Matrix m1 = createMatrix(5, 7);
 		Matrix m2 = createMatrix(5, 7);

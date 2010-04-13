@@ -49,6 +49,12 @@ public abstract class AbstractMapTest {
 		m.put("b", "test2");
 		assertEquals(getLabel(), "test1", m.get("a"));
 		assertEquals(getLabel(), "test2", m.get("b"));
+
+		m.put("a", "test2");
+		m.put("b", "test1");
+		assertEquals(getLabel(), "test2", m.get("a"));
+		assertEquals(getLabel(), "test1", m.get("b"));
+
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}

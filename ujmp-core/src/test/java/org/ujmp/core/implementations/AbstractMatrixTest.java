@@ -314,6 +314,60 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
+	public void testZeros() throws Exception {
+		Matrix m = createMatrix(21, 12);
+
+		for (long[] c : m.allCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		for (long[] c : m.availableCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		m.fill(Ret.ORIG, 0.0);
+
+		for (long[] c : m.allCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		for (long[] c : m.availableCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+	}
+
+	@Test
+	public void testNaN() throws Exception {
+		Matrix m = createMatrix(21, 12);
+
+		for (long[] c : m.allCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		for (long[] c : m.availableCoordinates()) {
+			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
+		}
+
+		m.fill(Ret.ORIG, Double.NaN);
+
+		for (long[] c : m.allCoordinates()) {
+			assertTrue(getLabel(), Double.isNaN(m.getAsDouble(c)));
+		}
+
+		for (long[] c : m.availableCoordinates()) {
+			assertTrue(getLabel(), Double.isNaN(m.getAsDouble(c)));
+		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
+	}
+
+	@Test
 	public void testClone() throws Exception {
 		Matrix m = createMatrix(2, 2);
 		m.setAsDouble(1.0, 0, 0);
@@ -2469,9 +2523,15 @@ public abstract class AbstractMatrixTest {
 		}
 
 		Matrix chol = a.chol();
-		Matrix prod = chol.mtimes(chol.transpose());
+		Matrix cholTrans = chol.transpose();
+		Matrix prod = chol.mtimes(cholTrans);
+		Matrix diff = prod.minus(a);
 
-		assertEquals(getLabel(), 0.0, prod.minus(a).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, diff.doubleValue(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
 	}
 
 	@Test
@@ -2508,6 +2568,10 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
+
+		if (result instanceof Erasable) {
+			((Erasable) result).erase();
+		}
 	}
 
 	@Test
@@ -2544,6 +2608,10 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
+
+		if (result instanceof Erasable) {
+			((Erasable) result).erase();
+		}
 	}
 
 	@Test
@@ -2583,6 +2651,10 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = chol.mtimes(chol.transpose());
 
 		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
+
+		if (result instanceof Erasable) {
+			((Erasable) result).erase();
+		}
 	}
 
 	// test example from wikipedia

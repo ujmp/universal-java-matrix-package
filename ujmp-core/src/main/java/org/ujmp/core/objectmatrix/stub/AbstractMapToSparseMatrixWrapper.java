@@ -34,37 +34,32 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObjectMatrix implements
 		Wrapper<Map<Coordinates, Object>> {
-
 	private static final long serialVersionUID = -6292034262789053069L;
 
 	private final Object defaultValue = null;
 
+	private final Map<Coordinates, Object> values;
+
 	private int maximumNumberOfEntries = -1;
 
-	private long[] size = null;
+	private final long[] size;
 
-	public AbstractMapToSparseMatrixWrapper(Matrix m) {
+	public AbstractMapToSparseMatrixWrapper(Map<Coordinates, Object> map, Matrix m) {
 		this.size = Coordinates.copyOf(m.getSize());
+		this.values = map;
 		for (long[] c : m.allCoordinates()) {
 			setObject(m.getAsObject(c), c);
 		}
 	}
 
-	public AbstractMapToSparseMatrixWrapper(Matrix m, int maximumNumberOfEntries) {
-		this.size = Coordinates.copyOf(m.getSize());
-		setMaximumNumberOfEntries(maximumNumberOfEntries);
-		for (long[] c : m.allCoordinates()) {
-			setObject(m.getAsObject(c), c);
-		}
-	}
-
-	public AbstractMapToSparseMatrixWrapper(long... size) {
+	public AbstractMapToSparseMatrixWrapper(Map<Coordinates, Object> map, long... size) {
 		this.size = Coordinates.copyOf(size);
+		this.values = map;
 	}
 
-	public abstract Map<Coordinates, Object> getMap();
-
-	public abstract void setMap(Map<Coordinates, Object> map);
+	public final Map<Coordinates, Object> getMap() {
+		return values;
+	}
 
 	public final long[] getSize() {
 		return size;
@@ -75,7 +70,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 	}
 
 	public final void setWrappedObject(Map<Coordinates, Object> object) {
-		setMap(object);
+		throw new MatrixException("not allowed");
 	}
 
 	public final Object getObject(long... coordinates) throws MatrixException {

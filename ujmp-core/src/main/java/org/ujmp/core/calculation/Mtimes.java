@@ -66,6 +66,8 @@ public class Mtimes {
 
 	public static MtimesCalculation<Matrix, Matrix, Matrix> MTIMES_JBLAS = null;
 
+	public static final boolean RESET_BLOCK_ORDER = false;
+
 	static {
 		init();
 	}
@@ -422,6 +424,10 @@ class MtimesDenseDoubleMatrix2D implements
 					BlockOrder.ROWMAJOR);
 		}
 
+		// force optimal block order
+		BlockOrder prevA = a.setBlockOrder(BlockOrder.ROWMAJOR);
+		BlockOrder prevB = b.setBlockOrder(BlockOrder.COLUMNMAJOR);
+
 		blockMultiplyMultiThreaded(a, b, c);
 
 		if (c != target) {
@@ -430,6 +436,12 @@ class MtimesDenseDoubleMatrix2D implements
 					target.setDouble(c.getDouble(i, j), i, j);
 				}
 			}
+		}
+
+		// reset block order
+		if (Mtimes.RESET_BLOCK_ORDER) {
+			a.setBlockOrder(prevA);
+			b.setBlockOrder(prevB);
 		}
 	}
 

@@ -26,11 +26,9 @@ package org.ujmp.lucene;
 import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
-import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
@@ -38,53 +36,24 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
 		implements Flushable, Closeable, Erasable {
 	private static final long serialVersionUID = -5164282058414257917L;
 
-	private LuceneMap<Coordinates, Object> map = null;
-
-	public LuceneSparseObjectMatrix(long... size) {
-		super(size);
+	public LuceneSparseObjectMatrix(long... size) throws IOException {
+		super(new LuceneMap<Coordinates, Object>(), size);
 	}
 
-	public LuceneSparseObjectMatrix(Matrix matrix) {
-		super(matrix);
+	public LuceneSparseObjectMatrix(Matrix matrix) throws IOException {
+		super(new LuceneMap<Coordinates, Object>(), matrix);
 	}
 
-	
-	public Map<Coordinates, Object> getMap() {
-		if (map == null) {
-			try {
-				map = new LuceneMap<Coordinates, Object>();
-			} catch (Exception e) {
-				throw new MatrixException("could not create map", e);
-			}
-		}
-		return map;
-	}
-
-	
-	public void setMap(Map<Coordinates, Object> map) {
-		throw new MatrixException("cannot exchange map");
-	}
-
-	
-	public void flush() throws IOException {
-		if (map != null) {
-			map.flush();
-		}
-	}
-
-	
-	public void close() throws IOException {
-		if (map != null) {
-			map.close();
-		}
-	}
-
-	
 	public void erase() throws IOException {
-		if (map != null) {
-			map.close();
-			map.erase();
-		}
+		((Erasable) getMap()).erase();
+	}
+
+	public void flush() throws IOException {
+		((Flushable) getMap()).flush();
+	}
+
+	public void close() throws IOException {
+		((Closeable) getMap()).close();
 	}
 
 }

@@ -23,7 +23,6 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
@@ -40,37 +39,24 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	private static final long serialVersionUID = -7464578359102479614L;
 
-	private long[] tileSize = new long[] { 50, 50 };
+	private final long[] tileSize = new long[] { 50, 50 };
 
 	private long[] size = null;
 
-	private Map<Coordinates, ObjectMatrix2D> values = null;
+	private final Map<Coordinates, ObjectMatrix2D> values;
 
-	public AbstractMapToTiledMatrix2DWrapper(Matrix m) {
-		this(new HashMap<Coordinates, ObjectMatrix2D>(), m);
-	}
-
-	public AbstractMapToTiledMatrix2DWrapper(Matrix m, int maximumNumberOfEntries2) {
-		this.size = Coordinates.copyOf(m.getSize());
-		for (long[] c : m.allCoordinates()) {
-			setObject(m.getAsObject(c), c);
-		}
-	}
-
-	public AbstractMapToTiledMatrix2DWrapper(long... size) {
+	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, long... size) {
+		this.values = map;
 		this.size = Coordinates.copyOf(size);
 	}
 
-	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, long[] size) {
-		this(size);
-		setMap(map);
-	}
-
 	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, Matrix source) {
-		setMap(map);
-		this.size = Coordinates.copyOf(source.getSize());
-		for (long[] c : source.allCoordinates()) {
+		this(map, source.getSize());
+		for (long[] c : source.availableCoordinates()) {
 			setObject(source.getAsObject(c), c);
+			if (!MathUtil.equals(getObject(c), source.getAsObject(c))) {
+				throw new MatrixException("error");
+			}
 		}
 	}
 
@@ -78,15 +64,8 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		return getObject((long) row, (long) column);
 	}
 
-	public Map<Coordinates, ObjectMatrix2D> getMap() {
-		if (values == null) {
-			values = new HashMap<Coordinates, ObjectMatrix2D>();
-		}
+	public final Map<Coordinates, ObjectMatrix2D> getMap() {
 		return values;
-	}
-
-	public void setMap(Map<Coordinates, ObjectMatrix2D> map) {
-		this.values = map;
 	}
 
 	public synchronized Object getObject(long row, long column) throws MatrixException {
@@ -99,12 +78,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		}
 	}
 
-	public Map<Coordinates, ObjectMatrix2D> getWrappedObject() {
+	public final Map<Coordinates, ObjectMatrix2D> getWrappedObject() {
 		return getMap();
 	}
 
-	public void setWrappedObject(Map<Coordinates, ObjectMatrix2D> object) {
-		setMap(object);
+	public final void setWrappedObject(Map<Coordinates, ObjectMatrix2D> object) {
+		throw new MatrixException("cannot change map");
 	}
 
 	public Iterable<long[]> allCoordinates() {
@@ -134,16 +113,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		m.setObject(o, row % tileSize[ROW], column % tileSize[COLUMN]);
 	}
 
-	public long[] getSize() {
+	public final long[] getSize() {
 		return size;
 	}
 
-	public long[] getTileSize() {
+	public final long[] getTileSize() {
 		return tileSize;
-	}
-
-	public void setTileSize(long... tileSize) {
-		this.tileSize = tileSize;
 	}
 
 }

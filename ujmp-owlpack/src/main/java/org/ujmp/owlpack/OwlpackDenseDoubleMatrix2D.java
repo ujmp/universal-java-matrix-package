@@ -45,7 +45,7 @@ public class OwlpackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public OwlpackDenseDoubleMatrix2D(final Matrix m) {
 		this(m.getSize());
-		for (final long[] c : m.allCoordinates()) {
+		for (final long[] c : m.availableCoordinates()) {
 			setDouble(m.getAsDouble(c), c);
 		}
 	}

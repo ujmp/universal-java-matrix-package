@@ -31,32 +31,58 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
+import org.ujmp.core.util.UJMPSettings;
 
 public class TestBlockMultiply extends TestCase {
 
 	public static void multiplyCompare(int m, int n, int k) throws Exception {
 
-		BlockDenseDoubleMatrix2D a = Fixture.createBlockRowLayoutWithGeneratedData(m, n,
-				BlockOrder.ROWMAJOR);
-		BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayoutWithGeneratedData(n, k,
-				BlockOrder.COLUMNMAJOR);
-		Matrix d = Fixture.createDenseMatrixWithGeneratedData(m, n);
-		Matrix e = Fixture.createDenseMatrixWithGeneratedData(n, k);
+		boolean useJblas = UJMPSettings.isUseJBlas();
+		UJMPSettings.setUseJBlas(false);
+		boolean useBlockMultiply = UJMPSettings.isUseBlockMatrixMultiply();
 
+		try {
+			BlockDenseDoubleMatrix2D a = Fixture.createBlockRowLayoutWithGeneratedData(m, n,
+					BlockOrder.ROWMAJOR);
+			BlockDenseDoubleMatrix2D b = Fixture.createBlockRowLayoutWithGeneratedData(n, k,
+					BlockOrder.COLUMNMAJOR);
+			Matrix d = Fixture.createDenseMatrixWithGeneratedData(m, n);
+			Matrix e = Fixture.createDenseMatrixWithGeneratedData(n, k);
+
+			UJMPSettings.setUseBlockMatrixMultiply(false);
+			Matrix f = multiplyDenseDouble2DMatrix(d, e);
+			
+			UJMPSettings.setUseBlockMatrixMultiply(true);
+			Matrix c = multiplyBlockMatrix(a, b);
+
+			Fixture.compare(f, c);
+		} finally {
+			// reset
+			UJMPSettings.setUseBlockMatrixMultiply(useBlockMultiply);
+			UJMPSettings.setUseJBlas(useJblas);
+		}
+
+		System.gc();
+	}
+
+	private static Matrix multiplyDenseDouble2DMatrix(Matrix d, Matrix e) throws Exception {
+		
 		Matrix f = Fixture.createBlockMultiplier(d, e).call();
-		assertTrue("f==null", f != null);
 
+		assertTrue("f==null", f != null);
+		return f;
+	}
+
+	private static BlockDenseDoubleMatrix2D multiplyBlockMatrix(BlockDenseDoubleMatrix2D a,
+			BlockDenseDoubleMatrix2D b) throws Exception {
 		Callable<BlockDenseDoubleMatrix2D> multiplyTask = Fixture.createMultiplier(a, b);
 		Callable<BlockDenseDoubleMatrix2D> multiplyTimer = new TimerDecorator<BlockDenseDoubleMatrix2D>(
-				m, n, k, multiplyTask);
+				a.getRowCount(), a.getColumnCount(), b.getColumnCount(), multiplyTask);
 
 		Callable<BlockDenseDoubleMatrix2D> callable = multiplyTimer;
 		BlockDenseDoubleMatrix2D c = callable.call();
 		assertTrue("c==null", c != null);
-
-		Fixture.compare(f, c);
-
-		System.gc();
+		return c;
 	}
 
 	protected static BlockDenseDoubleMatrix2D multiplyMatrix(final int i, final int j, final int k,

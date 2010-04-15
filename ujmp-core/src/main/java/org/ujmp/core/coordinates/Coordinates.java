@@ -24,6 +24,7 @@
 package org.ujmp.core.coordinates;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 
@@ -42,43 +43,28 @@ public class Coordinates implements Serializable {
 
 	public static final int ALL = Matrix.ALL;
 
-	public static final Coordinates SINGLEVALUE = new Coordinates(1, 1);
-
 	public static final long[] ZERO2D = new long[] { 0, 0 };
 
-	public long[] dimensions = null;
+	public final long[] dimensions;
 
 	public Coordinates(long... dimensions) {
+		// cannot use Arrays.copyOf(): not supported in Java 5
 		this.dimensions = new long[dimensions.length];
 		System.arraycopy(dimensions, 0, this.dimensions, 0, dimensions.length);
 	}
 
 	public Coordinates(Coordinates c) {
+		// cannot use Arrays.copyOf(): not supported in Java 5
 		this.dimensions = new long[c.dimensions.length];
 		System.arraycopy(c.dimensions, 0, this.dimensions, 0, c.dimensions.length);
 	}
 
 	public final int hashCode() {
-		return hashCode(this.dimensions);
-	}
-
-	public static final int hashCode(long[] coordinates) {
-		int h = 0;
-		for (int i = coordinates.length - 1; i != -1; i--) {
-			h = 31 * h + (int) coordinates[i];
-		}
-		return h;
+		return Arrays.hashCode(dimensions);
 	}
 
 	public boolean equals(Coordinates c) {
-		if (dimensions.length != c.dimensions.length) {
-			return false;
-		}
-		for (int i = dimensions.length - 1; i != -1; i--) {
-			if (dimensions[i] != c.dimensions[i])
-				return false;
-		}
-		return true;
+		return Arrays.equals(dimensions, c.dimensions);
 	}
 
 	public static long product(long[] c) {
@@ -114,15 +100,11 @@ public class Coordinates implements Serializable {
 	}
 
 	public void fillWithValue(long value) {
-		for (int i = dimensions.length - 1; i != -1; i--) {
-			dimensions[i] = value;
-		}
+		Arrays.fill(dimensions, value);
 	}
 
 	public void clear() {
-		for (int i = dimensions.length - 1; i != -1; i--) {
-			dimensions[i] = 0;
-		}
+		Arrays.fill(dimensions, 0);
 	}
 
 	public static String toString(long... coordinates) {

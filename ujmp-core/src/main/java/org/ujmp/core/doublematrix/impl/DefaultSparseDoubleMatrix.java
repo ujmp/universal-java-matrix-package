@@ -39,7 +39,7 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 	public static SparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
 
 	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {
-		super(m, -1);
+		super(m);
 	}
 
 	public DefaultSparseDoubleMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {

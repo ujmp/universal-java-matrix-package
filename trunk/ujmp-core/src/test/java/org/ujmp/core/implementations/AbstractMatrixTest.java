@@ -40,7 +40,9 @@ import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.matrix.DenseMatrix;
@@ -195,6 +197,30 @@ public abstract class AbstractMatrixTest {
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
+	}
+
+	@Test
+	public void testRowMajorDoubleArray2DConstructor() throws Exception {
+		Matrix m = new ArrayDenseDoubleMatrix2D(23, 17);
+		m.randn(Ret.ORIG);
+		Matrix m2 = createMatrix(m);
+		assertEquals(getLabel(), m, m2);
+	}
+
+	@Test
+	public void testColumnMajorDoubleArray1DConstructor() throws Exception {
+		Matrix m = new DefaultDenseDoubleMatrix2D(23, 17);
+		m.randn(Ret.ORIG);
+		Matrix m2 = createMatrix(m);
+		assertEquals(getLabel(), m, m2);
+	}
+
+	@Test
+	public void testOtherConstructor() throws Exception {
+		Matrix m = new DefaultDenseDoubleMatrixMultiD(23, 17);
+		m.randn(Ret.ORIG);
+		Matrix m2 = createMatrix(m);
+		assertEquals(getLabel(), m, m2);
 	}
 
 	@Test

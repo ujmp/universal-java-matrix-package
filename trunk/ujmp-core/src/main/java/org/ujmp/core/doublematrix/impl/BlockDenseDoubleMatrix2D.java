@@ -222,7 +222,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		for (int i = m.layout.numberOfBlocks; --i != -1;) {
 			final double[] block = m.data[i];
 			if (block != null) {
-				this.data[i] = Arrays.copyOf(block, block.length);
+				// cannot use Arrays.copyOf(): not supported in Java 5
+				this.data[i] = new double[block.length];
+				System.arraycopy(block, 0, this.data[i], 0, block.length);
 			}
 		}
 		Annotation a = m.getAnnotation();
@@ -433,7 +435,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				block = this.data[blockNumberA];
 
 				if (returnType == Ret.NEW && null != block) {
-					block = Arrays.copyOf(block, block.length);
+					// cannot use Arrays.copyOf(): not supported in Java 5
+					final double[] newBlock = new double[block.length];
+					System.arraycopy(block, 0, newBlock, 0, block.length);
+					block = newBlock;
 				}
 
 				final int blockNumberB = transMat.layout.getBlockNumber(j, i);

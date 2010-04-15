@@ -25,8 +25,11 @@ package org.ujmp.jblas;
 
 import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.jblas.calculation.Chol;
 import org.ujmp.jblas.calculation.Eig;
@@ -38,7 +41,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		implements Wrapper<DoubleMatrix> {
 	private static final long serialVersionUID = 4929284378405884509L;
 
-	private DoubleMatrix matrix = null;
+	private DoubleMatrix matrix;
 
 	public JBlasDenseDoubleMatrix2D(long... size) {
 		this.matrix = new DoubleMatrix((int) size[ROW], (int) size[COLUMN]);
@@ -49,9 +52,30 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public JBlasDenseDoubleMatrix2D(Matrix source) throws MatrixException {
-		this(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			setDouble(source.getAsDouble(c), c);
+		if (source instanceof HasColumnMajorDoubleArray1D) {
+			final double[] data = ((HasColumnMajorDoubleArray1D) source)
+					.getColumnMajorDoubleArray1D();
+			this.matrix = new DoubleMatrix((int) source.getRowCount(),
+					(int) source.getColumnCount(), data);
+		} else if (source instanceof HasRowMajorDoubleArray2D) {
+			final double[][] data = ((HasRowMajorDoubleArray2D) source)
+					.getRowMajorDoubleArray2D();
+			this.matrix = new DoubleMatrix(data);
+		} else if (source instanceof DenseDoubleMatrix2D) {
+			this.matrix = new DoubleMatrix((int) source.getRowCount(),
+					(int) source.getColumnCount());
+			final DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) source;
+			for (int r = (int) source.getRowCount(); --r >= 0;) {
+				for (int c = (int) source.getColumnCount(); --c >= 0;) {
+					matrix.put(r, c, m2.getDouble(r, c));
+				}
+			}
+		} else {
+			this.matrix = new DoubleMatrix((int) source.getRowCount(),
+					(int) source.getColumnCount());
+			for (long[] c : source.availableCoordinates()) {
+				setDouble(source.getAsDouble(c), c);
+			}
 		}
 	}
 

@@ -61,6 +61,7 @@ import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
+import org.ujmp.core.intmatrix.calculation.Magic;
 import org.ujmp.core.intmatrix.impl.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
@@ -562,6 +563,10 @@ public abstract class MatrixFactory {
 	 */
 	public static Matrix eye(long... size) throws MatrixException {
 		return Eye.calc(size);
+	}
+
+	public static Matrix magic(int size) throws MatrixException {
+		return Magic.magic(size);
 	}
 
 	public static Matrix pascal(long... size) throws MatrixException {

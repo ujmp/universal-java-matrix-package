@@ -53,45 +53,55 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int CACHEDRESULTS = 9;
 
-	private static final int DENSE = 10;
+	private static final int DENSESA = 10;
 
-	private static final int SPARSE = 11;
+	private static final int DENSEAA = 11;
 
-	private static final int COMPLEX = 12;
+	private static final int DENSEBLOCK = 12;
 
-	private static final int DOUBLE = 13;
+	private static final int SPARSEDOK = 13;
 
-	private static final int FLOAT = 14;
+	private static final int SPARSELIL = 14;
 
-	private static final int BIGDECIMAL = 15;
+	private static final int SPARSEYALE = 15;
 
-	private static final int D2 = 16;
+	private static final int SPARSECRS = 16;
 
-	private static final int D3 = 17;
+	private static final int SPARSECDS = 17;
 
-	private static final int D4 = 18;
+	private static final int DOUBLE = 18;
 
-	private static final int D4PLUS = 19;
+	private static final int FLOAT = 19;
 
-	private static final int TRANSPOSE = 20;
+	private static final int BIGDECIMAL = 20;
 
-	private static final int SCALE = 21;
+	private static final int COMPLEX = 21;
 
-	private static final int PLUSMINUS = 22;
+	private static final int D2 = 22;
 
-	private static final int INV = 23;
+	private static final int D3 = 23;
 
-	private static final int SOLVE = 24;
+	private static final int D3PLUS = 24;
 
-	private static final int LU = 25;
+	private static final int TRANSPOSE = 25;
 
-	private static final int QR = 26;
+	private static final int SCALE = 26;
 
-	private static final int SVD = 27;
+	private static final int PLUSMINUS = 27;
 
-	private static final int CHOL = 28;
+	private static final int INV = 28;
 
-	private static final int EIG = 29;
+	private static final int SOLVE = 29;
+
+	private static final int LU = 30;
+
+	private static final int QR = 31;
+
+	private static final int SVD = 32;
+
+	private static final int CHOL = 33;
+
+	private static final int EIG = 34;
 
 	private static final int LABELROW = 0;
 
@@ -150,7 +160,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(30, 21);
+		super(35, 22);
 		this.format = format;
 
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
@@ -184,16 +194,25 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString("multithreaded", MULTITHREADED, LABELCOLUMN);
 		setAsString("in-place ops", INPLACE, LABELCOLUMN);
 		setAsString("cached results", CACHEDRESULTS, LABELCOLUMN);
-		setAsString("dense", DENSE, LABELCOLUMN);
-		setAsString("sparse", SPARSE, LABELCOLUMN);
+		setAsString("dense SA" + footnote("1", "single array"), DENSESA, LABELCOLUMN);
+		setAsString("dense AA" + footnote("2", "array of arrays"), DENSEAA, LABELCOLUMN);
+		setAsString("dense block", DENSEBLOCK, LABELCOLUMN);
+		setAsString("sparse DOK" + footnote("3", "dictionary of key-value pairs"), SPARSEDOK,
+				LABELCOLUMN);
+		setAsString("sparse LIL" + footnote("4", "list of lists"), SPARSELIL, LABELCOLUMN);
+
+		setAsString("sparse CSR" + footnote("5", "compressed sparse row/column"), SPARSECRS,
+				LABELCOLUMN);
+		setAsString("sparse CDS" + footnote("6", "compressed sparse diagonal"), SPARSECDS,
+				LABELCOLUMN);
+		setAsString("sparse Yale", SPARSEYALE, LABELCOLUMN);
 		setAsString("complex", COMPLEX, LABELCOLUMN);
 		setAsString("double", DOUBLE, LABELCOLUMN);
 		setAsString("float", FLOAT, LABELCOLUMN);
 		setAsString("BigDecimal", BIGDECIMAL, LABELCOLUMN);
 		setAsString("2D", D2, LABELCOLUMN);
 		setAsString("3D", D3, LABELCOLUMN);
-		setAsString("4D", D4, LABELCOLUMN);
-		setAsString("$>$4D", D4PLUS, LABELCOLUMN);
+		setAsString("$>$3D", D3PLUS, LABELCOLUMN);
 		setAsString("transpose", TRANSPOSE, LABELCOLUMN);
 		setAsString("scale", SCALE, LABELCOLUMN);
 		setAsString("plus/minus", PLUSMINUS, LABELCOLUMN);
@@ -214,16 +233,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(both(), MULTITHREADED, UJMP);
 		setAsString(yes(), INPLACE, UJMP);
 		setAsString(no(), CACHEDRESULTS, UJMP);
-		setAsString(yes(), DENSE, UJMP);
-		setAsString(yes(), SPARSE, UJMP);
+		setAsString(yes(), DENSEAA, UJMP);
+		setAsString(yes(), DENSESA, UJMP);
+		setAsString(yes(), DENSEBLOCK, UJMP);
+		setAsString(yes(), SPARSEDOK, UJMP);
+		setAsString(no(), SPARSEYALE, UJMP);
+		setAsString(yes(), SPARSELIL, UJMP);
+		setAsString(no(), SPARSECRS, UJMP);
+		setAsString(no(), SPARSECDS, UJMP);
 		setAsString(no(), COMPLEX, UJMP);
 		setAsString(yes(), DOUBLE, UJMP);
 		setAsString(yes(), FLOAT, UJMP);
 		setAsString(yes(), BIGDECIMAL, UJMP);
 		setAsString(yes(), D2, UJMP);
 		setAsString(yes(), D3, UJMP);
-		setAsString(yes(), D4, UJMP);
-		setAsString(yes(), D4PLUS, UJMP);
+		setAsString(yes(), D3PLUS, UJMP);
 		setAsString(yes(), TRANSPOSE, UJMP);
 		setAsString(yes(), SCALE, UJMP);
 		setAsString(yes(), PLUSMINUS, UJMP);
@@ -241,10 +265,16 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, ARRAY4J);
 		setAsString(no(), JAVA5, ARRAY4J);
 		setAsString(yes(), JAVA6, ARRAY4J);
-		setAsString(unknown(), MULTITHREADED, ARRAY4J);
-		setAsString(unknown(), INPLACE, ARRAY4J);
-		setAsString(yes(), DENSE, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSE, ARRAY4J);
+		setAsString(unknown() + footnote("m", "uses native machine code"), MULTITHREADED, ARRAY4J);
+		setAsString(yes(), INPLACE, ARRAY4J);
+		setAsString(yes(), DENSESA, ARRAY4J);
+		setAsString(no(), DENSEAA, ARRAY4J);
+		setAsString(no(), DENSEBLOCK, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSEDOK, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSEYALE, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSELIL, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSECRS, ARRAY4J);
+		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSECDS, ARRAY4J);
 		setAsString(no() + footnote("i", "interface only, no implementation"), COMPLEX, ARRAY4J);
 		setAsString(no() + footnote("i", "interface only, no implementation"), DOUBLE, ARRAY4J);
 		setAsString(yes(), FLOAT, ARRAY4J);
@@ -253,8 +283,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), INPLACE, ARRAY4J);
 		setAsString(yes(), D2, ARRAY4J);
 		setAsString(no(), D3, ARRAY4J);
-		setAsString(no(), D4, ARRAY4J);
-		setAsString(no(), D4PLUS, ARRAY4J);
+		setAsString(no(), D3PLUS, ARRAY4J);
 		setAsString(no(), SOLVE, ARRAY4J);
 		setAsString(no(), INV, ARRAY4J);
 		setAsString(no(), SVD, ARRAY4J);
@@ -274,16 +303,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, COLT);
 		setAsString(yes(), SCALE, COLT);
 		setAsString(yes(), PLUSMINUS, COLT);
-		setAsString(yes(), DENSE, COLT);
-		setAsString(yes(), SPARSE, COLT);
+		setAsString(yes(), DENSESA, COLT);
+		setAsString(no(), DENSEAA, COLT);
+		setAsString(no(), DENSEBLOCK, COLT);
+		setAsString(yes(), SPARSEDOK, COLT);
+		setAsString(no(), SPARSEYALE, COLT);
+		setAsString(no(), SPARSELIL, COLT);
+		setAsString(no(), SPARSECRS, COLT);
+		setAsString(no(), SPARSECDS, COLT);
 		setAsString(no(), COMPLEX, COLT);
 		setAsString(yes(), DOUBLE, COLT);
 		setAsString(no(), FLOAT, COLT);
 		setAsString(no(), BIGDECIMAL, COLT);
 		setAsString(yes(), D2, COLT);
 		setAsString(yes(), D3, COLT);
-		setAsString(no(), D4, COLT);
-		setAsString(no(), D4PLUS, COLT);
+		setAsString(no(), D3PLUS, COLT);
 		setAsString(yes(), INV, COLT);
 		setAsString(squareTall(), SOLVE, COLT);
 		setAsString(squareTall(), SVD, COLT);
@@ -303,16 +337,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), TRANSPOSE, COMMONSMATH);
 		setAsString(yes(), SCALE, COMMONSMATH);
 		setAsString(yes(), PLUSMINUS, COMMONSMATH);
-		setAsString(yes(), DENSE, COMMONSMATH);
-		setAsString(yes(), SPARSE, COMMONSMATH);
+		setAsString(yes(), DENSEAA, COMMONSMATH);
+		setAsString(no(), DENSESA, COMMONSMATH);
+		setAsString(yes(), DENSEBLOCK, COMMONSMATH);
+		setAsString(yes(), SPARSEDOK, COMMONSMATH);
+		setAsString(no(), SPARSEYALE, COMMONSMATH);
+		setAsString(no(), SPARSELIL, COMMONSMATH);
+		setAsString(no(), SPARSECRS, COMMONSMATH);
+		setAsString(no(), SPARSECDS, COMMONSMATH);
 		setAsString(yes(), COMPLEX, COMMONSMATH);
 		setAsString(yes(), DOUBLE, COMMONSMATH);
 		setAsString(no(), FLOAT, COMMONSMATH);
 		setAsString(yes(), BIGDECIMAL, COMMONSMATH);
 		setAsString(yes(), D2, COMMONSMATH);
 		setAsString(no(), D3, COMMONSMATH);
-		setAsString(no(), D4, COMMONSMATH);
-		setAsString(no(), D4PLUS, COMMONSMATH);
+		setAsString(no(), D3PLUS, COMMONSMATH);
 		setAsString(yes(), INV, COMMONSMATH);
 		setAsString(squareTall(), SOLVE, COMMONSMATH);
 		setAsString(all() + footnote("e", "error in implementation"), SVD, COMMONSMATH);
@@ -330,16 +369,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), MULTITHREADED, EJML);
 		setAsString(no(), CACHEDRESULTS, EJML);
 		setAsString(yes(), INPLACE, EJML);
-		setAsString(yes(), DENSE, EJML);
-		setAsString(no(), SPARSE, EJML);
+		setAsString(yes(), DENSESA, EJML);
+		setAsString(no(), DENSEAA, EJML);
+		setAsString(yes(), DENSEBLOCK, EJML);
+		setAsString(no(), SPARSEDOK, EJML);
+		setAsString(no(), SPARSEYALE, EJML);
+		setAsString(no(), SPARSELIL, EJML);
+		setAsString(no(), SPARSECRS, EJML);
+		setAsString(no(), SPARSECDS, EJML);
 		setAsString(no(), COMPLEX, EJML);
 		setAsString(yes(), DOUBLE, EJML);
 		setAsString(no(), FLOAT, EJML);
 		setAsString(no(), BIGDECIMAL, EJML);
 		setAsString(yes(), D2, EJML);
 		setAsString(no(), D3, EJML);
-		setAsString(no(), D4, EJML);
-		setAsString(no(), D4PLUS, EJML);
+		setAsString(no(), D3PLUS, EJML);
 		setAsString(yes(), TRANSPOSE, EJML);
 		setAsString(yes(), SCALE, EJML);
 		setAsString(yes(), PLUSMINUS, EJML);
@@ -360,16 +404,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), MULTITHREADED, JAMA);
 		setAsString(no(), INPLACE, JAMA);
 		setAsString(no(), CACHEDRESULTS, JAMA);
-		setAsString(yes(), DENSE, JAMA);
-		setAsString(no(), SPARSE, JAMA);
+		setAsString(yes(), DENSEAA, JAMA);
+		setAsString(no(), DENSESA, JAMA);
+		setAsString(no(), DENSEBLOCK, JAMA);
+		setAsString(no(), SPARSEDOK, JAMA);
+		setAsString(no(), SPARSEYALE, JAMA);
+		setAsString(no(), SPARSELIL, JAMA);
+		setAsString(no(), SPARSECRS, JAMA);
+		setAsString(no(), SPARSECDS, JAMA);
 		setAsString(no(), COMPLEX, JAMA);
 		setAsString(yes(), DOUBLE, JAMA);
 		setAsString(no(), FLOAT, JAMA);
 		setAsString(no(), BIGDECIMAL, JAMA);
 		setAsString(yes(), D2, JAMA);
 		setAsString(no(), D3, JAMA);
-		setAsString(no(), D4, JAMA);
-		setAsString(no(), D4PLUS, JAMA);
+		setAsString(no(), D3PLUS, JAMA);
 		setAsString(yes(), TRANSPOSE, JAMA);
 		setAsString(yes(), SCALE, JAMA);
 		setAsString(yes(), PLUSMINUS, JAMA);
@@ -387,18 +436,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JAMPACK);
 		setAsString(yes(), JAVA5, JAMPACK);
 		setAsString(yes(), JAVA6, JAMPACK);
-		setAsString(unknown(), MULTITHREADED, JAMPACK);
-		setAsString(unknown(), INPLACE, JAMPACK);
-		setAsString(yes(), DENSE, JAMPACK);
-		setAsString(no(), SPARSE, JAMPACK);
+		setAsString(no(), MULTITHREADED, JAMPACK);
+		setAsString(no(), INPLACE, JAMPACK);
+		setAsString(yes(), DENSEAA, JAMPACK);
+		setAsString(no(), DENSESA, JAMPACK);
+		setAsString(no(), DENSEBLOCK, JAMPACK);
+		setAsString(no(), SPARSEDOK, JAMPACK);
+		setAsString(no(), SPARSEYALE, JAMPACK);
+		setAsString(no(), SPARSELIL, JAMPACK);
+		setAsString(no(), SPARSECRS, JAMPACK);
+		setAsString(no(), SPARSECDS, JAMPACK);
 		setAsString(yes(), COMPLEX, JAMPACK);
 		setAsString(yes(), DOUBLE, JAMPACK);
 		setAsString(no(), FLOAT, JAMPACK);
 		setAsString(no(), BIGDECIMAL, JAMPACK);
 		setAsString(yes(), D2, JAMPACK);
 		setAsString(no(), D3, JAMPACK);
-		setAsString(no(), D4, JAMPACK);
-		setAsString(no(), D4PLUS, JAMPACK);
+		setAsString(no(), D3PLUS, JAMPACK);
 		setAsString(yes(), INV, JAMPACK);
 		setAsString(square(), SOLVE, JAMPACK);
 		setAsString(square(), SVD, JAMPACK);
@@ -409,22 +463,27 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 		setAsString(small("1.0.2"), VERSION, JBLAS);
 		setAsString(small("2010"), DATE, JBLAS);
-		setAsString(small("?"), LICENCE, JBLAS);
+		setAsString(small("BSD"), LICENCE, JBLAS);
 		setAsString(no(), JAVA14, JBLAS);
-		setAsString(unknown(), JAVA5, JBLAS);
+		setAsString(yes(), JAVA5, JBLAS);
 		setAsString(yes(), JAVA6, JBLAS);
-		setAsString(yes(), MULTITHREADED, JBLAS);
+		setAsString(yes() + footnote("m", "using native machine code"), MULTITHREADED, JBLAS);
 		setAsString(yes(), INPLACE, JBLAS);
-		setAsString(yes(), DENSE, JBLAS);
-		setAsString(no(), SPARSE, JBLAS);
+		setAsString(yes(), DENSESA, JBLAS);
+		setAsString(no(), DENSEAA, JBLAS);
+		setAsString(no(), DENSEBLOCK, JBLAS);
+		setAsString(no(), SPARSEDOK, JBLAS);
+		setAsString(no(), SPARSEYALE, JBLAS);
+		setAsString(no(), SPARSELIL, JBLAS);
+		setAsString(no(), SPARSECRS, JBLAS);
+		setAsString(no(), SPARSECDS, JBLAS);
 		setAsString(yes(), COMPLEX, JBLAS);
 		setAsString(yes(), DOUBLE, JBLAS);
 		setAsString(yes(), FLOAT, JBLAS);
 		setAsString(no(), BIGDECIMAL, JBLAS);
 		setAsString(yes(), D2, JBLAS);
 		setAsString(no(), D3, JBLAS);
-		setAsString(no(), D4, JBLAS);
-		setAsString(no(), D4PLUS, JBLAS);
+		setAsString(no(), D3PLUS, JBLAS);
 		setAsString(yes(), TRANSPOSE, JBLAS);
 		setAsString(yes(), SCALE, JBLAS);
 		setAsString(yes(), PLUSMINUS, JBLAS);
@@ -440,20 +499,25 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("2009"), DATE, JLINALG);
 		setAsString(small("GPL"), LICENCE, JLINALG);
 		setAsString(no(), JAVA14, JLINALG);
-		setAsString(unknown(), JAVA5, JLINALG);
+		setAsString(no(), JAVA5, JLINALG);
 		setAsString(yes(), JAVA6, JLINALG);
-		setAsString(unknown(), MULTITHREADED, JLINALG);
-		setAsString(unknown(), INPLACE, JLINALG);
-		setAsString(yes(), DENSE, JLINALG);
-		setAsString(no(), SPARSE, JLINALG);
+		setAsString(no(), MULTITHREADED, JLINALG);
+		setAsString(yes(), INPLACE, JLINALG);
+		setAsString(yes(), DENSEAA, JLINALG);
+		setAsString(no(), DENSESA, JLINALG);
+		setAsString(no(), DENSEBLOCK, JLINALG);
+		setAsString(no(), SPARSEDOK, JLINALG);
+		setAsString(no(), SPARSEYALE, JLINALG);
+		setAsString(no(), SPARSELIL, JLINALG);
+		setAsString(no(), SPARSECRS, JLINALG);
+		setAsString(no(), SPARSECDS, JLINALG);
 		setAsString(yes(), COMPLEX, JLINALG);
 		setAsString(yes(), DOUBLE, JLINALG);
 		setAsString(no(), FLOAT, JLINALG);
 		setAsString(yes(), BIGDECIMAL, JLINALG);
 		setAsString(yes(), D2, JLINALG);
 		setAsString(no(), D3, JLINALG);
-		setAsString(no(), D4, JLINALG);
-		setAsString(no(), D4PLUS, JLINALG);
+		setAsString(no(), D3PLUS, JLINALG);
 		setAsString(yes(), INV, JLINALG);
 		setAsString(no(), SVD, JLINALG);
 		setAsString(no(), LU, JLINALG);
@@ -467,18 +531,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, JMATHARRAY);
 		setAsString(yes(), JAVA5, JMATHARRAY);
 		setAsString(yes(), JAVA6, JMATHARRAY);
-		setAsString(unknown(), MULTITHREADED, JMATHARRAY);
-		setAsString(unknown(), INPLACE, JMATHARRAY);
-		setAsString(yes(), DENSE, JMATHARRAY);
-		setAsString(no(), SPARSE, JMATHARRAY);
+		setAsString(no(), MULTITHREADED, JMATHARRAY);
+		setAsString(no(), INPLACE, JMATHARRAY);
+		setAsString(yes(), DENSEAA, JMATHARRAY);
+		setAsString(no(), DENSESA, JMATHARRAY);
+		setAsString(no(), DENSEBLOCK, JMATHARRAY);
+		setAsString(no(), SPARSEDOK, JMATHARRAY);
+		setAsString(no(), SPARSEYALE, JMATHARRAY);
+		setAsString(no(), SPARSELIL, JMATHARRAY);
+		setAsString(no(), SPARSECRS, JMATHARRAY);
+		setAsString(no(), SPARSECDS, JMATHARRAY);
 		setAsString(no(), COMPLEX, JMATHARRAY);
 		setAsString(yes(), DOUBLE, JMATHARRAY);
 		setAsString(no(), FLOAT, JMATHARRAY);
 		setAsString(no(), BIGDECIMAL, JMATHARRAY);
 		setAsString(yes(), D2, JMATHARRAY);
 		setAsString(no(), D3, JMATHARRAY);
-		setAsString(no(), D4, JMATHARRAY);
-		setAsString(no(), D4PLUS, JMATHARRAY);
+		setAsString(no(), D3PLUS, JMATHARRAY);
 		setAsString(yes(), INV, JMATHARRAY);
 		setAsString(squareTall(), SVD, JMATHARRAY);
 		setAsString(squareTall(), LU, JMATHARRAY);
@@ -492,18 +561,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JMATRICES);
 		setAsString(yes(), JAVA5, JMATRICES);
 		setAsString(yes(), JAVA6, JMATRICES);
-		setAsString(unknown(), MULTITHREADED, JMATRICES);
-		setAsString(unknown(), INPLACE, JMATRICES);
-		setAsString(yes(), DENSE, JMATRICES);
-		setAsString(no(), SPARSE, JMATRICES);
+		setAsString(no(), MULTITHREADED, JMATRICES);
+		setAsString(no(), INPLACE, JMATRICES);
+		setAsString(yes(), DENSEAA, JMATRICES);
+		setAsString(no(), DENSESA, JMATRICES);
+		setAsString(no(), DENSEBLOCK, JMATRICES);
+		setAsString(no(), SPARSEDOK, JMATRICES);
+		setAsString(no(), SPARSEYALE, JMATRICES);
+		setAsString(no(), SPARSELIL, JMATRICES);
+		setAsString(no(), SPARSECRS, JMATRICES);
+		setAsString(no(), SPARSECDS, JMATRICES);
 		setAsString(yes(), COMPLEX, JMATRICES);
 		setAsString(yes(), DOUBLE, JMATRICES);
 		setAsString(no(), FLOAT, JMATRICES);
 		setAsString(yes(), BIGDECIMAL, JMATRICES);
 		setAsString(yes(), D2, JMATRICES);
 		setAsString(no(), D3, JMATRICES);
-		setAsString(no(), D4, JMATRICES);
-		setAsString(no(), D4PLUS, JMATRICES);
+		setAsString(no(), D3PLUS, JMATRICES);
 		setAsString(yes(), INV, JMATRICES);
 		setAsString(square(), SVD, JMATRICES);
 		setAsString(squareTall(), LU, JMATRICES);
@@ -517,18 +591,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JSCI);
 		setAsString(yes(), JAVA5, JSCI);
 		setAsString(yes(), JAVA6, JSCI);
-		setAsString(unknown(), MULTITHREADED, JSCI);
-		setAsString(unknown(), INPLACE, JSCI);
-		setAsString(yes(), DENSE, JSCI);
-		setAsString(yes(), SPARSE, JSCI);
+		setAsString(no(), MULTITHREADED, JSCI);
+		setAsString(no(), INPLACE, JSCI);
+		setAsString(yes(), DENSEAA, JSCI);
+		setAsString(no(), DENSESA, JSCI);
+		setAsString(no(), DENSEBLOCK, JSCI);
+		setAsString(yes(), SPARSEYALE, JSCI);
+		setAsString(no(), SPARSEDOK, JSCI);
+		setAsString(no(), SPARSELIL, JSCI);
+		setAsString(no(), SPARSECRS, JSCI);
+		setAsString(no(), SPARSECDS, JSCI);
 		setAsString(yes(), COMPLEX, JSCI);
 		setAsString(yes(), DOUBLE, JSCI);
 		setAsString(no(), FLOAT, JSCI);
 		setAsString(no(), BIGDECIMAL, JSCI);
 		setAsString(yes(), D2, JSCI);
 		setAsString(no(), D3, JSCI);
-		setAsString(no(), D4, JSCI);
-		setAsString(no(), D4PLUS, JSCI);
+		setAsString(no(), D3PLUS, JSCI);
 		setAsString(yes(), INV, JSCI);
 		setAsString(square(), SVD, JSCI);
 		setAsString(square() + footnote("e", "error in implementation"), LU, JSCI);
@@ -542,18 +621,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, JSCIENCE);
 		setAsString(yes(), JAVA5, JSCIENCE);
 		setAsString(yes(), JAVA6, JSCIENCE);
-		setAsString(unknown(), MULTITHREADED, JSCIENCE);
-		setAsString(unknown(), INPLACE, JSCIENCE);
-		setAsString(yes(), DENSE, JSCIENCE);
-		setAsString(yes(), SPARSE, JSCIENCE);
+		setAsString(yes(), MULTITHREADED, JSCIENCE);
+		setAsString(no(), INPLACE, JSCIENCE);
+		setAsString(yes(), DENSEAA, JSCIENCE);
+		setAsString(no(), DENSEBLOCK, JSCIENCE);
+		setAsString(no(), DENSESA, JSCIENCE);
+		setAsString(yes(), SPARSELIL, JSCIENCE);
+		setAsString(no(), SPARSEYALE, JSCIENCE);
+		setAsString(no(), SPARSECDS, JSCIENCE);
+		setAsString(no(), SPARSECRS, JSCIENCE);
+		setAsString(yes(), SPARSEDOK, JSCIENCE);
 		setAsString(yes(), COMPLEX, JSCIENCE);
 		setAsString(yes(), DOUBLE, JSCIENCE);
 		setAsString(no(), FLOAT, JSCIENCE);
 		setAsString(no(), BIGDECIMAL, JSCIENCE);
 		setAsString(yes(), D2, JSCIENCE);
 		setAsString(no(), D3, JSCIENCE);
-		setAsString(no(), D4, JSCIENCE);
-		setAsString(no(), D4PLUS, JSCIENCE);
+		setAsString(no(), D3PLUS, JSCIENCE);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, JSCIENCE);
 		setAsString(yes(), SCALE, JSCIENCE);
 		setAsString(yes(), PLUSMINUS, JSCIENCE);
@@ -571,18 +655,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, MANTISSA);
 		setAsString(yes(), JAVA5, MANTISSA);
 		setAsString(yes(), JAVA6, MANTISSA);
-		setAsString(unknown(), MULTITHREADED, MANTISSA);
-		setAsString(unknown(), INPLACE, MANTISSA);
-		setAsString(yes(), DENSE, MANTISSA);
-		setAsString(no(), SPARSE, MANTISSA);
+		setAsString(no(), MULTITHREADED, MANTISSA);
+		setAsString(yes(), INPLACE, MANTISSA);
+		setAsString(yes(), DENSESA, MANTISSA);
+		setAsString(no(), DENSEAA, MANTISSA);
+		setAsString(no(), DENSEBLOCK, MANTISSA);
+		setAsString(no(), SPARSEDOK, MANTISSA);
+		setAsString(no(), SPARSEYALE, MANTISSA);
+		setAsString(no(), SPARSELIL, MANTISSA);
+		setAsString(no(), SPARSECRS, MANTISSA);
+		setAsString(no(), SPARSECDS, MANTISSA);
 		setAsString(no(), COMPLEX, MANTISSA);
 		setAsString(yes(), DOUBLE, MANTISSA);
 		setAsString(no(), FLOAT, MANTISSA);
 		setAsString(no(), BIGDECIMAL, MANTISSA);
 		setAsString(yes(), D2, MANTISSA);
 		setAsString(no(), D3, MANTISSA);
-		setAsString(no(), D4, MANTISSA);
-		setAsString(no(), D4PLUS, MANTISSA);
+		setAsString(no(), D3PLUS, MANTISSA);
 		setAsString(yes(), INV, MANTISSA);
 		setAsString(no(), SVD, MANTISSA);
 		setAsString(square() + footnote("o", "not accessible from outside"), LU, MANTISSA);
@@ -596,18 +685,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, MTJ);
 		setAsString(yes(), JAVA5, MTJ);
 		setAsString(yes(), JAVA6, MTJ);
-		setAsString(unknown(), MULTITHREADED, MTJ);
+		setAsString(yes() + footnote("m", "using native machine code"), MULTITHREADED, MTJ);
 		setAsString(yes(), INPLACE, MTJ);
-		setAsString(yes(), DENSE, MTJ);
-		setAsString(yes(), SPARSE, MTJ);
+		setAsString(yes(), DENSESA, MTJ);
+		setAsString(no(), DENSEAA, MTJ);
+		setAsString(no(), DENSEBLOCK, MTJ);
+		setAsString(yes(), SPARSECRS, MTJ);
+		setAsString(yes(), SPARSECDS, MTJ);
+		setAsString(yes(), SPARSELIL, MTJ);
+		setAsString(no(), SPARSEDOK, MTJ);
+		setAsString(no(), SPARSEYALE, MTJ);
 		setAsString(no(), COMPLEX, MTJ);
 		setAsString(yes(), DOUBLE, MTJ);
 		setAsString(no(), FLOAT, MTJ);
 		setAsString(no(), BIGDECIMAL, MTJ);
 		setAsString(yes(), D2, MTJ);
 		setAsString(no(), D3, MTJ);
-		setAsString(no(), D4, MTJ);
-		setAsString(no(), D4PLUS, MTJ);
+		setAsString(no(), D3PLUS, MTJ);
 		setAsString(yes(), TRANSPOSE, MTJ);
 		setAsString(yes(), SCALE, MTJ);
 		setAsString(yes(), PLUSMINUS, MTJ);
@@ -625,22 +719,27 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), JAVA14, OJALGO);
 		setAsString(yes(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
-		setAsString(yes(), MULTITHREADED, OJALGO);
+		setAsString(both(), MULTITHREADED, OJALGO);
 		setAsString(yes(), INPLACE, OJALGO);
 		setAsString(no(), CACHEDRESULTS, OJALGO);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, OJALGO);
 		setAsString(yes(), SCALE, OJALGO);
 		setAsString(yes(), PLUSMINUS, OJALGO);
-		setAsString(yes(), DENSE, OJALGO);
-		setAsString(no(), SPARSE, OJALGO);
+		setAsString(yes(), DENSESA, OJALGO);
+		setAsString(no(), DENSEAA, OJALGO);
+		setAsString(no(), DENSEBLOCK, OJALGO);
+		setAsString(no(), SPARSECDS, OJALGO);
+		setAsString(no(), SPARSECRS, OJALGO);
+		setAsString(no(), SPARSEYALE, OJALGO);
+		setAsString(no(), SPARSELIL, OJALGO);
+		setAsString(no(), SPARSEDOK, OJALGO);
 		setAsString(yes(), COMPLEX, OJALGO);
 		setAsString(yes(), DOUBLE, OJALGO);
 		setAsString(yes(), FLOAT, OJALGO);
 		setAsString(yes(), BIGDECIMAL, OJALGO);
 		setAsString(yes(), D2, OJALGO);
 		setAsString(no(), D3, OJALGO);
-		setAsString(no(), D4, OJALGO);
-		setAsString(no(), D4PLUS, OJALGO);
+		setAsString(no(), D3PLUS, OJALGO);
 		setAsString(yes(), INV, OJALGO);
 		setAsString(squareTall(), SOLVE, OJALGO);
 		setAsString(all(), SVD, OJALGO);
@@ -655,19 +754,24 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, ORBITAL);
 		setAsString(yes(), JAVA5, ORBITAL);
 		setAsString(yes(), JAVA6, ORBITAL);
-		setAsString(unknown(), MULTITHREADED, ORBITAL);
-		setAsString(unknown(), INPLACE, ORBITAL);
+		setAsString(no(), MULTITHREADED, ORBITAL);
+		setAsString(no(), INPLACE, ORBITAL);
 		setAsString(no(), CACHEDRESULTS, ORBITAL);
-		setAsString(yes(), DENSE, ORBITAL);
-		setAsString(no(), SPARSE, ORBITAL);
+		setAsString(yes(), DENSESA, ORBITAL);
+		setAsString(yes(), DENSEAA, ORBITAL);
+		setAsString(no(), DENSEBLOCK, ORBITAL);
+		setAsString(no(), SPARSECDS, ORBITAL);
+		setAsString(no(), SPARSECRS, ORBITAL);
+		setAsString(no(), SPARSEDOK, ORBITAL);
+		setAsString(no(), SPARSELIL, ORBITAL);
+		setAsString(no(), SPARSEYALE, ORBITAL);
 		setAsString(yes(), COMPLEX, ORBITAL);
 		setAsString(yes(), DOUBLE, ORBITAL);
 		setAsString(no(), FLOAT, ORBITAL);
 		setAsString(no(), BIGDECIMAL, ORBITAL);
 		setAsString(yes(), D2, ORBITAL);
-		setAsString(no(), D3, ORBITAL);
-		setAsString(no(), D4, ORBITAL);
-		setAsString(no(), D4PLUS, ORBITAL);
+		setAsString(yes(), D3, ORBITAL);
+		setAsString(yes(), D3PLUS, ORBITAL);
 		setAsString(yes(), INV, ORBITAL);
 		setAsString(no(), SVD, ORBITAL);
 		setAsString(square() + footnote("e", "error in implementation"), LU, ORBITAL);
@@ -682,18 +786,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA5, OWLPACK);
 		setAsString(yes(), JAVA6, OWLPACK);
 		setAsString(no(), MULTITHREADED, OWLPACK);
-		setAsString(unknown(), INPLACE, OWLPACK);
+		setAsString(yes(), INPLACE, OWLPACK);
 		setAsString(no(), CACHEDRESULTS, OWLPACK);
-		setAsString(yes(), DENSE, OWLPACK);
-		setAsString(no(), SPARSE, OWLPACK);
+		setAsString(yes(), DENSEAA, OWLPACK);
+		setAsString(no(), DENSESA, OWLPACK);
+		setAsString(no(), DENSEBLOCK, OWLPACK);
+		setAsString(no(), SPARSECDS, OWLPACK);
+		setAsString(no(), SPARSECRS, OWLPACK);
+		setAsString(no(), SPARSEYALE, OWLPACK);
+		setAsString(no(), SPARSEDOK, OWLPACK);
+		setAsString(no(), SPARSELIL, OWLPACK);
 		setAsString(yes(), COMPLEX, OWLPACK);
 		setAsString(yes(), DOUBLE, OWLPACK);
 		setAsString(yes(), FLOAT, OWLPACK);
 		setAsString(no(), BIGDECIMAL, OWLPACK);
 		setAsString(yes(), D2, OWLPACK);
 		setAsString(no(), D3, OWLPACK);
-		setAsString(no(), D4, OWLPACK);
-		setAsString(no(), D4PLUS, OWLPACK);
+		setAsString(no(), D3PLUS, OWLPACK);
 		setAsString(yes() + footnote("e", "error in implementation"), INV, OWLPACK);
 		setAsString(circle() + footnote("e", "error in implementation"), SVD, OWLPACK);
 		setAsString(no(), LU, OWLPACK);
@@ -707,22 +816,27 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, PARALLELCOLT);
 		setAsString(yes(), JAVA5, PARALLELCOLT);
 		setAsString(yes(), JAVA6, PARALLELCOLT);
-		setAsString(yes(), MULTITHREADED, PARALLELCOLT);
+		setAsString(both(), MULTITHREADED, PARALLELCOLT);
 		setAsString(yes(), INPLACE, PARALLELCOLT);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, PARALLELCOLT);
 		setAsString(yes(), SCALE, PARALLELCOLT);
 		setAsString(yes(), PLUSMINUS, PARALLELCOLT);
 		setAsString(no(), CACHEDRESULTS, PARALLELCOLT);
-		setAsString(yes(), DENSE, PARALLELCOLT);
-		setAsString(yes(), SPARSE, PARALLELCOLT);
+		setAsString(yes(), DENSESA, PARALLELCOLT);
+		setAsString(yes(), DENSEAA, PARALLELCOLT);
+		setAsString(no(), DENSEBLOCK, PARALLELCOLT);
+		setAsString(yes(), SPARSECRS, PARALLELCOLT);
+		setAsString(yes(), SPARSELIL, PARALLELCOLT);
+		setAsString(yes(), SPARSEDOK, PARALLELCOLT);
+		setAsString(no(), SPARSEYALE, PARALLELCOLT);
+		setAsString(no(), SPARSECDS, PARALLELCOLT);
 		setAsString(yes(), COMPLEX, PARALLELCOLT);
 		setAsString(yes(), DOUBLE, PARALLELCOLT);
 		setAsString(yes(), FLOAT, PARALLELCOLT);
 		setAsString(no(), BIGDECIMAL, PARALLELCOLT);
 		setAsString(yes(), D2, PARALLELCOLT);
 		setAsString(yes(), D3, PARALLELCOLT);
-		setAsString(no(), D4, PARALLELCOLT);
-		setAsString(no(), D4PLUS, PARALLELCOLT);
+		setAsString(no(), D3PLUS, PARALLELCOLT);
 		setAsString(yes(), INV, PARALLELCOLT);
 		setAsString(squareTall(), SOLVE, PARALLELCOLT);
 		setAsString(all(), SVD, PARALLELCOLT);
@@ -735,7 +849,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(small("2009"), DATE, SST);
 		setAsString(small("LGPL"), LICENCE, SST);
 		setAsString(no(), JAVA14, SST);
-		setAsString(yes() + footnote("5", "jar does not work with Java 5"), JAVA5, SST);
+		setAsString(yes() + footnote("j", "jar does not work with Java 5"), JAVA5, SST);
 		setAsString(yes(), JAVA6, SST);
 		setAsString(no(), MULTITHREADED, SST);
 		setAsString(yes(), INPLACE, SST);
@@ -743,16 +857,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), SCALE, SST);
 		setAsString(yes(), PLUSMINUS, SST);
 		setAsString(no(), CACHEDRESULTS, SST);
-		setAsString(yes(), DENSE, SST);
-		setAsString(yes(), SPARSE, SST);
+		setAsString(yes(), DENSESA, SST);
+		setAsString(no(), DENSEAA, SST);
+		setAsString(no(), DENSEBLOCK, SST);
+		setAsString(yes(), SPARSEDOK, SST);
+		setAsString(no(), SPARSELIL, SST);
+		setAsString(no(), SPARSEYALE, SST);
+		setAsString(no(), SPARSECDS, SST);
+		setAsString(no(), SPARSECRS, SST);
 		setAsString(yes(), COMPLEX, SST);
 		setAsString(yes(), DOUBLE, SST);
 		setAsString(no(), FLOAT, SST);
 		setAsString(no(), BIGDECIMAL, SST);
 		setAsString(yes(), D2, SST);
 		setAsString(yes(), D3, SST);
-		setAsString(yes(), D4, SST);
-		setAsString(yes(), D4PLUS, SST);
+		setAsString(yes(), D3PLUS, SST);
 		setAsString(yes(), INV, SST);
 		setAsString(no(), SOLVE, SST);
 		setAsString(all(), SVD, SST);
@@ -773,16 +892,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), SCALE, VECMATH);
 		setAsString(yes(), PLUSMINUS, VECMATH);
 		setAsString(no(), CACHEDRESULTS, VECMATH);
-		setAsString(yes(), DENSE, VECMATH);
-		setAsString(no(), SPARSE, VECMATH);
+		setAsString(yes(), DENSEAA, VECMATH);
+		setAsString(no(), DENSESA, VECMATH);
+		setAsString(no(), DENSEBLOCK, VECMATH);
+		setAsString(no(), SPARSEDOK, VECMATH);
+		setAsString(no(), SPARSELIL, VECMATH);
+		setAsString(no(), SPARSECDS, VECMATH);
+		setAsString(no(), SPARSECRS, VECMATH);
+		setAsString(no(), SPARSEYALE, VECMATH);
 		setAsString(no(), COMPLEX, VECMATH);
 		setAsString(yes(), DOUBLE, VECMATH);
 		setAsString(no(), FLOAT, VECMATH);
 		setAsString(no(), BIGDECIMAL, VECMATH);
 		setAsString(yes(), D2, VECMATH);
 		setAsString(no(), D3, VECMATH);
-		setAsString(no(), D4, VECMATH);
-		setAsString(no(), D4PLUS, VECMATH);
+		setAsString(no(), D3PLUS, VECMATH);
 		setAsString(yes(), INV, VECMATH);
 		setAsString(no(), SOLVE, VECMATH);
 		setAsString(circle() + footnote("e", "error in implementation"), SVD, VECMATH);
@@ -883,7 +1007,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	private String footnote(String footnote, String text) {
 		switch (format) {
 		case LATEX:
-			String f = "$^\\mathrm{" + footnote + "}$ " + text;
+			String f = "\\footnotesize{$^\\mathrm{" + footnote + "}$ " + text + "}";
 			if (!footnotes.contains(f)) {
 				footnotes.add(f);
 			}
@@ -910,27 +1034,29 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		s = s
 				.replaceAll(
 						"\\\\begin\\{tabular\\}",
-						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{centering}\n\\\\scalebox{0.85}{%\n\\\\begin{tabular}");
+						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{centering}\n\\\\scalebox{0.8}{%\n\\\\begin{tabular}");
 		s = s.replaceAll("latest version", "\\\\toprule\nlatest version");
 		s = s.replaceAll("\\\\end\\{sidewaystable\\}", "");
 		s = s.replaceAll("\\\\end\\{tabular\\}", "\\\\end{tabular}}\n\\\\end{centering}");
 		s = s.replaceAll("version &", "\\\\toprule\nversion &");
 		s = s.replaceAll("Java 1.4 &", "\\\\midrule\nJava 1.4 &");
 		s = s.replaceAll("multithreaded &", "\\\\midrule\nmultithreaded &");
-		s = s.replaceAll("dense &", "\\\\midrule\ndense &");
-		s = s.replaceAll("complex &", "\\\\midrule\ncomplex &");
+		s = s.replaceAll("dense SA", "\\\\midrule\ndense SA");
+		s = s.replaceAll("sparse DOK", "\\\\midrule\nsparse DOK");
+		s = s.replaceAll("double &", "\\\\midrule\ndouble &");
 		s = s.replaceAll("2D &", "\\\\midrule\n2D &");
 		s = s.replaceAll("transpose &", "\\\\midrule\ntranspose &");
 		s = s.replaceAll("inverse &", "\\\\midrule\ninverse &");
-		s = s + "\\medskip" + "\n";
-		s = s + "\\begin{tabular}{p{0.33\\textwidth}p{0.33\\textwidth}p{0.33\\textwidth}}\n";
+		s = s + "\\medskip\n";
+		s = s
+				+ "\\begin{tabular}{p{0.25\\textwidth}p{0.25\\textwidth}p{0.25\\textwidth}p{0.25\\textwidth}}\n";
 		s += "\\renewcommand{\\tabcolsep}{30pt}";
 		List<String> fn = ml.getFootnotes();
 		Collections.sort(fn);
 		for (int i = 0; i < fn.size(); i++) {
 			String f = fn.get(i);
 			s = s + f;
-			if (i % 3 == 2) {
+			if (i % 4 == 3) {
 				s = s + "\\\\\n";
 			} else {
 				s = s + " & ";

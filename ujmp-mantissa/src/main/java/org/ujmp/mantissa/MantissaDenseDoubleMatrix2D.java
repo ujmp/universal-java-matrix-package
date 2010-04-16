@@ -99,6 +99,22 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
+	public Matrix solve(Matrix b) {
+		if (matrix instanceof SquareMatrix
+				&& b instanceof MantissaDenseDoubleMatrix2D) {
+			try {
+				org.spaceroots.mantissa.linalg.Matrix b2 = ((MantissaDenseDoubleMatrix2D) b)
+						.getWrappedObject();
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
+						.solve(b2, UJMPSettings.getTolerance()));
+			} catch (Exception e) {
+				throw new MatrixException(e);
+			}
+		} else {
+			throw new MatrixException("only allowed for square matrices");
+		}
+	}
+
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof MantissaDenseDoubleMatrix2D) {
 			return new MantissaDenseDoubleMatrix2D(matrix

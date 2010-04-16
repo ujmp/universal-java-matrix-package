@@ -1764,10 +1764,10 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareFixedSmall() throws Exception {
+	public void testLUSquareSingularSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
 
-		// skip libraries which do not support square matrices
+		// skip libraries which do not support singular matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			return;
 		}
@@ -1798,6 +1798,7 @@ public abstract class AbstractMatrixTest {
 				a.setAsDouble(v++, r, c);
 			}
 		}
+
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
@@ -1806,7 +1807,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareFixedLarge() throws Exception {
+	public void testLUSquareSingularLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1957,6 +1958,9 @@ public abstract class AbstractMatrixTest {
 		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(2, 4);
@@ -1982,6 +1986,9 @@ public abstract class AbstractMatrixTest {
 		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrix(121, 143);
@@ -1998,19 +2005,7 @@ public abstract class AbstractMatrixTest {
 	public void testLUSquareRandSmall() throws Exception {
 		Matrix a = createMatrix(10, 10);
 
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
@@ -2037,19 +2032,8 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrix(112, 112);
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
+
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {

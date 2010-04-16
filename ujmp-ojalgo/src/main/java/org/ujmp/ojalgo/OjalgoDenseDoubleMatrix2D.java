@@ -34,12 +34,14 @@ import org.ojalgo.matrix.BasicMatrix;
 import org.ojalgo.matrix.PrimitiveMatrix;
 import org.ojalgo.matrix.decomposition.LUDecomposition;
 import org.ojalgo.matrix.store.MatrixStore;
+import org.ojalgo.matrix.store.OjalgoUtil;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ojalgo.calculation.Chol;
 import org.ujmp.ojalgo.calculation.Eig;
@@ -54,7 +56,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	private static final long serialVersionUID = 6628172130438716653L;
 
-	private transient PrimitiveDenseStore matrix = null;
+	private transient PrimitiveDenseStore matrix;
 
 	public OjalgoDenseDoubleMatrix2D(final long... size) {
 		matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY.makeZero(
@@ -62,8 +64,14 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public OjalgoDenseDoubleMatrix2D(final Matrix m) {
-		this(m.getSize());
-		if (m instanceof DenseDoubleMatrix2D) {
+		if (m instanceof HasColumnMajorDoubleArray1D) {
+			final double[] data = ((HasColumnMajorDoubleArray1D) m)
+					.getColumnMajorDoubleArray1D();
+			this.matrix = OjalgoUtil.linkToArray((int) m.getRowCount(), (int) m
+					.getColumnCount(), data);
+		} else if (m instanceof DenseDoubleMatrix2D) {
+			this.matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
+					.makeZero((int) m.getRowCount(), (int) m.getColumnCount());
 			final DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) m;
 			for (int r = (int) m.getRowCount(); --r >= 0;) {
 				for (int c = (int) m.getColumnCount(); --c >= 0;) {
@@ -71,7 +79,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				}
 			}
 		} else {
-			for (final long[] c : m.allCoordinates()) {
+			this.matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
+					.makeZero((int) m.getRowCount(), (int) m.getColumnCount());
+			for (final long[] c : m.availableCoordinates()) {
 				this.setDouble(m.getAsDouble(c), c);
 			}
 		}

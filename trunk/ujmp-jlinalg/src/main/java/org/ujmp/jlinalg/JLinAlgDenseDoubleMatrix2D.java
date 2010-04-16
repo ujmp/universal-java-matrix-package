@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.jlinalg.MatrixMultiplication;
 import org.jlinalg.doublewrapper.DoubleWrapper;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -111,7 +112,9 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m instanceof JLinAlgDenseDoubleMatrix2D) {
 			org.jlinalg.Matrix<DoubleWrapper> b = ((JLinAlgDenseDoubleMatrix2D) m)
 					.getWrappedObject();
-			return new JLinAlgDenseDoubleMatrix2D(matrix.multiply(b));
+			org.jlinalg.Matrix<DoubleWrapper> c = MatrixMultiplication
+					.strassenBodrato(matrix, b);
+			return new JLinAlgDenseDoubleMatrix2D(c);
 		} else {
 			return super.mtimes(m);
 		}

@@ -108,7 +108,9 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 				.getL());
 		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
 				.getU());
-		return new Matrix[] { l, u };
+		Matrix p = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
+				.getP());
+		return new Matrix[] { l, u, p };
 	}
 
 	public Matrix[] qr() {

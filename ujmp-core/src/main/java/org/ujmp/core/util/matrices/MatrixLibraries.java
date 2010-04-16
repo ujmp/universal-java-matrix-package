@@ -47,41 +47,41 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	private static final int JAVA6 = 6;
 
-	private static final int MULTITHREADED = 7;
+	private static final int DENSESA = 7;
 
-	private static final int INPLACE = 8;
+	private static final int DENSEAA = 8;
 
-	private static final int CACHEDRESULTS = 9;
+	private static final int DENSEBLOCK = 9;
 
-	private static final int DENSESA = 10;
+	private static final int SPARSEDOK = 10;
 
-	private static final int DENSEAA = 11;
+	private static final int SPARSELIL = 11;
 
-	private static final int DENSEBLOCK = 12;
+	private static final int SPARSEYALE = 12;
 
-	private static final int SPARSEDOK = 13;
+	private static final int SPARSECRS = 13;
 
-	private static final int SPARSELIL = 14;
+	private static final int SPARSECDS = 14;
 
-	private static final int SPARSEYALE = 15;
+	private static final int DOUBLE = 15;
 
-	private static final int SPARSECRS = 16;
+	private static final int FLOAT = 16;
 
-	private static final int SPARSECDS = 17;
+	private static final int BIGDECIMAL = 17;
 
-	private static final int DOUBLE = 18;
+	private static final int COMPLEX = 18;
 
-	private static final int FLOAT = 19;
+	private static final int D2 = 19;
 
-	private static final int BIGDECIMAL = 20;
+	private static final int D3 = 20;
 
-	private static final int COMPLEX = 21;
+	private static final int D3PLUS = 21;
 
-	private static final int D2 = 22;
+	private static final int MULTITHREADED = 22;
 
-	private static final int D3 = 23;
+	private static final int INPLACE = 23;
 
-	private static final int D3PLUS = 24;
+	private static final int CACHEDRESULTS = 24;
 
 	private static final int TRANSPOSE = 25;
 
@@ -281,6 +281,10 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), BIGDECIMAL, ARRAY4J);
 		setAsString(no(), MULTITHREADED, ARRAY4J);
 		setAsString(yes(), INPLACE, ARRAY4J);
+		setAsString(no(), CACHEDRESULTS, ARRAY4J);
+		setAsString(yes(), PLUSMINUS, ARRAY4J);
+		setAsString(yes(), SCALE, ARRAY4J);
+		setAsString(yes(), TRANSPOSE, ARRAY4J);
 		setAsString(yes(), D2, ARRAY4J);
 		setAsString(no(), D3, ARRAY4J);
 		setAsString(no(), D3PLUS, ARRAY4J);
@@ -300,6 +304,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA6, COLT);
 		setAsString(no(), MULTITHREADED, COLT);
 		setAsString(yes(), INPLACE, COLT);
+		setAsString(no(), CACHEDRESULTS, COLT);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, COLT);
 		setAsString(yes(), SCALE, COLT);
 		setAsString(yes(), PLUSMINUS, COLT);
@@ -333,7 +338,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA5, COMMONSMATH);
 		setAsString(yes(), JAVA6, COMMONSMATH);
 		setAsString(no(), MULTITHREADED, COMMONSMATH);
-		setAsString(no(), INPLACE, COMMONSMATH);
+		setAsString(yes(), INPLACE, COMMONSMATH);
+		setAsString(no(), CACHEDRESULTS, COMMONSMATH);
 		setAsString(yes(), TRANSPOSE, COMMONSMATH);
 		setAsString(yes(), SCALE, COMMONSMATH);
 		setAsString(yes(), PLUSMINUS, COMMONSMATH);
@@ -354,7 +360,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D3PLUS, COMMONSMATH);
 		setAsString(yes(), INV, COMMONSMATH);
 		setAsString(squareTall(), SOLVE, COMMONSMATH);
-		setAsString(all() + footnote("e", "error in implementation"), SVD, COMMONSMATH);
+		setAsString(all(), SVD, COMMONSMATH);
 		setAsString(square() + footnote("n", "non-singular matrices only"), LU, COMMONSMATH);
 		setAsString(all(), QR, COMMONSMATH);
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);

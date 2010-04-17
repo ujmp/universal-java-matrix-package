@@ -248,21 +248,21 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>mysql-connector-java</groupId>
+				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.7</version>
+				<version>5.1.12</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>8.3-604.jdbc4</version>
+				<version>8.4-701.jdbc4</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>derby</groupId>
+				<groupId>org.apache.derby</groupId>
 				<artifactId>derby</artifactId>
-				<version>10.5.1.1</version>
+				<version>10.5.3.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -490,12 +490,28 @@
 	</reporting>
 
 
-	<distributionManagement>
+	<!--
+		<distributionManagement> <repository> <id>ujmp-repository</id>
+		<name>UJMP Repository</name> <url>file:/~/.m2/repository</url>
+		</repository> </distributionManagement>
+	-->
+
+	<repositories>
 		<repository>
 			<id>ujmp-repository</id>
 			<name>UJMP Repository</name>
 			<url>file:/~/.m2/repository</url>
 		</repository>
-	</distributionManagement>
+		<repository>
+			<id>ibiblio.org</id>
+			<name>ibiblio Mirror of http://repo1.maven.org/maven2/</name>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+		</repository>
+		<repository>
+			<id>java-matrix</id>
+			<name>java-matrix maven repository</name>
+			<url>http://java-matrix.org/maven2</url>
+		</repository>
+	</repositories>
 
 </project>

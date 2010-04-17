@@ -1958,6 +1958,9 @@ public abstract class AbstractMatrixTest {
 		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
+			return;
+		}
 		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
 			return;
 		}
@@ -2515,7 +2518,7 @@ public abstract class AbstractMatrixTest {
 		Matrix pascal = MatrixFactory.pascal(5, 5);
 		Matrix a = createMatrix(pascal);
 
-		// only SPD
+		// some error?
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
 		}
@@ -2557,7 +2560,7 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
 
-		// only SPD
+		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
 		}
@@ -2597,7 +2600,7 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
 
-		// only SPD
+		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
 		}
@@ -2640,7 +2643,7 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
 
-		// only SPD
+		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
 		}

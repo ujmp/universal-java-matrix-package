@@ -325,9 +325,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(no(), D3PLUS, COLT);
 		setAsString(yes(), INV, COLT);
 		setAsString(squareTall(), SOLVE, COLT);
-		setAsString(squareTall(), SVD, COLT);
+		setAsString(all(), SVD, COLT);
 		setAsString(squareTall(), LU, COLT);
-		setAsString(all(), QR, COLT);
+		setAsString(squareTall(), QR, COLT);
 		setAsString(yes(), EIG, COLT);
 		setAsString(yes(), CHOL, COLT);
 
@@ -469,7 +469,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all(), LU, JAMPACK);
 		setAsString(all(), QR, JAMPACK);
 		setAsString(yes(), EIG, JAMPACK);
-		setAsString(yes(), CHOL, JAMPACK);
+		setAsString(yes() + footnote("e", "error in implementation"), CHOL, JAMPACK);
 
 		setAsString(small("1.0.2"), VERSION, JBLAS);
 		setAsString(small("2010"), DATE, JBLAS);
@@ -750,7 +750,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all() + footnote("e", "error in implementation"), LU, MTJ);
 		setAsString(squareTall(), QR, MTJ);
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, MTJ);
-		setAsString(yes(), CHOL, MTJ);
+		setAsString(yes() + footnote("e", "error in implementation"), CHOL, MTJ);
 
 		setAsString(small("29.0"), VERSION, OJALGO);
 		setAsString(small("2010"), DATE, OJALGO);

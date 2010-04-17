@@ -243,7 +243,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				Zmat x = Solve.aib(matrix, b2.matrix);
 				return new JampackDenseDoubleMatrix2D(x);
 			} else {
-				return super.solve(b);
+				throw new MatrixException("only supported for square matrices");
 			}
 		} catch (Exception e) {
 			throw new MatrixException(e);

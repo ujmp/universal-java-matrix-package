@@ -138,6 +138,14 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return r;
 	}
 
+	// some error
+	// public Matrix invSPD() throws MatrixException {
+	// CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+	// org.jmatrices.dbl.Matrix eye = MatrixFactory.getIdentityMatrix(matrix
+	// .rows(), null);
+	// return new JMatricesDenseDoubleMatrix2D(chol.solve(eye));
+	// }
+
 	public Matrix[] lu() {
 		if (getRowCount() >= getColumnCount()) {
 			LUDecomposition lu = new LUDecomposition(matrix);

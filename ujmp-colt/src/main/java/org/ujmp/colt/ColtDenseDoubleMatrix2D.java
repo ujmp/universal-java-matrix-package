@@ -237,8 +237,8 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix chol() {
-		CholeskyDecomposition eig = new CholeskyDecomposition(matrix);
-		Matrix r = new ColtDenseDoubleMatrix2D(eig.getL());
+		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+		Matrix r = new ColtDenseDoubleMatrix2D(chol.getL());
 		return r;
 	}
 

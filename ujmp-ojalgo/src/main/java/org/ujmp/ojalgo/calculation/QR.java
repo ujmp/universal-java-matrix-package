@@ -34,49 +34,37 @@ public class QR implements
 	public static QR INSTANCE = new QR();
 
 	public Matrix[] calc(Matrix source) {
-		try {
-			final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
-					.makePrimitive();
-			PrimitiveDenseStore matrix = null;
-			if (source instanceof OjalgoDenseDoubleMatrix2D) {
-				matrix = ((OjalgoDenseDoubleMatrix2D) source)
-						.getWrappedObject();
-			} else {
-				matrix = new OjalgoDenseDoubleMatrix2D(source)
-						.getWrappedObject();
-			}
-			qr.compute(matrix);
-			final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
-			final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
-			return new Matrix[] { q, r };
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.QR.UJMP
-					.calc(source);
+		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
+				.makePrimitive();
+		PrimitiveDenseStore matrix = null;
+		if (source instanceof OjalgoDenseDoubleMatrix2D) {
+			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+		} else {
+			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
+		qr.compute(matrix);
+		final Matrix q = new OjalgoDenseDoubleMatrix2D(qr.getQ());
+		final Matrix r = new OjalgoDenseDoubleMatrix2D(qr.getR());
+		return new Matrix[] { q, r };
 	}
 
 	public Matrix solve(Matrix a, Matrix b) {
-		try {
-			final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
-					.makePrimitive();
-			PrimitiveDenseStore a2 = null;
-			PrimitiveDenseStore b2 = null;
-			if (a instanceof OjalgoDenseDoubleMatrix2D) {
-				a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
-			} else {
-				a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
-			}
-			if (b instanceof OjalgoDenseDoubleMatrix2D) {
-				b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
-			} else {
-				b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
-			}
-			qr.compute(a2);
-			return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.QR.UJMP
-					.solve(a, b);
+		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
+				.makePrimitive();
+		PrimitiveDenseStore a2 = null;
+		PrimitiveDenseStore b2 = null;
+		if (a instanceof OjalgoDenseDoubleMatrix2D) {
+			a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
+		} else {
+			a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
 		}
+		if (b instanceof OjalgoDenseDoubleMatrix2D) {
+			b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
+		} else {
+			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
+		}
+		qr.compute(a2);
+		return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
 	}
 
 }

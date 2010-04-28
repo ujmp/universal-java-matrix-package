@@ -42,6 +42,7 @@ import org.ujmp.core.interfaces.HasRowMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ejml.calculation.Inv;
+import org.ujmp.ejml.calculation.InvSPD;
 import org.ujmp.ejml.calculation.QR;
 import org.ujmp.ejml.calculation.SVD;
 import org.ujmp.ejml.calculation.Solve;
@@ -128,7 +129,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix invSPD() {
-		return Inv.INSTANCE.calc(this);
+		return InvSPD.INSTANCE.calc(this);
 	}
 
 	public double det() {

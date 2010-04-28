@@ -50,19 +50,14 @@ public class Solve
 		} else {
 			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
 		}
-		try {
-			if (a.isSquare()) {
-				final LU<Double> lu = LUDecomposition.makePrimitive();
-				lu.compute(a2);
-				return new OjalgoDenseDoubleMatrix2D(lu.solve(b2));
-			} else {
-				final QR<Double> qr = QRDecomposition.makePrimitive();
-				qr.compute(a2);
-				return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
-			}
-		} catch (final Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMPSQUARE
-					.calc(a, b);
+		if (a.isSquare()) {
+			final LU<Double> lu = LUDecomposition.makePrimitive();
+			lu.compute(a2);
+			return new OjalgoDenseDoubleMatrix2D(lu.solve(b2));
+		} else {
+			final QR<Double> qr = QRDecomposition.makePrimitive();
+			qr.compute(a2);
+			return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
 		}
 	}
 

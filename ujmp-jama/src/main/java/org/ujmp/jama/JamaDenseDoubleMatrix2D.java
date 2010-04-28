@@ -71,7 +71,8 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix invSPD() throws MatrixException {
-		return new JamaDenseDoubleMatrix2D(matrix.solve(Jama.Matrix.identity(
+		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
+		return new JamaDenseDoubleMatrix2D(chol.solve(Jama.Matrix.identity(
 				matrix.getRowDimension(), matrix.getRowDimension())));
 	}
 

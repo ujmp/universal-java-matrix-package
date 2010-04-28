@@ -35,21 +35,13 @@ public class InvSPD
 	public static InvSPD INSTANCE = new InvSPD();
 
 	public Matrix calc(Matrix source) {
-		try {
-			MatrixStore<Double> matrix = null;
-			if (source instanceof OjalgoDenseDoubleMatrix2D) {
-				matrix = ((OjalgoDenseDoubleMatrix2D) source)
-						.getWrappedObject();
-			} else {
-				matrix = new OjalgoDenseDoubleMatrix2D(source)
-						.getWrappedObject();
-			}
-			return new OjalgoDenseDoubleMatrix2D(CholeskyDecomposition
-					.makePrimitive().invert(matrix));
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD.UJMP
-					.calc(source);
+		MatrixStore<Double> matrix = null;
+		if (source instanceof OjalgoDenseDoubleMatrix2D) {
+			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+		} else {
+			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
+		return new OjalgoDenseDoubleMatrix2D(CholeskyDecomposition
+				.makePrimitive().invert(matrix));
 	}
-
 }

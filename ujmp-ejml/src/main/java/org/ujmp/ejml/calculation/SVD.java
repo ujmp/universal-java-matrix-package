@@ -34,26 +34,21 @@ public class SVD
 
 	public static SVD INSTANCE = new SVD();
 
-	@Override
 	public Matrix[] calc(Matrix source) {
-		try {
-			SingularValueDecomposition svd = DecompositionFactory.svd();
+		SingularValueDecomposition svd = DecompositionFactory.svd();
 
-			if (source instanceof EJMLDenseDoubleMatrix2D) {
-				svd.decompose(((EJMLDenseDoubleMatrix2D) source)
-						.getWrappedObject());
-			} else {
-				svd.decompose(new EJMLDenseDoubleMatrix2D(source)
-						.getWrappedObject());
-			}
-			Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
-			Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
-			Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW(null));
-			return new Matrix[] { u, s, v };
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.UJMP
-					.calc(source);
+		if (source instanceof EJMLDenseDoubleMatrix2D) {
+			svd
+					.decompose(((EJMLDenseDoubleMatrix2D) source)
+							.getWrappedObject());
+		} else {
+			svd.decompose(new EJMLDenseDoubleMatrix2D(source)
+					.getWrappedObject());
 		}
+		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
+		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
+		Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW(null));
+		return new Matrix[] { u, s, v };
 	}
 
 }

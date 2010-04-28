@@ -35,21 +35,15 @@ public class InvSPD
 	public static InvSPD INSTANCE = new InvSPD();
 
 	public Matrix calc(Matrix source) {
-		try {
-			DenseMatrix64F matrix = null;
-			if (source instanceof EJMLDenseDoubleMatrix2D) {
-				matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
-			} else {
-				matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
-			}
-			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
-			CovarianceOps.invert(matrix, ret);
-			return new EJMLDenseDoubleMatrix2D(ret);
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD.UJMP
-					.calc(source);
+		DenseMatrix64F matrix = null;
+		if (source instanceof EJMLDenseDoubleMatrix2D) {
+			matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
+		} else {
+			matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
 		}
+		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
+		CovarianceOps.invert(matrix, ret);
+		return new EJMLDenseDoubleMatrix2D(ret);
 	}
 
 }

@@ -29,136 +29,176 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
+import org.ujmp.core.util.MathUtil;
 
 public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
-		implements Closeable {
+		implements Closeable, Erasable {
 	private static final long serialVersionUID = -5801269687893136766L;
 
-	private Connection connection = null;
+	private boolean useExtendedSQL = false;
 
-	private PreparedStatement getEntryStatement = null;
+	private transient Connection connection = null;
 
-	private PreparedStatement insertEntryStatement = null;
+	private transient PreparedStatement getEntryStatement = null;
 
-	private PreparedStatement deleteEntryStatement = null;
+	private transient PreparedStatement insertEntryStatement = null;
 
-	private PreparedStatement getSizeStatement = null;
+	private transient PreparedStatement deleteEntryStatement = null;
 
-	private String url = null;
+	private transient PreparedStatement selectAllStatement = null;
 
-	private String username = null;
+	private final String url;
+
+	private final String username;
 
 	private String password = null;
 
-	private String tableName = null;
+	private final String tableName;
 
-	private String[] columnsForCoordinates = null;
+	private final String[] columnsForCoordinates;
 
-	private String columnForValue = null;
+	private final String columnForValue;
 
-	private long[] size = null;
+	private final long[] size;
 
-	public JDBCSparseObjectMatrix(String url, String username, String password,
-			String tableName, String columnForValue,
+	public JDBCSparseObjectMatrix(long[] size, String url, String username,
+			String password, String tableName, String columnForValue,
 			String... columnsForCoordinates) throws ClassNotFoundException {
 		this.url = url;
+		this.size = size;
 		this.username = username;
 		this.password = password;
 		this.tableName = tableName;
 		this.columnForValue = columnForValue;
 		this.columnsForCoordinates = columnsForCoordinates;
 
-		// if (url.startsWith("jdbc:mysql://")) {
-		// Class.forName("com.mysql.jdbc.Driver");
-		// }else if (url.startsWith("jdbc:derby://")) {
-		// Class.forName("com.mysql.jdbc.Driver");
-		// }
-	}
-
-	private PreparedStatement getGetEntryStatement() {
-		try {
-			if (getEntryStatement == null) {
-				StringBuilder s = new StringBuilder();
-				s.append("select ");
-				s.append(columnForValue);
-				s.append(" from ");
-				s.append(tableName);
-				s.append(" where ");
-				for (int i = 0; i < columnsForCoordinates.length; i++) {
-					s.append(columnsForCoordinates[i]);
-					s.append("=?");
-					if (i < columnsForCoordinates.length - 1) {
-						s.append(" and ");
-					}
-				}
-				getEntryStatement = getConnection().prepareStatement(
-						s.toString());
-			}
-			return getEntryStatement;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+		if (url.startsWith("jdbc:hsqldb:")) {
+			Class.forName("org.hsqldb.jdbcDriver");
+		} else if (url.startsWith("jdbc:mysql:")) {
+			Class.forName("org.mysql.jdbc.Driver");
+		} else if (url.startsWith("jdbc:postgresql:")) {
+			Class.forName("org.postgresql.Driver");
+		} else if (url.startsWith("jdbc:derby:")) {
+			Class.forName("org.apache.derby.jdbc.Driver40");
 		}
+
+		createTableIfNotExists();
 	}
 
-	private PreparedStatement getInsertEntryStatement() {
-		try {
-			if (insertEntryStatement == null) {
-				StringBuilder s = new StringBuilder();
-				s.append("insert into ");
-				s.append(tableName);
-				s.append(" (");
-				s.append(columnForValue);
-				s.append(", ");
-				for (int i = 0; i < columnsForCoordinates.length; i++) {
-					s.append(columnsForCoordinates[i]);
-					if (i < columnsForCoordinates.length - 1) {
-						s.append(", ");
-					}
+	public JDBCSparseObjectMatrix(long[] size, Connection connection,
+			String tableName, String columnForValue,
+			String... columnsForCoordinates) throws SQLException {
+		this.size = size;
+		this.connection = connection;
+		this.username = connection.getMetaData().getUserName();
+		this.url = connection.getMetaData().getURL();
+		this.tableName = tableName;
+		this.columnForValue = columnForValue;
+		this.columnsForCoordinates = columnsForCoordinates;
+		createTableIfNotExists();
+	}
+
+	private void createTableIfNotExists() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private PreparedStatement getSelectAllStatement() throws SQLException {
+		if (selectAllStatement == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("select ");
+			s.append(columnForValue);
+			s.append(", ");
+			for (int i = 0; i < columnsForCoordinates.length; i++) {
+				s.append(columnsForCoordinates[i]);
+				if (i < columnsForCoordinates.length - 1) {
+					s.append(", ");
 				}
-				s.append(") values (?, ");
-				for (int i = 0; i < columnsForCoordinates.length; i++) {
-					s.append("?");
-					if (i < columnsForCoordinates.length - 1) {
-						s.append(", ");
-					}
+			}
+			s.append(" from ");
+			s.append(tableName);
+			selectAllStatement = getConnection().prepareStatement(s.toString());
+		}
+		return selectAllStatement;
+	}
+
+	private PreparedStatement getGetEntryStatement() throws SQLException {
+		if (getEntryStatement == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("select ");
+			s.append(columnForValue);
+			s.append(" from ");
+			s.append(tableName);
+			s.append(" where ");
+			for (int i = 0; i < columnsForCoordinates.length; i++) {
+				s.append(columnsForCoordinates[i]);
+				s.append("=?");
+				if (i < columnsForCoordinates.length - 1) {
+					s.append(" and ");
 				}
-				s.append(") on duplicate key update ");
+			}
+			getEntryStatement = getConnection().prepareStatement(s.toString());
+		}
+		return getEntryStatement;
+	}
+
+	private PreparedStatement getInsertEntryStatement() throws SQLException {
+		if (insertEntryStatement == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("insert into ");
+			s.append(tableName);
+			s.append(" (");
+			s.append(columnForValue);
+			s.append(", ");
+			for (int i = 0; i < columnsForCoordinates.length; i++) {
+				s.append(columnsForCoordinates[i]);
+				if (i < columnsForCoordinates.length - 1) {
+					s.append(", ");
+				}
+			}
+			s.append(") values (?, ");
+			for (int i = 0; i < columnsForCoordinates.length; i++) {
+				s.append("?");
+				if (i < columnsForCoordinates.length - 1) {
+					s.append(", ");
+				}
+			}
+			s.append(")");
+
+			if (useExtendedSQL) {
+				s.append(" on duplicate key update ");
 				s.append(columnForValue);
 				s.append("=?");
-				insertEntryStatement = getConnection().prepareStatement(
-						s.toString());
 			}
-			return insertEntryStatement;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+
+			insertEntryStatement = getConnection().prepareStatement(
+					s.toString());
 		}
+		return insertEntryStatement;
 	}
 
-	private PreparedStatement getGetSizeStatement() {
-		try {
-			if (getSizeStatement == null) {
-				StringBuilder s = new StringBuilder();
-				s.append("select ");
-				for (int i = 0; i < columnsForCoordinates.length; i++) {
-					s.append("max(" + columnsForCoordinates[i] + ")");
-					if (i < columnsForCoordinates.length - 1) {
-						s.append(", ");
-					}
+	private PreparedStatement getDeleteEntryStatement() throws SQLException {
+		if (deleteEntryStatement == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("delete from ");
+			s.append(tableName);
+			s.append(" where ");
+			for (int i = 0; i < columnsForCoordinates.length; i++) {
+				s.append(columnsForCoordinates[i]);
+				s.append("=?");
+				if (i < columnsForCoordinates.length - 1) {
+					s.append(" and ");
 				}
-				s.append(" from ");
-				s.append(tableName);
-				getSizeStatement = getConnection().prepareStatement(
-						s.toString());
 			}
-			return getSizeStatement;
-		} catch (Exception e) {
-			throw new MatrixException(e);
+			deleteEntryStatement = getConnection().prepareStatement(
+					s.toString());
 		}
+		return deleteEntryStatement;
 	}
 
 	public synchronized Object getObject(long... coordinates) {
@@ -179,39 +219,44 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		}
 	}
 
+	private void deleteObject(long... coordinates) throws SQLException {
+		PreparedStatement ps = getDeleteEntryStatement();
+		for (int i = 0; i < coordinates.length; i++) {
+			ps.setLong(i + 1, coordinates[i]);
+		}
+		ps.execute();
+	}
+
 	public synchronized void setObject(Object value, long... coordinates) {
 		try {
-			PreparedStatement ps = getInsertEntryStatement();
-			ps.setObject(1, value);
-			ps.setObject(coordinates.length + 2, value);
-			for (int i = 0; i < coordinates.length; i++) {
-				ps.setLong(i + 2, coordinates[i]);
+			if (MathUtil.getDouble(value) == 0.0) {
+				deleteObject(coordinates);
+			} else {
+
+				if (!useExtendedSQL) {
+					deleteObject(coordinates);
+				}
+
+				PreparedStatement ps = getInsertEntryStatement();
+
+				ps.setObject(1, value);
+				for (int i = 0; i < coordinates.length; i++) {
+					ps.setLong(i + 2, coordinates[i]);
+				}
+
+				if (useExtendedSQL) {
+					ps.setObject(coordinates.length + 2, value);
+				}
+
+				ps.executeUpdate();
 			}
-			ps.executeUpdate();
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
 	}
 
 	public synchronized long[] getSize() {
-		try {
-			if (size == null) {
-				PreparedStatement ps = getGetSizeStatement();
-				ResultSet rs = ps.executeQuery();
-				rs.next();
-				ResultSetMetaData rsMetaData = rs.getMetaData();
-				int s = rsMetaData.getColumnCount();
-				size = new long[s];
-				for (int i = 0; i < s; i++) {
-					size[i] = rs.getLong(i + 1) + 1;
-				}
-				ps.close();
-				rs.close();
-			}
-			return size;
-		} catch (SQLException e) {
-			throw new MatrixException(e);
-		}
+		return size;
 	}
 
 	public synchronized void close() throws IOException {
@@ -225,7 +270,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 	}
 
 	public synchronized Connection getConnection() throws SQLException {
-		if (connection == null || !connection.isClosed()) {
+		if (connection == null || connection.isClosed()) {
 			connection = DriverManager.getConnection(getUrl(), getUsername(),
 					getPassword());
 			// DatabaseMetaData dbm = connection.getMetaData();
@@ -267,6 +312,11 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 			}
 			connection = null;
 		}
+	}
+
+	public void erase() throws IOException {
+		// TODO
+		// delete database table
 	}
 
 }

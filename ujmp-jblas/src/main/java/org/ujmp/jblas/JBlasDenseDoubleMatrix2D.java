@@ -34,6 +34,7 @@ import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.jblas.calculation.Chol;
 import org.ujmp.jblas.calculation.Eig;
 import org.ujmp.jblas.calculation.Inv;
+import org.ujmp.jblas.calculation.InvSPD;
 import org.ujmp.jblas.calculation.LU;
 import org.ujmp.jblas.calculation.Solve;
 
@@ -87,6 +88,10 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix inv() throws MatrixException {
 		return Inv.INSTANCE.calc(this);
+	}
+
+	public Matrix invSPD() throws MatrixException {
+		return InvSPD.INSTANCE.calc(this);
 	}
 
 	public double getDouble(long row, long column) {

@@ -48,14 +48,9 @@ public class SolveSPD
 		} else {
 			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
 		}
-		try {
-			final Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-			chol.compute(a2);
-			return new OjalgoDenseDoubleMatrix2D(chol.solve(b2));
-		} catch (final Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD.UJMPSQUARE
-					.calc(a, b);
-		}
+		final Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
+		chol.compute(a2);
+		return new OjalgoDenseDoubleMatrix2D(chol.solve(b2));
 	}
 
 }

@@ -158,6 +158,13 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.inverse(matrix));
 	}
 
+	public Matrix invSPD() {
+		CholeskyDecomposition chol = new CholeskyDecomposition(new Jama.Matrix(
+				matrix));
+		return new JMathArrayDenseDoubleMatrix2D(chol.solve(
+				Jama.Matrix.identity(matrix.length, matrix.length)).getArray());
+	}
+
 	public Matrix plus(double value) {
 		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(DoubleArray
 				.copy(matrix), value));

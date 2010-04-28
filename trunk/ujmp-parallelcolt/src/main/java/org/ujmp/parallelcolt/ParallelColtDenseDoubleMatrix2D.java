@@ -30,6 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.parallelcolt.calculation.Solve;
 
 import cern.colt.matrix.tdouble.DoubleFactory2D;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
@@ -46,7 +47,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		Wrapper<cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -1941030601886654699L;
 
-	private static final DenseDoubleAlgebra ALG = new DenseDoubleAlgebra();
+	public static final DenseDoubleAlgebra ALG = new DenseDoubleAlgebra();
 
 	private cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D matrix;
 
@@ -247,13 +248,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public Matrix solve(Matrix b) {
-		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
-			DoubleMatrix2D b2 = ((ParallelColtDenseDoubleMatrix2D) b).matrix;
-			DoubleMatrix2D result = ALG.solve(matrix, b2);
-			return new ParallelColtDenseDoubleMatrix2D(result);
-		} else {
-			return super.solve(b);
-		}
+		return Solve.INSTANCE.calc(this, b);
 	}
 
 	public Matrix solveSPD(Matrix b) {

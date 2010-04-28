@@ -36,24 +36,16 @@ public class Eig
 	public static Eig INSTANCE = new Eig();
 
 	public Matrix[] calc(Matrix source) {
-		try {
-			final Eigenvalue<Double> evd = EigenvalueDecomposition
-					.makePrimitive();
-			PrimitiveDenseStore matrix = null;
-			if (source instanceof OjalgoDenseDoubleMatrix2D) {
-				matrix = ((OjalgoDenseDoubleMatrix2D) source)
-						.getWrappedObject();
-			} else {
-				matrix = new OjalgoDenseDoubleMatrix2D(source)
-						.getWrappedObject();
-			}
-			evd.compute(matrix);
-			final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
-			final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
-			return new Matrix[] { v, d };
-		} catch (Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.Eig.UJMP
-					.calc(source);
+		final Eigenvalue<Double> evd = EigenvalueDecomposition.makePrimitive();
+		PrimitiveDenseStore matrix = null;
+		if (source instanceof OjalgoDenseDoubleMatrix2D) {
+			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+		} else {
+			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
+		evd.compute(matrix);
+		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
+		final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
+		return new Matrix[] { v, d };
 	}
 }

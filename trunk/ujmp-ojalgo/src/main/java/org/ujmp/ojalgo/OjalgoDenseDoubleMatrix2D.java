@@ -46,6 +46,7 @@ import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ojalgo.calculation.Chol;
 import org.ujmp.ojalgo.calculation.Eig;
 import org.ujmp.ojalgo.calculation.Inv;
+import org.ujmp.ojalgo.calculation.InvSPD;
 import org.ujmp.ojalgo.calculation.LU;
 import org.ujmp.ojalgo.calculation.QR;
 import org.ujmp.ojalgo.calculation.SVD;
@@ -156,6 +157,11 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	@Override
 	public Matrix inv() {
 		return Inv.INSTANCE.calc(this);
+	}
+
+	@Override
+	public Matrix invSPD() {
+		return InvSPD.INSTANCE.calc(this);
 	}
 
 	public double det() {

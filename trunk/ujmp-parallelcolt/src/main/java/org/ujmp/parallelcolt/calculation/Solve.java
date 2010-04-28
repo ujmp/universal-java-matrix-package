@@ -21,28 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.ojalgo.calculation;
+package org.ujmp.parallelcolt.calculation;
 
-import org.ojalgo.matrix.decomposition.LUDecomposition;
-import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
-import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
+import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 
-public class Inv
+public class Solve
 		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
+		org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
-	public static Inv INSTANCE = new Inv();
+	public static Solve INSTANCE = new Solve();
 
-	public Matrix calc(Matrix source) {
-		MatrixStore<Double> matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+	public Matrix calc(Matrix a, Matrix b) {
+		cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D a2 = null;
+		cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D b2 = null;
+		if (a instanceof ParallelColtDenseDoubleMatrix2D) {
+			a2 = ((ParallelColtDenseDoubleMatrix2D) a).getWrappedObject();
 		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
+			a2 = new ParallelColtDenseDoubleMatrix2D(a).getWrappedObject();
 		}
-		return new OjalgoDenseDoubleMatrix2D(LUDecomposition.makePrimitive()
-				.invert(matrix));
+		if (b instanceof ParallelColtDenseDoubleMatrix2D) {
+			b2 = ((ParallelColtDenseDoubleMatrix2D) b).getWrappedObject();
+		} else {
+			b2 = new ParallelColtDenseDoubleMatrix2D(b).getWrappedObject();
+		}
+		return new ParallelColtDenseDoubleMatrix2D(
+				ParallelColtDenseDoubleMatrix2D.ALG.solve(a2, b2));
 	}
 
 }

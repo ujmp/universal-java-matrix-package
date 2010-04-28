@@ -107,6 +107,7 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrix(3, 3);
+		m.setAsDouble(1.0, 2, 2);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
 		long[] c1 = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c1, new long[] { 0, 0 }));
@@ -331,6 +332,7 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSize() throws Exception {
 		Matrix m = createMatrix(21, 12);
+		m.setAsDouble(1.0, 20, 11);
 		assertEquals(getLabel(), 21, m.getRowCount());
 		assertEquals(getLabel(), 12, m.getColumnCount());
 
@@ -1151,6 +1153,9 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testToDoubleArrayLarge() throws Exception {
+		if (!isTestLarge()) {
+			return;
+		}
 		Matrix m = createMatrix(106, 117);
 		m.randn(Ret.ORIG);
 
@@ -2380,6 +2385,9 @@ public abstract class AbstractMatrixTest {
 		if (a.getClass().getName().startsWith("org.jdmp.ehcache.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.jdbc.")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2479,6 +2487,9 @@ public abstract class AbstractMatrixTest {
 		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
 			return;
 		}
+		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2499,6 +2510,9 @@ public abstract class AbstractMatrixTest {
 		Matrix a = createMatrix(168, 143);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
 			return;
 		}
 

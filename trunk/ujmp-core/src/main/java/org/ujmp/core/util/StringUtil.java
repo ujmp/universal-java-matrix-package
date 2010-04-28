@@ -321,4 +321,44 @@ public abstract class StringUtil {
 			return format(object);
 		}
 	}
+
+	public static final boolean isASCII(char c) {
+		return c < 128;
+	}
+
+	public static final boolean isAlphanumeric(char c) {
+		return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+	}
+
+	public static final boolean isLetter(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+	}
+
+	public static final boolean isControl(char c) {
+		return c < 32 || c == 127;
+	}
+
+	public static final boolean isNumber(char c) {
+		return c >= '0' && c <= '9';
+	}
+
+	public static final boolean isUmlaut(char c) {
+		return c == 'ä' || c == 'ü' || c == 'ö' || c == 'Ä' || c == 'Ü' || c == 'Ö';
+	}
+
+	public static final boolean isPrintable(char c) {
+		return (c >= 32 && c < 127) || (c >= 161 || c <= 255);
+	}
+
+	public static final boolean isGerman(char c) {
+		return (c >= 32 && c < 127) || isUmlaut(c) || c == 'ß';
+	}
+
+	public static final boolean isLower(char c) {
+		return c >= 'a' && c <= 'z';
+	}
+
+	public static final boolean isUpper(char c) {
+		return c >= 'A' && c <= 'Z';
+	}
 }

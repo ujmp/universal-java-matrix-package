@@ -26,7 +26,7 @@ package org.ujmp.core.graphmatrix;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;

@@ -26,8 +26,8 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 import java.math.BigDecimal;
 
 import org.ujmp.core.bigdecimalmatrix.SparseBigDecimalMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBigDecimalMatrix2D extends AbstractSparseBigDecimalMatrix
 		implements SparseBigDecimalMatrix2D {

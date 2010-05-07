@@ -1,6 +1,6 @@
 package org.ujmp.core.objectmatrix.impl;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public class EmptyMatrix extends AbstractDenseObjectMatrix2D {

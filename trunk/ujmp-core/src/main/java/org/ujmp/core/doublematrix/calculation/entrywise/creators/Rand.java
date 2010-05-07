@@ -55,10 +55,6 @@ public class Rand extends AbstractDoubleCalculation {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(Matrix source) throws MatrixException {
-		return calc(source, 0.0, 1.0);
-	}
-
 	public static Matrix calc(Matrix source, double min, double max) throws MatrixException {
 		Matrix ret = Matrix.factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {

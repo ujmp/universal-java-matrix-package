@@ -23,8 +23,8 @@
 
 package org.ujmp.core.shortmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.shortmatrix.SparseShortMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseShortMatrix2D extends AbstractSparseShortMatrix implements
 		SparseShortMatrix2D {

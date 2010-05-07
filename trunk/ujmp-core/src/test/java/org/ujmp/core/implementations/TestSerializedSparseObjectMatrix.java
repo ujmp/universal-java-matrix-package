@@ -21,27 +21,22 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.bigintegermatrix.stub;
+package org.ujmp.core.implementations;
 
-import org.ujmp.core.Coordinates;
-import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.impl.SerializedSparseObjectMatrix;
 
-public abstract class AbstractDenseBigIntegerMatrix extends AbstractBigIntegerMatrix implements
-		DenseBigIntegerMatrix {
-	private static final long serialVersionUID = 97884327461753962L;
+public class TestSerializedSparseObjectMatrix extends AbstractMatrixTest {
 
-	public final boolean contains(long... coordinates) {
-		return Coordinates.isSmallerThan(coordinates, getSize());
+	public Matrix createMatrix(long... size) throws Exception {
+		return new SerializedSparseObjectMatrix(size);
 	}
 
-	public final StorageType getStorageType() {
-		return StorageType.DENSE;
+	public Matrix createMatrix(Matrix source) throws Exception {
+		return new SerializedSparseObjectMatrix(source);
 	}
 
-	public DenseObjectMatrixFactory getFactory() {
-		return DenseObjectMatrix2D.factory;
+	public boolean isTestLarge() {
+		return false;
 	}
-
 }

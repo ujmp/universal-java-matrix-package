@@ -23,8 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Flipdim extends AbstractObjectCalculation {

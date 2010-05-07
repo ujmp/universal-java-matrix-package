@@ -27,125 +27,135 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 
 public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	private static final long serialVersionUID = -2575195318248762416L;
 
-	private static final int LABELCOLUMN = 0;
+	public static final int LABELCOLUMN = 0;
 
-	private static final int VERSION = 1;
+	public static final int VERSION = 1;
 
-	private static final int DATE = 2;
+	public static final int DATE = 2;
 
-	private static final int LICENCE = 3;
+	public static final int LICENCE = 3;
 
-	private static final int JAVA14 = 4;
+	public static final int JAVA14 = 4;
 
-	private static final int JAVA5 = 5;
+	public static final int JAVA5 = 5;
 
-	private static final int JAVA6 = 6;
+	public static final int JAVA6 = 6;
 
-	private static final int DENSESA = 7;
+	public static final int DENSESA = 7;
 
-	private static final int DENSEAA = 8;
+	public static final int DENSEAA = 8;
 
-	private static final int DENSEBLOCK = 9;
+	public static final int DENSEBLOCK = 9;
 
-	private static final int SPARSEDOK = 10;
+	public static final int SPARSEDOK = 10;
 
-	private static final int SPARSELIL = 11;
+	public static final int SPARSELIL = 11;
 
-	private static final int SPARSEYALE = 12;
+	public static final int SPARSEYALE = 12;
 
-	private static final int SPARSECRS = 13;
+	public static final int SPARSECRS = 13;
 
-	private static final int SPARSECDS = 14;
+	public static final int SPARSECDS = 14;
 
-	private static final int DOUBLE = 15;
+	public static final int DOUBLE = 15;
 
-	private static final int FLOAT = 16;
+	public static final int FLOAT = 16;
 
-	private static final int BIGDECIMAL = 17;
+	public static final int BIGDECIMAL = 17;
 
-	private static final int COMPLEX = 18;
+	public static final int COMPLEX = 18;
 
-	private static final int D2 = 19;
+	public static final int D2 = 19;
 
-	private static final int D3 = 20;
+	public static final int D3 = 20;
 
-	private static final int D3PLUS = 21;
+	public static final int D3PLUS = 21;
 
-	private static final int MULTITHREADED = 22;
+	public static final int MULTITHREADED = 22;
 
-	private static final int INPLACE = 23;
+	public static final int INPLACE = 23;
 
-	private static final int CACHEDRESULTS = 24;
+	public static final int CACHEDRESULTS = 24;
 
-	private static final int TRANSPOSE = 25;
+	public static final int TRANSPOSE = 25;
 
-	private static final int SCALE = 26;
+	public static final int SCALE = 26;
 
-	private static final int PLUSMINUS = 27;
+	public static final int PLUSMINUS = 27;
 
-	private static final int INV = 28;
+	public static final int INV = 28;
 
-	private static final int SOLVE = 29;
+	public static final int SOLVE = 29;
 
-	private static final int LU = 30;
+	public static final int LU = 30;
 
-	private static final int QR = 31;
+	public static final int QR = 31;
 
-	private static final int SVD = 32;
+	public static final int SVD = 32;
 
-	private static final int CHOL = 33;
+	public static final int CHOL = 33;
 
-	private static final int EIG = 34;
+	public static final int EIG = 34;
 
-	private static final int LABELROW = 0;
+	public static final int PACKAGE = 35;
 
-	private static final int ARRAY4J = 1;
+	public static final int LABELROW = 0;
 
-	private static final int COLT = 2;
+	public static final int ARRAY4J = 1;
 
-	private static final int COMMONSMATH = 3;
+	public static final int COLT = 2;
 
-	private static final int EJML = 4;
+	public static final int COMMONSMATH = 3;
 
-	private static final int JAMA = 5;
+	public static final int EJML = 4;
 
-	private static final int JAMPACK = 6;
+	public static final int JAMA = 5;
 
-	private static final int JBLAS = 7;
+	public static final int JAMPACK = 6;
 
-	private static final int JLINALG = 8;
+	public static final int JBLAS = 7;
 
-	private static final int JMATHARRAY = 9;
+	public static final int JLINALG = 8;
 
-	private static final int JMATRICES = 10;
+	public static final int JMATHARRAY = 9;
 
-	private static final int JSCI = 11;
+	public static final int JMATRICES = 10;
 
-	private static final int JSCIENCE = 12;
+	public static final int JSCI = 11;
 
-	private static final int MANTISSA = 13;
+	public static final int JSCIENCE = 12;
 
-	private static final int MTJ = 14;
+	public static final int MANTISSA = 13;
 
-	private static final int OJALGO = 15;
+	public static final int MTJ = 14;
 
-	private static final int ORBITAL = 16;
+	public static final int OJALGO = 15;
 
-	private static final int OWLPACK = 17;
+	public static final int ORBITAL = 16;
 
-	private static final int PARALLELCOLT = 18;
+	public static final int OWLPACK = 17;
 
-	private static final int SST = 19;
+	public static final int PARALLELCOLT = 18;
 
-	private static final int UJMP = 20;
+	public static final int SST = 19;
 
-	private static final int VECMATH = 21;
+	public static final int UJMP = 20;
+
+	public static final int VECMATH = 21;
+
+	public static final String NONSINGULARLETTER = "n";
+
+	public static final String NONSINGULARTEXT = "non-singular matrices only";
+
+	public static final String ERRORTEXT = "error in implementation";
 
 	private List<String> footnotes = new ArrayList<String>();
 
@@ -160,7 +170,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(35, 22);
+		super(36, 22);
 		this.format = format;
 
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
@@ -223,25 +233,26 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString("QR", QR, LABELCOLUMN);
 		setAsString("Cholesky", CHOL, LABELCOLUMN);
 		setAsString("Eigen", EIG, LABELCOLUMN);
+		setAsString("package", PACKAGE, LABELCOLUMN);
 
 		setAsString(org.ujmp.core.UJMP.UJMPVERSION, VERSION, UJMP);
 		setAsString(small("2010"), DATE, UJMP);
 		setAsString(small("LGPL"), LICENCE, UJMP);
-		setAsString(no(), JAVA14, UJMP);
+		setAsString(notSupported(), JAVA14, UJMP);
 		setAsString(yes(), JAVA5, UJMP);
 		setAsString(yes(), JAVA6, UJMP);
 		setAsString(both(), MULTITHREADED, UJMP);
 		setAsString(yes(), INPLACE, UJMP);
-		setAsString(no(), CACHEDRESULTS, UJMP);
+		setAsString(notSupported(), CACHEDRESULTS, UJMP);
 		setAsString(yes(), DENSEAA, UJMP);
 		setAsString(yes(), DENSESA, UJMP);
 		setAsString(yes(), DENSEBLOCK, UJMP);
 		setAsString(yes(), SPARSEDOK, UJMP);
-		setAsString(no(), SPARSEYALE, UJMP);
+		setAsString(notSupported(), SPARSEYALE, UJMP);
 		setAsString(yes(), SPARSELIL, UJMP);
-		setAsString(no(), SPARSECRS, UJMP);
-		setAsString(no(), SPARSECDS, UJMP);
-		setAsString(no(), COMPLEX, UJMP);
+		setAsString(notSupported(), SPARSECRS, UJMP);
+		setAsString(notSupported(), SPARSECDS, UJMP);
+		setAsString(notSupported(), COMPLEX, UJMP);
 		setAsString(yes(), DOUBLE, UJMP);
 		setAsString(yes(), FLOAT, UJMP);
 		setAsString(yes(), BIGDECIMAL, UJMP);
@@ -258,43 +269,52 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all(), LU, UJMP);
 		setAsString(squareTall(), QR, UJMP);
 		setAsString(all(), SVD, UJMP);
+		setAsString("org.ujmp.core", PACKAGE, UJMP);
 
 		setAsString(small("SVN"), VERSION, ARRAY4J);
 		setAsString(small("2008"), DATE, ARRAY4J);
 		setAsString(small("BSD"), LICENCE, ARRAY4J);
-		setAsString(no(), JAVA14, ARRAY4J);
-		setAsString(no(), JAVA5, ARRAY4J);
+		setAsString(notSupported(), JAVA14, ARRAY4J);
+		setAsString(notSupported(), JAVA5, ARRAY4J);
 		setAsString(yes(), JAVA6, ARRAY4J);
 		setAsString(unknown() + footnote("m", "using native machine code"), MULTITHREADED, ARRAY4J);
 		setAsString(yes(), INPLACE, ARRAY4J);
 		setAsString(yes(), DENSESA, ARRAY4J);
-		setAsString(no(), DENSEAA, ARRAY4J);
-		setAsString(no(), DENSEBLOCK, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSEDOK, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSEYALE, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSELIL, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSECRS, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), SPARSECDS, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), COMPLEX, ARRAY4J);
-		setAsString(no() + footnote("i", "interface only, no implementation"), DOUBLE, ARRAY4J);
+		setAsString(notSupported(), DENSEAA, ARRAY4J);
+		setAsString(notSupported(), DENSEBLOCK, ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), SPARSEDOK,
+				ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"),
+				SPARSEYALE, ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), SPARSELIL,
+				ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), SPARSECRS,
+				ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), SPARSECDS,
+				ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), COMPLEX,
+				ARRAY4J);
+		setAsString(notSupported() + footnote("i", "interface only, no implementation"), DOUBLE,
+				ARRAY4J);
 		setAsString(yes(), FLOAT, ARRAY4J);
-		setAsString(no(), BIGDECIMAL, ARRAY4J);
-		setAsString(no(), MULTITHREADED, ARRAY4J);
+		setAsString(notSupported(), BIGDECIMAL, ARRAY4J);
+		setAsString(notSupported(), MULTITHREADED, ARRAY4J);
 		setAsString(yes(), INPLACE, ARRAY4J);
-		setAsString(no(), CACHEDRESULTS, ARRAY4J);
+		setAsString(notSupported(), CACHEDRESULTS, ARRAY4J);
 		setAsString(yes(), PLUSMINUS, ARRAY4J);
 		setAsString(yes(), SCALE, ARRAY4J);
 		setAsString(yes(), TRANSPOSE, ARRAY4J);
 		setAsString(yes(), D2, ARRAY4J);
-		setAsString(no(), D3, ARRAY4J);
-		setAsString(no(), D3PLUS, ARRAY4J);
-		setAsString(no(), SOLVE, ARRAY4J);
-		setAsString(no(), INV, ARRAY4J);
-		setAsString(no(), SVD, ARRAY4J);
-		setAsString(no(), QR, ARRAY4J);
-		setAsString(no(), LU, ARRAY4J);
-		setAsString(no(), EIG, ARRAY4J);
-		setAsString(no(), CHOL, ARRAY4J);
+		setAsString(notSupported(), D3, ARRAY4J);
+		setAsString(notSupported(), D3PLUS, ARRAY4J);
+		setAsString(notSupported(), SOLVE, ARRAY4J);
+		setAsString(notSupported(), INV, ARRAY4J);
+		setAsString(notSupported(), SVD, ARRAY4J);
+		setAsString(notSupported(), QR, ARRAY4J);
+		setAsString(notSupported(), LU, ARRAY4J);
+		setAsString(notSupported(), EIG, ARRAY4J);
+		setAsString(notSupported(), CHOL, ARRAY4J);
+		setAsString(notSupported(), PACKAGE, ARRAY4J);
 
 		setAsString(small("1.2.0"), VERSION, COLT);
 		setAsString(small("2004"), DATE, COLT);
@@ -302,27 +322,27 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, COLT);
 		setAsString(yes(), JAVA5, COLT);
 		setAsString(yes(), JAVA6, COLT);
-		setAsString(no(), MULTITHREADED, COLT);
+		setAsString(notSupported(), MULTITHREADED, COLT);
 		setAsString(yes(), INPLACE, COLT);
-		setAsString(no(), CACHEDRESULTS, COLT);
+		setAsString(notSupported(), CACHEDRESULTS, COLT);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, COLT);
 		setAsString(yes(), SCALE, COLT);
 		setAsString(yes(), PLUSMINUS, COLT);
 		setAsString(yes(), DENSESA, COLT);
-		setAsString(no(), DENSEAA, COLT);
-		setAsString(no(), DENSEBLOCK, COLT);
+		setAsString(notSupported(), DENSEAA, COLT);
+		setAsString(notSupported(), DENSEBLOCK, COLT);
 		setAsString(yes(), SPARSEDOK, COLT);
-		setAsString(no(), SPARSEYALE, COLT);
-		setAsString(no(), SPARSELIL, COLT);
-		setAsString(no(), SPARSECRS, COLT);
-		setAsString(no(), SPARSECDS, COLT);
-		setAsString(no(), COMPLEX, COLT);
+		setAsString(notSupported(), SPARSEYALE, COLT);
+		setAsString(notSupported(), SPARSELIL, COLT);
+		setAsString(notSupported(), SPARSECRS, COLT);
+		setAsString(notSupported(), SPARSECDS, COLT);
+		setAsString(notSupported(), COMPLEX, COLT);
 		setAsString(yes(), DOUBLE, COLT);
-		setAsString(no(), FLOAT, COLT);
-		setAsString(no(), BIGDECIMAL, COLT);
+		setAsString(notSupported(), FLOAT, COLT);
+		setAsString(notSupported(), BIGDECIMAL, COLT);
 		setAsString(yes(), D2, COLT);
 		setAsString(yes(), D3, COLT);
-		setAsString(no(), D3PLUS, COLT);
+		setAsString(notSupported(), D3PLUS, COLT);
 		setAsString(yes(), INV, COLT);
 		setAsString(squareTall(), SOLVE, COLT);
 		setAsString(all(), SVD, COLT);
@@ -330,66 +350,68 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), QR, COLT);
 		setAsString(yes(), EIG, COLT);
 		setAsString(yes(), CHOL, COLT);
+		setAsString("org.ujmp.colt", PACKAGE, COLT);
 
 		setAsString(small("2.1"), VERSION, COMMONSMATH);
 		setAsString(small("2010"), DATE, COMMONSMATH);
 		setAsString(small("Apache"), LICENCE, COMMONSMATH);
-		setAsString(no(), JAVA14, COMMONSMATH);
+		setAsString(notSupported(), JAVA14, COMMONSMATH);
 		setAsString(yes(), JAVA5, COMMONSMATH);
 		setAsString(yes(), JAVA6, COMMONSMATH);
-		setAsString(no(), MULTITHREADED, COMMONSMATH);
+		setAsString(notSupported(), MULTITHREADED, COMMONSMATH);
 		setAsString(yes(), INPLACE, COMMONSMATH);
-		setAsString(no(), CACHEDRESULTS, COMMONSMATH);
+		setAsString(notSupported(), CACHEDRESULTS, COMMONSMATH);
 		setAsString(yes(), TRANSPOSE, COMMONSMATH);
 		setAsString(yes(), SCALE, COMMONSMATH);
 		setAsString(yes(), PLUSMINUS, COMMONSMATH);
 		setAsString(yes(), DENSEAA, COMMONSMATH);
-		setAsString(no(), DENSESA, COMMONSMATH);
+		setAsString(notSupported(), DENSESA, COMMONSMATH);
 		setAsString(yes(), DENSEBLOCK, COMMONSMATH);
 		setAsString(yes(), SPARSEDOK, COMMONSMATH);
-		setAsString(no(), SPARSEYALE, COMMONSMATH);
-		setAsString(no(), SPARSELIL, COMMONSMATH);
-		setAsString(no(), SPARSECRS, COMMONSMATH);
-		setAsString(no(), SPARSECDS, COMMONSMATH);
+		setAsString(notSupported(), SPARSEYALE, COMMONSMATH);
+		setAsString(notSupported(), SPARSELIL, COMMONSMATH);
+		setAsString(notSupported(), SPARSECRS, COMMONSMATH);
+		setAsString(notSupported(), SPARSECDS, COMMONSMATH);
 		setAsString(yes(), COMPLEX, COMMONSMATH);
 		setAsString(yes(), DOUBLE, COMMONSMATH);
-		setAsString(no(), FLOAT, COMMONSMATH);
+		setAsString(notSupported(), FLOAT, COMMONSMATH);
 		setAsString(yes(), BIGDECIMAL, COMMONSMATH);
 		setAsString(yes(), D2, COMMONSMATH);
-		setAsString(no(), D3, COMMONSMATH);
-		setAsString(no(), D3PLUS, COMMONSMATH);
+		setAsString(notSupported(), D3, COMMONSMATH);
+		setAsString(notSupported(), D3PLUS, COMMONSMATH);
 		setAsString(yes(), INV, COMMONSMATH);
 		setAsString(squareTall(), SOLVE, COMMONSMATH);
 		setAsString(all(), SVD, COMMONSMATH);
-		setAsString(square() + footnote("n", "non-singular matrices only"), LU, COMMONSMATH);
+		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, COMMONSMATH);
 		setAsString(all(), QR, COMMONSMATH);
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
 		setAsString(yes(), CHOL, COMMONSMATH);
+		setAsString("org.ujmp.commonsmath", PACKAGE, COMMONSMATH);
 
 		setAsString(small("0.11"), VERSION, EJML);
 		setAsString(small("2010"), DATE, EJML);
 		setAsString(small("LGPL"), LICENCE, EJML);
-		setAsString(no(), JAVA14, EJML);
-		setAsString(no(), JAVA5, EJML);
+		setAsString(notSupported(), JAVA14, EJML);
+		setAsString(notSupported(), JAVA5, EJML);
 		setAsString(yes(), JAVA6, EJML);
-		setAsString(no(), MULTITHREADED, EJML);
-		setAsString(no(), CACHEDRESULTS, EJML);
+		setAsString(notSupported(), MULTITHREADED, EJML);
+		setAsString(notSupported(), CACHEDRESULTS, EJML);
 		setAsString(yes(), INPLACE, EJML);
 		setAsString(yes(), DENSESA, EJML);
-		setAsString(no(), DENSEAA, EJML);
+		setAsString(notSupported(), DENSEAA, EJML);
 		setAsString(yes(), DENSEBLOCK, EJML);
-		setAsString(no(), SPARSEDOK, EJML);
-		setAsString(no(), SPARSEYALE, EJML);
-		setAsString(no(), SPARSELIL, EJML);
-		setAsString(no(), SPARSECRS, EJML);
-		setAsString(no(), SPARSECDS, EJML);
-		setAsString(no(), COMPLEX, EJML);
+		setAsString(notSupported(), SPARSEDOK, EJML);
+		setAsString(notSupported(), SPARSEYALE, EJML);
+		setAsString(notSupported(), SPARSELIL, EJML);
+		setAsString(notSupported(), SPARSECRS, EJML);
+		setAsString(notSupported(), SPARSECDS, EJML);
+		setAsString(notSupported(), COMPLEX, EJML);
 		setAsString(yes(), DOUBLE, EJML);
-		setAsString(no(), FLOAT, EJML);
-		setAsString(no(), BIGDECIMAL, EJML);
+		setAsString(notSupported(), FLOAT, EJML);
+		setAsString(notSupported(), BIGDECIMAL, EJML);
 		setAsString(yes(), D2, EJML);
-		setAsString(no(), D3, EJML);
-		setAsString(no(), D3PLUS, EJML);
+		setAsString(notSupported(), D3, EJML);
+		setAsString(notSupported(), D3PLUS, EJML);
 		setAsString(yes(), TRANSPOSE, EJML);
 		setAsString(yes(), SCALE, EJML);
 		setAsString(yes(), PLUSMINUS, EJML);
@@ -397,9 +419,10 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), SOLVE, EJML);
 		setAsString(all(), SVD, EJML);
 		setAsString(all(), LU, EJML);
-		setAsString(squareTall(), QR, EJML);
+		setAsString(square(), QR, EJML);
 		setAsString(yes(), EIG, EJML);
 		setAsString(yes(), CHOL, EJML);
+		setAsString("org.ujmp.ejml", PACKAGE, EJML);
 
 		setAsString(small("1.0.2"), VERSION, JAMA);
 		setAsString(small("2005"), DATE, JAMA);
@@ -407,24 +430,24 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JAMA);
 		setAsString(yes(), JAVA5, JAMA);
 		setAsString(yes(), JAVA6, JAMA);
-		setAsString(no(), MULTITHREADED, JAMA);
-		setAsString(no(), INPLACE, JAMA);
-		setAsString(no(), CACHEDRESULTS, JAMA);
+		setAsString(notSupported(), MULTITHREADED, JAMA);
+		setAsString(notSupported(), INPLACE, JAMA);
+		setAsString(notSupported(), CACHEDRESULTS, JAMA);
 		setAsString(yes(), DENSEAA, JAMA);
-		setAsString(no(), DENSESA, JAMA);
-		setAsString(no(), DENSEBLOCK, JAMA);
-		setAsString(no(), SPARSEDOK, JAMA);
-		setAsString(no(), SPARSEYALE, JAMA);
-		setAsString(no(), SPARSELIL, JAMA);
-		setAsString(no(), SPARSECRS, JAMA);
-		setAsString(no(), SPARSECDS, JAMA);
-		setAsString(no(), COMPLEX, JAMA);
+		setAsString(notSupported(), DENSESA, JAMA);
+		setAsString(notSupported(), DENSEBLOCK, JAMA);
+		setAsString(notSupported(), SPARSEDOK, JAMA);
+		setAsString(notSupported(), SPARSEYALE, JAMA);
+		setAsString(notSupported(), SPARSELIL, JAMA);
+		setAsString(notSupported(), SPARSECRS, JAMA);
+		setAsString(notSupported(), SPARSECDS, JAMA);
+		setAsString(notSupported(), COMPLEX, JAMA);
 		setAsString(yes(), DOUBLE, JAMA);
-		setAsString(no(), FLOAT, JAMA);
-		setAsString(no(), BIGDECIMAL, JAMA);
+		setAsString(notSupported(), FLOAT, JAMA);
+		setAsString(notSupported(), BIGDECIMAL, JAMA);
 		setAsString(yes(), D2, JAMA);
-		setAsString(no(), D3, JAMA);
-		setAsString(no(), D3PLUS, JAMA);
+		setAsString(notSupported(), D3, JAMA);
+		setAsString(notSupported(), D3PLUS, JAMA);
 		setAsString(yes(), TRANSPOSE, JAMA);
 		setAsString(yes(), SCALE, JAMA);
 		setAsString(yes(), PLUSMINUS, JAMA);
@@ -435,6 +458,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), QR, JAMA);
 		setAsString(yes(), EIG, JAMA);
 		setAsString(yes(), CHOL, JAMA);
+		setAsString("org.ujmp.jama", PACKAGE, JAMA);
 
 		setAsString(small("?"), VERSION, JAMPACK);
 		setAsString(small("1999"), DATE, JAMPACK);
@@ -442,23 +466,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JAMPACK);
 		setAsString(yes(), JAVA5, JAMPACK);
 		setAsString(yes(), JAVA6, JAMPACK);
-		setAsString(no(), MULTITHREADED, JAMPACK);
-		setAsString(no(), INPLACE, JAMPACK);
+		setAsString(notSupported(), MULTITHREADED, JAMPACK);
+		setAsString(notSupported(), INPLACE, JAMPACK);
 		setAsString(yes(), DENSEAA, JAMPACK);
-		setAsString(no(), DENSESA, JAMPACK);
-		setAsString(no(), DENSEBLOCK, JAMPACK);
-		setAsString(no(), SPARSEDOK, JAMPACK);
-		setAsString(no(), SPARSEYALE, JAMPACK);
-		setAsString(no(), SPARSELIL, JAMPACK);
-		setAsString(no(), SPARSECRS, JAMPACK);
-		setAsString(no(), SPARSECDS, JAMPACK);
+		setAsString(notSupported(), DENSESA, JAMPACK);
+		setAsString(notSupported(), DENSEBLOCK, JAMPACK);
+		setAsString(notSupported(), SPARSEDOK, JAMPACK);
+		setAsString(notSupported(), SPARSEYALE, JAMPACK);
+		setAsString(notSupported(), SPARSELIL, JAMPACK);
+		setAsString(notSupported(), SPARSECRS, JAMPACK);
+		setAsString(notSupported(), SPARSECDS, JAMPACK);
 		setAsString(yes(), COMPLEX, JAMPACK);
 		setAsString(yes(), DOUBLE, JAMPACK);
-		setAsString(no(), FLOAT, JAMPACK);
-		setAsString(no(), BIGDECIMAL, JAMPACK);
+		setAsString(notSupported(), FLOAT, JAMPACK);
+		setAsString(notSupported(), BIGDECIMAL, JAMPACK);
 		setAsString(yes(), D2, JAMPACK);
-		setAsString(no(), D3, JAMPACK);
-		setAsString(no(), D3PLUS, JAMPACK);
+		setAsString(notSupported(), D3, JAMPACK);
+		setAsString(notSupported(), D3PLUS, JAMPACK);
 		setAsString(yes(), CACHEDRESULTS, JAMPACK);
 		setAsString(yes(), TRANSPOSE, JAMPACK);
 		setAsString(yes(), PLUSMINUS, JAMPACK);
@@ -469,105 +493,109 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all(), LU, JAMPACK);
 		setAsString(all(), QR, JAMPACK);
 		setAsString(yes(), EIG, JAMPACK);
-		setAsString(yes() + footnote("e", "error in implementation"), CHOL, JAMPACK);
+		setAsString(yes() + footnote("e", ERRORTEXT), CHOL, JAMPACK);
+		setAsString("org.ujmp.jampack", PACKAGE, JAMPACK);
 
 		setAsString(small("1.0.2"), VERSION, JBLAS);
 		setAsString(small("2010"), DATE, JBLAS);
 		setAsString(small("BSD"), LICENCE, JBLAS);
-		setAsString(no(), JAVA14, JBLAS);
+		setAsString(notSupported(), JAVA14, JBLAS);
 		setAsString(yes(), JAVA5, JBLAS);
 		setAsString(yes(), JAVA6, JBLAS);
 		setAsString(yes() + footnote("m", "using native machine code"), MULTITHREADED, JBLAS);
 		setAsString(yes(), INPLACE, JBLAS);
-		setAsString(no(), CACHEDRESULTS, JBLAS);
+		setAsString(notSupported(), CACHEDRESULTS, JBLAS);
 		setAsString(yes(), DENSESA, JBLAS);
-		setAsString(no(), DENSEAA, JBLAS);
-		setAsString(no(), DENSEBLOCK, JBLAS);
-		setAsString(no(), SPARSEDOK, JBLAS);
-		setAsString(no(), SPARSEYALE, JBLAS);
-		setAsString(no(), SPARSELIL, JBLAS);
-		setAsString(no(), SPARSECRS, JBLAS);
-		setAsString(no(), SPARSECDS, JBLAS);
+		setAsString(notSupported(), DENSEAA, JBLAS);
+		setAsString(notSupported(), DENSEBLOCK, JBLAS);
+		setAsString(notSupported(), SPARSEDOK, JBLAS);
+		setAsString(notSupported(), SPARSEYALE, JBLAS);
+		setAsString(notSupported(), SPARSELIL, JBLAS);
+		setAsString(notSupported(), SPARSECRS, JBLAS);
+		setAsString(notSupported(), SPARSECDS, JBLAS);
 		setAsString(yes(), COMPLEX, JBLAS);
 		setAsString(yes(), DOUBLE, JBLAS);
 		setAsString(yes(), FLOAT, JBLAS);
-		setAsString(no(), BIGDECIMAL, JBLAS);
+		setAsString(notSupported(), BIGDECIMAL, JBLAS);
 		setAsString(yes(), D2, JBLAS);
-		setAsString(no(), D3, JBLAS);
-		setAsString(no(), D3PLUS, JBLAS);
+		setAsString(notSupported(), D3, JBLAS);
+		setAsString(notSupported(), D3PLUS, JBLAS);
 		setAsString(yes(), TRANSPOSE, JBLAS);
 		setAsString(yes(), SCALE, JBLAS);
 		setAsString(yes(), PLUSMINUS, JBLAS);
 		setAsString(yes(), INV, JBLAS);
 		setAsString(square(), SOLVE, JBLAS);
-		setAsString(no(), SVD, JBLAS);
+		setAsString(notSupported(), SVD, JBLAS);
 		setAsString(all(), LU, JBLAS);
-		setAsString(no(), QR, JBLAS);
+		setAsString(notSupported(), QR, JBLAS);
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, JBLAS);
 		setAsString(yes(), CHOL, JBLAS);
+		setAsString("org.ujmp.jblas", PACKAGE, JBLAS);
 
 		setAsString(small("0.6"), VERSION, JLINALG);
 		setAsString(small("2009"), DATE, JLINALG);
 		setAsString(small("GPL"), LICENCE, JLINALG);
-		setAsString(no(), JAVA14, JLINALG);
-		setAsString(no(), JAVA5, JLINALG);
+		setAsString(notSupported(), JAVA14, JLINALG);
+		setAsString(notSupported(), JAVA5, JLINALG);
 		setAsString(yes(), JAVA6, JLINALG);
-		setAsString(no(), MULTITHREADED, JLINALG);
-		setAsString(no(), CACHEDRESULTS, JLINALG);
+		setAsString(notSupported(), MULTITHREADED, JLINALG);
+		setAsString(notSupported(), CACHEDRESULTS, JLINALG);
 		setAsString(yes(), INPLACE, JLINALG);
 		setAsString(yes(), DENSEAA, JLINALG);
-		setAsString(no(), DENSESA, JLINALG);
-		setAsString(no(), DENSEBLOCK, JLINALG);
-		setAsString(no(), SPARSEDOK, JLINALG);
-		setAsString(no(), SPARSEYALE, JLINALG);
-		setAsString(no(), SPARSELIL, JLINALG);
-		setAsString(no(), SPARSECRS, JLINALG);
-		setAsString(no(), SPARSECDS, JLINALG);
+		setAsString(notSupported(), DENSESA, JLINALG);
+		setAsString(notSupported(), DENSEBLOCK, JLINALG);
+		setAsString(notSupported(), SPARSEDOK, JLINALG);
+		setAsString(notSupported(), SPARSEYALE, JLINALG);
+		setAsString(notSupported(), SPARSELIL, JLINALG);
+		setAsString(notSupported(), SPARSECRS, JLINALG);
+		setAsString(notSupported(), SPARSECDS, JLINALG);
 		setAsString(yes(), COMPLEX, JLINALG);
 		setAsString(yes(), DOUBLE, JLINALG);
-		setAsString(no(), FLOAT, JLINALG);
+		setAsString(notSupported(), FLOAT, JLINALG);
 		setAsString(yes(), BIGDECIMAL, JLINALG);
 		setAsString(yes(), TRANSPOSE, JLINALG);
 		setAsString(yes(), SCALE, JLINALG);
 		setAsString(yes(), PLUSMINUS, JLINALG);
 		setAsString(yes(), D2, JLINALG);
-		setAsString(no(), D3, JLINALG);
-		setAsString(no(), D3PLUS, JLINALG);
+		setAsString(notSupported(), D3, JLINALG);
+		setAsString(notSupported(), D3PLUS, JLINALG);
 		setAsString(yes(), INV, JLINALG);
-		setAsString(no() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"), SOLVE, JLINALG);
-		setAsString(no(), SVD, JLINALG);
-		setAsString(no(), LU, JLINALG);
-		setAsString(no(), QR, JLINALG);
-		setAsString(no(), EIG, JLINALG);
-		setAsString(no(), CHOL, JLINALG);
+		setAsString(notSupported() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"),
+				SOLVE, JLINALG);
+		setAsString(notSupported(), SVD, JLINALG);
+		setAsString(notSupported(), LU, JLINALG);
+		setAsString(notSupported(), QR, JLINALG);
+		setAsString(notSupported(), EIG, JLINALG);
+		setAsString(notSupported(), CHOL, JLINALG);
+		setAsString("org.ujmp.jlinalg", PACKAGE, JLINALG);
 
 		setAsString(small("?"), VERSION, JMATHARRAY);
 		setAsString(small("2009"), DATE, JMATHARRAY);
 		setAsString(small("BSD"), LICENCE, JMATHARRAY);
-		setAsString(no(), JAVA14, JMATHARRAY);
+		setAsString(notSupported(), JAVA14, JMATHARRAY);
 		setAsString(yes(), JAVA5, JMATHARRAY);
 		setAsString(yes(), JAVA6, JMATHARRAY);
-		setAsString(no(), MULTITHREADED, JMATHARRAY);
-		setAsString(no(), INPLACE, JMATHARRAY);
-		setAsString(no(), CACHEDRESULTS, JMATHARRAY);
+		setAsString(notSupported(), MULTITHREADED, JMATHARRAY);
+		setAsString(notSupported(), INPLACE, JMATHARRAY);
+		setAsString(notSupported(), CACHEDRESULTS, JMATHARRAY);
 		setAsString(yes(), TRANSPOSE, JMATHARRAY);
 		setAsString(yes(), SCALE, JMATHARRAY);
 		setAsString(yes(), PLUSMINUS, JMATHARRAY);
 		setAsString(yes(), DENSEAA, JMATHARRAY);
-		setAsString(no(), DENSESA, JMATHARRAY);
-		setAsString(no(), DENSEBLOCK, JMATHARRAY);
-		setAsString(no(), SPARSEDOK, JMATHARRAY);
-		setAsString(no(), SPARSEYALE, JMATHARRAY);
-		setAsString(no(), SPARSELIL, JMATHARRAY);
-		setAsString(no(), SPARSECRS, JMATHARRAY);
-		setAsString(no(), SPARSECDS, JMATHARRAY);
-		setAsString(no(), COMPLEX, JMATHARRAY);
+		setAsString(notSupported(), DENSESA, JMATHARRAY);
+		setAsString(notSupported(), DENSEBLOCK, JMATHARRAY);
+		setAsString(notSupported(), SPARSEDOK, JMATHARRAY);
+		setAsString(notSupported(), SPARSEYALE, JMATHARRAY);
+		setAsString(notSupported(), SPARSELIL, JMATHARRAY);
+		setAsString(notSupported(), SPARSECRS, JMATHARRAY);
+		setAsString(notSupported(), SPARSECDS, JMATHARRAY);
+		setAsString(notSupported(), COMPLEX, JMATHARRAY);
 		setAsString(yes(), DOUBLE, JMATHARRAY);
-		setAsString(no(), FLOAT, JMATHARRAY);
-		setAsString(no(), BIGDECIMAL, JMATHARRAY);
+		setAsString(notSupported(), FLOAT, JMATHARRAY);
+		setAsString(notSupported(), BIGDECIMAL, JMATHARRAY);
 		setAsString(yes(), D2, JMATHARRAY);
-		setAsString(no(), D3, JMATHARRAY);
-		setAsString(no(), D3PLUS, JMATHARRAY);
+		setAsString(notSupported(), D3, JMATHARRAY);
+		setAsString(notSupported(), D3PLUS, JMATHARRAY);
 		setAsString(yes(), INV, JMATHARRAY);
 		setAsString(squareTall(), SOLVE, JMATHARRAY);
 		setAsString(squareTall(), SVD, JMATHARRAY);
@@ -575,6 +603,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), QR, JMATHARRAY);
 		setAsString(yes(), EIG, JMATHARRAY);
 		setAsString(yes(), CHOL, JMATHARRAY);
+		setAsString("org.ujmp.jmatharray", PACKAGE, JMATHARRAY);
 
 		setAsString(small("0.6"), VERSION, JMATRICES);
 		setAsString(small("2004"), DATE, JMATRICES);
@@ -582,24 +611,24 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JMATRICES);
 		setAsString(yes(), JAVA5, JMATRICES);
 		setAsString(yes(), JAVA6, JMATRICES);
-		setAsString(no(), MULTITHREADED, JMATRICES);
-		setAsString(no(), INPLACE, JMATRICES);
-		setAsString(no(), CACHEDRESULTS, JMATRICES);
+		setAsString(notSupported(), MULTITHREADED, JMATRICES);
+		setAsString(notSupported(), INPLACE, JMATRICES);
+		setAsString(notSupported(), CACHEDRESULTS, JMATRICES);
 		setAsString(yes(), DENSEAA, JMATRICES);
-		setAsString(no(), DENSESA, JMATRICES);
-		setAsString(no(), DENSEBLOCK, JMATRICES);
-		setAsString(no(), SPARSEDOK, JMATRICES);
-		setAsString(no(), SPARSEYALE, JMATRICES);
-		setAsString(no(), SPARSELIL, JMATRICES);
-		setAsString(no(), SPARSECRS, JMATRICES);
-		setAsString(no(), SPARSECDS, JMATRICES);
+		setAsString(notSupported(), DENSESA, JMATRICES);
+		setAsString(notSupported(), DENSEBLOCK, JMATRICES);
+		setAsString(notSupported(), SPARSEDOK, JMATRICES);
+		setAsString(notSupported(), SPARSEYALE, JMATRICES);
+		setAsString(notSupported(), SPARSELIL, JMATRICES);
+		setAsString(notSupported(), SPARSECRS, JMATRICES);
+		setAsString(notSupported(), SPARSECDS, JMATRICES);
 		setAsString(yes(), COMPLEX, JMATRICES);
 		setAsString(yes(), DOUBLE, JMATRICES);
-		setAsString(no(), FLOAT, JMATRICES);
+		setAsString(notSupported(), FLOAT, JMATRICES);
 		setAsString(yes(), BIGDECIMAL, JMATRICES);
 		setAsString(yes(), D2, JMATRICES);
-		setAsString(no(), D3, JMATRICES);
-		setAsString(no(), D3PLUS, JMATRICES);
+		setAsString(notSupported(), D3, JMATRICES);
+		setAsString(notSupported(), D3PLUS, JMATRICES);
 		setAsString(yes(), TRANSPOSE, JMATRICES);
 		setAsString(yes(), PLUSMINUS, JMATRICES);
 		setAsString(yes(), SCALE, JMATRICES);
@@ -610,6 +639,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), QR, JMATRICES);
 		setAsString(yes(), EIG, JMATRICES);
 		setAsString(yes(), CHOL, JMATRICES);
+		setAsString("org.ujmp.jmatrices", PACKAGE, JMATRICES);
 
 		setAsString(small("1.1"), VERSION, JSCI);
 		setAsString(small("2009"), DATE, JSCI);
@@ -617,70 +647,73 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, JSCI);
 		setAsString(yes(), JAVA5, JSCI);
 		setAsString(yes(), JAVA6, JSCI);
-		setAsString(no(), MULTITHREADED, JSCI);
-		setAsString(no(), INPLACE, JSCI);
-		setAsString(no(), CACHEDRESULTS, JSCI);
+		setAsString(notSupported(), MULTITHREADED, JSCI);
+		setAsString(notSupported(), INPLACE, JSCI);
+		setAsString(notSupported(), CACHEDRESULTS, JSCI);
 		setAsString(yes(), DENSEAA, JSCI);
-		setAsString(no(), DENSESA, JSCI);
-		setAsString(no(), DENSEBLOCK, JSCI);
+		setAsString(notSupported(), DENSESA, JSCI);
+		setAsString(notSupported(), DENSEBLOCK, JSCI);
 		setAsString(yes(), SPARSEYALE, JSCI);
-		setAsString(no(), SPARSEDOK, JSCI);
-		setAsString(no(), SPARSELIL, JSCI);
-		setAsString(no(), SPARSECRS, JSCI);
-		setAsString(no(), SPARSECDS, JSCI);
+		setAsString(notSupported(), SPARSEDOK, JSCI);
+		setAsString(notSupported(), SPARSELIL, JSCI);
+		setAsString(notSupported(), SPARSECRS, JSCI);
+		setAsString(notSupported(), SPARSECDS, JSCI);
 		setAsString(yes(), COMPLEX, JSCI);
 		setAsString(yes(), DOUBLE, JSCI);
-		setAsString(no(), FLOAT, JSCI);
-		setAsString(no(), BIGDECIMAL, JSCI);
+		setAsString(notSupported(), FLOAT, JSCI);
+		setAsString(notSupported(), BIGDECIMAL, JSCI);
 		setAsString(yes(), D2, JSCI);
-		setAsString(no(), D3, JSCI);
-		setAsString(no(), D3PLUS, JSCI);
+		setAsString(notSupported(), D3, JSCI);
+		setAsString(notSupported(), D3PLUS, JSCI);
 		setAsString(yes(), TRANSPOSE, JSCI);
 		setAsString(yes(), PLUSMINUS, JSCI);
 		setAsString(yes(), SCALE, JSCI);
-		setAsString(no() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"), SOLVE, JSCI);
+		setAsString(notSupported() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"),
+				SOLVE, JSCI);
 		setAsString(yes(), INV, JSCI);
 		setAsString(square(), SVD, JSCI);
-		setAsString(square() + footnote("n", "non-singular matrices only"), LU, JSCI);
+		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, JSCI);
 		setAsString(square(), QR, JSCI);
 		setAsString(yes() + footnote("s", "symmetric matrices only")
 				+ footnote("a", "results not directly accessible"), EIG, JSCI);
 		setAsString(yes(), CHOL, JSCI);
+		setAsString("org.ujmp.jsci", PACKAGE, JSCI);
 
 		setAsString(small("4.3.1"), VERSION, JSCIENCE);
 		setAsString(small("2007"), DATE, JSCIENCE);
 		setAsString(small("BSD"), LICENCE, JSCIENCE);
-		setAsString(no(), JAVA14, JSCIENCE);
+		setAsString(notSupported(), JAVA14, JSCIENCE);
 		setAsString(yes(), JAVA5, JSCIENCE);
 		setAsString(yes(), JAVA6, JSCIENCE);
 		setAsString(yes(), MULTITHREADED, JSCIENCE);
-		setAsString(no(), INPLACE, JSCIENCE);
-		setAsString(no(), CACHEDRESULTS, JSCIENCE);
+		setAsString(notSupported(), INPLACE, JSCIENCE);
+		setAsString(notSupported(), CACHEDRESULTS, JSCIENCE);
 		setAsString(yes(), DENSEAA, JSCIENCE);
-		setAsString(no(), DENSEBLOCK, JSCIENCE);
-		setAsString(no(), DENSESA, JSCIENCE);
+		setAsString(notSupported(), DENSEBLOCK, JSCIENCE);
+		setAsString(notSupported(), DENSESA, JSCIENCE);
 		setAsString(yes(), SPARSELIL, JSCIENCE);
-		setAsString(no(), SPARSEYALE, JSCIENCE);
-		setAsString(no(), SPARSECDS, JSCIENCE);
-		setAsString(no(), SPARSECRS, JSCIENCE);
+		setAsString(notSupported(), SPARSEYALE, JSCIENCE);
+		setAsString(notSupported(), SPARSECDS, JSCIENCE);
+		setAsString(notSupported(), SPARSECRS, JSCIENCE);
 		setAsString(yes(), SPARSEDOK, JSCIENCE);
 		setAsString(yes(), COMPLEX, JSCIENCE);
 		setAsString(yes(), DOUBLE, JSCIENCE);
-		setAsString(no(), FLOAT, JSCIENCE);
-		setAsString(no(), BIGDECIMAL, JSCIENCE);
+		setAsString(notSupported(), FLOAT, JSCIENCE);
+		setAsString(notSupported(), BIGDECIMAL, JSCIENCE);
 		setAsString(yes(), D2, JSCIENCE);
-		setAsString(no(), D3, JSCIENCE);
-		setAsString(no(), D3PLUS, JSCIENCE);
+		setAsString(notSupported(), D3, JSCIENCE);
+		setAsString(notSupported(), D3PLUS, JSCIENCE);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, JSCIENCE);
 		setAsString(yes(), SCALE, JSCIENCE);
 		setAsString(yes(), PLUSMINUS, JSCIENCE);
 		setAsString(yes(), INV, JSCIENCE);
 		setAsString(square(), SOLVE, JSCIENCE);
-		setAsString(no(), SVD, JSCIENCE);
-		setAsString(square() + footnote("n", "non-singular matrices only"), LU, JSCIENCE);
-		setAsString(no(), QR, JSCIENCE);
-		setAsString(no(), EIG, JSCIENCE);
-		setAsString(no(), CHOL, JSCIENCE);
+		setAsString(notSupported(), SVD, JSCIENCE);
+		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, JSCIENCE);
+		setAsString(notSupported(), QR, JSCIENCE);
+		setAsString(notSupported(), EIG, JSCIENCE);
+		setAsString(notSupported(), CHOL, JSCIENCE);
+		setAsString("org.ujmp.jscience", PACKAGE, JSCIENCE);
 
 		setAsString(small("7.2"), VERSION, MANTISSA);
 		setAsString(small("2007"), DATE, MANTISSA);
@@ -688,97 +721,99 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, MANTISSA);
 		setAsString(yes(), JAVA5, MANTISSA);
 		setAsString(yes(), JAVA6, MANTISSA);
-		setAsString(no(), MULTITHREADED, MANTISSA);
-		setAsString(no(), CACHEDRESULTS, MANTISSA);
+		setAsString(notSupported(), MULTITHREADED, MANTISSA);
+		setAsString(notSupported(), CACHEDRESULTS, MANTISSA);
 		setAsString(yes(), INPLACE, MANTISSA);
 		setAsString(yes(), TRANSPOSE, MANTISSA);
 		setAsString(yes(), PLUSMINUS, MANTISSA);
 		setAsString(yes(), SCALE, MANTISSA);
 		setAsString(yes(), DENSESA, MANTISSA);
-		setAsString(no(), DENSEAA, MANTISSA);
-		setAsString(no(), DENSEBLOCK, MANTISSA);
-		setAsString(no(), SPARSEDOK, MANTISSA);
-		setAsString(no(), SPARSEYALE, MANTISSA);
-		setAsString(no(), SPARSELIL, MANTISSA);
-		setAsString(no(), SPARSECRS, MANTISSA);
-		setAsString(no(), SPARSECDS, MANTISSA);
-		setAsString(no(), COMPLEX, MANTISSA);
+		setAsString(notSupported(), DENSEAA, MANTISSA);
+		setAsString(notSupported(), DENSEBLOCK, MANTISSA);
+		setAsString(notSupported(), SPARSEDOK, MANTISSA);
+		setAsString(notSupported(), SPARSEYALE, MANTISSA);
+		setAsString(notSupported(), SPARSELIL, MANTISSA);
+		setAsString(notSupported(), SPARSECRS, MANTISSA);
+		setAsString(notSupported(), SPARSECDS, MANTISSA);
+		setAsString(notSupported(), COMPLEX, MANTISSA);
 		setAsString(yes(), DOUBLE, MANTISSA);
-		setAsString(no(), FLOAT, MANTISSA);
-		setAsString(no(), BIGDECIMAL, MANTISSA);
+		setAsString(notSupported(), FLOAT, MANTISSA);
+		setAsString(notSupported(), BIGDECIMAL, MANTISSA);
 		setAsString(yes(), D2, MANTISSA);
-		setAsString(no(), D3, MANTISSA);
-		setAsString(no(), D3PLUS, MANTISSA);
+		setAsString(notSupported(), D3, MANTISSA);
+		setAsString(notSupported(), D3PLUS, MANTISSA);
 		setAsString(yes(), INV, MANTISSA);
 		setAsString(square(), SOLVE, MANTISSA);
-		setAsString(no(), SVD, MANTISSA);
+		setAsString(notSupported(), SVD, MANTISSA);
 		setAsString(square() + footnote("a", "results not directly accessible"), LU, MANTISSA);
-		setAsString(no(), QR, MANTISSA);
-		setAsString(no(), EIG, MANTISSA);
-		setAsString(no(), CHOL, MANTISSA);
+		setAsString(notSupported(), QR, MANTISSA);
+		setAsString(notSupported(), EIG, MANTISSA);
+		setAsString(notSupported(), CHOL, MANTISSA);
+		setAsString("org.ujmp.mantissa", PACKAGE, MANTISSA);
 
 		setAsString(small("0.9.12"), VERSION, MTJ);
 		setAsString(small("2009"), DATE, MTJ);
 		setAsString(small("LGPL"), LICENCE, MTJ);
-		setAsString(no(), JAVA14, MTJ);
+		setAsString(notSupported(), JAVA14, MTJ);
 		setAsString(yes(), JAVA5, MTJ);
 		setAsString(yes(), JAVA6, MTJ);
 		setAsString(yes() + footnote("m", "using native machine code"), MULTITHREADED, MTJ);
 		setAsString(yes(), INPLACE, MTJ);
-		setAsString(no(), CACHEDRESULTS, MTJ);
+		setAsString(notSupported(), CACHEDRESULTS, MTJ);
 		setAsString(yes(), DENSESA, MTJ);
-		setAsString(no(), DENSEAA, MTJ);
-		setAsString(no(), DENSEBLOCK, MTJ);
+		setAsString(notSupported(), DENSEAA, MTJ);
+		setAsString(notSupported(), DENSEBLOCK, MTJ);
 		setAsString(yes(), SPARSECRS, MTJ);
 		setAsString(yes(), SPARSECDS, MTJ);
 		setAsString(yes(), SPARSELIL, MTJ);
-		setAsString(no(), SPARSEDOK, MTJ);
-		setAsString(no(), SPARSEYALE, MTJ);
-		setAsString(no(), COMPLEX, MTJ);
+		setAsString(notSupported(), SPARSEDOK, MTJ);
+		setAsString(notSupported(), SPARSEYALE, MTJ);
+		setAsString(notSupported(), COMPLEX, MTJ);
 		setAsString(yes(), DOUBLE, MTJ);
-		setAsString(no(), FLOAT, MTJ);
-		setAsString(no(), BIGDECIMAL, MTJ);
+		setAsString(notSupported(), FLOAT, MTJ);
+		setAsString(notSupported(), BIGDECIMAL, MTJ);
 		setAsString(yes(), D2, MTJ);
-		setAsString(no(), D3, MTJ);
-		setAsString(no(), D3PLUS, MTJ);
+		setAsString(notSupported(), D3, MTJ);
+		setAsString(notSupported(), D3PLUS, MTJ);
 		setAsString(yes(), TRANSPOSE, MTJ);
 		setAsString(yes(), SCALE, MTJ);
 		setAsString(yes(), PLUSMINUS, MTJ);
 		setAsString(yes(), INV, MTJ);
 		setAsString(squareTall(), SOLVE, MTJ);
 		setAsString(all(), SVD, MTJ);
-		setAsString(all() + footnote("e", "error in implementation"), LU, MTJ);
+		setAsString(all() + footnote("e", ERRORTEXT), LU, MTJ);
 		setAsString(squareTall(), QR, MTJ);
 		setAsString(yes() + footnote("s", "symmetric matrices only"), EIG, MTJ);
-		setAsString(yes() + footnote("e", "error in implementation"), CHOL, MTJ);
+		setAsString(yes() + footnote("e", ERRORTEXT), CHOL, MTJ);
+		setAsString("org.ujmp.mtj", PACKAGE, MTJ);
 
 		setAsString(small("29.0"), VERSION, OJALGO);
 		setAsString(small("2010"), DATE, OJALGO);
 		setAsString(small("MIT"), LICENCE, OJALGO);
-		setAsString(no(), JAVA14, OJALGO);
+		setAsString(notSupported(), JAVA14, OJALGO);
 		setAsString(yes(), JAVA5, OJALGO);
 		setAsString(yes(), JAVA6, OJALGO);
 		setAsString(both(), MULTITHREADED, OJALGO);
 		setAsString(yes(), INPLACE, OJALGO);
-		setAsString(no(), CACHEDRESULTS, OJALGO);
+		setAsString(notSupported(), CACHEDRESULTS, OJALGO);
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, OJALGO);
 		setAsString(yes(), SCALE, OJALGO);
 		setAsString(yes(), PLUSMINUS, OJALGO);
 		setAsString(yes(), DENSESA, OJALGO);
-		setAsString(no(), DENSEAA, OJALGO);
-		setAsString(no(), DENSEBLOCK, OJALGO);
-		setAsString(no(), SPARSECDS, OJALGO);
-		setAsString(no(), SPARSECRS, OJALGO);
-		setAsString(no(), SPARSEYALE, OJALGO);
-		setAsString(no(), SPARSELIL, OJALGO);
-		setAsString(no(), SPARSEDOK, OJALGO);
+		setAsString(notSupported(), DENSEAA, OJALGO);
+		setAsString(notSupported(), DENSEBLOCK, OJALGO);
+		setAsString(notSupported(), SPARSECDS, OJALGO);
+		setAsString(notSupported(), SPARSECRS, OJALGO);
+		setAsString(notSupported(), SPARSEYALE, OJALGO);
+		setAsString(notSupported(), SPARSELIL, OJALGO);
+		setAsString(notSupported(), SPARSEDOK, OJALGO);
 		setAsString(yes(), COMPLEX, OJALGO);
 		setAsString(yes(), DOUBLE, OJALGO);
 		setAsString(yes(), FLOAT, OJALGO);
 		setAsString(yes(), BIGDECIMAL, OJALGO);
 		setAsString(yes(), D2, OJALGO);
-		setAsString(no(), D3, OJALGO);
-		setAsString(no(), D3PLUS, OJALGO);
+		setAsString(notSupported(), D3, OJALGO);
+		setAsString(notSupported(), D3PLUS, OJALGO);
 		setAsString(yes(), INV, OJALGO);
 		setAsString(squareTall(), SOLVE, OJALGO);
 		setAsString(all(), SVD, OJALGO);
@@ -786,6 +821,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(all(), QR, OJALGO);
 		setAsString(yes(), EIG, OJALGO);
 		setAsString(yes(), CHOL, OJALGO);
+		setAsString("org.ujmp.ojalgo", PACKAGE, OJALGO);
 
 		setAsString(small("1.3.0"), VERSION, ORBITAL);
 		setAsString(small("2009"), DATE, ORBITAL);
@@ -793,21 +829,21 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, ORBITAL);
 		setAsString(yes(), JAVA5, ORBITAL);
 		setAsString(yes(), JAVA6, ORBITAL);
-		setAsString(no(), MULTITHREADED, ORBITAL);
-		setAsString(no(), INPLACE, ORBITAL);
-		setAsString(no(), CACHEDRESULTS, ORBITAL);
+		setAsString(notSupported(), MULTITHREADED, ORBITAL);
+		setAsString(notSupported(), INPLACE, ORBITAL);
+		setAsString(notSupported(), CACHEDRESULTS, ORBITAL);
 		setAsString(yes(), DENSESA, ORBITAL);
 		setAsString(yes(), DENSEAA, ORBITAL);
-		setAsString(no(), DENSEBLOCK, ORBITAL);
-		setAsString(no(), SPARSECDS, ORBITAL);
-		setAsString(no(), SPARSECRS, ORBITAL);
-		setAsString(no(), SPARSEDOK, ORBITAL);
-		setAsString(no(), SPARSELIL, ORBITAL);
-		setAsString(no(), SPARSEYALE, ORBITAL);
+		setAsString(notSupported(), DENSEBLOCK, ORBITAL);
+		setAsString(notSupported(), SPARSECDS, ORBITAL);
+		setAsString(notSupported(), SPARSECRS, ORBITAL);
+		setAsString(notSupported(), SPARSEDOK, ORBITAL);
+		setAsString(notSupported(), SPARSELIL, ORBITAL);
+		setAsString(notSupported(), SPARSEYALE, ORBITAL);
 		setAsString(yes(), COMPLEX, ORBITAL);
 		setAsString(yes(), DOUBLE, ORBITAL);
-		setAsString(no(), FLOAT, ORBITAL);
-		setAsString(no(), BIGDECIMAL, ORBITAL);
+		setAsString(notSupported(), FLOAT, ORBITAL);
+		setAsString(notSupported(), BIGDECIMAL, ORBITAL);
 		setAsString(yes(), TRANSPOSE, ORBITAL);
 		setAsString(yes(), PLUSMINUS, ORBITAL);
 		setAsString(yes(), SCALE, ORBITAL);
@@ -815,12 +851,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), D3, ORBITAL);
 		setAsString(yes(), D3PLUS, ORBITAL);
 		setAsString(yes(), INV, ORBITAL);
-		setAsString(no(), SVD, ORBITAL);
-		setAsString(no() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"), SOLVE, ORBITAL);
-		setAsString(square() + footnote("n", "non-singular matrices only"), LU, ORBITAL);
-		setAsString(no(), QR, ORBITAL);
-		setAsString(no(), EIG, ORBITAL);
-		setAsString(no(), CHOL, ORBITAL);
+		setAsString(notSupported(), SVD, ORBITAL);
+		setAsString(notSupported() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"),
+				SOLVE, ORBITAL);
+		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, ORBITAL);
+		setAsString(notSupported(), QR, ORBITAL);
+		setAsString(notSupported(), EIG, ORBITAL);
+		setAsString(notSupported(), CHOL, ORBITAL);
+		setAsString("org.ujmp.orbital", PACKAGE, ORBITAL);
 
 		setAsString(unknown(), VERSION, OWLPACK);
 		setAsString(small("1999"), DATE, OWLPACK);
@@ -828,34 +866,36 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), JAVA14, OWLPACK);
 		setAsString(yes(), JAVA5, OWLPACK);
 		setAsString(yes(), JAVA6, OWLPACK);
-		setAsString(no(), MULTITHREADED, OWLPACK);
+		setAsString(notSupported(), MULTITHREADED, OWLPACK);
 		setAsString(yes(), INPLACE, OWLPACK);
-		setAsString(no(), CACHEDRESULTS, OWLPACK);
+		setAsString(notSupported(), CACHEDRESULTS, OWLPACK);
 		setAsString(yes(), DENSEAA, OWLPACK);
-		setAsString(no(), DENSESA, OWLPACK);
-		setAsString(no(), DENSEBLOCK, OWLPACK);
-		setAsString(no(), SPARSECDS, OWLPACK);
-		setAsString(no(), SPARSECRS, OWLPACK);
-		setAsString(no(), SPARSEYALE, OWLPACK);
-		setAsString(no(), SPARSEDOK, OWLPACK);
-		setAsString(no(), SPARSELIL, OWLPACK);
+		setAsString(notSupported(), DENSESA, OWLPACK);
+		setAsString(notSupported(), DENSEBLOCK, OWLPACK);
+		setAsString(notSupported(), SPARSECDS, OWLPACK);
+		setAsString(notSupported(), SPARSECRS, OWLPACK);
+		setAsString(notSupported(), SPARSEYALE, OWLPACK);
+		setAsString(notSupported(), SPARSEDOK, OWLPACK);
+		setAsString(notSupported(), SPARSELIL, OWLPACK);
 		setAsString(yes(), COMPLEX, OWLPACK);
 		setAsString(yes(), DOUBLE, OWLPACK);
 		setAsString(yes(), FLOAT, OWLPACK);
-		setAsString(no(), BIGDECIMAL, OWLPACK);
+		setAsString(notSupported(), BIGDECIMAL, OWLPACK);
 		setAsString(yes(), TRANSPOSE, OWLPACK);
 		setAsString(yes(), PLUSMINUS, OWLPACK);
 		setAsString(yes(), SCALE, OWLPACK);
 		setAsString(yes(), D2, OWLPACK);
-		setAsString(no(), D3, OWLPACK);
-		setAsString(no(), D3PLUS, OWLPACK);
-		setAsString(no() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"), SOLVE, OWLPACK);
-		setAsString(yes() + footnote("e", "error in implementation"), INV, OWLPACK);
-		setAsString(circle() + footnote("e", "error in implementation"), SVD, OWLPACK);
-		setAsString(no(), LU, OWLPACK);
+		setAsString(notSupported(), D3, OWLPACK);
+		setAsString(notSupported(), D3PLUS, OWLPACK);
+		setAsString(notSupported() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"),
+				SOLVE, OWLPACK);
+		setAsString(yes() + footnote("e", ERRORTEXT), INV, OWLPACK);
+		setAsString(circle() + footnote("e", ERRORTEXT), SVD, OWLPACK);
+		setAsString(notSupported(), LU, OWLPACK);
 		setAsString(circle() + footnote("u", "unuseable without documentation"), QR, OWLPACK);
-		setAsString(no(), EIG, OWLPACK);
-		setAsString(no(), CHOL, OWLPACK);
+		setAsString(notSupported(), EIG, OWLPACK);
+		setAsString(notSupported(), CHOL, OWLPACK);
+		setAsString("org.ujmp.owlpack", PACKAGE, OWLPACK);
 
 		setAsString(small("0.9.4"), VERSION, PARALLELCOLT);
 		setAsString(small("2010"), DATE, PARALLELCOLT);
@@ -868,22 +908,22 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("f", "flags matrix as transposed"), TRANSPOSE, PARALLELCOLT);
 		setAsString(yes(), SCALE, PARALLELCOLT);
 		setAsString(yes(), PLUSMINUS, PARALLELCOLT);
-		setAsString(no(), CACHEDRESULTS, PARALLELCOLT);
+		setAsString(notSupported(), CACHEDRESULTS, PARALLELCOLT);
 		setAsString(yes(), DENSESA, PARALLELCOLT);
 		setAsString(yes(), DENSEAA, PARALLELCOLT);
-		setAsString(no(), DENSEBLOCK, PARALLELCOLT);
+		setAsString(notSupported(), DENSEBLOCK, PARALLELCOLT);
 		setAsString(yes(), SPARSECRS, PARALLELCOLT);
 		setAsString(yes(), SPARSELIL, PARALLELCOLT);
 		setAsString(yes(), SPARSEDOK, PARALLELCOLT);
-		setAsString(no(), SPARSEYALE, PARALLELCOLT);
-		setAsString(no(), SPARSECDS, PARALLELCOLT);
+		setAsString(notSupported(), SPARSEYALE, PARALLELCOLT);
+		setAsString(notSupported(), SPARSECDS, PARALLELCOLT);
 		setAsString(yes(), COMPLEX, PARALLELCOLT);
 		setAsString(yes(), DOUBLE, PARALLELCOLT);
 		setAsString(yes(), FLOAT, PARALLELCOLT);
-		setAsString(no(), BIGDECIMAL, PARALLELCOLT);
+		setAsString(notSupported(), BIGDECIMAL, PARALLELCOLT);
 		setAsString(yes(), D2, PARALLELCOLT);
 		setAsString(yes(), D3, PARALLELCOLT);
-		setAsString(no(), D3PLUS, PARALLELCOLT);
+		setAsString(notSupported(), D3PLUS, PARALLELCOLT);
 		setAsString(yes(), INV, PARALLELCOLT);
 		setAsString(squareTall(), SOLVE, PARALLELCOLT);
 		setAsString(all(), SVD, PARALLELCOLT);
@@ -891,79 +931,83 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(squareTall(), QR, PARALLELCOLT);
 		setAsString(yes(), EIG, PARALLELCOLT);
 		setAsString(yes(), CHOL, PARALLELCOLT);
+		setAsString("org.ujmp.parallelcolt", PACKAGE, PARALLELCOLT);
 
 		setAsString(small("1.10"), VERSION, SST);
 		setAsString(small("2009"), DATE, SST);
 		setAsString(small("LGPL"), LICENCE, SST);
-		setAsString(no(), JAVA14, SST);
+		setAsString(notSupported(), JAVA14, SST);
 		setAsString(yes() + footnote("j", "jar does not work with Java 5"), JAVA5, SST);
 		setAsString(yes(), JAVA6, SST);
-		setAsString(no(), MULTITHREADED, SST);
+		setAsString(notSupported(), MULTITHREADED, SST);
 		setAsString(yes(), INPLACE, SST);
 		setAsString(yes(), TRANSPOSE, SST);
 		setAsString(yes(), SCALE, SST);
 		setAsString(yes(), PLUSMINUS, SST);
-		setAsString(no(), CACHEDRESULTS, SST);
+		setAsString(notSupported(), CACHEDRESULTS, SST);
 		setAsString(yes(), DENSESA, SST);
-		setAsString(no(), DENSEAA, SST);
-		setAsString(no(), DENSEBLOCK, SST);
+		setAsString(notSupported(), DENSEAA, SST);
+		setAsString(notSupported(), DENSEBLOCK, SST);
 		setAsString(yes(), SPARSEDOK, SST);
-		setAsString(no(), SPARSELIL, SST);
-		setAsString(no(), SPARSEYALE, SST);
-		setAsString(no(), SPARSECDS, SST);
-		setAsString(no(), SPARSECRS, SST);
+		setAsString(notSupported(), SPARSELIL, SST);
+		setAsString(notSupported(), SPARSEYALE, SST);
+		setAsString(notSupported(), SPARSECDS, SST);
+		setAsString(notSupported(), SPARSECRS, SST);
 		setAsString(yes(), COMPLEX, SST);
 		setAsString(yes(), DOUBLE, SST);
-		setAsString(no(), FLOAT, SST);
-		setAsString(no(), BIGDECIMAL, SST);
+		setAsString(notSupported(), FLOAT, SST);
+		setAsString(notSupported(), BIGDECIMAL, SST);
 		setAsString(yes(), D2, SST);
 		setAsString(yes(), D3, SST);
 		setAsString(yes(), D3PLUS, SST);
 		setAsString(yes(), INV, SST);
-		setAsString(no(), SOLVE, SST);
+		setAsString(notSupported(), SOLVE, SST);
 		setAsString(all(), SVD, SST);
-		setAsString(no(), LU, SST);
-		setAsString(no(), QR, SST);
+		setAsString(notSupported(), LU, SST);
+		setAsString(notSupported(), QR, SST);
 		setAsString(yes(), EIG, SST);
-		setAsString(no(), CHOL, SST);
+		setAsString(notSupported(), CHOL, SST);
+		setAsString("org.ujmp.sst", PACKAGE, SST);
 
 		setAsString(small("1.5.1"), VERSION, VECMATH);
 		setAsString(small("2007"), DATE, VECMATH);
 		setAsString(small("other"), LICENCE, VECMATH);
-		setAsString(no(), JAVA14, VECMATH);
+		setAsString(notSupported(), JAVA14, VECMATH);
 		setAsString(yes(), JAVA5, VECMATH);
 		setAsString(yes(), JAVA6, VECMATH);
-		setAsString(no(), MULTITHREADED, VECMATH);
+		setAsString(notSupported(), MULTITHREADED, VECMATH);
 		setAsString(yes(), INPLACE, VECMATH);
 		setAsString(yes(), TRANSPOSE, VECMATH);
-		setAsString(no(), SCALE, VECMATH);
+		setAsString(notSupported(), SCALE, VECMATH);
 		setAsString(yes(), PLUSMINUS, VECMATH);
-		setAsString(no(), CACHEDRESULTS, VECMATH);
+		setAsString(notSupported(), CACHEDRESULTS, VECMATH);
 		setAsString(yes(), DENSEAA, VECMATH);
-		setAsString(no(), DENSESA, VECMATH);
-		setAsString(no(), DENSEBLOCK, VECMATH);
-		setAsString(no(), SPARSEDOK, VECMATH);
-		setAsString(no(), SPARSELIL, VECMATH);
-		setAsString(no(), SPARSECDS, VECMATH);
-		setAsString(no(), SPARSECRS, VECMATH);
-		setAsString(no(), SPARSEYALE, VECMATH);
-		setAsString(no(), COMPLEX, VECMATH);
+		setAsString(notSupported(), DENSESA, VECMATH);
+		setAsString(notSupported(), DENSEBLOCK, VECMATH);
+		setAsString(notSupported(), SPARSEDOK, VECMATH);
+		setAsString(notSupported(), SPARSELIL, VECMATH);
+		setAsString(notSupported(), SPARSECDS, VECMATH);
+		setAsString(notSupported(), SPARSECRS, VECMATH);
+		setAsString(notSupported(), SPARSEYALE, VECMATH);
+		setAsString(notSupported(), COMPLEX, VECMATH);
 		setAsString(yes(), DOUBLE, VECMATH);
-		setAsString(no(), FLOAT, VECMATH);
-		setAsString(no(), BIGDECIMAL, VECMATH);
+		setAsString(notSupported(), FLOAT, VECMATH);
+		setAsString(notSupported(), BIGDECIMAL, VECMATH);
 		setAsString(yes(), D2, VECMATH);
-		setAsString(no(), D3, VECMATH);
-		setAsString(no(), D3PLUS, VECMATH);
+		setAsString(notSupported(), D3, VECMATH);
+		setAsString(notSupported(), D3PLUS, VECMATH);
 		setAsString(yes(), INV, VECMATH);
-		setAsString(no(), SOLVE, VECMATH);
-		setAsString(circle() + footnote("e", "error in implementation"), SVD, VECMATH);
-		setAsString(square() + footnote("n", "non-singular matrices only"), LU, VECMATH);
-		setAsString(no(), QR, VECMATH);
-		setAsString(no(), EIG, VECMATH);
-		setAsString(no(), CHOL, VECMATH);
+		setAsString(notSupported(), SOLVE, VECMATH);
+		setAsString(circle() + footnote("e", ERRORTEXT), SVD, VECMATH);
+		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, VECMATH);
+		setAsString(notSupported(), QR, VECMATH);
+		setAsString(notSupported(), EIG, VECMATH);
+		setAsString(notSupported(), CHOL, VECMATH);
+		setAsString("org.ujmp.vecmath", PACKAGE, VECMATH);
+
 	}
 
-	private String yes() {
+	public String yes() {
 		switch (format) {
 		case LATEX:
 			return "\\bf{$+$}";
@@ -972,7 +1016,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String both() {
+	public String both() {
 		switch (format) {
 		case LATEX:
 			return "\\bf{$+/-$}";
@@ -981,7 +1025,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String all() {
+	public String all() {
 		switch (format) {
 		case LATEX:
 			return "\\scalebox{0.6}[1.0]{$\\square$}\\,$\\square$\\,\\scalebox{1.0}[0.6]{$\\square$}";
@@ -990,7 +1034,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String squareTall() {
+	public String squareTall() {
 		switch (format) {
 		case LATEX:
 			return "\\scalebox{0.6}[1.0]{$\\square$}\\,$\\square$";
@@ -999,7 +1043,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String square() {
+	public String square() {
 		switch (format) {
 		case LATEX:
 			return "$\\square$";
@@ -1008,7 +1052,25 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String circle() {
+	public String tall() {
+		switch (format) {
+		case LATEX:
+			return "$\\tall$";
+		default:
+			return "tall";
+		}
+	}
+
+	public String fat() {
+		switch (format) {
+		case LATEX:
+			return "$\\fat$";
+		default:
+			return "fat";
+		}
+	}
+
+	public String circle() {
 		switch (format) {
 		case LATEX:
 			return "$\\circ$";
@@ -1017,7 +1079,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String no() {
+	public String notSupported() {
 		switch (format) {
 		case LATEX:
 			return "\\bf{$-$}";
@@ -1026,14 +1088,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String unknown() {
+	public String unknown() {
 		switch (format) {
 		default:
 			return "?";
 		}
 	}
 
-	private String turn(String text) {
+	public String turn(String text) {
 		switch (format) {
 		case LATEX:
 			return "\\begin{turn}{90}" + text + "\\end{turn}";
@@ -1042,7 +1104,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String small(String text) {
+	public String small(String text) {
 		switch (format) {
 		case LATEX:
 			return "\\small " + text;
@@ -1051,7 +1113,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	private String footnote(String footnote, String text) {
+	public String footnote(String footnote, String text) {
 		switch (format) {
 		case LATEX:
 			String f = "\\footnotesize{$^\\mathrm{" + footnote + "}$ " + text + "}";
@@ -1074,7 +1136,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	public static void main(String[] args) throws Exception {
 		MatrixLibraries ml = new MatrixLibraries(MatrixLibrariesFormat.LATEX);
-		String s = ml.exportToString(FileFormat.TEX);
+		Matrix m = ml.deleteRows(Ret.NEW, ml.getRowCount() - 1);
+		String s = m.exportToString(FileFormat.TEX);
 		s = s.replaceAll("table", "sidewaystable");
 		s = s.replaceAll("\\\\centering", "");
 		s = s.replaceAll("\\\\toprule", "");
@@ -1112,5 +1175,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		s = s + "\\end{tabular}\n";
 		s = s + "\\end{sidewaystable}";
 		System.out.println(s);
+	}
+
+	public long getColumnForPackage(String label) {
+		for (long c = getColumnCount(); --c != -1;) {
+			String p = getAsString(PACKAGE, c);
+			if (label.equals(p)) {
+				return c;
+			}
+		}
+		return -1;
 	}
 }

@@ -27,9 +27,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeLS;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;

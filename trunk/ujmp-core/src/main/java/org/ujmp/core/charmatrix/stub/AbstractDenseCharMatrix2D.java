@@ -24,9 +24,9 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix implements
 		DenseCharMatrix2D {

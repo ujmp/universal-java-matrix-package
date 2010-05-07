@@ -23,8 +23,8 @@
 
 package org.ujmp.core.stringmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.stringmatrix.SparseStringMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseStringMatrix2D extends AbstractSparseStringMatrix implements
 		SparseStringMatrix2D {

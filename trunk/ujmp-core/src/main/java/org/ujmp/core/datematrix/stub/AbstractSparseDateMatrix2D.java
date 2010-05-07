@@ -25,10 +25,10 @@ package org.ujmp.core.datematrix.stub;
 
 import java.util.Date;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.datematrix.DateMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseDateMatrix2D extends AbstractSparseDateMatrix implements
 		DateMatrix2D {

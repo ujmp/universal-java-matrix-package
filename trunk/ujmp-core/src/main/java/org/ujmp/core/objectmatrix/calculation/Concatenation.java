@@ -25,8 +25,8 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import java.util.Collection;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 

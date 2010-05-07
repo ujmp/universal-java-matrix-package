@@ -24,10 +24,10 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.SparseBooleanMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBooleanMatrix implements
 		SparseBooleanMatrix2D {

@@ -23,10 +23,10 @@
 
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
 import org.ujmp.core.exceptions.MatrixException;

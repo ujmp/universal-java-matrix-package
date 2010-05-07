@@ -23,12 +23,12 @@
 
 package org.ujmp.core.bytematrix.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.impl.ByteCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 

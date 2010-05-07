@@ -24,12 +24,14 @@
 package org.ujmp.jdbc;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
@@ -66,9 +68,26 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	private final long[] size;
 
+	public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException,
+			IOException, SQLException {
+		this(size, "jdbc:hsqldb:"
+				+ File.createTempFile("hsqldbtemp", "").getAbsolutePath()
+				+ ";shutdown=true", "SA", "", "matrixTable", "valueColumn",
+				createColumnNames(size));
+	}
+
+	private static String[] createColumnNames(long... size) {
+		String[] cols = new String[size.length];
+		for (int c = size.length; --c != -1;) {
+			cols[c] = "column" + c;
+		}
+		return cols;
+	}
+
 	public JDBCSparseObjectMatrix(long[] size, String url, String username,
 			String password, String tableName, String columnForValue,
-			String... columnsForCoordinates) throws ClassNotFoundException {
+			String... columnsForCoordinates) throws ClassNotFoundException,
+			SQLException {
 		this.url = url;
 		this.size = size;
 		this.username = username;
@@ -103,9 +122,19 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		createTableIfNotExists();
 	}
 
-	private void createTableIfNotExists() {
-		// TODO Auto-generated method stub
+	private void createTableIfNotExists() throws SQLException {
+		// TODO: check if exists
+		// TODO: add primary key
+		Statement statement = getConnection().createStatement();
+		StringBuilder sb = new StringBuilder();
 
+		sb.append("CREATE TABLE ").append(tableName);
+		sb.append(" (valueColumn float");
+		for (String c : columnsForCoordinates) {
+			sb.append(", ").append(c).append(" int");
+		}
+		sb.append(")");
+		statement.execute(sb.toString());
 	}
 
 	private PreparedStatement getSelectAllStatement() throws SQLException {
@@ -315,8 +344,47 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 	}
 
 	public void erase() throws IOException {
-		// TODO
-		// delete database table
+		try {
+			Statement st = getConnection().createStatement();
+			st.execute("drop table " + tableName);
+		} catch (SQLException e) {
+			throw new IOException(e);
+		}
+
+		close();
+
+		// maybe it was just a temporary database?
+		if (url.contains("hsqldbtemp")) {
+			String[] s = url.split(":");
+			if (s.length > 2) {
+				String file = "";
+				for (int i = 2; i < s.length; i++) {
+					file += s[i];
+					if (i < s.length - 1) {
+						file += ":";
+					}
+				}
+				s = file.split(";");
+				file = s[0];
+
+				File file1 = new File(file);
+				if (file1.exists()) {
+					file1.delete();
+				}
+				File file2 = new File(file + ".log");
+				if (file2.exists()) {
+					file2.delete();
+				}
+				File file3 = new File(file + ".properties");
+				if (file3.exists()) {
+					file3.delete();
+				}
+				File file4 = new File(file + ".script");
+				if (file4.exists()) {
+					file4.delete();
+				}
+			}
+		}
 	}
 
 }

@@ -26,10 +26,10 @@ package org.ujmp.core.bigintegermatrix.stub;
 import java.math.BigInteger;
 
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix
 		implements DenseBigIntegerMatrix2D {

@@ -23,8 +23,8 @@
 
 package org.ujmp.core.annotation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 
 public abstract class AbstractAnnotation implements Annotation {
 	private static final long serialVersionUID = 2939231340832922069L;

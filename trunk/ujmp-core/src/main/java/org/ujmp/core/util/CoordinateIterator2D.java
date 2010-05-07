@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.coordinates;
+package org.ujmp.core.util;
 
 import java.util.Iterator;
 

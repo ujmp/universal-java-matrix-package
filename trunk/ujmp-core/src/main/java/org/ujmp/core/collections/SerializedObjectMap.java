@@ -31,7 +31,7 @@ import java.io.Serializable;
 
 import org.ujmp.core.util.SerializationUtil;
 
-public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
+public class SerializedObjectMap<K, V> extends AbstractDiskMap<K, V> {
 	private static final long serialVersionUID = -1969661697021465379L;
 
 	public SerializedObjectMap() throws IOException {
@@ -58,7 +58,7 @@ public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
 		super(path, useGZip);
 	}
 
-	public final void write(OutputStream os, V value) {
+	public final void writeValue(OutputStream os, V value) {
 		try {
 			SerializationUtil.serialize((Serializable) value, os);
 		} catch (Exception e) {
@@ -67,7 +67,7 @@ public class SerializedObjectMap<V> extends AbstractDiskMap<V> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public V read(InputStream is) {
+	public V readValue(InputStream is) {
 		try {
 			return (V) SerializationUtil.deserialize(is);
 		} catch (Exception e) {

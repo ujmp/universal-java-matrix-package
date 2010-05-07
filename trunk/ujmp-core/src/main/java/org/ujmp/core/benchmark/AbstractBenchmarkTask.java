@@ -26,9 +26,9 @@ package org.ujmp.core.benchmark;
 import java.io.File;
 import java.util.List;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;

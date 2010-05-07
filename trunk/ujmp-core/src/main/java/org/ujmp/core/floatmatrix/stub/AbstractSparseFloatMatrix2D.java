@@ -23,8 +23,8 @@
 
 package org.ujmp.core.floatmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.floatmatrix.SparseFloatMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMatrix implements
 		SparseFloatMatrix2D {

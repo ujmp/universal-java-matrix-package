@@ -25,12 +25,12 @@ package org.ujmp.core.bigintegermatrix.calculation;
 
 import java.math.BigInteger;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.bigintegermatrix.impl.BigIntegerCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 

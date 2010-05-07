@@ -23,8 +23,8 @@
 
 package org.ujmp.core.booleanmatrix.stub;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 

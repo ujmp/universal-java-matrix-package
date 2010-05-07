@@ -130,22 +130,22 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
 	@Override
 	@Test
-	public void testGinvSmall() throws Exception {
+	public void testGinvFixedSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testGinvSmall();
+		super.testGinvFixedSmall();
 	}
 
 	@Override
 	@Test
-	public void testInvSmall() throws Exception {
+	public void testInvFixedSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testInvSmall();
+		super.testInvFixedSmall();
 	}
 
 	@Override
@@ -160,12 +160,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
 	@Override
 	@Test
-	public void testMTimesSmall() throws Exception {
+	public void testMTimesFixedSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testMTimesSmall();
+		super.testMTimesFixedSmall();
 	}
 
 	@Override
@@ -250,12 +250,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
 	@Override
 	@Test
-	public void testPinvSmall() throws Exception {
+	public void testPinvFixedSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testPinvSmall();
+		super.testPinvFixedSmall();
 	}
 
 	@Override
@@ -270,12 +270,12 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
 	@Override
 	@Test
-	public void testQRSquareSmall() throws Exception {
+	public void testQRFixedSquareSmall() throws Exception {
 		// SST requires Java 1.6, it cannot be tested with 1.5
 		if ("1.5".equals(System.getProperty("java.specification.version"))) {
 			return;
 		}
-		super.testQRSquareSmall();
+		super.testQRFixedSquareSmall();
 	}
 
 	public boolean isTestLarge() {

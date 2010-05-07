@@ -27,14 +27,14 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixRAW {
 
 	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		return new DenseFileMatrix2D(file);
+		return new DenseFileMatrix(file);
 	}
 
 }

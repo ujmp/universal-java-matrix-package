@@ -23,10 +23,10 @@
 
 package org.ujmp.core.doublematrix.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DoubleCalculationMatrix;
 import org.ujmp.core.enums.ValueType;

@@ -31,10 +31,8 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -57,12 +55,11 @@ import org.apache.lucene.util.Version;
 import org.ujmp.core.collections.AbstractMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.util.Base64;
-import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.FileUtil;
 
-public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
-		Flushable, Closeable, Erasable, Serializable {
+public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
+		Closeable, Erasable {
 	private static final long serialVersionUID = 8998898900190996038L;
 
 	private static final String KEYSTRING = "KS";
@@ -81,11 +78,15 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 
 	private static final int MAXSIZE = 1000000;
 
+	private static final int AUTOFLUSHCOUNT = 100000;
+
 	private boolean readOnly = false;
 
 	private transient File path = null;
 
 	private transient Analyzer analyzer = null;
+
+	private int count = 0;
 
 	public LuceneMap() throws IOException {
 		this(null, false);
@@ -112,7 +113,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 			path = File.createTempFile("lucene", "");
 			path.delete();
 			path.mkdir();
-			path.deleteOnExit();
 		}
 		return path;
 	}
@@ -202,10 +202,10 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 	private static String getUniqueString(Object o) throws IOException {
 		if (o == null) {
 			return "";
+		} else if (o instanceof String) {
+			return (String) o;
 		} else {
-			byte[] data = SerializationUtil.serialize((Serializable) o);
-			String s = Base64.encodeBytes(data);
-			return s;
+			return StringUtil.encodeToHex((Serializable) o);
 		}
 	}
 
@@ -220,6 +220,11 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 					Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field(VALUEDATA, getBytes(value), Field.Store.YES));
 			getIndexWriter().updateDocument(term, doc);
+
+			// auto flush from time to time
+			if (++count % AUTOFLUSHCOUNT == 0) {
+				flush();
+			}
 			return null;
 		} catch (Exception e) {
 			throw new MatrixException("could not add document: " + key, e);
@@ -230,6 +235,10 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 		try {
 			Term term = new Term(KEYSTRING, getUniqueString(key));
 			getIndexWriter().deleteDocuments(term);
+			// auto flush from time to time
+			if (++count % AUTOFLUSHCOUNT == 0) {
+				flush();
+			}
 			return null;
 		} catch (Exception e) {
 			throw new MatrixException("could not delete document: " + key, e);
@@ -250,20 +259,37 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 	public synchronized int size() {
 		try {
 			flush();
-			int size = getIndexWriter().numDocs();
-			return size;
+			if (indexSearcher != null
+					&& indexSearcher.getIndexReader().isCurrent()) {
+				return indexSearcher.getIndexReader().numDocs();
+			} else {
+				int size = getIndexWriter().numDocs();
+				return size;
+			}
 		} catch (Exception e) {
 			throw new MatrixException("could not count documents", e);
 		}
 	}
 
 	public synchronized void flush() throws IOException {
-		getIndexWriter().expungeDeletes(true);
-		getIndexWriter().commit();
+		IndexWriter iw = getIndexWriter();
+		iw.expungeDeletes(true);
+		iw.commit();
+		iw.close(true);
+		indexWriter = null;
+
 	}
 
 	public synchronized void close() throws IOException {
-		getIndexWriter().close();
+		if (indexSearcher != null) {
+			indexSearcher.close();
+			indexSearcher = null;
+		}
+		if (indexWriter != null) {
+			indexWriter.close(true);
+			indexWriter = null;
+		}
+
 	}
 
 	private synchronized IndexWriter getIndexWriter() {
@@ -300,12 +326,21 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 				getIndexWriter();
 			}
 			if (indexWriter != null) {
-				flush();
+				if (indexSearcher != null) {
+					indexSearcher.close();
+					indexSearcher = null;
+				}
+				indexWriter.commit();
+				indexWriter.waitForMerges();
+				indexWriter.expungeDeletes(true);
+				indexWriter.close();
+				indexWriter = null;
 			}
-			if (indexSearcher != null
-					&& !indexSearcher.getIndexReader().isCurrent()) {
-				indexSearcher.close();
-				indexSearcher = null;
+			if (indexSearcher != null) {
+				if (!indexSearcher.getIndexReader().isCurrent()) {
+					indexSearcher.close();
+					indexSearcher = null;
+				}
 			}
 			if (indexSearcher == null) {
 				indexSearcher = new IndexSearcher(directory, true);
@@ -329,30 +364,30 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Map<K, V>,
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
-		s.defaultReadObject();
-		while (true) {
-			try {
-				K k = (K) s.readObject();
-				V v = (V) s.readObject();
-				put(k, v);
-			} catch (OptionalDataException e) {
-				return;
-			}
-		}
-	}
-
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
-		s.defaultWriteObject();
-		for (Object k : keySet()) {
-			Object v = get(k);
-			s.writeObject(k);
-			s.writeObject(v);
-		}
-	}
+	// @SuppressWarnings("unchecked")
+	// private void readObject(ObjectInputStream s) throws IOException,
+	// ClassNotFoundException {
+	// s.defaultReadObject();
+	// while (true) {
+	// try {
+	// K k = (K) s.readObject();
+	// V v = (V) s.readObject();
+	// put(k, v);
+	// } catch (OptionalDataException e) {
+	// return;
+	// }
+	// }
+	// }
+	//
+	// private void writeObject(ObjectOutputStream s) throws IOException,
+	// MatrixException {
+	// s.defaultWriteObject();
+	// for (Object k : keySet()) {
+	// Object v = get(k);
+	// s.writeObject(k);
+	// s.writeObject(v);
+	// }
+	// }
 
 	public synchronized void erase() throws IOException {
 		close();

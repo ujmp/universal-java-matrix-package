@@ -31,7 +31,7 @@ import java.io.OutputStream;
 import org.ujmp.core.util.io.IntelligentFileReader;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
-public class TextMap extends AbstractDiskMap<String> {
+public class TextMap extends AbstractDiskMap<String, String> {
 	private static final long serialVersionUID = -7635770465612652548L;
 
 	public TextMap() throws IOException {
@@ -58,11 +58,11 @@ public class TextMap extends AbstractDiskMap<String> {
 		super(path, useGZip);
 	}
 
-	public final void write(OutputStream os, String value) {
+	public final void writeValue(OutputStream os, String value) {
 		IntelligentFileWriter.write(os, value);
 	}
 
-	public String read(InputStream is) {
+	public String readValue(InputStream is) {
 		String s = IntelligentFileReader.load(is);
 		if (s != null && s.length() > 1) {
 			s = s.substring(0, s.length() - 1);

@@ -23,17 +23,14 @@
 
 package org.ujmp.lucene;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.collections.AbstractMapTest;
 
 public class TestLuceneMap extends AbstractMapTest {
 
-	// TODO
 	public Map<String, String> createMap() throws Exception {
-		return new HashMap<String, String>();
-		// return new LuceneMap<String, String>();
+		return new LuceneMap<String, String>();
 	}
 
 }

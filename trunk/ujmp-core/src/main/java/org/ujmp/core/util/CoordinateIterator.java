@@ -1,7 +1,8 @@
-package org.ujmp.core.coordinates;
+package org.ujmp.core.util;
 
 import java.util.Iterator;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class CoordinateIterator implements Iterable<long[]> {

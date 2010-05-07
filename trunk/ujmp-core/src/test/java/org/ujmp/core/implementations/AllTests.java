@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestDenseFileMatrix2D.class, TestArrayDenseDoubleMatrix2D.class,
+@Suite.SuiteClasses( { TestDenseFileMatrix.class, TestArrayDenseDoubleMatrix2D.class,
 		TestDefaultDenseDoubleMatrix2D.class, TestDefaultDenseObjectMatrix2D.class,
 		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnMatrix2D.class,
 		TestDefaultSparseRowMatrix2D.class, TestDefaultDenseStringMatrix2D.class,

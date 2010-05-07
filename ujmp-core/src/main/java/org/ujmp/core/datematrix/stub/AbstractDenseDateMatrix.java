@@ -23,7 +23,7 @@
 
 package org.ujmp.core.datematrix.stub;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 
 public abstract class AbstractDenseDateMatrix extends AbstractDateMatrix {
 	private static final long serialVersionUID = -5424852410834200088L;

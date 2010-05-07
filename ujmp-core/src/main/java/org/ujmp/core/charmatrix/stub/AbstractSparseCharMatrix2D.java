@@ -24,7 +24,7 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.SparseCharMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseCharMatrix2D extends AbstractSparseCharMatrix implements
 		SparseCharMatrix2D {

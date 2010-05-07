@@ -23,8 +23,8 @@
 
 package org.ujmp.core.benchmark;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;

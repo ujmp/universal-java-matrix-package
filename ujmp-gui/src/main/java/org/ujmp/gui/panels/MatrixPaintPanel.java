@@ -50,7 +50,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.interfaces.HasToolTip;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;

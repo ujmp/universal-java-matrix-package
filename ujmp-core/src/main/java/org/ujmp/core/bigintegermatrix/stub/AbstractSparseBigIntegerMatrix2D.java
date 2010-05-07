@@ -26,10 +26,10 @@ package org.ujmp.core.bigintegermatrix.stub;
 import java.math.BigInteger;
 
 import org.ujmp.core.bigintegermatrix.SparseBigIntegerMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBigIntegerMatrix2D extends AbstractSparseBigIntegerMatrix
 		implements SparseBigIntegerMatrix2D {

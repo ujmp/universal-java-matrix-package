@@ -25,13 +25,13 @@ package org.ujmp.core.objectmatrix.stub;
 
 import java.util.Map;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObjectMatrix2D

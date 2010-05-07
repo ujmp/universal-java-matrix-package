@@ -31,9 +31,9 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;
 

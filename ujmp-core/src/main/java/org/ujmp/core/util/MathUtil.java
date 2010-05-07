@@ -24,6 +24,8 @@
 package org.ujmp.core.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -83,16 +85,20 @@ public abstract class MathUtil {
 		return UJMPSettings.getDefaultMathContext();
 	}
 
-	public static String getMD5Sum(String text) throws NoSuchAlgorithmException {
+	public static String md5(String text) throws NoSuchAlgorithmException {
+		return md5(text.getBytes());
+	}
+
+	public static String md5(byte[] data) throws NoSuchAlgorithmException {
 		MessageDigest mdAlgorithm;
 		StringBuilder hexString = new StringBuilder();
 
 		mdAlgorithm = MessageDigest.getInstance("MD5");
-		mdAlgorithm.update(text.getBytes());
+		mdAlgorithm.update(data);
 		byte[] digest = mdAlgorithm.digest();
 
 		for (int i = 0; i < digest.length; i++) {
-			text = Integer.toHexString(0xFF & digest[i]);
+			String text = Integer.toHexString(0xFF & digest[i]);
 
 			if (text.length() < 2) {
 				text = "0" + text;
@@ -104,26 +110,12 @@ public abstract class MathUtil {
 		return hexString.toString();
 	}
 
-	public static String getMD5Sum(File file) throws NoSuchAlgorithmException {
-		MessageDigest mdAlgorithm;
-		StringBuilder hexString = new StringBuilder();
+	public static String md5(File file) throws NoSuchAlgorithmException {
+		return md5(IntelligentFileReader.readBytes(file));
+	}
 
-		mdAlgorithm = MessageDigest.getInstance("MD5");
-		mdAlgorithm.update(IntelligentFileReader.readBytes(file));
-		byte[] digest = mdAlgorithm.digest();
-
-		String text = null;
-		for (int i = 0; i < digest.length; i++) {
-			text = Integer.toHexString(0xFF & digest[i]);
-
-			if (text.length() < 2) {
-				text = "0" + text;
-			}
-
-			hexString.append(text);
-		}
-		hexString.trimToSize();
-		return hexString.toString();
+	public static String md5(Serializable o) throws NoSuchAlgorithmException, IOException {
+		return md5(SerializationUtil.serialize(o));
 	}
 
 	public static final Random getRandom() {
@@ -1062,9 +1054,9 @@ public abstract class MathUtil {
 		return -tmp + Math.log(ser * 2.5066282751072975 / x);
 	}
 
-	public static final int multiDindex(long[] size, long[] pos) {
-		int sum = 0;
-		int prod = 1;
+	public static final long multiDindex(long[] size, long[] pos) {
+		long sum = 0;
+		long prod = 1;
 		final int d = pos.length;
 		for (int k = 0; k < d; k++) {
 			prod = 1;

@@ -27,18 +27,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
@@ -46,9 +46,31 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.matrix.DenseMatrix;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public abstract class AbstractMatrixTest {
+
+	private static final MatrixLibraries LIBRARIES = new MatrixLibraries();
+
+	private static final String SQUARE = LIBRARIES.square();
+
+	private static final String TALL = LIBRARIES.tall();
+
+	private static final String FAT = LIBRARIES.fat();
+
+	public enum MatrixLayout {
+		SQUARE, FAT, TALL
+	};
+
+	public enum EntryGenerator {
+		RANDN, RAND, RANDSYMM, RANDNSYMM, SINGULAR, SPD
+	};
+
+	public enum Size {
+		SINGLEENTRY, LARGE, SMALL
+	};
 
 	public static final double TOLERANCE = 1e-3;
 
@@ -128,6 +150,7 @@ public abstract class AbstractMatrixTest {
 		long[] c9 = ci.next();
 		assertTrue(getLabel(), Coordinates.equals(c9, new long[] { 2, 2 }));
 		assertFalse(getLabel(), ci.hasNext());
+
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
@@ -206,6 +229,10 @@ public abstract class AbstractMatrixTest {
 		m.randn(Ret.ORIG);
 		Matrix m2 = createMatrix(m);
 		assertEquals(getLabel(), m, m2);
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
 	}
 
 	@Test
@@ -214,6 +241,10 @@ public abstract class AbstractMatrixTest {
 		m.randn(Ret.ORIG);
 		Matrix m2 = createMatrix(m);
 		assertEquals(getLabel(), m, m2);
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
 	}
 
 	@Test
@@ -222,6 +253,10 @@ public abstract class AbstractMatrixTest {
 		m.randn(Ret.ORIG);
 		Matrix m2 = createMatrix(m);
 		assertEquals(getLabel(), m, m2);
+
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
 	}
 
 	@Test
@@ -1149,6 +1184,10 @@ public abstract class AbstractMatrixTest {
 				assertEquals(getLabel(), m.getAsDouble(r, c), array[r][c], 0.0);
 			}
 		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	@Test
@@ -1166,6 +1205,10 @@ public abstract class AbstractMatrixTest {
 				assertEquals(getLabel(), m.getAsDouble(r, c), array[r][c], 0.0);
 			}
 		}
+
+		if (m instanceof Erasable) {
+			((Erasable) m).erase();
+		}
 	}
 
 	@Test
@@ -1175,6 +1218,7 @@ public abstract class AbstractMatrixTest {
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.minus(m2);
 		assertEquals(getLabel(), m1, m3);
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1194,6 +1238,7 @@ public abstract class AbstractMatrixTest {
 		Matrix m3 = m1.minus(m2);
 		Matrix m4 = m2.times(-1);
 		assertEquals(getLabel(), m4, m3);
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1215,6 +1260,7 @@ public abstract class AbstractMatrixTest {
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1233,6 +1279,7 @@ public abstract class AbstractMatrixTest {
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1250,6 +1297,7 @@ public abstract class AbstractMatrixTest {
 		Matrix m2 = createMatrix(5, 7);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1267,6 +1315,7 @@ public abstract class AbstractMatrixTest {
 		Matrix m2 = createMatrix(5, 7);
 		Matrix m3 = m1.divide(m2);
 		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1285,6 +1334,7 @@ public abstract class AbstractMatrixTest {
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.divide(m2);
 		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1303,6 +1353,7 @@ public abstract class AbstractMatrixTest {
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.divide(m2);
 		assertTrue(getLabel(), m3.isEmpty());
+
 		if (m1 instanceof Erasable) {
 			((Erasable) m1).erase();
 		}
@@ -1315,7 +1366,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMTimesSmall() throws Exception {
+	public void testMTimesFixedSmall() throws Exception {
 		Matrix m1 = createMatrix(2, 2);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
@@ -1370,7 +1421,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMTimesLarge() throws Exception {
+	public void testMTimesFixedLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1442,13 +1493,26 @@ public abstract class AbstractMatrixTest {
 		}
 
 		do {
-			m1.rand(Ret.ORIG);
+			m1.randn(Ret.ORIG);
 		} while (m1.isSingular());
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
 		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+		if (eye instanceof Erasable) {
+			((Erasable) eye).erase();
+		}
 	}
 
 	@Test
@@ -1471,6 +1535,19 @@ public abstract class AbstractMatrixTest {
 		Matrix m3 = m1.mtimes(m2);
 		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+		if (eye instanceof Erasable) {
+			((Erasable) eye).erase();
+		}
 	}
 
 	@Test
@@ -1491,13 +1568,26 @@ public abstract class AbstractMatrixTest {
 		}
 
 		do {
-			m1.rand(Ret.ORIG);
+			m1.randn(Ret.ORIG);
 		} while (m1.isSingular());
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
 		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+		if (eye instanceof Erasable) {
+			((Erasable) eye).erase();
+		}
 	}
 
 	@Test
@@ -1523,9 +1613,22 @@ public abstract class AbstractMatrixTest {
 		Matrix m3 = m1.mtimes(m2);
 		Matrix eye = DenseMatrix.factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
+
+		if (m1 instanceof Erasable) {
+			((Erasable) m1).erase();
+		}
+		if (m2 instanceof Erasable) {
+			((Erasable) m2).erase();
+		}
+		if (m3 instanceof Erasable) {
+			((Erasable) m3).erase();
+		}
+		if (eye instanceof Erasable) {
+			((Erasable) eye).erase();
+		}
 	}
 
-	public void testInvSmall() throws Exception {
+	public void testInvFixedSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -1564,7 +1667,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPinvSmall() throws Exception {
+	public void testPinvFixedSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -1606,7 +1709,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testGinvSmall() throws Exception {
+	public void testGinvFixedSmall() throws Exception {
 		Matrix m1 = createMatrix(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1662,6 +1765,10 @@ public abstract class AbstractMatrixTest {
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
 	}
 
 	@Test
@@ -1693,7 +1800,7 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			// doesn't habe own eig function
+			// doesn't provide eig function
 			return;
 		}
 
@@ -1703,6 +1810,16 @@ public abstract class AbstractMatrixTest {
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod1 instanceof Erasable) {
+			((Erasable) prod1).erase();
+		}
+		if (prod2 instanceof Erasable) {
+			((Erasable) prod2).erase();
+		}
 	}
 
 	@Test
@@ -1716,23 +1833,23 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		Random random = new Random();
-		int rows = (int) a.getRowCount();
-		int cols = (int) a.getColumnCount();
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols && c <= r; c++) {
-				double f = random.nextDouble() - 0.5;
-				a.setAsDouble(f - 0.5, r, c);
-				a.setAsDouble(f - 0.5, c, r);
-			}
-		}
+		setRandSymmetric(a);
 
 		Matrix[] eig = a.eig();
 		Matrix prod1 = a.mtimes(eig[0]);
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
-		// tolerance for EJML must be set to larger value
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod1 instanceof Erasable) {
+			((Erasable) prod1).erase();
+		}
+		if (prod2 instanceof Erasable) {
+			((Erasable) prod2).erase();
+		}
 	}
 
 	@Test
@@ -1749,23 +1866,23 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		Random random = new Random();
-		int rows = (int) a.getRowCount();
-		int cols = (int) a.getColumnCount();
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols && c <= r; c++) {
-				double f = random.nextDouble() - 0.5;
-				a.setAsDouble(f - 0.5, r, c);
-				a.setAsDouble(f - 0.5, c, r);
-			}
-		}
+		setRandSymmetric(a);
 
 		Matrix[] eig = a.eig();
 		Matrix prod1 = a.mtimes(eig[0]);
 		Matrix prod2 = eig[0].mtimes(eig[1]);
 
-		// tolerance for EJML must be set to larger value
 		assertEquals(getLabel(), 0.0, prod1.minus(prod2).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod1 instanceof Erasable) {
+			((Erasable) prod1).erase();
+		}
+		if (prod2 instanceof Erasable) {
+			((Erasable) prod2).erase();
+		}
 	}
 
 	@Test
@@ -1798,17 +1915,57 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
+	}
+
+	public static void setAscending(Matrix source) {
+		for (int r = 0, v = 1; r < source.getRowCount(); r++) {
+			for (int c = 0; c < source.getColumnCount(); c++) {
+				source.setAsDouble(v++, r, c);
+			}
+		}
+	}
+
+	public static void setRandSymmetric(Matrix a) {
+		Random random = new Random();
+		int rows = (int) a.getRowCount();
+		int cols = (int) a.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols && c <= r; c++) {
+				double f = random.nextDouble();
+				a.setAsDouble(f, r, c);
+				a.setAsDouble(f, c, r);
+			}
+		}
+	}
+
+	public static void setRandnSymmetric(Matrix a) {
+		Random random = new Random();
+		int rows = (int) a.getRowCount();
+		int cols = (int) a.getColumnCount();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols && c <= r; c++) {
+				double f = random.nextGaussian();
+				a.setAsDouble(f, r, c);
+				a.setAsDouble(f, c, r);
+			}
+		}
 	}
 
 	@Test
@@ -1844,16 +2001,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -1876,6 +2039,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -1901,6 +2077,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -1926,6 +2115,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -1951,6 +2153,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -1979,6 +2194,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -2007,6 +2235,19 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = a.mtimes(x2);
 
 		assertEquals(getLabel(), 0.0, prod.minus(b).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (x instanceof Erasable) {
+			((Erasable) x).erase();
+		}
+		if (x2 instanceof Erasable) {
+			((Erasable) x2).erase();
+		}
 	}
 
 	@Test
@@ -2026,12 +2267,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -2054,12 +2305,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(getLabel(), 0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -2092,16 +2353,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -2137,16 +2404,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -2194,16 +2467,22 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
@@ -2254,57 +2533,496 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
 		Matrix aperm = lu[2].mtimes(a);
 
 		assertEquals(0.0, prod.minus(aperm).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (aperm instanceof Erasable) {
+			((Erasable) aperm).erase();
+		}
 	}
 
 	@Test
-	public void testQRSquareSmall() throws Exception {
+	public void testQRFixedSquareSmall() throws Exception {
 		Matrix a = createMatrix(5, 5);
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
-	public void testQRSquareLarge() throws Exception {
+	public void testQRFixedSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrix(151, 151);
-		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
-			for (int c = 0; c < a.getColumnCount(); c++) {
-				a.setAsDouble(v++, r, c);
-			}
-		}
+		setAscending(a);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
-	public void testQRRandSmall() throws Exception {
+	public void testQRRandSquareSmall() throws Exception {
 		Matrix a = createMatrix(7, 7);
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+	}
+
+	@Test
+	public void testQR() throws Exception {
+		Matrix a = createMatrix(1, 1);
+
+		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
+		layouts.add(MatrixLayout.SQUARE);
+		layouts.add(MatrixLayout.FAT);
+		layouts.add(MatrixLayout.TALL);
+
+		List<Size> sizes = new LinkedList<Size>();
+		sizes.add(Size.SINGLEENTRY);
+		sizes.add(Size.SMALL);
+		if (isTestLarge()) {
+			sizes.add(Size.LARGE);
+		}
+
+		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
+		generators.add(EntryGenerator.SINGULAR);
+		generators.add(EntryGenerator.RAND);
+		generators.add(EntryGenerator.RANDN);
+		generators.add(EntryGenerator.RANDSYMM);
+		generators.add(EntryGenerator.RANDNSYMM);
+		generators.add(EntryGenerator.SPD);
+
+		// skip libraries which do not support QR
+		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
+			return;
+		}
+
+		for (MatrixLayout layout : layouts) {
+			for (Size size : sizes) {
+				for (EntryGenerator generator : generators) {
+					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
+					System.out.println(label);
+
+					// symmetric only for square matrices
+					if (!MatrixLayout.SQUARE.equals(layout)) {
+						if (EntryGenerator.RANDSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.SPD.equals(generator)) {
+							continue;
+						}
+					}
+
+					try {
+						a = createMatrix(layout, size, generator);
+						Matrix[] qr = a.qr();
+						Matrix prod = qr[0].mtimes(qr[1]);
+						Matrix diff = prod.minus(a);
+						assertEquals(label, 0.0, diff.getRMS(), TOLERANCE);
+
+						if (a instanceof Erasable) {
+							((Erasable) a).erase();
+						}
+						if (prod instanceof Erasable) {
+							((Erasable) prod).erase();
+						}
+						if (diff instanceof Erasable) {
+							((Erasable) diff).erase();
+						}
+					} catch (Exception e) {
+						// catch known errors
+						// i.e. when this feature is not supported
+						if (!isSupported(a, MatrixLibraries.QR, layout, generator)) {
+							continue;
+						}
+
+						throw e;
+					}
+				}
+			}
+		}
+	}
+
+	private static boolean isSupported(Matrix a, long feature, MatrixLayout layout,
+			EntryGenerator generator) {
+
+		// figure out what should be supported by this library
+		String[] p = a.getClass().getPackage().getName().split("\\.");
+		String packageName = p[0] + "." + p[1] + "." + p[2];
+		if (packageName.contains("jdmp")) {
+			packageName = "org.ujmp.core";
+		}
+		if (packageName.contains("jmatio")) {
+			packageName = "org.ujmp.core";
+		}
+		if (packageName.contains("lucene")) {
+			packageName = "org.ujmp.core";
+		}
+		if (packageName.contains("jdbc")) {
+			packageName = "org.ujmp.core";
+		}
+		long col = LIBRARIES.getColumnForPackage(packageName);
+		if (col < 0) {
+			System.out.println(col);
+		}
+		String supported = LIBRARIES.getAsString(feature, col);
+
+		if (MatrixLayout.FAT.equals(layout)) {
+			if (!supported.contains(FAT)) {
+				return false;
+			}
+		}
+		if (MatrixLayout.TALL.equals(layout)) {
+			if (!supported.contains(TALL)) {
+				return false;
+			}
+		}
+		if (MatrixLayout.SQUARE.equals(layout)) {
+			if (!supported.contains(SQUARE)) {
+				return false;
+			}
+			if (EntryGenerator.SINGULAR.equals(generator)
+					&& supported.contains(MatrixLibraries.NONSINGULARTEXT)) {
+				return false;
+			}
+		}
+
+		if (supported.contains(MatrixLibraries.ERRORTEXT)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Test
+	public void testLU() throws Exception {
+		Matrix a = createMatrix(1, 1);
+
+		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
+		layouts.add(MatrixLayout.SQUARE);
+		layouts.add(MatrixLayout.FAT);
+		layouts.add(MatrixLayout.TALL);
+
+		List<Size> sizes = new LinkedList<Size>();
+		sizes.add(Size.SINGLEENTRY);
+		sizes.add(Size.SMALL);
+		if (isTestLarge()) {
+			sizes.add(Size.LARGE);
+		}
+
+		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
+		generators.add(EntryGenerator.SINGULAR);
+		generators.add(EntryGenerator.RAND);
+		generators.add(EntryGenerator.RANDN);
+		generators.add(EntryGenerator.RANDSYMM);
+		generators.add(EntryGenerator.RANDNSYMM);
+		generators.add(EntryGenerator.SPD);
+
+		// skip libraries which do not support LU
+		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
+			return;
+		}
+
+		// vecmath has some error
+		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+
+		// mtj has some error
+		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
+			return;
+		}
+
+		// JBlas not supported for 64 bit on windows
+		if (System.getProperty("os.name").toLowerCase().contains("windows")
+				&& System.getProperty("java.vm.name").contains("64")
+				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
+			return;
+		}
+
+		// gives wrong result for singular matrices
+		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
+			generators.remove(EntryGenerator.SINGULAR);
+		}
+
+		// gives wrong result for singular matrices
+		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
+			generators.remove(EntryGenerator.SINGULAR);
+		}
+
+		// gives wrong result for singular matrices
+		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
+			generators.remove(EntryGenerator.SINGULAR);
+		}
+
+		for (MatrixLayout layout : layouts) {
+			for (Size size : sizes) {
+				for (EntryGenerator generator : generators) {
+					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
+					System.out.println(label);
+
+					// symmetric only for square matrices
+					if (!MatrixLayout.SQUARE.equals(layout)) {
+						if (EntryGenerator.RANDSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.SPD.equals(generator)) {
+							continue;
+						}
+					}
+
+					try {
+
+						a = createMatrix(layout, size, generator);
+						Matrix[] lu = a.lu();
+						Matrix prod = lu[0].mtimes(lu[1]);
+						Matrix aperm = lu[2].mtimes(a);
+						Matrix diff = prod.minus(aperm);
+						assertEquals(label, 0.0, diff.getRMS(), TOLERANCE);
+
+						if (a instanceof Erasable) {
+							((Erasable) a).erase();
+						}
+						if (prod instanceof Erasable) {
+							((Erasable) prod).erase();
+						}
+						if (aperm instanceof Erasable) {
+							((Erasable) aperm).erase();
+						}
+						if (diff instanceof Erasable) {
+							((Erasable) diff).erase();
+						}
+					} catch (Exception e) {
+						// catch known errors
+						// i.e. when this feature is not supported
+						if (!isSupported(a, MatrixLibraries.LU, layout, generator)) {
+							continue;
+						}
+
+						throw e;
+					}
+				}
+			}
+		}
+	}
+
+	@Test
+	public void testSVD() throws Exception {
+		Matrix a = createMatrix(1, 1);
+
+		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
+		layouts.add(MatrixLayout.SQUARE);
+		layouts.add(MatrixLayout.FAT);
+		layouts.add(MatrixLayout.TALL);
+
+		List<Size> sizes = new LinkedList<Size>();
+		sizes.add(Size.SINGLEENTRY);
+		sizes.add(Size.SMALL);
+		if (isTestLarge()) {
+			sizes.add(Size.LARGE);
+		}
+
+		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
+		generators.add(EntryGenerator.SINGULAR);
+		generators.add(EntryGenerator.RAND);
+		generators.add(EntryGenerator.RANDN);
+		generators.add(EntryGenerator.RANDSYMM);
+		generators.add(EntryGenerator.RANDNSYMM);
+		generators.add(EntryGenerator.SPD);
+
+		// owlpack has some error
+		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
+			return;
+		}
+
+		// vecmath has some error
+		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
+			return;
+		}
+
+		// problem with very small matrices
+		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
+			sizes.remove(Size.SINGLEENTRY);
+		}
+
+		for (MatrixLayout layout : layouts) {
+			for (Size size : sizes) {
+				for (EntryGenerator generator : generators) {
+					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
+					System.out.println(label);
+
+					// symmetric only for square matrices
+					if (!MatrixLayout.SQUARE.equals(layout)) {
+						if (EntryGenerator.RANDSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+							continue;
+						} else if (EntryGenerator.SPD.equals(generator)) {
+							continue;
+						}
+					}
+
+					try {
+
+						a = createMatrix(layout, size, generator);
+						Matrix[] svd = a.svd();
+						Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
+						Matrix diff = prod.minus(a);
+						assertEquals(label, 0.0, diff.getRMS(), TOLERANCE);
+
+						if (a instanceof Erasable) {
+							((Erasable) a).erase();
+						}
+						if (prod instanceof Erasable) {
+							((Erasable) prod).erase();
+						}
+						if (diff instanceof Erasable) {
+							((Erasable) diff).erase();
+						}
+					} catch (Exception e) {
+						// catch known errors
+						// i.e. when this feature is not supported
+						if (!isSupported(a, MatrixLibraries.SVD, layout, generator)) {
+							continue;
+						}
+
+						throw e;
+					}
+				}
+			}
+		}
+	}
+
+	private Matrix createMatrix(MatrixLayout layout, Size size, EntryGenerator generator)
+			throws Exception {
+		int rows = 0, cols = 0;
+
+		switch (layout) {
+		case SQUARE:
+			if (Size.SMALL.equals(size)) {
+				rows = MathUtil.nextInteger(2, 9);
+				cols = rows;
+			} else if (Size.LARGE.equals(size)) {
+				rows = MathUtil.nextInteger(102, 109);
+				cols = rows;
+			} else if (Size.SINGLEENTRY.equals(size)) {
+				rows = 1;
+				cols = 1;
+			}
+			break;
+		case FAT:
+			if (Size.SMALL.equals(size)) {
+				rows = MathUtil.nextInteger(2, 9);
+				cols = MathUtil.nextInteger(12, 19);
+			} else if (Size.LARGE.equals(size)) {
+				rows = MathUtil.nextInteger(102, 109);
+				cols = MathUtil.nextInteger(122, 139);
+			} else if (Size.SINGLEENTRY.equals(size)) {
+				rows = 1;
+				cols = 2;
+			}
+			break;
+		case TALL:
+			if (Size.SMALL.equals(size)) {
+				rows = MathUtil.nextInteger(12, 19);
+				cols = MathUtil.nextInteger(2, 9);
+			} else if (Size.LARGE.equals(size)) {
+				rows = MathUtil.nextInteger(122, 139);
+				cols = MathUtil.nextInteger(102, 109);
+			} else if (Size.SINGLEENTRY.equals(size)) {
+				rows = 2;
+				cols = 1;
+			}
+			break;
+		default:
+			throw new Exception("unknown layout: " + layout);
+		}
+
+		Matrix a = createMatrix(rows, cols);
+
+		switch (generator) {
+		case SINGULAR:
+			setAscending(a);
+			break;
+		case RAND:
+			a.rand(Ret.ORIG);
+			break;
+		case RANDN:
+			a.randn(Ret.ORIG);
+			break;
+		case RANDSYMM:
+			setRandSymmetric(a);
+			break;
+		case RANDNSYMM:
+			setRandnSymmetric(a);
+			break;
+		case SPD:
+			BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
+			break;
+		default:
+			throw new Exception("unknown entry generator: " + generator);
+		}
+		return a;
 	}
 
 	@Test
@@ -2313,11 +3031,18 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrix(123, 123);
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
@@ -2398,6 +3123,13 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
@@ -2478,6 +3210,13 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
@@ -2500,6 +3239,13 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
@@ -2525,10 +3271,17 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = qr[0].mtimes(qr[1]);
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
+
+		if (a instanceof Erasable) {
+			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
 	}
 
 	@Test
-	public void testCholSmall() throws Exception {
+	public void testCholPascalSmall() throws Exception {
 		Matrix pascal = MatrixFactory.pascal(5, 5);
 		Matrix a = createMatrix(pascal);
 
@@ -2558,6 +3311,12 @@ public abstract class AbstractMatrixTest {
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
+		}
+		if (prod instanceof Erasable) {
+			((Erasable) prod).erase();
+		}
+		if (diff instanceof Erasable) {
+			((Erasable) diff).erase();
 		}
 	}
 
@@ -2647,7 +3406,7 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Random random = new Random(System.nanoTime());
-		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(100, 100);
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(102, 102);
 		int rows = (int) temp.getRowCount();
 		int cols = (int) temp.getColumnCount();
 		for (int r = 0; r < rows; r++) {
@@ -2718,10 +3477,6 @@ public abstract class AbstractMatrixTest {
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
-
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
 		}
@@ -2750,10 +3505,6 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -2787,10 +3538,6 @@ public abstract class AbstractMatrixTest {
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
-
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
 		}
@@ -2808,17 +3555,13 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 
 		Matrix[] svd = a.svd();
 
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -2840,17 +3583,13 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 
-		a.rand(Ret.ORIG);
+		a.randn(Ret.ORIG);
 
 		Matrix[] svd = a.svd();
 
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -2888,10 +3627,6 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -2933,10 +3668,6 @@ public abstract class AbstractMatrixTest {
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
 
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
-
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
 		}
@@ -2973,10 +3704,6 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -3017,10 +3744,6 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 
 		assertEquals(0.0, prod.minus(a).getRMS(), TOLERANCE);
-
-		if (a instanceof Closeable) {
-			((Closeable) a).close();
-		}
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();

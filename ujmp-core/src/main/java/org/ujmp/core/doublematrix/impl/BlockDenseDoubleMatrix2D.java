@@ -26,11 +26,11 @@ import static org.ujmp.core.util.VerifyUtil.verify;
 
 import java.util.Arrays;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;

@@ -24,9 +24,9 @@
 package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix implements
 		DenseByteMatrix2D {

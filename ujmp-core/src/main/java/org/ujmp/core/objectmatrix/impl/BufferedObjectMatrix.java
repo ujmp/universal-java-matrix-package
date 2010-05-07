@@ -29,8 +29,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
@@ -138,8 +138,8 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 					while (outputBuffer != null && !outputBuffer.isEmpty()) {
 						Coordinates c = outputBuffer.iterator().next();
 						outputBuffer.remove(c);
-						double value = inputBuffer.getAsDouble(c.dimensions);
-						original.setAsDouble(value, c.dimensions);
+						double value = inputBuffer.getAsDouble(c.co);
+						original.setAsDouble(value, c.co);
 					}
 					Thread.sleep(100);
 				} catch (Exception e) {

@@ -25,8 +25,8 @@ package org.ujmp.core.objectmatrix.impl;
 
 import java.util.HashMap;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToTiledMatrix2DWrapper;
 

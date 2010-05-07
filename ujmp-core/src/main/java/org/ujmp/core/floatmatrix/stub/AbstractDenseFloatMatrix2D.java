@@ -23,8 +23,8 @@
 
 package org.ujmp.core.floatmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseFloatMatrix2D extends AbstractDenseFloatMatrix implements
 		DenseFloatMatrix2D {

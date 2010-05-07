@@ -37,7 +37,7 @@ import org.ujmp.core.util.MathUtil;
 public class FileUtil {
 
 	public static boolean deleteRecursive(File path) {
-		if (path.exists()) {
+		if (path != null && path.exists()) {
 			File[] files = path.listFiles();
 			for (File f : files) {
 				if (f.isDirectory()) {
@@ -47,7 +47,11 @@ public class FileUtil {
 				}
 			}
 		}
-		return (path.delete());
+		if (path != null) {
+			return path.delete();
+		} else {
+			return false;
+		}
 	}
 
 	// TODO: this can be made faster by reading into a byte buffer
@@ -79,7 +83,7 @@ public class FileUtil {
 	}
 
 	public static String md5Sum(File file) throws Exception {
-		return MathUtil.getMD5Sum(file);
+		return MathUtil.md5(file);
 	}
 
 	public static List<List<File>> findDuplicates(File path) throws Exception {
@@ -119,6 +123,21 @@ public class FileUtil {
 			}
 		}
 		return list;
+	}
+
+	public static int countFiles(File path) {
+		int count = 0;
+		File[] files = path.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					count += countFiles(f);
+				} else {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 }

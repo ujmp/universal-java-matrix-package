@@ -33,11 +33,11 @@ import org.ujmp.core.calculation.PlusScalar;
 import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix implements
 		DenseDoubleMatrix2D {

@@ -23,12 +23,12 @@
 
 package org.ujmp.core.charmatrix.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.impl.CharCalculationMatrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 

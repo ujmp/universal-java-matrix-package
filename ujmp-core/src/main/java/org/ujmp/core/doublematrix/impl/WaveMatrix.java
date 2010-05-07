@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import org.ujmp.core.util.UJMPFormat;
 
-public class WaveMatrix extends DenseFileMatrix2D {
+public class WaveMatrix extends DenseFileMatrix {
 	private static final long serialVersionUID = -4952985947339369630L;
 
 	public static final int HEADERLENGTH = 44;
@@ -44,10 +44,8 @@ public class WaveMatrix extends DenseFileMatrix2D {
 	}
 
 	public WaveMatrix(File file, boolean readOnly) throws IOException {
-		super(file, 1, 1, 44, SHORTLITTLEENDIAN, readOnly);
-		setRowCount((int) (getDataLength() / (getBitsPerSample() / 8) / getChannels()));
-		setColumnCount(getChannels());
-		// setRowCount(100000000);
+		super(file, 44, SHORTLITTLEENDIAN, readOnly, 1, 1);
+		setSize((int) (getDataLength() / (getBitsPerSample() / 8) / getChannels()), getChannels());
 		System.out.println(toString());
 	}
 

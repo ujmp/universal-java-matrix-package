@@ -23,9 +23,9 @@
 
 package org.ujmp.core.booleanmatrix.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class And extends AbstractBooleanCalculation {

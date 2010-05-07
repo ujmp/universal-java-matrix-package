@@ -38,8 +38,8 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;

@@ -25,11 +25,11 @@ package org.ujmp.core.objectmatrix.stub;
 
 import java.util.Map;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObjectMatrix implements

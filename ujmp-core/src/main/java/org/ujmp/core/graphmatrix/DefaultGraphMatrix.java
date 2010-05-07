@@ -30,11 +30,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.collections.ArrayIndexList;
-import org.ujmp.core.coordinates.CoordinateSetToLongWrapper;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
 public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	private static final long serialVersionUID = -6103776352324576412L;

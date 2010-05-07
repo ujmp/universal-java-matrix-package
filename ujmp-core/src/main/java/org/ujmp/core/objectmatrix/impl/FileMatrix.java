@@ -181,7 +181,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 				String md5 = (String) map.get(MD5);
 				if (md5 == null) {
 					try {
-						md5 = MathUtil.getMD5Sum(file);
+						md5 = MathUtil.md5(file);
 						map.put((String) key, md5);
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -24,8 +24,8 @@
 package org.ujmp.commonsmath;
 
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 

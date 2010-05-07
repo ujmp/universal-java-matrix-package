@@ -23,8 +23,8 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -69,11 +69,11 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	}
 
 	public final Object getObject(long... pos) {
-		return values[MathUtil.multiDindex(size, pos)];
+		return values[(int) MathUtil.multiDindex(size, pos)];
 	}
 
 	public final void setObject(Object value, long... pos) {
-		values[MathUtil.multiDindex(size, pos)] = value;
+		values[(int) MathUtil.multiDindex(size, pos)] = value;
 	}
 
 }

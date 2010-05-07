@@ -23,8 +23,8 @@
 
 package org.ujmp.core.intmatrix.impl;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;

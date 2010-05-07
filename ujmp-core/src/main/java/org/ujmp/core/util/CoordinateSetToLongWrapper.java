@@ -21,12 +21,13 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.coordinates;
+package org.ujmp.core.util;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coordinates>> {
@@ -86,7 +87,7 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 		}
 
 		public long[] next() {
-			return it.next().dimensions;
+			return it.next().co;
 		}
 
 		public void remove() {

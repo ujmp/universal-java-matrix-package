@@ -23,10 +23,10 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseObjectMatrix2D extends AbstractSparseObjectMatrix implements
 		SparseObjectMatrix2D {

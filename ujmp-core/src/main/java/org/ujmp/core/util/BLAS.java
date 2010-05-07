@@ -25,7 +25,7 @@ package org.ujmp.core.util;
 
 import java.lang.reflect.Method;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;

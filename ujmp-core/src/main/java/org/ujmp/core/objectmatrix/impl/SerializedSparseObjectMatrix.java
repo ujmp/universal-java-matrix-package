@@ -21,27 +21,33 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.bigintegermatrix.stub;
+package org.ujmp.core.objectmatrix.impl;
+
+import java.io.IOException;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.SerializedObjectMap;
+import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
-public abstract class AbstractDenseBigIntegerMatrix extends AbstractBigIntegerMatrix implements
-		DenseBigIntegerMatrix {
-	private static final long serialVersionUID = 97884327461753962L;
+public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements
+		Erasable {
+	private static final long serialVersionUID = 2239927901825378258L;
 
-	public final boolean contains(long... coordinates) {
-		return Coordinates.isSmallerThan(coordinates, getSize());
+	public SerializedSparseObjectMatrix(long... size) throws IOException {
+		super(new SerializedObjectMap<Coordinates, Object>(), size);
 	}
 
-	public final StorageType getStorageType() {
-		return StorageType.DENSE;
+	public SerializedSparseObjectMatrix(Matrix source) throws IOException {
+		this(source.getSize());
+		for (long[] c : source.availableCoordinates()) {
+			setAsObject(source.getAsObject(c), c);
+		}
 	}
 
-	public DenseObjectMatrixFactory getFactory() {
-		return DenseObjectMatrix2D.factory;
+	public void erase() throws IOException {
+		((Erasable) getMap()).erase();
 	}
 
 }

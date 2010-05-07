@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;

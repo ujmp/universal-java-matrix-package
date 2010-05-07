@@ -23,7 +23,7 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import org.ujmp.core.coordinates.Coordinates;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;

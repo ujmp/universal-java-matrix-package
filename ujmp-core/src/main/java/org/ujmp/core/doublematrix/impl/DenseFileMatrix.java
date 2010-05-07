@@ -23,6 +23,7 @@
 
 package org.ujmp.core.doublematrix.impl;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,17 +33,20 @@ import java.io.OptionalDataException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
-public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Erasable {
+public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasable, Closeable {
 	private static final long serialVersionUID = 1754729146021609978L;
 
 	private transient BufferedRandomAccessFile randomAccessFile = null;
+
+	private int bufferSize = 65536;
 
 	public static final int BYTE = 0;
 
@@ -74,9 +78,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 
 	private File file = null;
 
-	private long rowCount = 0;
-
-	private long columnCount = 0;
+	private long[] size;
 
 	private long offset = 0;
 
@@ -86,43 +88,55 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 
 	private static ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-	public DenseFileMatrix2D(File file, long rowCount, long columnCount) throws IOException {
-		this(file, rowCount, columnCount, 0, DOUBLE, false);
+	public DenseFileMatrix(File file, long... size) throws IOException {
+		this(file, 0, DOUBLE, false, size);
 	}
 
-	public DenseFileMatrix2D(File file) throws IOException {
-		this(file, file.length(), 1, 0, BYTE, true);
+	public DenseFileMatrix(File file) throws IOException {
+		this(file, 0, BYTE, true, file.length(), 1);
 	}
 
-	public DenseFileMatrix2D(File file, long rowCount, long columnCount, int dataType)
+	public DenseFileMatrix(File file, int dataType, long... size) throws IOException {
+		this(file, 0, dataType, false, size);
+	}
+
+	public DenseFileMatrix(File file, long offset, int dataType, boolean readOnly, long... size)
 			throws IOException {
-		this(file, rowCount, columnCount, 0, dataType, false);
+		this(65536, file, offset, dataType, readOnly, size);
 	}
 
-	public DenseFileMatrix2D(File file, long rowCount, long columnCount, long offset, int dataType,
-			boolean readOnly) throws IOException {
+	public DenseFileMatrix(int bufferSize, File file, long offset, int dataType,
+			boolean readOnly, long... size) throws IOException {
 		if (file == null) {
 			file = File.createTempFile("denseFileMatrix", ".dat");
 			file.deleteOnExit();
 		}
+		this.bufferSize = bufferSize;
 		this.file = file;
-		this.rowCount = rowCount;
-		this.columnCount = columnCount;
+		this.size = size;
 		this.offset = offset;
 		this.dataType = dataType;
 		this.bitsPerValue = getBitsPerValue(dataType);
 		this.readOnly = readOnly;
 	}
 
+	public int getBufferSize() {
+		return bufferSize;
+	}
+
+	public void setBufferSize(int bufferSize) {
+		this.bufferSize = bufferSize;
+	}
+
 	private void createFile() {
 		try {
 			if (readOnly) {
-				randomAccessFile = new BufferedRandomAccessFile(file, "r");
+				randomAccessFile = new BufferedRandomAccessFile(file, "r", bufferSize);
 			} else {
 				try {
-					randomAccessFile = new BufferedRandomAccessFile(file, "rw");
+					randomAccessFile = new BufferedRandomAccessFile(file, "rw", bufferSize);
 				} catch (FileNotFoundException e) {
-					randomAccessFile = new BufferedRandomAccessFile(file, "r");
+					randomAccessFile = new BufferedRandomAccessFile(file, "r", bufferSize);
 				}
 				long difference = getFileLength() + offset - randomAccessFile.length();
 				if (difference > 0) {
@@ -175,35 +189,19 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 		}
 	}
 
-	public DenseFileMatrix2D(long rowCount, long columnCount) throws IOException {
-		this(rowCount, columnCount, DOUBLE);
+	public DenseFileMatrix(long... size) throws IOException {
+		this(null, size);
 	}
 
-	public DenseFileMatrix2D(long... size) throws IOException {
-		this(size[ROW], size[COLUMN], DOUBLE);
-	}
-
-	public DenseFileMatrix2D(Matrix m) throws IOException {
+	public DenseFileMatrix(Matrix m) throws IOException {
 		this(m.getSize());
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
 		}
 	}
 
-	public DenseFileMatrix2D(long rowCount, long columnCount, int dataType) throws IOException {
-		this(null, rowCount, columnCount, dataType);
-	}
-
 	public BufferedRandomAccessFile getRandomAccessFile() {
 		return randomAccessFile;
-	}
-
-	public void setRowCount(int rowCount) {
-		this.rowCount = rowCount;
-	}
-
-	public void setColumnCount(int colCount) {
-		this.columnCount = colCount;
 	}
 
 	public File getFile() {
@@ -243,20 +241,19 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 		}
 	}
 
-	public double getBytesPerValue() {
-		return getBitsPerValue() / 8.0;
+	public long getBytesPerValue() {
+		return getBitsPerValue() / 8;
 	}
 
 	public int getBitsPerValue() {
 		return bitsPerValue;
 	}
 
-	private double getPos(long row, long column) {
+	private long getPos(long... pos) {
 		if (getBytesPerValue() < 1) {
-			return ((double) row * (double) columnCount * getBytesPerValue())
-					+ (column * getBytesPerValue()) + offset;
+			throw new RuntimeException("not supported");
 		}
-		return (row * columnCount * getBytesPerValue()) + (column * getBytesPerValue()) + offset;
+		return MathUtil.multiDindex(size, pos) * getBytesPerValue() + offset;
 	}
 
 	public long getFileLength() {
@@ -268,21 +265,15 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 		return dataType;
 	}
 
-	public synchronized double getDouble(int row, int column) {
-		return getDouble((long) row, (long) column);
-	}
-
-	public synchronized double getDouble(long row, long column) {
+	public synchronized double getDouble(long... c) {
 		if (randomAccessFile == null) {
 			createFile();
 		}
 		if (randomAccessFile != null) {
 			try {
-				double pos = getPos(row, column);
+				long seek = getPos(c);
 
-				if (pos < getFileLength() + offset) {
-
-					long seek = (long) Math.floor(pos);
+				if (seek < getFileLength() + offset) {
 
 					byte[] bytes = null;
 
@@ -332,17 +323,22 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 					case UNSIGNEDSHORT:
 						return randomAccessFile.readUnsignedShort();
 					case BOOLEAN:
-						return getBit(randomAccessFile.readByte(), pos - Math.floor(pos));
+						// return getBit(randomAccessFile.readByte(), pos -
+						// Math.floor(pos));
 					}
 
 				} else {
-					throw new MatrixException("no such coordinates: " + row + "," + column);
+					throw new MatrixException("no such coordinates: " + Coordinates.toString(c));
 				}
 			} catch (Exception e) {
 				throw new MatrixException("could not read value", e);
 			}
 		}
 		return 0.0;
+	}
+
+	public void setSize(long... size) {
+		this.size = size;
 	}
 
 	private static final double getBit(byte b, double offset) {
@@ -387,11 +383,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 		return b;
 	}
 
-	public synchronized void setDouble(double value, int row, int column) {
-		setDouble(value, (long) row, (long) column);
-	}
-
-	public synchronized void setDouble(double value, long row, long column) {
+	public synchronized void setDouble(double value, long... c) {
 		if (isReadOnly())
 			return;
 
@@ -405,9 +397,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 				createFile();
 			}
 
-			double pos = getPos(row, column);
-
-			long seek = (long) Math.floor(pos);
+			long seek = getPos(c);
 
 			ByteBuffer bb = null;
 
@@ -458,8 +448,8 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 				throw new IOException("not supported");
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not write value at coordinates " + row + "," + column,
-					e);
+			throw new MatrixException("could not write value at coordinates "
+					+ Coordinates.toString(c), e);
 		}
 	}
 
@@ -469,13 +459,13 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 			try {
 				randomAccessFile.close();
 				randomAccessFile = null;
-			} catch (Exception e) {
+			} catch (Throwable e) {
 			}
 		}
 	}
 
 	public long[] getSize() {
-		return new long[] { rowCount, columnCount };
+		return size;
 	}
 
 	public boolean isReadOnly() {
@@ -504,7 +494,7 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 			try {
 				Coordinates c = (Coordinates) s.readObject();
 				Double o = (Double) s.readObject();
-				setDouble(o, c.dimensions);
+				setDouble(o, c.co);
 			} catch (OptionalDataException e) {
 				return;
 			}
@@ -512,7 +502,15 @@ public class DenseFileMatrix2D extends AbstractDenseDoubleMatrix2D implements Er
 	}
 
 	public void erase() throws IOException {
+		close();
 		file.delete();
+	}
+
+	public void close() throws IOException {
+		if (randomAccessFile != null) {
+			randomAccessFile.close();
+		}
+
 	}
 
 }

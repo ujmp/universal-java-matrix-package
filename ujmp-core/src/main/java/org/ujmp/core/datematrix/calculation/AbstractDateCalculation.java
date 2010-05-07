@@ -25,10 +25,10 @@ package org.ujmp.core.datematrix.calculation;
 
 import java.util.Date;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.impl.DateCalculationMatrix;
 import org.ujmp.core.enums.ValueType;

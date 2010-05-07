@@ -23,12 +23,12 @@
 
 package org.ujmp.core.calculation;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.coordinates.CoordinateIterator;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.CoordinateIterator;
 
 public abstract class AbstractCalculation implements Calculation {
 

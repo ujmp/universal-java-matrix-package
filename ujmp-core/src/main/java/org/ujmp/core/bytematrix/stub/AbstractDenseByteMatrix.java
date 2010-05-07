@@ -23,8 +23,8 @@
 
 package org.ujmp.core.bytematrix.stub;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.bytematrix.DenseByteMatrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 

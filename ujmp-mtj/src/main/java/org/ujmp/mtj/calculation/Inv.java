@@ -26,8 +26,8 @@ package org.ujmp.mtj.calculation;
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrices;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;

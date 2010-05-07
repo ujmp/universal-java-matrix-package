@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
@@ -67,8 +68,6 @@ import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
-import org.ujmp.core.coordinates.CoordinateIterator;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.datematrix.calculation.ToDateMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
@@ -194,6 +193,7 @@ import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 import org.ujmp.core.stringmatrix.calculation.Stem;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
+import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -223,7 +223,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		try {
 			long mem = Runtime.getRuntime().maxMemory();
 			if (mem < 133234688) {
-				System.err.println("Available memory is very low: " + (mem / 1024 / 1024) + "M");
+				System.err.println("Available memory is very low: " + (mem / 1000000) + "M");
 				System.err
 						.println("Invoke Java with the parameter -Xmx512M to increase available memory");
 			}

@@ -23,6 +23,8 @@
 
 package org.ujmp.core.util;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,6 +39,9 @@ import org.ujmp.core.exceptions.MatrixException;
 public abstract class StringUtil {
 
 	private static final NumberFormat DefaultNF = NumberFormat.getNumberInstance(Locale.US);
+
+	public static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b',
+			'c', 'd', 'e', 'f' };
 
 	public static final String BRACKETS = "[\\[\\]\\(\\)\\{\\}]";
 
@@ -78,6 +83,90 @@ public abstract class StringUtil {
 		return o.toString();
 	}
 
+	public static final String encodeToHex(Serializable o) throws IOException {
+		return encodeToHex(SerializationUtil.serialize(o));
+	}
+
+	public static final String encodeToHex(byte[] data) {
+		final StringBuilder s = new StringBuilder(data.length * 2);
+		final int length = data.length;
+		for (int i = 0; i < length; i++) {
+			s.append(HEX[(data[i] + 128) / 16]).append(HEX[(data[i] + 128) % 16]);
+		}
+		return s.toString();
+	}
+
+	public static final int hexToInt(char c) {
+		switch (c) {
+		case '0':
+			return 0;
+		case '1':
+			return 1;
+		case '2':
+			return 2;
+		case '3':
+			return 3;
+		case '4':
+			return 4;
+		case '5':
+			return 5;
+		case '6':
+			return 6;
+		case '7':
+			return 7;
+		case '8':
+			return 8;
+		case '9':
+			return 9;
+		case 'A':
+			return 10;
+		case 'B':
+			return 11;
+		case 'C':
+			return 12;
+		case 'D':
+			return 13;
+		case 'E':
+			return 14;
+		case 'F':
+			return 15;
+		case 'a':
+			return 10;
+		case 'b':
+			return 11;
+		case 'c':
+			return 12;
+		case 'd':
+			return 13;
+		case 'e':
+			return 14;
+		case 'f':
+			return 15;
+		default:
+			throw new RuntimeException("this is not a hex string");
+		}
+	}
+
+	public static final byte[] decodeFromHex(String data) {
+		byte[] bytes = new byte[data.length() / 2];
+		for (int i = 0; i < data.length(); i += 2) {
+			char c1 = data.charAt(i);
+			char c2 = data.charAt(i + 1);
+			int i1 = hexToInt(c1);
+			int i2 = hexToInt(c2);
+			bytes[i / 2] = (byte) (i1 * 16 + i2 - 128);
+		}
+		return bytes;
+	}
+
+	public static final String reverse(String s) {
+		StringBuilder reverted = new StringBuilder(s.length());
+		for (int i = s.length(); --i != -1;) {
+			reverted.append(s.charAt(i));
+		}
+		return reverted.toString();
+	}
+
 	public static final String convert(Object o) {
 		if (o == null) {
 			return null;
@@ -89,7 +178,7 @@ public abstract class StringUtil {
 			return ((Matrix) o).stringValue();
 		}
 		if (o instanceof Number) {
-			return "" + (((Number) o).doubleValue());
+			return String.valueOf(((Number) o).doubleValue());
 		}
 		return o.toString();
 	}
@@ -328,6 +417,18 @@ public abstract class StringUtil {
 
 	public static final boolean isAlphanumeric(char c) {
 		return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+	}
+
+	public static final boolean isAlphanumeric(String s) {
+		if (s == null) {
+			return false;
+		}
+		for (int i = s.length(); --i != -1;) {
+			if (!isAlphanumeric(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static final boolean isLetter(char c) {

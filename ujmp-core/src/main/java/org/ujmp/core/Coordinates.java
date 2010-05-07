@@ -21,12 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.coordinates;
+package org.ujmp.core;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
-import org.ujmp.core.Matrix;
 
 public class Coordinates implements Serializable {
 	private static final long serialVersionUID = 8361257560328772093L;
@@ -45,26 +43,26 @@ public class Coordinates implements Serializable {
 
 	public static final long[] ZERO2D = new long[] { 0, 0 };
 
-	public final long[] dimensions;
+	public long[] co;
 
 	public Coordinates(long... dimensions) {
 		// cannot use Arrays.copyOf(): not supported in Java 5
-		this.dimensions = new long[dimensions.length];
-		System.arraycopy(dimensions, 0, this.dimensions, 0, dimensions.length);
+		this.co = new long[dimensions.length];
+		System.arraycopy(dimensions, 0, this.co, 0, dimensions.length);
 	}
 
 	public Coordinates(Coordinates c) {
 		// cannot use Arrays.copyOf(): not supported in Java 5
-		this.dimensions = new long[c.dimensions.length];
-		System.arraycopy(c.dimensions, 0, this.dimensions, 0, c.dimensions.length);
+		this.co = new long[c.co.length];
+		System.arraycopy(c.co, 0, this.co, 0, c.co.length);
 	}
 
 	public final int hashCode() {
-		return Arrays.hashCode(dimensions);
+		return Arrays.hashCode(co);
 	}
 
 	public boolean equals(Coordinates c) {
-		return Arrays.equals(dimensions, c.dimensions);
+		return Arrays.equals(co, c.co);
 	}
 
 	public static long product(long[] c) {
@@ -78,9 +76,9 @@ public class Coordinates implements Serializable {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("[");
-		for (int i = 0; i < dimensions.length; i++) {
-			s.append(dimensions[i]);
-			if (i < dimensions.length - 1) {
+		for (int i = 0; i < co.length; i++) {
+			s.append(co[i]);
+			if (i < co.length - 1) {
 				s.append(", ");
 			}
 		}
@@ -100,11 +98,11 @@ public class Coordinates implements Serializable {
 	}
 
 	public void fillWithValue(long value) {
-		Arrays.fill(dimensions, value);
+		Arrays.fill(co, value);
 	}
 
 	public void clear() {
-		Arrays.fill(dimensions, 0);
+		Arrays.fill(co, 0);
 	}
 
 	public static String toString(long... coordinates) {
@@ -189,7 +187,7 @@ public class Coordinates implements Serializable {
 	}
 
 	public int getDimensionCount() {
-		return dimensions.length;
+		return co.length;
 	}
 
 	public static final boolean equals(long[] c1, long[] c2) {

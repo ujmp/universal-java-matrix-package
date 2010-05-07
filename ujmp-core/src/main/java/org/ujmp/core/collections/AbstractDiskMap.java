@@ -31,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
@@ -38,16 +39,18 @@ import java.util.zip.GZIPOutputStream;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.util.SerializationUtil;
+import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.FileUtil;
 
-public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implements Erasable {
+public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
 	private static final long serialVersionUID = -8615077389159395747L;
 
 	private File path = null;
 
 	private boolean useGZip = true;
 
-	private int maxDepth = 20;
+	private int maxDepth = 5;
 
 	public AbstractDiskMap(File path, boolean useGZip) throws IOException {
 		this.useGZip = useGZip;
@@ -70,90 +73,98 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 	}
 
 	public synchronized final int size() {
-		return countFiles(getPath());
+		return FileUtil.countFiles(getPath());
 	}
 
-	private static int countFiles(File path) {
-		int count = 0;
-		File[] files = path.listFiles();
-		if (files != null) {
-			for (File f : files) {
-				if (f.isDirectory()) {
-					count += countFiles(f);
-				} else {
-					count++;
-				}
-			}
+	private final File getFileNameForKey(Object o) throws IOException {
+		String key;
+		String suffix = ".dat";
+		if (useGZip) {
+			suffix += ".gz";
 		}
-		return count;
-	}
-
-	private static final String convertKey(String key) {
-		String result = "";
-		for (int i = 0; i < key.length(); i++) {
-			char c = key.charAt(i);
-			if ((c < 48) || (c > 122) || ((c > 90) && (c < 97)) || ((c > 57) && (c < 65))) {
-				c = '_';
-			}
-			result += c;
+		if (o instanceof String && StringUtil.isAlphanumeric((String) o)) {
+			key = (String) o;
+		} else {
+			suffix = ".obj" + suffix;
+			key = StringUtil.reverse(StringUtil.encodeToHex((Serializable) o));
 		}
-		return result;
-	}
-
-	private final File getFileNameForKey(String key) {
-		key = convertKey(key);
-		String result = getPath().getAbsolutePath() + File.separator;
+		StringBuilder result = new StringBuilder();
+		result.append(getPath().getAbsolutePath());
+		result.append(File.separator);
 		for (int i = 0; i < maxDepth && i < key.length() - 1; i++) {
 			char c = key.charAt(i);
-			result += c + File.separator;
+			result.append(c);
+			result.append(File.separator);
 		}
-		result += key + ".dat";
-		if (useGZip) {
-			result += ".gz";
-		}
-		return new File(result);
+		result.append(key);
+		result.append(suffix);
+		return new File(result.toString());
 	}
 
 	public synchronized final V remove(Object key) {
-		V v = get(key);
-		File file = getFileNameForKey((String) key);
-		if (file.exists()) {
-			file.delete();
+		try {
+			V v = get(key);
+			File file = getFileNameForKey(key);
+			if (file.exists()) {
+				file.delete();
+			}
+			return v;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		return v;
 	}
 
 	public synchronized final boolean containsKey(Object key) {
-		File file = getFileNameForKey((String) key);
-		if (file == null) {
-			return false;
+		try {
+			File file = getFileNameForKey(key);
+			if (file == null) {
+				return false;
+			}
+			return file.exists();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		return file.exists();
 	}
 
-	public final Set<String> keySet() {
-		Set<String> set = new HashSet<String>();
-		listFilesToSet(getPath(), set);
-		return set;
+	// TODO: better with an Iterator
+	public final Set<K> keySet() {
+		try {
+			Set<K> set = new HashSet<K>();
+			listFilesToSet(getPath(), set);
+			return set;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	private void listFilesToSet(File path, Set<String> set) {
+	private void listFilesToSet(File path, Set<K> set) throws ClassNotFoundException, IOException {
 		File[] files = path.listFiles();
 		if (files != null) {
 			for (File f : files) {
 				if (f.isDirectory()) {
 					listFilesToSet(f, set);
 				} else {
-					String filename = f.getName();
-					if (filename.endsWith(".gz")) {
-						filename = filename.substring(0, filename.length() - 3);
-					}
-					if (filename.endsWith(".dat")) {
-						filename = filename.substring(0, filename.length() - 4);
-					}
-					set.add(filename);
+					set.add(getKeyForFile(f));
 				}
 			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private K getKeyForFile(File file) throws ClassNotFoundException, IOException {
+		String filename = file.getName();
+		if (filename.endsWith(".gz")) {
+			filename = filename.substring(0, filename.length() - 3);
+		}
+		if (filename.endsWith(".dat")) {
+			filename = filename.substring(0, filename.length() - 4);
+		}
+		if (filename.endsWith(".obj")) {
+			filename = filename.substring(0, filename.length() - 4);
+			filename = StringUtil.reverse(filename);
+			return (K) SerializationUtil.deserialize(StringUtil.decodeFromHex(filename));
+		} else {
+			return (K) filename;
 		}
 	}
 
@@ -173,7 +184,7 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 		this.path = path;
 	}
 
-	public final synchronized V put(String key, V value) {
+	public final synchronized V put(K key, V value) {
 		try {
 			if (key == null) {
 				return null;
@@ -197,7 +208,7 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 				bo = new GZIPOutputStream(bo, 8192);
 			}
 
-			write(bo, value);
+			writeValue(bo, value);
 
 			bo.close();
 			fo.close();
@@ -210,7 +221,7 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 
 	public final synchronized V get(Object key) {
 		try {
-			File file = getFileNameForKey((String) key);
+			File file = getFileNameForKey(key);
 			if (file == null || !file.exists()) {
 				return null;
 			}
@@ -223,7 +234,7 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 				bi = new GZIPInputStream(bi, 8192);
 			}
 
-			o = read(bi);
+			o = readValue(bi);
 
 			bi.close();
 			fi.close();
@@ -234,8 +245,8 @@ public abstract class AbstractDiskMap<V> extends AbstractMap<String, V> implemen
 		}
 	}
 
-	public abstract void write(OutputStream os, V value);
+	public abstract void writeValue(OutputStream os, V value);
 
-	public abstract V read(InputStream is);
+	public abstract V readValue(InputStream is);
 
 }

@@ -43,6 +43,7 @@ import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
@@ -52,7 +53,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.impl.DenseFileMatrix2D;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
@@ -640,9 +641,9 @@ public abstract class MatrixFactory {
 		return new SynchronizedGenericMatrix<T>(matrix);
 	}
 
-	public static final DenseDoubleMatrix2D linkToBinaryFile(String filename, int rowCount,
-			int columnCount) throws IOException {
-		return new DenseFileMatrix2D(new File(filename), rowCount, columnCount);
+	public static final DenseDoubleMatrix linkToBinaryFile(String filename, long... size)
+			throws IOException {
+		return new DenseFileMatrix(new File(filename), size);
 	}
 
 	public static final ObjectMatrix2D linkToJDBC(String url, String sqlStatement, String username,

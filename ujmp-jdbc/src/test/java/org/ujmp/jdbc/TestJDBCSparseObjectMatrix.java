@@ -33,29 +33,30 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 public class TestJDBCSparseObjectMatrix extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws Exception {
-		File tempFile = File.createTempFile("hsqldb", "");
-		try {
-			Class.forName("org.hsqldb.jdbcDriver");
-			String username = "SA";
-			String password = "";
-			String tableName = "matrix";
-			String columnForValue = "value";
-			String[] columnsForCoordinates = new String[] { "row", "column" };
-			String url = "jdbc:hsqldb:" + tempFile + ";shutdown=true";
-			String sql = "CREATE TABLE matrix (value float, row int, column int)";
-			Connection c = DriverManager.getConnection(url, username, password);
-			c.createStatement().execute(sql);
-			Matrix m = new JDBCSparseObjectMatrix(size, c, tableName,
-					columnForValue, columnsForCoordinates);
-			return m;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			if (tempFile.exists()) {
-				tempFile.delete();
-			}
-		}
+		return new JDBCSparseObjectMatrix(size);
+//		File tempFile = File.createTempFile("hsqldb", "");
+//		try {
+//			Class.forName("org.hsqldb.jdbcDriver");
+//			String username = "SA";
+//			String password = "";
+//			String tableName = "matrix";
+//			String columnForValue = "value";
+//			String[] columnsForCoordinates = new String[] { "row", "column" };
+//			String url = "jdbc:hsqldb:" + tempFile + ";shutdown=true";
+//			String sql = "CREATE TABLE matrix (value float, row int, column int)";
+//			Connection c = DriverManager.getConnection(url, username, password);
+//			c.createStatement().execute(sql);
+//			Matrix m = new JDBCSparseObjectMatrix(size, c, tableName,
+//					columnForValue, columnsForCoordinates);
+//			return m;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		} finally {
+//			if (tempFile.exists()) {
+//				tempFile.delete();
+//			}
+//		}
 
 	}
 

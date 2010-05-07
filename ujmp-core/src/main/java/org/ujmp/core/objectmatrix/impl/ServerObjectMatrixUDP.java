@@ -30,8 +30,8 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.coordinates.Coordinates;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
@@ -117,12 +117,12 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 					case SETDOUBLEVALUE:
 						coordinates = (Coordinates) ois.readObject();
 						value = ois.readDouble();
-						setAsDouble(value, coordinates.dimensions);
+						setAsDouble(value, coordinates.co);
 						oos.writeInt(SETDOUBLEVALUE);
 						break;
 					case GETDOUBLEVALUE:
 						coordinates = (Coordinates) ois.readObject();
-						value = getAsDouble(coordinates.dimensions);
+						value = getAsDouble(coordinates.co);
 						oos.writeInt(GETDOUBLEVALUE);
 						oos.writeDouble(value);
 						break;

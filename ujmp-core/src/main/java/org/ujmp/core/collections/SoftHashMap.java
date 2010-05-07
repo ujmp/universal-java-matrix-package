@@ -62,8 +62,15 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
 	}
 
 	public V put(K key, V value) {
-		SoftReference<V> v = getMap().put(key, new SoftReference<V>(value));
-		return v == null ? null : v.get();
+		do {
+			try {
+				SoftReference<V> v = getMap().put(key, new SoftReference<V>(value));
+				return v == null ? null : v.get();
+			} catch (OutOfMemoryError e) {
+				getMap().remove(getMap().keySet().iterator().next());
+			}
+		} while (!getMap().isEmpty());
+		throw new OutOfMemoryError("removing all entries from Map could not avoid OutOfMemoryError");
 	}
 
 	public V remove(Object key) {

@@ -23,11 +23,11 @@
 
 package org.ujmp.core.doublematrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
 		SparseDoubleMatrix2D {

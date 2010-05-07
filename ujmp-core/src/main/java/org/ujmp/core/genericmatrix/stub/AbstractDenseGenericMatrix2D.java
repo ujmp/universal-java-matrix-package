@@ -23,10 +23,10 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.genericmatrix.DenseGenericMatrix2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix<A>
 		implements DenseGenericMatrix2D<A> {

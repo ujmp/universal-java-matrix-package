@@ -23,8 +23,8 @@
 
 package org.ujmp.core.longmatrix.stub;
 
-import org.ujmp.core.coordinates.CoordinateIterator2D;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
+import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseLongMatrix2D extends AbstractDenseLongMatrix implements
 		DenseLongMatrix2D {

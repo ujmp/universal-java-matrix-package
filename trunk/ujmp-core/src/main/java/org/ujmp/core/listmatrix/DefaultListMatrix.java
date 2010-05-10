@@ -31,7 +31,7 @@ import java.util.List;
 public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
 	private static final long serialVersionUID = -6381864884046078055L;
 
-	private List<A> list = null;
+	private List<A> list;
 
 	public DefaultListMatrix(Collection<A> list) {
 		if (list instanceof List) {
@@ -49,7 +49,6 @@ public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
 		this.list = Arrays.asList(objects);
 	}
 
-	
 	public List<A> getList() {
 		return list;
 	}

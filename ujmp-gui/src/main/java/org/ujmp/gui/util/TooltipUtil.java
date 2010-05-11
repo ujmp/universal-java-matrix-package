@@ -35,12 +35,12 @@ public abstract class TooltipUtil {
 		String toolTip = "<html><b>[" + Coordinates.toString(coordinates)
 				+ "]</b>";
 
-		if (coordinates[0] == -1) {
-			System.out.println();
+		String columnLabel = null;
+		try {
+			columnLabel = matrix
+					.getColumnName((int) coordinates[Matrix.COLUMN]);
+		} catch (Exception e) {
 		}
-
-		String columnLabel = matrix
-				.getColumnName((int) coordinates[Matrix.COLUMN]);
 		if (columnLabel != null) {
 			toolTip += " <b>(" + columnLabel + ")</b>";
 		}
@@ -54,8 +54,13 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Object:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		Object o = matrix
-				.getValueAt((int) coordinates[0], (int) coordinates[1]);
+
+		Object o = null;
+		try {
+			o = matrix.getValueAt((int) coordinates[0], (int) coordinates[1]);
+		} catch (Exception e) {
+		}
+
 		if (o != null) {
 			toolTip += o.getClass();
 		} else {
@@ -69,12 +74,14 @@ public abstract class TooltipUtil {
 		toolTip += "<b>String:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		String s = StringUtil.getString(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
-		if (s != null && s.length() > 25) {
-			s = s.substring(0, 25);
+		try {
+			String s = StringUtil.getString(o);
+			if (s != null && s.length() > 25) {
+				s = s.substring(0, 25);
+			}
+			toolTip += s;
+		} catch (Exception e) {
 		}
-		toolTip += s;
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -83,8 +90,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Double:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getDouble(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getDouble(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -93,8 +102,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Float:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getFloat(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getFloat(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -103,8 +114,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Long:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getLong(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getLong(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -113,8 +126,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Short:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getShort(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getShort(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -123,8 +138,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Int:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getInt(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getInt(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -133,8 +150,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Byte:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getByte(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getByte(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -143,8 +162,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Char:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getChar(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getChar(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -153,8 +174,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Boolean:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getBoolean(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getBoolean(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 
@@ -163,8 +186,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Date:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		toolTip += MathUtil.getDate(matrix.getValueAt((int) coordinates[0],
-				(int) coordinates[1]));
+		try {
+			toolTip += MathUtil.getDate(o);
+		} catch (Exception e) {
+		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
 

@@ -2711,6 +2711,9 @@ public abstract class AbstractMatrixTest {
 		if (packageName.contains("lucene")) {
 			packageName = "org.ujmp.core";
 		}
+		if (packageName.contains("ehcache")) {
+			packageName = "org.ujmp.core";
+		}
 		if (packageName.contains("jdbc")) {
 			packageName = "org.ujmp.core";
 		}
@@ -3057,6 +3060,9 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
+			return;
+		}
+		if (a.getClass().getName().startsWith("org.ujmp.ehcache.")) {
 			return;
 		}
 		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {

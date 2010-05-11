@@ -21,6 +21,7 @@
 				<include>hadoop:hadoop-core</include>
 				<include>commons-logging:commons-logging</include>
 				<include>ejml:ejml</include>
+				<include>ejml:ejml</include>
 				<include>iText:iText</include>
 				<include>jackcess:jackcess</include>
 				<include>jfreechart:jfreechart</include>
@@ -69,6 +70,7 @@
 				<include>FontBox:FontBox</include>
 				<include>sst:sst</include>
 				<include>vecmath:vecmath</include>
+				<include>net.sf.ehcache:ehcache</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>

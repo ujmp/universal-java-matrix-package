@@ -164,6 +164,24 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache-core</artifactId>
+				<version>2.0.1</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.5.8</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-jdk14</artifactId>
+				<version>1.5.8</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jama</groupId>
 				<artifactId>jama</artifactId>
 				<version>1.0.2</version>
@@ -488,13 +506,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-
-	<!--
-		<distributionManagement> <repository> <id>ujmp-repository</id>
-		<name>UJMP Repository</name> <url>file:/~/.m2/repository</url>
-		</repository> </distributionManagement>
-	-->
 
 	<repositories>
 		<repository>

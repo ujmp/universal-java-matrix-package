@@ -106,6 +106,8 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 			UJMPSettings.setUseParallelColt(config.isUseParallelColt());
 			UJMPSettings.setUseBlockMatrixMultiply(config.isUseBlockMatrixMultiply());
 
+			UJMPSettings.setDefaultBlockSize(config.getDefaultBlockSize());
+
 			if (config.isRunTimesScalar()) {
 				new TimesScalarBenchmarkTask(benchmarkSeed, getMatrixClass(), getConfig()).run();
 			}

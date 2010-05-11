@@ -97,7 +97,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	private static final long serialVersionUID = -5131649082019624021L;
 
-	private static final int DEFAULT_BLOCK_SIZE = 100;
+	public static int DEFAULT_BLOCK_SIZE = 100;
 
 	private static int deriveDefaultBlockStripeSize(int rows, int cols) {
 		// TODO pick a suitable size

@@ -99,6 +99,8 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("useMTJ", true);
 		put("useParallelColt", true);
 		put("useCommonsMath", true);
+
+		put("defaultBlockSize", 100);
 	}
 
 	public List<long[]> getSVDSizes() {
@@ -631,8 +633,16 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getBoolean(get("useBlockMatrixMultiply"));
 	}
 
+	public int getDefaultBlockSize() {
+		return MathUtil.getInt(get("defaultBlockSize"));
+	}
+
 	public void setUseBlockMatrixMultiply(boolean use) {
 		put("useBlockMatrixMultiply", use);
+	}
+
+	public void setDefaultBlockSize(int size) {
+		put("defaultBlockSize", size);
 	}
 
 	public void setUseParallelColt(boolean use) {

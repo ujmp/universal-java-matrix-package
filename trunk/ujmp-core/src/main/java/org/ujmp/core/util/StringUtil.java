@@ -462,4 +462,45 @@ public abstract class StringUtil {
 	public static final boolean isUpper(char c) {
 		return c >= 'A' && c <= 'Z';
 	}
+
+	public static boolean isPrintable(String s) {
+		if (s == null) {
+			return false;
+		}
+		for (int i = s.length(); --i != -1;) {
+			if (!isPrintable(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean isSuitedAsFilename(String s) {
+		if (!StringUtil.isPrintable(s)) {
+			return false;
+		}
+		for (int i = s.length(); --i != -1;) {
+			char c = s.charAt(i);
+			if (c == '/') {
+				return false;
+			} else if (c == '\\') {
+				return false;
+			} else if (c == ':') {
+				return false;
+			} else if (c == ' ') {
+				return false;
+			} else if (c == '*') {
+				return false;
+			} else if (c == '<') {
+				return false;
+			} else if (c == '>') {
+				return false;
+			} else if (c == '?') {
+				return false;
+			} else if (c == '|') {
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -50,7 +50,7 @@ public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements
 
 	private boolean useGZip = true;
 
-	private int maxDepth = 5;
+	private int maxDepth = 10;
 
 	public AbstractDiskMap(File path, boolean useGZip) throws IOException {
 		this.useGZip = useGZip;
@@ -82,7 +82,8 @@ public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements
 		if (useGZip) {
 			suffix += ".gz";
 		}
-		if (o instanceof String && StringUtil.isAlphanumeric((String) o)) {
+		if (o instanceof String && StringUtil.isSuitedAsFilename((String) o)
+				&& !((String) o).contains(".")) {
 			key = (String) o;
 		} else {
 			suffix = ".obj" + suffix;

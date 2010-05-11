@@ -37,8 +37,7 @@ import java.util.Set;
 
 import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Map<K, V>,
-		Serializable {
+public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Serializable {
 	private static final long serialVersionUID = -6429342188863787235L;
 
 	public boolean isEmpty() {
@@ -143,7 +142,8 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 	@SuppressWarnings("unchecked")
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
-		while (true) {
+		int size = s.readInt();
+		for (int i = 0; i < size; i++) {
 			try {
 				K k = (K) s.readObject();
 				V v = (V) s.readObject();
@@ -156,6 +156,7 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 
 	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {
 		s.defaultWriteObject();
+		s.writeInt(size());
 		for (Object k : keySet()) {
 			Object v = get(k);
 			s.writeObject(k);

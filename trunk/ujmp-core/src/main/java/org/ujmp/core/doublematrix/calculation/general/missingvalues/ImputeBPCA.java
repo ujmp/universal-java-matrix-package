@@ -48,7 +48,6 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		return true;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (imp == null) {
 			try {
@@ -57,7 +56,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 
 				try {
 					if (calc == null) {
-						Class<?> c = Class.forName("org.ujmp.bpca.ImputeBPCA");
+						Class<?> c = Class.forName("org.ujmp.jbpcafill.ImputeBPCA");
 						Constructor<?> con = c.getConstructor(Matrix.class);
 						calc = (DoubleCalculation) con.newInstance(getSource());
 					}

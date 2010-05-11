@@ -469,7 +469,6 @@
 						<link>http://java.sun.com/javase/6/docs/api/</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-core/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-gui/apidocs</link>
-						<link>http://www.ujmp.org/docs/${project.version}/ujmp-bpca/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-colt/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-commonsmath/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-ejml/apidocs</link>
@@ -479,6 +478,7 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jama/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jampack/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jblas/apidocs</link>
+						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jbpcafill/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jdbc/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jexcelapi/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-jlinalg/apidocs</link>

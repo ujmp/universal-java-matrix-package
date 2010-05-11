@@ -18,9 +18,6 @@
 
 				<include>org.ujmp:ujmp-gui</include>
 
-				<include>org.ujmp:ujmp-bpca</include>
-				<include>JBPCAfill:JBPCAfill</include>
-
 				<include>org.ujmp:ujmp-colt</include>
 				<include>colt:colt</include>
 				<include>concurrent:concurrent</include>
@@ -54,6 +51,9 @@
 
 				<include>org.ujmp:ujmp-jblas</include>
 				<include>jblas:jblas</include>
+
+				<include>org.ujmp:ujmp-jbpcafill</include>
+				<include>JBPCAfill:JBPCAfill</include>
 
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>mysql-connector-java:mysql-connector-java</include>

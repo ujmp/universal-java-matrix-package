@@ -250,7 +250,7 @@
 			<dependency>
 				<groupId>jxl</groupId>
 				<artifactId>jxl</artifactId>
-				<version>2.6.10</version>
+				<version>2.6.12</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -286,7 +286,7 @@
 			<dependency>
 				<groupId>hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>1.8.0.10</version>
+				<version>1.8.1.2</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

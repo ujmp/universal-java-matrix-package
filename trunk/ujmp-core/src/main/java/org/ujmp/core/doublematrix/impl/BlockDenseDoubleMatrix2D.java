@@ -37,6 +37,7 @@ import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
+import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PFor;
 
 /**
@@ -97,11 +98,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	private static final long serialVersionUID = -5131649082019624021L;
 
-	public static int DEFAULT_BLOCK_SIZE = 100;
-
 	private static int deriveDefaultBlockStripeSize(int rows, int cols) {
 		// TODO pick a suitable size
-		return (rows < DEFAULT_BLOCK_SIZE && cols < DEFAULT_BLOCK_SIZE) ? 50 : DEFAULT_BLOCK_SIZE;
+		return (rows < UJMPSettings.getDefaultBlockSize() && cols < UJMPSettings
+				.getDefaultBlockSize()) ? 50 : UJMPSettings.getDefaultBlockSize();
 	}
 
 	/** Matrix data by block number. */

@@ -46,6 +46,8 @@ public abstract class UJMPSettings {
 
 	private static boolean useBlockMatrixMultiply = true;
 
+	private static int defaultBlockSize = 100;
+
 	private static MathContext mathContext = MathContext.DECIMAL128;
 
 	public static MathContext getDefaultMathContext() {
@@ -263,6 +265,14 @@ public abstract class UJMPSettings {
 
 	public static void setUseBlockMatrixMultiply(boolean useBlockMatrix) {
 		UJMPSettings.useBlockMatrixMultiply = useBlockMatrix;
+	}
+
+	public static int getDefaultBlockSize() {
+		return defaultBlockSize;
+	}
+
+	public static void setDefaultBlockSize(int defaultBlockSize) {
+		UJMPSettings.defaultBlockSize = defaultBlockSize;
 	}
 
 }

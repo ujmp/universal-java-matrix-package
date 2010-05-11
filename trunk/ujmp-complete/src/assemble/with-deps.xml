@@ -31,6 +31,9 @@
 				<include>org.ujmp:ujmp-ejml</include>
 				<include>ejml:ejml</include>
 
+				<include>org.ujmp:ujmp-ehcache</include>
+				<include>net.sf.ehcache:ehcache</include>
+
 				<include>org.ujmp:ujmp-hadoop</include>
 				<include>hadoop:hadoop-core</include>
 				<include>commons-logging:commons-logging</include>
@@ -48,7 +51,7 @@
 
 				<include>org.ujmp:ujmp-jampack</include>
 				<include>jampack:jampack</include>
-				
+
 				<include>org.ujmp:ujmp-jblas</include>
 				<include>jblas:jblas</include>
 
@@ -60,7 +63,7 @@
 
 				<include>org.ujmp:ujmp-jexcelapi</include>
 				<include>jxl:jxl</include>
-				
+
 				<include>org.ujmp:ujmp-jfreechart</include>
 				<include>jfreechart:jfreechart</include>
 				<include>jcommon:jcommon</include>

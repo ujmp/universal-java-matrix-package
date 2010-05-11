@@ -17,6 +17,7 @@
 				<include>hadoop:hadoop-core</include>
 				<include>commons-logging:commons-logging</include>
 				<include>ejml:ejml</include>
+				<include>net.sf.ehcache:ehcache</include>
 				<include>iText:iText</include>
 				<include>jackcess:jackcess</include>
 				<include>jfreechart:jfreechart</include>

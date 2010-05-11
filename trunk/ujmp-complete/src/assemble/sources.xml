@@ -34,6 +34,10 @@
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>../ujmp-ehcache/src/main/java</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>../ujmp-ejml/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>

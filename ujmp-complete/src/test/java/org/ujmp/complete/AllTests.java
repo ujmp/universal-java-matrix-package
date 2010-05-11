@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { org.ujmp.complete.TestPlugins.class,
 		org.ujmp.complete.TestCompareMatrices.class, org.ujmp.core.AllTests.class,
-		org.ujmp.gui.AllTests.class, org.ujmp.bpca.AllTests.class, org.ujmp.hadoop.AllTests.class,
+		org.ujmp.gui.AllTests.class, org.ujmp.jbpcafill.AllTests.class, org.ujmp.hadoop.AllTests.class,
 		org.ujmp.colt.AllTests.class, org.ujmp.ehcache.AllTests.class,
 		org.ujmp.jackcess.AllTests.class, org.ujmp.itext.AllTests.class,
 		org.ujmp.jampack.AllTests.class, org.ujmp.jama.AllTests.class,

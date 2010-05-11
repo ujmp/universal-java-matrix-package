@@ -22,10 +22,6 @@
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>../ujmp-bpca/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
 			<directory>../ujmp-colt/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>
@@ -63,6 +59,10 @@
 		</fileSet>
 		<fileSet>
 			<directory>../ujmp-jblas/src/main/java</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../ujmp-jbpcafill/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>

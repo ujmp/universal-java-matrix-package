@@ -16,7 +16,6 @@
 			<includes>
 				<include>org.ujmp:ujmp-core</include>
 				<include>org.ujmp:ujmp-gui</include>
-				<include>org.ujmp:ujmp-bpca</include>
 				<include>org.ujmp:ujmp-colt</include>
 				<include>org.ujmp:ujmp-commonsmath</include>
 				<include>org.ujmp:ujmp-ehcache</include>
@@ -27,6 +26,7 @@
 				<include>org.ujmp:ujmp-jama</include>
 				<include>org.ujmp:ujmp-jampack</include>
 				<include>org.ujmp:ujmp-jblas</include>
+				<include>org.ujmp:ujmp-jbpcafill</include>
 				<include>org.ujmp:ujmp-jdbc</include>
 				<include>org.ujmp:ujmp-jexcelapi</include>
 				<include>org.ujmp:ujmp-jfreechart</include>

@@ -17,13 +17,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-bpca</artifactId>
-			<version>${version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-colt</artifactId>
 			<version>${version}</version>
 			<scope>compile</scope>
@@ -101,6 +94,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
+			<version>${version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jbpcafill</artifactId>
 			<version>${version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -272,14 +272,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-bpca</artifactId>
-			<version>${version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
+
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-colt</artifactId>
@@ -370,6 +363,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
+			<version>${version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jbpcafill</artifactId>
 			<version>${version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -564,7 +565,6 @@
 	<modules>
 		<module>../ujmp-core</module>
 		<module>../ujmp-gui</module>
-		<module>../ujmp-bpca</module>
 		<module>../ujmp-colt</module>
 		<module>../ujmp-commonsmath</module>
 		<module>../ujmp-ehcache</module>
@@ -575,6 +575,7 @@
 		<module>../ujmp-jama</module>
 		<module>../ujmp-jampack</module>
 		<module>../ujmp-jblas</module>
+		<module>../ujmp-jbpcafill</module>
 		<module>../ujmp-jdbc</module>
 		<module>../ujmp-jfreechart</module>
 		<module>../ujmp-jexcelapi</module>

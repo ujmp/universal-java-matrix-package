@@ -24,7 +24,7 @@
 			<resource>
 				<targetPath>META-INF</targetPath>
 				<filtering>false</filtering>
-				<directory>${basedir}/src/main/resource/META-INF</directory>
+				<directory>${basedir}/META-INF</directory>
 				<includes>
 					<include>**</include>
 				</includes>

@@ -36,11 +36,12 @@ import org.ujmp.core.UJMP;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.pdf.DefaultFontMapper;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfTemplate;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.DefaultFontMapper;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public abstract class ExportPDF {
 
@@ -78,8 +79,7 @@ public abstract class ExportPDF {
 			return;
 		}
 		try {
-			Document document = new Document(new com.lowagie.text.Rectangle(
-					width, height));
+			Document document = new Document(new Rectangle(width, height));
 			PdfWriter writer = PdfWriter.getInstance(document,
 					new FileOutputStream(file.getAbsolutePath()));
 			document.addAuthor("UJMP v" + UJMP.UJMPVERSION);

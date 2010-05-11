@@ -1,0 +1,102 @@
+ JAMPACK
+A JAVA PACKAGE FOR MATRIX COMPUTATIONS
+G. W. Stewart
+
+Department of Computer Science
+Institute for Advanced Computer Studies
+University of Maryland
+
+Mathematical and Computations Sciences Division
+NIST
+
+stewart@cs.umd.edu
+http://www.cs.umd.edu/~stewart/
+Contents
+
+Introduction
+Goals
+Current Status
+Obtaining Jampack
+Feedback
+
+Introduction
+
+Jampack (JAva Matrix PACKage) is a collection of cooperating classes designed to perform matrix computations in Java applications. The current version of the Jampack is preliminary and incomplete. It is being released to see if there is enough interest to continue its development.
+
+Jampack was developed by the author at NIST and the University of Maryland. A sibling matrix package, Jama, has also been developed at NIST and Mathworks. The two packages arose from the need to evaluate alternate designs for the implementation of matrices in Java. Jama is based on a single matrix class within a strictly object-oriented framework. Jampack uses a more open approach that lends itself to extension by the user. As it turns out, for the casual user the packages differ principally in the syntax of the matrix operations. I hope you will take the time to look at Jama along with Jampack. There is much to be learned from both packages.
+
+The following is a summary of the goals and status of the package. For further details see the Jampack Owner's Manual or the Javadoc documentation.
+Goals
+
+Jampack was designed with the following considerations in mind.
+
+   1. User friendliness. To the casual user Jampack is an object oriented package, consisting of classes of matrices and classes of methods (called suites) to manipulate matrices. The user who wants only to implement a few formulas (e.g, to solve a least squares problem) can do so without taking a course in matrix computations.
+
+   2. Expert friendliness. Jampack provides implementations of the the transformations the advanced user needs to implement features not in the package. In particular, Jampack supplies methods for generating and applying plane rotations and Householder transformations.
+
+   3. Efficiency. Jampack routines are (or will be) moderately efficient. Jampack makes no claim to compete with high-performance matrix packages.
+
+   4. Openness. In the Jampack view, implementations of matrix processes should not be hidden. Instead, each user, according to his or her abilities, should be encouraged to look under the hood and even tinker with the code. This is the reason why Jampack has an Owner's Manual while other packages have User's Guides.
+
+   5. Extensibility. Jampack was created to be open ended. By segregating matrix operations and functions into suites of methods that perform related tasks, Jampack makes it easy to add new features. Just put the appropriate method in the appropriate suite. Or if the feature is sufficiently novel, start a new suite.
+
+   6. Growth. If the package catches on, it is hoped that its users will contribute to the growth of the package under the supervision an review committee. 
+
+Current Status
+
+Jampack is not yet a mature package. It does not have all the features that a reasonable matrix package should have (for example Jampack does not do determinants). The code has only been lightly tested and certainly has bugs. Many of the basic operations are soft coded--that is, they use other Jampack methods to perform the operation, a process that usually requires the creation of matrices to hold intermediate results. Finally, there are probably inconsistencies and infelicities built into the design of the package itself.
+
+Which is to say that one should use Jampack cautiously. The time has not yet come to make it a critical part of an application: things are too likely to change. But the package can still do a lot. The following is a list of what Jampack has and has not.
+
+   1. Complex matrices. A virtue of Jampack is that it fully supports complex matrices. A failing is that there are only complex matrices. It was felt that the design should proceed from the more general to the less general to avoid painting the package into a corner. The implementation of real matrices is the first thing on the agenda for extending Jampack
+
+   2. Indexing. In books on matrix computations, the beginning element of a matrix is its (1,1)-element. Other disciplines have other conventions. For example, in queueing theory matrices often begin with a (0,0)-element. Jampack allows the index of the base element to be set at the beginning of an application by the user.
+
+   3. Matrix classes. Jampack currently has two matrix classes for general matrices (Zmat) and diagonal matrices (Zdiagmat). The class Zmat has subclasses for triangular and positive semidefinite matrices. It is planned to add band matrices and (much later) sparse matrices.
+
+   4. Operation suites Jampack segregates its operations in suites. Here is a list with links to the Owner's Manual.
+
+             Plus, Minus, Times, H, Solve, Inv, Norm,
+             Trace, Eye, Block, Merge, Rand, Print.
+
+      Obviously, there is much to add to this list.
+
+   5. Decompositions. Jampack has a basic complement of matrix decompositions--i.e, factorizations of matrices. A decompositions in Jampack is implemented by a class whose members are the factors of the of the decomposition. The decomposition is computed by the initializer of the decomposition class. Jampack currently supports the following decompositions.
+
+         1. The Pivoted LU decomposition
+         2. The Cholesky decomposition
+         3. The QR decomposition
+         4. The eigendecompostition of a symmetric matrix
+         5. The singular value decomposition
+         6. Hessenberg form
+         7. The Schur Decomposition
+         8. The eigendecompostition of a general matrix 
+
+   6. History. Some applications have loops that repeatedly use a decomposition of an unchanging matrix. To avoid having to recompute the decomposition at each iteration of the loop, Jampack saves it for reuse on a history list in the matrix in question. The mechanics for turning on and off this option are not completely specified.
+
+   7. Transformations. Jampack has two Suites, Rot and House, for generating and applying plane rotations and Householder transformations. In addition it has suites for pivoting and permuting rows and columns of a matrix.
+
+   8. Test programs. The current version of Jampack comes with the test programs used to help debug the package. These largely uncommented programs do not represent the thorough testing required of finished software. But they may be of use to those who want to extend the package.
+
+   9. Storage allocation.
+      Jampack uses the Java storage allocator to maintain its matrices. For example the Jampack statement
+
+          C = Times.o(A,B);
+
+      creates a new instance of a matrix class to hold the product of A and B. In a tight loop, this statement could stress the garbage collector. Under considerations are extensions like
+
+          Times.o(A, B, C);
+
+      where the user furnishes a matrix C of appropriate dimensions to receive the product of A and B.
+      Obtaining Jampack
+      To obtain and install Jampack, download Jampack.tar.gz or Jampack.zip to a directory in your Java CLASSPATH and expand it to produce the directory Jampack. You are now ready to go. Jampack can also be obtained by anonymous ftp at thales.cs.umd.edu in pub/Jampack or at gams.nist.gov in pub/Jampack. This document can be found at both NIST and the University of Maryland:
+
+          ftp://thales.cs.umd:/pub/Jampack/Jampack/AboutJampack.html
+          ftp://gams.nist.gov:/pub/Jampack/Jampack/AboutJampack.html 
+
+      Feedback
+      The purpose of this release is to see if it generates enough enthusiasm to justify continued development of Jampack. Your comments and suggestion will decide the matter. I encourage you to write me directly or contribute to the discussion group jampack@nist.gov. To subscribe to the group send email to listproc@nist.gov with the test
+
+          subscribe jampack your-email-address 
+
+      in the body. Past contributions will be saved in a public repository where they may be browsed. 

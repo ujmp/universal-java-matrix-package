@@ -27,6 +27,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 
@@ -35,11 +36,10 @@ import org.junit.Test;
 public class TestExportPDF {
 
 	@Test
-	public void testExport() {
+	public void testExport() throws IOException {
 		JButton b = new JButton("test");
 		b.setSize(100, 100);
-		File file = new File(System.getProperty("java.io.tmpdir")
-				+ System.getProperty("file.separator") + "test.pdf");
+		File file = File.createTempFile("itext-text", ".pdf");
 		ExportPDF.save(file, b);
 
 		assertTrue(file.exists());

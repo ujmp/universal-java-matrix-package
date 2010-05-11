@@ -746,7 +746,7 @@ public abstract class MathUtil {
 
 	public static long getLong(Object o) {
 		if (o == null) {
-			throw new IllegalArgumentException("null cannot be converted to long");
+			return 0;
 		}
 		if (o instanceof Long) {
 			return (Long) o;

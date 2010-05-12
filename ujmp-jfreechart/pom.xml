@@ -19,11 +19,11 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jfreechart</groupId>
+			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jcommon</groupId>
+			<groupId>jfree</groupId>
 			<artifactId>jcommon</artifactId>
 		</dependency>
 

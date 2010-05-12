@@ -1148,8 +1148,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Randn(this).calc(ret);
 	}
 
+	// TODO: this should also work for objects and Strings
 	public final int compareTo(Matrix m) {
-		return new Double(doubleValue()).compareTo(m.doubleValue());
+		double v1 = getMeanValue();
+		double v2 = m.getMeanValue();
+		return new Double(v1).compareTo(v2);
 	}
 
 	public int rank() throws MatrixException {

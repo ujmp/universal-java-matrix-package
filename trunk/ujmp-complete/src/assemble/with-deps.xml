@@ -84,7 +84,7 @@
 				<include>jmatrices:jmatrices</include>
 
 				<include>org.ujmp:ujmp-jsci</include>
-				<include>jsci-core:jsci-core</include>
+				<include>jsci:jsci-core</include>
 
 				<include>org.ujmp:ujmp-jscience</include>
 				<include>jscience:jscience</include>

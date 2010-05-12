@@ -19,7 +19,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jsci-core</groupId>
+			<groupId>jsci</groupId>
 			<artifactId>jsci-core</artifactId>
 		</dependency>
 		<dependency>

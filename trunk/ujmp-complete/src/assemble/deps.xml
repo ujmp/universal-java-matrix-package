@@ -41,7 +41,7 @@
 				<include>jmathplot:jmathplot</include>
 				<include>jmatio:jmatio</include>
 				<include>jmatrices:jmatrices</include>
-				<include>jsci-core:jsci-core</include>
+				<include>jsci:jsci-core</include>
 				<include>jscience:jscience</include>
 				<include>jung:jung</include>
 				<include>commons-collections:commons-collections</include>

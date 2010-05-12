@@ -160,12 +160,10 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public void runAll() throws Exception {
 		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
-		if (getConfig().isSingleThreaded()) {
-			UJMPSettings.setNumberOfThreads(1);
-			ProcessorCount.RUNTIME = 1;
-			ConcurrencyUtils.setNumberOfThreads(1);
-			System.setProperty("ATLAS_NUM_THREADS", "1");
-		}
+		UJMPSettings.setNumberOfThreads(getConfig().getNumberOfThreads());
+		ProcessorCount.RUNTIME = getConfig().getNumberOfThreads();
+		ConcurrencyUtils.setNumberOfThreads(getConfig().getNumberOfThreads());
+		System.setProperty("ATLAS_NUM_THREADS", "" + getConfig().getNumberOfThreads());
 
 		if (getConfig().isShuffle()) {
 			Collections.shuffle(benchmarks);

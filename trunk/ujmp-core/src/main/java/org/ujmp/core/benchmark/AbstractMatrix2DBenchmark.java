@@ -76,7 +76,7 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 		System.out.println(" UJMP matrix benchmark");
 		System.out.println("===============================================================");
 		System.out.println(" Settings:");
-		System.out.println("   singleThreaded: " + config.isSingleThreaded());
+		System.out.println("   numberOfThreads: " + config.getNumberOfThreads());
 		System.out.println("   gcMemory: " + config.isGCMemory());
 		System.out.println("   purgeMemory: " + config.isPurgeMemory());
 		System.out.println("   burnInRuns: " + config.getBurnInRuns());

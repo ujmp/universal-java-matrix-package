@@ -787,7 +787,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("e", ERRORTEXT), CHOL, MTJ);
 		setAsString("org.ujmp.mtj", PACKAGE, MTJ);
 
-		setAsString(small("29.6"), VERSION, OJALGO);
+		setAsString(small("29.8"), VERSION, OJALGO);
 		setAsString(small("2010"), DATE, OJALGO);
 		setAsString(small("MIT"), LICENCE, OJALGO);
 		setAsString(notSupported(), JAVA14, OJALGO);

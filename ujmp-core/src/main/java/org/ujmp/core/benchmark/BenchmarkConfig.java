@@ -29,6 +29,7 @@ import java.util.List;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.UJMPSettings;
 
 public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 	private static final long serialVersionUID = 2267893158983793396L;
@@ -40,7 +41,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 	public BenchmarkConfig() {
 		put("name", null);
 
-		put("singleThreaded", false);
+		put("numberOfThreads", UJMPSettings.getNumberOfThreads());
 		put("reverse", false);
 		put("shuffle", false);
 		put("gcMemory", true);
@@ -179,12 +180,12 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runSVD", runSVD);
 	}
 
-	public boolean isSingleThreaded() {
-		return MathUtil.getBoolean(get("singleThreaded"));
+	public int getNumberOfThreads() {
+		return MathUtil.getInt(get("numberOfThreads"));
 	}
 
-	public void setSingleThreaded(boolean singleThreaded) {
-		put("singleThreaded", singleThreaded);
+	public void setNumberOfThreads(int numberOfThreads) {
+		put("numberOfThreads", numberOfThreads);
 	}
 
 	public boolean isRunEig() {

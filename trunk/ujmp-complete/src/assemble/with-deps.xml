@@ -65,8 +65,8 @@
 				<include>jxl:jxl</include>
 
 				<include>org.ujmp:ujmp-jfreechart</include>
-				<include>jfreechart:jfreechart</include>
-				<include>jcommon:jcommon</include>
+				<include>jfree:jfreechart</include>
+				<include>jfree:jcommon</include>
 
 				<include>org.ujmp:ujmp-jlinalg</include>
 				<include>jlinalg:jlinalg</include>

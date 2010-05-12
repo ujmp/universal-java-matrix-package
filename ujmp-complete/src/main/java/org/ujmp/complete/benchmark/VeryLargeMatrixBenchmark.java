@@ -32,6 +32,7 @@ import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.impl.SerializedSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.ehcache.EhcacheSparseObjectMatrix;
 import org.ujmp.jdbc.JDBCSparseObjectMatrix;
 import org.ujmp.lucene.LuceneSparseObjectMatrix;
 
@@ -39,9 +40,11 @@ public class VeryLargeMatrixBenchmark {
 
 	public static final int MATRIXSIZE = 10000;
 
-	public static final int MAXTIME = 10; // s
+	public static final int MAXTIME = 30; // s
 
 	public static final int BURNINTIME = 10; // s
+
+	public static final int MAXENTRYCOUNT = 100000;
 
 	public static void main(String args[]) throws Exception {
 		System.out.println("Disk Matrix Benchmark");
@@ -58,8 +61,7 @@ public class VeryLargeMatrixBenchmark {
 		matricesToTest.add(new SerializedSparseObjectMatrix(MATRIXSIZE, MATRIXSIZE));
 		matricesToTest.add(new LuceneSparseObjectMatrix(MATRIXSIZE, MATRIXSIZE));
 		matricesToTest.add(new JDBCSparseObjectMatrix(MATRIXSIZE, MATRIXSIZE));
-		// matricesToTest.add(new EhcacheSparseObjectMatrix(MATRIXSIZE,
-		// MATRIXSIZE));
+		matricesToTest.add(new EhcacheSparseObjectMatrix(MATRIXSIZE, MATRIXSIZE));
 
 		for (Matrix m : matricesToTest) {
 			System.out.println(m.getClass().getSimpleName());
@@ -89,7 +91,7 @@ public class VeryLargeMatrixBenchmark {
 		t = System.currentTimeMillis();
 		random = new Random(seed);
 		int writtenEntryCount = 0;
-		while (System.currentTimeMillis() - t < MAXTIME * 1000) {
+		while (System.currentTimeMillis() - t < MAXTIME * 1000 && writtenEntryCount < MAXENTRYCOUNT) {
 			double value = MathUtil.nextDouble();
 			m.setAsObject(value, random.nextInt(MATRIXSIZE), random.nextInt(MATRIXSIZE));
 			writtenEntryCount++;
@@ -133,7 +135,7 @@ public class VeryLargeMatrixBenchmark {
 		t = System.currentTimeMillis();
 		readEntryCount = 0;
 		hitCount = 0;
-		while (System.currentTimeMillis() - t < MAXTIME * 1000) {
+		while (System.currentTimeMillis() - t < MAXTIME * 1000 && readEntryCount < MAXENTRYCOUNT) {
 			int row = random.nextInt(MATRIXSIZE);
 			int col = random.nextInt(MATRIXSIZE);
 			double v = m.getAsDouble(row, col);
@@ -192,6 +194,12 @@ public class VeryLargeMatrixBenchmark {
 		System.out.println(" Reading/writing random non-zero entries");
 		printStatistics(System.currentTimeMillis() - t, readEntryCount, hitCount);
 
+		// lucene takes a long time to recover after sequential write
+		if (m instanceof LuceneSparseObjectMatrix) {
+			System.out.println();
+			return;
+		}
+
 		// burn in
 		while (System.currentTimeMillis() - t < BURNINTIME * 1000) {
 			double value = MathUtil.nextDouble();
@@ -206,7 +214,8 @@ public class VeryLargeMatrixBenchmark {
 				double value = MathUtil.nextDouble();
 				m.setAsObject(value, r, c);
 				writtenEntryCount++;
-				if (System.currentTimeMillis() - t > MAXTIME * 1000) {
+				if (System.currentTimeMillis() - t > MAXTIME * 1000
+						|| writtenEntryCount > MAXENTRYCOUNT) {
 					break;
 				}
 			}

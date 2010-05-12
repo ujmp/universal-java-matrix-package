@@ -115,7 +115,7 @@ public class Mean extends AbstractDoubleCalculation {
 		for (long[] c : m.availableCoordinates()) {
 			sum += m.getAsDouble(c);
 		}
-		return sum / m.getValueCount();
+		return sum / Coordinates.product(m.getSize());
 	}
 
 }

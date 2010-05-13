@@ -434,21 +434,9 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>pdfbox</groupId>
+				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
-				<version>0.8.0</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>bcprov</groupId>
-				<artifactId>bcprov</artifactId>
-				<version>jdk14-132</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>FontBox</groupId>
-				<artifactId>FontBox</artifactId>
-				<version>0.2.0-dev</version>
+				<version>1.1.0</version>
 				<scope>compile</scope>
 			</dependency>
 

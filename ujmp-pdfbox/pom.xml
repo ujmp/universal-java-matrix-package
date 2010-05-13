@@ -19,16 +19,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>pdfbox</groupId>
+			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>bcprov</groupId>
-			<artifactId>bcprov</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>FontBox</groupId>
-			<artifactId>FontBox</artifactId>
 		</dependency>
 
 		<dependency>

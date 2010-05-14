@@ -40,20 +40,17 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("ujmp-gui");
 		dependencies.add("iText.jar");
 		neededClasses.add("org.ujmp.gui.Plugin");
-		neededClasses.add("com.lowagie.text.Document");
+		neededClasses.add("com.itextpdf.Document");
 	}
 
-	
 	public String getDescription() {
 		return "interface for PDF export";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

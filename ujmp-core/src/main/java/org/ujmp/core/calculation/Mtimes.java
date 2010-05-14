@@ -407,7 +407,7 @@ class MtimesDenseDoubleMatrix2D implements
 		}
 		if (source2 instanceof BlockDenseDoubleMatrix2D
 				&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) source2)
-						.getBlockStripeSize()) {
+				.getBlockStripeSize()) {
 			b = (BlockDenseDoubleMatrix2D) source2;
 		} else {
 			b = new BlockDenseDoubleMatrix2D(source2, a.getBlockStripeSize(),
@@ -417,7 +417,7 @@ class MtimesDenseDoubleMatrix2D implements
 		final int bcols = (int) b.getColumnCount();
 		if (target instanceof BlockDenseDoubleMatrix2D
 				&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) target)
-						.getBlockStripeSize()) {
+				.getBlockStripeSize()) {
 			c = (BlockDenseDoubleMatrix2D) target;
 		} else {
 			c = new BlockDenseDoubleMatrix2D(arows, bcols, a.getBlockStripeSize(),
@@ -587,6 +587,12 @@ class MtimesDenseDoubleMatrix2D implements
 	 * @return new matrix C containing result of matrix multiplication C = A x
 	 *         B.
 	 */
+	/**
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
+	 */
 	private BlockDenseDoubleMatrix2D blockMultiplyMultiThreaded(final BlockDenseDoubleMatrix2D a,
 			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c) {
 		final BlockMatrixLayout al = a.getBlockLayout();
@@ -631,11 +637,16 @@ class MtimesDenseDoubleMatrix2D implements
 				f.get();
 			}
 		} catch (ExecutionException e) {
-			String msg = "Execution exception - while awaiting completion of matrix multiplication.";
-			throw new RuntimeException(msg, e);
+			StringBuilder sb = new StringBuilder("Execution exception - while awaiting completion of matrix multiplication [" + e.getMessage() + "]:");
+			if (e.getCause() != null) {
+				for (StackTraceElement stackTraceElement : e.getCause().getStackTrace()) {
+					sb.append(stackTraceElement).append("  *  ");
+				}
+			}
+			throw new RuntimeException(sb.toString(), e.getCause());
 		} catch (final InterruptedException e) {
 			String msg = "Interrupted - while awaiting completion of matrix multiplication.";
-			throw new RuntimeException(msg, e);
+			throw new RuntimeException(msg + ": cause [" + e.getMessage() + "]", e);
 		}
 
 		return c;

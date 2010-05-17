@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.constants;
+package org.ujmp.core.util;
 
 public abstract class Constants {
 

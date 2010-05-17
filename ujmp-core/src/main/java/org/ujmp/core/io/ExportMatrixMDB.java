@@ -27,8 +27,8 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.constants.Constants;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.Constants;
 
 public class ExportMatrixMDB {
 

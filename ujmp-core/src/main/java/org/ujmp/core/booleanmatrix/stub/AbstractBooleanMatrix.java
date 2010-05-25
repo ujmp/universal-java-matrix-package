@@ -23,7 +23,7 @@
 
 package org.ujmp.core.booleanmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.enums.ValueType;
@@ -57,7 +57,7 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 	}
 
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		verify(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setBoolean(value != 0, coordinates);
 	}
 

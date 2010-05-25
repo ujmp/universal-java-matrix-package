@@ -22,7 +22,7 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import java.util.Arrays;
 
@@ -155,10 +155,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 */
 	public BlockDenseDoubleMatrix2D(final int rows, final int cols, final int blockStripeSize,
 			final BlockOrder blockOrder) {
-		verify(rows > 0, "rows<=0");
-		verify(cols > 0, "cols<=0");
-		verify(blockStripeSize > 0, "blockStripeSize<=0");
-		verify(blockOrder != null, "blockOrder == null");
+		assertTrue(rows > 0, "rows<=0");
+		assertTrue(cols > 0, "cols<=0");
+		assertTrue(blockStripeSize > 0, "blockStripeSize<=0");
+		assertTrue(blockOrder != null, "blockOrder == null");
 
 		this.size = new long[] { rows, cols };
 
@@ -315,12 +315,12 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		final int rows = data.length;
 		final int cols = data[0].length;
 
-		verify(startRow < rows && startRow < getRowCount(), "illegal startRow: %s", startRow);
-		verify(startCol < cols && startCol < getColumnCount(), "illegal startCol: %s", startCol);
-		verify(rows <= getRowCount(), "too many rows in input: %s: max allowed = %s", rows,
+		assertTrue(startRow < rows && startRow < getRowCount(), "illegal startRow: %s", startRow);
+		assertTrue(startCol < cols && startCol < getColumnCount(), "illegal startCol: %s", startCol);
+		assertTrue(rows <= getRowCount(), "too many rows in input: %s: max allowed = %s", rows,
 				getRowCount());
-		verify(cols <= getColumnCount(), "too many columns in input: %s: max allowed = %s", cols,
-				getColumnCount());
+		assertTrue(cols <= getColumnCount(), "too many columns in input: %s: max allowed = %s",
+				cols, getColumnCount());
 
 		for (int i = startRow; i < rows; i++) {
 			for (int j = startCol; j < cols; j++) {
@@ -784,7 +784,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * @return old BlockOrder.
 	 */
 	public BlockOrder setBlockOrder(BlockOrder order) {
-		verify(order != null, "block order cannot be null");
+		assertTrue(order != null, "block order cannot be null");
 
 		if (order == layout.blockOrder) {
 			return order; // quick exit, already same

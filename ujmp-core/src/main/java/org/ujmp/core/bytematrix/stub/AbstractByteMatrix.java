@@ -23,7 +23,7 @@
 
 package org.ujmp.core.bytematrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.enums.ValueType;
@@ -55,7 +55,7 @@ public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> imp
 	}
 
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		verify(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setByte((byte) value, coordinates);
 	}
 

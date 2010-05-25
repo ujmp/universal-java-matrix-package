@@ -29,7 +29,7 @@ import org.ujmp.core.Matrix;
 
 public abstract class VerifyUtil {
 
-	public static final void verify(boolean test, String message, Object... messageArgs) {
+	public static final void assertTrue(boolean test, String message, Object... messageArgs) {
 		if (!test) {
 			String text = (messageArgs == null || messageArgs.length == 0) ? message : String
 					.format(message, messageArgs);
@@ -37,13 +37,94 @@ public abstract class VerifyUtil {
 		}
 	}
 
-	public static final void verify(boolean test, String message) {
+	public static final void assertFalse(boolean test, String message, Object... messageArgs) {
+		if (!test) {
+			String text = (messageArgs == null || messageArgs.length == 0) ? message : String
+					.format(message, messageArgs);
+			throw new IllegalArgumentException(text);
+		}
+	}
+
+	public static final void assertTrue(boolean test, String message) {
 		if (!test) {
 			throw new IllegalArgumentException(message);
 		}
 	}
 
-	public static final void haveSameSize(final Matrix m1, final Matrix m2) {
-		verify(Arrays.equals(m1.getSize(), m2.getSize()), "matrices have different sizes");
+	public static final void assertFalse(boolean test, String message) {
+		if (test) {
+			throw new IllegalArgumentException(message);
+		}
+	}
+
+	public static final void assertSameSize(final Matrix m1, final Matrix m2) {
+		assertTrue(Arrays.equals(m1.getSize(), m2.getSize()), "matrices have different sizes");
+	}
+
+	public static void assertSameSize(Matrix... matrices) {
+		assertTrue(matrices.length > 1, "more than one matrix must be provided");
+		for (int i = matrices.length; --i != 0;) {
+			assertTrue(Arrays.equals(matrices[i].getSize(), matrices[i - 1].getSize()),
+					"matrices have different sizes");
+		}
+	}
+
+	public static void assertSameSize(double[][] source1, double[][] source2, double[][] target) {
+		assertNotNull(source1, "matrix1 cannot be null");
+		assertNotNull(source2, "matrix2 cannot be null");
+		assertNotNull(target, "matrix3 cannot be null");
+		assertNotNull(source1[0], "matrix1 must be 2d");
+		assertNotNull(source2[0], "matrix2 must be 2d");
+		assertNotNull(target[0], "matrix3 must be 2d");
+		assertEquals(source1.length, source2.length, "matrix1 and matrix2 have different sizes");
+		assertEquals(source2.length, target.length, "matrix1 and matrix3 have different sizes");
+		assertEquals(source1[0].length, source2[0].length,
+				"matrix1 and matrix2 have different sizes");
+		assertEquals(source2[0].length, target[0].length,
+				"matrix1 and matrix3 have different sizes");
+	}
+
+	public static void assertEquals(int i1, int i2, String message) {
+		assertTrue(i1 == i2, message);
+	}
+
+	public static void assertNotNull(Object o, String message) {
+		assertFalse(o == null, message);
+	}
+
+	public static void assertNull(Object o, String message) {
+		assertTrue(o == null, message);
+	}
+
+	public static void assertSameSize(double[] source1, double[] source2, double[] target) {
+		assertNotNull(source1, "matrix1 cannot be null");
+		assertNotNull(source2, "matrix2 cannot be null");
+		assertNotNull(target, "matrix3 cannot be null");
+		assertEquals(source1.length, source2.length, "matrix1 and matrix2 have different sizes");
+		assertEquals(source2.length, target.length, "matrix1 and matrix3 have different sizes");
+	}
+
+	public static void assertSameSize(double[][] source, double[][] target) {
+		assertNotNull(source, "matrix1 cannot be null");
+		assertNotNull(target, "matrix2 cannot be null");
+		assertNotNull(source[0], "matrix1 must be 2d");
+		assertNotNull(target[0], "matrix2 must be 2d");
+		assertEquals(source.length, target.length, "matrix1 and matrix2 have different sizes");
+		assertEquals(source[0].length, target[0].length, "matrix1 and matrix2 have different sizes");
+	}
+
+	public static void assertSameSize(double[] source, double[] target) {
+		assertNotNull(source, "matrix1 cannot be null");
+		assertNotNull(target, "matrix2 cannot be null");
+		assertEquals(source.length, target.length, "matrix1 and matrix2 have different sizes");
+	}
+
+	public static void assert2D(Matrix m) {
+		assertNotNull(m, "matrix cannot be null");
+		assertEquals(m.getDimensionCount(), 2, "matrix is not 2d");
+	}
+
+	public static void assertEquals(long l1, long l2, String message) {
+		assertTrue(l1 == l2, message);
 	}
 }

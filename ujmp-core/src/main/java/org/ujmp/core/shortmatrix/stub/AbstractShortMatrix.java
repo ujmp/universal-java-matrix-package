@@ -23,7 +23,7 @@
 
 package org.ujmp.core.shortmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -56,7 +56,7 @@ public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> i
 	}
 
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
-		verify(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setShort((short) value, coordinates);
 	}
 

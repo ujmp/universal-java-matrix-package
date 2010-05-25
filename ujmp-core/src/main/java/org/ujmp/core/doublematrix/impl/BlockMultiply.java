@@ -22,7 +22,7 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import java.util.concurrent.Callable;
 
@@ -132,7 +132,7 @@ public class BlockMultiply implements Callable<Void> {
 						} else {
 							int aCols = aBlock.length / aRows;
 							int bRows = bBlock.length / bCols;
-							verify(aCols == bRows, "aCols!=bRows");
+							assertTrue(aCols == bRows, "aCols!=bRows");
 							multiplyRowMajorTimesColumnMajorBlocks(aBlock, bBlock, cBlock, aRows,
 									aCols, bCols);
 						}
@@ -203,18 +203,18 @@ public class BlockMultiply implements Callable<Void> {
 	private static void verifyInput(final BlockDenseDoubleMatrix2D a,
 			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c, final int fromM,
 			final int toM, final int fromN, final int toN, final int fromK, final int toK) {
-		verify(a != null, "a cannot be null");
-		verify(b != null, "b cannot be null");
-		verify(c != null, "c cannot be null");
-		verify(fromM <= a.getRowCount() && fromM >= 0, "Invalid argument : fromM");
-		verify(toM <= a.getRowCount() && toM >= fromM, "Invalid argument : fromM/toM");
-		verify(fromN <= a.getColumnCount() && fromN >= 0, "Invalid argument : fromN");
-		verify(toN <= a.getColumnCount() && toN >= fromN, "Invalid argument : fromN/toN");
-		verify(fromK <= b.getColumnCount() && fromK >= 0, "Invalid argument : fromK");
-		verify(toK <= b.getColumnCount() && toK >= fromK, "Invalid argument : fromK/toK");
-		verify(a.getColumnCount() == b.getRowCount(), "Invalid argument : a.columns != b.rows");
-		verify(a.getRowCount() == c.getRowCount(), "Invalid argument : a.rows != c.rows");
-		verify(b.getColumnCount() == c.getColumnCount(),
+		assertTrue(a != null, "a cannot be null");
+		assertTrue(b != null, "b cannot be null");
+		assertTrue(c != null, "c cannot be null");
+		assertTrue(fromM <= a.getRowCount() && fromM >= 0, "Invalid argument : fromM");
+		assertTrue(toM <= a.getRowCount() && toM >= fromM, "Invalid argument : fromM/toM");
+		assertTrue(fromN <= a.getColumnCount() && fromN >= 0, "Invalid argument : fromN");
+		assertTrue(toN <= a.getColumnCount() && toN >= fromN, "Invalid argument : fromN/toN");
+		assertTrue(fromK <= b.getColumnCount() && fromK >= 0, "Invalid argument : fromK");
+		assertTrue(toK <= b.getColumnCount() && toK >= fromK, "Invalid argument : fromK/toK");
+		assertTrue(a.getColumnCount() == b.getRowCount(), "Invalid argument : a.columns != b.rows");
+		assertTrue(a.getRowCount() == c.getRowCount(), "Invalid argument : a.rows != c.rows");
+		assertTrue(b.getColumnCount() == c.getColumnCount(),
 				"Invalid argument : b.columns != c.columns");
 	}
 

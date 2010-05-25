@@ -34,6 +34,7 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class DivideScalar {
@@ -56,6 +57,7 @@ class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor, (SparseMatrix) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.divide(value, divisor);
@@ -83,6 +85,7 @@ class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, De
 			DivideScalar.DENSEMATRIX2D
 					.calc((DenseMatrix2D) source, divisor, (DenseMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.divide(value, divisor);
@@ -105,6 +108,7 @@ class DivideScalarSparseMatrix implements DivideScalarCalculation<SparseMatrix, 
 
 	public final void calc(final SparseMatrix source, final BigDecimal divisor,
 			final SparseMatrix target) {
+		VerifyUtil.assertSameSize(source, target);
 		for (long[] c : source.availableCoordinates()) {
 			BigDecimal value = source.getAsBigDecimal(c);
 			BigDecimal result = MathUtil.divide(value, divisor);
@@ -125,6 +129,7 @@ class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D
 			DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
 					(DenseDoubleMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					BigDecimal value = source.getAsBigDecimal(r, c);
@@ -165,6 +170,7 @@ class DivideScalarDenseDoubleMatrix2D implements
 			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), divisor,
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) / divisor, r, c);
@@ -174,6 +180,7 @@ class DivideScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[][] source, final double divisor, final double[][] target) {
+		VerifyUtil.assertSameSize(source, target);
 		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
 				&& source[0].length >= 100) {
 			new PForEquidistant(0, source.length - 1) {
@@ -199,6 +206,7 @@ class DivideScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[] source, final double divisor, final double[] target) {
+		VerifyUtil.assertSameSize(source, target);
 		final int length = source.length;
 		for (int i = 0; i < length; i++) {
 			target[i] = source[i] / divisor;

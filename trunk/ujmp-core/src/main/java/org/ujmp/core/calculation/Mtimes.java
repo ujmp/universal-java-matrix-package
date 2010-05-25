@@ -23,7 +23,7 @@
 
 package org.ujmp.core.calculation;
 
-import static org.ujmp.core.util.VerifyUtil.verify;
+import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -38,7 +38,6 @@ import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout;
 import org.ujmp.core.doublematrix.impl.BlockMultiply;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.matrix.DenseMatrix;
@@ -46,6 +45,7 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.AbstractPlugin;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PFor;
 import org.ujmp.core.util.concurrent.UJMPThreadPoolExecutor;
 
@@ -112,14 +112,16 @@ class MtimesMatrix implements MtimesCalculation<Matrix, Matrix, Matrix> {
 	}
 
 	private final void gemm(final Matrix A, final Matrix B, final Matrix C) {
+		VerifyUtil.assert2D(A);
+		VerifyUtil.assert2D(B);
+		VerifyUtil.assert2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-
-		if (m1ColumnCount != m2RowCount) {
-			throw new MatrixException("matrices have wrong size");
-		}
+		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
+		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
+		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -175,14 +177,16 @@ class MtimesDenseMatrix implements MtimesCalculation<DenseMatrix, DenseMatrix, D
 	}
 
 	private final void gemm(final DenseMatrix A, final DenseMatrix B, final DenseMatrix C) {
+		VerifyUtil.assert2D(A);
+		VerifyUtil.assert2D(B);
+		VerifyUtil.assert2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-
-		if (m1ColumnCount != m2RowCount) {
-			throw new MatrixException("matrices have wrong size");
-		}
+		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
+		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
+		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -227,6 +231,15 @@ class MtimesDenseMatrix implements MtimesCalculation<DenseMatrix, DenseMatrix, D
 class MtimesSparseMatrix1 implements MtimesCalculation<SparseMatrix, Matrix, Matrix> {
 
 	public final void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
+		VerifyUtil.assert2D(source1);
+		VerifyUtil.assert2D(source2);
+		VerifyUtil.assert2D(target);
+		VerifyUtil.assertEquals(source1.getColumnCount(), source2.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.assertEquals(target.getRowCount(), source1.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.assertEquals(target.getColumnCount(), source2.getColumnCount(),
+				"matrices have wrong sizes");
 		target.clear();
 		for (long[] c1 : source1.availableCoordinates()) {
 			final double v1 = source1.getAsDouble(c1);
@@ -247,6 +260,15 @@ class MtimesSparseMatrix1 implements MtimesCalculation<SparseMatrix, Matrix, Mat
 class MtimesSparseMatrix2 implements MtimesCalculation<Matrix, SparseMatrix, Matrix> {
 
 	public final void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
+		VerifyUtil.assert2D(source1);
+		VerifyUtil.assert2D(source2);
+		VerifyUtil.assert2D(target);
+		VerifyUtil.assertEquals(source1.getColumnCount(), source2.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.assertEquals(target.getRowCount(), source1.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.assertEquals(target.getColumnCount(), source2.getColumnCount(),
+				"matrices have wrong sizes");
 		target.clear();
 		for (long[] c2 : source2.availableCoordinates()) {
 			final double v2 = source2.getAsDouble(c2);
@@ -278,14 +300,16 @@ class MtimesDenseMatrix2D implements MtimesCalculation<DenseMatrix2D, DenseMatri
 	}
 
 	private final void gemm(final DenseMatrix2D A, final DenseMatrix2D B, final DenseMatrix2D C) {
+		VerifyUtil.assert2D(A);
+		VerifyUtil.assert2D(B);
+		VerifyUtil.assert2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-
-		if (m1ColumnCount != m2RowCount) {
-			throw new MatrixException("matrices have wrong size");
-		}
+		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong size");
+		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong size");
+		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong size");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -339,12 +363,12 @@ class MtimesDenseDoubleMatrix2D implements
 
 	public final void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 			final DenseDoubleMatrix2D target) {
-		verify(source1 != null, "a == null");
-		verify(source2 != null, "b == null");
-		verify(target != null, "c == null");
-		verify(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
-		verify(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
-		verify(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
+		assertTrue(source1 != null, "a == null");
+		assertTrue(source2 != null, "b == null");
+		assertTrue(target != null, "c == null");
+		assertTrue(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
+		assertTrue(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
+		assertTrue(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
 		if (source1.getRowCount() >= Mtimes.THRESHOLD
 				&& source1.getColumnCount() >= Mtimes.THRESHOLD
 				&& source2.getColumnCount() >= Mtimes.THRESHOLD) {
@@ -407,7 +431,7 @@ class MtimesDenseDoubleMatrix2D implements
 		}
 		if (source2 instanceof BlockDenseDoubleMatrix2D
 				&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) source2)
-				.getBlockStripeSize()) {
+						.getBlockStripeSize()) {
 			b = (BlockDenseDoubleMatrix2D) source2;
 		} else {
 			b = new BlockDenseDoubleMatrix2D(source2, a.getBlockStripeSize(),
@@ -417,7 +441,7 @@ class MtimesDenseDoubleMatrix2D implements
 		final int bcols = (int) b.getColumnCount();
 		if (target instanceof BlockDenseDoubleMatrix2D
 				&& a.getBlockStripeSize() == ((BlockDenseDoubleMatrix2D) target)
-				.getBlockStripeSize()) {
+						.getBlockStripeSize()) {
 			c = (BlockDenseDoubleMatrix2D) target;
 		} else {
 			c = new BlockDenseDoubleMatrix2D(arows, bcols, a.getBlockStripeSize(),
@@ -597,9 +621,9 @@ class MtimesDenseDoubleMatrix2D implements
 			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c) {
 		final BlockMatrixLayout al = a.getBlockLayout();
 		final BlockMatrixLayout bl = b.getBlockLayout();
-		verify(al.columns == bl.rows, "b.rows != this.columns");
-		verify(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s", al.blockStripe,
-				bl.blockStripe);
+		assertTrue(al.columns == bl.rows, "b.rows != this.columns");
+		assertTrue(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s",
+				al.blockStripe, bl.blockStripe);
 
 		final List<Callable<Void>> tasks = new LinkedList<Callable<Void>>();
 
@@ -637,7 +661,9 @@ class MtimesDenseDoubleMatrix2D implements
 				f.get();
 			}
 		} catch (ExecutionException e) {
-			StringBuilder sb = new StringBuilder("Execution exception - while awaiting completion of matrix multiplication [" + e.getMessage() + "]:");
+			StringBuilder sb = new StringBuilder(
+					"Execution exception - while awaiting completion of matrix multiplication ["
+							+ e.getMessage() + "]:");
 			if (e.getCause() != null) {
 				for (StackTraceElement stackTraceElement : e.getCause().getStackTrace()) {
 					sb.append(stackTraceElement).append("  *  ");

@@ -34,6 +34,7 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class MinusScalar {
@@ -56,6 +57,7 @@ class MinusScalarMatrix implements MinusScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal svalue = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.minus(svalue, value);
@@ -82,6 +84,7 @@ class MinusScalarDenseMatrix implements MinusScalarCalculation<DenseMatrix, Dens
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value, (DenseMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal svalue = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.minus(svalue, value);
@@ -103,6 +106,7 @@ class MinusScalarSparseMatrix implements MinusScalarCalculation<SparseMatrix, Sp
 
 	public final void calc(final SparseMatrix source, final BigDecimal value,
 			final SparseMatrix target) {
+		VerifyUtil.assertSameSize(source, target);
 		for (long[] c : source.availableCoordinates()) {
 			BigDecimal svalue = source.getAsBigDecimal(c);
 			BigDecimal result = MathUtil.minus(svalue, value);
@@ -123,6 +127,7 @@ class MinusScalarDenseMatrix2D implements MinusScalarCalculation<DenseMatrix2D, 
 			MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
 					(DenseDoubleMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					BigDecimal svalue = source.getAsBigDecimal(r, c);
@@ -162,6 +167,7 @@ class MinusScalarDenseDoubleMatrix2D implements
 			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), value,
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) - value, r, c);
@@ -171,6 +177,7 @@ class MinusScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[][] source, final double value, final double[][] target) {
+		VerifyUtil.assertSameSize(source, target);
 		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
 				&& source[0].length >= 100) {
 			new PForEquidistant(0, source.length - 1) {
@@ -196,6 +203,7 @@ class MinusScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[] source, final double value, final double[] target) {
+		VerifyUtil.assertSameSize(source, target);
 		final int length = source.length;
 		for (int i = 0; i < length; i++) {
 			target[i] = source[i] - value;

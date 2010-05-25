@@ -57,7 +57,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public DefaultSparseGenericMatrix(long... size) {
-		VerifyUtil.verify(size.length > 1, "matrix must have at least two dimensions");
+		VerifyUtil.assertTrue(size.length > 1, "matrix must have at least two dimensions");
 		this.size = Coordinates.copyOf(size);
 	}
 

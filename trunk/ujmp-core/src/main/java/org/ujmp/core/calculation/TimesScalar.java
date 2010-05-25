@@ -34,6 +34,7 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class TimesScalar {
@@ -62,6 +63,7 @@ class TimesScalarMatrix implements TimesScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			TimesScalar.SPARSEMATRIX.calc((SparseMatrix) source, factor, (SparseMatrix) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.times(value, factor);
@@ -88,6 +90,7 @@ class TimesScalarDenseMatrix implements TimesScalarCalculation<DenseMatrix, Dens
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			TimesScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, factor, (DenseMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal value = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.times(value, factor);
@@ -109,6 +112,7 @@ class TimesScalarSparseMatrix implements TimesScalarCalculation<SparseMatrix, Sp
 
 	public final void calc(final SparseMatrix source, final BigDecimal factor,
 			final SparseMatrix target) {
+		VerifyUtil.assertSameSize(source, target);
 		for (long[] c : source.availableCoordinates()) {
 			BigDecimal value = source.getAsBigDecimal(c);
 			BigDecimal result = MathUtil.times(value, factor);
@@ -129,6 +133,7 @@ class TimesScalarDenseMatrix2D implements TimesScalarCalculation<DenseMatrix2D, 
 			TimesScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, factor,
 					(DenseDoubleMatrix2D) target);
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					BigDecimal value = source.getAsBigDecimal(r, c);
@@ -169,6 +174,7 @@ class TimesScalarDenseDoubleMatrix2D implements
 			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), factor,
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
+			VerifyUtil.assertSameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(factor * source.getDouble(r, c), r, c);
@@ -178,6 +184,7 @@ class TimesScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[][] source, final double factor, final double[][] target) {
+		VerifyUtil.assertSameSize(source, target);
 		final int rows = source.length;
 		final int cols = source[0].length;
 		if (UJMPSettings.getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
@@ -205,6 +212,7 @@ class TimesScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[] source, final double factor, final double[] target) {
+		VerifyUtil.assertSameSize(source, target);
 		final int length = source.length;
 		for (int i = 0; i < length; i++) {
 			target[i] = source[i] * factor;

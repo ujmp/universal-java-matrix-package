@@ -69,11 +69,11 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 	}
 
 	public final double getDouble(long... pos) {
-		return values[(int) MathUtil.multiDindex(size, pos)];
+		return values[(int) MathUtil.pos2IndexRowMajor(size, pos)];
 	}
 
 	public final void setDouble(double value, long... pos) {
-		values[(int) MathUtil.multiDindex(size, pos)] = value;
+		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
 	}
 
 }

@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SumAction extends MatrixAction {
+public class SumAction extends AbstractMatrixAction {
 
 	private static final long serialVersionUID = 5704836312852778524L;
 

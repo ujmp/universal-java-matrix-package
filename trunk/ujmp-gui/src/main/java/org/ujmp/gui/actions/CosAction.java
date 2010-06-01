@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class CosAction extends MatrixAction {
+public class CosAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 6069808090456484963L;
 
 	public CosAction(JComponent c, MatrixGUIObject m, GUIObject v) {

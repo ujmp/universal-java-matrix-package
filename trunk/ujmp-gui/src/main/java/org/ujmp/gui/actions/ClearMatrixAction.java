@@ -32,7 +32,7 @@ import javax.swing.KeyStroke;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ClearMatrixAction extends MatrixAction {
+public class ClearMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 4460357277537577412L;
 
 	public ClearMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

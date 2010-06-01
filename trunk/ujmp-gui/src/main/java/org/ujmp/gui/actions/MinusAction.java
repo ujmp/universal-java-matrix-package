@@ -35,7 +35,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class MinusAction extends MatrixAction {
+public class MinusAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -23456655151951524L;
 
 	public MinusAction(JComponent c, MatrixGUIObject m, GUIObject v) {

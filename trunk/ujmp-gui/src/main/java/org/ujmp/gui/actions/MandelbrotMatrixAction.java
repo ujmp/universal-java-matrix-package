@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class MandelbrotMatrixAction extends MatrixAction {
+public class MandelbrotMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 8708344146012762782L;
 
 	public MandelbrotMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

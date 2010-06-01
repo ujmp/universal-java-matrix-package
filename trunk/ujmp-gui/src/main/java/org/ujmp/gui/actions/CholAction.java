@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class CholAction extends MatrixAction {
+public class CholAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -7453299795967048288L;
 
 	public CholAction(JComponent c, MatrixGUIObject m, GUIObject v) {

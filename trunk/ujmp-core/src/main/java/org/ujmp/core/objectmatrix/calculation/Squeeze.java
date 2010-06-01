@@ -21,31 +21,33 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.actions;
-
-import javax.swing.Action;
-import javax.swing.JComponent;
+package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.MatrixGUIObject;
 
-public class ProdAction extends AbstractMatrixAction {
-	private static final long serialVersionUID = -6268502779513490985L;
+public class Squeeze extends Reshape {
+	private static final long serialVersionUID = 6364079287530956244L;
 
-	public ProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
-		super(c, m, v);
-		putValue(Action.NAME, "Prod");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the product between each two rows in this matrix");
+	public Squeeze(Matrix source) {
+		super(source, calculateNewSize(source));
 	}
 
-	public Object call() throws MatrixException {
-		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(),
-				getDimension(), getIgnoreMissing());
-		m.showGUI();
-		return m;
+	private static long[] calculateNewSize(Matrix source) {
+		long[] oldSize = source.getSize();
+		int n = 0;
+		for (int d = oldSize.length; --d != -1;) {
+			if (oldSize[d] > 1) {
+				n++;
+			}
+		}
+		long[] newSize = new long[n];
+		for (int d = oldSize.length; --d != -1;) {
+			if (oldSize[d] > 1) {
+				n--;
+				newSize[n] = oldSize[d];
+			}
+		}
+		return newSize;
 	}
 
 }

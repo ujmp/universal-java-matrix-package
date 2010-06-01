@@ -34,7 +34,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class TransposeAction extends MatrixAction {
+public class TransposeAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -993725459831614912L;
 
 	public TransposeAction(JComponent c, MatrixGUIObject m, GUIObject v) {

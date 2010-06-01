@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class VarianceAction extends MatrixAction {
+public class VarianceAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -2308191750274084929L;
 
 	public VarianceAction(JComponent c, MatrixGUIObject m, GUIObject v) {

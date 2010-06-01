@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FlipdimAction extends MatrixAction {
+public class FlipdimAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 5646962775078347030L;
 
 	public FlipdimAction(JComponent c, MatrixGUIObject m, GUIObject v) {

@@ -253,7 +253,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 		if (getBytesPerValue() < 1) {
 			throw new RuntimeException("not supported");
 		}
-		return MathUtil.multiDindex(size, pos) * getBytesPerValue() + offset;
+		return MathUtil.pos2IndexRowMajor(size, pos) * getBytesPerValue() + offset;
 	}
 
 	public long getFileLength() {

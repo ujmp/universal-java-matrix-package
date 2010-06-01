@@ -33,7 +33,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class DuplicateAction extends MatrixAction {
+public class DuplicateAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 6122103774731476379L;
 
 	public DuplicateAction(JComponent c, MatrixGUIObject m, GUIObject v) {

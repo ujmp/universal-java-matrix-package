@@ -33,7 +33,7 @@ import javax.swing.KeyStroke;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FillAction extends MatrixAction {
+public class FillAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 6318874871015478768L;
 
 	private String initialValue = "";

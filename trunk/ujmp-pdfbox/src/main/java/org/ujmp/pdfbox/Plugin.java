@@ -38,24 +38,23 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("pdfbox.jar");
-		dependencies.add("bcprov-jdk14.jar");
-		dependencies.add("FontBox.jar");
+		dependencies.add("jempbox.jar");
+		dependencies.add("fontbox.jar");
+		dependencies.add("commons-logging.jar");
 		neededClasses.add("org.apache.pdfbox.PDFReader");
-		neededClasses.add("org.bouncycastle.LICENSE");
-		neededClasses.add("org.fontbox.util.BoundingBox");
+		neededClasses.add("org.apache.jempbox.impl.XMLUtil");
+		neededClasses.add("org.apache.fontbox.util.BoundingBox");
+		neededClasses.add("org.apache.commons.logging.Log");
 	}
 
-	
 	public String getDescription() {
 		return "library for reading PDF files";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

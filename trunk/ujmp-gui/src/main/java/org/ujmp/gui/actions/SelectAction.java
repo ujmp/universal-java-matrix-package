@@ -31,7 +31,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SelectAction extends MatrixAction {
+public class SelectAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 252129881194877739L;
 
 	public SelectAction(JComponent c, MatrixGUIObject m, GUIObject v) {

@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SinAction extends MatrixAction {
+public class SinAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 8939336020827959294L;
 
 	public SinAction(JComponent c, MatrixGUIObject m, GUIObject v) {

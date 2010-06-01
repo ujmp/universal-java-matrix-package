@@ -33,7 +33,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class ReplaceByNearestNeighborAction extends MatrixAction {
+public class ReplaceByNearestNeighborAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -2401692333851059830L;
 
 	public ReplaceByNearestNeighborAction(JComponent c, MatrixGUIObject m,

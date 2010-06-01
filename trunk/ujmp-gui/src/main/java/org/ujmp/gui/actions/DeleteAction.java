@@ -31,7 +31,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class DeleteAction extends MatrixAction {
+public class DeleteAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 1875202202123788470L;
 
 	public DeleteAction(JComponent c, MatrixGUIObject m, GUIObject v) {

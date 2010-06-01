@@ -169,9 +169,11 @@ import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
 import org.ujmp.core.objectmatrix.calculation.IncludeAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Replace;
+import org.ujmp.core.objectmatrix.calculation.Reshape;
 import org.ujmp.core.objectmatrix.calculation.Selection;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sortrows;
+import org.ujmp.core.objectmatrix.calculation.Squeeze;
 import org.ujmp.core.objectmatrix.calculation.Swap;
 import org.ujmp.core.objectmatrix.calculation.ToObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
@@ -180,7 +182,6 @@ import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.objectmatrix.calculation.UniqueValueCount;
 import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
-import org.ujmp.core.objectmatrix.impl.ReshapedObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
@@ -1660,23 +1661,23 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return getAbsoluteValueSum() / getValueCount();
 	}
 
-	public final Matrix toRowVector() throws MatrixException {
+	public final Matrix toRowVector(Ret returnType) throws MatrixException {
 		if (isRowVector()) {
 			return this;
 		} else if (isColumnVector()) {
-			return transpose();
+			return transpose(returnType);
 		} else {
-			return reshape(Coordinates.product(getSize()), 1);
+			return reshape(returnType, Coordinates.product(getSize()), 1);
 		}
 	}
 
-	public final Matrix toColumnVector() throws MatrixException {
+	public final Matrix toColumnVector(Ret returnType) throws MatrixException {
 		if (isColumnVector()) {
 			return this;
 		} else if (isRowVector()) {
-			return transpose();
+			return transpose(returnType);
 		} else {
-			return reshape(1, (int) Coordinates.product(getSize()));
+			return reshape(returnType, 1, (int) Coordinates.product(getSize()));
 		}
 	}
 
@@ -1802,8 +1803,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		throw new MatrixException("operation not possible: cannot change size of matrix");
 	}
 
-	public final Matrix reshape(long... newSize) {
-		return new ReshapedObjectMatrix(this, newSize);
+	public final Matrix reshape(Ret returnType, long... newSize) {
+		return new Reshape(this, newSize).calc(returnType);
+	}
+
+	public final Matrix squeeze(Ret returnType) {
+		return new Squeeze(this).calc(returnType);
 	}
 
 	public final double doubleValue() throws MatrixException {

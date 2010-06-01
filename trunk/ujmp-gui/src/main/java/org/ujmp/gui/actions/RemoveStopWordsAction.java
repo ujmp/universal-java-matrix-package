@@ -34,7 +34,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class RemoveStopWordsAction extends MatrixAction {
+public class RemoveStopWordsAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -8691068224220738712L;
 
 	public static final String[] ENGLISH_STOP_WORDS = { "a", "an", "and",

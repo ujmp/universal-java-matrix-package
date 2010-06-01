@@ -33,7 +33,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class FadeInAction extends MatrixAction {
+public class FadeInAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -485768320588021515L;
 
 	public FadeInAction(JComponent c, MatrixGUIObject m, GUIObject v) {

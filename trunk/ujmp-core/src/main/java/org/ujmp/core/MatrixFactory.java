@@ -91,6 +91,7 @@ import org.ujmp.core.shortmatrix.impl.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 import org.ujmp.core.stringmatrix.impl.SimpleDenseStringMatrix2D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
 import org.ujmp.core.util.matrices.MatrixMemoryUsage;
 import org.ujmp.core.util.matrices.MatrixRandomSeed;
@@ -903,6 +904,14 @@ public abstract class MatrixFactory {
 		Matrix[] matrices = new Matrix[(int) columnCount];
 		Arrays.fill(matrices, column);
 		return horCat(matrices);
+	}
+
+	public static Matrix sequence(double start, double end) {
+		return sequence(start, end, 1);
+	}
+
+	public static Matrix sequence(double start, double end, double stepsize) {
+		return MatrixFactory.linkToArray(MathUtil.sequenceDouble(start, end, stepsize));
 	}
 
 }

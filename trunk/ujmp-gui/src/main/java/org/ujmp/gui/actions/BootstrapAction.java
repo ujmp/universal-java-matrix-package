@@ -35,7 +35,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class BootstrapAction extends MatrixAction {
+public class BootstrapAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -4303125885679602677L;
 
 	public BootstrapAction(JComponent c, MatrixGUIObject m, GUIObject v) {

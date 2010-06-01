@@ -32,7 +32,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class ReplaceRegexAction extends MatrixAction {
+public class ReplaceRegexAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 6791582298005924770L;
 
 	public ReplaceRegexAction(JComponent c, MatrixGUIObject m, GUIObject v) {

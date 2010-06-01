@@ -32,7 +32,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.matrices.IrisMatrix;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class IrisMatrixAction extends MatrixAction {
+public class IrisMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -1016922504877553L;
 
 	public IrisMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

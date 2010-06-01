@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SunSpotDataMatrixAction extends MatrixAction {
+public class SunSpotDataMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 5736739909120149516L;
 
 	public SunSpotDataMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

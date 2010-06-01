@@ -40,7 +40,7 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("ujmp-gui");
 		dependencies.add("iText.jar");
 		neededClasses.add("org.ujmp.gui.Plugin");
-		neededClasses.add("com.itextpdf.Document");
+		neededClasses.add("com.itextpdf.text.Document");
 	}
 
 	public String getDescription() {

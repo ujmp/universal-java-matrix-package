@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SqrtAction extends MatrixAction {
+public class SqrtAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 371063665780104847L;
 
 	public SqrtAction(JComponent c, MatrixGUIObject m, GUIObject v) {

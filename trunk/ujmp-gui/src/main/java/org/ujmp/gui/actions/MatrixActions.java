@@ -107,6 +107,8 @@ public class MatrixActions extends ArrayList<JComponent> {
 		public TransformMenu(JComponent c, MatrixGUIObject m, GUIObject v) {
 			super("Transform");
 			add(new JMenuItem(new TransposeAction(c, m, v)));
+			add(new JMenuItem(new ReshapeAction(c, m, v)));
+			add(new JMenuItem(new SqueezeAction(c, m, v)));
 			add(new JMenuItem(new FlipdimAction(c, m, v)));
 			add(new JSeparator());
 			add(new JMenuItem(new PlusAction(c, m, v)));

@@ -412,14 +412,20 @@ public abstract class MathUtil {
 	}
 
 	public static List<Long> sequenceListLong(long start, long end) {
+		return sequenceListLong(start, end, 1);
+	}
+
+	public static List<Long> sequenceListLong(long start, long end, long stepsize) {
 		List<Long> list = new ArrayList<Long>();
 
 		if (start < end) {
-			for (long l = start; l <= end; l++) {
+			stepsize = Math.abs(stepsize);
+			for (long l = start; l <= end; l += stepsize) {
 				list.add(l);
 			}
 		} else {
-			for (long l = start; l >= end; l--) {
+			stepsize = -Math.abs(stepsize);
+			for (long l = start; l >= end; l += stepsize) {
 				list.add(l);
 			}
 		}
@@ -427,14 +433,20 @@ public abstract class MathUtil {
 	}
 
 	public static List<Double> sequenceListDouble(double start, double end) {
+		return sequenceListDouble(start, end, 1);
+	}
+
+	public static List<Double> sequenceListDouble(double start, double end, double stepsize) {
 		List<Double> list = new ArrayList<Double>();
 
 		if (start < end) {
-			for (double l = start; l <= end; l++) {
+			stepsize = Math.abs(stepsize);
+			for (double l = start; l <= end; l += stepsize) {
 				list.add(l);
 			}
 		} else {
-			for (double l = start; l >= end; l--) {
+			stepsize = -Math.abs(stepsize);
+			for (double l = start; l >= end; l += stepsize) {
 				list.add(l);
 			}
 		}
@@ -460,8 +472,16 @@ public abstract class MathUtil {
 		return collectionToLong(sequenceListLong(start, end));
 	}
 
+	public static long[] sequenceLong(long start, long end, long stepsize) {
+		return collectionToLong(sequenceListLong(start, end, stepsize));
+	}
+
 	public static double[] sequenceDouble(double start, double end) {
 		return collectionToDouble(sequenceListDouble(start, end));
+	}
+
+	public static double[] sequenceDouble(double start, double end, double stepsize) {
+		return collectionToDouble(sequenceListDouble(start, end, stepsize));
 	}
 
 	public static int[] sequenceInt(int start, int end) {
@@ -1054,7 +1074,7 @@ public abstract class MathUtil {
 		return -tmp + Math.log(ser * 2.5066282751072975 / x);
 	}
 
-	public static final long multiDindex(long[] size, long[] pos) {
+	public static final long pos2IndexRowMajor(long[] size, long[] pos) {
 		long sum = 0;
 		long prod = 1;
 		final int d = pos.length;
@@ -1066,5 +1086,15 @@ public abstract class MathUtil {
 			sum += prod * pos[k];
 		}
 		return sum;
+	}
+
+	public static final long[] index2PosRowMajor(long[] size, long index) {
+		final long[] pos = new long[size.length];
+		long res = index;
+		for (int k = size.length; --k != -1;) {
+			pos[k] = res % size[k];
+			res /= size[k];
+		}
+		return pos;
 	}
 }

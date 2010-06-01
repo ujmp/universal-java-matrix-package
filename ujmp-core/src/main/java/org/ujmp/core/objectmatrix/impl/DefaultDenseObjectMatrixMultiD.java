@@ -69,11 +69,11 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	}
 
 	public final Object getObject(long... pos) {
-		return values[(int) MathUtil.multiDindex(size, pos)];
+		return values[(int) MathUtil.pos2IndexRowMajor(size, pos)];
 	}
 
 	public final void setObject(Object value, long... pos) {
-		values[(int) MathUtil.multiDindex(size, pos)] = value;
+		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
 	}
 
 }

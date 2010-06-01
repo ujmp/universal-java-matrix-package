@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ShuffleAction extends MatrixAction {
+public class ShuffleAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 8024764766111284766L;
 
 	public ShuffleAction(JComponent c, MatrixGUIObject m, GUIObject v) {

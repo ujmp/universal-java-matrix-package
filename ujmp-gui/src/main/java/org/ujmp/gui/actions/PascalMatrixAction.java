@@ -33,7 +33,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class PascalMatrixAction extends MatrixAction {
+public class PascalMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -7304014036300004532L;
 
 	public PascalMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

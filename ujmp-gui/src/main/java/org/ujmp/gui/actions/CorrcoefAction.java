@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class CorrcoefAction extends MatrixAction {
+public class CorrcoefAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 3782150550995513107L;
 
 	public CorrcoefAction(JComponent c, MatrixGUIObject m, GUIObject v) {

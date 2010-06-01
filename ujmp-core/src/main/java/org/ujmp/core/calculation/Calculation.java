@@ -50,6 +50,12 @@ public interface Calculation extends Serializable {
 		NEW, LINK, ORIG
 	};
 
+	public static final Ret NEW = Ret.NEW;
+
+	public static final Ret LINK = Ret.LINK;
+
+	public static final Ret ORIG = Ret.ORIG;
+
 	public Matrix calc(Ret returnType) throws MatrixException;
 
 	public Matrix calcNew() throws MatrixException;

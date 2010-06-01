@@ -33,7 +33,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class RandAction extends MatrixAction {
+public class RandAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -2169147968755999187L;
 
 	public RandAction(JComponent c, MatrixGUIObject m, GUIObject v) {

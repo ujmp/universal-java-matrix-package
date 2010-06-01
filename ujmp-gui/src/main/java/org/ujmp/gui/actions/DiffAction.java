@@ -31,7 +31,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class DiffAction extends MatrixAction {
+public class DiffAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -7269394086737529443L;
 
 	public DiffAction(JComponent c, MatrixGUIObject m, GUIObject v) {

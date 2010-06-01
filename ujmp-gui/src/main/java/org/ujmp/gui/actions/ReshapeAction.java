@@ -31,19 +31,18 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ProdAction extends AbstractMatrixAction {
-	private static final long serialVersionUID = -6268502779513490985L;
+public class ReshapeAction extends AbstractMatrixAction {
+	private static final long serialVersionUID = 4276000753444375646L;
 
-	public ProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public ReshapeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Prod");
+		putValue(Action.NAME, "Reshape");
 		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the product between each two rows in this matrix");
+				"Rearranges the cells of a matrix in a another way");
 	}
 
 	public Object call() throws MatrixException {
-		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(),
-				getDimension(), getIgnoreMissing());
+		Matrix m = getMatrix().reshape(getNewOrLink(), getSize());
 		m.showGUI();
 		return m;
 	}

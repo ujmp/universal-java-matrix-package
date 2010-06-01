@@ -36,7 +36,7 @@ import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class DiscretizeAction extends MatrixAction {
+public class DiscretizeAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 5299723653513556195L;
 
 	public DiscretizeAction(JComponent c, MatrixGUIObject m, GUIObject v) {

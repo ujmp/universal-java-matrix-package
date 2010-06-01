@@ -27,6 +27,10 @@ import java.lang.reflect.Field;
 
 public class ReflectionUtil {
 
+	public static Object extractPrivateField(Object o, String fieldName) {
+		return extractPrivateField(o.getClass(), o, fieldName);
+	}
+
 	public static Object extractPrivateField(Class<?> c, Object o, String fieldName) {
 		Field[] fields = c.getDeclaredFields();
 		if (fields != null) {

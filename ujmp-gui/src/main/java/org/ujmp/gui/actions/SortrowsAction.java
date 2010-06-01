@@ -35,7 +35,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class SortrowsAction extends MatrixAction {
+public class SortrowsAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 6226680852162744489L;
 
 	public SortrowsAction(JComponent c, MatrixGUIObject m, GUIObject v) {

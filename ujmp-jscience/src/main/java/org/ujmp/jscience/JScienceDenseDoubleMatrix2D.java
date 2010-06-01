@@ -100,13 +100,13 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public void setDouble(double value, long row, long column) {
 		if (getTransposed()) {
 			Float64Vector f = getRowsTable().get((int) column);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(
-					Float64Vector.class, f, "_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(f,
+					"_values");
 			data[(int) row] = value;
 		} else {
 			Float64Vector f = getRowsTable().get((int) row);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(
-					Float64Vector.class, f, "_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(f,
+					"_values");
 			data[(int) column] = value;
 		}
 	}

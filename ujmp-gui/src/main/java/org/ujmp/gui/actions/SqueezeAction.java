@@ -31,19 +31,18 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ProdAction extends AbstractMatrixAction {
-	private static final long serialVersionUID = -6268502779513490985L;
+public class SqueezeAction extends AbstractMatrixAction {
+	private static final long serialVersionUID = 8775927579848044107L;
 
-	public ProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public SqueezeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
-		putValue(Action.NAME, "Prod");
+		putValue(Action.NAME, "Squeeze");
 		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the product between each two rows in this matrix");
+				"Removes all singleton dimensions of this matrix");
 	}
 
 	public Object call() throws MatrixException {
-		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(),
-				getDimension(), getIgnoreMissing());
+		Matrix m = getMatrix().squeeze(getNewOrLink());
 		m.showGUI();
 		return m;
 	}

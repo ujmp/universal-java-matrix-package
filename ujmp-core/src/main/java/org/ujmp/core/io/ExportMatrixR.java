@@ -35,30 +35,37 @@ import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixR {
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException, MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
+			MatrixException {
 		IntelligentFileWriter writer = new IntelligentFileWriter(file);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
-	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException {
+	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters)
+			throws IOException, MatrixException {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
-	public static void toWriter(Writer writer, Matrix matrix, Object... parameters) throws IOException, MatrixException {
+	public static void toWriter(Writer writer, Matrix matrix, Object... parameters)
+			throws IOException, MatrixException {
 		String EOL = System.getProperty("line.separator");
 		long nrow = matrix.getRowCount();
 		long ncol = matrix.getColumnCount();
 		writer.append("matrix(c(");
-		for (int r = 0; r < nrow; r++) {
-			for (int c = 0; c < ncol; c++) {
-				writer.append("" + matrix.getAsDouble(r, c));
-				if (!((r == nrow - 1) && (c == ncol - 1))) {
+		for (int c = 0; c < ncol; c++) {
+			writer.append("c(");
+			for (int r = 0; r < nrow; r++) {
+				writer.append(String.valueOf(matrix.getAsDouble(r, c)));
+				if ((r + 1) < nrow) {
 					writer.append(",");
 				}
+			}
+			writer.append(")");
+			if ((c + 1) < ncol) {
+				writer.append(",");
 			}
 		}
 		writer.append("),ncol=" + ncol + ",nrow=" + nrow + ")" + EOL);

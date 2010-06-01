@@ -25,6 +25,7 @@ package org.ujmp.gui.util;
 
 import javax.swing.JOptionPane;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class GUIUtil {
@@ -69,6 +70,18 @@ public abstract class GUIUtil {
 		int i = JOptionPane.showConfirmDialog(null, message, message,
 				JOptionPane.YES_NO_OPTION);
 		return JOptionPane.YES_OPTION == i;
+	}
+
+	public static long[] getSize(String message) {
+		long size[] = null;
+		while (size == null) {
+			String s = getString(message);
+			try {
+				size = Coordinates.parseString(s);
+			} catch (Exception e) {
+			}
+		}
+		return size;
 	}
 
 }

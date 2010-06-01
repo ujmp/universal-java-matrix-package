@@ -62,7 +62,9 @@ public interface ObjectCalculations {
 
 	public Matrix includeAnnotation(Ret returnType, int dimension) throws MatrixException;
 
-	public Matrix reshape(long... newSize) throws MatrixException;
+	public Matrix reshape(Ret returnType, long... newSize) throws MatrixException;
+
+	public Matrix squeeze(Ret returnType) throws MatrixException;
 
 	public Matrix unique(Ret returnType) throws MatrixException;
 
@@ -72,9 +74,9 @@ public interface ObjectCalculations {
 
 	public Matrix triu(Ret returnType, int k) throws MatrixException;
 
-	public Matrix toColumnVector() throws MatrixException;
+	public Matrix toColumnVector(Ret returnType) throws MatrixException;
 
-	public Matrix toRowVector() throws MatrixException;
+	public Matrix toRowVector(Ret returnType) throws MatrixException;
 
 	public Matrix swap(Ret returnType, int dimension, long pos1, long pos2);
 

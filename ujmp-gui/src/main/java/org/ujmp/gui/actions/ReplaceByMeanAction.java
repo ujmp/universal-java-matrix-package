@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class ReplaceByMeanAction extends MatrixAction {
+public class ReplaceByMeanAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -7820090923370035750L;
 
 	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, GUIObject v) {

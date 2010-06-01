@@ -32,7 +32,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class WelcomeMatrixAction extends MatrixAction {
+public class WelcomeMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 4416037171565562066L;
 
 	public WelcomeMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {

@@ -34,7 +34,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class RoundAction extends MatrixAction {
+public class RoundAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 9072784334795456528L;
 
 	public RoundAction(JComponent c, MatrixGUIObject m, GUIObject v) {

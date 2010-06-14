@@ -428,9 +428,9 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>hadoop</groupId>
+				<groupId>org.apache.mahout.hadoop</groupId>
 				<artifactId>hadoop-core</artifactId>
-				<version>0.20.0</version>
+				<version>0.20.1</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

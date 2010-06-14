@@ -19,7 +19,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>hadoop</groupId>
+			<groupId>org.apache.mahout.hadoop</groupId>
 			<artifactId>hadoop-core</artifactId>
 		</dependency>
 		<dependency>

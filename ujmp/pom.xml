@@ -308,8 +308,8 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>LSimpute</groupId>
-				<artifactId>LSimpute</artifactId>
+				<groupId>lsimpute</groupId>
+				<artifactId>lsimpute</artifactId>
 				<version>0.0.1</version>
 				<scope>compile</scope>
 			</dependency>

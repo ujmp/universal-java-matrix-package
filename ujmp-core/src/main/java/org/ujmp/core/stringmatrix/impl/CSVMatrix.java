@@ -62,7 +62,6 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 					.println("You should specify the column separator to make sure that the file is parsed correctly.");
 			System.out.println("Example: MatrixFactory.linkToFile(FileFormat.CSV, file, \";\")");
 		}
-		setLabel(file.getAbsolutePath());
 
 		sli = new SeekableLineInputStream(file);
 
@@ -74,6 +73,8 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 				columnCount = c;
 			}
 		}
+
+		setLabel(file.getAbsolutePath());
 	}
 
 	public long[] getSize() {

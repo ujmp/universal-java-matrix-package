@@ -19,8 +19,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>LSimpute</groupId>
-			<artifactId>LSimpute</artifactId>
+			<groupId>lsimpute</groupId>
+			<artifactId>lsimpute</artifactId>
 		</dependency>
 
 		<dependency>

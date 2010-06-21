@@ -1077,13 +1077,21 @@ public abstract class MathUtil {
 	public static final long pos2IndexRowMajor(long[] size, long[] pos) {
 		long sum = 0;
 		long prod = 1;
-		final int d = pos.length;
-		for (int k = 0; k < d; k++) {
-			prod = 1;
-			for (int l = k + 1; l < d; l++) {
-				prod *= size[l];
-			}
+		final int length = pos.length;
+		for (int k = length - 1; k >= 0; k--) {
 			sum += prod * pos[k];
+			prod *= size[k];
+		}
+		return sum;
+	}
+
+	public static final long pos2IndexColumnMajor(long[] size, long[] pos) {
+		long sum = 0;
+		long prod = 1;
+		final int length = pos.length;
+		for (int k = 0; k < length; k++) {
+			sum += prod * pos[k];
+			prod *= size[k];
 		}
 		return sum;
 	}
@@ -1097,4 +1105,16 @@ public abstract class MathUtil {
 		}
 		return pos;
 	}
+
+	public static final long[] index2PosColumnMajor(long[] size, long index) {
+		final int length = size.length;
+		final long[] pos = new long[length];
+		long res = index;
+		for (int k = 0; k < length; k++) {
+			pos[k] = res % size[k];
+			res /= size[k];
+		}
+		return pos;
+	}
+
 }

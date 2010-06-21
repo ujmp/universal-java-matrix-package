@@ -49,15 +49,15 @@ public class Reshape extends AbstractObjectCalculation {
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {
-		long index = MathUtil.pos2IndexRowMajor(newSize, coordinates);
-		long[] oldPos = MathUtil.index2PosRowMajor(oldSize, index);
+		long index = MathUtil.pos2IndexColumnMajor(newSize, coordinates);
+		long[] oldPos = MathUtil.index2PosColumnMajor(oldSize, index);
 		return getSource().getAsObject(oldPos);
 	}
 
 	@Override
 	public void setObject(Object value, long... coordinates) throws MatrixException {
-		long index = MathUtil.pos2IndexRowMajor(newSize, coordinates);
-		long[] oldPos = MathUtil.index2PosRowMajor(oldSize, index);
+		long index = MathUtil.pos2IndexColumnMajor(newSize, coordinates);
+		long[] oldPos = MathUtil.index2PosColumnMajor(oldSize, index);
 		getSource().setAsObject(value, oldPos);
 	}
 

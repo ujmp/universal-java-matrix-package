@@ -1,0 +1,155 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>with-deps</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory></outputDirectory>
+			<outputFileNameMapping></outputFileNameMapping>
+			<unpack>true</unpack>
+			<scope>runtime</scope>
+			<includes>
+				<include>org.ujmp:ujmp-core</include>
+
+				<include>org.ujmp:ujmp-gui</include>
+
+				<include>org.ujmp:ujmp-colt</include>
+				<include>colt:colt</include>
+				<include>concurrent:concurrent</include>
+
+				<include>org.ujmp:ujmp-commonsmath</include>
+				<include>commons-math:commons-math</include>
+
+				<include>org.ujmp:ujmp-ejml</include>
+				<include>ejml:ejml</include>
+
+				<include>org.ujmp:ujmp-ehcache</include>
+				<include>net.sf.ehcache:ehcache-core</include>
+				<include>org.slf4j:slf4j-api</include>
+				<include>org.slf4j:slf4j-jdk14</include>
+
+				<include>org.ujmp:ujmp-hadoop</include>
+				<include>org.apache.mahout.hadoop:hadoop-core</include>
+				<include>commons-logging:commons-logging</include>
+
+				<include>org.ujmp:ujmp-itext</include>
+				<include>iText:iText</include>
+
+				<include>org.ujmp:ujmp-jackcess</include>
+				<include>jackcess:jackcess</include>
+				<include>commons-logging:commons-logging</include>
+				<include>commons-lang:commons-lang</include>
+
+				<include>org.ujmp:ujmp-jama</include>
+				<include>jama:jama</include>
+
+				<include>org.ujmp:ujmp-jampack</include>
+				<include>jampack:jampack</include>
+
+				<include>org.ujmp:ujmp-jblas</include>
+				<include>jblas:jblas</include>
+
+				<include>org.ujmp:ujmp-jbpcafill</include>
+				<include>JBPCAfill:JBPCAfill</include>
+
+				<include>org.ujmp:ujmp-jdbc</include>
+				<include>mysql:mysql-connector-java</include>
+				<include>postgresql:postgresql</include>
+				<include>org.apache.derby:derby</include>
+				<include>hsqldb:hsqldb</include>
+
+				<include>org.ujmp:ujmp-jexcelapi</include>
+				<include>jxl:jxl</include>
+
+				<include>org.ujmp:ujmp-jfreechart</include>
+				<include>jfree:jfreechart</include>
+				<include>jfree:jcommon</include>
+
+				<include>org.ujmp:ujmp-jlinalg</include>
+				<include>jlinalg:jlinalg</include>
+
+				<include>org.ujmp:ujmp-jmatharray</include>
+				<include>jmatharray:jmatharray</include>
+
+				<include>org.ujmp:ujmp-jmathplot</include>
+				<include>jmathplot:jmathplot</include>
+
+				<include>org.ujmp:ujmp-jmatio</include>
+				<include>jmatio:jmatio</include>
+
+				<include>org.ujmp:ujmp-jmatrices</include>
+				<include>jmatrices:jmatrices</include>
+
+				<include>org.ujmp:ujmp-jsci</include>
+				<include>jsci:jsci-core</include>
+
+				<include>org.ujmp:ujmp-jscience</include>
+				<include>jscience:jscience</include>
+
+				<include>org.ujmp:ujmp-jung</include>
+				<include>jung:jung</include>
+				<include>commons-collections:commons-collections</include>
+				<include>colt:colt</include>
+				<include>concurrent:concurrent</include>
+
+				<include>org.ujmp:ujmp-lsimpute</include>
+				<include>lsimpute:lsimpute</include>
+
+				<include>org.ujmp:ujmp-lucene</include>
+				<include>org.apache.lucene:lucene-core</include>
+				<include>org.apache.lucene:lucene-queries</include>
+
+				<include>org.ujmp:ujmp-mail</include>
+				<include>javax.mail:mail</include>
+
+				<include>org.ujmp:ujmp-mantissa</include>
+				<include>mantissa:mantissa</include>
+
+				<include>org.ujmp:ujmp-mtj</include>
+				<include>mtj:mtj</include>
+				<include>arpack-combo:arpack-combo</include>
+				<include>netlib-java:netlib-java</include>
+
+				<include>org.ujmp:ujmp-ojalgo</include>
+				<include>ojalgo:ojalgo</include>
+
+				<include>org.ujmp:ujmp-orbital</include>
+				<include>orbital:orbital-core</include>
+				<include>orbital:orbital-ext</include>
+
+				<include>org.ujmp:ujmp-owlpack</include>
+				<include>owlpack:owlpack</include>
+
+				<include>org.ujmp:ujmp-parallelcolt</include>
+				<include>parallelcolt:parallelcolt</include>
+				<include>jtransforms:jtransforms</include>
+				<include>jplasma:jplasma</include>
+				<include>csparsej:csparsej</include>
+				<include>netlib-java:netlib-java</include>
+				<include>arpack-combo:arpack-combo</include>
+
+				<include>org.ujmp:ujmp-pdfbox</include>
+				<include>org.apache.pdfbox:pdfbox</include>
+				<include>org.apache.pdfbox:fontbox</include>
+				<include>org.apache.pdfbox:jempbox</include>
+
+				<include>org.ujmp:ujmp-sst</include>
+				<include>sst:sst</include>
+
+				<include>org.ujmp:ujmp-vecmath</include>
+				<include>vecmath:vecmath</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<directory>target/classes</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly>

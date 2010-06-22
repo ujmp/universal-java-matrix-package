@@ -29,10 +29,12 @@
 				<include>ejml:ejml</include>
 
 				<include>org.ujmp:ujmp-ehcache</include>
-				<include>net.sf.ehcache:ehcache</include>
+				<include>net.sf.ehcache:ehcache-core</include>
+				<include>org.slf4j:slf4j-api</include>
+				<include>org.slf4j:slf4j-jdk14</include>
 
 				<include>org.ujmp:ujmp-hadoop</include>
-				<include>hadoop:hadoop-core</include>
+				<include>org.apache.mahout.hadoop:hadoop-core</include>
 				<include>commons-logging:commons-logging</include>
 
 				<include>org.ujmp:ujmp-itext</include>
@@ -56,9 +58,9 @@
 				<include>JBPCAfill:JBPCAfill</include>
 
 				<include>org.ujmp:ujmp-jdbc</include>
-				<include>mysql-connector-java:mysql-connector-java</include>
+				<include>mysql:mysql-connector-java</include>
 				<include>postgresql:postgresql</include>
-				<include>derby:derby</include>
+				<include>org.apache.derby:derby</include>
 				<include>hsqldb:hsqldb</include>
 
 				<include>org.ujmp:ujmp-jexcelapi</include>
@@ -96,14 +98,14 @@
 				<include>concurrent:concurrent</include>
 
 				<include>org.ujmp:ujmp-lsimpute</include>
-				<include>LSimpute:LSimpute</include>
+				<include>lsimpute:lsimpute</include>
 
 				<include>org.ujmp:ujmp-lucene</include>
 				<include>org.apache.lucene:lucene-core</include>
 				<include>org.apache.lucene:lucene-queries</include>
 
 				<include>org.ujmp:ujmp-mail</include>
-				<include>mail:mail</include>
+				<include>javax.mail:mail</include>
 
 				<include>org.ujmp:ujmp-mantissa</include>
 				<include>mantissa:mantissa</include>
@@ -132,9 +134,9 @@
 				<include>arpack-combo:arpack-combo</include>
 
 				<include>org.ujmp:ujmp-pdfbox</include>
-				<include>pdfbox:pdfbox</include>
-				<include>bcprov:bcprov</include>
-				<include>FontBox:FontBox</include>
+				<include>org.apache.pdfbox:pdfbox</include>
+				<include>org.apache.pdfbox:fontbox</include>
+				<include>org.apache.pdfbox:jempbox</include>
 
 				<include>org.ujmp:ujmp-sst</include>
 				<include>sst:sst</include>

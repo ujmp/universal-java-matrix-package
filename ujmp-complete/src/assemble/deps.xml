@@ -18,9 +18,8 @@
 				<include>colt:colt</include>
 				<include>concurrent:concurrent</include>
 				<include>commons-math:commons-math</include>
-				<include>hadoop:hadoop-core</include>
+				<include>org.apache.mahout.hadoop:hadoop-core</include>
 				<include>commons-logging:commons-logging</include>
-				<include>ejml:ejml</include>
 				<include>ejml:ejml</include>
 				<include>iText:iText</include>
 				<include>jackcess:jackcess</include>
@@ -31,9 +30,9 @@
 				<include>jama:jama</include>
 				<include>jampack:jampack</include>
 				<include>jblas:jblas</include>
-				<include>mysql-connector-java:mysql-connector-java</include>
+				<include>mysql:mysql-connector-java</include>
 				<include>postgresql:postgresql</include>
-				<include>derby:derby</include>
+				<include>org.apache.derby:derby</include>
 				<include>hsqldb:hsqldb</include>
 				<include>jxl:jxl</include>
 				<include>jlinalg:jlinalg</include>
@@ -47,10 +46,10 @@
 				<include>commons-collections:commons-collections</include>
 				<include>colt:colt</include>
 				<include>concurrent:concurrent</include>
-				<include>LSimpute:LSimpute</include>
+				<include>lsimpute:lsimpute</include>
 				<include>org.apache.lucene:lucene-core</include>
 				<include>org.apache.lucene:lucene-queries</include>
-				<include>mail:mail</include>
+				<include>javax.mail:mail</include>
 				<include>mantissa:mantissa</include>
 				<include>mtj:mtj</include>
 				<include>arpack-combo:arpack-combo</include>
@@ -65,12 +64,14 @@
 				<include>csparsej:csparsej</include>
 				<include>netlib-java:netlib-java</include>
 				<include>arpack-combo:arpack-combo</include>
-				<include>pdfbox:pdfbox</include>
-				<include>bcprov:bcprov</include>
-				<include>FontBox:FontBox</include>
+				<include>org.apache.pdfbox:pdfbox</include>
+				<include>org.apache.pdfbox:fontbox</include>
+				<include>org.apache.pdfbox:jempbox</include>
 				<include>sst:sst</include>
 				<include>vecmath:vecmath</include>
-				<include>net.sf.ehcache:ehcache</include>
+				<include>net.sf.ehcache:ehcache-core</include>
+				<include>org.slf4j:slf4j-api</include>
+				<include>org.slf4j:slf4j-jdk14</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>

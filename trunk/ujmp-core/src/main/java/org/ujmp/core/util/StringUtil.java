@@ -444,7 +444,7 @@ public abstract class StringUtil {
 	}
 
 	public static final boolean isUmlaut(char c) {
-		return c == 'ä' || c == 'ü' || c == 'ö' || c == 'Ä' || c == 'Ü' || c == 'Ö';
+		return c == 228 || c == 252 || c == 246 || c == 196 || c == 220 || c == 214;
 	}
 
 	public static final boolean isPrintable(char c) {
@@ -452,7 +452,7 @@ public abstract class StringUtil {
 	}
 
 	public static final boolean isGerman(char c) {
-		return (c >= 32 && c < 127) || isUmlaut(c) || c == 'ß';
+		return (c >= 32 && c < 127) || isUmlaut(c) || c == 223;
 	}
 
 	public static final boolean isLower(char c) {

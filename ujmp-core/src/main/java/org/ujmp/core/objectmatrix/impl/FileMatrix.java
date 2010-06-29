@@ -25,20 +25,21 @@ package org.ujmp.core.objectmatrix.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
-import java.lang.ref.SoftReference;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.collections.LazyMap;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.io.FileUtil;
+import org.ujmp.core.util.io.IntelligentFileReader;
+import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
@@ -77,10 +78,12 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	public static final String MD5 = "MD5";
 
-	private FileMap map = null;
+	public static final String ANNOTATION = "Annotation";
+
+	private final FileMap map;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
-		map = new FileMap(file, parameters);
+		this(null, file, parameters);
 	}
 
 	public FileMatrix(FileFormat fileFormat, File file, Object... parameters) throws IOException {
@@ -91,20 +94,14 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		return map;
 	}
 
-	class FileMap implements Map<String, Object>, Serializable {
+	class FileMap extends LazyMap<String, Object> {
 		private static final long serialVersionUID = -4946966403241068247L;
 
-		private File file = null;
+		private final File finalFile;
 
-		private Map<String, Object> map = null;
+		private final FileFormat fileformat;
 
-		private transient SoftReference<Matrix> content = null;
-
-		private transient SoftReference<Matrix> bytes = null;
-
-		private FileFormat fileformat = null;
-
-		private Object[] parameters = null;
+		private final Object[] parameters;
 
 		public FileMap(File file, Object... paramegters) throws IOException {
 			this(null, file, paramegters);
@@ -117,117 +114,66 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 				this.fileformat = fileFormat;
 			}
 			this.parameters = paramegters;
-			this.file = file;
-			this.map = new HashMap<String, Object>();
-			this.content = new SoftReference<Matrix>(null);
-			map.put(CONTENT, null);
-			map.put(MD5, null);
-			map.put(ID, file.getAbsolutePath());
-			map.put(PATH, file.getPath());
-			map.put(FILENAME, file.getName());
-			map.put(BYTES, null);
-			String[] components = file.getName().split("\\.");
-			if (components.length > 1) {
-				map.put(EXTENSION, components[components.length - 1]);
+			this.finalFile = file;
+			put(ID, file.getAbsolutePath());
+			put(PATH, file.getPath());
+			put(FILENAME, file.getName());
+			// String[] components = file.getName().split("\\.");
+			// if (components != null && components.length > 1) {
+			// map.put(EXTENSION, components[components.length - 1]);
+			// } else {
+			// map.put(EXTENSION, null);
+			// }
+			put(CANREAD, file.canRead());
+			put(CANWRITE, file.canWrite());
+			put(ISHIDDEN, file.isHidden());
+			put(ISDIRECTORY, file.isDirectory());
+			put(ISFILE, file.isFile());
+			put(LASTMODIFIED, file.lastModified());
+			put(SIZE, file.length());
+			put(FILEFORMAT, this.fileformat);
+
+			if (fileformat == null) {
+				put(CONTENT, null);
 			} else {
-				map.put(EXTENSION, null);
+				Callable<Matrix> c = new Callable<Matrix>() {
+					public Matrix call() throws Exception {
+						return MatrixFactory.linkToFile(fileformat, finalFile, parameters);
+					}
+				};
+				put(CONTENT, c);
 			}
-			map.put(CANREAD, file.canRead());
-			map.put(CANWRITE, file.canWrite());
-			map.put(ISHIDDEN, file.isHidden());
-			map.put(ISDIRECTORY, file.isDirectory());
-			map.put(ISFILE, file.isFile());
-			map.put(LASTMODIFIED, file.lastModified());
-			map.put(SIZE, file.length());
-			map.put(FILEFORMAT, this.fileformat);
-		}
-
-		public File getFile() {
-			return file;
-		}
-
-		public void clear() {
-			map.clear();
-		}
-
-		public boolean containsKey(Object key) {
-			return map.containsKey(key);
-		}
-
-		public boolean containsValue(Object value) {
-			return map.containsValue(value);
-		}
-
-		public Set<java.util.Map.Entry<String, Object>> entrySet() {
-			throw new MatrixException("not implemented");
-		}
-
-		public Object get(Object key) {
-			if (CONTENT.equals(key)) {
-				if (fileformat == null) {
-					return null;
-				}
-				Matrix m = null;
-				if (content == null || content.get() == null) {
+			Callable<Object> md5 = new Callable<Object>() {
+				public Object call() throws Exception {
 					try {
-						m = MatrixFactory.linkToFile(fileformat, file, parameters);
-						content = new SoftReference<Matrix>(m);
-					} catch (Exception e) {
-						throw new MatrixException(e);
+						if (finalFile != null && !finalFile.isDirectory() && finalFile.canRead()) {
+							return MathUtil.md5(finalFile);
+						} else {
+							return 0;
+						}
+					} catch (Throwable t) {
+						return Double.NaN;
 					}
 				}
-				return content.get();
-			} else if (MD5.equals(key)) {
-				String md5 = (String) map.get(MD5);
-				if (md5 == null) {
-					try {
-						md5 = MathUtil.md5(file);
-						map.put((String) key, md5);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			};
+			put(MD5, md5);
+			Callable<Matrix> bytes = new Callable<Matrix>() {
+				public Matrix call() throws Exception {
+					return MatrixFactory.linkToFile(FileFormat.RAW, finalFile, parameters);
 				}
-				return md5;
-			} else if (BYTES.equals(key)) {
-				if (bytes == null || bytes.get() == null) {
-					try {
-						bytes = new SoftReference<Matrix>(MatrixFactory.linkToFile(FileFormat.RAW,
-								file));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			};
+			put(BYTES, bytes);
+			Callable<Matrix> annotation = new Callable<Matrix>() {
+				public Matrix call() throws Exception {
+					return new AnnotationMatrix(FileUtil.appendExtension(finalFile, ".xml"));
 				}
-				return bytes.get();
-			}
-			return map.get(key);
+			};
+			put(ANNOTATION, annotation);
+
 		}
 
-		public boolean isEmpty() {
-			return map.isEmpty();
-		}
-
-		public Set<String> keySet() {
-			return map.keySet();
-		}
-
-		public Object put(String key, Object value) {
-			return map.put(key, value);
-		}
-
-		public void putAll(Map<? extends String, ? extends Object> m) {
-			map.putAll(m);
-		}
-
-		public Object remove(Object key) {
-			return map.remove(key);
-		}
-
-		public int size() {
-			return map.size();
-		}
-
-		public Collection<Object> values() {
-			throw new MatrixException("not implemented");
+		public File getFinalFile() {
+			return finalFile;
 		}
 
 	}
@@ -235,10 +181,37 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public MapMatrix<String, Object> copy() {
 		try {
 			MapMatrix<String, Object> ret;
-			ret = new FileMatrix(map.getFile());
+			ret = new FileMatrix(map.getFinalFile());
 			return ret;
 		} catch (IOException e) {
 			throw new MatrixException(e);
 		}
+	}
+
+	class AnnotationMatrix extends AbstractDenseStringMatrix2D {
+		private static final long serialVersionUID = 1978026473405074699L;
+
+		private final File finalFile;
+
+		public AnnotationMatrix(File file) {
+			this.finalFile = file;
+		}
+
+		public String getString(long row, long column) {
+			return IntelligentFileReader.load(finalFile);
+		}
+
+		public void setString(String value, long row, long column) {
+			try {
+				IntelligentFileWriter.save(finalFile, value);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		public long[] getSize() {
+			return new long[] { 1, 1 };
+		}
+
 	}
 }

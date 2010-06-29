@@ -33,6 +33,8 @@ public class LazyMap<K, V> extends AbstractMap<K, V> {
 
 	private transient Map<K, Callable<V>> map = null;
 
+	private boolean useCache = true;
+
 	public LazyMap() {
 	}
 
@@ -53,7 +55,16 @@ public class LazyMap<K, V> extends AbstractMap<K, V> {
 			return null;
 		}
 		try {
-			return cv.call();
+			final V v = cv.call();
+			if (useCache) {
+				Callable<V> c = new Callable<V>() {
+					public V call() throws Exception {
+						return v;
+					}
+				};
+				getMap().put((K) key, c);
+			}
+			return v;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

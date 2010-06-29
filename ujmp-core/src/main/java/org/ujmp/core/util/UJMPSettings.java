@@ -275,4 +275,8 @@ public abstract class UJMPSettings {
 		UJMPSettings.defaultBlockSize = defaultBlockSize;
 	}
 
+	public static String getLineEnd() {
+		return System.getProperty("line.separator");
+	}
+
 }

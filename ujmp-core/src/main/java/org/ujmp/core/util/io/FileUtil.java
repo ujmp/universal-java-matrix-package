@@ -26,13 +26,16 @@ package org.ujmp.core.util.io;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.VerifyUtil;
 
 public class FileUtil {
 
@@ -54,22 +57,37 @@ public class FileUtil {
 		}
 	}
 
-	// TODO: this can be made faster by reading into a byte buffer
-	public static boolean equalsContent(File file1, File file2) throws Exception {
+	public static boolean equalsContent(File file1, File file2) throws IOException {
+		VerifyUtil.assertNotNull(file1, "file1 is null");
+		VerifyUtil.assertNotNull(file2, "file2 is null");
+		VerifyUtil.assertTrue(file1.exists(), "file1 does not exist");
+		VerifyUtil.assertTrue(file2.exists(), "file2 does not exist");
+		VerifyUtil.assertTrue(file1.canRead(), "cannot read file1");
+		VerifyUtil.assertTrue(file2.canRead(), "cannot read file2");
+
 		if (file1.length() != file2.length()) {
 			return false;
 		}
+
+		final int bufferSize = 8192;
+		final byte[] data1 = new byte[bufferSize];
+		final byte[] data2 = new byte[bufferSize];
+
 		boolean areEqual = true;
 		BufferedInputStream in1 = new BufferedInputStream(new FileInputStream(file1));
 		BufferedInputStream in2 = new BufferedInputStream(new FileInputStream(file2));
 		while (true) {
-			int i1 = in1.read();
-			int i2 = in2.read();
-			if (i1 != i2) {
+			int length1 = in1.read(data1, 0, bufferSize);
+			int length2 = in2.read(data2, 0, bufferSize);
+			if (length1 != length2) {
 				areEqual = false;
 				break;
 			}
-			if (i1 == -1) {
+			if (!Arrays.equals(data1, data2)) {
+				areEqual = false;
+				break;
+			}
+			if (length1 < bufferSize) {
 				break;
 			}
 		}
@@ -78,8 +96,8 @@ public class FileUtil {
 		return areEqual;
 	}
 
-	public static void move(File source, File target) {
-
+	public static boolean move(File source, File target) {
+		return source.renameTo(target);
 	}
 
 	public static String md5Sum(File file) throws Exception {
@@ -140,4 +158,8 @@ public class FileUtil {
 		return count;
 	}
 
+	public static final File appendExtension(File file, String newExtension) {
+		String name = file.getAbsolutePath().concat(newExtension);
+		return new File(name);
+	}
 }

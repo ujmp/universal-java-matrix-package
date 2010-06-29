@@ -590,7 +590,11 @@ public abstract class MatrixFactory {
 		return matrix;
 	}
 
-	public static final FileListMatrix linkToDir(String dir) {
+	public static final FileListMatrix linkToDir(String dir) throws IOException {
+		return new FileListMatrix(dir);
+	}
+
+	public static final FileListMatrix linkToDir(File dir) throws IOException {
 		return new FileListMatrix(dir);
 	}
 

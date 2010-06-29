@@ -24,49 +24,42 @@
 package org.ujmp.core.stringmatrix.impl;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.listmatrix.AbstractListMatrix;
+import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
-public class FileListMatrix extends AbstractDenseStringMatrix2D {
+public class FileListMatrix extends AbstractListMatrix<Matrix> {
 	private static final long serialVersionUID = -2627484975560893624L;
 
-	private List<File> files = null;
+	private final List<Matrix> list = new ArrayList<Matrix>();
 
-	public FileListMatrix(String path) {
+	public FileListMatrix(String path) throws IOException {
 		this(new File(path));
 	}
 
-	public FileListMatrix(File path) {
-		this.files = Arrays.asList(path.listFiles());
-		Collections.sort(files);
-		setMatrixAnnotation(path);
-	}
-
-	public long[] getSize() {
-		return new long[] { files.size(), 2 };
-	}
-
-	public String getString(long row, long column) {
-		switch ((int) column) {
-		case 0:
-			File f = files.get((int) row);
-			return f.getName();
-		case 1:
-			return "" + files.get((int) row).length();
-		}
-		return null;
-	}
-
-	public void setString(String value, long row, long column) {
-		if (column == 0 && row < files.size()) {
-			File source = files.get((int) row);
-			File target = new File(source.getParent() + File.separator + value);
-			source.renameTo(target);
-			files.set((int) row, target);
+	public FileListMatrix(File path) throws IOException {
+		File[] files = path.listFiles();
+		for (File f : files) {
+			list.add(new FileMatrix(f));
 		}
 	}
+
+	@Override
+	public List<Matrix> getList() {
+		return list;
+	}
+
+	// public void setString(String value, long row, long column) {
+	// if (column == 0 && row < files.size()) {
+	// File source = files.get((int) row);
+	// File target = new File(source.getParent() + File.separator + value);
+	// source.renameTo(target);
+	// files.set((int) row, target);
+	// }
+	// }
 
 }

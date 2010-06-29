@@ -23,7 +23,9 @@
 
 package org.ujmp.core.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -42,7 +44,6 @@ import java.util.Random;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class MathUtil {
 
@@ -110,8 +111,32 @@ public abstract class MathUtil {
 		return hexString.toString();
 	}
 
-	public static String md5(File file) throws NoSuchAlgorithmException {
-		return md5(IntelligentFileReader.readBytes(file));
+	public static String md5(File file) throws NoSuchAlgorithmException, IOException {
+		MessageDigest mdAlgorithm;
+		StringBuilder hexString = new StringBuilder();
+
+		mdAlgorithm = MessageDigest.getInstance("MD5");
+		FileInputStream fi = new FileInputStream(file);
+		BufferedInputStream bi = new BufferedInputStream(fi);
+		byte[] data = new byte[8192];
+		for (int length = bi.read(data); length != -1; length = bi.read(data)) {
+			mdAlgorithm.update(data, 0, length);
+		}
+		bi.close();
+		fi.close();
+		byte[] digest = mdAlgorithm.digest();
+
+		for (int i = 0; i < digest.length; i++) {
+			String text = Integer.toHexString(0xFF & digest[i]);
+
+			if (text.length() < 2) {
+				text = "0" + text;
+			}
+
+			hexString.append(text);
+		}
+		hexString.trimToSize();
+		return hexString.toString();
 	}
 
 	public static String md5(Serializable o) throws NoSuchAlgorithmException, IOException {

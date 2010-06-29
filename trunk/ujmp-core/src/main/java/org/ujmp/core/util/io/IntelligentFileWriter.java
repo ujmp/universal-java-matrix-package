@@ -92,7 +92,11 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 	}
 
 	public static final void save(String filename, String text) throws Exception {
-		IntelligentFileWriter fw = new IntelligentFileWriter(filename, false);
+		save(new File(filename), text);
+	}
+
+	public static final void save(File file, String text) throws Exception {
+		IntelligentFileWriter fw = new IntelligentFileWriter(file, false);
 		fw.write(text);
 		fw.close();
 	}
@@ -103,7 +107,6 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 		fw.close();
 	}
 
-	
 	public void close() throws IOException {
 		if (bw != null)
 			bw.close();
@@ -113,7 +116,6 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 			zip.close();
 	}
 
-	
 	public void flush() throws IOException {
 		if (bw != null)
 			bw.flush();
@@ -123,7 +125,6 @@ public class IntelligentFileWriter extends Writer implements Appendable, Closeab
 			zip.flush();
 	}
 
-	
 	public void write(char[] cbuf, int off, int len) throws IOException {
 		bw.write(cbuf, off, len);
 	}

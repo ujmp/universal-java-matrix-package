@@ -38,6 +38,8 @@ import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
 
+import org.ujmp.core.util.VerifyUtil;
+
 public class IntelligentFileReader extends Reader {
 
 	private static final Logger logger = Logger.getLogger(IntelligentFileReader.class.getName());
@@ -114,7 +116,6 @@ public class IntelligentFileReader extends Reader {
 		return null;
 	}
 
-	
 	public void close() {
 		try {
 			if (lr != null)
@@ -140,7 +141,6 @@ public class IntelligentFileReader extends Reader {
 			return -1;
 	}
 
-	
 	public int read(char[] cbuf, int off, int len) throws IOException {
 		return lr.read(cbuf, off, len);
 	}
@@ -191,6 +191,9 @@ public class IntelligentFileReader extends Reader {
 
 	public static byte[] readBytes(File file) {
 		try {
+			VerifyUtil.assertNotNull(file, "file is null");
+			VerifyUtil.assertFalse(file.isDirectory(), "file is a directory");
+			VerifyUtil.assertTrue(file.canRead(), "cannot read from file");
 			byte[] data = new byte[(int) file.length()];
 			FileInputStream fi = new FileInputStream(file);
 			BufferedInputStream bi = new BufferedInputStream(fi);

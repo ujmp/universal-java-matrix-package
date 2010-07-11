@@ -348,7 +348,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 			Statement st = getConnection().createStatement();
 			st.execute("drop table " + tableName);
 		} catch (SQLException e) {
-			throw new IOException(e);
+			throw new IOException(e.toString());
 		}
 
 		close();

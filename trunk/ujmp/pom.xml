@@ -364,7 +364,7 @@
 			<dependency>
 				<groupId>ejml</groupId>
 				<artifactId>ejml</artifactId>
-				<version>0.12</version>
+				<version>0.13</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

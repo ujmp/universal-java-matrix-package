@@ -45,8 +45,8 @@ public class SVD
 			svd.decompose(new EJMLDenseDoubleMatrix2D(source)
 					.getWrappedObject());
 		}
-		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU());
-		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV());
+		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU(false));
+		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV(false));
 		Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW(null));
 		return new Matrix[] { u, s, v };
 	}

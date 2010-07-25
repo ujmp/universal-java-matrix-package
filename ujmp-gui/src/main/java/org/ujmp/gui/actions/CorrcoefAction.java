@@ -42,10 +42,9 @@ public class CorrcoefAction extends AbstractMatrixAction {
 				"Calculates the correlation coefficient for this matrix");
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().corrcoef(Ret.NEW,
-				getIgnoreMissing());
+				getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

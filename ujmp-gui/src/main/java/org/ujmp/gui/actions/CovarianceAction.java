@@ -42,10 +42,9 @@ public class CovarianceAction extends AbstractMatrixAction {
 				"Calculates the covariance of the entries in this matrix");
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().cov(Ret.NEW,
-				getIgnoreMissing());
+				getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

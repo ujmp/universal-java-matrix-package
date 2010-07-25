@@ -42,10 +42,9 @@ public class VarianceAction extends AbstractMatrixAction {
 				"Calculates the variance of the entries in this matrix");
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().var(Ret.NEW,
-				getDimension(), getIgnoreMissing());
+				getDimension(), getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

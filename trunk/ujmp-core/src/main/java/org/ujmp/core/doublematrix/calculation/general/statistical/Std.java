@@ -36,9 +36,12 @@ public class Std extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
-	public Std(int dimension, boolean ignoreNaN, Matrix matrix) {
+	private boolean besselsCorrection = true;
+
+	public Std(int dimension, boolean ignoreNaN, Matrix matrix, boolean besselsCorrection) {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
+		this.besselsCorrection = besselsCorrection;
 		Annotation aold = matrix.getAnnotation();
 		if (aold != null) {
 			Annotation a = new DefaultAnnotation(getSize());
@@ -54,7 +57,7 @@ public class Std extends AbstractDoubleCalculation {
 
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (variance == null) {
-			variance = new Var(getDimension(), ignoreNaN, getSource()).calcNew();
+			variance = new Var(getDimension(), ignoreNaN, getSource(), besselsCorrection).calcNew();
 		}
 		return Math.sqrt(variance.getAsDouble(coordinates));
 	}

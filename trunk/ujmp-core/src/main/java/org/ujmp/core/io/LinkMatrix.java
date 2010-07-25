@@ -34,8 +34,15 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
+import org.ujmp.core.util.VerifyUtil;
+import org.ujmp.core.util.io.FileUtil;
 
 public abstract class LinkMatrix {
+
+	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
+			IOException {
+		return toFile(FileUtil.guessFormat(file), file, parameters);
+	}
 
 	public static Matrix toFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
@@ -43,6 +50,7 @@ public abstract class LinkMatrix {
 			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
 			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
+			VerifyUtil.assertNotNull(matrix, "matrix could not be linked");
 			return matrix;
 		} catch (ClassNotFoundException e) {
 			try {

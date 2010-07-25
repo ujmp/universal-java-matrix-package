@@ -35,12 +35,14 @@ public class Cov extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
-	public Cov(boolean ignoreNaN, Matrix matrix) {
+	private boolean besselsCorrection = true;
+
+	public Cov(boolean ignoreNaN, Matrix matrix, boolean besselsCorrection) {
 		super(matrix);
 		this.ignoreNaN = ignoreNaN;
+		this.besselsCorrection = besselsCorrection;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double sumProd = 0.0;
 		long rows = getSource().getRowCount();
@@ -81,13 +83,15 @@ public class Cov extends AbstractDoubleCalculation {
 
 		double cov = Double.NaN;
 		if (N > 0) {
-			cov = sumProd / (N - 1);
+			if (besselsCorrection) {
+				cov = sumProd / (N - 1);
+			} else {
+				cov = sumProd / N;
+			}
 		}
-
 		return cov;
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}

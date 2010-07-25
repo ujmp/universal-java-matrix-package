@@ -37,17 +37,18 @@ import java.lang.reflect.Method;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.io.FileUtil;
 
 public abstract class ExportMatrix {
 
 	public static final void toFile(File file, Matrix m, Object... parameters)
 			throws MatrixException, IOException {
-		toFile(guessFormat(file), file, m, parameters);
+		toFile(FileUtil.guessFormat(file), file, m, parameters);
 	}
 
 	public static final void toFile(String file, Matrix m, Object... parameters)
 			throws MatrixException, IOException {
-		toFile(guessFormat(new File(file)), file, m, parameters);
+		toFile(FileUtil.guessFormat(new File(file)), file, m, parameters);
 	}
 
 	public static final void toFile(FileFormat format, String filename, Matrix matrix,
@@ -75,26 +76,6 @@ public abstract class ExportMatrix {
 		} catch (InvocationTargetException e) {
 			throw new MatrixException("error exporting matrix in format: " + format, e);
 		}
-	}
-
-	public static FileFormat guessFormat(File file) {
-		String filename = file.getAbsolutePath();
-		String[] components = filename.split("\\.");
-		String suffix = components[components.length - 1];
-		if (suffix.equalsIgnoreCase("gz") || suffix.equalsIgnoreCase("z")
-				|| suffix.equalsIgnoreCase("gzip") || suffix.equalsIgnoreCase(".zip")
-				|| suffix.equalsIgnoreCase(".7zip") || suffix.equalsIgnoreCase(".7z")) {
-			suffix = components[components.length - 2];
-		}
-
-		for (FileFormat f : FileFormat.values()) {
-			if (suffix.equalsIgnoreCase(f.name())) {
-				return f;
-			}
-		}
-
-		throw new MatrixException(
-				"could not guess file format, please use exportToFile(Format,File,Matrix)");
 	}
 
 	public static final String toString(FileFormat format, Matrix matrix, Object... parameters)

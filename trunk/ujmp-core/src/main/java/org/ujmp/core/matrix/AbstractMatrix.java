@@ -162,6 +162,7 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
+import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
 import org.ujmp.core.objectmatrix.calculation.ExtractAnnotation;
@@ -1048,12 +1049,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Mean(dimension, ignoreNaN, this).calc(returnType);
 	}
 
-	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
-		return new Var(dimension, ignoreNaN, this).calc(returnType);
+	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException {
+		return new Var(dimension, ignoreNaN, this, besselsCorrection).calc(returnType);
 	}
 
-	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {
-		return new Std(dimension, ignoreNaN, this).calc(returnType);
+	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException {
+		return new Std(dimension, ignoreNaN, this, besselsCorrection).calc(returnType);
 	}
 
 	public long getColumnCount() {
@@ -1392,12 +1395,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Tan(this).calc(returnType);
 	}
 
-	public Matrix cov(Ret returnType, boolean ignoreNaN) throws MatrixException {
-		return new Cov(ignoreNaN, this).calc(returnType);
+	public Matrix cov(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException {
+		return new Cov(ignoreNaN, this, besselsCorrection).calc(returnType);
 	}
 
-	public Matrix corrcoef(Ret returnType, boolean ignoreNaN) throws MatrixException {
-		return new Corrcoef(ignoreNaN, this).calc(returnType);
+	public Matrix corrcoef(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException {
+		return new Corrcoef(ignoreNaN, this, besselsCorrection).calc(returnType);
 	}
 
 	public Matrix mutualInf(Ret returnType) throws MatrixException {
@@ -1558,7 +1563,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final double getStdValue() throws MatrixException {
-		return std(Ret.NEW, Matrix.ALL, true).getEuklideanValue();
+		return std(Ret.NEW, Matrix.ALL, true, true).getEuklideanValue();
 	}
 
 	public final double getValueSum() throws MatrixException {
@@ -1723,8 +1728,9 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final Matrix appendHorizontally(Matrix m) throws MatrixException {
-		return append(COLUMN, m);
+	public final Matrix appendHorizontally(Ret returnType, Matrix... matrices)
+			throws MatrixException {
+		return append(returnType, COLUMN, matrices);
 	}
 
 	public Iterable<Object> allValues() {
@@ -1751,12 +1757,16 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		};
 	}
 
-	public final Matrix appendVertically(Matrix m) throws MatrixException {
-		return append(ROW, m);
+	public final Matrix appendVertically(Ret returnType, Matrix... matrices) throws MatrixException {
+		return append(returnType, ROW, matrices);
 	}
 
-	public final Matrix append(int dimension, Matrix m) throws MatrixException {
-		return MatrixFactory.concat(dimension, this, m);
+	public final Matrix append(Ret returnType, int dimension, Matrix... matrices)
+			throws MatrixException {
+		Matrix[] mtotal = new Matrix[matrices.length + 1];
+		mtotal[0] = this;
+		System.arraycopy(matrices, 0, mtotal, 1, matrices.length);
+		return new Concatenation(dimension, mtotal).calc(returnType);
 	}
 
 	public final Matrix discretizeToColumns(long column) throws MatrixException {

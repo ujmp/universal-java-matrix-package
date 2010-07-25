@@ -34,10 +34,32 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.VerifyUtil;
 
 public class FileUtil {
+
+	public static FileFormat guessFormat(File file) {
+		String filename = file.getAbsolutePath();
+		String[] components = filename.split("\\.");
+		String suffix = components[components.length - 1];
+		if (suffix.equalsIgnoreCase("gz") || suffix.equalsIgnoreCase("z")
+				|| suffix.equalsIgnoreCase("gzip") || suffix.equalsIgnoreCase(".zip")
+				|| suffix.equalsIgnoreCase(".7zip") || suffix.equalsIgnoreCase(".7z")) {
+			suffix = components[components.length - 2];
+		}
+
+		for (FileFormat f : FileFormat.values()) {
+			if (suffix.equalsIgnoreCase(f.name())) {
+				return f;
+			}
+		}
+
+		throw new MatrixException(
+				"could not guess file format, please use exportToFile(Format,File,Matrix)");
+	}
 
 	public static boolean deleteRecursive(File path) {
 		if (path != null && path.exists()) {

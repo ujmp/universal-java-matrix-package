@@ -28,141 +28,164 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Date;
-
-import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.UJMP;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.listmatrix.ListMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
+import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixXML {
+
+	private static final String XMLHEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
 	private static boolean createXMLHeader = true;
 
 	private static boolean createInfo = true;
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException, XMLStreamException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException {
 		IntelligentFileWriter writer = new IntelligentFileWriter(file);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
 	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters)
-			throws IOException, MatrixException, XMLStreamException {
+			throws IOException {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
+	public static void toWriter(Writer writer, MapMatrix<?, ?> map, Object... parameters)
+			throws IOException {
+		final String EOL = UJMPSettings.getLineEnd();
+		writer.write("<map>");
+		writer.write(EOL);
+		for (Map.Entry<?, ?> e : map.entrySet()) {
+			Object key = e.getKey();
+			Object value = e.getValue();
+			writer.write("<" + key + ">");
+			writer.write(String.valueOf(value));
+			writer.write("</" + key + ">");
+			writer.write(EOL);
+		}
+		writer.write("</map>");
+		writer.write(EOL);
+	}
+
 	public static void toWriter(Writer writer, Matrix matrix, Object... parameters)
-			throws IOException, MatrixException, XMLStreamException {
+			throws IOException {
+		final String EOL = UJMPSettings.getLineEnd();
+
 		if (parameters != null && parameters.length > 0) {
 			if (parameters[0] instanceof Boolean) {
 				createXMLHeader = (Boolean) createXMLHeader;
 			}
 		}
 
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(writer);
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent newline = eventFactory.createDTD(System.getProperty("line.separator"));
-
 		if (createXMLHeader == true) {
-			StartDocument startDocument = eventFactory.createStartDocument();
-			eventWriter.add(startDocument);
-			eventWriter.add(newline);
+			writer.write(XMLHEADER);
+			writer.write(EOL);
 		}
 
-		StartElement matrixStart = eventFactory.createStartElement("", "", "matrix");
-		eventWriter.add(matrixStart);
+		if (matrix == null || matrix instanceof EmptyMatrix) {
+			writer.write("<emptyMatrix></emptyMatrix>");
+			writer.write(EOL);
+		} else if (matrix instanceof MapMatrix<?, ?>) {
+			toWriter(writer, (MapMatrix<?, ?>) matrix, parameters);
+		} else if (matrix instanceof ListMatrix<?>) {
+			toWriter(writer, (ListMatrix<?>) matrix, parameters);
+		} else {
+			String size = Coordinates.toString(matrix.getSize());
+			String st = matrix.getStorageType().name();
+			String vt = matrix.getValueType().name();
 
-		String size = Coordinates.toString(matrix.getSize());
-		eventWriter.add(eventFactory.createAttribute("size", size));
+			writer.write("<matrix ");
+			writer.write("size=\"");
+			writer.write(size);
+			writer.write("\" storageType=\"");
+			writer.write(st);
+			writer.write("\" valueType=\"");
+			writer.write(vt);
+			writer.write("\">");
+			writer.write(EOL);
 
-		String st = matrix.getStorageType().name();
-		eventWriter.add(eventFactory.createAttribute("storageType", st));
+			// if (createInfo == true) {
+			// eventWriter.add(eventFactory.createStartElement("", "", "info"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "",
+			// "creator"));
+			// eventWriter.add(eventFactory.createCharacters("UJMP"));
+			// eventWriter.add(eventFactory.createEndElement("", "",
+			// "creator"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "",
+			// "version"));
+			// eventWriter.add(eventFactory.createCharacters(UJMP.UJMPVERSION));
+			// eventWriter.add(eventFactory.createEndElement("", "",
+			// "version"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "", "os"));
+			// eventWriter.add(eventFactory.createCharacters(System.getProperty("os.name")));
+			// eventWriter.add(eventFactory.createEndElement("", "", "os"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "", "java"));
+			// eventWriter.add(eventFactory.createCharacters(System.getProperty("java.version")));
+			// eventWriter.add(eventFactory.createEndElement("", "", "java"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "", "date"));
+			// eventWriter.add(eventFactory.createCharacters(new
+			// Date().toString()));
+			// eventWriter.add(eventFactory.createEndElement("", "", "date"));
+			// eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createEndElement("", "", "info"));
+			// eventWriter.add(newline);
+			// }
 
-		String vt = matrix.getValueType().name();
-		eventWriter.add(eventFactory.createAttribute("valueType", vt));
+			// Annotation annotation = matrix.getAnnotation();
+			// if (annotation != null) {
+			// eventWriter.add(eventFactory.createStartElement("", "",
+			// "annotation"));
+			// eventWriter.add(newline);
+			//
+			// Object label = annotation.getMatrixAnnotation();
+			// if (label != null) {
+			// eventWriter.add(eventFactory.createStartElement("", "",
+			// "label"));
+			// eventWriter.add(eventFactory.createCharacters("" + label));
+			// eventWriter.add(eventFactory.createEndElement("", "", "label"));
+			// eventWriter.add(newline);
+			// }
+			//
+			// eventWriter.add(eventFactory.createEndElement("", "",
+			// "annotation"));
+			// eventWriter.add(newline);
+			// }
 
-		eventWriter.add(newline);
+			// eventWriter.add(eventFactory.createStartElement("", "", "data"));
+			// eventWriter.add(newline);
+			//
+			// for (long[] c : matrix.availableCoordinates()) {
+			// eventWriter.add(eventFactory.createStartElement("", "", "cell"));
+			// String pos = Coordinates.toString(c);
+			// eventWriter.add(eventFactory.createAttribute("pos", pos));
+			//
+			// eventWriter.add(eventFactory.createCharacters("" +
+			// matrix.getAsObject(c)));
+			//
+			// eventWriter.add(eventFactory.createEndElement("", "", "cell"));
+			// eventWriter.add(newline);
+			// }
+			//
+			// eventWriter.add(eventFactory.createEndElement("", "", "data"));
+			// eventWriter.add(newline);
 
-		if (createInfo == true) {
-			eventWriter.add(eventFactory.createStartElement("", "", "info"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createStartElement("", "", "creator"));
-			eventWriter.add(eventFactory.createCharacters("UJMP"));
-			eventWriter.add(eventFactory.createEndElement("", "", "creator"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createStartElement("", "", "version"));
-			eventWriter.add(eventFactory.createCharacters(UJMP.UJMPVERSION));
-			eventWriter.add(eventFactory.createEndElement("", "", "version"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createStartElement("", "", "os"));
-			eventWriter.add(eventFactory.createCharacters(System.getProperty("os.name")));
-			eventWriter.add(eventFactory.createEndElement("", "", "os"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createStartElement("", "", "java"));
-			eventWriter.add(eventFactory.createCharacters(System.getProperty("java.version")));
-			eventWriter.add(eventFactory.createEndElement("", "", "java"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createStartElement("", "", "date"));
-			eventWriter.add(eventFactory.createCharacters(new Date().toString()));
-			eventWriter.add(eventFactory.createEndElement("", "", "date"));
-			eventWriter.add(newline);
-			eventWriter.add(eventFactory.createEndElement("", "", "info"));
-			eventWriter.add(newline);
+			writer.write("</matrix>");
+			writer.write(EOL);
 		}
-
-		Annotation annotation = matrix.getAnnotation();
-		if (annotation != null) {
-			eventWriter.add(eventFactory.createStartElement("", "", "annotation"));
-			eventWriter.add(newline);
-
-			Object label = annotation.getMatrixAnnotation();
-			if (label != null) {
-				eventWriter.add(eventFactory.createStartElement("", "", "label"));
-				eventWriter.add(eventFactory.createCharacters("" + label));
-				eventWriter.add(eventFactory.createEndElement("", "", "label"));
-				eventWriter.add(newline);
-			}
-
-			eventWriter.add(eventFactory.createEndElement("", "", "annotation"));
-			eventWriter.add(newline);
-		}
-
-		eventWriter.add(eventFactory.createStartElement("", "", "data"));
-		eventWriter.add(newline);
-
-		for (long[] c : matrix.availableCoordinates()) {
-			eventWriter.add(eventFactory.createStartElement("", "", "cell"));
-			String pos = Coordinates.toString(c);
-			eventWriter.add(eventFactory.createAttribute("pos", pos));
-
-			eventWriter.add(eventFactory.createCharacters("" + matrix.getAsObject(c)));
-
-			eventWriter.add(eventFactory.createEndElement("", "", "cell"));
-			eventWriter.add(newline);
-		}
-
-		eventWriter.add(eventFactory.createEndElement("", "", "data"));
-		eventWriter.add(newline);
-
-		eventWriter.add(eventFactory.createEndElement("", "", "matrix"));
-		eventWriter.add(newline);
-		eventWriter.add(eventFactory.createEndDocument());
-		eventWriter.close();
 	}
 
 }

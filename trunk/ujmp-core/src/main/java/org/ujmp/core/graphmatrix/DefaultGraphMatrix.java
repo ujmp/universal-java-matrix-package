@@ -39,6 +39,8 @@ import org.ujmp.core.util.CoordinateSetToLongWrapper;
 public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	private static final long serialVersionUID = -6103776352324576412L;
 
+	private boolean directed = true;
+
 	private final List<N> nodes = new ArrayIndexList<N>();
 
 	private final Map<Coordinates, E> edges = new HashMap<Coordinates, E>();
@@ -58,7 +60,6 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return edges.values();
 	}
 
-	
 	public Iterable<long[]> availableCoordinates() {
 		return new CoordinateSetToLongWrapper(edges.keySet());
 	}
@@ -67,16 +68,8 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return nodes;
 	}
 
-	public void setDirectedEdge(E value, long node1, long node2) {
-		edges.put(new Coordinates(new long[] { node1, node2 }), value);
-	}
-
 	public void addNode(N o) {
 		nodes.add(o);
-	}
-
-	public void removeEdge(long node1, long node2) {
-		edges.remove(new Coordinates(new long[] { node1, node2 }));
 	}
 
 	public void removeNode(N o) {
@@ -95,17 +88,6 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return nodes.size();
 	}
 
-	
-	public void addDirectedEdge(long node1, long node2) {
-		throw new MatrixException("not implemented!");
-	}
-
-	
-	public void addUndirectedEdge(long node1, long node2) {
-		throw new MatrixException("not implemented!");
-	}
-
-	
 	public void clear() {
 		// nodes.clear();
 		edges.clear();
@@ -163,33 +145,11 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		this.directed = directed;
 	}
 
-	private boolean directed = true;
-
 	public void setNode(N node, long index) {
 		nodes.set((int) index, node);
 	}
 
-	public void setObject(Object o, long row, long column) throws MatrixException {
-		throw new MatrixException("not implemented!");
-	}
-
-	public void setObject(Object o, int row, int column) throws MatrixException {
-		throw new MatrixException("not implemented!");
-	}
-
-	public void addEdge(N node1, N node2) {
-		throw new MatrixException("not implemented!");
-	}
-
-	public void addEdge(long nodeIndex1, long nodeIndex2) {
-		throw new MatrixException("not implemented!");
-	}
-
-	public void removeEdge(N node1, N node2) {
-		throw new MatrixException("not implemented!");
-	}
-
-	public void setEdge(E edgeObject, long nodeIndex1, long nodeIndex2) {
+	public synchronized void setEdge(E edge, long nodeIndex1, long nodeIndex2) {
 		int nmbOfNodes = nodes.size();
 		if (nodeIndex1 >= nmbOfNodes)
 			throw new MatrixException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes
@@ -197,7 +157,7 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		if (nodeIndex2 >= nmbOfNodes)
 			throw new MatrixException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes
 					+ " available");
-		edges.put(new Coordinates(nodeIndex1, nodeIndex2), edgeObject);
+		edges.put(new Coordinates(nodeIndex1, nodeIndex2), edge);
 		List<Long> list = children.get(nodeIndex1);
 		if (list == null) {
 			list = new ArrayList<Long>();
@@ -211,16 +171,26 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 			parents.put(nodeIndex2, list);
 		}
 		list.add(nodeIndex1);
-
 	}
 
-	public void setEdge(E edgeObject, N node1, N node2) {
-		throw new MatrixException("not implemented!");
+	public void setEdge(E edge, N node1, N node2) {
+		long index1 = getIndexOfNode(node1);
+		long index2 = getIndexOfNode(node2);
+		setEdge(edge, index1, index2);
 	}
 
-	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
+	}
+
+	public E getEdge(long nodeIndex1, long nodeIndex2) {
+		return null;
+	}
+
+	public void setObject(E value, long row, long column) {
+	}
+
+	public void setObject(E value, int row, int column) {
 	}
 
 }

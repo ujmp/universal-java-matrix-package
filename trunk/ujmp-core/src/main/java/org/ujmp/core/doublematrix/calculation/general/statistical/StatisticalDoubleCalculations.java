@@ -106,9 +106,12 @@ public interface StatisticalDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @param ignoreNaN
 	 *            should missing values be ignored
+	 * @param besselsCorrection
+	 *            use (n-1) instead of n
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
+	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException;
 
 	/**
 	 * Calculates the standard deviation of all entries in the Matrix either per
@@ -121,9 +124,12 @@ public interface StatisticalDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @param ignoreNaN
 	 *            should missing values be ignored
+	 * @param besselsCorrection
+	 *            use (n-1) instead of n
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
+	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException;
 
 	/**
 	 * Calculates the covariance Matrix. Each row is an observation and each
@@ -134,9 +140,12 @@ public interface StatisticalDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @param ignoreNaN
 	 *            should missing values be ignored
+	 * @param besselsCorrection
+	 *            use (n-1) instead of n
 	 * @return Covariance Matrix
 	 */
-	public Matrix cov(Ret returnType, boolean ignoreNaN) throws MatrixException;
+	public Matrix cov(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException;
 
 	/**
 	 * Calculates the Pearson correlation. Each row is an observation and each
@@ -147,9 +156,12 @@ public interface StatisticalDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @param ignoreNaN
 	 *            should missing values be ignored
+	 * @param besselsCorrection
+	 *            use (n-1) instead of n
 	 * @return Covariance Matrix
 	 */
-	public Matrix corrcoef(Ret returnType, boolean ignoreNaN) throws MatrixException;
+	public Matrix corrcoef(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
+			throws MatrixException;
 
 	/**
 	 * Calculates the mutual information. Each row is an observation and each

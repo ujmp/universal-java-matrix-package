@@ -54,6 +54,9 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 				setObject(m.getAsObject(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
 	public DefaultDenseObjectMatrix2D(long... size) {

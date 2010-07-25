@@ -63,10 +63,10 @@ public interface MiscGeneralDoubleCalculations {
 
 	public Matrix fadeOut(Ret ret, int dimensions) throws MatrixException;
 
-	public Matrix appendHorizontally(Matrix m) throws MatrixException;
+	public Matrix appendHorizontally(Ret returnType, Matrix... matrices) throws MatrixException;
 
-	public Matrix appendVertically(Matrix m) throws MatrixException;
+	public Matrix appendVertically(Ret returnType, Matrix... matrices) throws MatrixException;
 
-	public Matrix append(int dimension, Matrix m) throws MatrixException;
+	public Matrix append(Ret returnType, int dimension, Matrix... matrices) throws MatrixException;
 
 }

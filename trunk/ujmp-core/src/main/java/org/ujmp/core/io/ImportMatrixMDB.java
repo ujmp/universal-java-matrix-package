@@ -38,7 +38,7 @@ public class ImportMatrixMDB {
 			Matrix matrix = (Matrix) method.invoke(null, file, parameters);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jackcess not found in classpath", e);
+			throw new MatrixException(e);
 		}
 	}
 

@@ -30,6 +30,7 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements
 		GraphMatrix<N, E> {
@@ -37,13 +38,6 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 
 	public boolean contains(long... coordinates) {
 		return getEdgeList().contains(new Coordinates(coordinates));
-	}
-
-	public void removeUndirectedEdge(N node1, N node2) {
-		long index1 = getIndexOfNode(node1);
-		long index2 = getIndexOfNode(node2);
-		removeDirectedEdge(index1, index2);
-		removeDirectedEdge(index2, index1);
 	}
 
 	public boolean isConnected(N node1, N node2) {
@@ -84,10 +78,10 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return getParentIndices(index);
 	}
 
-	public E getEdgeValue(N node1, N node2) {
+	public E getEdge(N node1, N node2) {
 		long index1 = getIndexOfNode(node1);
 		long index2 = getIndexOfNode(node2);
-		return getEdgeValue(index1, index2);
+		return getEdge(index1, index2);
 	}
 
 	public int getDegree(N node) {
@@ -98,22 +92,8 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return getParentCount(nodeIndex) + getChildCount(nodeIndex);
 	}
 
-	public void addChild(long nodeIndex, long childIndex) {
-		addEdge(nodeIndex, childIndex);
-	}
-
-	public void addParent(long nodeIndex, long parentIndex) {
-		addEdge(nodeIndex, parentIndex);
-	}
-
 	public int getChildCount(N node) {
 		return getChildCount(getIndexOfNode(node));
-	}
-
-	public void addParent(N node, N parent) {
-		long parentIndex = getIndexOfNode(node);
-		long nodeIndex = getIndexOfNode(node);
-		addParent(nodeIndex, parentIndex);
 	}
 
 	public int getParentCount(N node) {
@@ -135,84 +115,34 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return objects;
 	}
 
-	public void removeUndirectedEdge(long nodeIndex1, long nodeIndex2) {
-		removeDirectedEdge(nodeIndex1, nodeIndex2);
-		removeDirectedEdge(nodeIndex2, nodeIndex1);
-	}
-
-	public void removeDirectedEdge(N node1, N node2) {
-		long index1 = getIndexOfNode(node1);
-		long index2 = getIndexOfNode(node2);
-		removeDirectedEdge(index1, index2);
-	}
-
 	public Iterable<long[]> availableCoordinates() {
 		// TODO: improve
 		return super.availableCoordinates();
 	}
 
 	public long[] getSize() {
-		return new long[] { getNodeList().size(), getNodeList().size() };
+		return new long[] { getNodeCount(), getNodeCount() };
 	}
 
 	public E getObject(long row, long column) {
-		return getEdgeValue(row, column);
+		return getEdge(row, column);
 	}
 
 	public E getObject(int row, int column) {
-		return getEdgeValue(row, column);
+		return getEdge(row, column);
 	}
 
 	public long getValueCount() {
 		return getEdgeList().size();
 	}
 
-	public final void addDirectedEdge(N node1, N node2) {
-		long i1 = getIndexOfNode(node1);
-		long i2 = getIndexOfNode(node2);
-		addDirectedEdge(i1, i2);
-	}
-
-	public abstract void addUndirectedEdge(long node1, long node2);
-
-	public abstract void addDirectedEdge(long node1, long node2);
-
-	public final void addUndirectedEdge(N node1, N node2) {
-		long i1 = getIndexOfNode(node1);
-		long i2 = getIndexOfNode(node2);
-		addUndirectedEdge(i1, i2);
-	}
-
 	public final boolean isConnected(long node1, long node2) {
-		return getObject(node1, node2) != null;
+		return MathUtil.getBoolean(getObject(node1, node2));
 	}
 
 	public final long getIndexOfNode(N o) {
-		return (getNodeList()).indexOf(o);
+		return getNodeList().indexOf(o);
 	}
-
-	public void setUndirectedEdge(E value, long node1, long node2) {
-		setDirectedEdge(value, node1, node2);
-		setDirectedEdge(value, node2, node1);
-	}
-
-	// public final void setObject(E v, long... coordinates) {
-	// setDirectedEdge(v, coordinates[ROW], coordinates[COLUMN]);
-	// }
-
-	public void setDirectedEdge(E edgeObject, N node1, N node2) {
-		long index1 = getIndexOfNode(node1);
-		long index2 = getIndexOfNode(node2);
-		setDirectedEdge(edgeObject, index1, index2);
-	}
-
-	public void setUndirectedEdge(E edgeObject, N node1, N node2) {
-		long index1 = getIndexOfNode(node1);
-		long index2 = getIndexOfNode(node2);
-		setUndirectedEdge(edgeObject, index1, index2);
-	}
-
-	public abstract void clear();
 
 	public final StorageType getStorageType() {
 		return StorageType.GRAPH;

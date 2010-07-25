@@ -44,7 +44,7 @@ public class Standardize extends AbstractDoubleCalculation {
 			center = new Center(true, getDimension(), getSource()).calcNew();
 		}
 		if (sigma == null) {
-			sigma = new Std(getDimension(), true, center).calcNew();
+			sigma = new Std(getDimension(), true, center, true).calcNew();
 		}
 		switch (getDimension()) {
 		case ALL:

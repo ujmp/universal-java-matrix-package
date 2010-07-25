@@ -813,6 +813,11 @@ public abstract class MatrixFactory {
 		return LinkMatrix.toFile(format, file, parameters);
 	}
 
+	public static final Matrix linkToFile(File file, Object... parameters) throws MatrixException,
+			IOException {
+		return LinkMatrix.toFile(file, parameters);
+	}
+
 	public static final Matrix importFromFile(String filename, Object... parameters)
 			throws MatrixException, IOException {
 		return ImportMatrix.fromFile(new File(filename), parameters);

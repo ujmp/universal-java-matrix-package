@@ -26,15 +26,17 @@ package org.ujmp.core.io;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixMDB {
 
-	public static void toFile(File file, Object... parameters) {
+	public static Matrix toFile(File file, Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jackcess.LinkMatrixMDB");
 			Method method = c.getMethod("toFile", new Class[] { File.class, Object[].class });
-			method.invoke(null, file, parameters);
+			Matrix m = (Matrix) method.invoke(null, file, parameters);
+			return m;
 		} catch (Exception e) {
 			throw new MatrixException("ujmp-jackcess not found in classpath", e);
 		}

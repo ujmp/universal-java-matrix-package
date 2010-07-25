@@ -35,12 +35,14 @@ public class Corrcoef extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
-	public Corrcoef(boolean ignoreNaN, Matrix matrix) {
+	private boolean besselsCorrection = true;
+
+	public Corrcoef(boolean ignoreNaN, Matrix matrix, boolean besselsCorrection) {
 		super(matrix);
 		this.ignoreNaN = ignoreNaN;
+		this.besselsCorrection = besselsCorrection;
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		double sumSqX = 0.0;
 		double sumSqY = 0.0;
@@ -90,15 +92,19 @@ public class Corrcoef extends AbstractDoubleCalculation {
 
 		}
 
-		double sdX = Math.sqrt(sumSqX / (N - 1));
-		double sdY = Math.sqrt(sumSqY / (N - 1));
-		double cov = sumProd / (N - 1);
+		double div = N;
+		if (besselsCorrection) {
+			div = N - 1;
+		}
+
+		double sdX = Math.sqrt(sumSqX / div);
+		double sdY = Math.sqrt(sumSqY / div);
+		double cov = sumProd / div;
 		double corr = cov / (sdX * sdY);
 
 		return corr;
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}

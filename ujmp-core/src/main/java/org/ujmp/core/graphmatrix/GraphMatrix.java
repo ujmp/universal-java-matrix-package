@@ -23,8 +23,75 @@
 
 package org.ujmp.core.graphmatrix;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
-public interface GraphMatrix<N, E> extends GenericMatrix2D<E>, GenericGraph<N, E> {
+public interface GraphMatrix<N, E> extends GenericMatrix2D<E> {
+
+	public List<N> getNodeList();
+
+	public boolean isDirected();
+
+	public void setDirected(boolean directed);
+
+	public Collection<E> getEdgeList();
+
+	public E getEdge(long nodeIndex1, long nodeIndex2);
+
+	public E getEdge(N node1, N node2);
+
+	public void setEdge(E edge, long nodeIndex1, long nodeIndex2);
+
+	public void setEdge(E edge, N node1, N node2);
+
+	public N getNode(long index);
+
+	public void addNode(N node);
+
+	public void setNode(N node, long index);
+
+	public void removeNode(N node);
+
+	public void removeNode(long node);
+
+	public boolean isConnected(long nodeIndex1, long nodeIndex2);
+
+	public boolean isConnected(N node1, N node2);
+
+	public long getIndexOfNode(N node);
+
+	public int getEdgeCount();
+
+	public int getNodeCount();
+
+	public int getChildCount(long nodeIndex);
+
+	public int getChildCount(N node);
+
+	public int getParentCount(long nodeIndex);
+
+	public int getParentCount(N node);
+
+	public int getDegree(long nodeIndex);
+
+	public int getDegree(N node);
+
+	public List<N> getChildren(long nodeIndex);
+
+	public List<N> getChildren(N node);
+
+	public List<Long> getChildIndices(long nodeIndex);
+
+	public List<Long> getChildIndices(N node);
+
+	public List<N> getParents(long nodeIndex);
+
+	public List<N> getParents(N node);
+
+	public List<Long> getParentIndices(long nodeIndex);
+
+	public List<Long> getParentIndices(N node);
 
 }

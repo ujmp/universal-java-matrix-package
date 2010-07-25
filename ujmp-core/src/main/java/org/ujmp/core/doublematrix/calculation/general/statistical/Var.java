@@ -23,12 +23,10 @@
 
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
@@ -37,13 +35,14 @@ public class Var extends AbstractDoubleCalculation {
 
 	private Matrix mean = null;
 
-	private Matrix missingCount = null;
-
 	private boolean ignoreNaN = false;
 
-	public Var(int dimension, boolean ignoreNaN, Matrix matrix) {
+	private boolean besselsCorrection = false;
+
+	public Var(int dimension, boolean ignoreNaN, Matrix matrix, boolean besselsCorrection) {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
+		this.besselsCorrection = besselsCorrection;
 		Annotation aold = matrix.getAnnotation();
 		if (aold != null) {
 			Annotation a = new DefaultAnnotation(getSize());
@@ -61,44 +60,49 @@ public class Var extends AbstractDoubleCalculation {
 		if (mean == null) {
 			mean = new Mean(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
-		if (missingCount == null) {
-			missingCount = new CountMissing(getDimension(), getSource()).calcNew();
-		}
 
 		double sum = 0;
 
 		if (ignoreNaN) {
 			double count = 0;
+			double m = 0, v = 0;
 			switch (getDimension()) {
 			case ROW:
+				m = mean.getAsDouble(0, coordinates[COLUMN]);
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
-					sum += Math.pow(MathUtil.ignoreNaN(getSource().getAsDouble(r,
-							coordinates[COLUMN]))
-							- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
+					v = getSource().getAsDouble(r, coordinates[COLUMN]);
+					if (!MathUtil.isNaNOrInfinite(v)) {
+						sum += Math.pow(v - m, 2.0);
+						count++;
+					}
 				}
-				count = getSource().getRowCount()
-						- missingCount.getAsDouble(0, coordinates[COLUMN]) - 1;
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			case COLUMN:
+				m = mean.getAsDouble(coordinates[ROW], 0);
 				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
-					sum += Math.pow(MathUtil
-							.ignoreNaN(getSource().getAsDouble(coordinates[ROW], c))
-							- mean.getAsDouble(coordinates[ROW], 0), 2.0);
+					v = getSource().getAsDouble(coordinates[ROW], c);
+					if (!MathUtil.isNaNOrInfinite(v)) {
+						sum += Math.pow(v - m, 2.0);
+						count++;
+					}
 				}
-				count = getSource().getColumnCount()
-						- missingCount.getAsDouble(coordinates[ROW], 0) - 1;
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			case ALL:
+				m = mean.getAsDouble(0, 0);
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
 					for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
-						sum += Math.pow(MathUtil.ignoreNaN(getSource().getAsDouble(r, c))
-								- mean.getAsDouble(0, 0), 2.0);
+						v = getSource().getAsDouble(r, c);
+						if (!MathUtil.isNaNOrInfinite(v)) {
+							sum += Math.pow(v - m, 2.0);
+							count++;
+						}
 					}
 				}
-				count = (Coordinates.product(getSource().getSize())
-						- missingCount.getAsDouble(0, 0) - 1);
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			default:
@@ -111,16 +115,18 @@ public class Var extends AbstractDoubleCalculation {
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
 					sum += Math.pow((getSource().getAsDouble(r, coordinates[COLUMN]))
 							- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
+					count++;
 				}
-				count = getSource().getRowCount() - 1;
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			case COLUMN:
 				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
 					sum += Math.pow((getSource().getAsDouble(coordinates[ROW], c))
 							- mean.getAsDouble(coordinates[ROW], 0), 2.0);
+					count++;
 				}
-				count = getSource().getColumnCount() - 1;
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			case ALL:
@@ -128,9 +134,10 @@ public class Var extends AbstractDoubleCalculation {
 					for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
 						sum += Math.pow((getSource().getAsDouble(r, c)) - mean.getAsDouble(0, 0),
 								2.0);
+						count++;
 					}
 				}
-				count = Coordinates.product(getSource().getSize()) - 1;
+				count = besselsCorrection ? count - 1 : count;
 				count = count == 0 ? 1 : count;
 				return sum / count;
 			default:

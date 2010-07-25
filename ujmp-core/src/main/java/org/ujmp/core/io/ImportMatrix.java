@@ -39,12 +39,13 @@ import java.net.URLConnection;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.io.FileUtil;
 
 public abstract class ImportMatrix {
 
 	public static Matrix fromFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		return fromFile(ExportMatrix.guessFormat(file), file, parameters);
+		return fromFile(FileUtil.guessFormat(file), file, parameters);
 	}
 
 	public static Matrix fromFile(FileFormat format, File file, Object... parameters)

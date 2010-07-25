@@ -88,6 +88,22 @@ public abstract class VerifyUtil {
 		assertTrue(i1 == i2, message);
 	}
 
+	public static void assertEquals(long[] s1, long[] s2, String message) {
+		assertTrue(Arrays.equals(s1, s2), message);
+	}
+
+	public static void assertEquals(int[] s1, int[] s2, String message) {
+		assertTrue(Arrays.equals(s1, s2), message);
+	}
+
+	public static void assertEquals(double[] s1, double[] s2, String message) {
+		assertTrue(Arrays.equals(s1, s2), message);
+	}
+
+	public static void assertEquals(float[] s1, float[] s2, String message) {
+		assertTrue(Arrays.equals(s1, s2), message);
+	}
+
 	public static void assertNotNull(Object o, String message) {
 		assertFalse(o == null, message);
 	}

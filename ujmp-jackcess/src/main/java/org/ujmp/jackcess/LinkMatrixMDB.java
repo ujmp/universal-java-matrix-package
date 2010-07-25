@@ -25,8 +25,10 @@ package org.ujmp.jackcess;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.StringUtil;
 
 import com.healthmarketscience.jackcess.Database;
 
@@ -34,14 +36,26 @@ public class LinkMatrixMDB {
 
 	public static final JackcessDenseObjectMatrix2D toFile(File file, Object... parameters)
 			throws MatrixException, IOException {
+		Database db = Database.open(file);
+		Set<String> tables = db.getTableNames();
 		String tablename = null;
+
 		if (parameters.length != 0) {
-			tablename = parameters[0].toString();
-		} else {
-			Database db = Database.open(file);
-			tablename = db.getTableNames().iterator().next();
-			db.close();
+			tablename = StringUtil.convert(parameters[0]);
 		}
+		if (tablename == null) {
+			if (tables.size() == 1) {
+				tablename = db.getTableNames().iterator().next();
+			}
+		}
+
+		db.close();
+
+		if (tablename == null) {
+			throw new IllegalArgumentException(
+					"please append the table name, i.e. one of these tables: " + tables);
+		}
+
 		return new JackcessDenseObjectMatrix2D(file, tablename);
 	}
 

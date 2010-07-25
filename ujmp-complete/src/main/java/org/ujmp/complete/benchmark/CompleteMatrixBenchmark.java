@@ -259,7 +259,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				mean.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
 				means.add(mean);
 
-				Matrix std = data.std(Ret.NEW, Matrix.ROW, true);
+				Matrix std = data.std(Ret.NEW, Matrix.ROW, true, true);
 				std.setLabel(m.getLabel() + "-" + benchmarkName + "-std");
 				std.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
 				stds.add(std);

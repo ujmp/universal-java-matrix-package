@@ -34,6 +34,7 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.util.VerifyUtil;
 
 import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.ColumnBuilder;
@@ -51,20 +52,30 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 
 	private List<Column> columns = null;
 
-	Cursor cursor = null;
+	private Cursor cursor = null;
+
+	private Integer curPos = null;
 
 	public JackcessDenseObjectMatrix2D(File file, String tablename) throws IOException {
 		database = Database.open(file);
+		VerifyUtil.assertNotNull(database, "database could not be opened");
 		table = database.getTable(tablename);
+		VerifyUtil.assertNotNull(table, "table not found in database");
 		columns = table.getColumns();
 		cursor = Cursor.createCursor(table);
+
+		for (int i = 0; i < columns.size(); i++) {
+			setColumnLabel(i, columns.get(i).getName());
+		}
+		setLabel(tablename);
 	}
 
 	public JackcessDenseObjectMatrix2D(File file, Matrix matrix) throws IOException {
 		this(file, "ujmp-matrix", matrix);
 	}
 
-	public JackcessDenseObjectMatrix2D(File file, String tablename, Matrix matrix) throws IOException {
+	public JackcessDenseObjectMatrix2D(File file, String tablename, Matrix matrix)
+			throws IOException {
 		try {
 			database = Database.create(file);
 
@@ -104,30 +115,36 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 		return getObject((int) row, (int) column);
 	}
 
-	
 	public synchronized Object getObject(int row, int column) throws MatrixException {
 		if (columns == null || cursor == null) {
 			return null;
 		}
 		try {
 			Column c = columns.get(column);
-			cursor.reset();
-			cursor.moveNextRows(row + 1);
+			if (curPos == null) {
+				cursor.reset();
+				cursor.moveNextRows(row + 1);
+			} else {
+				int diff = row + 1 - curPos;
+				if (diff > 0) {
+					cursor.moveNextRows(diff);
+				} else if (diff < 0) {
+					cursor.movePreviousRows(-diff);
+				}
+			}
+			curPos = row + 1;
 			return cursor.getCurrentRowValue(c);
 		} catch (IOException e) {
 			throw new MatrixException(e);
 		}
 	}
 
-	
 	public void setObject(Object value, long row, long column) {
 	}
 
-	
 	public void setObject(Object value, int row, int column) {
 	}
 
-	
 	public long[] getSize() {
 		if (table == null) {
 			return Coordinates.ZERO2D;

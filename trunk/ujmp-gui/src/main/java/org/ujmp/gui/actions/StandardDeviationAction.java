@@ -42,10 +42,9 @@ public class StandardDeviationAction extends AbstractMatrixAction {
 				"Calculates the standard deviation of the entries in this matrix");
 	}
 
-	
 	public Object call() throws MatrixException {
 		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW,
-				getDimension(), getIgnoreMissing());
+				getDimension(), getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

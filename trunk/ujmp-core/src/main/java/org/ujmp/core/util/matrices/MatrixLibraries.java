@@ -787,7 +787,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes() + footnote("e", ERRORTEXT), CHOL, MTJ);
 		setAsString("org.ujmp.mtj", PACKAGE, MTJ);
 
-		setAsString(small("29.8"), VERSION, OJALGO);
+		setAsString(small("29.24"), VERSION, OJALGO);
 		setAsString(small("2010"), DATE, OJALGO);
 		setAsString(small("MIT"), LICENCE, OJALGO);
 		setAsString(notSupported(), JAVA14, OJALGO);
@@ -933,8 +933,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), CHOL, PARALLELCOLT);
 		setAsString("org.ujmp.parallelcolt", PACKAGE, PARALLELCOLT);
 
-		setAsString(small("1.10"), VERSION, SST);
-		setAsString(small("2009"), DATE, SST);
+		setAsString(small("1.11"), VERSION, SST);
+		setAsString(small("2010"), DATE, SST);
 		setAsString(small("LGPL"), LICENCE, SST);
 		setAsString(notSupported(), JAVA14, SST);
 		setAsString(yes() + footnote("j", "jar does not work with Java 5"), JAVA5, SST);

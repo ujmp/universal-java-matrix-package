@@ -75,7 +75,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return MathUtil.toLongArray(data.dimensions());
+		return MathUtil.toLongArray(data.dims());
 	}
 
 	private void readObject(ObjectInputStream s) throws IOException,

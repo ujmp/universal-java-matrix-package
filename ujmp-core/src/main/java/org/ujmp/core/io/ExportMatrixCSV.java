@@ -31,6 +31,7 @@ import java.io.Writer;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public abstract class ExportMatrixCSV {
@@ -58,7 +59,17 @@ public abstract class ExportMatrixCSV {
 		long colCount = matrix.getColumnCount();
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
-				writer.append("" + matrix.getAsObject(row, col));
+				String s = StringUtil.format(matrix.getAsObject(row, col));
+				if (s.contains("\n") || s.contains("\r") || s.contains("\\u000a")
+						|| s.contains("\\u000d")) {
+					throw new MatrixException(
+							"at least one cell contains a line break, CSV output may be garbage");
+				}
+				if (s.contains("\t") || s.contains("\\u0009") || s.contains("\\u00ad")) {
+					throw new MatrixException(
+							"at least one cell contains a tabulator, CSV output may be garbage");
+				}
+				writer.append(s);
 				if (col < colCount - 1) {
 					writer.append(separator);
 				}

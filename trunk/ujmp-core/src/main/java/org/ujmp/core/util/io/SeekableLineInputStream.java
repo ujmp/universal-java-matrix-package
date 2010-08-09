@@ -37,11 +37,19 @@ import java.util.List;
  */
 public class SeekableLineInputStream extends InputStream {
 
+	private static final long MAXLINECOUNT = 1000;
+
+	private final long[] countsTotal = new long[256];
+
+	private final long[] diffSum = new long[256];
+
 	private int bufferSize = 65536;
 
-	private BufferedRandomAccessFile in = null;
+	private BufferedRandomAccessFile in;
 
 	private final List<Long> lineEnds = new ArrayList<Long>();
+
+	private long maxLineLength = 0;
 
 	public SeekableLineInputStream(String file) throws IOException {
 		this(new File(file));
@@ -50,41 +58,78 @@ public class SeekableLineInputStream extends InputStream {
 	public SeekableLineInputStream(File file) throws IOException {
 		in = new BufferedRandomAccessFile(file, "r", bufferSize);
 		long totalLength = in.length();
-		long maxLength = 0;
 		long last = -1;
-		byte[] bytes = new byte[bufferSize];
+		long lineCount = 0;
+
+		final long[][] countsPerLine = new long[2][256];
+		long[] c = countsPerLine[0];
+		final long[] c0 = countsPerLine[0];
+		final long[] c1 = countsPerLine[1];
+
+		final byte[] bytes = new byte[bufferSize];
+		byte b;
 		for (long pos = 0; pos < totalLength; pos += bufferSize) {
 			Arrays.fill(bytes, (byte) 0);
 			in.read(pos, bytes);
-
 			for (int i = 0; i < bufferSize; i++) {
-				byte b = bytes[i];
+				b = bytes[i];
+
+				// count characters
+				if (lineCount < MAXLINECOUNT) {
+					c[b + 128]++;
+				}
+
+				// when a new line comes
 				if (b == 10) {
+
+					if (lineCount < MAXLINECOUNT) {
+						// sum up character frequencies
+						for (int j = 256; --j != -1;) {
+							countsTotal[j] += c[j];
+						}
+						for (int j = 256; --j != -1;) {
+							diffSum[j] += Math.abs(c0[j] - c1[j]);
+						}
+						// ignore difference for first line
+						if (lineCount == 0) {
+							Arrays.fill(diffSum, 0);
+						}
+						c = countsPerLine[(int) (++lineCount % 2)];
+						Arrays.fill(c, 0);
+					}
+
 					long length = pos + i - last;
-					if (length > maxLength) {
-						maxLength = length;
+					if (length > maxLineLength) {
+						maxLineLength = length;
 					}
 					lineEnds.add(pos + i);
 					last = pos + i;
 				}
-
 			}
 		}
 
-		// remove last newline, if it the last byte in the file
+		// remove last newline, if it is the last byte in the file
 		lineEnds.remove(totalLength - 1);
 
-		System.out.println("This stream has " + getLineCount() + " lines");
+		for (int i = 0; i < 256; i++) {
+			if (countsTotal[i] > 0)
+				System.out.println((i - 128) + " " + countsTotal[i] + " " + diffSum[i]);
+		}
+
+		System.out.println("This file has " + getLineCount() + " lines");
 
 		// if initial buffer size was too small, we have to increase it now
-		if (maxLength + 1 > bufferSize) {
-			bufferSize = (int) maxLength + 1;
+		if (maxLineLength + 1 > bufferSize) {
+			bufferSize = (int) maxLineLength + 1;
 			in.close();
 			in = new BufferedRandomAccessFile(file, "r", bufferSize);
 		}
 	}
 
-	
+	public long getMaxLineLength() {
+		return maxLineLength;
+	}
+
 	public void close() throws IOException {
 		in.close();
 	}
@@ -93,34 +138,36 @@ public class SeekableLineInputStream extends InputStream {
 		return lineEnds.size() + 1;
 	}
 
-	
 	public int read() throws IOException {
 		return in.read();
 	}
 
-	public String readLine(int lineNumber) throws IOException {
-		String line = null;
-		if (line == null) {
-			long start = 0;
-			if (lineNumber > 0) {
-				start = lineEnds.get(lineNumber - 1) + 1;
-			}
-			long end = 0;
-			if (lineNumber < getLineCount() - 1) {
-				end = lineEnds.get(lineNumber);
-			} else {
-				end = in.length();
-			}
-			int length = (int) (end - start);
-			byte[] bytes = new byte[length];
-			in.read(start, bytes);
+	public String getMostProbableDelimiter() {
+		long lines = Math.min(MAXLINECOUNT, lineEnds.size());
+		return null;
+	}
 
-			// eliminate Windows line end
-			if (bytes[bytes.length - 1] == 13) {
-				line = new String(bytes, 0, bytes.length - 1);
-			} else {
-				line = new String(bytes);
-			}
+	public String readLine(int lineNumber) throws IOException {
+		String line;
+		long start = 0;
+		if (lineNumber > 0) {
+			start = lineEnds.get(lineNumber - 1) + 1;
+		}
+		long end = 0;
+		if (lineNumber < getLineCount() - 1) {
+			end = lineEnds.get(lineNumber);
+		} else {
+			end = in.length();
+		}
+		int length = (int) (end - start);
+		byte[] bytes = new byte[length];
+		in.read(start, bytes);
+
+		// eliminate Windows line end
+		if (bytes[bytes.length - 1] == 13) {
+			line = new String(bytes, 0, bytes.length - 1);
+		} else {
+			line = new String(bytes);
 		}
 		return line;
 	}

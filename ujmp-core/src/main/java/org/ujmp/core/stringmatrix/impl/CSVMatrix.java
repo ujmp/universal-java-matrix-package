@@ -26,6 +26,7 @@ package org.ujmp.core.stringmatrix.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.ujmp.core.collections.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
@@ -36,7 +37,7 @@ import org.ujmp.core.util.io.SeekableLineInputStream;
 public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = 6025235663309962730L;
 
-	private String fieldDelimiter = "[,;\t]";
+	private String fieldDelimiter = null;
 
 	private int columnCount = 0;
 
@@ -48,6 +49,8 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 
 	private SeekableLineInputStream sli = null;
 
+	private final Pattern pattern;
+
 	private final Map<Long, String[]> rows = new SoftHashMap<Long, String[]>();
 
 	public CSVMatrix(String file, Object... parameters) throws IOException {
@@ -58,17 +61,26 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 		if (parameters.length != 0 && parameters[0] instanceof String) {
 			this.fieldDelimiter = (String) parameters[0];
 		} else {
+		}
+
+		sli = new SeekableLineInputStream(file);
+		if (sli.getMostProbableDelimiter() != null) {
+			fieldDelimiter = sli.getMostProbableDelimiter();
+		} else {
+			fieldDelimiter = "[,;\t]";
+			System.out.println("Could not guess field delimiter from file, using: "
+					+ fieldDelimiter);
 			System.out
 					.println("You should specify the column separator to make sure that the file is parsed correctly.");
 			System.out.println("Example: MatrixFactory.linkToFile(FileFormat.CSV, file, \";\")");
 		}
 
-		sli = new SeekableLineInputStream(file);
+		pattern = Pattern.compile(fieldDelimiter);
 
 		// check 100 random lines to find maximum number of columns
 		for (int i = 0; i < 100; i++) {
 			String line = sli.readLine(MathUtil.nextInteger(0, sli.getLineCount() - 1));
-			int c = line.split(fieldDelimiter).length;
+			int c = pattern.split(line).length;
 			if (c > columnCount) {
 				columnCount = c;
 			}
@@ -87,7 +99,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 			fields = rows.get(row);
 			if (fields == null) {
 				String line = sli.readLine((int) row);
-				fields = line.split(fieldDelimiter);
+				fields = pattern.split(line);
 				if (trimFields) {
 					for (int i = 0; i < fields.length; i++) {
 						fields[i] = fields[i].trim();

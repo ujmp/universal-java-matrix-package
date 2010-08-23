@@ -31,6 +31,7 @@ import org.junit.runners.Suite;
 		TestDefaultDenseDoubleMatrix2D.class, TestDefaultDenseObjectMatrix2D.class,
 		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnMatrix2D.class,
 		TestDefaultSparseRowMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
-		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class })
+		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class,
+		TestDefaultSparseDoubleMatrix.class })
 public class AllTests {
 }

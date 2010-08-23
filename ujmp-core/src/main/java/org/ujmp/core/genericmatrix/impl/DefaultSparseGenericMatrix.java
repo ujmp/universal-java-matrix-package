@@ -120,4 +120,8 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return StorageType.SPARSE;
 	}
 
+	public final void clear() {
+		values.clear();
+	}
+
 }

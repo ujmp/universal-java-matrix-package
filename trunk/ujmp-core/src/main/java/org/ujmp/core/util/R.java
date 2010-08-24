@@ -133,6 +133,24 @@ public class R {
 			cur = getFromR();
 		}
 
+		// sometimes R does not execute the command, a newLine seems to help
+		executeNewLine();
+
+		return last;
+	}
+
+	private String executeNewLine() throws Exception {
+		sendToR("");
+		String cur = "";
+		String last = "";
+
+		cur = getFromR();
+
+		while (cur != null && cur.length() > 0) {
+			last = cur;
+			cur = getFromR();
+		}
+
 		return last;
 	}
 

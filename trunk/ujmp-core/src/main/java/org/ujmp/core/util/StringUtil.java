@@ -160,11 +160,7 @@ public abstract class StringUtil {
 	}
 
 	public static final String reverse(String s) {
-		StringBuilder reverted = new StringBuilder(s.length());
-		for (int i = s.length(); --i != -1;) {
-			reverted.append(s.charAt(i));
-		}
-		return reverted.toString();
+		return new StringBuilder(s).reverse().toString();
 	}
 
 	public static final String convert(Object o) {

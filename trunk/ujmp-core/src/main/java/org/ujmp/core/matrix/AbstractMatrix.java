@@ -1648,14 +1648,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
 	}
 
-	public final void setRowObject(long row, Object label) {
+	public final void setRowLabelObject(long row, Object label) {
 		if (getDimensionCount() != 2) {
 			throw new MatrixException("This function is only supported for 2D matrices");
 		}
 		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
 	}
 
-	public final void setColumnObject(long col, Object label) {
+	public final void setColumnLabelObject(long col, Object label) {
 		if (getDimensionCount() != 2) {
 			throw new MatrixException("This function is only supported for 2D matrices");
 		}

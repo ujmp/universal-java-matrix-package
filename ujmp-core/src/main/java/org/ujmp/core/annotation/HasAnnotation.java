@@ -53,9 +53,9 @@ public interface HasAnnotation {
 
 	public void setRowLabel(long row, String label);
 
-	public void setRowObject(long row, Object o);
+	public void setRowLabelObject(long row, Object o);
 
-	public void setColumnObject(long col, Object o);
+	public void setColumnLabelObject(long col, Object o);
 
 	public long getRowForLabel(Object object);
 

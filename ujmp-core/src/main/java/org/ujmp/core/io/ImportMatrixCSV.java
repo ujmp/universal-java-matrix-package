@@ -38,6 +38,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class ImportMatrixCSV {
@@ -61,6 +62,7 @@ public abstract class ImportMatrixCSV {
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
 			throws MatrixException, IOException {
+		VerifyUtil.assertNotNull(stream, "InputStream is null");
 		InputStreamReader r = new InputStreamReader(stream);
 		Matrix m = fromReader(r, parameters);
 		r.close();

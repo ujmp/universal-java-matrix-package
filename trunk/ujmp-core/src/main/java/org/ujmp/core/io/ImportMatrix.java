@@ -108,6 +108,12 @@ public abstract class ImportMatrix {
 		} else if (FileFormat.ImapFolders.equals(format)) {
 			return ImportMatrixImapFolders.fromURL(urlString, parameters);
 		} else {
+			
+			/**
+			 * TODO Hack to encode whitespace characters in URL since URLEncoder.encode() for the url.getPath() does not work as expected. 
+			 * Make utility which handles the encoding as specified in RFC 1738
+			 **/
+			urlString = urlString.replace(" ", "%20");
 			return fromURL(format, new URL(urlString), parameters);
 		}
 	}

@@ -70,7 +70,7 @@ public abstract class ImportMatrix {
 		return ImportMatrixCSV.fromString(string, parameters);
 	}
 
-	public static Matrix fromString(FileFormat format, String string, Object parameters)
+	public static Matrix fromString(FileFormat format, String string, Object... parameters)
 			throws MatrixException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
@@ -112,7 +112,7 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromStream(FileFormat format, InputStream stream, Object parameters)
+	public static Matrix fromStream(FileFormat format, InputStream stream, Object... parameters)
 			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
@@ -131,7 +131,22 @@ public abstract class ImportMatrix {
 		}
 	}
 
-	public static Matrix fromReader(FileFormat format, Reader reader, Object parameters)
+	public static Matrix fromResource(FileFormat format, String name, Object... parameters)
+			throws MatrixException, IOException {
+		try {
+			InputStream stream = ImportMatrix.class.getClassLoader().getResourceAsStream(name);
+			if (stream == null) {
+				return null;
+			}
+			Matrix m = fromStream(format, stream, parameters);
+			stream.close();
+			return m;
+		} catch (Exception e) {
+			throw new MatrixException("could not import", e);
+		}
+	}
+
+	public static Matrix fromReader(FileFormat format, Reader reader, Object... parameters)
 			throws MatrixException, IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());

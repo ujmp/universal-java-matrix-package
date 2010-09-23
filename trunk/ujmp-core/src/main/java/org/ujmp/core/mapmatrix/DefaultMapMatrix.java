@@ -26,6 +26,8 @@ package org.ujmp.core.mapmatrix;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ujmp.core.Matrix;
+
 public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 	private static final long serialVersionUID = -1764575977190231155L;
 
@@ -37,6 +39,22 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 
 	public DefaultMapMatrix(Map<K, V> map) {
 		this.map = map;
+	}
+
+	@SuppressWarnings("unchecked")
+	public DefaultMapMatrix(Matrix m) {
+		this();
+		if (m.getColumnCount() != 2) {
+			throw new IllegalArgumentException("matrix must have two columns: key and value");
+		}
+		for (long row = m.getRowCount(); --row != -1;) {
+			K key = (K) m.getAsObject(row, 0);
+			if (key == null) {
+				throw new IllegalArgumentException("key cell in row " + row
+						+ " must not contain null");
+			}
+			put(key, (V) m.getAsObject(row, 1));
+		}
 	}
 
 	public Map<K, V> getMap() {

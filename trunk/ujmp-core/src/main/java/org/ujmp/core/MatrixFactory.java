@@ -833,6 +833,11 @@ public abstract class MatrixFactory {
 		return ImportMatrix.fromFile(format, new File(file), parameters);
 	}
 
+	public static final Matrix importFromResource(FileFormat format, String name,
+			Object... parameters) throws MatrixException, IOException {
+		return ImportMatrix.fromResource(format, name, parameters);
+	}
+
 	public static final Matrix importFromFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		return ImportMatrix.fromFile(format, file, parameters);

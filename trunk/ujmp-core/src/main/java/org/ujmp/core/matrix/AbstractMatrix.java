@@ -1524,6 +1524,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		setMatrixAnnotation(label);
 	}
 
+	public final void setLabelObject(Object label) {
+		setMatrixAnnotation(label);
+	}
+
+	public final Object getLabelObject() {
+		return getMatrixAnnotation();
+	}
+
 	public final String getLabel() {
 		Object o = getMatrixAnnotation();
 		if (o == null) {

@@ -129,6 +129,14 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		matrix.setLabel(label);
 	}
 
+	public Object getLabelObject() {
+		return matrix.getLabelObject();
+	}
+
+	public void setLabelObject(Object label) {
+		matrix.setLabelObject(label);
+	}
+
 	public final void addTableModelListener(TableModelListener l) {
 		getListenerList().add(TableModelListener.class, l);
 	}

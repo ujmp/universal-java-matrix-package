@@ -40,4 +40,19 @@ public interface HasLabel {
 	 */
 	public void setLabel(String label);
 
+	/**
+	 * Returns the label of an object.
+	 * 
+	 * @return the label
+	 */
+	public Object getLabelObject();
+
+	/**
+	 * Sets the label of an object
+	 * 
+	 * @param label
+	 *            the new label.
+	 */
+	public void setLabelObject(Object label);
+
 }

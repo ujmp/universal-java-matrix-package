@@ -28,40 +28,58 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
 import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
-public class FileListMatrix extends AbstractListMatrix<FileMatrix> {
+public class FileListMatrix extends AbstractListMatrix<Matrix> {
 	private static final long serialVersionUID = -2627484975560893624L;
 
-	private final List<FileMatrix> list = new ArrayList<FileMatrix>();
+	private final File path;
+
+	private List<Matrix> list = null;
 
 	public FileListMatrix() throws IOException {
 		this((File) null);
 	}
 
-	public FileListMatrix(String path) throws IOException {
+	public FileListMatrix(String path) {
 		this(new File(path));
 	}
 
-	public FileListMatrix(File path) throws IOException {
+	public FileListMatrix(File path) {
+		this.path = path;
 		if (path == null) {
 			setLabelObject("/");
-			File[] files = File.listRoots();
-			for (File f : files) {
-				list.add(new FileMatrix(f));
-			}
 		} else {
 			setLabelObject(path);
-			File[] files = path.listFiles();
-			for (File f : files) {
-				list.add(new FileMatrix(f));
-			}
 		}
 	}
 
 	@Override
-	public List<FileMatrix> getList() {
+	public List<Matrix> getList() {
+		if (list == null) {
+			try {
+				list = new ArrayList<Matrix>();
+				File[] files = null;
+				if (path == null) {
+					files = File.listRoots();
+				} else {
+					files = path.listFiles();
+				}
+				if (files != null) {
+					for (File f : files) {
+						if (f.isDirectory()) {
+							list.add(new FileListMatrix(f));
+						} else {
+							list.add(new FileMatrix(f));
+						}
+					}
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 		return list;
 	}
 

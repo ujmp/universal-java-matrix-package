@@ -33,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
@@ -81,6 +82,10 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		}
 
 		return label;
+	}
+
+	protected void setValue(Object value) {
+		setText((value == null) ? "" : StringUtil.format(value));
 	}
 
 }

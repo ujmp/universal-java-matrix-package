@@ -91,6 +91,9 @@ public enum FileFormat {
 	}
 
 	public static FileFormat guess(File file) {
+		if (file == null) {
+			System.out.println();
+		}
 		String name = file.getName().toLowerCase();
 		for (FileFormat f : FileFormat.values()) {
 			for (String e : f.getExtensions()) {

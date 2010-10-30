@@ -50,4 +50,7 @@ public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMat
 		return factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
 }

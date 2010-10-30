@@ -24,14 +24,15 @@
 package org.ujmp.core.annotation;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.ujmp.core.Matrix;
 
-public interface Annotation extends Serializable, Cloneable {
-
-	public long[] getSize();
+public interface Annotation extends Serializable, Cloneable {	
 
 	public Matrix getDimensionMatrix(int dimension);
+
+	public Map<Integer, Matrix> getDimensionMatrices();
 
 	public void setDimensionMatrix(int dimension, Matrix matrix);
 

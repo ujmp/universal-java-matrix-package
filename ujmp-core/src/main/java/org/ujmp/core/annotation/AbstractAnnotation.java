@@ -23,24 +23,19 @@
 
 package org.ujmp.core.annotation;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 
 public abstract class AbstractAnnotation implements Annotation {
 	private static final long serialVersionUID = 2939231340832922069L;
 
-	private long[] size = null;
+	private final int dimensionCount;
 
-	public AbstractAnnotation(long... size) {
-		this.size = Coordinates.copyOf(size);
-	}
-
-	public final long[] getSize() {
-		return size;
+	public AbstractAnnotation(int dimensionCount) {
+		this.dimensionCount = dimensionCount;
 	}
 
 	public final int getDimensionCount() {
-		return getSize().length;
+		return dimensionCount;
 	}
 
 	public final Object getAxisAnnotation(int axis) {

@@ -122,6 +122,11 @@ public class MatrixTableEditorPanel extends JPanel implements
 		int row = jTable.rowAtPoint(e.getPoint());
 		int col = jTable.columnAtPoint(e.getPoint());
 
+		// seems to happen sometimes
+		if (row < 0 || col < 0) {
+			return;
+		}
+
 		if (e.getButton() == MouseEvent.BUTTON3) {
 			// right click: show menu
 			JPopupMenu popup = new MatrixPopupMenu(null, dataModel, row, col);

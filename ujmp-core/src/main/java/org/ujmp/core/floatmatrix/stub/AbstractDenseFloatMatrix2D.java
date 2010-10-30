@@ -43,24 +43,24 @@ public abstract class AbstractDenseFloatMatrix2D extends AbstractDenseFloatMatri
 		setFloat(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Float getObject(long row, long column) {
 		return getFloat(row, column);
 	}
 
-	
 	public final Float getObject(int row, int column) {
 		return getFloat(row, column);
 	}
 
-	
 	public final void setObject(Float value, long row, long column) {
 		setFloat(value, row, column);
 	}
 
-	
 	public final void setObject(Float value, int row, int column) {
 		setFloat(value, row, column);
+	}
+
+	public final int getDimensionCount() {
+		return 2;
 	}
 
 }

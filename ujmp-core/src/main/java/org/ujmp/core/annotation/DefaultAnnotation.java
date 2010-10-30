@@ -40,22 +40,26 @@ public class DefaultAnnotation extends AbstractAnnotation {
 
 	private Map<Integer, Matrix> dimensionMatrices = null;
 
-	public DefaultAnnotation(long[] size) {
-		super(size);
+	public DefaultAnnotation(int dimensionCount) {
+		super(dimensionCount);
 	}
 
 	public Matrix getDimensionMatrix(int dimension) {
-		if (dimensionMatrices == null) {
-			dimensionMatrices = new HashMap<Integer, Matrix>(getDimensionCount());
-		}
-		Matrix m = dimensionMatrices.get(dimension);
+		Matrix m = getDimensionMatrices().get(dimension);
 		if (m == null) {
-			long[] t = Coordinates.copyOf(getSize());
-			t[dimension] = 1;
+			long[] t = new long[getDimensionCount()];
+			Arrays.fill(t, 1);
 			m = MatrixFactory.sparse(ValueType.OBJECT, t);
-			dimensionMatrices.put(dimension, m);
+			getDimensionMatrices().put(dimension, m);
 		}
 		return m;
+	}
+
+	public Map<Integer, Matrix> getDimensionMatrices() {
+		if (dimensionMatrices == null) {
+			dimensionMatrices = new HashMap<Integer, Matrix>(2);
+		}
+		return dimensionMatrices;
 	}
 
 	public Object getMatrixAnnotation() {
@@ -67,7 +71,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 	}
 
 	public Annotation clone() {
-		Annotation a = new DefaultAnnotation(getSize());
+		Annotation a = new DefaultAnnotation(getDimensionCount());
 		a.setMatrixAnnotation(getMatrixAnnotation());
 		for (int i = 0; i < getDimensionCount(); i++) {
 			a.setDimensionMatrix(i, getDimensionMatrix(i).clone());
@@ -112,19 +116,16 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		Matrix m = getDimensionMatrix(dimension);
 		long old = position[dimension];
 		position[dimension] = 0;
+		if (!Coordinates.isSmallerThan(position, m.getSize())) {
+			long[] newSize = Coordinates.max(m.getSize(), Coordinates.plusOne(position));
+			m.setSize(newSize);
+		}
 		m.setAsObject(label, position);
 		position[dimension] = old;
 	}
 
 	public void setDimensionMatrix(int dimension, Matrix matrix) {
-		if (dimensionMatrices == null) {
-			dimensionMatrices = new HashMap<Integer, Matrix>(getDimensionCount());
-		}
-		if (matrix == null) {
-			dimensionMatrices.put(dimension, null);
-		} else {
-			dimensionMatrices.put(dimension, matrix);
-		}
+		getDimensionMatrices().put(dimension, matrix);
 	}
 
 }

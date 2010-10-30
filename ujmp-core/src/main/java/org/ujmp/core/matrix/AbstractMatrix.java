@@ -273,7 +273,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setMatrixAnnotation(Object value) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation(getSize());
+			annotation = new DefaultAnnotation(getDimensionCount());
 		}
 		annotation.setMatrixAnnotation(value);
 	}
@@ -288,14 +288,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setAxisAnnotation(int axis, Object label, long... position) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation(getSize());
+			annotation = new DefaultAnnotation(getDimensionCount());
 		}
 		annotation.setAxisAnnotation(axis, label, position);
 	}
 
 	public final void setAxisAnnotation(int axis, Object label) {
 		if (annotation == null) {
-			annotation = new DefaultAnnotation(getSize());
+			annotation = new DefaultAnnotation(getDimensionCount());
 		}
 		annotation.setAxisAnnotation(axis, label);
 	}
@@ -321,6 +321,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 		}
 		return false;
+	}
+
+	public int getDimensionCount() {
+		return getSize().length;
 	}
 
 	public final double getEuklideanValue() throws MatrixException {
@@ -1096,10 +1100,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return UJMPFormat.getMultiLineInstance().format(this);
 	}
 
-	public final int getDimensionCount() {
-		return getSize().length;
-	}
-
 	public final Matrix ones(Ret ret) throws MatrixException {
 		return new Ones(this).calc(ret);
 	}
@@ -1154,8 +1154,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	// TODO: this should also work for objects and Strings
 	public final int compareTo(Matrix m) {
-		double v1 = getMeanValue();
-		double v2 = m.getMeanValue();
+		double v1 = doubleValue();
+		double v2 = m.doubleValue();
 		return new Double(v1).compareTo(v2);
 	}
 
@@ -1833,35 +1833,35 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (isScalar()) {
 			return getAsDouble(0, 0);
 		}
-		return getMeanValue();
+		return Double.NaN;
 	}
 
 	public final int intValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsInt(0, 0);
 		}
-		return (int) getMeanValue();
+		return 0;
 	}
 
 	public final char charValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsChar(0, 0);
 		}
-		return (char) getMeanValue();
+		return 0;
 	}
 
 	public final BigInteger bigIntegerValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBigInteger(0, 0);
 		}
-		return BigInteger.valueOf((long) getMeanValue());
+		return null;
 	}
 
 	public final BigDecimal bigDecimalValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBigDecimal(0, 0);
 		}
-		return BigDecimal.valueOf(getMeanValue());
+		return null;
 	}
 
 	public final Matrix fadeIn(Ret ret, int dimension) throws MatrixException {
@@ -1876,28 +1876,28 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (isScalar()) {
 			return getAsFloat(0, 0);
 		}
-		return (float) getMeanValue();
+		return Float.NaN;
 	}
 
 	public final long longValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsLong(0, 0);
 		}
-		return (long) getMeanValue();
+		return 0;
 	}
 
 	public final Date dateValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsDate(0, 0);
 		}
-		return MathUtil.getDate(getMeanValue());
+		return MathUtil.getDate(null);
 	}
 
 	public final boolean booleanValue() throws MatrixException {
 		if (isScalar()) {
 			return getAsBoolean(0, 0);
 		}
-		return getMeanValue() != 0;
+		return false;
 	}
 
 	public final String stringValue() throws MatrixException {

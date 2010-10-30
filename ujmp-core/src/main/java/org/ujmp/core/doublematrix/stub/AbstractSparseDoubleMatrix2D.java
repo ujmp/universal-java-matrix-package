@@ -67,4 +67,8 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 		return factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

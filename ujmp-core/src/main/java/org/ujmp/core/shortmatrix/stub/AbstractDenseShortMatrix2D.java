@@ -58,4 +58,8 @@ public abstract class AbstractDenseShortMatrix2D extends AbstractDenseShortMatri
 		setShort(value, row, column);
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

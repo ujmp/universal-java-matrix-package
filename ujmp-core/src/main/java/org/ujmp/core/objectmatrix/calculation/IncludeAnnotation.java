@@ -39,7 +39,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
-		setAnnotation(new DefaultAnnotation(getSize()));
+		setAnnotation(new DefaultAnnotation(getSize().length));
 		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
 	}
 

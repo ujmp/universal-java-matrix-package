@@ -42,24 +42,24 @@ public abstract class AbstractDenseIntMatrix2D extends AbstractDenseIntMatrix im
 		setInt(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Integer getObject(long row, long column) {
 		return getInt(row, column);
 	}
 
-	
 	public final Integer getObject(int row, int column) {
 		return getInt(row, column);
 	}
 
-	
 	public final void setObject(Integer value, long row, long column) {
 		setInt(value, row, column);
 	}
 
-	
 	public final void setObject(Integer value, int row, int column) {
 		setInt(value, row, column);
+	}
+
+	public final int getDimensionCount() {
+		return 2;
 	}
 
 }

@@ -81,13 +81,14 @@ public class UJMPFormat extends Format {
 				pad(toAppendTo, ' ', width);
 			}
 			return toAppendTo;
-		} else if (obj.isScalar()) {
-			Object v = obj.getAsObject(obj.allCoordinates().iterator().next());
-			return format(v, toAppendTo, pos);
 		} else if (multiLine) {
 			return formatMultiLine(obj, toAppendTo, pos);
 		} else {
-			toAppendTo.append("[Matrix]");
+			if (obj.getLabel() != null) {
+				toAppendTo.append("[" + obj.getLabel() + "]");
+			} else {
+				toAppendTo.append("[Matrix]");
+			}
 			return toAppendTo;
 		}
 	}

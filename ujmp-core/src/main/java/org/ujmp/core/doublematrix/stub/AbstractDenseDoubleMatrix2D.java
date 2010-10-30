@@ -174,4 +174,8 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 		return factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

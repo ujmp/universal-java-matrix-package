@@ -49,4 +49,8 @@ public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGener
 		return DenseObjectMatrix2D.factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

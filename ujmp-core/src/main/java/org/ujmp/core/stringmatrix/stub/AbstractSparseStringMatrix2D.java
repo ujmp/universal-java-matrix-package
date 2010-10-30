@@ -59,4 +59,8 @@ public abstract class AbstractSparseStringMatrix2D extends AbstractSparseStringM
 		setString(value, row, column);
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

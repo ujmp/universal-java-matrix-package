@@ -65,4 +65,8 @@ public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix 
 		return DenseObjectMatrix2D.factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

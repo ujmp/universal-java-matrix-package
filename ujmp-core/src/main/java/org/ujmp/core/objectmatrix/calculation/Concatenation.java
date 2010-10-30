@@ -98,7 +98,7 @@ public class Concatenation extends AbstractObjectCalculation {
 
 		// Annotation
 		if (matrices[0].getMatrixAnnotation() != null) {
-			Annotation annotation = new DefaultAnnotation(size);
+			Annotation annotation = new DefaultAnnotation(size.length);
 			setAnnotation(annotation);
 			annotation.setMatrixAnnotation(matrices[0].getMatrixAnnotation());
 			for (int d = 0; d < matrices[0].getDimensionCount(); d++) {

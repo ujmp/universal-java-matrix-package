@@ -90,9 +90,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Double:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += Double.NaN;
+		} else {
 			toolTip += MathUtil.getDouble(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -102,9 +103,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Float:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += Float.NaN;
+		} else {
 			toolTip += MathUtil.getFloat(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -114,9 +116,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Long:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += "0";
+		} else {
 			toolTip += MathUtil.getLong(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -126,9 +129,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Short:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += "0";
+		} else {
 			toolTip += MathUtil.getShort(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -138,9 +142,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Int:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += "0";
+		} else {
 			toolTip += MathUtil.getInt(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -150,9 +155,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Byte:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += "0";
+		} else {
 			toolTip += MathUtil.getByte(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -162,9 +168,9 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Char:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+		} else {
 			toolTip += MathUtil.getChar(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -174,9 +180,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Boolean:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += "false";
+		} else {
 			toolTip += MathUtil.getBoolean(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";
@@ -186,9 +193,10 @@ public abstract class TooltipUtil {
 		toolTip += "<b>Date:</b>";
 		toolTip += "</td>";
 		toolTip += "<td>";
-		try {
+		if (o instanceof Matrix) {
+			toolTip += MathUtil.getDate(null);
+		} else {
 			toolTip += MathUtil.getDate(o);
-		} catch (Exception e) {
 		}
 		toolTip += "</td>";
 		toolTip += "</tr>";

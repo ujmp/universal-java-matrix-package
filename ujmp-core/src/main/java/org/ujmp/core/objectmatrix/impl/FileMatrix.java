@@ -26,20 +26,14 @@ package org.ujmp.core.objectmatrix.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.collections.LazyMap;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.io.FileUtil;
-import org.ujmp.core.util.io.IntelligentFileReader;
-import org.ujmp.core.util.io.IntelligentFileWriter;
+import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
@@ -47,8 +41,6 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public static final String CONTENT = "Content";
 
 	public static final String TEXT = "Text";
-
-	public static final String ID = "Id";
 
 	public static final String BYTES = "Bytes";
 
@@ -77,8 +69,6 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public static final String FILEFORMAT = "FileFormat";
 
 	public static final String MD5 = "MD5";
-
-	public static final String ANNOTATION = "Annotation";
 
 	private FileMap map = null;
 
@@ -131,15 +121,8 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			}
 			this.parameters = paramegters;
 			this.finalFile = file;
-			put(ID, file.getAbsolutePath());
 			put(PATH, file.getPath());
 			put(FILENAME, file.getName());
-			// String[] components = file.getName().split("\\.");
-			// if (components != null && components.length > 1) {
-			// map.put(EXTENSION, components[components.length - 1]);
-			// } else {
-			// map.put(EXTENSION, null);
-			// }
 			put(CANREAD, file.canRead());
 			put(CANWRITE, file.canWrite());
 			put(ISHIDDEN, file.isHidden());
@@ -148,44 +131,12 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			put(LASTMODIFIED, file.lastModified());
 			put(SIZE, file.length());
 			put(FILEFORMAT, this.fileformat);
-
-			if (fileformat == null) {
-				put(CONTENT, null);
+			if (file.isDirectory()) {
+				put(CONTENT, new FileListMatrix(finalFile, parameters));
 			} else {
-				Callable<Matrix> c = new Callable<Matrix>() {
-					public Matrix call() throws Exception {
-						return MatrixFactory.linkToFile(fileformat, finalFile, parameters);
-					}
-				};
-				put(CONTENT, c);
+				put(CONTENT, MatrixFactory.linkToFile(fileformat, finalFile, parameters));
+				put(BYTES, MatrixFactory.linkToFile(FileFormat.RAW, finalFile));
 			}
-			Callable<Object> md5 = new Callable<Object>() {
-				public Object call() throws Exception {
-					try {
-						if (finalFile != null && !finalFile.isDirectory() && finalFile.canRead()) {
-							return MathUtil.md5(finalFile);
-						} else {
-							return 0;
-						}
-					} catch (Throwable t) {
-						return Double.NaN;
-					}
-				}
-			};
-			put(MD5, md5);
-			Callable<Matrix> bytes = new Callable<Matrix>() {
-				public Matrix call() throws Exception {
-					return MatrixFactory.linkToFile(FileFormat.RAW, finalFile, parameters);
-				}
-			};
-			put(BYTES, bytes);
-			Callable<Matrix> annotation = new Callable<Matrix>() {
-				public Matrix call() throws Exception {
-					return new AnnotationMatrix(FileUtil.appendExtension(finalFile, ".xml"));
-				}
-			};
-			put(ANNOTATION, annotation);
-
 		}
 
 		public File getFinalFile() {
@@ -204,30 +155,4 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		}
 	}
 
-	class AnnotationMatrix extends AbstractDenseStringMatrix2D {
-		private static final long serialVersionUID = 1978026473405074699L;
-
-		private final File finalFile;
-
-		public AnnotationMatrix(File file) {
-			this.finalFile = file;
-		}
-
-		public String getString(long row, long column) {
-			return IntelligentFileReader.load(finalFile);
-		}
-
-		public void setString(String value, long row, long column) {
-			try {
-				IntelligentFileWriter.save(finalFile, value);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		public long[] getSize() {
-			return new long[] { 1, 1 };
-		}
-
-	}
 }

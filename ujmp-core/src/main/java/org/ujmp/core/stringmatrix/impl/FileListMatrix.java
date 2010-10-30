@@ -28,26 +28,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.AbstractMapMatrixList;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
-public class FileListMatrix extends AbstractListMatrix<Matrix> {
-	private static final long serialVersionUID = -2627484975560893624L;
+public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
+	private static final long serialVersionUID = -4912495890644097086L;
+
+	private PrivateFileListMatrix list = null;
 
 	private final File path;
 
-	private List<Matrix> list = null;
-
-	public FileListMatrix() throws IOException {
-		this((File) null);
+	public FileListMatrix(Object... parameters) throws IOException {
+		this((File) null, parameters);
 	}
 
-	public FileListMatrix(String path) {
-		this(new File(path));
+	public FileListMatrix(String path, Object... parameters) {
+		this(new File(path), parameters);
 	}
 
-	public FileListMatrix(File path) {
+	public FileListMatrix(File path, Object... parameters) {
 		this.path = path;
 		if (path == null) {
 			setLabelObject("/");
@@ -57,30 +58,52 @@ public class FileListMatrix extends AbstractListMatrix<Matrix> {
 	}
 
 	@Override
-	public List<Matrix> getList() {
+	public PrivateFileListMatrix getList() {
 		if (list == null) {
-			try {
-				list = new ArrayList<Matrix>();
-				File[] files = null;
-				if (path == null) {
-					files = File.listRoots();
-				} else {
-					files = path.listFiles();
-				}
-				if (files != null) {
-					for (File f : files) {
-						if (f.isDirectory()) {
-							list.add(new FileListMatrix(f));
-						} else {
+			list = new PrivateFileListMatrix(path);
+		}
+		return list;
+	}
+
+	class PrivateFileListMatrix extends AbstractListMatrix<MapMatrix<String, Object>> {
+		private static final long serialVersionUID = -2627484975560893624L;
+
+		private final File path;
+
+		private List<MapMatrix<String, Object>> list = null;
+
+		public PrivateFileListMatrix(File path) {
+			this.path = path;
+			if (path == null) {
+				setLabelObject("/");
+			} else {
+				setLabelObject(path);
+			}
+		}
+
+		@Override
+		public List<MapMatrix<String, Object>> getList() {
+			if (list == null) {
+				try {
+					list = new ArrayList<MapMatrix<String, Object>>();
+					File[] files = null;
+					if (path == null) {
+						files = File.listRoots();
+					} else {
+						files = path.listFiles();
+					}
+					if (files != null) {
+						for (File f : files) {
 							list.add(new FileMatrix(f));
 						}
 					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
-			} catch (Exception e) {
-				throw new RuntimeException(e);
 			}
+			return list;
 		}
-		return list;
+
 	}
 
 }

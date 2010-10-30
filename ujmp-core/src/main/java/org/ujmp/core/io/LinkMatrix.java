@@ -66,6 +66,16 @@ public abstract class LinkMatrix {
 			throw new MatrixException("could not import", e);
 		}
 	}
+
+	public static boolean isSupported(FileFormat format) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
+			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
+			return m != null;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
 
 class DelayedContentMatrix extends AbstractObjectMatrix {

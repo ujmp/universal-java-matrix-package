@@ -31,40 +31,45 @@ import org.ujmp.core.util.io.UJMPFileFilter;
  * Import and export formats that are supported.
  */
 public enum FileFormat {
-	CSV("Comma Separated Files", "csv"), //
-	TXT("Text Files", "txt"), //
-	M("Matlab Script Files", "m"), //
-	MAT("Matlab Data Files", "mat"), //
-	GIF("GIF Image Files", "gif"), //
-	FILE("Text Files", "*"), //
-	MDB("Microsoft Access Files", "mdb"), //
-	R("R Files", "r"), //
-	RSS("RSS Feed", "rss", "rdf", "xml"), //
-	ATOM("Atom Feed", "atom", "xml"), //
-	JPG("JPG Image Files", "jpg", "jpeg"), //
-	HTML("HTML Files", "html", "htm"), //
-	MTX("Matrix Data Format", "mtx"), //
-	XLS("Microsoft Excel Files", "xls"), //
-	SER("Serialized Data Files", "ser", "obj", "dat"), //
-	GRAPHML("GraphML Files", "graphml", "gml"), //
-	TEX("Latex Files", "tex"), //
-	WAV("Wave Audio Files", "wav"), //
-	BMP("BMP Image Files", "bmp"), //
-	TIFF("TIFF Image Files", "tif"), //
-	PLT("GnuPlot Files", "plt"), //
-	PDF("PDF Files", "pdf"), //
-	PNG("PNG Images Files", "png"), //
-	XML("XML Files", "xml"), //
+	UNKNOWN("unknown", ""), //
 	AML("AML Files", "aml"), //
 	ARFF("ARFF Files", "arf"), //
+	ATOM("Atom Feed", "atom", "xml"), //
 	ATT("ATT Files", "att"), //
-	LOG("Log Files", "log"), //
-	NET("Net Files", "net"), //
-	STRING("String files", "txt"), //
-	SPARSECSV("Sparse CSV Files", "csv"), //
-	RAW("Binary Files", "raw", "bin"), //
+	BMP("BMP Image Files", "bmp"), //
+	CSV("Comma Separated Files", "csv"), //
+	DIRECTORY("Directory", ""), //	
+	DOC("Microsoft Word Files", "doc"), //
+	FILE("Text Files", "*"), //
+	GIF("GIF Image Files", "gif"), //
+	GRAPHML("GraphML Files", "graphml", "gml"), //
+	HTML("HTML Files", "html", "htm"), //
 	ImapMessages("Imap Messages", "imap"), //
-	ImapFolders("Imap Folders", "imap");
+	ImapFolders("Imap Folders", "imap"), //
+	JPG("JPG Image Files", "jpg", "jpeg"), //	
+	LOG("Log Files", "log"), //	
+	M("Matlab Script Files", "m"), //
+	MAT("Matlab Data Files", "mat"), //
+	MDB("Microsoft Access Files", "mdb"), //
+	MP3("MP3", "mp3"), //
+	MTX("Matrix Data Format", "mtx"), //
+	NET("Net Files", "net"), //
+	PDF("PDF Files", "pdf"), //
+	PLT("GnuPlot Files", "plt"), //
+	PNG("PNG Images Files", "png"), //
+	R("Matlab R Files", "r"), //
+	RAW("Binary Files", "raw", "bin"), //
+	RSS("RSS Feed", "rss", "rdf", "xml"), //
+	SER("Serialized Data Files", "ser", "obj", "dat"), //
+	SPARSECSV("Sparse CSV Files", "csv"), //
+	STRING("String files", "txt"), //
+	TEX("Latex Files", "tex"), //
+	TIFF("TIFF Image Files", "tif"), //
+	TXT("Text Files", "txt"), //
+	WAV("Wave Audio Files", "wav"), //
+	XLS("Microsoft Excel Files", "xls"), //
+	XML("XML Files", "xml"), //	
+	ZIP("ZIP Files", "zip"); //
 
 	private String[] extensions = null;
 
@@ -92,17 +97,20 @@ public enum FileFormat {
 
 	public static FileFormat guess(File file) {
 		if (file == null) {
-			System.out.println();
+			return FileFormat.UNKNOWN;
+		}
+		if (file.isDirectory()) {
+			return FileFormat.DIRECTORY;
 		}
 		String name = file.getName().toLowerCase();
 		for (FileFormat f : FileFormat.values()) {
 			for (String e : f.getExtensions()) {
-				if (name.endsWith(e)) {
+				if (name.endsWith("." + e)) {
 					return f;
 				}
 			}
 		}
-		return FileFormat.TXT;
+		return FileFormat.UNKNOWN;
 	}
 
 }

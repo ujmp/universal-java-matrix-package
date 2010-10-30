@@ -3313,7 +3313,7 @@ public abstract class AbstractMatrixTest {
 		Matrix prod = chol.mtimes(cholTrans);
 		Matrix diff = prod.minus(a);
 
-		assertEquals(getLabel(), 0.0, diff.doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, diff.getRMS(), TOLERANCE);
 
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
@@ -3359,7 +3359,7 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, prod.minus(result).getRMS(), TOLERANCE);
 
 		if (result instanceof Erasable) {
 			((Erasable) result).erase();
@@ -3399,7 +3399,7 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(getLabel(), 0.0, prod.minus(result).doubleValue(), TOLERANCE);
+		assertEquals(getLabel(), 0.0, prod.minus(result).getRMS(), TOLERANCE);
 
 		if (result instanceof Erasable) {
 			((Erasable) result).erase();
@@ -3442,7 +3442,7 @@ public abstract class AbstractMatrixTest {
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
-		assertEquals(0.0, prod.minus(result).doubleValue(), TOLERANCE);
+		assertEquals(0.0, prod.minus(result).getRMS(), TOLERANCE);
 
 		if (result instanceof Erasable) {
 			((Erasable) result).erase();

@@ -80,35 +80,37 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 		fireValueChanged();
 	}
 
-	public double getEstimatedMaxValue(long timeOut) throws MatrixException {
-		double max = -Double.MAX_VALUE;
-		long t0 = System.currentTimeMillis();
-		long t1;
-		double v = 0.0;
-		for (long[] c : matrix.availableCoordinates()) {
-			max = (v = matrix.getAsDouble(c)) > max ? v : max;
-			t1 = System.currentTimeMillis();
-			if (t1 - t0 > timeOut) {
-				return max;
-			}
-		}
-		return max;
-	}
+	// Takes too much time and does not work for recursive objects
 
-	public double getEstimatedMinValue(long timeOut) throws MatrixException {
-		double min = Double.MAX_VALUE;
-		long t0 = System.currentTimeMillis();
-		long t1;
-		double v = 0.0;
-		for (long[] c : matrix.availableCoordinates()) {
-			min = (v = matrix.getAsDouble(c)) < min ? v : min;
-			t1 = System.currentTimeMillis();
-			if (t1 - t0 > timeOut) {
-				return min;
-			}
-		}
-		return min;
-	}
+	// public double getEstimatedMaxValue(long timeOut) throws MatrixException {
+	// double max = -Double.MAX_VALUE;
+	// long t0 = System.currentTimeMillis();
+	// long t1;
+	// double v = 0.0;
+	// for (long[] c : matrix.availableCoordinates()) {
+	// max = (v = matrix.getAsDouble(c)) > max ? v : max;
+	// t1 = System.currentTimeMillis();
+	// if (t1 - t0 > timeOut) {
+	// return max;
+	// }
+	// }
+	// return max;
+	// }
+
+	// public double getEstimatedMinValue(long timeOut) throws MatrixException {
+	// double min = Double.MAX_VALUE;
+	// long t0 = System.currentTimeMillis();
+	// long t1;
+	// double v = 0.0;
+	// for (long[] c : matrix.availableCoordinates()) {
+	// min = (v = matrix.getAsDouble(c)) < min ? v : min;
+	// t1 = System.currentTimeMillis();
+	// if (t1 - t0 > timeOut) {
+	// return min;
+	// }
+	// }
+	// return min;
+	// }
 
 	public long getValueCount() {
 		return matrix.getValueCount();

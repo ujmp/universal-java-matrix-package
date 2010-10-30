@@ -66,4 +66,8 @@ public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanM
 		return DenseObjectMatrix2D.factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

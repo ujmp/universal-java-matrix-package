@@ -26,6 +26,7 @@ package org.ujmp.gui.util;
 import java.awt.Color;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
@@ -91,16 +92,18 @@ public abstract class ColorUtil {
 			return fromRGB((Integer) v);
 		}
 		if (v instanceof Matrix) {
-			if (((Matrix) v).isScalar()) {
-				return fromObject(((Matrix) v).getAsObject(0, 0));
-			}
+			Matrix m = (Matrix) v;
+			String s = m.getLabel();
+			s = s == null ? "[Matrix]" : s;
+			return fromString(s);
 		}
+		String s = StringUtil.format(v);
 		try {
-			double d = Double.parseDouble(v.toString());
+			double d = Double.parseDouble(s);
 			return fromDouble(d);
 		} catch (Exception e) {
 		}
-		return fromString(v.toString());
+		return fromString(s);
 	}
 
 	private static int hash(int h) {

@@ -71,8 +71,9 @@ public abstract class StringUtil {
 			return (String) o;
 		}
 		if (o instanceof Matrix) {
-			if (((Matrix) o).isScalar()) {
-				return format(((Matrix) o).getAsObject(0, 0));
+			Matrix m = (Matrix) o;
+			if (m.getLabel() != null) {
+				return "[" + m.getLabel() + "]";
 			} else {
 				return "[Matrix]";
 			}

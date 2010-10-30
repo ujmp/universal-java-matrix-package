@@ -80,17 +80,33 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	public static final String ANNOTATION = "Annotation";
 
-	private final FileMap map;
+	private FileMap map = null;
+
+	private final FileFormat fileFormat;
+
+	private final File file;
+
+	private final Object[] parameters;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
 		this(null, file, parameters);
 	}
 
 	public FileMatrix(FileFormat fileFormat, File file, Object... parameters) throws IOException {
-		map = new FileMap(fileFormat, file, parameters);
+		this.fileFormat = fileFormat;
+		this.file = file;
+		this.parameters = parameters;
+		setLabelObject(file);
 	}
 
 	public Map<String, Object> getMap() {
+		if (map == null) {
+			try {
+				map = new FileMap(fileFormat, file, parameters);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		return map;
 	}
 

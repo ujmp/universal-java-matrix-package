@@ -135,8 +135,8 @@ public class MatrixPlot extends JPanel implements TableCellRenderer,
 			plotSettings.setWidth(getWidth());
 			plotSettings.setMinXValue(0.0);
 			plotSettings.setMaxXValue(guiObject.getRowCount() - 1);
-			plotSettings.setMinYValue(guiObject.getEstimatedMinValue(100));
-			plotSettings.setMaxYValue(guiObject.getEstimatedMaxValue(100));
+			plotSettings.setMinYValue(-1);
+			plotSettings.setMaxYValue(100);
 
 			if (plotSettings.isShowPlotBackGround()) {
 				plotBackground.paintComponent(g);

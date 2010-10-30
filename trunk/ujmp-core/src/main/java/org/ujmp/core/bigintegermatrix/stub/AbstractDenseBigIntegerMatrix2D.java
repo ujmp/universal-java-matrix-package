@@ -66,5 +66,9 @@ public abstract class AbstractDenseBigIntegerMatrix2D extends AbstractDenseBigIn
 	public DenseObjectMatrix2DFactory getFactory() {
 		return DenseObjectMatrix2D.factory;
 	}
+	
+	public final int getDimensionCount() {
+		return 2;
+	}
 
 }

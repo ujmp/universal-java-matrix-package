@@ -266,6 +266,14 @@ public class Coordinates implements Serializable {
 		return ret;
 	}
 
+	public static long[] plusOne(long[] coordinates) {
+		long[] ret = new long[coordinates.length];
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			ret[i] = coordinates[i] + 1;
+		}
+		return ret;
+	}
+
 	public static boolean isZero(long[] coordinates) {
 		for (int i = coordinates.length - 1; i != -1; i--) {
 			if (coordinates[i] != 0)

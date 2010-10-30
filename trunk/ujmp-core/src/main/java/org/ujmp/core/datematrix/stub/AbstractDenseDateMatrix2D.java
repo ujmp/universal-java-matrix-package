@@ -66,4 +66,8 @@ public abstract class AbstractDenseDateMatrix2D extends AbstractDenseDateMatrix 
 		return DenseObjectMatrix2D.factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

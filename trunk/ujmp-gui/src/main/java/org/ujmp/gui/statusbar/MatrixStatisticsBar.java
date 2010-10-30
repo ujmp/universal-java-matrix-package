@@ -31,8 +31,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class MatrixStatisticsBar extends JLabel implements TableModelListener,
@@ -52,11 +50,11 @@ public class MatrixStatisticsBar extends JLabel implements TableModelListener,
 	}
 
 	public void update() {
-		if (updateThread != null) {
-			updateThread.interrupt();
-		}
-		updateThread = new UpdateThread(matrixGUIObject, this);
-		updateThread.start();
+		// if (updateThread != null) {
+		// updateThread.interrupt();
+		// }
+		// updateThread = new UpdateThread(matrixGUIObject, this);
+		// updateThread.start();
 	}
 
 	public void tableChanged(TableModelEvent e) {
@@ -89,40 +87,42 @@ class UpdateThread extends Thread {
 	}
 
 	public void run() {
-		jLabel.setText("calculating statistics...");
+		// Takes a lot of time and does not work for recursive objects
 
-		long colMin = matrixGUIObject.getColumnSelectionModel()
-				.getMinSelectionIndex();
-		long colMax = matrixGUIObject.getColumnSelectionModel()
-				.getMaxSelectionIndex();
-		long rowMin = matrixGUIObject.getRowSelectionModel()
-				.getMinSelectionIndex();
-		long rowMax = matrixGUIObject.getRowSelectionModel()
-				.getMaxSelectionIndex();
+		// jLabel.setText("calculating statistics...");
+		//
+		// long colMin = matrixGUIObject.getColumnSelectionModel()
+		// .getMinSelectionIndex();
+		// long colMax = matrixGUIObject.getColumnSelectionModel()
+		// .getMaxSelectionIndex();
+		// long rowMin = matrixGUIObject.getRowSelectionModel()
+		// .getMinSelectionIndex();
+		// long rowMax = matrixGUIObject.getRowSelectionModel()
+		// .getMaxSelectionIndex();
 
-		Matrix m = null;
+		// Matrix m = null;
+		//
+		// if (colMin < 0 || colMax < 0 || rowMin < 0 || rowMax < 0) {
+		// m = matrixGUIObject.getMatrix();
+		// } else {
+		// m = matrixGUIObject.getMatrix().subMatrix(Ret.LINK, rowMin, colMin,
+		// rowMax, colMax);
+		// }
 
-		if (colMin < 0 || colMax < 0 || rowMin < 0 || rowMax < 0) {
-			m = matrixGUIObject.getMatrix();
-		} else {
-			m = matrixGUIObject.getMatrix().subMatrix(Ret.LINK, rowMin, colMin,
-					rowMax, colMax);
-		}
-
-		long count = m.getValueCount();
-		double min = m.getMinValue();
-		double max = m.getMaxValue();
-		double mean = m.getMeanValue();
-		double std = m.getStdValue();
-		double sum = m.getValueSum();
-
-		StringBuffer s = new StringBuffer();
-		s.append(count + " cells selected:");
-		s.append(" min=" + nf.format(min));
-		s.append(" max=" + nf.format(max));
-		s.append(" mean=" + nf.format(mean));
-		s.append(" std=" + nf.format(std));
-		s.append(" sum=" + nf.format(sum));
-		jLabel.setText(s.toString());
+		// long count = m.getValueCount();
+		// double min = m.getMinValue();
+		// double max = m.getMaxValue();
+		// double mean = m.getMeanValue();
+		// double std = m.getStdValue();
+		// double sum = m.getValueSum();
+		//
+		// StringBuffer s = new StringBuffer();
+		// s.append(count + " cells selected:");
+		// s.append(" min=" + nf.format(min));
+		// s.append(" max=" + nf.format(max));
+		// s.append(" mean=" + nf.format(mean));
+		// s.append(" std=" + nf.format(std));
+		// s.append(" sum=" + nf.format(sum));
+		// jLabel.setText(s.toString());
 	}
 }

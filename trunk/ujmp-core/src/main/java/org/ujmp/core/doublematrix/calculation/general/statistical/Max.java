@@ -36,7 +36,7 @@ public class Max extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 		Annotation aold = matrix.getAnnotation();
 		if (aold != null) {
-			Annotation a = new DefaultAnnotation(getSize());
+			Annotation a = new DefaultAnnotation(getSize().length);
 			a.setMatrixAnnotation(aold.getMatrixAnnotation());
 			if (dimension == ROW) {
 				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));

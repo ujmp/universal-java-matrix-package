@@ -50,4 +50,8 @@ public abstract class AbstractSparseObjectMatrix2D extends AbstractSparseObjectM
 		return factory;
 	}
 
+	public final int getDimensionCount() {
+		return 2;
+	}
+
 }

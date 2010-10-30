@@ -51,6 +51,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasToolTip;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;
@@ -138,11 +139,11 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 	public void mouseClicked(MouseEvent e) {
 		if (matrix != null) {
 
+			int newRow = getRowPos(e.getY());
+			int newCol = getColPos(e.getX());
+
 			if (e.getButton() == MouseEvent.BUTTON3) {
-
-				int newRow = getRowPos(e.getY());
-				int newCol = getColPos(e.getX());
-
+				// right click: show popup menu
 				newRow = newRow < 0 ? 0 : newRow;
 				newCol = newCol < 0 ? 0 : newCol;
 				newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1
@@ -153,6 +154,12 @@ public class MatrixPaintPanel extends JPanel implements ComponentListener,
 				JPopupMenu popup = new MatrixPopupMenu(this, matrix, newRow,
 						newCol);
 				popup.show(this, e.getX(), e.getY());
+			} else if (e.getButton() == MouseEvent.BUTTON1) {
+				// left click: show new window if value is a matrix
+				Object o = matrix.getMatrix().getAsObject(newRow, newCol);
+				if (o instanceof Matrix) {
+					((Matrix) o).showGUI();
+				}
 			}
 		}
 	}

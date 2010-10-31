@@ -160,6 +160,9 @@ public class SeekableLineInputStream extends InputStream {
 			end = in.length();
 		}
 		int length = (int) (end - start);
+		if (length == 0) {
+			return "";
+		}
 		byte[] bytes = new byte[length];
 		in.read(start, bytes);
 

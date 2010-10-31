@@ -38,7 +38,7 @@ import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
 
-	public static final String CONTENT = "Content";
+	public static final String FILES = "Files";
 
 	public static final String TEXT = "Text";
 
@@ -69,6 +69,12 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public static final String FILEFORMAT = "FileFormat";
 
 	public static final String MD5 = "MD5";
+
+	public static final String AVARAGECOLOR = "AvarageColor";
+
+	public static final String THUMBNAIL = "Thumbnail";
+
+	public static final String IMAGE = "Image";
 
 	private FileMap map = null;
 
@@ -132,10 +138,17 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			put(SIZE, file.length());
 			put(FILEFORMAT, this.fileformat);
 			if (file.isDirectory()) {
-				put(CONTENT, new FileListMatrix(finalFile, parameters));
+				put(FILES, new FileListMatrix(finalFile, parameters));
 			} else {
-				put(CONTENT, MatrixFactory.linkToFile(fileformat, finalFile, parameters));
-				put(BYTES, MatrixFactory.linkToFile(FileFormat.RAW, finalFile));
+				put(BYTES, MatrixFactory.linkToFile(FileFormat.HEX, finalFile));
+			}
+			if (FileFormat.isImage(this.fileformat)) {
+				put(AVARAGECOLOR, MatrixFactory.linkToFile(this.fileformat, finalFile, 1, 1));
+				put(THUMBNAIL, MatrixFactory.linkToFile(this.fileformat, finalFile, 30, 30));
+				put(IMAGE, MatrixFactory.linkToFile(this.fileformat, finalFile));
+			}
+			if (this.fileformat == FileFormat.UNKNOWN || FileFormat.isText(this.fileformat)) {
+				put(TEXT, MatrixFactory.linkToFile(FileFormat.CSV, finalFile));
 			}
 		}
 

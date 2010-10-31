@@ -36,35 +36,48 @@ public enum FileFormat {
 	ARFF("ARFF Files", "arf"), //
 	ATOM("Atom Feed", "atom", "xml"), //
 	ATT("ATT Files", "att"), //
+	AVI("AVI Files", "avi"), //
 	BMP("BMP Image Files", "bmp"), //
+	C("C Files", "c"), //
+	CS("C# Files", "cs"), //
 	CSV("Comma Separated Files", "csv"), //
-	DIRECTORY("Directory", ""), //	
+	DIRECTORY("Directory", ""), //
+	DLL("Microsoft Windows DLL Files", "dll"), //
 	DOC("Microsoft Word Files", "doc"), //
+	EXE("Executable Files", "exe"), //
 	FILE("Text Files", "*"), //
 	GIF("GIF Image Files", "gif"), //
 	GRAPHML("GraphML Files", "graphml", "gml"), //
+	H("C Header Files", "h"), //
+	HEX("Binary Files", "raw", "hex", "bin"), //
 	HTML("HTML Files", "html", "htm"), //
 	ImapMessages("Imap Messages", "imap"), //
 	ImapFolders("Imap Folders", "imap"), //
+	JAVA("Java Files", "java"), //
+	JAR("Java JAR Files", "jar"), //
 	JPG("JPG Image Files", "jpg", "jpeg"), //	
 	LOG("Log Files", "log"), //	
 	M("Matlab Script Files", "m"), //
 	MAT("Matlab Data Files", "mat"), //
 	MDB("Microsoft Access Files", "mdb"), //
-	MP3("MP3", "mp3"), //
+	MP3("MP3 Audio Files", "mp3"), //
+	MPG("MPG Files", "mpg", "mpeg"), //
 	MTX("Matrix Data Format", "mtx"), //
 	NET("Net Files", "net"), //
 	PDF("PDF Files", "pdf"), //
+	PHP("PHP Files", "php"), //
 	PLT("GnuPlot Files", "plt"), //
 	PNG("PNG Images Files", "png"), //
+	PS("PostScript Files", "ps"), //
 	R("Matlab R Files", "r"), //
-	RAW("Binary Files", "raw", "bin"), //
+	RAR("RAR Files", "rar"), //	
 	RSS("RSS Feed", "rss", "rdf", "xml"), //
 	SER("Serialized Data Files", "ser", "obj", "dat"), //
 	SPARSECSV("Sparse CSV Files", "csv"), //
-	STRING("String files", "txt"), //
+	SQL("SQL Files", "sql"), //	
 	TEX("Latex Files", "tex"), //
 	TIFF("TIFF Image Files", "tif"), //
+	TMP("TMP Files", "tmp", "temp"), //
 	TXT("Text Files", "txt"), //
 	WAV("Wave Audio Files", "wav"), //
 	XLS("Microsoft Excel Files", "xls"), //
@@ -111,6 +124,62 @@ public enum FileFormat {
 			}
 		}
 		return FileFormat.UNKNOWN;
+	}
+
+	public static boolean isImage(FileFormat fileformat) {
+		switch (fileformat) {
+		case BMP:
+			return true;
+		case GIF:
+			return true;
+		case JPG:
+			return true;
+		case PNG:
+			return true;
+		case TIFF:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public static boolean isText(FileFormat fileformat) {
+		switch (fileformat) {
+		case C:
+			return true;
+		case CS:
+			return true;
+		case CSV:
+			return true;
+		case GRAPHML:
+			return true;
+		case HTML:
+			return true;
+		case JAVA:
+			return true;
+		case LOG:
+			return true;
+		case M:
+			return true;
+		case NET:
+			return true;
+		case PHP:
+			return true;
+		case PLT:
+			return true;
+		case R:
+			return true;
+		case SQL:
+			return true;
+		case TEX:
+			return true;
+		case TXT:
+			return true;
+		case XML:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 }

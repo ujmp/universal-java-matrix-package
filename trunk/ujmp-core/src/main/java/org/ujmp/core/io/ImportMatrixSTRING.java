@@ -37,55 +37,55 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
-public abstract class ImportMatrixSTRING {
+public abstract class ImportMatrixSTRING extends ImportMatrixCSV {
 
-	public static final Matrix fromString(String string, Object... parameters)
-			throws MatrixException {
-		StringReader sr = new StringReader(string);
-		IntelligentFileReader r = new IntelligentFileReader(sr);
-		Matrix m = fromReader(r);
-		r.close();
-		return m;
-	}
-
-	public static final Matrix fromStream(InputStream stream, Object... parameters)
-			throws MatrixException, IOException {
-		InputStreamReader r = new InputStreamReader(stream, "UTF-8");
-		Matrix m = fromReader(r, parameters);
-		r.close();
-		return m;
-	}
-
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
-		FileInputStream lr = new FileInputStream(file);
-		Matrix m = fromStream(lr, parameters);
-		m.setLabel(file.getAbsolutePath());
-		lr.close();
-		return m;
-	}
-
-	public static final Matrix fromReader(Reader reader, Object... parameters)
-			throws MatrixException {
-		StringBuilder s = new StringBuilder();
-
-		try {
-			IntelligentFileReader lr = new IntelligentFileReader(reader);
-			String line = null;
-			while ((line = lr.readLine()) != null) {
-				if (line.length() > 0) {
-					s.append(line + "\n");
-				}
-			}
-			lr.close();
-
-			Matrix m = MatrixFactory.zeros(ValueType.STRING, 1, 1);
-			m.setAsString(s.toString(), 0, 0);
-
-			return m;
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
-	}
+//	public static final Matrix fromString(String string, Object... parameters)
+//			throws MatrixException {
+//		StringReader sr = new StringReader(string);
+//		IntelligentFileReader r = new IntelligentFileReader(sr);
+//		Matrix m = fromReader(r);
+//		r.close();
+//		return m;
+//	}
+//
+//	public static final Matrix fromStream(InputStream stream, Object... parameters)
+//			throws MatrixException, IOException {
+//		InputStreamReader r = new InputStreamReader(stream, "UTF-8");
+//		Matrix m = fromReader(r, parameters);
+//		r.close();
+//		return m;
+//	}
+//
+//	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
+//			IOException {
+//		FileInputStream lr = new FileInputStream(file);
+//		Matrix m = fromStream(lr, parameters);
+//		m.setLabel(file.getAbsolutePath());
+//		lr.close();
+//		return m;
+//	}
+//
+//	public static final Matrix fromReader(Reader reader, Object... parameters)
+//			throws MatrixException {
+//		StringBuilder s = new StringBuilder();
+//
+//		try {
+//			IntelligentFileReader lr = new IntelligentFileReader(reader);
+//			String line = null;
+//			while ((line = lr.readLine()) != null) {
+//				if (line.length() > 0) {
+//					s.append(line + "\n");
+//				}
+//			}
+//			lr.close();
+//
+//			Matrix m = MatrixFactory.zeros(ValueType.STRING, 1, 1);
+//			m.setAsString(s.toString(), 0, 0);
+//
+//			return m;
+//		} catch (Exception e) {
+//			throw new MatrixException(e);
+//		}
+//	}
 
 }

@@ -33,21 +33,21 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
-public abstract class ImportMatrixTXT {
+public abstract class ImportMatrixTXT extends ImportMatrixCSV {
 
-	public static final Matrix fromStream(InputStream stream, Object... parameters)
-			throws MatrixException, IOException {
-		return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
-	}
-
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
-		return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
-	}
-
-	public static final Matrix fromReader(Reader reader, Object... parameters)
-			throws MatrixException {
-		return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
-	}
+//	public static final Matrix fromStream(InputStream stream, Object... parameters)
+//			throws MatrixException, IOException {
+//		return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
+//	}
+//
+//	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
+//			IOException {
+//		return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
+//	}
+//
+//	public static final Matrix fromReader(Reader reader, Object... parameters)
+//			throws MatrixException {
+//		return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
+//	}
 
 }

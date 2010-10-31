@@ -21,8 +21,9 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.impl;
+package org.ujmp.core.intmatrix.impl;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,7 @@ import javax.imageio.ImageIO;
 
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
@@ -42,12 +44,28 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(BufferedImage image) throws IOException {
-		bufferedImage = image;
+	public ImageMatrix(BufferedImage image, Object... parameters) throws IOException {
+		if (parameters.length == 2) {
+			int width = MathUtil.getInt(parameters[0]);
+			int height = MathUtil.getInt(parameters[1]);
+			if (width > 0 && width < 100000 && height > 0 && height < 100000) {
+				Image tempImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				if (tempImage instanceof BufferedImage) {
+					bufferedImage = (BufferedImage) tempImage;
+				} else {
+					bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+					bufferedImage.getGraphics().drawImage(tempImage, 0, 0, null);
+				}
+			} else {
+				bufferedImage = image;
+			}
+		} else {
+			bufferedImage = image;
+		}
 	}
 
 	public ImageMatrix(File file, Object... parameters) throws IOException {
-		this(ImageIO.read(file));
+		this(ImageIO.read(file), parameters);
 	}
 
 	public ImageMatrix(InputStream stream, Object... parameters) throws IOException {

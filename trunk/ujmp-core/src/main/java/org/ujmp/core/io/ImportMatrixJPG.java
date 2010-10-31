@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.ImageMatrix;
+import org.ujmp.core.intmatrix.impl.ImageMatrix;
 
 public abstract class ImportMatrixJPG {
 

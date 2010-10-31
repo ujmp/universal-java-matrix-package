@@ -23,18 +23,6 @@
 
 package org.ujmp.core.io;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
-import org.ujmp.core.exceptions.MatrixException;
-
-public class LinkMatrixRAW {
-
-	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
-			IOException {
-		return new DenseFileMatrix(file);
-	}
+public abstract class LinkMatrixTXT extends LinkMatrixCSV {
 
 }

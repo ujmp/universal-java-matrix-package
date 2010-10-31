@@ -25,19 +25,16 @@ package org.ujmp.core.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.intmatrix.impl.ImageMatrix;
+import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
+import org.ujmp.core.exceptions.MatrixException;
 
-public abstract class ImportMatrixPNG {
+public class LinkMatrixHEX {
 
-	public static Matrix fromFile(File file, Object... parameters) throws IOException {
-		return new ImageMatrix(file, parameters);
-	}
-
-	public static Matrix fromStream(InputStream stream, Object... parameters) throws IOException {
-		return new ImageMatrix(stream, parameters);
+	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
+			IOException {
+		return new DenseFileMatrix(file);
 	}
 
 }

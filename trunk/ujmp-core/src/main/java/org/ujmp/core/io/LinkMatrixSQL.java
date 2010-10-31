@@ -23,21 +23,6 @@
 
 package org.ujmp.core.io;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.ujmp.core.Matrix;
-import org.ujmp.core.intmatrix.impl.ImageMatrix;
-
-public abstract class ImportMatrixPNG {
-
-	public static Matrix fromFile(File file, Object... parameters) throws IOException {
-		return new ImageMatrix(file, parameters);
-	}
-
-	public static Matrix fromStream(InputStream stream, Object... parameters) throws IOException {
-		return new ImageMatrix(stream, parameters);
-	}
+public abstract class LinkMatrixSQL extends LinkMatrixCSV {
 
 }

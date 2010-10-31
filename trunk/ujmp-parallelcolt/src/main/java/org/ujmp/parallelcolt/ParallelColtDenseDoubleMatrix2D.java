@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.parallelcolt.calculation.Solve;
@@ -62,6 +61,14 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		} else {
 			this.matrix = new cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(
 					m.toArray());
+			// this.matrix = new
+			// cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(
+			// m.rows(), m.columns());
+			// for (int r = 0; r < m.rows(); r++) {
+			// for (int c = 0; c < m.columns(); c++) {
+			// matrix.setQuick(r, c, m.getQuick(r, c));
+			// }
+			// }
 		}
 	}
 
@@ -72,13 +79,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 
 	public ParallelColtDenseDoubleMatrix2D(Matrix source)
 			throws MatrixException {
-		if (source instanceof HasColumnMajorDoubleArray1D) {
-			final double[] data = ((HasColumnMajorDoubleArray1D) source)
-					.getColumnMajorDoubleArray1D();
-			this.matrix = new cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(
-					(int) source.getRowCount(), (int) source.getColumnCount(),
-					data, 0, 0, 1, (int) source.getRowCount(), false);
-		} else if (source instanceof HasRowMajorDoubleArray2D) {
+		if (source instanceof HasRowMajorDoubleArray2D) {
 			final double[][] data = ((HasRowMajorDoubleArray2D) source)
 					.getRowMajorDoubleArray2D();
 			this.matrix = new cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(

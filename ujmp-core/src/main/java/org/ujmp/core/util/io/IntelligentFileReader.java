@@ -46,7 +46,7 @@ public class IntelligentFileReader extends Reader {
 
 	private FileReader fr = null;
 
-	private InputStream zip = null;
+	private InputStream is = null;
 
 	private LineNumberReader lr = null;
 
@@ -73,25 +73,30 @@ public class IntelligentFileReader extends Reader {
 	}
 
 	public IntelligentFileReader(File file) {
+		this(file, "UTF-8");
+	}
+
+	public IntelligentFileReader(File file, String encoding) {
+		this.encoding = encoding;
 		if (file != null && file.exists()) {
 			if (file.getAbsolutePath().toLowerCase().endsWith(".gz")) {
 				try {
-					zip = new GZIPInputStream(new FileInputStream(file));
-					lr = new LineNumberReader(new InputStreamReader(zip, encoding));
+					is = new GZIPInputStream(new FileInputStream(file));
+					lr = new LineNumberReader(new InputStreamReader(is, encoding));
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "could not open file " + file, e);
 				}
 			} else if (file.getAbsolutePath().toLowerCase().endsWith(".z")) {
 				try {
-					zip = new ZipInputStream(new FileInputStream(file));
-					lr = new LineNumberReader(new InputStreamReader(zip, encoding));
+					is = new ZipInputStream(new FileInputStream(file));
+					lr = new LineNumberReader(new InputStreamReader(is, encoding));
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "could not open file " + file, e);
 				}
 			} else {
 				try {
-					fr = new FileReader(file);
-					lr = new LineNumberReader(fr);
+					is = new FileInputStream(file);
+					lr = new LineNumberReader(new InputStreamReader(is, encoding));
 				} catch (Exception e) {
 					logger.log(Level.WARNING, "could not open file " + file, e);
 				}
@@ -128,8 +133,8 @@ public class IntelligentFileReader extends Reader {
 		} catch (Exception e) {
 		}
 		try {
-			if (zip != null)
-				zip.close();
+			if (is != null)
+				is.close();
 		} catch (Exception e) {
 		}
 	}

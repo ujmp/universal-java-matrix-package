@@ -59,9 +59,9 @@ public class ExportMatrixTEX {
 		w.write("\\begin{table}[!ht]" + EOL);
 		w.write("\\centering" + EOL);
 
-		if (m.getMatrixAnnotation() != null) {
+		if (m.getLabelObject() != null) {
 			w.write("\\caption{"
-					+ UJMPFormat.getSingleLineInstance().format(m.getMatrixAnnotation()) + "}"
+					+ UJMPFormat.getSingleLineInstance().format(m.getLabelObject()) + "}"
 					+ EOL);
 		}
 

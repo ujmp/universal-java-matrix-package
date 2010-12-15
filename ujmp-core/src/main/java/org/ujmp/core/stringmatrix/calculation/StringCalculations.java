@@ -66,6 +66,8 @@ public interface StringCalculations {
 
 	public Matrix upperCase(Ret returnType) throws MatrixException;
 
+	public Matrix convertEncoding(Ret returnType, String encoding) throws MatrixException;
+
 	public Matrix tfIdf(boolean calculateTf, boolean calculateIdf, boolean normalize)
 			throws MatrixException;
 

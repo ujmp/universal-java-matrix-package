@@ -64,7 +64,7 @@ public class MatrixChartPanel extends AbstractChartPanel {
 
 		String title = getMatrix().getLabel();
 		String xLabel = StringUtil.format(getMatrix().getMatrix()
-				.getAxisAnnotation(Matrix.ROW));
+				.getAxisLabel(Matrix.ROW));
 		String yLabel = null;
 
 		// setChart(ChartFactory.createLineChart(title, xLabel, yLabel,

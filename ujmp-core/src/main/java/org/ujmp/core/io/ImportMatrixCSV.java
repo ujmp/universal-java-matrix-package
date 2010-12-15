@@ -24,7 +24,6 @@
 package org.ujmp.core.io;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -71,7 +70,24 @@ public abstract class ImportMatrixCSV {
 
 	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
 			IOException {
-		FileReader lr = new FileReader(file);
+		String encoding = "UTF-8";
+		if (parameters != null) {
+			for (Object o : parameters) {
+				if (o instanceof String) {
+					String s = (String) o;
+					if ("UTF-8".equals(s)) {
+						encoding = "UTF-8";
+					} else if ("UTF-16".equals(s)) {
+						encoding = "UTF-16";
+					} else if ("UTF8".equals(s)) {
+						encoding = "UTF8";
+					} else if ("ISO-8859-1".equals(s)) {
+						encoding = "ISO-8859-1";
+					}
+				}
+			}
+		}
+		IntelligentFileReader lr = new IntelligentFileReader(file, encoding);
 		Matrix m = fromReader(lr, parameters);
 		m.setLabel(file.getAbsolutePath());
 		lr.close();
@@ -82,7 +98,7 @@ public abstract class ImportMatrixCSV {
 			throws MatrixException {
 		List<String[]> rowData = new ArrayList<String[]>();
 
-		if (parameters.length == 1 && parameters[0] instanceof String) {
+		if (parameters.length > 0 && parameters[0] instanceof String) {
 			fieldDelimiter = (String) parameters[0];
 		} else {
 			System.out
@@ -108,7 +124,7 @@ public abstract class ImportMatrixCSV {
 						for (int i = 0; i < fields.length; i++) {
 							String s = fields[i];
 							if (s.length() > 1 && s.startsWith(quotation) && s.endsWith(quotation)) {
-								fields[i] = s.substring(1, s.length() - 2);
+								fields[i] = s.substring(1, s.length() - 1);
 							}
 						}
 					}

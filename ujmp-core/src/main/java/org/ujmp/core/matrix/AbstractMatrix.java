@@ -188,6 +188,7 @@ import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.calculation.ToShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
+import org.ujmp.core.stringmatrix.calculation.ConvertEncoding;
 import org.ujmp.core.stringmatrix.calculation.LowerCase;
 import org.ujmp.core.stringmatrix.calculation.RemovePunctuation;
 import org.ujmp.core.stringmatrix.calculation.RemoveWords;
@@ -243,6 +244,19 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		id = runningId++;
 	}
 
+	// TODO: make faster
+	public final Matrix setData(Ret returnType, Matrix matrix, long... offset) {
+		switch (returnType) {
+		case ORIG:
+			for (long[] c : matrix.availableCoordinates()) {
+				setAsObject(matrix.getAsObject(c), Coordinates.plus(c, offset));
+			}
+			return this;
+		default:
+			throw new MatrixException("not implemented yet");
+		}
+	}
+
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(getSize());
 	}
@@ -263,27 +277,20 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return MathUtil.getPreferredObject(getAsObject(coordinates));
 	}
 
-	public final Object getMatrixAnnotation() {
-		return annotation == null ? null : annotation.getMatrixAnnotation();
+	public final Object getLabelObject() {
+		return annotation == null ? null : annotation.getLabelObject();
 	}
 
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
 
-	public final void setMatrixAnnotation(Object value) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
-		}
-		annotation.setMatrixAnnotation(value);
-	}
-
 	public final Object getAxisAnnotation(int axis, long... position) {
 		return annotation == null ? null : annotation.getAxisAnnotation(axis, position);
 	}
 
-	public final Object getAxisAnnotation(int axis) {
-		return annotation == null ? null : annotation.getAxisAnnotation(axis);
+	public final String getAxisLabel(int axis) {
+		return annotation == null ? null : annotation.getAxisLabel(axis);
 	}
 
 	public final void setAxisAnnotation(int axis, Object label, long... position) {
@@ -293,11 +300,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		annotation.setAxisAnnotation(axis, label, position);
 	}
 
-	public final void setAxisAnnotation(int axis, Object label) {
+	public final void setAxisLabel(int axis, String label) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation(getDimensionCount());
 		}
-		annotation.setAxisAnnotation(axis, label);
+		annotation.setAxisLabel(axis, label);
 	}
 
 	public final GUIObject getGUIObject() {
@@ -1432,6 +1439,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new UpperCase(this).calc(returnType);
 	}
 
+	public Matrix convertEncoding(Ret returnType, String encoding) throws MatrixException {
+		return new ConvertEncoding(this, encoding).calc(returnType);
+	}
+
 	public Matrix tfIdf(boolean calculateTf, boolean calculateIdf, boolean normalize)
 			throws MatrixException {
 		return new TfIdf(this, calculateTf, calculateIdf, normalize).calc(Ret.NEW);
@@ -1521,19 +1532,21 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final void setLabel(String label) {
-		setMatrixAnnotation(label);
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		annotation.setLabel(label);
 	}
 
 	public final void setLabelObject(Object label) {
-		setMatrixAnnotation(label);
-	}
-
-	public final Object getLabelObject() {
-		return getMatrixAnnotation();
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		annotation.setLabelObject(label);
 	}
 
 	public final String getLabel() {
-		Object o = getMatrixAnnotation();
+		Object o = getLabelObject();
 		if (o == null) {
 			return null;
 		}
@@ -1628,14 +1641,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final Object getRowObject(long row) {
+	public final Object getRowLabelObject(long row) {
 		if (getDimensionCount() != 2) {
 			throw new MatrixException("This function is only supported for 2D matrices");
 		}
 		return getAxisAnnotation(COLUMN, new long[] { row, 0 });
 	}
 
-	public final Object getColumnObject(long col) {
+	public final Object getColumnLabelObject(long col) {
 		if (getDimensionCount() != 2) {
 			throw new MatrixException("This function is only supported for 2D matrices");
 		}
@@ -2312,6 +2325,18 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public MatrixFactoryRoot getFactory() {
 		return factory;
+	}
+
+	public Object getAxisLabelObject(int dimension) {
+		return annotation == null ? null : annotation.getAxisLabelObject(dimension);
+	}
+
+	public void setAxisLabelObject(int dimension, Object label) {
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		annotation.setAxisLabelObject(dimension, label);
+
 	}
 
 }

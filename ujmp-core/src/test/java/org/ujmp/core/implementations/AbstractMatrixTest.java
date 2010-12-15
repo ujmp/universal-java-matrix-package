@@ -85,12 +85,24 @@ public abstract class AbstractMatrixTest {
 	}
 
 	public Matrix getTestMatrix() throws Exception {
-		Matrix m = createMatrix(3, 3);
+		Matrix m = createMatrixWithAnnotation(3, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
 		m.setAsDouble(2.0, 2, 1);
 		m.setAsDouble(-2.0, 1, 2);
+		return m;
+	}
+
+	private Matrix createMatrixWithAnnotation(long... size) throws Exception {
+		Matrix m = createMatrix(size);
+		setAnnotation(m);
+		return m;
+	}
+
+	private Matrix createMatrixWithAnnotation(Matrix matrix) throws Exception {
+		Matrix m = createMatrix(matrix);
+		setAnnotation(m);
 		return m;
 	}
 
@@ -128,7 +140,7 @@ public abstract class AbstractMatrixTest {
 	// Test interface CoordinateFunctions
 	@Test
 	public void testCoordinateIterator2D() throws Exception {
-		Matrix m = createMatrix(3, 3);
+		Matrix m = createMatrixWithAnnotation(3, 3);
 		m.setAsDouble(1.0, 2, 2);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
 		long[] c1 = ci.next();
@@ -196,7 +208,7 @@ public abstract class AbstractMatrixTest {
 	public void testSelectedCoordinatesString() throws Exception {
 		Matrix m = getTestMatrix();
 
-		Matrix mTest = createMatrix(2, 3);
+		Matrix mTest = createMatrixWithAnnotation(2, 3);
 		mTest.setAsObject(mTest.getAsObject(0, 0), 0, 0);
 		mTest.setAsObject(mTest.getAsObject(0, 1), 0, 1);
 		mTest.setAsObject(mTest.getAsObject(0, 2), 0, 2);
@@ -226,8 +238,9 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testRowMajorDoubleArray2DConstructor() throws Exception {
 		Matrix m = new ArrayDenseDoubleMatrix2D(23, 17);
+		setAnnotation(m);
 		m.randn(Ret.ORIG);
-		Matrix m2 = createMatrix(m);
+		Matrix m2 = createMatrixWithAnnotation(m);
 		assertEquals(getLabel(), m, m2);
 
 		if (m2 instanceof Erasable) {
@@ -238,8 +251,9 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testColumnMajorDoubleArray1DConstructor() throws Exception {
 		Matrix m = new DefaultDenseDoubleMatrix2D(23, 17);
+		setAnnotation(m);
 		m.randn(Ret.ORIG);
-		Matrix m2 = createMatrix(m);
+		Matrix m2 = createMatrixWithAnnotation(m);
 		assertEquals(getLabel(), m, m2);
 
 		if (m2 instanceof Erasable) {
@@ -248,10 +262,18 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
+	public void testConstructorWithAnnotation() throws Exception {
+		Matrix m = createMatrixWithAnnotation(3, 3);
+		Matrix m2 = createMatrix(m);
+		assertEquals(getLabel(), m, m2);
+	}
+
+	@Test
 	public void testOtherConstructor() throws Exception {
 		Matrix m = new DefaultDenseDoubleMatrixMultiD(23, 17);
+		setAnnotation(m);
 		m.randn(Ret.ORIG);
-		Matrix m2 = createMatrix(m);
+		Matrix m2 = createMatrixWithAnnotation(m);
 		assertEquals(getLabel(), m, m2);
 
 		if (m2 instanceof Erasable) {
@@ -263,7 +285,7 @@ public abstract class AbstractMatrixTest {
 	public void testSelectedCoordinates() throws Exception {
 		Matrix m = getTestMatrix();
 
-		Matrix mTest = createMatrix(2, 3);
+		Matrix mTest = createMatrixWithAnnotation(2, 3);
 		mTest.setAsObject(mTest.getAsObject(0, 0), 0, 0);
 		mTest.setAsObject(mTest.getAsObject(0, 1), 0, 1);
 		mTest.setAsObject(mTest.getAsObject(0, 2), 0, 2);
@@ -298,7 +320,7 @@ public abstract class AbstractMatrixTest {
 		long[] c = m.getCoordinatesOfMaximum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 1, 1 }));
 
-		m = createMatrix(2, 2);
+		m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(Double.NaN, 0, 0);
 		m.setAsDouble(Double.NaN, 0, 1);
 		m.setAsDouble(Double.NaN, 1, 0);
@@ -317,7 +339,7 @@ public abstract class AbstractMatrixTest {
 		long[] c = m.getCoordinatesOfMinimum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 1, 2 }));
 
-		m = createMatrix(2, 2);
+		m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(Double.NaN, 0, 0);
 		m.setAsDouble(Double.NaN, 0, 1);
 		m.setAsDouble(Double.NaN, 1, 0);
@@ -366,7 +388,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSize() throws Exception {
-		Matrix m = createMatrix(21, 12);
+		Matrix m = createMatrixWithAnnotation(21, 12);
 		m.setAsDouble(1.0, 20, 11);
 		assertEquals(getLabel(), 21, m.getRowCount());
 		assertEquals(getLabel(), 12, m.getColumnCount());
@@ -378,7 +400,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testZeros() throws Exception {
-		Matrix m = createMatrix(21, 12);
+		Matrix m = createMatrixWithAnnotation(21, 12);
 
 		for (long[] c : m.allCoordinates()) {
 			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
@@ -405,7 +427,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testNaN() throws Exception {
-		Matrix m = createMatrix(21, 12);
+		Matrix m = createMatrixWithAnnotation(21, 12);
 
 		for (long[] c : m.allCoordinates()) {
 			assertEquals(getLabel(), 0.0, m.getAsDouble(c), 0.0);
@@ -432,18 +454,11 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testClone() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
 		m.setAsDouble(4.0, 1, 1);
-		m.setMatrixAnnotation("annotation");
-		m.setAxisAnnotation(Matrix.ROW, "row");
-		m.setAxisAnnotation(Matrix.COLUMN, "column");
-		m.setRowLabel(0, "row0");
-		m.setRowLabel(1, "row1");
-		m.setColumnLabel(0, "column0");
-		m.setColumnLabel(1, "column1");
 		Matrix m2 = m.clone();
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
@@ -455,25 +470,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testAnnotation() throws Exception {
-		Matrix m = createMatrix(2, 2);
-		m.setAsDouble(1.0, 0, 0);
-		m.setAsDouble(2.0, 0, 1);
-		m.setAsDouble(3.0, 1, 0);
-		m.setAsDouble(4.0, 1, 1);
-		m.setMatrixAnnotation("annotation");
-		m.setAxisAnnotation(Matrix.ROW, "row");
-		m.setAxisAnnotation(Matrix.COLUMN, "column");
-		m.setRowLabel(0, "row0");
-		m.setRowLabel(1, "row1");
-		m.setColumnLabel(0, "column0");
-		m.setColumnLabel(1, "column1");
-		assertEquals(getLabel(), "annotation", m.getMatrixAnnotation());
-		assertEquals(getLabel(), "row", m.getAxisAnnotation(Matrix.ROW));
-		assertEquals(getLabel(), "column", m.getAxisAnnotation(Matrix.COLUMN));
-		assertEquals(getLabel(), "row0", m.getRowLabel(0));
-		assertEquals(getLabel(), "row1", m.getRowLabel(1));
-		assertEquals(getLabel(), "column0", m.getColumnLabel(0));
-		assertEquals(getLabel(), "column1", m.getColumnLabel(1));
+		Matrix m = createMatrixWithAnnotation(2, 2);
+		compareAnnotation(m);
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -482,7 +480,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testCountMissingValues() throws Exception {
-		Matrix m = createMatrix(4, 4);
+		Matrix m = createMatrixWithAnnotation(4, 4);
 		m = m.zeros(Ret.ORIG);
 		m.setAsDouble(Double.NaN, 1, 0);
 		m.setAsDouble(Double.NaN, 3, 0);
@@ -514,7 +512,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSerialize() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -535,7 +533,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testToDoubleArray() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -553,7 +551,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSetAndGet() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -578,7 +576,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testPlusScalarSmall() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -608,7 +606,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(119, 119);
+		Matrix m = createMatrixWithAnnotation(119, 119);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -635,8 +633,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testPlusMatrixSmall() throws Exception {
-		Matrix m1 = createMatrix(2, 2);
-		Matrix m2 = createMatrix(2, 2);
+		Matrix m1 = createMatrixWithAnnotation(2, 2);
+		Matrix m2 = createMatrixWithAnnotation(2, 2);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -678,8 +676,8 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(121, 111);
-		Matrix m2 = createMatrix(121, 111);
+		Matrix m1 = createMatrixWithAnnotation(121, 111);
+		Matrix m2 = createMatrixWithAnnotation(121, 111);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -719,7 +717,7 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testTransposeSmall() throws Exception {
 		// TODO: check labels
-		Matrix m = createMatrix(2, 3);
+		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 0, 2);
@@ -754,7 +752,7 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		// TODO: check labels
-		Matrix m = createMatrix(111, 101);
+		Matrix m = createMatrixWithAnnotation(111, 101);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 0, 2);
@@ -778,7 +776,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testTransposeNewSmall() throws Exception {
-		Matrix m = createMatrix(2, 3);
+		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 0, 2);
@@ -808,7 +806,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testTransposeLinkSmall() throws Exception {
-		Matrix m = createMatrix(2, 3);
+		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 0, 2);
@@ -838,7 +836,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testEmpty() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		if (m instanceof AbstractDoubleMatrix) {
 			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 0), TOLERANCE);
 			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 1), TOLERANCE);
@@ -858,7 +856,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testMinusScalarSmall() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -887,7 +885,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(124, 114);
+		Matrix m = createMatrixWithAnnotation(124, 114);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -913,7 +911,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testTimesScalarSmall() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -942,7 +940,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(128, 113);
+		Matrix m = createMatrixWithAnnotation(128, 113);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -968,7 +966,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testDivideScalarSmall() throws Exception {
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -997,7 +995,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(2, 2);
+		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
 		m.setAsDouble(3.0, 1, 0);
@@ -1023,8 +1021,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testMinusMatrixSmall() throws Exception {
-		Matrix m1 = createMatrix(2, 2);
-		Matrix m2 = createMatrix(2, 2);
+		Matrix m1 = createMatrixWithAnnotation(2, 2);
+		Matrix m2 = createMatrixWithAnnotation(2, 2);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -1065,8 +1063,8 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(123, 109);
-		Matrix m2 = createMatrix(123, 109);
+		Matrix m1 = createMatrixWithAnnotation(123, 109);
+		Matrix m2 = createMatrixWithAnnotation(123, 109);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(3.0, 1, 0);
@@ -1104,8 +1102,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0PlusXMatrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.plus(m2);
 		assertEquals(getLabel(), m2, m3);
@@ -1122,8 +1120,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testXPlus0MatrixMatrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.plus(m2);
 		assertEquals(getLabel(), m1, m3);
@@ -1140,8 +1138,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0Plus0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.plus(m2);
 		assertTrue(getLabel(), m3.isEmpty());
 		if (m1 instanceof Erasable) {
@@ -1157,8 +1155,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0Minus0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.minus(m2);
 		assertTrue(getLabel(), m3.isEmpty());
 		if (m1 instanceof Erasable) {
@@ -1174,7 +1172,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testToDoubleArraySmall() throws Exception {
-		Matrix m = createMatrix(6, 7);
+		Matrix m = createMatrixWithAnnotation(6, 7);
 		m.randn(Ret.ORIG);
 
 		double[][] array = m.toDoubleArray();
@@ -1195,7 +1193,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m = createMatrix(106, 117);
+		Matrix m = createMatrixWithAnnotation(106, 117);
 		m.randn(Ret.ORIG);
 
 		double[][] array = m.toDoubleArray();
@@ -1213,8 +1211,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testXMinus0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.minus(m2);
 		assertEquals(getLabel(), m1, m3);
@@ -1232,8 +1230,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0MinusXMatrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.minus(m2);
 		Matrix m4 = m2.times(-1);
@@ -1255,8 +1253,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0TimesXMatrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
@@ -1274,8 +1272,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testXTimes0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
@@ -1293,8 +1291,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0Times0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.times(m2);
 		assertTrue(getLabel(), m3.isEmpty());
 
@@ -1311,8 +1309,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0Divide0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.divide(m2);
 		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
 
@@ -1329,8 +1327,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testXDivide0Matrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
 		Matrix m3 = m1.divide(m2);
 		assertEquals(getLabel(), 35, m3.countMissing(Ret.NEW, Matrix.ALL).intValue());
@@ -1348,8 +1346,8 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void test0DivideXMatrix() throws Exception {
-		Matrix m1 = createMatrix(5, 7);
-		Matrix m2 = createMatrix(5, 7);
+		Matrix m1 = createMatrixWithAnnotation(5, 7);
+		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
 		Matrix m3 = m1.divide(m2);
 		assertTrue(getLabel(), m3.isEmpty());
@@ -1367,7 +1365,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testMTimesFixedSmall() throws Exception {
-		Matrix m1 = createMatrix(2, 2);
+		Matrix m1 = createMatrixWithAnnotation(2, 2);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1380,7 +1378,7 @@ public abstract class AbstractMatrixTest {
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
 		m1.setAsDouble(4.0, 1, 1);
-		Matrix m2 = createMatrix(2, 3);
+		Matrix m2 = createMatrixWithAnnotation(2, 3);
 		m2.setAsDouble(1.0, 0, 0);
 		m2.setAsDouble(-2.0, 0, 1);
 		m2.setAsDouble(3.0, 0, 2);
@@ -1425,7 +1423,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(109, 111);
+		Matrix m1 = createMatrixWithAnnotation(109, 111);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1438,7 +1436,7 @@ public abstract class AbstractMatrixTest {
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
 		m1.setAsDouble(4.0, 1, 1);
-		Matrix m2 = createMatrix(111, 127);
+		Matrix m2 = createMatrixWithAnnotation(111, 127);
 		m2.setAsDouble(1.0, 0, 0);
 		m2.setAsDouble(-2.0, 0, 1);
 		m2.setAsDouble(3.0, 0, 2);
@@ -1480,7 +1478,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testInvRandSmall() throws Exception {
-		Matrix m1 = createMatrix(10, 10);
+		Matrix m1 = createMatrixWithAnnotation(10, 10);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1517,7 +1515,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testInvSPDRandSmall() throws Exception {
-		Matrix m1 = createMatrix(10, 10);
+		Matrix m1 = createMatrixWithAnnotation(10, 10);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1555,7 +1553,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(128, 128);
+		Matrix m1 = createMatrixWithAnnotation(128, 128);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1595,7 +1593,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix m1 = createMatrix(128, 128);
+		Matrix m1 = createMatrixWithAnnotation(128, 128);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1629,7 +1627,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	public void testInvFixedSmall() throws Exception {
-		Matrix m1 = createMatrix(3, 3);
+		Matrix m1 = createMatrixWithAnnotation(3, 3);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1668,7 +1666,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testPinvFixedSmall() throws Exception {
-		Matrix m1 = createMatrix(3, 3);
+		Matrix m1 = createMatrixWithAnnotation(3, 3);
 
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
@@ -1710,7 +1708,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testGinvFixedSmall() throws Exception {
-		Matrix m1 = createMatrix(3, 3);
+		Matrix m1 = createMatrixWithAnnotation(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
 		m1.setAsDouble(3.0, 2, 0);
@@ -1744,7 +1742,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testEigRandSmall() throws Exception {
-		Matrix a = createMatrix(10, 10);
+		Matrix a = createMatrixWithAnnotation(10, 10);
 
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			// only symmetric matrices
@@ -1776,7 +1774,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(110, 110);
+		Matrix a = createMatrixWithAnnotation(110, 110);
 
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
 			// only symmetric matrices
@@ -1824,7 +1822,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testEigSymmSmall() throws Exception {
-		Matrix a = createMatrix(10, 10);
+		Matrix a = createMatrixWithAnnotation(10, 10);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1857,7 +1855,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(111, 111);
+		Matrix a = createMatrixWithAnnotation(111, 111);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -1887,7 +1885,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testLUSquareSingularSmall() throws Exception {
-		Matrix a = createMatrix(5, 5);
+		Matrix a = createMatrixWithAnnotation(5, 5);
 
 		// skip libraries which do not support singular matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -1973,7 +1971,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(116, 116);
+		Matrix a = createMatrixWithAnnotation(116, 116);
 
 		// skip libraries which do not support square matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -2021,7 +2019,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSolveRandSquareSmall() throws Exception {
-		Matrix a = createMatrix(2, 2);
+		Matrix a = createMatrixWithAnnotation(2, 2);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -2031,7 +2029,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(2, 4);
+		Matrix x = createMatrixWithAnnotation(2, 4);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2059,7 +2057,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(125, 125);
+		Matrix a = createMatrixWithAnnotation(125, 125);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -2069,7 +2067,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(125, 142);
+		Matrix x = createMatrixWithAnnotation(125, 142);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2097,7 +2095,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(125, 125);
+		Matrix a = createMatrixWithAnnotation(125, 125);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -2107,7 +2105,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
-		Matrix x = createMatrix(125, 125);
+		Matrix x = createMatrixWithAnnotation(125, 125);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2135,7 +2133,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(15, 15);
+		Matrix a = createMatrixWithAnnotation(15, 15);
 
 		// JBlas not supported for 64 bit on windows
 		if (System.getProperty("os.name").toLowerCase().contains("windows")
@@ -2145,7 +2143,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
-		Matrix x = createMatrix(15, 15);
+		Matrix x = createMatrixWithAnnotation(15, 15);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2170,7 +2168,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSolveRandTallSmall() throws Exception {
-		Matrix a = createMatrix(6, 2);
+		Matrix a = createMatrixWithAnnotation(6, 2);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
 			return;
@@ -2186,7 +2184,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(2, 4);
+		Matrix x = createMatrixWithAnnotation(2, 4);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2214,7 +2212,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(169, 121);
+		Matrix a = createMatrixWithAnnotation(169, 121);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
 			return;
@@ -2227,7 +2225,7 @@ public abstract class AbstractMatrixTest {
 		}
 
 		a.randn(Ret.ORIG);
-		Matrix x = createMatrix(121, 143);
+		Matrix x = createMatrixWithAnnotation(121, 143);
 		x.randn(Ret.ORIG);
 		Matrix b = a.mtimes(x);
 
@@ -2252,7 +2250,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testLUSquareRandSmall() throws Exception {
-		Matrix a = createMatrix(10, 10);
+		Matrix a = createMatrixWithAnnotation(10, 10);
 
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
@@ -2290,7 +2288,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(112, 112);
+		Matrix a = createMatrixWithAnnotation(112, 112);
 
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
 			return;
@@ -2325,7 +2323,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testLUTallFixedSmall() throws Exception {
-		Matrix a = createMatrix(6, 4);
+		Matrix a = createMatrixWithAnnotation(6, 4);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -2376,7 +2374,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(161, 142);
+		Matrix a = createMatrixWithAnnotation(161, 142);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
@@ -2424,7 +2422,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testLUFatFixedSmall() throws Exception {
-		Matrix a = createMatrix(4, 6);
+		Matrix a = createMatrixWithAnnotation(4, 6);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
@@ -2490,7 +2488,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(141, 162);
+		Matrix a = createMatrixWithAnnotation(141, 162);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
@@ -2553,7 +2551,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testQRFixedSquareSmall() throws Exception {
-		Matrix a = createMatrix(5, 5);
+		Matrix a = createMatrixWithAnnotation(5, 5);
 		setAscending(a);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -2573,7 +2571,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(151, 151);
+		Matrix a = createMatrixWithAnnotation(151, 151);
 		setAscending(a);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -2590,7 +2588,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testQRRandSquareSmall() throws Exception {
-		Matrix a = createMatrix(7, 7);
+		Matrix a = createMatrixWithAnnotation(7, 7);
 		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -2607,7 +2605,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testQR() throws Exception {
-		Matrix a = createMatrix(1, 1);
+		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
 		layouts.add(MatrixLayout.SQUARE);
@@ -2667,7 +2665,7 @@ public abstract class AbstractMatrixTest {
 					}
 
 					try {
-						a = createMatrix(layout, size, generator);
+						a = createMatrixWithAnnotation(layout, size, generator);
 						Matrix[] qr = a.qr();
 						Matrix prod = qr[0].mtimes(qr[1]);
 						Matrix diff = prod.minus(a);
@@ -2752,7 +2750,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testLU() throws Exception {
-		Matrix a = createMatrix(1, 1);
+		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
 		layouts.add(MatrixLayout.SQUARE);
@@ -2836,7 +2834,7 @@ public abstract class AbstractMatrixTest {
 
 					try {
 
-						a = createMatrix(layout, size, generator);
+						a = createMatrixWithAnnotation(layout, size, generator);
 						Matrix[] lu = a.lu();
 						Matrix prod = lu[0].mtimes(lu[1]);
 						Matrix aperm = lu[2].mtimes(a);
@@ -2871,7 +2869,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSVD() throws Exception {
-		Matrix a = createMatrix(1, 1);
+		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
 		layouts.add(MatrixLayout.SQUARE);
@@ -2927,7 +2925,7 @@ public abstract class AbstractMatrixTest {
 
 					try {
 
-						a = createMatrix(layout, size, generator);
+						a = createMatrixWithAnnotation(layout, size, generator);
 						Matrix[] svd = a.svd();
 						Matrix prod = svd[0].mtimes(svd[1]).mtimes(svd[2].transpose());
 						Matrix diff = prod.minus(a);
@@ -2956,8 +2954,8 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	private Matrix createMatrix(MatrixLayout layout, Size size, EntryGenerator generator)
-			throws Exception {
+	private Matrix createMatrixWithAnnotation(MatrixLayout layout, Size size,
+			EntryGenerator generator) throws Exception {
 		int rows = 0, cols = 0;
 
 		switch (layout) {
@@ -3001,7 +2999,7 @@ public abstract class AbstractMatrixTest {
 			throw new Exception("unknown layout: " + layout);
 		}
 
-		Matrix a = createMatrix(rows, cols);
+		Matrix a = createMatrixWithAnnotation(rows, cols);
 
 		switch (generator) {
 		case SINGULAR:
@@ -3033,7 +3031,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(123, 123);
+		Matrix a = createMatrixWithAnnotation(123, 123);
 		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
 		Matrix prod = qr[0].mtimes(qr[1]);
@@ -3050,7 +3048,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testQRFatSmall() throws Exception {
-		Matrix a = createMatrix(4, 6);
+		Matrix a = createMatrixWithAnnotation(4, 6);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
@@ -3143,7 +3141,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(140, 160);
+		Matrix a = createMatrixWithAnnotation(140, 160);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
@@ -3227,7 +3225,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testQRTallSmall() throws Exception {
-		Matrix a = createMatrix(6, 4);
+		Matrix a = createMatrixWithAnnotation(6, 4);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
 			return;
@@ -3259,7 +3257,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(168, 143);
+		Matrix a = createMatrixWithAnnotation(168, 143);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
 			return;
@@ -3289,7 +3287,7 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testCholPascalSmall() throws Exception {
 		Matrix pascal = MatrixFactory.pascal(5, 5);
-		Matrix a = createMatrix(pascal);
+		Matrix a = createMatrixWithAnnotation(pascal);
 
 		// some error?
 		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
@@ -3337,7 +3335,7 @@ public abstract class AbstractMatrixTest {
 				temp.setDouble(random.nextDouble(), r, c);
 			}
 		}
-		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
 		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
@@ -3377,7 +3375,7 @@ public abstract class AbstractMatrixTest {
 				temp.setDouble(random.nextDouble(), r, c);
 			}
 		}
-		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
 		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
@@ -3420,7 +3418,7 @@ public abstract class AbstractMatrixTest {
 				temp.setDouble(random.nextDouble(), r, c);
 			}
 		}
-		Matrix result = createMatrix(temp.mtimes(temp.transpose()));
+		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
 		// some error?
 		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
@@ -3452,7 +3450,7 @@ public abstract class AbstractMatrixTest {
 	// test example from wikipedia
 	@Test
 	public void testSVDWikipedia() throws Exception {
-		Matrix a = createMatrix(4, 5);
+		Matrix a = createMatrixWithAnnotation(4, 5);
 
 		// skip libraries which do not support fat matrices
 
@@ -3490,7 +3488,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSVDSquareSmall() throws Exception {
-		Matrix a = createMatrix(5, 5);
+		Matrix a = createMatrixWithAnnotation(5, 5);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -3522,7 +3520,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(107, 107);
+		Matrix a = createMatrixWithAnnotation(107, 107);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -3551,7 +3549,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSVDSquareRandSmall() throws Exception {
-		Matrix a = createMatrix(10, 10);
+		Matrix a = createMatrixWithAnnotation(10, 10);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -3579,7 +3577,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(109, 109);
+		Matrix a = createMatrixWithAnnotation(109, 109);
 
 		// skip libraries which do not support fat matrices
 		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
@@ -3604,7 +3602,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSVDFatSmall() throws Exception {
-		Matrix a = createMatrix(4, 6);
+		Matrix a = createMatrixWithAnnotation(4, 6);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -3644,7 +3642,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(123, 142);
+		Matrix a = createMatrixWithAnnotation(123, 142);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -3681,7 +3679,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testSVDTallSmall() throws Exception {
-		Matrix a = createMatrix(6, 4);
+		Matrix a = createMatrixWithAnnotation(6, 4);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -3721,7 +3719,7 @@ public abstract class AbstractMatrixTest {
 		if (!isTestLarge()) {
 			return;
 		}
-		Matrix a = createMatrix(140, 121);
+		Matrix a = createMatrixWithAnnotation(140, 121);
 
 		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
 			return;
@@ -3754,6 +3752,46 @@ public abstract class AbstractMatrixTest {
 		if (a instanceof Erasable) {
 			((Erasable) a).erase();
 		}
+	}
+
+	public static void setAnnotation(Matrix m) {
+		m.setLabel("label");
+		m.setAxisLabel(Matrix.ROW, "rows");
+		m.setAxisLabel(Matrix.COLUMN, "columns");
+
+		for (int r = 0; r < m.getRowCount(); r++) {
+			if (r == 0) {
+				continue;
+			}
+			m.setRowLabel(r, "row" + r);
+		}
+
+		for (int c = 0; c < m.getColumnCount(); c++) {
+			if (c == 1) {
+				continue;
+			}
+			m.setColumnLabel(c, "col" + c);
+		}
+	}
+
+	public static void compareAnnotation(Matrix m) {
+		for (int r = 0; r < m.getRowCount(); r++) {
+			if (r == 0) {
+				assertEquals(null, m.getRowLabel(r));
+			} else {
+				assertEquals("row" + r, m.getRowLabel(r));
+			}
+		}
+
+		for (int c = 0; c < m.getColumnCount(); c++) {
+			if (c == 1) {
+				assertEquals(null, m.getColumnLabel(c));
+			} else {
+				assertEquals("col" + c, m.getColumnLabel(c));
+			}
+		}
+
+		assertEquals("label", m.getLabel());
 	}
 
 }

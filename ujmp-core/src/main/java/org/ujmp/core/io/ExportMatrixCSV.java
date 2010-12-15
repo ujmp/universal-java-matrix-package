@@ -60,6 +60,9 @@ public abstract class ExportMatrixCSV {
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
 				String s = StringUtil.convert(matrix.getAsObject(row, col));
+				if (s == null) {
+					s = "";
+				}
 				if (s.contains("\n") || s.contains("\r") || s.contains("\\u000a")
 						|| s.contains("\\u000d")) {
 					throw new MatrixException(

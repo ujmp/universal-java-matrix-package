@@ -36,7 +36,7 @@ import org.ujmp.core.exceptions.MatrixException;
 public class DefaultAnnotation extends AbstractAnnotation {
 	private static final long serialVersionUID = -7988756144808776868L;
 
-	private Object matrixAnnotation = null;
+	private Object label = null;
 
 	private Map<Integer, Matrix> dimensionMatrices = null;
 
@@ -62,17 +62,17 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		return dimensionMatrices;
 	}
 
-	public Object getMatrixAnnotation() {
-		return matrixAnnotation;
+	public Object getLabelObject() {
+		return label;
 	}
 
-	public void setMatrixAnnotation(Object matrixAnnotation) {
-		this.matrixAnnotation = matrixAnnotation;
+	public void setLabelObject(Object label) {
+		this.label = label;
 	}
 
 	public Annotation clone() {
 		Annotation a = new DefaultAnnotation(getDimensionCount());
-		a.setMatrixAnnotation(getMatrixAnnotation());
+		a.setLabelObject(getLabelObject());
 		for (int i = 0; i < getDimensionCount(); i++) {
 			a.setDimensionMatrix(i, getDimensionMatrix(i).clone());
 		}
@@ -80,7 +80,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 	}
 
 	public void clear() {
-		matrixAnnotation = null;
+		label = null;
 		dimensionMatrices = null;
 	}
 

@@ -23,7 +23,9 @@
 
 package org.ujmp.core.annotation;
 
-public interface HasAnnotation {
+import org.ujmp.core.interfaces.HasLabel;
+
+public interface HasAnnotation extends HasLabel {
 
 	public Annotation getAnnotation();
 
@@ -31,23 +33,23 @@ public interface HasAnnotation {
 
 	public Object getAxisAnnotation(int dimension, long... position);
 
-	public Object getAxisAnnotation(int dimension);
+	public String getAxisLabel(int dimension);
+
+	public Object getAxisLabelObject(int dimension);
 
 	public void setAxisAnnotation(int dimension, Object label, long... position);
 
-	public void setAxisAnnotation(int dimension, Object label);
+	public void setAxisLabel(int dimension, String label);
 
-	public Object getMatrixAnnotation();
-
-	public void setMatrixAnnotation(Object annotation);
+	public void setAxisLabelObject(int dimension, Object label);
 
 	public String getColumnLabel(long col);
 
 	public String getRowLabel(long row);
 
-	public Object getRowObject(long row);
+	public Object getRowLabelObject(long row);
 
-	public Object getColumnObject(long col);
+	public Object getColumnLabelObject(long col);
 
 	public void setColumnLabel(long col, String label);
 

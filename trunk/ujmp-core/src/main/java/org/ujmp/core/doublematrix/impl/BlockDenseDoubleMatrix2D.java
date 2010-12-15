@@ -273,6 +273,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
+		Annotation a = m.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
+		}
 	}
 
 	protected void addBlockData(final int row, final int column, final double[] newData) {

@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -48,6 +49,10 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			for (long[] c : m.allCoordinates()) {
 				setAsDouble(m.getAsDouble(c), c);
 			}
+		}
+		Annotation a = m.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
 		}
 	}
 

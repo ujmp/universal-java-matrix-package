@@ -41,7 +41,7 @@ public class Prod extends AbstractDoubleCalculation {
 		Annotation aold = matrix.getAnnotation();
 		if (aold != null) {
 			Annotation a = new DefaultAnnotation(getSize().length);
-			a.setMatrixAnnotation(aold.getMatrixAnnotation());
+			a.setLabelObject(aold.getLabelObject());
 			if (dimension == ROW) {
 				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
 			} else if (dimension == COLUMN) {

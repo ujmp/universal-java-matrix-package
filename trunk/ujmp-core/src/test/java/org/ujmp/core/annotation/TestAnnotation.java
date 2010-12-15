@@ -50,11 +50,11 @@ public class TestAnnotation {
 	@Test
 	public void testRows() {
 		Matrix m1 = Matrix.factory.zeros(1, 2);
-		m1.setMatrixAnnotation("label");
+		m1.setLabel("label");
 		m1.setRowLabel(0, "row1");
 		Matrix m2 = m1.appendVertically(Ret.NEW, Matrix.factory.zeros(1, 2));
 		m2.setRowLabel(1, "row2");
-		assertEquals("label", m2.getMatrixAnnotation());
+		assertEquals("label", m2.getLabelObject());
 		assertEquals("row1", m2.getRowLabel(0));
 		assertEquals("row2", m2.getRowLabel(1));
 	}
@@ -62,11 +62,11 @@ public class TestAnnotation {
 	@Test
 	public void testCols() {
 		Matrix m1 = Matrix.factory.zeros(2, 1);
-		m1.setMatrixAnnotation("label");
+		m1.setLabel("label");
 		m1.setColumnLabel(0, "col1");
 		Matrix m2 = m1.appendHorizontally(Ret.NEW, Matrix.factory.zeros(2, 1));
 		m2.setColumnLabel(1, "col2");
-		assertEquals("label", m2.getMatrixAnnotation());
+		assertEquals("label", m2.getLabelObject());
 		assertEquals("col1", m2.getColumnLabel(0));
 		assertEquals("col2", m2.getColumnLabel(1));
 	}

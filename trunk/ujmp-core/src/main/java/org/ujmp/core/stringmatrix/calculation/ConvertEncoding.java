@@ -21,40 +21,34 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.annotation;
+package org.ujmp.core.stringmatrix.calculation;
 
-import java.io.Serializable;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.interfaces.HasLabel;
+import org.ujmp.core.exceptions.MatrixException;
 
-public interface Annotation extends Serializable, Cloneable, HasLabel {
+public class ConvertEncoding extends AbstractStringCalculation {
+	private static final long serialVersionUID = 6849849503531827615L;
 
-	public Matrix getDimensionMatrix(int dimension);
+	private final String encoding;
 
-	public Map<Integer, Matrix> getDimensionMatrices();
+	public ConvertEncoding(Matrix m, String encoding) {
+		super(m);
+		this.encoding = encoding;
+	}
 
-	public void setDimensionMatrix(int dimension, Matrix matrix);
-
-	public void setAxisAnnotation(int dimension, Object label, long... position);
-
-	public Object getAxisAnnotation(int dimension, long... position);
-
-	public String getAxisLabel(int dimension);
-
-	public Object getAxisLabelObject(int dimension);
-
-	public void setAxisLabelObject(int dimension, Object label);
-
-	public void setAxisLabel(int dimension, String label);
-
-	public Annotation clone();
-
-	public boolean equals(Object annotation);
-
-	public void clear();
-
-	public long[] getPositionForLabel(int dimension, Object label);
+	public String getString(long... coordinates) throws MatrixException {
+		String s = getSource().getAsString(coordinates);
+		if (s == null) {
+			return null;
+		} else {
+			try {
+				return new String(s.getBytes(), encoding);
+			} catch (UnsupportedEncodingException e) {
+				throw new MatrixException(e);
+			}
+		}
+	}
 
 }

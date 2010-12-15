@@ -40,7 +40,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
 		setAnnotation(new DefaultAnnotation(getSize().length));
-		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
+		getAnnotation().setLabelObject(m.getLabelObject());
 	}
 
 	public Object getObject(long... coordinates) throws MatrixException {

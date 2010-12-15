@@ -142,8 +142,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 			// ps.setInt(2, offset);
 			resultSet = ps.executeQuery();
 			resultSets.put(pos, resultSet);
-			if (getMatrixAnnotation() == null) {
-				setMatrixAnnotation(getUrl() + " " + getSelectString());
+			if (getLabelObject() == null) {
+				setLabel(getUrl() + " " + getSelectString());
 				ResultSetMetaData rsm = resultSet.getMetaData();
 				for (int c = 0; c < rsm.getColumnCount(); c++) {
 					setColumnLabel(c, rsm.getColumnLabel(c + 1));

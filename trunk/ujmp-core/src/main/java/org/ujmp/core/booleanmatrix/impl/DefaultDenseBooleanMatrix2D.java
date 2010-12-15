@@ -68,12 +68,10 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -94,7 +92,6 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		boolean[][] result = new boolean[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

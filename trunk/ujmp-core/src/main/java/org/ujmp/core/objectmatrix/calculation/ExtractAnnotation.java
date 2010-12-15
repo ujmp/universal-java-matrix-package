@@ -39,7 +39,7 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]--;
 		setAnnotation(new DefaultAnnotation(size.length));
-		getAnnotation().setMatrixAnnotation(m.getMatrixAnnotation());
+		getAnnotation().setLabelObject(m.getLabelObject());
 
 		if (dim == ROW) {
 			Annotation a = m.getAnnotation();

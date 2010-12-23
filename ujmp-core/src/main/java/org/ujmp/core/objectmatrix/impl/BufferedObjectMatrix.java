@@ -50,6 +50,7 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	private static final EmptyObject EMPTYOBJECT = new EmptyObject();
 
 	public BufferedObjectMatrix(Matrix original) {
+		super(original);
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(Integer.MAX_VALUE);
@@ -58,12 +59,14 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	}
 
 	public BufferedObjectMatrix(Matrix original, int outputBufferSize) {
+		super(original);
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(outputBufferSize);
 	}
 
 	public BufferedObjectMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
+		super(original);
 		this.original = original;
 		setInputBufferSize(inputBufferSize);
 		setOutputBufferSize(outputBufferSize);

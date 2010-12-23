@@ -23,6 +23,7 @@
 
 package org.ujmp.core.doublematrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
@@ -35,6 +36,18 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 	private static final long serialVersionUID = 8234957657491264944L;
 
 	public DoubleMatrixFactory factory = new DefaultDenseDoubleMatrixFactory();
+
+	public AbstractDoubleMatrix() {
+		super();
+	}
+
+	public AbstractDoubleMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDoubleMatrix(long... size) {
+		super(size);
+	}
 
 	public final Double getObject(long... coordinates) throws MatrixException {
 		return getAsDouble(coordinates);

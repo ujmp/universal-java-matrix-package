@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -68,6 +69,12 @@ class MinusMatrixMatrix implements MinusMatrixCalculation<Matrix, Matrix, Matrix
 				BigDecimal result = MathUtil.minus(v1, v2);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 };
@@ -77,6 +84,12 @@ class MinusMatrixDenseMatrix implements
 
 	public final void calc(final DenseMatrix source1, final DenseMatrix source2,
 			final DenseMatrix target) {
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 		if (source1 instanceof DenseMatrix2D && source2 instanceof DenseMatrix2D
 				&& target instanceof DenseMatrix2D) {
 			MinusMatrix.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
@@ -88,6 +101,12 @@ class MinusMatrixDenseMatrix implements
 				BigDecimal v2 = source2.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.minus(v1, v2);
 				target.setAsBigDecimal(result, c);
+			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
 			}
 		}
 	}
@@ -111,6 +130,12 @@ class MinusMatrixSparseMatrix implements
 			BigDecimal result = MathUtil.minus(v1, v2);
 			target.setAsBigDecimal(result, c);
 		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 	}
 
 };
@@ -132,6 +157,12 @@ class MinusMatrixDenseMatrix2D implements
 					BigDecimal v2 = source2.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.minus(v1, v2);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -161,6 +192,12 @@ class MinusMatrixDenseDoubleMatrix2D implements
 				for (int c = (int) source1.getColumnCount(); --c != -1;) {
 					target.setDouble(source1.getDouble(r, c) - source2.getDouble(r, c), r, c);
 				}
+			}
+		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}

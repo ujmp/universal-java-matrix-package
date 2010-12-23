@@ -36,6 +36,7 @@ public class ArrayDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2
 	private BigInteger[][] values = null;
 
 	public ArrayDenseBigIntegerMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof ArrayDenseBigIntegerMatrix2D) {
 			BigInteger[][] v = ((ArrayDenseBigIntegerMatrix2D) m).values;
 			this.values = new BigInteger[v.length][v[0].length];
@@ -57,6 +58,7 @@ public class ArrayDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2
 	}
 
 	public ArrayDenseBigIntegerMatrix2D(long... size) {
+		super(size);
 		values = new BigInteger[(int) size[ROW]][(int) size[COLUMN]];
 		for (int r = values.length; --r != -1;) {
 			Arrays.fill(values[r], BigInteger.ZERO);

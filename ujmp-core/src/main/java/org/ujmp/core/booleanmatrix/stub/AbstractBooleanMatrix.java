@@ -25,6 +25,7 @@ package org.ujmp.core.booleanmatrix.stub;
 
 import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -35,6 +36,18 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		BooleanMatrix {
 
 	private static final long serialVersionUID = -6190735100426536876L;
+
+	public AbstractBooleanMatrix() {
+		super();
+	}
+
+	public AbstractBooleanMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractBooleanMatrix(long... size) {
+		super(size);
+	}
 
 	public final Boolean getObject(long... coordinates) throws MatrixException {
 		return getBoolean(coordinates);

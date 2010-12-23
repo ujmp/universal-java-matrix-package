@@ -23,6 +23,7 @@
 
 package org.ujmp.core.floatmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
@@ -30,40 +31,44 @@ import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
 public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> implements
 		FloatMatrix {
-
 	private static final long serialVersionUID = -6051872055791093546L;
 
-	
+	public AbstractFloatMatrix() {
+		super();
+	}
+
+	public AbstractFloatMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractFloatMatrix(long... size) {
+		super(size);
+	}
+
 	public final Float getObject(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	
 	public final void setObject(Float o, long... coordinates) throws MatrixException {
 		setFloat(o, coordinates);
 	}
 
-	
 	public final float getAsFloat(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	
 	public final void setAsFloat(float value, long... coordinates) throws MatrixException {
 		setFloat(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getFloat(coordinates);
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setFloat((float) value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

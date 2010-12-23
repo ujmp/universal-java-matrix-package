@@ -520,7 +520,9 @@ public abstract class MathUtil {
 	}
 
 	public static boolean equals(Object o1, Object o2) {
-		if ((o1 instanceof Number) || (o2 instanceof Number)) {
+		if (o1 == o2) {
+			return true;
+		} else if ((o1 instanceof Number) || (o2 instanceof Number)) {
 			return getDouble(o1) == getDouble(o2);
 		} else if ((o1 instanceof String) || (o2 instanceof String)) {
 			return UJMPFormat.getSingleLineInstance().format(o1).equals(

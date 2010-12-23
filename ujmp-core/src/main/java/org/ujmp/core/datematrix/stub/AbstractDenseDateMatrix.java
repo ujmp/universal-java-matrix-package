@@ -24,9 +24,22 @@
 package org.ujmp.core.datematrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 
 public abstract class AbstractDenseDateMatrix extends AbstractDateMatrix {
 	private static final long serialVersionUID = -5424852410834200088L;
+
+	public AbstractDenseDateMatrix() {
+		super();
+	}
+
+	public AbstractDenseDateMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseDateMatrix(long... size) {
+		super(size);
+	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

@@ -23,17 +23,32 @@
 
 package org.ujmp.core.doublematrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
 		SparseDoubleMatrix2D {
 	private static final long serialVersionUID = 2930732801501704674L;
 
 	public SparseDoubleMatrix2DFactory factory = new DefaultSparseDoubleMatrix2DFactory();
+
+	public AbstractSparseDoubleMatrix2D() {
+		super();
+	}
+
+	public AbstractSparseDoubleMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractSparseDoubleMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
@@ -46,6 +47,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 	private final Map<Coordinates, ObjectMatrix2D> values;
 
 	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, long... size) {
+		super(size);
 		this.values = map;
 		this.size = Coordinates.copyOf(size);
 	}
@@ -54,9 +56,10 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		this(map, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setObject(source.getAsObject(c), c);
-			if (!MathUtil.equals(getObject(c), source.getAsObject(c))) {
-				throw new MatrixException("error");
-			}
+		}
+		Annotation a = source.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
 		}
 	}
 

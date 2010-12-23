@@ -33,6 +33,7 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private boolean[][] values = null;
 
 	public DefaultDenseBooleanMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof DefaultDenseBooleanMatrix2D) {
 			boolean[][] v = ((DefaultDenseBooleanMatrix2D) m).values;
 			this.values = new boolean[v.length][v[0].length];
@@ -54,6 +55,7 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	}
 
 	public DefaultDenseBooleanMatrix2D(long... size) {
+		super(size);
 		values = new boolean[(int) size[ROW]][(int) size[COLUMN]];
 	}
 

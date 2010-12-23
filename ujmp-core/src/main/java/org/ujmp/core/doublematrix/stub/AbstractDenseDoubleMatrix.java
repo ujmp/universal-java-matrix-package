@@ -24,6 +24,7 @@
 package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
@@ -33,6 +34,18 @@ public abstract class AbstractDenseDoubleMatrix extends AbstractDoubleMatrix imp
 	private static final long serialVersionUID = -7916316088335979360L;
 
 	public DenseDoubleMatrixFactory factory = new DefaultDenseDoubleMatrixFactory();
+
+	public AbstractDenseDoubleMatrix() {
+		super();
+	}
+
+	public AbstractDenseDoubleMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseDoubleMatrix(long... size) {
+		super(size);
+	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

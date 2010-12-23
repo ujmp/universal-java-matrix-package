@@ -25,6 +25,7 @@ package org.ujmp.core.intmatrix.stub;
 
 import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -32,8 +33,19 @@ import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
-
 	private static final long serialVersionUID = -5153569448031492210L;
+
+	public AbstractIntMatrix() {
+		super();
+	}
+
+	public AbstractIntMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractIntMatrix(long... size) {
+		super(size);
+	}
 
 	public final Integer getObject(long... coordinates) throws MatrixException {
 		return getInt(coordinates);

@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -63,6 +64,12 @@ class PlusScalarMatrix implements PlusScalarCalculation<Matrix, Matrix> {
 				BigDecimal result = MathUtil.plus(svalue, value);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -90,6 +97,12 @@ class PlusScalarDenseMatrix implements PlusScalarCalculation<DenseMatrix, DenseM
 				BigDecimal result = MathUtil.plus(svalue, value);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -112,6 +125,12 @@ class PlusScalarSparseMatrix implements PlusScalarCalculation<SparseMatrix, Spar
 			BigDecimal result = MathUtil.plus(svalue, value);
 			target.setAsBigDecimal(result, c);
 		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 	}
 
 	public final void calc(SparseMatrix source, double value, SparseMatrix target) {
@@ -133,6 +152,12 @@ class PlusScalarDenseMatrix2D implements PlusScalarCalculation<DenseMatrix2D, De
 					BigDecimal svalue = source.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.plus(svalue, value);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -173,6 +198,12 @@ class PlusScalarDenseDoubleMatrix2D implements
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) + value, r, c);
 				}
+			}
+		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}

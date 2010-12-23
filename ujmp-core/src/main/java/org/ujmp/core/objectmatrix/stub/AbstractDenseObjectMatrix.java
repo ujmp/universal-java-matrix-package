@@ -24,6 +24,7 @@
 package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
@@ -33,6 +34,18 @@ public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix imp
 	private static final long serialVersionUID = -4546702335648155424L;
 
 	public static DenseObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
+
+	public AbstractDenseObjectMatrix() {
+		super();
+	}
+
+	public AbstractDenseObjectMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseObjectMatrix(long... size) {
+		super(size);
+	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

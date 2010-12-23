@@ -45,10 +45,12 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	private Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
 	public DefaultSparseRowDoubleMatrix2D(long... size) {
+		super(size);
 		setSize(size);
 	}
 
 	public DefaultSparseRowDoubleMatrix2D(Matrix m) {
+		super(m);
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setDouble(m.getAsDouble(c), c);

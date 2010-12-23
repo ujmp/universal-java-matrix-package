@@ -38,6 +38,7 @@ import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix implements
 		DenseDoubleMatrix2D {
@@ -45,6 +46,19 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 	public static DenseDoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
 
 	private static final long serialVersionUID = 4518790844453035022L;
+
+	public AbstractDenseDoubleMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseDoubleMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseDoubleMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

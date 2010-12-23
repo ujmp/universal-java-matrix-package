@@ -37,10 +37,12 @@ public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 	}
 
 	public SimpleDenseObjectMatrix2D(long... size) {
+		super(size);
 		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public SimpleDenseObjectMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof SimpleDenseObjectMatrix2D) {
 			Object[][] v = ((SimpleDenseObjectMatrix2D) m).values;
 			this.values = new Object[v.length][v[0].length];
@@ -61,12 +63,10 @@ public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}

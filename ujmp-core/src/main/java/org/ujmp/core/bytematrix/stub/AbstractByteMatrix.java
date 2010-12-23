@@ -25,6 +25,7 @@ package org.ujmp.core.bytematrix.stub;
 
 import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -33,6 +34,18 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 701344082157040644L;
+
+	public AbstractByteMatrix() {
+		super();
+	}
+
+	public AbstractByteMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractByteMatrix(long... size) {
+		super(size);
+	}
 
 	public final Byte getObject(long... coordinates) throws MatrixException {
 		return getByte(coordinates);

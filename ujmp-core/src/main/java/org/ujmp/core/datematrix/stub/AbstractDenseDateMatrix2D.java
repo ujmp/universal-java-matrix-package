@@ -25,14 +25,29 @@ package org.ujmp.core.datematrix.stub;
 
 import java.util.Date;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseDateMatrix2D extends AbstractDenseDateMatrix implements
 		DenseDateMatrix2D {
 	private static final long serialVersionUID = -2706051207687879249L;
+
+	public AbstractDenseDateMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseDateMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseDateMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

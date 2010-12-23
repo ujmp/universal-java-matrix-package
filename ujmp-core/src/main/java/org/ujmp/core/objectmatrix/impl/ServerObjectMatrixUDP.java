@@ -55,6 +55,7 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 	private ServerThread thread = null;
 
 	public ServerObjectMatrixUDP(Matrix matrix, int port) {
+		super(matrix);
 		this.matrix = matrix;
 
 		try {

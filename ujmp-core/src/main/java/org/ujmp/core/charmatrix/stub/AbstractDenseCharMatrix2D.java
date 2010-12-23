@@ -23,15 +23,29 @@
 
 package org.ujmp.core.charmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix implements
 		DenseCharMatrix2D {
-
 	private static final long serialVersionUID = -261545946520505256L;
+
+	public AbstractDenseCharMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseCharMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseCharMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

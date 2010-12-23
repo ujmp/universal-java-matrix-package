@@ -25,6 +25,7 @@ package org.ujmp.core.charmatrix.stub;
 
 import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -33,8 +34,19 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character> implements
 		CharMatrix {
-
 	private static final long serialVersionUID = 1967840166659276033L;
+
+	public AbstractCharMatrix() {
+		super();
+	}
+
+	public AbstractCharMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractCharMatrix(long... size) {
+		super(size);
+	}
 
 	public final Character getObject(long... coordinates) throws MatrixException {
 		return getChar(coordinates);

@@ -33,6 +33,7 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	private Matrix matrix = null;
 
 	public SynchronizedGenericMatrix(Matrix source) {
+		super(source);
 		this.matrix = source;
 		setAnnotation(source.getAnnotation());
 	}

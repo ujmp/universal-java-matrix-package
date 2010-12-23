@@ -29,7 +29,8 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorByteArray1D;
 
-public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements HasColumnMajorByteArray1D {
+public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements
+		HasColumnMajorByteArray1D {
 	private static final long serialVersionUID = -7637602510970244322L;
 
 	private byte[] values = null;
@@ -41,6 +42,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 	private int cols = 0;
 
 	public DefaultDenseByteMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -57,6 +59,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 	}
 
 	public DefaultDenseByteMatrix2D(long... size) {
+		super(size);
 		this.rows = (int) size[ROW];
 		this.cols = (int) size[COLUMN];
 		this.size = new long[] { rows, cols };
@@ -74,12 +77,10 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return size;
 	}
 
-	
 	public long getRowCount() {
 		return rows;
 	}
 
-	
 	public long getColumnCount() {
 		return cols;
 	}
@@ -100,7 +101,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		values[column * rows + row] = value;
 	}
 
-	
 	public final Matrix plus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -109,7 +109,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix minus(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -118,7 +117,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix times(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -127,7 +125,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix divide(double v) {
 		double[] result = new double[values.length];
 		for (int i = result.length; --i != -1;) {
@@ -136,7 +133,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	
 	public final Matrix copy() throws MatrixException {
 		byte[] result = new byte[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
@@ -147,7 +143,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return m;
 	}
 
-	
 	public final Matrix transpose() {
 		final byte[] result = new byte[cols * rows];
 		for (int c = rows; --c != -1;) {
@@ -158,7 +153,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseByteMatrix2D(result, cols, rows);
 	}
 
-	
 	public byte[] getColumnMajorByteArray1D() {
 		return values;
 	}

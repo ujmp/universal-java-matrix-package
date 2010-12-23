@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -66,6 +67,12 @@ class DivideMatrixDenseMatrix implements
 				BigDecimal result = MathUtil.divide(v1, v2);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -88,6 +95,12 @@ class DivideMatrixDenseMatrix2D implements
 					BigDecimal v2 = source2.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.divide(v1, v2);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -117,6 +130,12 @@ class DivideMatrixDenseDoubleMatrix2D implements
 				for (int c = (int) source1.getColumnCount(); --c != -1;) {
 					target.setDouble(source1.getDouble(r, c) / source2.getDouble(r, c), r, c);
 				}
+			}
+		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}
@@ -175,6 +194,12 @@ class DivideMatrixSparseMatrix implements
 			BigDecimal result = MathUtil.divide(v1, v2);
 			target.setAsBigDecimal(result, c);
 		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 	}
 }
 
@@ -196,6 +221,12 @@ class DivideMatrixMatrix implements DivideMatrixCalculation<Matrix, Matrix, Matr
 				BigDecimal v2 = source2.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.divide(v1, v2);
 				target.setAsBigDecimal(result, c);
+			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
 			}
 		}
 	}

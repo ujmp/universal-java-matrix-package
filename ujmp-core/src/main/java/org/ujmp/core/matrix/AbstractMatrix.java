@@ -202,6 +202,7 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
@@ -209,6 +210,21 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public static MatrixFactoryRoot factory = new DefaultDenseObjectMatrixFactory();
 
 	private static long runningId = 0;
+
+	public AbstractMatrix(long... size) {
+		this();
+		VerifyUtil.assertNotNull(size, "size cannot be null");
+		VerifyUtil.assertTrue(size.length > 1, "matrix must be at least 2d");
+	}
+
+	public AbstractMatrix(Matrix m) {
+		this();
+		VerifyUtil.assertNotNull(m, "matrix is null");
+		Annotation a = m.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
+		}
+	}
 
 	static {
 		try {

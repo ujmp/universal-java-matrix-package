@@ -33,6 +33,7 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	private byte[][] values = null;
 
 	public ArrayDenseByteMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof ArrayDenseByteMatrix2D) {
 			byte[][] v = ((ArrayDenseByteMatrix2D) m).values;
 			this.values = new byte[v.length][v[0].length];
@@ -54,6 +55,7 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	}
 
 	public ArrayDenseByteMatrix2D(long... size) {
+		super(size);
 		values = new byte[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
@@ -68,12 +70,10 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -94,7 +94,6 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		byte[][] result = new byte[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

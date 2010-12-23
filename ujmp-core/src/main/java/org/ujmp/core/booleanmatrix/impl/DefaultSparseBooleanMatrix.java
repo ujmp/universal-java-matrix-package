@@ -50,17 +50,14 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}
 
-	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return MathUtil.getBoolean(getObject(coordinates));
 	}
 
-	
 	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

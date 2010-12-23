@@ -50,17 +50,14 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}
 
-	
 	public char getChar(long... coordinates) throws MatrixException {
 		return MathUtil.getChar(getObject(coordinates));
 	}
 
-	
 	public void setChar(char value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

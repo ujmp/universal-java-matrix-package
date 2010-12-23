@@ -34,6 +34,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 	private Object[][] values = null;
 
 	public DefaultDenseGenericMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 		for (long[] c : m.allCoordinates()) {
 			setAsObject(m.getAsObject(c), c);
@@ -45,6 +46,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 	}
 
 	public DefaultDenseGenericMatrix2D(long... size) {
+		super(size);
 		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
@@ -52,12 +54,10 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -80,7 +80,6 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		values[row][column] = value;
 	}
 
-	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

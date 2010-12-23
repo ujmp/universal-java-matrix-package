@@ -23,6 +23,7 @@
 
 package org.ujmp.core.doublematrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrixFactory;
@@ -32,6 +33,18 @@ public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix im
 	private static final long serialVersionUID = 3204626510806761165L;
 
 	public SparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
+
+	public AbstractSparseDoubleMatrix() {
+		super();
+	}
+
+	public AbstractSparseDoubleMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractSparseDoubleMatrix(long... size) {
+		super(size);
+	}
 
 	public StorageType getStorageType() {
 		return StorageType.SPARSE;

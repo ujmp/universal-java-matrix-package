@@ -23,6 +23,7 @@
 
 package org.ujmp.core.longmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -31,7 +32,18 @@ import org.ujmp.core.longmatrix.LongMatrix;
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -47058946507188869L;
 
-	
+	public AbstractLongMatrix() {
+		super();
+	}
+
+	public AbstractLongMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractLongMatrix(long... size) {
+		super(size);
+	}
+
 	public final Long getObject(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
@@ -40,27 +52,22 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		setLong(o, coordinates);
 	}
 
-	
 	public final long getAsLong(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
 
-	
 	public final void setAsLong(long value, long... coordinates) throws MatrixException {
 		setLong(value, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) throws MatrixException {
 		return getLong(coordinates);
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setLong((int) value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

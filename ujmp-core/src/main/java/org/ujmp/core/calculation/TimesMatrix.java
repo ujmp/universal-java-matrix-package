@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -68,6 +69,12 @@ class TimesMatrixMatrix implements TimesMatrixCalculation<Matrix, Matrix, Matrix
 				BigDecimal result = MathUtil.times(v1, v2);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 };
@@ -89,6 +96,12 @@ class TimesMatrixDenseMatrix implements
 				BigDecimal result = MathUtil.times(v1, v2);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 };
@@ -104,6 +117,12 @@ class TimesMatrixSparseMatrix implements
 			BigDecimal v1 = source1.getAsBigDecimal(c);
 			BigDecimal v2 = source2.getAsBigDecimal(c);
 			target.setAsBigDecimal(MathUtil.times(v1, v2), c);
+		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
 		}
 	}
 
@@ -126,6 +145,12 @@ class TimesMatrixDenseMatrix2D implements
 					BigDecimal v2 = source2.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.times(v1, v2);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source1 != target) {
+				Annotation a = source1.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -155,6 +180,12 @@ class TimesMatrixDenseDoubleMatrix2D implements
 				for (int c = (int) source1.getColumnCount(); --c != -1;) {
 					target.setDouble(source1.getDouble(r, c) * source2.getDouble(r, c), r, c);
 				}
+			}
+		}
+		if (source1 != target) {
+			Annotation a = source1.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}

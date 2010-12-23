@@ -33,6 +33,7 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	private long[][] values = null;
 
 	public SimpleDenseLongMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof SimpleDenseLongMatrix2D) {
 			long[][] v = ((SimpleDenseLongMatrix2D) m).values;
 			this.values = new long[v.length][v[0].length];
@@ -54,6 +55,7 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	}
 
 	public SimpleDenseLongMatrix2D(long... size) {
+		super(size);
 		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
@@ -61,12 +63,10 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -87,7 +87,6 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		long[][] result = new long[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

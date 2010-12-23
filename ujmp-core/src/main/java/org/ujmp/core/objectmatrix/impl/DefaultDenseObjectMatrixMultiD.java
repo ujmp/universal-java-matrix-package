@@ -39,6 +39,7 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	private int length = 0;
 
 	public DefaultDenseObjectMatrixMultiD(Matrix m) throws MatrixException {
+		super(m);
 		this.size = Coordinates.copyOf(m.getSize());
 		this.length = (int) Coordinates.product(size);
 		this.values = new Object[length];
@@ -53,6 +54,7 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	}
 
 	public DefaultDenseObjectMatrixMultiD(long... size) {
+		super(size);
 		this.size = Coordinates.copyOf(size);
 		this.length = (int) Coordinates.product(size);
 		this.values = new Object[length];

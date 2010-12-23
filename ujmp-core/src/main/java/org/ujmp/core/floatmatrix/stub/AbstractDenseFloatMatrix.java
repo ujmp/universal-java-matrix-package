@@ -24,6 +24,7 @@
 package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
@@ -31,6 +32,18 @@ import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix implements
 		DenseFloatMatrix {
 	private static final long serialVersionUID = -2069841946241388853L;
+
+	public AbstractDenseFloatMatrix() {
+		super();
+	}
+
+	public AbstractDenseFloatMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseFloatMatrix(long... size) {
+		super(size);
+	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

@@ -33,6 +33,7 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	private float[][] values = null;
 
 	public ArrayDenseFloatMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof ArrayDenseFloatMatrix2D) {
 			float[][] v = ((ArrayDenseFloatMatrix2D) m).values;
 			this.values = new float[v.length][v[0].length];
@@ -54,6 +55,7 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	}
 
 	public ArrayDenseFloatMatrix2D(long... size) {
+		super(size);
 		values = new float[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
@@ -68,12 +70,10 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -94,7 +94,6 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final Matrix transpose() {
 		float[][] result = new float[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {

@@ -20,6 +20,7 @@
 				<include>org.ujmp:ujmp-commonsmath</include>
 				<include>org.ujmp:ujmp-ehcache</include>
 				<include>org.ujmp:ujmp-ejml</include>
+				<include>org.ujmp:ujmp-googlecode</include>
 				<include>org.ujmp:ujmp-hadoop</include>
 				<include>org.ujmp:ujmp-itext</include>
 				<include>org.ujmp:ujmp-jackcess</include>

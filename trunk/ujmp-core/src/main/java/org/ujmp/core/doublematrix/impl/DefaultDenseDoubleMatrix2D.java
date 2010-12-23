@@ -41,6 +41,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	private final int cols;
 
 	public DefaultDenseDoubleMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -57,6 +58,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	}
 
 	public DefaultDenseDoubleMatrix2D(long... size) {
+		super(size);
 		this.rows = (int) size[ROW];
 		this.cols = (int) size[COLUMN];
 		this.size = new long[] { rows, cols };

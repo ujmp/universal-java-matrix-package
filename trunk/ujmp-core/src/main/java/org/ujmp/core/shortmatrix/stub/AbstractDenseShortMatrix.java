@@ -24,6 +24,7 @@
 package org.ujmp.core.shortmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.shortmatrix.DenseShortMatrix;
@@ -31,6 +32,18 @@ import org.ujmp.core.shortmatrix.DenseShortMatrix;
 public abstract class AbstractDenseShortMatrix extends AbstractShortMatrix implements
 		DenseShortMatrix {
 	private static final long serialVersionUID = -2379265136500592409L;
+
+	public AbstractDenseShortMatrix() {
+		super();
+	}
+
+	public AbstractDenseShortMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseShortMatrix(long... size) {
+		super(size);
+	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());

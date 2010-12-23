@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -63,6 +64,12 @@ class MinusScalarMatrix implements MinusScalarCalculation<Matrix, Matrix> {
 				BigDecimal result = MathUtil.minus(svalue, value);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -90,6 +97,12 @@ class MinusScalarDenseMatrix implements MinusScalarCalculation<DenseMatrix, Dens
 				BigDecimal result = MathUtil.minus(svalue, value);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -112,6 +125,12 @@ class MinusScalarSparseMatrix implements MinusScalarCalculation<SparseMatrix, Sp
 			BigDecimal result = MathUtil.minus(svalue, value);
 			target.setAsBigDecimal(result, c);
 		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 	}
 
 	public final void calc(SparseMatrix source, double value, SparseMatrix target) {
@@ -133,6 +152,12 @@ class MinusScalarDenseMatrix2D implements MinusScalarCalculation<DenseMatrix2D, 
 					BigDecimal svalue = source.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.minus(svalue, value);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -172,6 +197,12 @@ class MinusScalarDenseDoubleMatrix2D implements
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) - value, r, c);
 				}
+			}
+		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}

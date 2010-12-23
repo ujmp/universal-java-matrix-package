@@ -37,6 +37,7 @@ public class SimpleDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 	private Date[][] values = null;
 
 	public SimpleDenseDateMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof SimpleDenseDateMatrix2D) {
 			Date[][] v = ((SimpleDenseDateMatrix2D) m).values;
 			this.values = new Date[v.length][v[0].length];
@@ -58,6 +59,7 @@ public class SimpleDenseDateMatrix2D extends AbstractDenseDateMatrix2D {
 	}
 
 	public SimpleDenseDateMatrix2D(long... size) {
+		super(size);
 		values = new Date[(int) size[ROW]][(int) size[COLUMN]];
 		for (int r = values.length; --r != -1;) {
 			Arrays.fill(values[r], DateMatrix.DATE0);

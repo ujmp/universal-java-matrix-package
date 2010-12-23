@@ -26,6 +26,7 @@ package org.ujmp.core.calculation;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -63,6 +64,12 @@ class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 				BigDecimal result = MathUtil.divide(value, divisor);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -91,6 +98,12 @@ class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, De
 				BigDecimal result = MathUtil.divide(value, divisor);
 				target.setAsBigDecimal(result, c);
 			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
+				}
+			}
 		}
 	}
 
@@ -114,6 +127,12 @@ class DivideScalarSparseMatrix implements DivideScalarCalculation<SparseMatrix, 
 			BigDecimal result = MathUtil.divide(value, divisor);
 			target.setAsBigDecimal(result, c);
 		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
+			}
+		}
 	}
 
 	public final void calc(SparseMatrix source, double divisor, SparseMatrix target) {
@@ -135,6 +154,12 @@ class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D
 					BigDecimal value = source.getAsBigDecimal(r, c);
 					BigDecimal result = MathUtil.divide(value, divisor);
 					target.setAsBigDecimal(result, r, c);
+				}
+			}
+			if (source != target) {
+				Annotation a = source.getAnnotation();
+				if (a != null) {
+					target.setAnnotation(a.clone());
 				}
 			}
 		}
@@ -175,6 +200,12 @@ class DivideScalarDenseDoubleMatrix2D implements
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) / divisor, r, c);
 				}
+			}
+		}
+		if (source != target) {
+			Annotation a = source.getAnnotation();
+			if (a != null) {
+				target.setAnnotation(a.clone());
 			}
 		}
 	}

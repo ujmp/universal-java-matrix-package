@@ -25,6 +25,7 @@ package org.ujmp.core.datematrix.stub;
 
 import java.util.Date;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -33,6 +34,18 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractDateMatrix extends AbstractGenericMatrix<Date> implements DateMatrix {
 	private static final long serialVersionUID = -7141035755618677879L;
+
+	public AbstractDateMatrix() {
+		super();
+	}
+
+	public AbstractDateMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDateMatrix(long... size) {
+		super(size);
+	}
 
 	public final Date getObject(long... coordinates) throws MatrixException {
 		return getDate(coordinates);

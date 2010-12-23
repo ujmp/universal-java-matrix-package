@@ -25,6 +25,7 @@ package org.ujmp.core.shortmatrix.stub;
 
 import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -34,6 +35,18 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> implements
 		ShortMatrix {
 	private static final long serialVersionUID = 34811716349836913L;
+
+	public AbstractShortMatrix() {
+		super();
+	}
+
+	public AbstractShortMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractShortMatrix(long... size) {
+		super(size);
+	}
 
 	public final Short getObject(long... coordinates) throws MatrixException {
 		return getShort(coordinates);

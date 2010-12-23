@@ -23,6 +23,7 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.matrix.AbstractMatrix;
 import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
@@ -35,6 +36,18 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 	private static final long serialVersionUID = -7498575238134186845L;
 
 	public static ObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
+
+	public AbstractGenericMatrix() {
+		super();
+	}
+
+	public AbstractGenericMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractGenericMatrix(long... size) {
+		super(size);
+	}
 
 	public final Object getAsObject(long... coordinates) {
 		return getObject(coordinates);

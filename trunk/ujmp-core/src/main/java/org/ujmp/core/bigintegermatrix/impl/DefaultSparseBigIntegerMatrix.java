@@ -53,17 +53,14 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}
 
-	
 	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
 		return MathUtil.getBigInteger(getObject(coordinates));
 	}
 
-	
 	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		setObject(value, coordinates);
 	}

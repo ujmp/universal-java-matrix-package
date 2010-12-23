@@ -39,6 +39,7 @@ public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private final long columns;
 
 	public BitSetDenseBooleanMatrix2D(long... size) {
+		super(size);
 		rows = size[ROW];
 		columns = size[COLUMN];
 		values = new BitSet((int) Coordinates.product(size));
@@ -64,8 +65,4 @@ public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		return new long[] { rows, columns };
 	}
 
-	public static void main(String[] args) throws Exception {
-		Matrix m = new BitSetDenseBooleanMatrix2D(10, 10);
-		System.out.println(m);
-	}
 }

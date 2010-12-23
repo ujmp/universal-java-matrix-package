@@ -36,6 +36,7 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 	private BigDecimal[][] values = null;
 
 	public ArrayDenseBigDecimalMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof ArrayDenseBigDecimalMatrix2D) {
 			BigDecimal[][] v = ((ArrayDenseBigDecimalMatrix2D) m).values;
 			this.values = new BigDecimal[v.length][v[0].length];
@@ -53,10 +54,12 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 	}
 
 	public ArrayDenseBigDecimalMatrix2D(BigDecimal[]... v) {
+		super();
 		this.values = v;
 	}
 
 	public ArrayDenseBigDecimalMatrix2D(long... size) {
+		super(size);
 		values = new BigDecimal[(int) size[ROW]][(int) size[COLUMN]];
 		for (int r = values.length; --r != -1;) {
 			Arrays.fill(values[r], BigDecimal.ZERO);
@@ -64,6 +67,7 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 	}
 
 	public ArrayDenseBigDecimalMatrix2D(BigDecimal... v) {
+		super();
 		this.values = new BigDecimal[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];

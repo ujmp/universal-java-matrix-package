@@ -23,6 +23,7 @@
 
 package org.ujmp.core.bigdecimalmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.SparseBigDecimalMatrix;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
@@ -30,6 +31,18 @@ import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 public abstract class AbstractSparseBigDecimalMatrix extends AbstractBigDecimalMatrix implements
 		SparseBigDecimalMatrix {
 	private static final long serialVersionUID = 3126623274231957611L;
+
+	public AbstractSparseBigDecimalMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractSparseBigDecimalMatrix() {
+		super();
+	}
+
+	public AbstractSparseBigDecimalMatrix(long... size) {
+		super(size);
+	}
 
 	public final StorageType getStorageType() {
 		return StorageType.SPARSE;

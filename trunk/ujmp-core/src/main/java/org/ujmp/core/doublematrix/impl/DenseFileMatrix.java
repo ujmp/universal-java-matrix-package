@@ -35,6 +35,7 @@ import java.nio.ByteOrder;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
@@ -105,8 +106,9 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 		this(65536, file, offset, dataType, readOnly, size);
 	}
 
-	public DenseFileMatrix(int bufferSize, File file, long offset, int dataType,
-			boolean readOnly, long... size) throws IOException {
+	public DenseFileMatrix(int bufferSize, File file, long offset, int dataType, boolean readOnly,
+			long... size) throws IOException {
+		super(size);
 		if (file == null) {
 			file = File.createTempFile("denseFileMatrix", ".dat");
 			file.deleteOnExit();
@@ -197,6 +199,10 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 		this(m.getSize());
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
+		}
+		Annotation a = m.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
 		}
 	}
 

@@ -25,6 +25,7 @@ package org.ujmp.core.bigintegermatrix.stub;
 
 import java.math.BigInteger;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -34,27 +35,34 @@ public abstract class AbstractBigIntegerMatrix extends AbstractGenericMatrix<Big
 		BigIntegerMatrix {
 	private static final long serialVersionUID = 3292181924433131789L;
 
-	
+	public AbstractBigIntegerMatrix() {
+		super();
+	}
+
+	public AbstractBigIntegerMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractBigIntegerMatrix(long... size) {
+		super(size);
+	}
+
 	public final BigInteger getObject(long... coordinates) throws MatrixException {
 		return getBigInteger(coordinates);
 	}
 
-	
 	public final void setObject(BigInteger o, long... coordinates) throws MatrixException {
 		setBigInteger(o, coordinates);
 	}
 
-	
 	public final BigInteger getAsBigInteger(long... coordinates) throws MatrixException {
 		return getBigInteger(coordinates);
 	}
 
-	
 	public final void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
 		setBigInteger(value, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}

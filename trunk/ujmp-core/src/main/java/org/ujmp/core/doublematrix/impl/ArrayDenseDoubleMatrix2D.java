@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -36,6 +35,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	private final double[][] values;
 
 	public ArrayDenseDoubleMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof ArrayDenseDoubleMatrix2D) {
 			double[][] v = ((ArrayDenseDoubleMatrix2D) m).values;
 			this.values = new double[v.length][v[0].length];
@@ -50,10 +50,6 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setAsDouble(m.getAsDouble(c), c);
 			}
 		}
-		Annotation a = m.getAnnotation();
-		if (a != null) {
-			setAnnotation(a.clone());
-		}
 	}
 
 	public ArrayDenseDoubleMatrix2D(double[]... v) {
@@ -61,6 +57,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	}
 
 	public ArrayDenseDoubleMatrix2D(long... size) {
+		super(size);
 		values = new double[(int) size[ROW]][(int) size[COLUMN]];
 	}
 

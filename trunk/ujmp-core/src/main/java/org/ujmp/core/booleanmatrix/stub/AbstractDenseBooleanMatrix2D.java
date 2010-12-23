@@ -23,16 +23,30 @@
 
 package org.ujmp.core.booleanmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix implements
 		DenseBooleanMatrix2D {
-
 	private static final long serialVersionUID = 1382622388004356999L;
+
+	public AbstractDenseBooleanMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseBooleanMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseBooleanMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

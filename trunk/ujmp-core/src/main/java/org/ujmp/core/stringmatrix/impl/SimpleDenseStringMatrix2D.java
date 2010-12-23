@@ -54,6 +54,7 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	}
 
 	public SimpleDenseStringMatrix2D(long... size) {
+		super(size);
 		values = new String[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
@@ -65,12 +66,10 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}

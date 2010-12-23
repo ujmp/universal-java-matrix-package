@@ -25,15 +25,30 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 
 import java.math.BigDecimal;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix
 		implements DenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = -6735931200406642163L;
+
+	public AbstractDenseBigDecimalMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseBigDecimalMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseBigDecimalMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

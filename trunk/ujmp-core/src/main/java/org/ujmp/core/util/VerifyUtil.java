@@ -143,4 +143,10 @@ public abstract class VerifyUtil {
 	public static void assertEquals(long l1, long l2, String message) {
 		assertTrue(l1 == l2, message);
 	}
+
+	public static void assert2D(long... size) {
+		assertNotNull(size, "size cannot be null");
+		assertTrue(size.length == 2, "size must be 2d");
+
+	}
 }

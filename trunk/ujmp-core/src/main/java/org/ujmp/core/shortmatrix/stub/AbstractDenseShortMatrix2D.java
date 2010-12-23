@@ -23,12 +23,27 @@
 
 package org.ujmp.core.shortmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseShortMatrix2D extends AbstractDenseShortMatrix implements
 		DenseShortMatrix2D {
 	private static final long serialVersionUID = -6656552895712687269L;
+
+	public AbstractDenseShortMatrix2D() {
+		super();
+	}
+
+	public AbstractDenseShortMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDenseShortMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());

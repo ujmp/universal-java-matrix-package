@@ -23,6 +23,7 @@
 
 package org.ujmp.core.stringmatrix.stub;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -31,10 +32,20 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String> implements
 		StringMatrix {
-
 	private static final long serialVersionUID = -8163097072559207L;
 
-	
+	public AbstractStringMatrix() {
+		super();
+	}
+
+	public AbstractStringMatrix(Matrix m) {
+		super(m);
+	}
+
+	public AbstractStringMatrix(long... size) {
+		super(size);
+	}
+
 	public final String getObject(long... coordinates) throws MatrixException {
 		return getAsString(coordinates);
 	}
@@ -43,27 +54,22 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		setAsString(o, coordinates);
 	}
 
-	
 	public final double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getAsString(coordinates));
 	}
 
-	
 	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
 		setAsString("" + value, coordinates);
 	}
 
-	
 	public final String getAsString(long... coordinates) {
 		return getString(coordinates);
 	}
 
-	
 	public final void setAsString(String string, long... coordinates) throws MatrixException {
 		setString(string, coordinates);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

@@ -40,6 +40,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	private long[] size = null;
 
 	public VolatileSparseObjectMatrix(Matrix m) throws MatrixException {
+		super(m);
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);

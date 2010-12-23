@@ -45,10 +45,12 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 	private Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
 	public DefaultSparseRowObjectMatrix2D(long... size) {
+		super(size);
 		setSize(size);
 	}
 
 	public DefaultSparseRowObjectMatrix2D(Matrix m) {
+		super(m);
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
@@ -66,7 +68,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
-
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
 		for (Long r : rows.keySet()) {

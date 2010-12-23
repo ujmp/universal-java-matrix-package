@@ -18,6 +18,7 @@
 				<include>commons-logging:commons-logging</include>
 				<include>ejml:ejml</include>
 				<include>net.sf.ehcache:ehcache-core</include>
+				<include>com.googlecode:google-api-translate-java</include>
 				<include>org.slf4j:slf4j-api</include>
 				<include>org.slf4j:slf4j-jdk14</include>
 				<include>iText:iText</include>

@@ -51,6 +51,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-googletranslate</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-gui</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -322,6 +329,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-googletranslate</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-hadoop</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -569,6 +584,7 @@
 		<module>../ujmp-commonsmath</module>
 		<module>../ujmp-ehcache</module>
 		<module>../ujmp-ejml</module>
+		<module>../ujmp-googletranslate</module>
 		<module>../ujmp-hadoop</module>
 		<module>../ujmp-itext</module>
 		<module>../ujmp-jackcess</module>

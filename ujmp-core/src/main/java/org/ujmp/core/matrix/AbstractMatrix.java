@@ -195,6 +195,7 @@ import org.ujmp.core.stringmatrix.calculation.RemoveWords;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 import org.ujmp.core.stringmatrix.calculation.Stem;
 import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
+import org.ujmp.core.stringmatrix.calculation.Translate;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
 import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.DecompositionOps;
@@ -1445,6 +1446,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix bootstrap(Ret returnType) throws MatrixException {
 		return new Bootstrap(this).calc(returnType);
+	}
+
+	public Matrix translate(Ret returnType, String sourceLanguage, String targetLanguage)
+			throws MatrixException {
+		return new Translate(this, sourceLanguage, targetLanguage).calc(returnType);
 	}
 
 	public Matrix lowerCase(Ret returnType) throws MatrixException {

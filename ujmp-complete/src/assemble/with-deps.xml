@@ -27,6 +27,9 @@
 
 				<include>org.ujmp:ujmp-ejml</include>
 				<include>ejml:ejml</include>
+				
+				<include>org.ujmp:ujmp-googletranslate</include>
+				<include>com.googlecode:google-api-translate-java</include>
 
 				<include>org.ujmp:ujmp-ehcache</include>
 				<include>net.sf.ehcache:ehcache-core</include>

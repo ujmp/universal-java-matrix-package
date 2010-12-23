@@ -38,6 +38,10 @@
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>../ujmp-googletranslate/src/main/java</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>../ujmp-hadoop/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>

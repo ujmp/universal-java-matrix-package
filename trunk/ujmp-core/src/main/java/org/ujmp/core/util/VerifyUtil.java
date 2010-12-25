@@ -149,4 +149,9 @@ public abstract class VerifyUtil {
 		assertTrue(size.length == 2, "size must be 2d");
 
 	}
+
+	public static void assertSquare(Matrix matrix) {
+		assert2D(matrix);
+		assertTrue(matrix.getRowCount() == matrix.getColumnCount(), "matrix must me square");
+	}
 }

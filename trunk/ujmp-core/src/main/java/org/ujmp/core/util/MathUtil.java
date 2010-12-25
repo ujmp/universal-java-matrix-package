@@ -950,7 +950,7 @@ public abstract class MathUtil {
 		return mu + sigma * val;
 	}
 
-	public static double f1measure(double tp, double tn, double fp, double fn) {
+	public static double f1Measure(double tp, double fp, double fn) {
 		double precision = precision(tp, fp);
 		double recall = recall(tp, fn);
 		return f1Measure(precision, recall);
@@ -1142,6 +1142,126 @@ public abstract class MathUtil {
 			res /= size[k];
 		}
 		return pos;
+	}
+
+	public static final long totalCorrect(Matrix confusionMatrix) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		return (long) confusionMatrix.trace();
+	}
+
+	public static final double accuracy(Matrix confusionMatrix) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		return totalCorrect(confusionMatrix) / confusionMatrix.getValueSum();
+	}
+
+	public static double precisionMacro(Matrix confusionMatrix) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		double sum = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			sum += precision(confusionMatrix, catIndex);
+		}
+		return sum / confusionMatrix.getRowCount();
+	}
+
+	public static double recallMacro(Matrix confusionMatrix) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		double sum = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			sum += recall(confusionMatrix, catIndex);
+		}
+		return sum / confusionMatrix.getRowCount();
+	}
+
+	public static double f1MeasureMacro(Matrix confusionMatrix) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		double sum = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			sum += f1Measure(confusionMatrix, catIndex);
+		}
+		return sum / confusionMatrix.getRowCount();
+	}
+
+	public static double precision(Matrix confusionMatrix, long catIndex) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		double tp = confusionMatrix.getAsDouble(catIndex, catIndex);
+		double fp = 0;
+		for (int c = 0; c < confusionMatrix.getRowCount(); c++) {
+			if (c == catIndex) {
+				continue;
+			}
+			fp += confusionMatrix.getAsDouble(catIndex, c);
+		}
+		return precision(tp, fp);
+	}
+
+	public static double recall(Matrix confusionMatrix, long catIndex) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		double tp = confusionMatrix.getAsDouble(catIndex, catIndex);
+		double fn = 0;
+		for (int r = 0; r < confusionMatrix.getRowCount(); r++) {
+			if (r == catIndex) {
+				continue;
+			}
+			fn += confusionMatrix.getAsDouble(r, catIndex);
+		}
+		return recall(tp, fn);
+	}
+
+	public static double f1Measure(Matrix confusionMatrix, long catIndex) {
+		VerifyUtil.assertSquare(confusionMatrix);
+		return f1Measure(precision(confusionMatrix, catIndex), recall(confusionMatrix, catIndex));
+	}
+
+	public static double precisionMicro(Matrix confusionMatrix) {
+		double tp = 0;
+		double fp = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			tp += confusionMatrix.getAsDouble(catIndex, catIndex);
+			for (int c = 0; c < confusionMatrix.getRowCount(); c++) {
+				if (c == catIndex) {
+					continue;
+				}
+				fp += confusionMatrix.getAsDouble(catIndex, c);
+			}
+		}
+		return precision(tp, fp);
+	}
+
+	public static double recallMicro(Matrix confusionMatrix) {
+		double tp = 0;
+		double fn = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			tp += confusionMatrix.getAsDouble(catIndex, catIndex);
+			for (int r = 0; r < confusionMatrix.getRowCount(); r++) {
+				if (r == catIndex) {
+					continue;
+				}
+				fn += confusionMatrix.getAsDouble(r, catIndex);
+			}
+		}
+		return recall(tp, fn);
+	}
+
+	public static double f1MeasureMicro(Matrix confusionMatrix) {
+		double tp = 0;
+		double fn = 0;
+		double fp = 0;
+		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
+			tp += confusionMatrix.getAsDouble(catIndex, catIndex);
+			for (int r = 0; r < confusionMatrix.getRowCount(); r++) {
+				if (r == catIndex) {
+					continue;
+				}
+				fn += confusionMatrix.getAsDouble(r, catIndex);
+			}
+			for (int c = 0; c < confusionMatrix.getRowCount(); c++) {
+				if (c == catIndex) {
+					continue;
+				}
+				fp += confusionMatrix.getAsDouble(catIndex, c);
+			}
+		}
+		return f1Measure(tp, fp, fn);
 	}
 
 }

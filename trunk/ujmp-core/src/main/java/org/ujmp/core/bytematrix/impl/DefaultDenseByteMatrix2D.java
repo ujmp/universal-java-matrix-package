@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 by Holger Arndt
+ * Copyright (C) 2008-2011 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional

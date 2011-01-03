@@ -38,7 +38,6 @@ import org.ujmp.mantissa.MantissaDenseDoubleMatrix2D;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 import org.ujmp.orbital.OrbitalDenseDoubleMatrix2D;
-import org.ujmp.owlpack.OwlpackDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
 import org.ujmp.sst.SSTDenseDoubleMatrix2D;
@@ -78,7 +77,6 @@ public class TestCompareMatrices {
 		ALLFLOATMATRIXCLASSES.add(MTJDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(OjalgoDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(OrbitalDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(OwlpackDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtSparseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(VecMathDenseDoubleMatrix2D.class);

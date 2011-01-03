@@ -69,7 +69,6 @@ import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
 import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
-import org.ujmp.owlpack.benchmark.OwlpackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
@@ -98,9 +97,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		}
 		if (getConfig().isRunSSTDenseDoubleMatrix2D()) {
 			list.add(new SSTDenseDoubleMatrix2DBenchmark());
-		}
-		if (getConfig().isRunOwlpackDenseDoubleMatrix2D()) {
-			list.add(new OwlpackDenseDoubleMatrix2DBenchmark());
 		}
 		if (getConfig().isRunOrbitalDenseDoubleMatrix2D()) {
 			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());

@@ -141,15 +141,13 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	public static final int ORBITAL = 16;
 
-	public static final int OWLPACK = 17;
+	public static final int PARALLELCOLT = 17;
 
-	public static final int PARALLELCOLT = 18;
+	public static final int SST = 18;
 
-	public static final int SST = 19;
+	public static final int UJMP = 19;
 
-	public static final int UJMP = 20;
-
-	public static final int VECMATH = 21;
+	public static final int VECMATH = 20;
 
 	public static final String NONSINGULARLETTER = "n";
 
@@ -170,7 +168,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(36, 22);
+		super(36, 21);
 		this.format = format;
 
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
@@ -189,7 +187,6 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(turn("MTJ"), LABELROW, MTJ);
 		setAsString(turn("ojAlgo"), LABELROW, OJALGO);
 		setAsString(turn("Orbital"), LABELROW, ORBITAL);
-		setAsString(turn("OWLPack"), LABELROW, OWLPACK);
 		setAsString(turn("Parallel Colt"), LABELROW, PARALLELCOLT);
 		setAsString(turn("SST"), LABELROW, SST);
 		setAsString(turn("UJMP"), LABELROW, UJMP);
@@ -860,42 +857,44 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(notSupported(), CHOL, ORBITAL);
 		setAsString("org.ujmp.orbital", PACKAGE, ORBITAL);
 
-		setAsString(unknown(), VERSION, OWLPACK);
-		setAsString(small("1999"), DATE, OWLPACK);
-		setAsString(unknown(), LICENCE, OWLPACK);
-		setAsString(yes(), JAVA14, OWLPACK);
-		setAsString(yes(), JAVA5, OWLPACK);
-		setAsString(yes(), JAVA6, OWLPACK);
-		setAsString(notSupported(), MULTITHREADED, OWLPACK);
-		setAsString(yes(), INPLACE, OWLPACK);
-		setAsString(notSupported(), CACHEDRESULTS, OWLPACK);
-		setAsString(yes(), DENSEAA, OWLPACK);
-		setAsString(notSupported(), DENSESA, OWLPACK);
-		setAsString(notSupported(), DENSEBLOCK, OWLPACK);
-		setAsString(notSupported(), SPARSECDS, OWLPACK);
-		setAsString(notSupported(), SPARSECRS, OWLPACK);
-		setAsString(notSupported(), SPARSEYALE, OWLPACK);
-		setAsString(notSupported(), SPARSEDOK, OWLPACK);
-		setAsString(notSupported(), SPARSELIL, OWLPACK);
-		setAsString(yes(), COMPLEX, OWLPACK);
-		setAsString(yes(), DOUBLE, OWLPACK);
-		setAsString(yes(), FLOAT, OWLPACK);
-		setAsString(notSupported(), BIGDECIMAL, OWLPACK);
-		setAsString(yes(), TRANSPOSE, OWLPACK);
-		setAsString(yes(), PLUSMINUS, OWLPACK);
-		setAsString(yes(), SCALE, OWLPACK);
-		setAsString(yes(), D2, OWLPACK);
-		setAsString(notSupported(), D3, OWLPACK);
-		setAsString(notSupported(), D3PLUS, OWLPACK);
-		setAsString(notSupported() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"),
-				SOLVE, OWLPACK);
-		setAsString(yes() + footnote("e", ERRORTEXT), INV, OWLPACK);
-		setAsString(circle() + footnote("e", ERRORTEXT), SVD, OWLPACK);
-		setAsString(notSupported(), LU, OWLPACK);
-		setAsString(circle() + footnote("u", "unuseable without documentation"), QR, OWLPACK);
-		setAsString(notSupported(), EIG, OWLPACK);
-		setAsString(notSupported(), CHOL, OWLPACK);
-		setAsString("org.ujmp.owlpack", PACKAGE, OWLPACK);
+		// setAsString(unknown(), VERSION, OWLPACK);
+		// setAsString(small("1999"), DATE, OWLPACK);
+		// setAsString(unknown(), LICENCE, OWLPACK);
+		// setAsString(yes(), JAVA14, OWLPACK);
+		// setAsString(yes(), JAVA5, OWLPACK);
+		// setAsString(yes(), JAVA6, OWLPACK);
+		// setAsString(notSupported(), MULTITHREADED, OWLPACK);
+		// setAsString(yes(), INPLACE, OWLPACK);
+		// setAsString(notSupported(), CACHEDRESULTS, OWLPACK);
+		// setAsString(yes(), DENSEAA, OWLPACK);
+		// setAsString(notSupported(), DENSESA, OWLPACK);
+		// setAsString(notSupported(), DENSEBLOCK, OWLPACK);
+		// setAsString(notSupported(), SPARSECDS, OWLPACK);
+		// setAsString(notSupported(), SPARSECRS, OWLPACK);
+		// setAsString(notSupported(), SPARSEYALE, OWLPACK);
+		// setAsString(notSupported(), SPARSEDOK, OWLPACK);
+		// setAsString(notSupported(), SPARSELIL, OWLPACK);
+		// setAsString(yes(), COMPLEX, OWLPACK);
+		// setAsString(yes(), DOUBLE, OWLPACK);
+		// setAsString(yes(), FLOAT, OWLPACK);
+		// setAsString(notSupported(), BIGDECIMAL, OWLPACK);
+		// setAsString(yes(), TRANSPOSE, OWLPACK);
+		// setAsString(yes(), PLUSMINUS, OWLPACK);
+		// setAsString(yes(), SCALE, OWLPACK);
+		// setAsString(yes(), D2, OWLPACK);
+		// setAsString(notSupported(), D3, OWLPACK);
+		// setAsString(notSupported(), D3PLUS, OWLPACK);
+		// setAsString(notSupported() + footnote("v",
+		// "only for $A \\cdot X = \\mbox{vector}$"),
+		// SOLVE, OWLPACK);
+		// setAsString(yes() + footnote("e", ERRORTEXT), INV, OWLPACK);
+		// setAsString(circle() + footnote("e", ERRORTEXT), SVD, OWLPACK);
+		// setAsString(notSupported(), LU, OWLPACK);
+		// setAsString(circle() + footnote("u",
+		// "unuseable without documentation"), QR, OWLPACK);
+		// setAsString(notSupported(), EIG, OWLPACK);
+		// setAsString(notSupported(), CHOL, OWLPACK);
+		// setAsString("org.ujmp.owlpack", PACKAGE, OWLPACK);
 
 		setAsString(small("0.9.4"), VERSION, PARALLELCOLT);
 		setAsString(small("2010"), DATE, PARALLELCOLT);

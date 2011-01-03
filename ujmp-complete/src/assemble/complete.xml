@@ -45,8 +45,7 @@
 				<include>org.ujmp:ujmp-mantissa</include>
 				<include>org.ujmp:ujmp-mtj</include>
 				<include>org.ujmp:ujmp-ojalgo</include>
-				<include>org.ujmp:ujmp-orbital</include>
-				<include>org.ujmp:ujmp-owlpack</include>
+				<include>org.ujmp:ujmp-orbital</include>				
 				<include>org.ujmp:ujmp-parallelcolt</include>
 				<include>org.ujmp:ujmp-pdfbox</include>
 				<include>org.ujmp:ujmp-sst</include>

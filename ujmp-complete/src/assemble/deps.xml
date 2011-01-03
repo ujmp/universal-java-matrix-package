@@ -57,8 +57,7 @@
 				<include>netlib-java:netlib-java</include>
 				<include>ojalgo:ojalgo</include>
 				<include>orbital:orbital-core</include>
-				<include>orbital:orbital-ext</include>
-				<include>owlpack:owlpack</include>
+				<include>orbital:orbital-ext</include>				
 				<include>parallelcolt:parallelcolt</include>
 				<include>jtransforms:jtransforms</include>
 				<include>jplasma:jplasma</include>

@@ -44,7 +44,7 @@ import org.junit.runners.Suite;
 		org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
 		org.ujmp.mantissa.AllTests.class, org.ujmp.mtj.AllTests.class,
 		org.ujmp.ojalgo.AllTests.class, org.ujmp.orbital.AllTests.class,
-		org.ujmp.owlpack.AllTests.class, org.ujmp.pdfbox.AllTests.class,
+		 org.ujmp.pdfbox.AllTests.class,
 		org.ujmp.vecmath.AllTests.class, org.ujmp.ejml.AllTests.class,
 		org.ujmp.googletranslate.AllTests.class, org.ujmp.sst.AllTests.class })
 public class AllTests {

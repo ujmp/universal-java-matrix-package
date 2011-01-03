@@ -123,10 +123,7 @@
 
 				<include>org.ujmp:ujmp-orbital</include>
 				<include>orbital:orbital-core</include>
-				<include>orbital:orbital-ext</include>
-
-				<include>org.ujmp:ujmp-owlpack</include>
-				<include>owlpack:owlpack</include>
+				<include>orbital:orbital-ext</include>				
 
 				<include>org.ujmp:ujmp-parallelcolt</include>
 				<include>parallelcolt:parallelcolt</include>

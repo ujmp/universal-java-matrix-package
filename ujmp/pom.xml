@@ -373,7 +373,7 @@
 			<dependency>
 				<groupId>ejml</groupId>
 				<artifactId>ejml</artifactId>
-				<version>0.13</version>
+				<version>0.15</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

@@ -385,7 +385,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(yes(), CHOL, COMMONSMATH);
 		setAsString("org.ujmp.commonsmath", PACKAGE, COMMONSMATH);
 
-		setAsString(small("0.13"), VERSION, EJML);
+		setAsString(small("0.15"), VERSION, EJML);
 		setAsString(small("2010"), DATE, EJML);
 		setAsString(small("LGPL"), LICENCE, EJML);
 		setAsString(notSupported(), JAVA14, EJML);

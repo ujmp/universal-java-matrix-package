@@ -62,6 +62,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public EJMLDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+		super(source);
 		// if (source instanceof HasColumnMajorDoubleArray1D) {
 		// final double[] data = ((HasColumnMajorDoubleArray1D) source)
 		// .getColumnMajorDoubleArray1D();

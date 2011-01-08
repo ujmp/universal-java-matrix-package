@@ -88,6 +88,14 @@ public abstract class VerifyUtil {
 		assertTrue(i1 == i2, message);
 	}
 
+	public static void assertEquals(double d1, double d2, double tol, String message) {
+		assertTrue(Math.abs(d1 - d2) < tol, message);
+	}
+
+	public static void assertEquals(float d1, float d2, float tol, String message) {
+		assertTrue(Math.abs(d1 - d2) < tol, message);
+	}
+
 	public static void assertEquals(long[] s1, long[] s2, String message) {
 		assertTrue(Arrays.equals(s1, s2), message);
 	}
@@ -152,6 +160,12 @@ public abstract class VerifyUtil {
 
 	public static void assertSquare(Matrix matrix) {
 		assert2D(matrix);
-		assertTrue(matrix.getRowCount() == matrix.getColumnCount(), "matrix must me square");
+		assertTrue(matrix.getRowCount() == matrix.getColumnCount(), "matrix must be square");
+	}
+
+	public static void assertSingleValue(Matrix matrix) {
+		assert2D(matrix);
+		assertTrue(matrix.getRowCount() == 1, "matrix must be 1x1");
+		assertTrue(matrix.getColumnCount() == 1, "matrix must be 1x1");
 	}
 }

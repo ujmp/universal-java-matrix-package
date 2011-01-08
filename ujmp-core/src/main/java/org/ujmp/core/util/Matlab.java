@@ -41,7 +41,7 @@ public class Matlab {
 		try {
 			SEARCH = new String[] { System.getProperty("Matlab"),
 					System.getProperty("user.home") + "/matlab/bin/matlab", "/usr/bin/matlab",
-					"/opt/matlab/bin/matlab" };
+					"/usr/local/bin/matlab", "/opt/matlab/bin/matlab" };
 		} catch (Exception e) {
 		}
 	}

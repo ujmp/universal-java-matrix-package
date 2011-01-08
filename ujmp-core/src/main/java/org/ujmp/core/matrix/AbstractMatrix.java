@@ -165,6 +165,7 @@ import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Deletion;
+import org.ujmp.core.objectmatrix.calculation.Diag;
 import org.ujmp.core.objectmatrix.calculation.ExtractAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Flipdim;
@@ -1071,6 +1072,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix transpose(Ret returnType) throws MatrixException {
 		return new Transpose(this).calc(returnType);
+	}
+
+	public Matrix diag(Ret returnType) throws MatrixException {
+		return new Diag(this).calc(returnType);
 	}
 
 	public Matrix mean(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException {

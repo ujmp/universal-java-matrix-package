@@ -127,6 +127,8 @@ public interface ObjectCalculations {
 
 	public Matrix flipdim(Ret returnType, int dimension);
 
+	public Matrix diag(Ret returnType) throws MatrixException;
+
 	/**
 	 * @deprecated Please do not use this method anymore, it will be removed.
 	 *             use <code>matrix.clone()</code> instead

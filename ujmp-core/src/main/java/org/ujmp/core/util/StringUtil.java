@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class StringUtil {
@@ -269,7 +270,7 @@ public abstract class StringUtil {
 							long start = Long.parseLong(startS.replaceAll("\\D", ""));
 							long end = Long.parseLong(endS.replaceAll("\\D", ""));
 
-							if (end > size[j]) {
+							if (end > size[i]) {
 								throw new MatrixException("Selection is bigger than size");
 							}
 
@@ -291,6 +292,11 @@ public abstract class StringUtil {
 		}
 
 		return selection;
+	}
+
+	public static void main(String[] args) throws Exception {
+		long[][] sel = parseSelection("0-30;1-32", new long[] { 31, 33 });
+		System.out.println(MatrixFactory.linkToArray(sel));
 	}
 
 	public static String duration(long time) {

@@ -79,6 +79,21 @@ public class FileUtil {
 		}
 	}
 
+	public static List<File> getAll(File path) {
+		List<File> all = new ArrayList<File>();
+		if (path != null && path.exists()) {
+			File[] files = path.listFiles();
+			for (File f : files) {
+				if (f.isDirectory()) {
+					all.addAll(getAll(f));
+				} else {
+					all.add(f);
+				}
+			}
+		}
+		return all;
+	}
+
 	public static boolean equalsContent(File file1, File file2) throws IOException {
 		VerifyUtil.assertNotNull(file1, "file1 is null");
 		VerifyUtil.assertNotNull(file2, "file2 is null");

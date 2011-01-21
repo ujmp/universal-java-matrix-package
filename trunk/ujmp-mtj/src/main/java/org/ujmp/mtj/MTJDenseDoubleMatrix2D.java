@@ -35,6 +35,7 @@ import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.QR;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -57,6 +58,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public MTJDenseDoubleMatrix2D(Matrix m) throws MatrixException {
+		super(m);
 		if (m instanceof MTJDenseDoubleMatrix2D) {
 			this.matrix = ((MTJDenseDoubleMatrix2D) m).matrix.copy();
 		} else {
@@ -211,7 +213,12 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix ret = matrix.copy();
 			ret.add(((MTJDenseDoubleMatrix2D) m2).getWrappedObject());
-			return new MTJDenseDoubleMatrix2D(ret);
+			Matrix result = new MTJDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(m2);
 		}
@@ -220,13 +227,23 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix times(double f) throws MatrixException {
 		DenseMatrix ret = matrix.copy();
 		ret.scale(f);
-		return new MTJDenseDoubleMatrix2D(ret);
+		Matrix result = new MTJDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double f) throws MatrixException {
 		DenseMatrix ret = matrix.copy();
 		ret.scale(1.0 / f);
-		return new MTJDenseDoubleMatrix2D(ret);
+		Matrix result = new MTJDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix copy() {

@@ -46,6 +46,9 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
+		}
 	}
 
 	public JSciDenseDoubleMatrix2D(long... size) {

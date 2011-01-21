@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -71,7 +72,9 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public JampackDenseDoubleMatrix2D(Matrix source) throws MatrixException {
-		this(source.getSize());
+		super(source);
+		this.matrix = new Zmat((int) source.getRowCount(), (int) source
+				.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -205,9 +208,13 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix times(double value) {
 		try {
-			return new JampackDenseDoubleMatrix2D(Times.o(new Z(value, 0),
-					matrix));
-
+			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(value,
+					0), matrix));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
@@ -215,9 +222,13 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix divide(double value) {
 		try {
-			return new JampackDenseDoubleMatrix2D(Times.o(
-					new Z(1.0 / value, 0), matrix));
-
+			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(
+					1.0 / value, 0), matrix));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}

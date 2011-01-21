@@ -30,6 +30,7 @@ import java.io.ObjectOutputStream;
 import org.jlinalg.MatrixMultiplication;
 import org.jlinalg.doublewrapper.DoubleWrapper;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -57,6 +58,9 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -99,13 +103,23 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		return new JLinAlgDenseDoubleMatrix2D(matrix.add(new DoubleWrapper(
-				value)));
+		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix
+				.add(new DoubleWrapper(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double value) {
-		return new JLinAlgDenseDoubleMatrix2D(matrix
+		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix
 				.multiply(new DoubleWrapper(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix mtimes(Matrix m) {

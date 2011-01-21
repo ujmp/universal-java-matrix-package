@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -50,9 +51,13 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public SSTDenseDoubleMatrix2D(Matrix source) {
+		super(source);
 		data = new RealArray(MathUtil.toIntArray(source.getSize()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -132,13 +137,23 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double v) {
-		return new SSTDenseDoubleMatrix2D(data.clone().uAdd(v));
+		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uAdd(v));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			return new SSTDenseDoubleMatrix2D(data.clone().eAdd(
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(
 					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(m);
 		}
@@ -146,23 +161,43 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			return new SSTDenseDoubleMatrix2D(data.clone().eSub(
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(
 					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(m);
 		}
 	}
 
 	public Matrix minus(double v) {
-		return new SSTDenseDoubleMatrix2D(data.clone().uAdd(-v));
+		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uAdd(-v));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double v) {
-		return new SSTDenseDoubleMatrix2D(data.clone().uMul(v));
+		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uMul(v));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double v) {
-		return new SSTDenseDoubleMatrix2D(data.clone().uMul(1 / v));
+		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uMul(1 / v));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 }

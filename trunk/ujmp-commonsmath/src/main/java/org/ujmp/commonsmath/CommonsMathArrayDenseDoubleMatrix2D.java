@@ -26,6 +26,7 @@ package org.ujmp.commonsmath;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -45,6 +46,10 @@ public class CommonsMathArrayDenseDoubleMatrix2D extends
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		Annotation a = source.getAnnotation();
+		if (a != null) {
+			setAnnotation(a.clone());
 		}
 	}
 

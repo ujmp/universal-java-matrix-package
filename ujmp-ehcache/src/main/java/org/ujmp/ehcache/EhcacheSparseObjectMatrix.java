@@ -33,18 +33,18 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
-public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements
-		Flushable, Closeable, Erasable {
+public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
+		implements Flushable, Closeable, Erasable {
 	private static final long serialVersionUID = -7743149828558906127L;
 
-	public EhcacheSparseObjectMatrix(Matrix m) throws MatrixException, IOException {
-		super(new EhcacheMap<Coordinates, Object>(EhcacheSparseObjectMatrix.class.getSimpleName()
-				+ System.nanoTime()), m);
+	public EhcacheSparseObjectMatrix(Matrix m) throws MatrixException,
+			IOException {
+		super(new EhcacheMap<Coordinates, Object>(), m);
 	}
 
-	public EhcacheSparseObjectMatrix(long... size) throws MatrixException, IOException {
-		super(new EhcacheMap<Coordinates, Object>(EhcacheSparseObjectMatrix.class.getSimpleName()
-				+ System.nanoTime()), size);
+	public EhcacheSparseObjectMatrix(long... size) throws MatrixException,
+			IOException {
+		super(new EhcacheMap<Coordinates, Object>(), size);
 	}
 
 	public void erase() throws IOException {

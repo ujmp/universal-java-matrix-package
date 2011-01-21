@@ -26,6 +26,7 @@ package org.ujmp.jmatharray;
 import org.math.array.DoubleArray;
 import org.math.array.LinearAlgebra;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -54,6 +55,9 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -166,29 +170,54 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(DoubleArray
-				.copy(matrix), value));
+		Matrix result = new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(
+				DoubleArray.copy(matrix), value));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix minus(double value) {
-		return new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(DoubleArray
-				.copy(matrix), -value));
+		Matrix result = new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(
+				DoubleArray.copy(matrix), -value));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double value) {
-		return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(matrix,
-				value));
+		Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(
+				matrix, value));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double value) {
-		return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.divide(matrix,
-				value));
+		Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.divide(
+				matrix, value));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JMathArrayDenseDoubleMatrix2D) {
-			return new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(
-					matrix, ((JMathArrayDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra
+					.times(matrix, ((JMathArrayDenseDoubleMatrix2D) m).matrix));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.mtimes(m);
 		}

@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
@@ -120,6 +121,17 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		this.columnForValue = columnForValue;
 		this.columnsForCoordinates = columnsForCoordinates;
 		createTableIfNotExists();
+	}
+
+	public JDBCSparseObjectMatrix(Matrix source) throws ClassNotFoundException,
+			IOException, SQLException {
+		this(source.getSize());
+		for (long[] c : source.availableCoordinates()) {
+			setAsObject(source.getAsObject(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
+		}
 	}
 
 	private void createTableIfNotExists() throws SQLException {

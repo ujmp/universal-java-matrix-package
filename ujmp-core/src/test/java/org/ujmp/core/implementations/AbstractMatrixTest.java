@@ -265,6 +265,9 @@ public abstract class AbstractMatrixTest {
 	public void testConstructorWithAnnotation() throws Exception {
 		Matrix m = createMatrixWithAnnotation(3, 3);
 		Matrix m2 = createMatrix(m);
+		System.out.println(m.minus(m2));
+		assertTrue(getLabel(), m.equalsContent(m2));
+		assertTrue(getLabel(), m.equalsAnnotation(m2));
 		assertEquals(getLabel(), m, m2);
 	}
 
@@ -1483,6 +1486,11 @@ public abstract class AbstractMatrixTest {
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
+		
+		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
+			return;
+		}
+		
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
 				&& System.getProperty("java.vm.name").contains("64")) {
@@ -1558,6 +1566,11 @@ public abstract class AbstractMatrixTest {
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
+		
+		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
+			return;
+		}
+		
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
 				&& System.getProperty("java.vm.name").contains("64")) {

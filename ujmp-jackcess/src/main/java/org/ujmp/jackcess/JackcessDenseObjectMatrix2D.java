@@ -76,6 +76,7 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 
 	public JackcessDenseObjectMatrix2D(File file, String tablename, Matrix matrix)
 			throws IOException {
+		super(matrix);
 		try {
 			database = Database.create(file);
 

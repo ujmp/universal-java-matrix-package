@@ -38,6 +38,7 @@ import org.jscience.mathematics.vector.LUDecomposition;
 import org.jscience.mathematics.vector.SparseMatrix;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -74,6 +75,9 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public JScienceDenseDoubleMatrix2D(Matrix matrix) throws MatrixException {
 		this.matrix = Float64Matrix.valueOf(matrix.toDoubleArray());
+		if (matrix.getAnnotation() != null) {
+			setAnnotation(matrix.getAnnotation().clone());
+		}
 	}
 
 	public JScienceDenseDoubleMatrix2D(DenseMatrix<Float64> matrix) {
@@ -153,8 +157,13 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
-			return new JScienceDenseDoubleMatrix2D(matrix
+			Matrix result = new JScienceDenseDoubleMatrix2D(matrix
 					.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(that);
 		}
@@ -162,21 +171,36 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
-			return new JScienceDenseDoubleMatrix2D(matrix
+			Matrix result = new JScienceDenseDoubleMatrix2D(matrix
 					.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.minus(that);
 		}
 	}
 
 	public Matrix times(double value) {
-		return new JScienceDenseDoubleMatrix2D(matrix.times(Float64
+		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64
 				.valueOf(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double value) {
-		return new JScienceDenseDoubleMatrix2D(matrix.times(Float64
+		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64
 				.valueOf(1.0 / value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix transpose() {

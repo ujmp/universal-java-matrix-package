@@ -48,7 +48,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("purgeMemory", true);
 
 		put("burnInRuns", 3);
-		put("runs", 25);
+		put("runs", 10);
 		put("minTrialCount", 1);
 		put("maxTrialCount", 5);
 		put("maxTime", 10000); // maximal time for one operation

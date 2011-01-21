@@ -32,6 +32,7 @@ import orbital.math.Real;
 import orbital.math.Values;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -51,6 +52,9 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this(m.getSize());
 		for (final long[] c : m.allCoordinates()) {
 			setDouble(m.getAsDouble(c), c);
+		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
 		}
 	}
 
@@ -102,7 +106,12 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m instanceof OrbitalDenseDoubleMatrix2D) {
 			orbital.math.Matrix result = matrix
 					.add(((OrbitalDenseDoubleMatrix2D) m).matrix);
-			return new OrbitalDenseDoubleMatrix2D(result);
+			Matrix ret = new OrbitalDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.plus(m);
 		}
@@ -111,20 +120,35 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix times(double v) {
 		orbital.math.Matrix result = matrix.scale(Values.getDefault()
 				.valueOf(v));
-		return new OrbitalDenseDoubleMatrix2D(result);
+		Matrix ret = new OrbitalDenseDoubleMatrix2D(result);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			ret.setAnnotation(a.clone());
+		}
+		return ret;
 	}
 
 	public Matrix divide(double v) {
 		orbital.math.Matrix result = matrix.scale(Values.getDefault().valueOf(
 				1.0 / v));
-		return new OrbitalDenseDoubleMatrix2D(result);
+		Matrix ret = new OrbitalDenseDoubleMatrix2D(result);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			ret.setAnnotation(a.clone());
+		}
+		return ret;
 	}
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof OrbitalDenseDoubleMatrix2D) {
 			orbital.math.Matrix result = matrix
 					.subtract(((OrbitalDenseDoubleMatrix2D) m).matrix);
-			return new OrbitalDenseDoubleMatrix2D(result);
+			Matrix ret = new OrbitalDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.minus(m);
 		}

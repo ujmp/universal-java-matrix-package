@@ -35,6 +35,7 @@ import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -144,7 +145,12 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix plus(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, value, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
+		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix plus(Matrix m) {
@@ -152,7 +158,12 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
 			CommonOps.add(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
-			return new EJMLDenseDoubleMatrix2D(ret);
+			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(m);
 		}
@@ -163,7 +174,12 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
 			CommonOps.sub(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
-			return new EJMLDenseDoubleMatrix2D(ret);
+			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.minus(m);
 		}
@@ -172,19 +188,34 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix minus(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, -value, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
+		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(value, matrix, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
+		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double value) {
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(1.0 / value, matrix, ret);
-		return new EJMLDenseDoubleMatrix2D(ret);
+		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix mtimes(Matrix m) {

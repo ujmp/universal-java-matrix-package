@@ -24,6 +24,7 @@
 package org.ujmp.colt;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -66,7 +67,9 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public ColtDenseDoubleMatrix2D(Matrix source) throws MatrixException {
-		this(source.getSize());
+		super(source);
+		this.matrix = new DenseDoubleMatrix2D((int) source.getRowCount(),
+				(int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -145,23 +148,47 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
-				.assign(Functions.plus(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) matrix.copy().assign(
+						Functions.plus(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix minus(double value) {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
-				.assign(Functions.minus(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) matrix.copy().assign(
+						Functions.minus(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double value) {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
-				.assign(Functions.mult(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) matrix.copy().assign(
+						Functions.mult(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix divide(double value) {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy()
-				.assign(Functions.div(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D(
+				(DenseDoubleMatrix2D) matrix.copy()
+						.assign(Functions.div(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix mtimes(Matrix m) {
@@ -182,7 +209,12 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m)
 					.getWrappedObject(), ret);
-			return new ColtDenseDoubleMatrix2D(ret);
+			Matrix result = new ColtDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.plus(m);
 		}
@@ -195,7 +227,12 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m)
 					.getWrappedObject(), ret);
-			return new ColtDenseDoubleMatrix2D(ret);
+			Matrix result = new ColtDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.minus(m);
 		}

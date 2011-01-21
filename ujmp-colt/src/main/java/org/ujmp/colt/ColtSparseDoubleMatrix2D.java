@@ -29,6 +29,7 @@ import java.util.Set;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
@@ -55,7 +56,9 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	}
 
 	public ColtSparseDoubleMatrix2D(Matrix source) throws MatrixException {
-		this(source.getSize());
+		super(source);
+		this.matrix = new SparseDoubleMatrix2D((int) source.getRowCount(),
+				(int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -123,13 +126,25 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
-				.copy().assign(Functions.plus(value)));
+		Matrix result = new ColtSparseDoubleMatrix2D(
+				(SparseDoubleMatrix2D) matrix.copy().assign(
+						Functions.plus(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix times(double value) {
-		return new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix
-				.copy().assign(Functions.mult(value)));
+		Matrix result = new ColtSparseDoubleMatrix2D(
+				(SparseDoubleMatrix2D) matrix.copy().assign(
+						Functions.mult(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix copy() {

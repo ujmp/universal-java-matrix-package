@@ -2011,6 +2011,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 							if (!o1.equals(o2)) {
 								return false;
 							}
+						} else if (o1 == null && o2 == null) {
 						} else {
 							return false;
 						}
@@ -2025,6 +2026,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 							if (!o1.equals(o2)) {
 								return false;
 							}
+						} else if (o1 == null && o2 == null) {
 						} else {
 							return false;
 						}

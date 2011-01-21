@@ -60,6 +60,9 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
+		}
 	}
 
 	public double getDouble(long row, long column) {

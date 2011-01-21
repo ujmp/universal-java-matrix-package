@@ -23,10 +23,6 @@
 
 package org.ujmp.jdbc;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 
@@ -34,39 +30,10 @@ public class TestJDBCSparseObjectMatrix extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws Exception {
 		return new JDBCSparseObjectMatrix(size);
-//		File tempFile = File.createTempFile("hsqldb", "");
-//		try {
-//			Class.forName("org.hsqldb.jdbcDriver");
-//			String username = "SA";
-//			String password = "";
-//			String tableName = "matrix";
-//			String columnForValue = "value";
-//			String[] columnsForCoordinates = new String[] { "row", "column" };
-//			String url = "jdbc:hsqldb:" + tempFile + ";shutdown=true";
-//			String sql = "CREATE TABLE matrix (value float, row int, column int)";
-//			Connection c = DriverManager.getConnection(url, username, password);
-//			c.createStatement().execute(sql);
-//			Matrix m = new JDBCSparseObjectMatrix(size, c, tableName,
-//					columnForValue, columnsForCoordinates);
-//			return m;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		} finally {
-//			if (tempFile.exists()) {
-//				tempFile.delete();
-//			}
-//		}
-
 	}
 
 	public Matrix createMatrix(Matrix source) throws Exception {
-		Matrix m = createMatrix(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			m.setAsDouble(source.getAsDouble(c), c);
-
-		}
-		return m;
+		return new JDBCSparseObjectMatrix(source);
 	}
 
 	public boolean isTestLarge() {

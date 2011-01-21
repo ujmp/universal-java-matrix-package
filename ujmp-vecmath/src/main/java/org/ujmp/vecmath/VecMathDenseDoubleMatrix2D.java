@@ -27,6 +27,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -57,6 +58,9 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -98,7 +102,12 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m instanceof VecMathDenseDoubleMatrix2D) {
 			GMatrix result = (GMatrix) matrix.clone();
 			result.add(((VecMathDenseDoubleMatrix2D) m).matrix);
-			return new VecMathDenseDoubleMatrix2D(result);
+			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.plus(m);
 		}
@@ -108,7 +117,12 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m instanceof VecMathDenseDoubleMatrix2D) {
 			GMatrix result = (GMatrix) matrix.clone();
 			result.sub(((VecMathDenseDoubleMatrix2D) m).matrix);
-			return new VecMathDenseDoubleMatrix2D(result);
+			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.minus(m);
 		}
@@ -119,7 +133,12 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			GMatrix result = new GMatrix(matrix.getNumRow(), (int) m
 					.getColumnCount());
 			result.mul(matrix, ((VecMathDenseDoubleMatrix2D) m).matrix);
-			return new VecMathDenseDoubleMatrix2D(result);
+			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.mtimes(m);
 		}

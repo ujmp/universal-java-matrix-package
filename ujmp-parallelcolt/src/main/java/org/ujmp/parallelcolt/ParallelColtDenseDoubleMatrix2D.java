@@ -24,6 +24,7 @@
 package org.ujmp.parallelcolt;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
@@ -79,6 +80,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 
 	public ParallelColtDenseDoubleMatrix2D(Matrix source)
 			throws MatrixException {
+		super(source);
 		if (source instanceof HasRowMajorDoubleArray2D) {
 			final double[][] data = ((HasRowMajorDoubleArray2D) source)
 					.getRowMajorDoubleArray2D();
@@ -132,9 +134,14 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public Matrix plus(double value) {
-		return new ParallelColtDenseDoubleMatrix2D(
+		Matrix result = new ParallelColtDenseDoubleMatrix2D(
 				(cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D) matrix
 						.copy().assign(DoubleFunctions.plus(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix inv() {
@@ -144,9 +151,14 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public Matrix times(double value) {
-		return new ParallelColtDenseDoubleMatrix2D(
+		Matrix result = new ParallelColtDenseDoubleMatrix2D(
 				(cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D) matrix
 						.copy().assign(DoubleFunctions.mult(value)));
+		Annotation a = getAnnotation();
+		if (a != null) {
+			result.setAnnotation(a.clone());
+		}
+		return result;
 	}
 
 	public Matrix transpose() {
@@ -160,7 +172,12 @@ public class ParallelColtDenseDoubleMatrix2D extends
 			DoubleMatrix2D result = matrix.copy();
 			result.assign(((ParallelColtDenseDoubleMatrix2D) m)
 					.getWrappedObject(), DoubleFunctions.plus);
-			return new ParallelColtDenseDoubleMatrix2D(result);
+			Matrix ret = new ParallelColtDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.plus(m);
 		}
@@ -171,7 +188,12 @@ public class ParallelColtDenseDoubleMatrix2D extends
 			DoubleMatrix2D result = matrix.copy();
 			result.assign(((ParallelColtDenseDoubleMatrix2D) m)
 					.getWrappedObject(), DoubleFunctions.minus);
-			return new ParallelColtDenseDoubleMatrix2D(result);
+			Matrix ret = new ParallelColtDenseDoubleMatrix2D(result);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				ret.setAnnotation(a.clone());
+			}
+			return ret;
 		} else {
 			return super.minus(m);
 		}
@@ -182,7 +204,12 @@ public class ParallelColtDenseDoubleMatrix2D extends
 			cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D ret = new cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(
 					(int) getRowCount(), (int) m.getColumnCount());
 			matrix.zMult(((ParallelColtDenseDoubleMatrix2D) m).matrix, ret);
-			return new ParallelColtDenseDoubleMatrix2D(ret);
+			Matrix result = new ParallelColtDenseDoubleMatrix2D(ret);
+			Annotation a = getAnnotation();
+			if (a != null) {
+				result.setAnnotation(a.clone());
+			}
+			return result;
 		} else {
 			return super.mtimes(m);
 		}

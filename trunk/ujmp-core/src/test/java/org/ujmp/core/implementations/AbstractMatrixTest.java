@@ -1486,11 +1486,7 @@ public abstract class AbstractMatrixTest {
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
-		
-		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
-			return;
-		}
-		
+
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
 				&& System.getProperty("java.vm.name").contains("64")) {
@@ -1566,11 +1562,7 @@ public abstract class AbstractMatrixTest {
 		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
 			return;
 		}
-		
-		if (m1.getClass().getName().startsWith("org.ujmp.ojalgo.")) {
-			return;
-		}
-		
+
 		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
 				&& System.getProperty("os.name").toLowerCase().contains("windows")
 				&& System.getProperty("java.vm.name").contains("64")) {

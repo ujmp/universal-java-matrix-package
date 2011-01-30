@@ -25,10 +25,12 @@ package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.concurrent.PFor;
 
 public class Rand extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 1482175899706574542L;
@@ -48,7 +50,7 @@ public class Rand extends AbstractDoubleCalculation {
 	}
 
 	public double getDouble(long... coordinates) {
-		return MathUtil.nextUniform(min, max);
+		return MathUtil.nextDouble(min, max);
 	}
 
 	public static Matrix calc(long... size) throws MatrixException {
@@ -58,7 +60,7 @@ public class Rand extends AbstractDoubleCalculation {
 	public static Matrix calc(Matrix source, double min, double max) throws MatrixException {
 		Matrix ret = Matrix.factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
-			ret.setAsDouble(MathUtil.nextUniform(min, max), c);
+			ret.setAsDouble(MathUtil.nextDouble(min, max), c);
 		}
 		return ret;
 	}
@@ -66,9 +68,28 @@ public class Rand extends AbstractDoubleCalculation {
 	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
 		Matrix ret = MatrixFactory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
-			ret.setAsDouble(MathUtil.nextUniform(0.0, 1.0), c);
+			ret.setAsDouble(MathUtil.nextDouble(), c);
 		}
 		return ret;
+	}
+
+	public Matrix calcOrig() throws MatrixException {
+		if (getSource() instanceof DenseDoubleMatrix2D) {
+			final DenseDoubleMatrix2D source = (DenseDoubleMatrix2D) getSource();
+
+			new PFor(0, (int) source.getRowCount() - 1) {
+				public void step(int row) {
+					for (long col = source.getColumnCount(); --col != -1;) {
+						source.setDouble(MathUtil.nextDouble(), row, col);
+					}
+				}
+			};
+
+			getSource().notifyGUIObject();
+			return getSource();
+		} else {
+			return super.calcOrig();
+		}
 	}
 
 }

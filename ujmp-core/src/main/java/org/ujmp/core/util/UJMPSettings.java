@@ -46,6 +46,8 @@ public abstract class UJMPSettings {
 
 	private static boolean useBlockMatrixMultiply = true;
 
+	private static boolean useMultiThreadedRandom = true;
+
 	private static int defaultBlockSize = 100;
 
 	private static MathContext mathContext = MathContext.DECIMAL128;
@@ -265,6 +267,14 @@ public abstract class UJMPSettings {
 
 	public static void setUseBlockMatrixMultiply(boolean useBlockMatrix) {
 		UJMPSettings.useBlockMatrixMultiply = useBlockMatrix;
+	}
+
+	public static boolean isUseMultiThreadedRandom() {
+		return useMultiThreadedRandom;
+	}
+
+	public static void setUseMultiThreadedRandom(boolean value) {
+		UJMPSettings.useMultiThreadedRandom = value;
 	}
 
 	public static int getDefaultBlockSize() {

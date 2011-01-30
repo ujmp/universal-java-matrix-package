@@ -60,11 +60,26 @@ public abstract class MathUtil {
 
 	private static long seed = System.nanoTime();
 
-	private static Random random = new Random();
+	private static final ThreadLocal<Random> randoms = new ThreadLocal<Random>();
+
+	private static final Random random = new Random();
+
+	public static Random getRandom() {
+		if (UJMPSettings.isUseMultiThreadedRandom()) {
+			Random random = randoms.get();
+			if (random == null) {
+				random = new Random();
+				randoms.set(random);
+			}
+			return random;
+		} else {
+			return random;
+		}
+	}
 
 	static {
 		try {
-			random.setSeed(seed);
+			getRandom().setSeed(seed);
 			dateFormats = new ArrayList<DateFormat>();
 			dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US));
 			dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US));
@@ -143,9 +158,9 @@ public abstract class MathUtil {
 		return md5(SerializationUtil.serialize(o));
 	}
 
-	public static final Random getRandom() {
-		return random;
-	}
+	// public static final Random getRandom() {
+	// return random;
+	// }
 
 	public static final boolean xor(boolean b1, boolean b2) {
 		if (b1 == false && b2 == false) {
@@ -183,7 +198,7 @@ public abstract class MathUtil {
 
 	public static void setSeed(long seed) {
 		MathUtil.seed = seed;
-		random.setSeed(seed);
+		getRandom().setSeed(seed);
 	}
 
 	public static final double log2(final double d) {
@@ -211,19 +226,15 @@ public abstract class MathUtil {
 	}
 
 	public static final double nextGaussian(double mean, double sigma) {
-		return sigma <= 0.0 ? 0.0 : sigma * random.nextGaussian() + mean;
+		return sigma <= 0.0 ? 0.0 : sigma * getRandom().nextGaussian() + mean;
 	}
 
-	public static final double nextUniform(double min, double max) {
-		if (min == max) {
-			max += Double.MIN_VALUE;
-		}
-		double r = random.nextDouble();
-		while (r <= 0.0) {
-			r = random.nextDouble();
-		}
+	public static final double nextGaussian() {
+		return getRandom().nextGaussian();
+	}
 
-		return min + r * (max - min);
+	public static final double nextDouble(double min, double max) {
+		return min + getRandom().nextDouble() * (max - min);
 	}
 
 	/**
@@ -239,20 +250,20 @@ public abstract class MathUtil {
 		if (min == max) {
 			return min;
 		}
-		double r = random.nextDouble();
+		double r = getRandom().nextDouble();
 		return (int) ((r * max) + ((1.0 - r) * min) + r);
 	}
 
 	public static boolean isEventHappening(double probability) {
-		return nextUniform(0.0, 1.0) < probability;
+		return nextDouble() < probability;
 	}
 
 	public static boolean nextBoolean() {
-		return nextGaussian(0.0, 1.0) > 0;
+		return getRandom().nextBoolean();
 	}
 
 	public static double nextDouble() {
-		return random.nextDouble();
+		return getRandom().nextDouble();
 	}
 
 	public static final double ignoreNaN(final double v) {

@@ -481,9 +481,7 @@ class MtimesDenseDoubleMatrix2D implements
 				final double temp = B[lcol + jcolTimesM1ColumnCount];
 				if (temp != 0.0d) {
 					final int lcolTimesM1RowCount = lcol * m1RowCount;
-					for (int irow = 0; irow < m1RowCount; ++irow) {
-						C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount] * temp;
-					}
+					calcOneColumn(temp, A, C, m1RowCount, jcolTimesM1RowCount, lcolTimesM1RowCount);
 				}
 			}
 		}
@@ -502,13 +500,19 @@ class MtimesDenseDoubleMatrix2D implements
 					final double temp = B[lcol + jcolTimesM1ColumnCount];
 					if (temp != 0.0d) {
 						final int lcolTimesM1RowCount = lcol * m1RowCount;
-						for (int irow = 0; irow < m1RowCount; ++irow) {
-							C[irow + jcolTimesM1RowCount] += A[irow + lcolTimesM1RowCount] * temp;
-						}
+						calcOneColumn(temp, A, C, m1RowCount, jcolTimesM1RowCount,
+								lcolTimesM1RowCount);
 					}
 				}
 			}
 		};
+	}
+
+	private final static void calcOneColumn(final double temp, final double[] A, final double[] C,
+			final int m1RowCount, int index1, int index2) {
+		for (int irow = 0; irow < m1RowCount; ++irow) {
+			C[index1++] += A[index2++] * temp;
+		}
 	}
 
 	private final void calcDoubleArray2DSingleThreaded(final double[][] m1, final double[][] m2,
@@ -687,7 +691,7 @@ class MtimesDenseDoubleMatrix2D implements
 			// do not break this dimension into parallel tasks
 			return jMax / blockStripe + adjust;
 		} else {
-			// assume 2 parallell tasks
+			// assume 2 parallel tasks
 			return Math.max(1, (jMax / blockStripe + adjust) / 2);
 		}
 		// may need something if jMax >>> iMax

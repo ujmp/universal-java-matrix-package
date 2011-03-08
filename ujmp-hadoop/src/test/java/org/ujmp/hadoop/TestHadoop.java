@@ -21,19 +21,17 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.googletranslate;
+package org.ujmp.hadoop;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class TestGoogleTranslate extends TestCase {
+public class TestHadoop extends TestCase {
 
 	@Test
-	public void testGoogleTranslate() throws Exception {
-		String translatedText = GoogleTranslate.translateString("en", "de",
-				"Hello world");
-		assertEquals("Hallo Welt", translatedText);
+	public void notTestYet() {
+		return;
 	}
 
 }

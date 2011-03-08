@@ -1099,7 +1099,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		case LATEX:
 			return "\\begin{turn}{90}" + text + "\\end{turn}";
 		default:
-			return "";
+			return text;
 		}
 	}
 

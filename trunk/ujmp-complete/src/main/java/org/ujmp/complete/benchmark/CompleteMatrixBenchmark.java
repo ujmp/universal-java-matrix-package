@@ -53,6 +53,7 @@ import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.CommandLineUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
@@ -187,6 +188,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public static void main(String[] args) throws Exception {
 		CompleteMatrixBenchmark mb = new CompleteMatrixBenchmark();
 		CommandLineUtil.parse(mb.getConfig(), args);
+		mb.saveSettings();
 		mb.runAll();
 		mb.evaluate();
 	}
@@ -199,6 +201,23 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		getConfig().setReverse(reverse);
 	}
 
+	public void saveSettings() throws Exception {
+		String resultDir = BenchmarkUtil.getResultDir(getConfig());
+		File envFile = new File(resultDir + File.separator + "env.csv");
+		File propFile = new File(resultDir + File.separator + "props.csv");
+		File confFile = new File(resultDir + File.separator + "conf.csv");
+		File versionFile = new File(resultDir + File.separator + "versions.csv");
+		new MatrixSystemEnvironment().exportToFile(FileFormat.CSV, envFile);
+		Matrix props = new MatrixSystemProperties().replaceRegex(Ret.NEW, "\r\n", " ");
+		props = props.replaceRegex(Ret.NEW, "\n", " ");
+		props.exportToFile(FileFormat.CSV, propFile);
+		getConfig().exportToFile(FileFormat.CSV, confFile);
+		Matrix libraries = new MatrixLibraries();
+		System.out.println(libraries);
+		Matrix versions = libraries.selectRows(Ret.NEW, 0, 1).transpose();
+		versions.exportToFile(FileFormat.CSV, versionFile);
+	}
+
 	public void evaluate() throws Exception {
 		System.out.println("Evaluation");
 		System.out.println("==========");
@@ -206,15 +225,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		File dir = new File(BenchmarkUtil.getResultDir(getConfig()));
 		if (!dir.exists()) {
 			throw new MatrixException("no results found");
-		}
-
-		if (!new File(dir, "properties.csv").exists()) {
-			new MatrixSystemProperties().exportToFile(FileFormat.CSV, new File(dir,
-					"properties.csv"));
-		}
-		if (!new File(dir, "environment.csv").exists()) {
-			new MatrixSystemEnvironment().exportToFile(FileFormat.CSV, new File(dir,
-					"environment.csv"));
 		}
 
 		Map<String, List<Matrix>> statistics = new HashMap<String, List<Matrix>>();

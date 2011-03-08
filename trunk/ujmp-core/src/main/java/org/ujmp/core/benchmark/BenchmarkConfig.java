@@ -43,16 +43,17 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 		put("numberOfThreads", UJMPSettings.getNumberOfThreads());
 		put("reverse", false);
-		put("shuffle", false);
+		put("shuffle", true);
 		put("gcMemory", true);
 		put("purgeMemory", true);
 
 		put("burnInRuns", 3);
 		put("runs", 10);
 		put("minTrialCount", 1);
-		put("maxTrialCount", 5);
-		put("maxTime", 10000); // maximal time for one operation
+		put("maxTrialCount", 3);
+		put("maxTime", 60000); // maximal time for one operation
 		put("maxStd", 10); // maximal standard deviation results may vary
+		put("minSize", 10); // maximal size of a matrix
 		put("maxSize", 10000); // maximal size of a matrix
 
 		put("runTimesScalar", true);
@@ -70,13 +71,12 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runQR", false);
 
 		put("runDefaultDenseDoubleMatrix2D", true);
-		put("runArrayDenseDoubleMatrix2D", true);
+		put("runArrayDenseDoubleMatrix2D", false);
 		put("runBlockDenseDoubleMatrix2D", true);
 		put("runJBlasDenseDoubleMatrix2D", true);
 		put("runMTJDenseDoubleMatrix2D", true);
 		put("runOjalgoDenseDoubleMatrix2D", true);
 		put("runOrbitalDenseDoubleMatrix2D", false);
-		put("runOwlpackDenseDoubleMatrix2D", false);
 		put("runJScienceDenseDoubleMatrix2D", false);
 		put("runJSciDenseDoubleMatrix2D", false);
 		put("runJMathArrayDenseDoubleMatrix2D", false);
@@ -254,45 +254,48 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public List<long[]> getSquareSizes() {
 		List<long[]> sizes = new LinkedList<long[]>();
+		int minSize = getMinSize();
 		int maxSize = getMaxSize();
-		sizes.add(new long[] { 2, 2 });
-		if (maxSize >= 3) {
+		if (minSize <= 2 && maxSize >= 2) {
+			sizes.add(new long[] { 2, 2 });
+		}
+		if (minSize <= 3 && maxSize >= 3) {
 			sizes.add(new long[] { 3, 3 });
 		}
-		if (maxSize >= 4) {
+		if (minSize <= 4 && maxSize >= 4) {
 			sizes.add(new long[] { 4, 4 });
 		}
-		if (maxSize >= 5) {
+		if (minSize <= 5 && maxSize >= 5) {
 			sizes.add(new long[] { 5, 5 });
 		}
-		if (maxSize >= 10) {
+		if (minSize <= 10 && maxSize >= 10) {
 			sizes.add(new long[] { 10, 10 });
 		}
-		if (maxSize >= 20) {
+		if (minSize <= 20 && maxSize >= 20) {
 			sizes.add(new long[] { 20, 20 });
 		}
-		if (maxSize >= 50) {
+		if (minSize <= 50 && maxSize >= 50) {
 			sizes.add(new long[] { 50, 50 });
 		}
-		if (maxSize >= 100) {
+		if (minSize <= 100 && maxSize >= 100) {
 			sizes.add(new long[] { 100, 100 });
 		}
-		if (maxSize >= 200) {
+		if (minSize <= 200 && maxSize >= 200) {
 			sizes.add(new long[] { 200, 200 });
 		}
-		if (maxSize >= 500) {
+		if (minSize <= 500 && maxSize >= 500) {
 			sizes.add(new long[] { 500, 500 });
 		}
-		if (maxSize >= 1000) {
+		if (minSize <= 1000 && maxSize >= 1000) {
 			sizes.add(new long[] { 1000, 1000 });
 		}
-		if (maxSize >= 2000) {
+		if (minSize <= 2000 && maxSize >= 2000) {
 			sizes.add(new long[] { 2000, 2000 });
 		}
-		if (maxSize >= 5000) {
+		if (minSize <= 5000 && maxSize >= 5000) {
 			sizes.add(new long[] { 5000, 5000 });
 		}
-		if (maxSize >= 10000) {
+		if (minSize <= 10000 && maxSize >= 10000) {
 			sizes.add(new long[] { 10000, 10000 });
 		}
 		return sizes;
@@ -538,12 +541,20 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		return MathUtil.getInt(get("maxSize"));
 	}
 
+	public int getMinSize() {
+		return MathUtil.getInt(get("minSize"));
+	}
+
 	public void setMaxTime(int maxTime) {
 		put("maxTime", maxTime);
 	}
 
 	public void setMaxSize(int maxSize) {
 		put("maxSize", maxSize);
+	}
+
+	public void setMinSize(int minSize) {
+		put("minSize", minSize);
 	}
 
 	public double getMaxStd() {

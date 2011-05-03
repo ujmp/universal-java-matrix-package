@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -210,5 +211,16 @@ public class IntelligentFileReader extends Reader {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static String load(URL url) throws IOException {
+		URLConnection connection = url.openConnection();
+		connection.setRequestProperty("User-Agent",
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		connection.setUseCaches(false);
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
+		connection.setConnectTimeout(3000);
+		return load(connection.getInputStream());
 	}
 }

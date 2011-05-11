@@ -23,11 +23,9 @@
 
 package org.ujmp.hadoop;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
-public class TestHadoop extends TestCase {
+public class TestHadoop  {
 
 	@Test
 	public void notTestYet() {

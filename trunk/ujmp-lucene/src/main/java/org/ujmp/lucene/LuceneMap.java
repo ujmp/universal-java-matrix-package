@@ -31,6 +31,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,9 +43,11 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.index.IndexWriter.MaxFieldLength;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
@@ -55,6 +58,7 @@ import org.apache.lucene.util.Version;
 import org.ujmp.core.collections.AbstractMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.FileUtil;
 
@@ -90,6 +94,10 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 
 	public LuceneMap() throws IOException {
 		this(null, false);
+	}
+
+	public LuceneMap(String dir) throws IOException {
+		this(new File(dir));
 	}
 
 	public LuceneMap(File dir) throws IOException {
@@ -164,6 +172,32 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 		return null;
 	}
 
+	public synchronized ObjectMatrix2D search(String searchString) {
+		try {
+			MultiFieldQueryParser p = new MultiFieldQueryParser(
+					Version.LUCENE_31, new String[] { VALUESTRING },
+					getAnalyzer());
+			Query query = p.parse(searchString);
+			TopDocs docs = getIndexSearcher().search(query, 100);
+			ObjectMatrix2D result = ObjectMatrix2D.factory.zeros(
+					docs.totalHits, 3);
+			for (int row = 0; row < docs.totalHits; row++) {
+				ScoreDoc match = docs.scoreDocs[row];
+				Document doc = getIndexSearcher().doc(match.doc);
+				result.setAsFloat(match.score, row, 0);
+				result.setAsObject(
+						getObjectFromBytes(doc.getBinaryValue(KEYDATA)), row, 1);
+				result.setAsObject(
+						getObjectFromBytes(doc.getBinaryValue(VALUEDATA)), row,
+						2);
+			}
+			return result;
+		} catch (Exception e) {
+			throw new MatrixException("could not search documents: "
+					+ searchString, e);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private V getObjectFromBytes(byte[] bytes) {
 		try {
@@ -215,10 +249,10 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 			Document doc = new Document();
 			doc.add(new Field(KEYSTRING, getUniqueString(key), Field.Store.YES,
 					Field.Index.NOT_ANALYZED));
-			doc.add(new Field(KEYDATA, getBytes(key), Field.Store.YES));
+			doc.add(new Field(KEYDATA, getBytes(key)));
 			doc.add(new Field(VALUESTRING, getUniqueString(value),
 					Field.Store.YES, Field.Index.NOT_ANALYZED));
-			doc.add(new Field(VALUEDATA, getBytes(value), Field.Store.YES));
+			doc.add(new Field(VALUEDATA, getBytes(value)));
 			getIndexWriter().updateDocument(term, doc);
 
 			// auto flush from time to time
@@ -247,7 +281,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 
 	public Analyzer getAnalyzer() {
 		if (analyzer == null) {
-			analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
+			analyzer = new StandardAnalyzer(Version.LUCENE_31);
 		}
 		return analyzer;
 	}
@@ -305,12 +339,14 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 							IndexWriter.unlock(getDirectory());
 						}
 						indexWriter = new IndexWriter(getDirectory(),
-								getAnalyzer(), MaxFieldLength.UNLIMITED);
+								new IndexWriterConfig(Version.LUCENE_31,
+										getAnalyzer()));
 					}
 				} else {
 					if (!readOnly) {
 						indexWriter = new IndexWriter(getDirectory(),
-								getAnalyzer(), true, MaxFieldLength.UNLIMITED);
+								new IndexWriterConfig(Version.LUCENE_31,
+										getAnalyzer()));
 					}
 				}
 			}
@@ -364,30 +400,30 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable,
 		}
 	}
 
-	// @SuppressWarnings("unchecked")
-	// private void readObject(ObjectInputStream s) throws IOException,
-	// ClassNotFoundException {
-	// s.defaultReadObject();
-	// while (true) {
-	// try {
-	// K k = (K) s.readObject();
-	// V v = (V) s.readObject();
-	// put(k, v);
-	// } catch (OptionalDataException e) {
-	// return;
-	// }
-	// }
-	// }
-	//
-	// private void writeObject(ObjectOutputStream s) throws IOException,
-	// MatrixException {
-	// s.defaultWriteObject();
-	// for (Object k : keySet()) {
-	// Object v = get(k);
-	// s.writeObject(k);
-	// s.writeObject(v);
-	// }
-	// }
+	@SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream s) throws IOException,
+			ClassNotFoundException {
+		s.defaultReadObject();
+		while (true) {
+			try {
+				K k = (K) s.readObject();
+				V v = (V) s.readObject();
+				put(k, v);
+			} catch (OptionalDataException e) {
+				return;
+			}
+		}
+	}
+
+	private void writeObject(ObjectOutputStream s) throws IOException,
+			MatrixException {
+		s.defaultWriteObject();
+		for (Object k : keySet()) {
+			Object v = get(k);
+			s.writeObject(k);
+			s.writeObject(v);
+		}
+	}
 
 	public synchronized void erase() throws IOException {
 		close();

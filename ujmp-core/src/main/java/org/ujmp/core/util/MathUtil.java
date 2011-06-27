@@ -536,8 +536,8 @@ public abstract class MathUtil {
 		} else if ((o1 instanceof Number) || (o2 instanceof Number)) {
 			return getDouble(o1) == getDouble(o2);
 		} else if ((o1 instanceof String) || (o2 instanceof String)) {
-			return UJMPFormat.getSingleLineInstance().format(o1).equals(
-					UJMPFormat.getSingleLineInstance().format(o2));
+			return UJMPFormat.getSingleLineInstance().format(o1)
+					.equals(UJMPFormat.getSingleLineInstance().format(o2));
 		} else if ((o1 instanceof Boolean) || (o2 instanceof Boolean)) {
 			return ((Boolean) o1).equals(o2);
 		} else {
@@ -636,9 +636,16 @@ public abstract class MathUtil {
 			return ((Matrix) o).booleanValue();
 		}
 		if (o instanceof String) {
-			try {
-				return Boolean.parseBoolean(((String) o));
-			} catch (Exception e) {
+			String s = ((String) o).toLowerCase();
+			if (s.equals("true")) {
+				return true;
+			} else if (s.equals("false")) {
+				return false;
+			} else {
+				try {
+					return Double.parseDouble(s) != 0.0;
+				} catch (Exception e) {
+				}
 			}
 		}
 		return false;

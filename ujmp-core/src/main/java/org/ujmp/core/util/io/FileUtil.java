@@ -26,7 +26,9 @@ package org.ujmp.core.util.io;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -134,7 +136,39 @@ public class FileUtil {
 	}
 
 	public static boolean move(File source, File target) {
+		VerifyUtil.assertNotNull(source, "source file is null");
+		VerifyUtil.assertNotNull(target, "target file is null");
+		VerifyUtil.assertTrue(source.canRead(), "cannot read source file");
+		VerifyUtil.assertTrue(source.exists(), "source file does not exist");
+		VerifyUtil.assertFalse(target.exists(), "target file exists");
+
 		return source.renameTo(target);
+	}
+
+	public static void copyFile(File source, File target) throws IOException {
+		VerifyUtil.assertNotNull(source, "source file is null");
+		VerifyUtil.assertNotNull(target, "target file is null");
+		VerifyUtil.assertTrue(source.canRead(), "cannot read source file");
+		VerifyUtil.assertTrue(source.exists(), "source file does not exist");
+		VerifyUtil.assertFalse(target.exists(), "target file exists");
+
+		final FileChannel inChannel = new FileInputStream(source).getChannel();
+		final FileChannel outChannel = new FileOutputStream(target).getChannel();
+		final long maxCount = 67076096;
+		final long size = inChannel.size();
+		long position = 0;
+		try {
+			while (position < size) {
+				position += inChannel.transferTo(position, maxCount, outChannel);
+			}
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			if (inChannel != null)
+				inChannel.close();
+			if (outChannel != null)
+				outChannel.close();
+		}
 	}
 
 	public static String md5Sum(File file) throws Exception {

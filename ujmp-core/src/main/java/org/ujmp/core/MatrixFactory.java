@@ -884,8 +884,8 @@ public abstract class MatrixFactory {
 		MatrixFactory.matrixMapper = matrixMapper;
 	}
 
-	public static Matrix repmat(Matrix matrix, long... count) {
-		return new Repmat(matrix, count).calc(Ret.LINK);
+	public static Matrix repmat(Ret returnType, Matrix matrix, long... count) {
+		return new Repmat(matrix, count).calc(returnType);
 	}
 
 	public static Matrix welcomeMatrix() {

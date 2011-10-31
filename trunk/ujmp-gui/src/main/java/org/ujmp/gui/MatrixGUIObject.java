@@ -144,7 +144,7 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 	}
 
 	public final void removeTableModelListener(TableModelListener l) {
-		getListenerList().add(TableModelListener.class, l);
+		getListenerList().remove(TableModelListener.class, l);
 	}
 
 	public final String getToolTipText() {
@@ -190,12 +190,9 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
 					s.append("<th>" + matrix.getRowLabel(row) + "</th>");
 					for (int col = 0; col < columnCount
 							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
-						s
-								.append("<td align=right>"
-										+ UJMPFormat.getSingleLineInstance()
-												.format(
-														matrix.getAsObject(row,
-																col)) + "</td>");
+						s.append("<td align=right>"
+								+ UJMPFormat.getSingleLineInstance().format(
+										matrix.getAsObject(row, col)) + "</td>");
 					}
 					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
 						s.append("<td align=right>...</td>");

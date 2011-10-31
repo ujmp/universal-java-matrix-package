@@ -24,6 +24,7 @@
 package org.ujmp.core;
 
 import org.ujmp.core.annotation.HasAnnotation;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideMatrixCalculation;
@@ -45,7 +46,6 @@ import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.TimesScalarCalculation;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.calculation.TransposeCalculation;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;

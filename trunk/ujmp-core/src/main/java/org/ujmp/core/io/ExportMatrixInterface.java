@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
+import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -54,5 +55,10 @@ public interface ExportMatrixInterface {
 
 	public String exportToString(FileFormat format, Object... parameters) throws MatrixException,
 			IOException;
+
+	public void exportToJDBC(String url, String tablename, String username, String password);
+
+	public void exportToJDBC(DB type, String host, int port, String database, String tablename,
+			String username, String password);
 
 }

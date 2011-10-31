@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.FileUtil;
@@ -114,6 +115,31 @@ public abstract class ExportMatrix {
 			m.invoke(null, writer, matrix, parameters);
 		} catch (Exception e) {
 			throw new MatrixException("writer format not supported: " + format, e);
+		}
+	}
+
+	public static void toJDBC(Matrix matrix, String url, String tablename, String username,
+			String password) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jdbc.ExportMatrixJDBC");
+			Method m = c.getMethod("toDatabase", new Class<?>[] { Matrix.class, String.class,
+					String.class, String.class, String.class });
+			m.invoke(null, matrix, url, tablename, username, password);
+		} catch (Exception e) {
+			throw new MatrixException("jdbc not available", e);
+		}
+	}
+
+	public static void toJDBC(Matrix matrix, DB type, String host, int port, String database,
+			String tablename, String username, String password) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jdbc.ExportMatrixJDBC");
+			Method m = c.getMethod("toDatabase", new Class<?>[] { Matrix.class, DB.class,
+					String.class, Integer.TYPE, String.class, String.class, String.class,
+					String.class });
+			m.invoke(null, matrix, type, host, port, database, tablename, username, password);
+		} catch (Exception e) {
+			throw new MatrixException("jdbc not available", e);
 		}
 	}
 }

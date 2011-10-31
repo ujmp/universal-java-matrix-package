@@ -31,10 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ojalgo.concurrent.ProcessorCount;
-import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
-import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
-import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
@@ -56,25 +52,6 @@ import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
-import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jama.JamaDenseDoubleMatrix2D;
-import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jblas.benchmark.JBlasDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jmatrices.benchmark.JMatricesDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jsci.benchmark.JSciDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jscience.benchmark.JScienceDenseDoubleMatrix2DBenchmark;
-import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
-import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
-import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
-import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
-import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
-import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
-import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
-
-import edu.emory.mathcs.utils.ConcurrencyUtils;
 
 public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
@@ -301,7 +278,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 						jamaRow = allmeans.getRowForLabel(DefaultDenseDoubleMatrix2D.class
 								.getSimpleName());
 					}
-					Matrix valueCount = Matrix.factory.zeros(1, allmeans.getColumnCount());
+					Matrix valueCount = MatrixFactory.zeros(1, allmeans.getColumnCount());
 					for (int c = 0; c < valueCount.getColumnCount(); c++) {
 						int s = extractSize(allmeans.getColumnLabel(c));
 						if (allmeans.getLabel().contains("tall")) {
@@ -394,8 +371,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		}
 		Matrix firstPart = MatrixFactory.horCat(MatrixFactory.linkToValue(matrix.getLabel()),
 				matrix.getAnnotation().getDimensionMatrix(Matrix.ROW));
-		Matrix lastPart = MatrixFactory.horCat(matrix.getAnnotation().getDimensionMatrix(
-				Matrix.COLUMN), matrix);
+		Matrix lastPart = MatrixFactory.horCat(
+				matrix.getAnnotation().getDimensionMatrix(Matrix.COLUMN), matrix);
 		Matrix complete = MatrixFactory.vertCat(firstPart, lastPart);
 		try {
 			complete.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())

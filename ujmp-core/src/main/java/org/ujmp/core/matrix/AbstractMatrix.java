@@ -139,6 +139,7 @@ import org.ujmp.core.doublematrix.calculation.general.statistical.Prod;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Sum;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Var;
+import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -150,8 +151,8 @@ import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
-import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
+import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
 import org.ujmp.core.io.ExportMatrix;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
@@ -1061,8 +1062,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Matrix transpose() throws MatrixException {
 		Matrix result = null;
 		try {
-			result = this.getClass().getConstructor(long[].class).newInstance(
-					Coordinates.transpose(getSize()));
+			result = this.getClass().getConstructor(long[].class)
+					.newInstance(Coordinates.transpose(getSize()));
 		} catch (Exception e) {
 			result = Matrix.factory.zeros(Coordinates.transpose(getSize()));
 		}
@@ -1332,8 +1333,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		double sum = 0.0;
 		if (ignoreNaN) {
 			for (long[] c : allCoordinates()) {
-				sum += MathUtil.ignoreNaN(Math
-						.pow(Math.abs((getAsDouble(c)) - m.getAsDouble(c)), p));
+				sum += MathUtil
+						.ignoreNaN(Math.pow(Math.abs((getAsDouble(c)) - m.getAsDouble(c)), p));
 			}
 		} else {
 			for (long[] c : allCoordinates()) {
@@ -1536,6 +1537,16 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public final void exportToFile(String file, Object... parameters) throws MatrixException,
 			IOException {
 		ExportMatrix.toFile(file, this, parameters);
+	}
+
+	public final void exportToJDBC(String url, String tablename, String username, String password)
+			throws MatrixException {
+		ExportMatrix.toJDBC(this, url, tablename, username, password);
+	}
+
+	public final void exportToJDBC(DB type, String host, int port, String database,
+			String tablename, String username, String password) throws MatrixException {
+		ExportMatrix.toJDBC(this, type, host, port, database, tablename, username, password);
 	}
 
 	public final void exportToFile(FileFormat format, String filename, Object... parameters)

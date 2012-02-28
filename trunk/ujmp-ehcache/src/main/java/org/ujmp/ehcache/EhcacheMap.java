@@ -40,7 +40,7 @@ import net.sf.ehcache.config.DiskStoreConfiguration;
 import net.sf.ehcache.event.RegisteredEventListeners;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
-import org.ujmp.core.collections.AbstractMap;
+import org.ujmp.core.collections.map.AbstractMap;
 import org.ujmp.core.interfaces.Erasable;
 
 public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,

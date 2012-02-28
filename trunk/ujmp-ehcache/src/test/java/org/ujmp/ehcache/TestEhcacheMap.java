@@ -26,7 +26,7 @@ package org.ujmp.ehcache;
 import java.util.Map;
 
 import org.junit.Test;
-import org.ujmp.core.collections.AbstractMapTest;
+import org.ujmp.core.collections.AbstractStringMapTest;
 
 // TODO: does not work?
 public class TestEhcacheMap { // extends AbstractMapTest {

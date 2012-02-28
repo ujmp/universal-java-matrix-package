@@ -12,7 +12,7 @@ import javax.mail.Folder;
 import javax.mail.MessagingException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.SoftHashMap;
+import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
 

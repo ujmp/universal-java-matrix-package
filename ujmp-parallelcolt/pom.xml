@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp-parallelcolt</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-parallelcolt</name>
@@ -22,7 +21,7 @@
 			<groupId>parallelcolt</groupId>
 			<artifactId>parallelcolt</artifactId>
 		</dependency>
-	 	<dependency>
+		<dependency>
 			<groupId>csparsej</groupId>
 			<artifactId>csparsej</artifactId>
 		</dependency>
@@ -42,7 +41,7 @@
 			<groupId>arpack-combo</groupId>
 			<artifactId>arpack-combo</artifactId>
 		</dependency>
- 
+
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>

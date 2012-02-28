@@ -25,9 +25,9 @@ package org.ujmp.lucene;
 
 import java.util.Map;
 
-import org.ujmp.core.collections.AbstractMapTest;
+import org.ujmp.core.collections.AbstractStringMapTest;
 
-public class TestLuceneMap extends AbstractMapTest {
+public class TestLuceneMap extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
 		return new LuceneMap<String, String>();

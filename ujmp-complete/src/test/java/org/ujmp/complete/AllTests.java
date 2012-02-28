@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { org.ujmp.complete.TestPlugins.class,
+@Suite.SuiteClasses({ org.ujmp.complete.TestPlugins.class,
 		org.ujmp.complete.TestCompareMatrices.class, org.ujmp.core.AllTests.class,
 		org.ujmp.gui.AllTests.class, org.ujmp.jbpcafill.AllTests.class,
 		org.ujmp.hadoop.AllTests.class, org.ujmp.colt.AllTests.class,
@@ -44,8 +44,7 @@ import org.junit.runners.Suite;
 		org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
 		org.ujmp.mantissa.AllTests.class, org.ujmp.mtj.AllTests.class,
 		org.ujmp.ojalgo.AllTests.class, org.ujmp.orbital.AllTests.class,
-		 org.ujmp.pdfbox.AllTests.class,
-		org.ujmp.vecmath.AllTests.class, org.ujmp.ejml.AllTests.class,
-		org.ujmp.googletranslate.AllTests.class, org.ujmp.sst.AllTests.class })
+		org.ujmp.pdfbox.AllTests.class, org.ujmp.vecmath.AllTests.class,
+		org.ujmp.ejml.AllTests.class, org.ujmp.sst.AllTests.class })
 public class AllTests {
 }

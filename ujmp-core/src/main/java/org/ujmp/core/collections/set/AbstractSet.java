@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,16 +21,40 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.set;
 
-import java.util.Map;
+import java.io.Serializable;
+import java.util.Collection;
 
-import org.ujmp.core.collections.map.TextMap;
+public abstract class AbstractSet<E> extends java.util.AbstractSet<E> implements Serializable {
+	private static final long serialVersionUID = -5947421458148665094L;
 
-public class TestTextMap extends AbstractStringMapTest {
+	public abstract boolean add(E value);
 
-	public Map<String, String> createMap() throws Exception {
-		return new TextMap();
+	public abstract boolean remove(Object o);
+
+	public abstract void clear();
+
+	public abstract boolean contains(Object o);
+
+	public boolean addAll(Collection<? extends E> c) {
+		boolean modified = false;
+		for (E e : c) {
+			if (add(e)) {
+				modified = true;
+			}
+		}
+		return modified;
+	}
+
+	public boolean removeAll(Collection<?> c) {
+		boolean modified = false;
+		for (Object e : c) {
+			if (remove(e)) {
+				modified = true;
+			}
+		}
+		return modified;
 	}
 
 }

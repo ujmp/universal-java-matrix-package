@@ -25,7 +25,9 @@ package org.ujmp.core.collections;
 
 import java.util.Map;
 
-public class TestSerializedObjectMap extends AbstractMapTest {
+import org.ujmp.core.collections.map.SerializedObjectMap;
+
+public class TestSerializedObjectMap extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
 		return new SerializedObjectMap<String, String>();

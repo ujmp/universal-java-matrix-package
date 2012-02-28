@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.collections.LazyMap;
+import org.ujmp.core.collections.map.LazyMap;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;

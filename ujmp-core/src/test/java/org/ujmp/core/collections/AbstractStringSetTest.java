@@ -33,7 +33,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.ujmp.core.util.SerializationUtil;
 
-public abstract class AbstractSetTest {
+public abstract class AbstractStringSetTest {
 
 	public abstract Set<String> createSet() throws Exception;
 
@@ -65,6 +65,9 @@ public abstract class AbstractSetTest {
 		m.add("a");
 		assertTrue(getLabel(), m.contains("a"));
 		assertFalse(getLabel(), m.contains("b"));
+		m.add("b");
+		assertTrue(getLabel(), m.contains("a"));
+		assertTrue(getLabel(), m.contains("b"));
 		m.add("b");
 		assertTrue(getLabel(), m.contains("a"));
 		assertTrue(getLabel(), m.contains("b"));

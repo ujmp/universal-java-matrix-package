@@ -26,6 +26,8 @@ package org.ujmp.core.collections;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.ujmp.core.collections.map.SoftHashMap;
+
 public class SoftHashMapList<K, V> extends SoftHashMap<K, V> {
 	private static final long serialVersionUID = 6061017330977330118L;
 

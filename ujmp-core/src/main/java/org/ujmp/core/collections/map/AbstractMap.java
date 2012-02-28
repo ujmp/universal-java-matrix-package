@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.map;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -61,7 +62,6 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 			}
 		}
 		return false;
-
 	}
 
 	public Collection<V> values() {
@@ -162,6 +162,36 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 			s.writeObject(k);
 			s.writeObject(v);
 		}
+	}
+
+	public String toString() {
+		if (isEmpty()) {
+			return "{}";
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append('{');
+		Set<K> keys = keySet();
+		int i = 0;
+		for (K k : keys) {
+			V v = get(k);
+			sb.append(k);
+			sb.append('=');
+			sb.append(v);
+			if (i++ < keys.size() - 1) {
+				sb.append(',').append(' ');
+			}
+		}
+
+		return sb.append('}').toString();
+	}
+
+	public Map<K, V> get(K... keys) {
+		Map<K, V> map = new HashMap<K, V>();
+		for (K key : keys) {
+			map.put(key, get(key));
+		}
+		return map;
 	}
 
 	public abstract void clear();

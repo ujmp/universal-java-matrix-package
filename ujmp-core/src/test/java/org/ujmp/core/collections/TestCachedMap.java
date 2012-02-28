@@ -26,7 +26,9 @@ package org.ujmp.core.collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestCachedMap extends AbstractMapTest {
+import org.ujmp.core.collections.map.CachedMap;
+
+public class TestCachedMap extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
 		return new CachedMap<String, String>(new HashMap<String, String>());

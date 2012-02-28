@@ -25,7 +25,7 @@ package org.ujmp.core.collections;
 
 import java.util.Map;
 
-public class TestSoftHashMapList extends AbstractMapTest {
+public class TestSoftHashMapList extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
 		return new SoftHashMapList<String, String>();

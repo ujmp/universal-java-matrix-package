@@ -25,7 +25,9 @@ package org.ujmp.core.collections;
 
 import java.util.Map;
 
-public class TestLazyMap extends AbstractMapTest {
+import org.ujmp.core.collections.map.LazyMap;
+
+public class TestLazyMap extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
 		return new LazyMap<String, String>();

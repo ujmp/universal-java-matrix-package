@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.map;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

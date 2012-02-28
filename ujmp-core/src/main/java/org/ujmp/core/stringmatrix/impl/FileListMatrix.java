@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.core.collections.AbstractMapMatrixList;
+import org.ujmp.core.collections.list.AbstractMapMatrixList;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.FileMatrix;

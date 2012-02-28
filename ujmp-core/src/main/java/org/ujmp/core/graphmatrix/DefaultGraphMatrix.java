@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.collections.ArrayIndexList;
+import org.ujmp.core.collections.list.ArrayIndexList;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;

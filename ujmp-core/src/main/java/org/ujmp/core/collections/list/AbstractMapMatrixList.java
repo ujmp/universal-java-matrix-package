@@ -21,10 +21,11 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.list;
 
 import java.util.List;
 
+import org.ujmp.core.collections.SortedListSet;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.mapmatrix.MapMatrix;
 

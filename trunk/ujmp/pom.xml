@@ -7,6 +7,7 @@
 	<artifactId>ujmp</artifactId>
 	<version>0.2.6</version>
 	<packaging>pom</packaging>
+	<description>The Universal Java Matrix Package (UJMP) is a library for sparse and dense matrixes.</description>
 	<url>http://www.ujmp.org/</url>
 
 	<developers>
@@ -18,6 +19,12 @@
 		</developer>
 	</developers>
 
+	<licenses>
+		<license>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0</url>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,11 +42,11 @@
 				</includes>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -49,7 +56,6 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -62,7 +68,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -107,7 +112,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.2</version>
+				<version>4.10</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -155,7 +160,7 @@
 			<dependency>
 				<groupId>com.googlecode</groupId>
 				<artifactId>google-api-translate-java</artifactId>
-				<version>0.92</version>
+				<version>1.6.0-beta</version>
 			</dependency>
 			<dependency>
 				<groupId>orbital</groupId>
@@ -280,25 +285,25 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.17</version>
+				<version>5.1.18</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>8.4-701.jdbc4</version>
+				<version>9.1-901.jdbc4</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.derby</groupId>
 				<artifactId>derby</artifactId>
-				<version>10.6.1.0</version>
+				<version>10.8.2.2</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>hsqldb</groupId>
+				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>1.8.1.2</version>
+				<version>2.2.8</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -335,12 +340,6 @@
 				<groupId>sst</groupId>
 				<artifactId>sst</artifactId>
 				<version>1.11</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>owlpack</groupId>
-				<artifactId>owlpack</artifactId>
-				<version>1998</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -400,43 +399,43 @@
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-core</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-queries</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-spellchecker</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-highlighter</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-wordnet</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-wikipedia</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-analyzers</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -461,7 +460,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<inherited>true</inherited>
-				<version>2.7</version>
 				<configuration>
 					<outputDirectory>../ujmp-complete/target/docs/${project.version}/${project.name}</outputDirectory>
 					<reportOutputDirectory>../ujmp-complete/target/docs/${project.version}/${project.name}</reportOutputDirectory>
@@ -498,7 +496,6 @@
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-mtj/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-ojalgo/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-orbital/apidocs</link>
-						<link>http://www.ujmp.org/docs/${project.version}/ujmp-owlpack/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-parallelcolt/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-pdfbox/apidocs</link>
 						<link>http://www.ujmp.org/docs/${project.version}/ujmp-sst/apidocs</link>
@@ -511,9 +508,9 @@
 
 	<repositories>
 		<repository>
-			<id>ujmp-repository</id>
-			<name>UJMP Repository</name>
-			<url>file:/~/.m2/repository</url>
+			<id>netcologne.de</id>
+			<name>netcologne Mirror of http://repo1.maven.org/maven2</name>
+			<url>http://mirror.netcologne.de/maven2</url>
 		</repository>
 		<repository>
 			<id>ibiblio.org</id>
@@ -524,6 +521,11 @@
 			<id>maven2-repository.dev.java.net</id>
 			<name>Java.net Repository for Maven</name>
 			<url>http://download.java.net/maven/2/</url>
+		</repository>
+		<repository>
+			<id>repository.jboss.org.maven2</id>
+			<name>JBoss Repository for Maven</name>
+			<url>http://repository.jboss.org/maven2/</url>
 		</repository>
 		<repository>
 			<id>java-matrix</id>

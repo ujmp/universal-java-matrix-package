@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jdbc;
+package org.ujmp.jdbc.matrix;
 
 import java.io.Closeable;
 import java.io.File;
@@ -39,8 +39,7 @@ import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 
-public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
-		implements Closeable, Erasable {
+public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implements Closeable, Erasable {
 	private static final long serialVersionUID = -5801269687893136766L;
 
 	private boolean useExtendedSQL = false;
@@ -69,12 +68,9 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	private final long[] size;
 
-	public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException,
-			IOException, SQLException {
-		this(size, "jdbc:hsqldb:"
-				+ File.createTempFile("hsqldbtemp", "").getAbsolutePath()
-				+ ";shutdown=true", "SA", "", "matrixTable", "valueColumn",
-				createColumnNames(size));
+	public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException, IOException, SQLException {
+		this(size, "jdbc:hsqldb:" + File.createTempFile("hsqldbtemp", "").getAbsolutePath() + ";shutdown=true", "SA",
+				"", "matrixTable", "valueColumn", createColumnNames(size));
 	}
 
 	private static String[] createColumnNames(long... size) {
@@ -85,10 +81,8 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		return cols;
 	}
 
-	public JDBCSparseObjectMatrix(long[] size, String url, String username,
-			String password, String tableName, String columnForValue,
-			String... columnsForCoordinates) throws ClassNotFoundException,
-			SQLException {
+	public JDBCSparseObjectMatrix(long[] size, String url, String username, String password, String tableName,
+			String columnForValue, String... columnsForCoordinates) throws ClassNotFoundException, SQLException {
 		this.url = url;
 		this.size = size;
 		this.username = username;
@@ -110,8 +104,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		createTableIfNotExists();
 	}
 
-	public JDBCSparseObjectMatrix(long[] size, Connection connection,
-			String tableName, String columnForValue,
+	public JDBCSparseObjectMatrix(long[] size, Connection connection, String tableName, String columnForValue,
 			String... columnsForCoordinates) throws SQLException {
 		this.size = size;
 		this.connection = connection;
@@ -123,8 +116,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 		createTableIfNotExists();
 	}
 
-	public JDBCSparseObjectMatrix(Matrix source) throws ClassNotFoundException,
-			IOException, SQLException {
+	public JDBCSparseObjectMatrix(Matrix source) throws ClassNotFoundException, IOException, SQLException {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsObject(source.getAsObject(c), c);
@@ -217,8 +209,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 				s.append("=?");
 			}
 
-			insertEntryStatement = getConnection().prepareStatement(
-					s.toString());
+			insertEntryStatement = getConnection().prepareStatement(s.toString());
 		}
 		return insertEntryStatement;
 	}
@@ -236,8 +227,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 					s.append(" and ");
 				}
 			}
-			deleteEntryStatement = getConnection().prepareStatement(
-					s.toString());
+			deleteEntryStatement = getConnection().prepareStatement(s.toString());
 		}
 		return deleteEntryStatement;
 	}
@@ -312,8 +302,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix
 
 	public synchronized Connection getConnection() throws SQLException {
 		if (connection == null || connection.isClosed()) {
-			connection = DriverManager.getConnection(getUrl(), getUsername(),
-					getPassword());
+			connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
 			// DatabaseMetaData dbm = connection.getMetaData();
 			// dbm = null;
 			// ResultSet rs = dbm.getTables(null, null, "%", null);

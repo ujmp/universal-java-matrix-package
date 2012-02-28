@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jdbc;
+package org.ujmp.jdbc.matrix;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ujmp.core.collections.SoftHashMap;
+import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 

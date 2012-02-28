@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp-complete</artifactId>
 	<packaging>pom</packaging>
 	<name>ujmp-complete</name>
@@ -12,7 +11,6 @@
 		<version>0.2.6</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
-
 
 	<dependencies>
 		<dependency>
@@ -45,13 +43,6 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-ehcache</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-googletranslate</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -237,7 +228,7 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -322,14 +313,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-googletranslate</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-hadoop</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -527,7 +510,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -569,7 +552,6 @@
 		<module>../ujmp-commonsmath</module>
 		<module>../ujmp-ehcache</module>
 		<module>../ujmp-ejml</module>
-		<module>../ujmp-googletranslate</module>
 		<module>../ujmp-hadoop</module>
 		<module>../ujmp-itext</module>
 		<module>../ujmp-jackcess</module>
@@ -594,7 +576,7 @@
 		<module>../ujmp-mantissa</module>
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-ojalgo</module>
-		<module>../ujmp-orbital</module>		
+		<module>../ujmp-orbital</module>
 		<module>../ujmp-parallelcolt</module>
 		<module>../ujmp-pdfbox</module>
 		<module>../ujmp-sst</module>

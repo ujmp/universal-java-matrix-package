@@ -33,7 +33,7 @@ import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.impl.SerializedSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.ehcache.EhcacheSparseObjectMatrix;
-import org.ujmp.jdbc.JDBCSparseObjectMatrix;
+import org.ujmp.jdbc.matrix.JDBCSparseObjectMatrix;
 import org.ujmp.lucene.LuceneSparseObjectMatrix;
 
 public class VeryLargeMatrixBenchmark {

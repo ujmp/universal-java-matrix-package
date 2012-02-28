@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.SoftHashMap;
+import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;

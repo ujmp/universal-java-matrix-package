@@ -21,12 +21,13 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.map;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
 
 public class LazyMap<K, V> extends AbstractMap<K, V> {
 	private static final long serialVersionUID = -5970508001189550492L;

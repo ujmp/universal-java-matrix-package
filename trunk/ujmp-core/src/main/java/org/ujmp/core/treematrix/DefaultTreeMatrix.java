@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ujmp.core.collections.ArrayIndexList;
+import org.ujmp.core.collections.list.ArrayIndexList;
 
 public class DefaultTreeMatrix extends AbstractTreeMatrix {
 	private static final long serialVersionUID = -6752285310555819432L;

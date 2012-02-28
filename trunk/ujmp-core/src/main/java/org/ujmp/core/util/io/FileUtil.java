@@ -64,18 +64,20 @@ public class FileUtil {
 	}
 
 	public static boolean deleteRecursive(File path) {
-		if (path != null && path.exists()) {
+		if (path != null && path.exists() && path.isDirectory()) {
 			File[] files = path.listFiles();
 			for (File f : files) {
 				if (f.isDirectory()) {
 					deleteRecursive(f);
 				} else {
 					f.delete();
+
 				}
 			}
 		}
 		if (path != null) {
-			return path.delete();
+			boolean successful = path.delete();
+			return successful;
 		} else {
 			return false;
 		}

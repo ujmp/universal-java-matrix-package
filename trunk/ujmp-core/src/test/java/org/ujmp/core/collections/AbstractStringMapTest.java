@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 
-public abstract class AbstractMapTest {
+public abstract class AbstractStringMapTest {
 
 	public abstract Map<String, String> createMap() throws Exception;
 

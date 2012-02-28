@@ -25,6 +25,8 @@ package org.ujmp.core.collections;
 
 import java.util.List;
 
+import org.ujmp.core.collections.list.ArrayIndexList;
+
 public class TestArrayIndexList extends AbstractListTest {
 
 	public List<String> createList() throws Exception {

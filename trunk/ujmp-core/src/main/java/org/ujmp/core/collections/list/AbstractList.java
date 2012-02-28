@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.list;
 
 import java.io.Serializable;
 

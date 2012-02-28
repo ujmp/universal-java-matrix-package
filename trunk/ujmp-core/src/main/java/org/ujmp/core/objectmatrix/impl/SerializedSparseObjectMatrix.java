@@ -28,7 +28,7 @@ import java.io.IOException;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.collections.SerializedObjectMap;
+import org.ujmp.core.collections.map.SerializedObjectMap;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 

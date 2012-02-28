@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.collections;
+package org.ujmp.core.collections.set;
 
 import java.util.BitSet;
 import java.util.Collection;
@@ -30,9 +30,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 
-public class BitSetSet implements Set<Integer>, SortedSet<Integer> {
+public class BitSetSet extends AbstractSet<Integer> implements Set<Integer>, SortedSet<Integer> {
+	private static final long serialVersionUID = 5913403371905860375L;
 
-	BitSet bitset = new BitSet();
+	private final BitSet bitset = new BitSet();
 
 	public BitSetSet() {
 	}
@@ -46,12 +47,8 @@ public class BitSetSet implements Set<Integer>, SortedSet<Integer> {
 		return true;
 	}
 
-	public void set(int start, int end) {
+	public void addRange(int start, int end) {
 		bitset.set(start, end);
-	}
-
-	public void clear(int index) {
-		bitset.clear(index);
 	}
 
 	public boolean addAll(Collection<? extends Integer> c) {

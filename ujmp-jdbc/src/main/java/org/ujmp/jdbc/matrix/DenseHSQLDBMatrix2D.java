@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,21 +21,21 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jdbc;
+package org.ujmp.jdbc.matrix;
 
-public class DensePostgreSQLMatrix2D extends AbstractDenseJDBCMatrix2D {
-	private static final long serialVersionUID = -3996486220109980402L;
+public class DenseHSQLDBMatrix2D extends AbstractDenseJDBCMatrix2D {
+	private static final long serialVersionUID = -3053272437622363485L;
 
-	public DensePostgreSQLMatrix2D(String url, String sqlStatement,
+	public DenseHSQLDBMatrix2D(String url, String sqlStatement,
 			String username, String password) throws ClassNotFoundException {
 		super(url, sqlStatement, username, password);
-		Class.forName("org.postgresql.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 	}
 
-	public DensePostgreSQLMatrix2D(String host, int port, String databasename,
+	public DenseHSQLDBMatrix2D(String host, int port, String databasename,
 			String sqlStatement, String username, String password)
 			throws ClassNotFoundException {
-		this("jdbc:postgresql://" + host + ":" + port + "/" + databasename,
+		this("jdbc:hsqldb://" + host + ":" + port + "/" + databasename,
 				sqlStatement, username, password);
 	}
 

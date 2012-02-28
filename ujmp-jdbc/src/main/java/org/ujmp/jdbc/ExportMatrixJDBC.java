@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,9 +35,8 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ExportMatrixJDBC {
 
-	public static void toDatabase(Matrix matrix, String url, String tablename,
-			String username, String password) throws ClassNotFoundException,
-			SQLException {
+	public static void toDatabase(Matrix matrix, String url, String tablename, String username, String password)
+			throws ClassNotFoundException, SQLException {
 		if (url.startsWith("jdbc:mysql://")) {
 			Class.forName("com.mysql.jdbc.Driver");
 		} else if (url.startsWith("jdbc:postgresql://")) {
@@ -46,8 +45,7 @@ public abstract class ExportMatrixJDBC {
 			throw new MatrixException("Database format not supported: " + url);
 		}
 
-		Connection connection = DriverManager.getConnection(url, username,
-				password);
+		Connection connection = DriverManager.getConnection(url, username, password);
 
 		Statement statement = connection.createStatement();
 
@@ -105,13 +103,11 @@ public abstract class ExportMatrixJDBC {
 		return columnName;
 	}
 
-	public static void toDatabase(Matrix matrix, DB type, String host,
-			int port, String databasename, String tablename, String username,
-			String password) throws ClassNotFoundException, SQLException {
+	public static void toDatabase(Matrix matrix, DB type, String host, int port, String databasename, String tablename,
+			String username, String password) throws ClassNotFoundException, SQLException {
 		switch (type) {
 		case MySQL:
-			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/"
-					+ databasename, tablename, username, password);
+			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/" + databasename, tablename, username, password);
 			break;
 		default:
 			throw new MatrixException("not supported: " + type);

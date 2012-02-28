@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2012 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -37,8 +37,8 @@ import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
 public class ImportMatrixJDBC {
 
-	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement,
-			String username, String password) throws Exception {
+	public static ObjectMatrix2D fromDatabase(String url, String sqlStatement, String username, String password)
+			throws Exception {
 		if (url.startsWith("jdbc:mysql://")) {
 			Class.forName("com.mysql.jdbc.Driver");
 		} else if (url.startsWith("jdbc:postgresql://")) {
@@ -47,8 +47,7 @@ public class ImportMatrixJDBC {
 			throw new MatrixException("Database format not supported: " + url);
 		}
 
-		Connection connection = DriverManager.getConnection(url, username,
-				password);
+		Connection connection = DriverManager.getConnection(url, username, password);
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery(sqlStatement);
 		ResultSetMetaData rsMetaData = resultSet.getMetaData();
@@ -56,8 +55,7 @@ public class ImportMatrixJDBC {
 		resultSet.last();
 		long rowCount = resultSet.getRow();
 		resultSet.first();
-		ObjectMatrix2D m = (ObjectMatrix2D) MatrixFactory.zeros(
-				ValueType.OBJECT, rowCount, columnCount);
+		ObjectMatrix2D m = (ObjectMatrix2D) MatrixFactory.zeros(ValueType.OBJECT, rowCount, columnCount);
 
 		for (int c = 0; c < columnCount; c++) {
 			m.setColumnLabel(c, rsMetaData.getColumnLabel(c + 1));
@@ -76,13 +74,12 @@ public class ImportMatrixJDBC {
 		return m;
 	}
 
-	public static ObjectMatrix2D fromDatabase(DB type, String host, int port,
-			String databasename, String sqlStatement, String username,
-			String password) throws Exception {
+	public static ObjectMatrix2D fromDatabase(DB type, String host, int port, String databasename, String sqlStatement,
+			String username, String password) throws Exception {
 		switch (type) {
 		case MySQL:
-			return fromDatabase("jdbc:mysql://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return fromDatabase("jdbc:mysql://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		default:
 			throw new MatrixException("not supported: " + type);
 		}

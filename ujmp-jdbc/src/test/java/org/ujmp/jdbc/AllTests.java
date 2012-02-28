@@ -25,8 +25,9 @@ package org.ujmp.jdbc;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.ujmp.jdbc.matrix.TestJDBCSparseObjectMatrix;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestJDBCSparseObjectMatrix.class })
+@Suite.SuiteClasses({ TestJDBCSparseObjectMatrix.class })
 public class AllTests {
 }

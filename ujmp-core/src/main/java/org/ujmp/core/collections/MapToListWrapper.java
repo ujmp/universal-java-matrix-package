@@ -32,7 +32,6 @@ import java.util.Map;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class MapToListWrapper<A> implements Wrapper<Map<Integer, A>>, List<A> {
-
 	private Map<Integer, A> map = null;
 
 	private int pos = 0;

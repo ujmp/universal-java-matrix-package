@@ -53,6 +53,7 @@ import org.ujmp.core.collections.map.AbstractMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.FileUtil;
@@ -324,24 +325,14 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			if (!IndexReader.indexExists(getDirectory())) {
 				getIndexWriter();
 			}
-			if (indexWriter != null) {
-				if (indexSearcher != null) {
-					indexSearcher.close();
-					indexSearcher = null;
-				}
-				indexWriter.commit();
-				indexWriter.waitForMerges();
-				indexWriter.close();
-				indexWriter = null;
+
+			if (indexSearcher != null && !indexSearcher.getIndexReader().isCurrent()) {
+				indexSearcher.close();
+				indexSearcher = null;
 			}
-			if (indexSearcher != null) {
-				if (!indexSearcher.getIndexReader().isCurrent()) {
-					indexSearcher.close();
-					indexSearcher = null;
-				}
-			}
+
 			if (indexSearcher == null) {
-				indexSearcher = new IndexSearcher(IndexReader.open(getDirectory(), true));
+				indexSearcher = new IndexSearcher(IndexReader.open(getIndexWriter(), true));
 			}
 			return indexSearcher;
 		} catch (Exception e) {
@@ -353,6 +344,19 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		clear();
 		close();
 		FileUtil.deleteRecursive(path);
+	}
+
+	public V getRandomValue() {
+		try {
+			if (getIndexSearcher().maxDoc() > 0) {
+				Document doc = getIndexSearcher().doc(MathUtil.nextInteger(0, getIndexSearcher().maxDoc() - 1));
+				return (V) SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA));
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			throw new MatrixException("could not search documents", e);
+		}
 	}
 
 }

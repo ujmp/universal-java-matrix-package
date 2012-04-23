@@ -532,6 +532,10 @@
 			<name>java-matrix maven repository</name>
 			<url>http://java-matrix.org/maven2</url>
 		</repository>
+		<repository>
+			<id>repo2_maven_org</id>
+			<url>http://repo2.maven.org/maven2</url>
+		</repository>
 	</repositories>
 
 </project>

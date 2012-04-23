@@ -38,7 +38,6 @@ public class JDBCComplexObjectMap extends AbstractJDBCMap<Map<String, Object>> i
 	protected JDBCComplexObjectMap(String url, String tableName, String username, String password, String keyColumnName)
 			throws SQLException {
 		super(url, tableName, username, password, keyColumnName, null);
-
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public abstract class AbstractJDBCMap<V> extends AbstractMap<String, V> implemen
 		this.keyColumn = keyColumnName;
 		this.valueColumn = valueColumnName;
 
-		// if no table name if defined, create one
+		// if no table name is defined, create one
 		if (this.tableName == null) {
 			this.tableName = "temp_map_" + System.currentTimeMillis();
 		}

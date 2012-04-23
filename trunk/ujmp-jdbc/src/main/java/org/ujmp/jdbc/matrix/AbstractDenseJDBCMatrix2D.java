@@ -38,8 +38,7 @@ import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
-public abstract class AbstractDenseJDBCMatrix2D extends
-		AbstractDenseObjectMatrix2D implements Closeable {
+public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -9077208839474846706L;
 
 	private final Map<Integer, Connection> connections = new HashMap<Integer, Connection>();
@@ -64,8 +63,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 
 	private int statementId = 0;
 
-	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement,
-			String username, String password) {
+	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement, String username, String password) {
 		this.url = url;
 		this.username = username;
 		this.password = password;
@@ -155,13 +153,11 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		return resultSet;
 	}
 
-	public synchronized PreparedStatement getSelectStatement()
-			throws SQLException {
+	public synchronized PreparedStatement getSelectStatement() throws SQLException {
 		PreparedStatement selectStatement = selectStatements.get(statementId);
 		if (selectStatement == null) {
-			selectStatement = getConnection(statementId).prepareStatement(
-					getSelectString(), ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+			selectStatement = getConnection(statementId).prepareStatement(getSelectString(),
+					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		}
 		statementId = ++statementId > connectionCount ? 0 : statementId;
 		return selectStatement;
@@ -170,8 +166,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 	public synchronized Connection getConnection(int id) throws SQLException {
 		Connection connection = connections.get(id);
 		if (connection == null) {
-			connection = DriverManager.getConnection(getUrl(), getUsername(),
-					getPassword());
+			connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
 			// DatabaseMetaData dbm = connection.getMetaData();
 			// dbm = null;
 			// ResultSet rs = dbm.getTables(null, null, "%", null);

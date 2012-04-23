@@ -63,7 +63,7 @@ public abstract class AbstractJDBCSet<V> extends AbstractSet<V> implements Close
 		this.tableName = tableName;
 		this.columnName = columnName;
 
-		// if no table name if defined, create one
+		// if no table name is defined, create one
 		if (this.tableName == null) {
 			this.tableName = "temp_set_" + System.currentTimeMillis();
 		}

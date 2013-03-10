@@ -30,7 +30,6 @@ import java.io.InputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrixPDF {
@@ -42,7 +41,7 @@ public abstract class ImportMatrixPDF {
 			PDFTextStripper pts = new PDFTextStripper();
 			String text = pts.getText(pdd);
 			pdd.close();
-			return MatrixFactory.linkToValue(text);
+			return Matrix.Factory.linkToValue(text);
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}
@@ -55,7 +54,7 @@ public abstract class ImportMatrixPDF {
 			PDFTextStripper pts = new PDFTextStripper();
 			String text = pts.getText(pdd);
 			pdd.close();
-			return MatrixFactory.linkToValue(text);
+			return Matrix.Factory.linkToValue(text);
 		} catch (Exception e) {
 			throw new MatrixException(e);
 		}

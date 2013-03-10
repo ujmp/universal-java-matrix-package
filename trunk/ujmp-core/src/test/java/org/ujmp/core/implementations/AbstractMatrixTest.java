@@ -36,7 +36,6 @@ import java.util.Random;
 import org.junit.Test;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
@@ -3290,7 +3289,7 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testCholPascalSmall() throws Exception {
-		Matrix pascal = MatrixFactory.pascal(5, 5);
+		Matrix pascal = Matrix.Factory.pascal(5, 5);
 		Matrix a = createMatrixWithAnnotation(pascal);
 
 		// some error?

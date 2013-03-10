@@ -27,7 +27,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public class TestConcatenation {
 
@@ -36,7 +35,7 @@ public class TestConcatenation {
 		Matrix m1 = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix m2 = Matrix.Factory.linkToArray(new double[][] { { 7, 8 }, { 9, 10 } });
 		Matrix m3 = Matrix.Factory.linkToArray(new double[][] { { 11 }, { 12 } });
-		Matrix m = MatrixFactory.horCat(m1, m2, m3);
+		Matrix m = Matrix.Factory.horCat(m1, m2, m3);
 		Matrix expected = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3, 7, 8, 11 },
 				{ 4, 5, 6, 9, 10, 12 } });
 		assertTrue(expected.equals(m));
@@ -47,7 +46,7 @@ public class TestConcatenation {
 		Matrix m1 = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
 		Matrix m2 = Matrix.Factory.linkToArray(new double[][] { { 7, 8, 9 } });
 		Matrix m3 = Matrix.Factory.linkToArray(new double[][] { { 10, 11, 12 } });
-		Matrix m = MatrixFactory.vertCat(m1, m2, m3);
+		Matrix m = Matrix.Factory.vertCat(m1, m2, m3);
 		Matrix expected = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 },
 				{ 7, 8, 9 }, { 10, 11, 12 } });
 		assertTrue(expected.equals(m));
@@ -56,9 +55,9 @@ public class TestConcatenation {
 	@Test
 	public void testEmpty() throws Exception {
 		Matrix m1 = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 } });
-		Matrix m2 = MatrixFactory.emptyMatrix();
+		Matrix m2 = Matrix.Factory.emptyMatrix();
 		Matrix m3 = Matrix.Factory.linkToArray(new double[][] { { 10, 11, 12 } });
-		Matrix m = MatrixFactory.vertCat(m1, m2, m3);
+		Matrix m = Matrix.Factory.vertCat(m1, m2, m3);
 		Matrix expected = Matrix.Factory.linkToArray(new double[][] { { 1, 2, 3 }, { 4, 5, 6 },
 				{ 10, 11, 12 } });
 		assertTrue(expected.equals(m));

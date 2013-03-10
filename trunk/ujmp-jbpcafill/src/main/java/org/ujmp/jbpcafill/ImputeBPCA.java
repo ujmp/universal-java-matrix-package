@@ -27,7 +27,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
@@ -59,7 +58,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 			Method me = c.getMethod("main", String[].class);
 			me.invoke(null, new Object[] { new String[] { file1.toString(),
 					file2.toString() } });
-			m = MatrixFactory.importFromFile(FileFormat.CSV, file2, "\\s");
+			m = Matrix.Factory.importFromFile(FileFormat.CSV, file2, "\\s");
 			m = m.replaceRegex(Ret.NEW, ",", "");
 			file1.delete();
 			file2.delete();

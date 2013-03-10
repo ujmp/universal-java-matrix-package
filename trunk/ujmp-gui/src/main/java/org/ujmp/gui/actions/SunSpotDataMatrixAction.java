@@ -27,7 +27,6 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -42,9 +41,8 @@ public class SunSpotDataMatrixAction extends AbstractMatrixAction {
 				"creates a matrix with Wolfer's sunspot data 1700 - 1987");
 	}
 
-	
 	public Object call() throws MatrixException {
-		Matrix m = MatrixFactory.SUNSPOTDATASET();
+		Matrix m = Matrix.Factory.sunSpotDataset();
 		m.showGUI();
 		return m;
 	}

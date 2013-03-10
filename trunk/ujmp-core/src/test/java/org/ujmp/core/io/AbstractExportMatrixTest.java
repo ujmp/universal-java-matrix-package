@@ -33,7 +33,6 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 
@@ -60,7 +59,7 @@ public abstract class AbstractExportMatrixTest {
 		assertTrue(getLabel(), file.exists());
 		assertTrue(getLabel(), file.length() > 0);
 
-		Matrix m2 = MatrixFactory.importFromFile(getFormat(), file);
+		Matrix m2 = Matrix.Factory.importFromFile(getFormat(), file);
 
 		assertTrue(getLabel(), m.equalsContent(m2));
 

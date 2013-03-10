@@ -25,7 +25,6 @@ package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class And extends AbstractBooleanCalculation {
@@ -34,21 +33,20 @@ public class And extends AbstractBooleanCalculation {
 	public And(Matrix m1, Matrix m2) {
 		super(m1, m2);
 		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = MatrixFactory.fill(m2.getAsBoolean(0, 0), m1.getSize());
+			getSources()[1] = Matrix.Factory.fill(m2.getAsBoolean(0, 0), m1.getSize());
 		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = MatrixFactory.fill(m1.getAsBoolean(0, 0), m2.getSize());
+			getSources()[0] = Matrix.Factory.fill(m1.getAsBoolean(0, 0), m2.getSize());
 		}
 	}
 
 	public And(Matrix m1, boolean v2) throws MatrixException {
-		this(m1, MatrixFactory.fill(v2, m1.getSize()));
+		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
 	public And(boolean v1, Matrix m2) throws MatrixException {
-		this(MatrixFactory.fill(v1, m2.getSize()), m2);
+		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	
 	public boolean getBoolean(long... coordinates) throws MatrixException {
 		return getSource().getAsBoolean(coordinates) && getSources()[1].getAsBoolean(coordinates);
 	}

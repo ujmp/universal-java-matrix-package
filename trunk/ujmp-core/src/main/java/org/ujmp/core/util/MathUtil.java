@@ -43,7 +43,6 @@ import java.util.Locale;
 import java.util.Random;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public abstract class MathUtil {
 
@@ -284,7 +283,7 @@ public abstract class MathUtil {
 
 	public static final Matrix getMatrix(Object o) {
 		if (o == null) {
-			return MatrixFactory.EMPTYMATRIX;
+			return Matrix.Factory.emptyMatrix();
 		}
 		if (o instanceof Matrix) {
 			Matrix m = (Matrix) o;
@@ -294,7 +293,7 @@ public abstract class MathUtil {
 				return m;
 			}
 		} else {
-			return MatrixFactory.linkToValue(o);
+			return Matrix.Factory.linkToValue(o);
 		}
 	}
 

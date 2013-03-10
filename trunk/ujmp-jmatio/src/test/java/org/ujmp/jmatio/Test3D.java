@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 
 public class Test3D {
@@ -53,7 +52,7 @@ public class Test3D {
 
 	@Test
 	public void testUJMP() {
-		Matrix original = MatrixFactory.rand(ValueType.DOUBLE, 3, 4, 5);
+		Matrix original = Matrix.Factory.rand(ValueType.DOUBLE, 3, 4, 5);
 		MLDoubleMatrix mlDouble = new MLDoubleMatrix(original);
 		assertEquals("dimension count", original.getDimensionCount(), mlDouble.getDimensionCount());
 		assertEquals("row count", original.getRowCount(), mlDouble.getRowCount());

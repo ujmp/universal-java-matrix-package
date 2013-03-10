@@ -32,7 +32,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -47,7 +46,6 @@ public class ImportMatrixFromFileAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
 	}
 
-	
 	public Object call() {
 		try {
 			File file = null;
@@ -77,7 +75,7 @@ public class ImportMatrixFromFileAction extends ObjectAction {
 			if (file == null)
 				return null;
 
-			Matrix m = MatrixFactory.importFromFile(fileFormat, file);
+			Matrix m = Matrix.Factory.importFromFile(fileFormat, file);
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

@@ -30,7 +30,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
@@ -100,10 +99,10 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 	private Matrix getMatrix() {
 		if (matrix == null || matrix.get() == null) {
 			try {
-				matrix = new SoftReference<Matrix>(MatrixFactory.importFromFile(fileformat, file,
+				matrix = new SoftReference<Matrix>(Matrix.Factory.importFromFile(fileformat, file,
 						parameters));
 			} catch (Exception e) {
-				return MatrixFactory.emptyMatrix();
+				return Matrix.Factory.emptyMatrix();
 			}
 		}
 		return matrix.get();

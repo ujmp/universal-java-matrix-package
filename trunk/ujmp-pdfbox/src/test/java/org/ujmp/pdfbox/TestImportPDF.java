@@ -31,7 +31,6 @@ import java.io.File;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.util.ResourceUtil;
 
@@ -46,7 +45,7 @@ public class TestImportPDF {
 
 		assertTrue(file.exists());
 
-		Matrix m = MatrixFactory.importFromFile(file, FileFormat.PDF);
+		Matrix m = Matrix.Factory.importFromFile(file, FileFormat.PDF);
 
 		String s = m.getAsString(0, 0);
 		assertEquals("test", s.trim());

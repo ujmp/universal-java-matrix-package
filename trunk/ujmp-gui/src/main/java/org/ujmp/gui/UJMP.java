@@ -26,7 +26,6 @@ package org.ujmp.gui;
 import java.applet.Applet;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 
 public class UJMP extends Applet {
 	private static final long serialVersionUID = 9112777043274552132L;
@@ -34,7 +33,7 @@ public class UJMP extends Applet {
 	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
 
 	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.welcomeMatrix();
+		Matrix m = Matrix.Factory.welcomeMatrix();
 		m.showGUI();
 	}
 

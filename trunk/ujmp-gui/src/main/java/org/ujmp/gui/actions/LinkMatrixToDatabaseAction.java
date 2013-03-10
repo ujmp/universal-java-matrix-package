@@ -30,7 +30,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.DB;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -44,7 +43,6 @@ public class LinkMatrixToDatabaseAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 	}
 
-	
 	public Object call() {
 		try {
 			DB type = DB.values()[JOptionPane.showOptionDialog(getComponent(),
@@ -80,7 +78,7 @@ public class LinkMatrixToDatabaseAction extends ObjectAction {
 			String password = null;
 			password = JOptionPane.showInputDialog("Enter password:", null);
 
-			Matrix m = MatrixFactory.linkToJDBC(type, host, port, database,
+			Matrix m = Matrix.Factory.linkToJDBC(type, host, port, database,
 					sql, username, password);
 			m.showGUI();
 			return m;

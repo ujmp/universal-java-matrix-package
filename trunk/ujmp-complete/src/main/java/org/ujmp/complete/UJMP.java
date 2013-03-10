@@ -25,7 +25,6 @@ package org.ujmp.complete;
 
 import org.ujmp.complete.benchmark.CompleteMatrixBenchmark;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.BenchmarkConfig;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
@@ -56,7 +55,7 @@ public class UJMP extends org.ujmp.gui.UJMP {
 			System.out.println("Options for Benchmark:");
 			CommandLineUtil.printOptions(new BenchmarkConfig());
 		} else {
-			Matrix m = MatrixFactory.welcomeMatrix();
+			Matrix m = Matrix.Factory.welcomeMatrix();
 			m.showGUI();
 		}
 	}

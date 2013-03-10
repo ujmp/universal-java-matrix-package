@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -49,7 +48,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		if (m == null) {
 			long[] t = new long[getDimensionCount()];
 			Arrays.fill(t, 1);
-			m = MatrixFactory.sparse(ValueType.OBJECT, t);
+			m = Matrix.Factory.sparse(ValueType.OBJECT, t);
 			getDimensionMatrices().put(dimension, m);
 		}
 		return m;

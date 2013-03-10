@@ -25,7 +25,7 @@ package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.matrix.Matrix2D;
 
-public interface Matrix2DFactory<T extends Matrix2D> extends MatrixFactoryRoot<T> {
+public interface Matrix2DFactory<T extends Matrix2D> extends MatrixFactory<T> {
 
 	public T zeros(final long rows, final long cols);
 }

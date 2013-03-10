@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core;
+package org.ujmp.core.matrix.factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
@@ -84,7 +85,6 @@ import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
-import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
@@ -112,7 +112,7 @@ import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
 
-public class MatrixFactory extends AbstractMatrixFactory<Matrix> {
+public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	private static final long serialVersionUID = -6788016781517917785L;
 
 	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();

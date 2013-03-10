@@ -23,8 +23,8 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 
-public interface ObjectMatrixFactory<T extends ObjectMatrix> extends MatrixFactoryRoot<T> {
+public interface ObjectMatrixFactory<T extends ObjectMatrix> extends MatrixFactory<T> {
 }

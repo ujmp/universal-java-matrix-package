@@ -25,6 +25,6 @@ package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.Matrix;
 
-public abstract class AbstractMatrixFactory<T extends Matrix> implements MatrixFactoryRoot<T> {
+public abstract class AbstractMatrixFactory<T extends Matrix> implements MatrixFactory<T> {
 	private static final long serialVersionUID = -3618488741326819828L;
 }

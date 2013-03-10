@@ -25,5 +25,5 @@ package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.matrix.DenseMatrix;
 
-public interface DenseMatrixFactory<T extends DenseMatrix> extends MatrixFactoryRoot<T> {
+public interface DenseMatrixFactory<T extends DenseMatrix> extends MatrixFactory<T> {
 }

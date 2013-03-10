@@ -24,9 +24,9 @@
 package org.ujmp.core.longmatrix.factory;
 
 import org.ujmp.core.longmatrix.LongMatrix;
-import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactory;
 
-public interface LongMatrixFactory<T extends LongMatrix> extends MatrixFactoryRoot<T> {
+public interface LongMatrixFactory<T extends LongMatrix> extends MatrixFactory<T> {
 
 	public T ones(final long... size);
 

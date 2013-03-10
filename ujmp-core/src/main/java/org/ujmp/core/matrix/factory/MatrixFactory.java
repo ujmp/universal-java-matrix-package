@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
 
-public interface MatrixFactoryRoot<T extends Matrix> extends Serializable {
+public interface MatrixFactory<T extends Matrix> extends Serializable {
 
 	public static final int ROW = Matrix.ROW;
 

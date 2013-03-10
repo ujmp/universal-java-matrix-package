@@ -30,8 +30,6 @@ import java.io.ObjectOutputStream;
 import org.ojalgo.access.Access2D;
 import org.ojalgo.array.ArrayUtils;
 import org.ojalgo.function.implementation.PrimitiveFunction;
-import org.ojalgo.matrix.BasicMatrix;
-import org.ojalgo.matrix.PrimitiveMatrix;
 import org.ojalgo.matrix.decomposition.LUDecomposition;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ojalgo.matrix.store.OjalgoUtil;
@@ -70,8 +68,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (m instanceof HasColumnMajorDoubleArray1D) {
 			final double[] data = ((HasColumnMajorDoubleArray1D) m)
 					.getColumnMajorDoubleArray1D();
-			this.matrix = OjalgoUtil.linkToArray((int) m.getRowCount(), (int) m
-					.getColumnCount(), data);
+			this.matrix = OjalgoUtil.linkToArray((int) m.getRowCount(),
+					(int) m.getColumnCount(), data);
 		} else if (m instanceof DenseDoubleMatrix2D) {
 			this.matrix = (PrimitiveDenseStore) PrimitiveDenseStore.FACTORY
 					.makeZero((int) m.getRowCount(), (int) m.getColumnCount());
@@ -122,8 +120,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.getWrappedObject();
 
 			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
-					.makeZero((int) this.getRowCount(), (int) this
-							.getColumnCount());
+					.makeZero((int) this.getRowCount(),
+							(int) this.getColumnCount());
 
 			retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, tmpArg);
 
@@ -143,10 +141,6 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	@Override
 	public Matrix[] eig() {
 		return Eig.INSTANCE.calc(this);
-	}
-
-	public final BasicMatrix getBasicMatrix() {
-		return new PrimitiveMatrix(matrix);
 	}
 
 	public double getDouble(final int row, final int column) {
@@ -205,8 +199,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.getWrappedObject();
 
 			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
-					.makeZero((int) this.getRowCount(), (int) this
-							.getColumnCount());
+					.makeZero((int) this.getRowCount(),
+							(int) this.getColumnCount());
 
 			retVal.fillMatching(matrix, PrimitiveFunction.SUBTRACT, tmpArg);
 
@@ -259,8 +253,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.getWrappedObject();
 
 			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
-					.makeZero((int) this.getRowCount(), (int) this
-							.getColumnCount());
+					.makeZero((int) this.getRowCount(),
+							(int) this.getColumnCount());
 
 			retVal.fillMatching(matrix, PrimitiveFunction.ADD, tmpArg);
 
@@ -332,8 +326,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.getWrappedObject();
 
 			final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
-					.makeZero((int) this.getRowCount(), (int) this
-							.getColumnCount());
+					.makeZero((int) this.getRowCount(),
+							(int) this.getColumnCount());
 
 			retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, tmpArg);
 

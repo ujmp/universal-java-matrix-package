@@ -23,6 +23,7 @@
 
 package org.ujmp.ojalgo.calculation;
 
+import org.ojalgo.matrix.decomposition.Cholesky;
 import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
@@ -41,7 +42,8 @@ public class InvSPD
 		} else {
 			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
-		return new OjalgoDenseDoubleMatrix2D(CholeskyDecomposition
-				.makePrimitive().invert(matrix));
+		Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
+		chol.compute(matrix);
+		return new OjalgoDenseDoubleMatrix2D(chol.getInverse());
 	}
 }

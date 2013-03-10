@@ -41,8 +41,10 @@ public class Inv
 		} else {
 			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
-		return new OjalgoDenseDoubleMatrix2D(LUDecomposition.makePrimitive()
-				.invert(matrix));
+		org.ojalgo.matrix.decomposition.LU<Double> lu = LUDecomposition
+				.makePrimitive();
+		lu.compute(matrix);
+		return new OjalgoDenseDoubleMatrix2D(lu.getInverse());
 	}
 
 }

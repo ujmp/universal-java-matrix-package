@@ -23,11 +23,11 @@
 
 package org.ujmp.ejml.calculation;
 
-import org.ejml.alg.dense.decomposition.DecompositionFactory;
-import org.ejml.alg.dense.decomposition.QRDecomposition;
-import org.ejml.alg.dense.linsol.LinearSolver;
 import org.ejml.alg.dense.linsol.qr.LinearSolverQrHouseCol;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.LinearSolver;
+import org.ejml.factory.QRDecomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
@@ -37,7 +37,8 @@ public class QR implements
 	public static QR INSTANCE = new QR();
 
 	public Matrix[] calc(Matrix source) {
-		QRDecomposition qr = DecompositionFactory.qr();
+		QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(
+				(int) source.getRowCount(), (int) source.getColumnCount());
 		DenseMatrix64F matrix = null;
 		if (source instanceof EJMLDenseDoubleMatrix2D) {
 			matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
@@ -53,7 +54,7 @@ public class QR implements
 	}
 
 	public Matrix solve(Matrix a, Matrix b) {
-		LinearSolver solver = new LinearSolverQrHouseCol();
+		LinearSolver<DenseMatrix64F> solver = new LinearSolverQrHouseCol();
 		DenseMatrix64F a2 = null;
 		DenseMatrix64F b2 = null;
 		if (a instanceof EJMLDenseDoubleMatrix2D) {

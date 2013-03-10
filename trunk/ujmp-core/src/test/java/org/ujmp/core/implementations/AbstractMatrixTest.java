@@ -45,7 +45,6 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.matrices.MatrixLibraries;

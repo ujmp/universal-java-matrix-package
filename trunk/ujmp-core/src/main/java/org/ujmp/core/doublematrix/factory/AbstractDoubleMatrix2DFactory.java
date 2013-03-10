@@ -23,14 +23,40 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 
-public class DefaultDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> {
-	private static final long serialVersionUID = -3755160039410460427L;
+public abstract class AbstractDoubleMatrix2DFactory<T extends DoubleMatrix2D> extends
+		AbstractDoubleMatrixFactory<T> implements DoubleMatrix2DFactory<T> {
+	private static final long serialVersionUID = -2262202653249931934L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseDoubleMatrix2D(rows, columns);
+	public T zeros(final long... size) {
+		return zeros(size[ROW], size[COLUMN]);
 	}
+
+	public final T rand(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.rand(Ret.ORIG);
+		return m;
+	}
+
+	public final T randn(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.randn(Ret.ORIG);
+		return m;
+	}
+
+	public final T ones(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.ones(Ret.ORIG);
+		return m;
+	}
+
+	public final T eye(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		Eye.calcOrig(m);
+		return m;
+	}
+
 }

@@ -23,14 +23,37 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public class DefaultDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> {
-	private static final long serialVersionUID = -3755160039410460427L;
+public abstract class AbstractDoubleMatrixFactory<T extends DoubleMatrix> extends
+		AbstractMatrixFactory<T> implements DoubleMatrixFactory<T> {
+	private static final long serialVersionUID = -5255187567566478335L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseDoubleMatrix2D(rows, columns);
+	public final T rand(final long... size) {
+		final T m = zeros(size);
+		m.rand(Ret.ORIG);
+		return m;
 	}
+
+	public final T randn(final long... size) {
+		final T m = zeros(size);
+		m.randn(Ret.ORIG);
+		return m;
+	}
+
+	public final T ones(final long... size) {
+		final T m = zeros(size);
+		m.ones(Ret.ORIG);
+		return m;
+	}
+
+	public final T eye(final long... size) {
+		final T m = zeros(size);
+		Eye.calcOrig(m);
+		return m;
+	}
+
 }

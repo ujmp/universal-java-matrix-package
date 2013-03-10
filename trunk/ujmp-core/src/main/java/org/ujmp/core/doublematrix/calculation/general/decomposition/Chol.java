@@ -156,7 +156,7 @@ public interface Chol<T> {
 	};
 
 	final class CholMatrix {
-		private static final long serialVersionUID = 400514872358216115L;
+		public static final long serialVersionUID = 400514872358216115L;
 
 		/**
 		 * Array for internal storage of decomposition.

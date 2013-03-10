@@ -120,7 +120,7 @@ public interface Eig<T> {
 	public static final Eig<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	final class EigMatrix {
-		private static final long serialVersionUID = -4312402808395971553L;
+		public static final long serialVersionUID = -4312402808395971553L;
 
 		private static final double EPSILON = Math.pow(2.0, -52.0);
 

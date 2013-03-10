@@ -50,7 +50,6 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
-import org.ujmp.core.util.AbstractPlugin;
 
 /**
  * @deprecated use <code>Matrix.[operation]</code> instead
@@ -91,5 +90,4 @@ public abstract class Ops {
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	
 }

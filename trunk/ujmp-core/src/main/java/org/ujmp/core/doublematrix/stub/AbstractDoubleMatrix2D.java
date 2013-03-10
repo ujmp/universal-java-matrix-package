@@ -21,16 +21,34 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.doublematrix.factory;
+package org.ujmp.core.doublematrix.stub;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.VerifyUtil;
 
-public class DefaultDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> {
-	private static final long serialVersionUID = -3755160039410460427L;
+public abstract class AbstractDoubleMatrix2D extends AbstractDoubleMatrix implements DoubleMatrix2D {
+	private static final long serialVersionUID = -4189202907633610643L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseDoubleMatrix2D(rows, columns);
+	public AbstractDoubleMatrix2D() {
+		super();
 	}
+
+	public AbstractDoubleMatrix2D(Matrix m) {
+		super(m);
+	}
+
+	public AbstractDoubleMatrix2D(long... size) {
+		super(size);
+		VerifyUtil.assert2D(size);
+	}
+	
+	public final double getDouble(long... coordinates) {
+		return getDouble(coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public final void setDouble(double value, long... coordinates) {
+		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
 }

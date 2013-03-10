@@ -112,7 +112,7 @@ import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
 import org.ujmp.core.util.matrices.MatrixSystemProperties;
 import org.ujmp.core.util.matrices.MatrixSystemTime;
 
-public class MatrixFactoryTemp extends AbstractMatrixFactory<Matrix> {
+public class MatrixFactory extends AbstractMatrixFactory<Matrix> {
 	private static final long serialVersionUID = -6788016781517917785L;
 
 	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();

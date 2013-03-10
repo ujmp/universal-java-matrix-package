@@ -87,7 +87,7 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 	/**
 	 * A factory for creating matrices.
 	 */
-	public static final MatrixFactoryTemp Factory = new MatrixFactoryTemp();
+	public static final MatrixFactory Factory = new MatrixFactory();
 
 	public MatrixFactoryRoot<? extends Matrix> getFactory();
 

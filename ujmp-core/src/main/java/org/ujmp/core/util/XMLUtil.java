@@ -54,14 +54,6 @@ public class XMLUtil {
 
 	private static final String XMLHEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
-	public static void main(String[] args) throws Exception {
-		MapMatrix m = new DefaultMapMatrix();
-		m.put("test", "value");
-		m.put("test3", "valu3e");
-		write(new File("d:/test.xml"), m);
-		System.out.println(parse(new File("d:/test.xml")));
-	}
-
 	public static Matrix parse(File file) throws FileNotFoundException, IOException, SAXException,
 			ParserConfigurationException {
 		InputStream fis = new FileInputStream(file);

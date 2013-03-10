@@ -30,7 +30,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.VerifyUtil;
 
-public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
+public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2D implements
 		SparseDoubleMatrix2D {
 	private static final long serialVersionUID = 2930732801501704674L;
 
@@ -51,14 +51,6 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 		return new CoordinateIterator2D(getSize());
 	}
 
-	public final double getDouble(long... coordinates) {
-		return getDouble(coordinates[ROW], coordinates[COLUMN]);
-	}
-
-	public final void setDouble(double value, long... coordinates) {
-		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
-	}
-
 	public final Double getObject(long row, long column) throws MatrixException {
 		return getDouble(row, column);
 	}
@@ -77,6 +69,10 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 
 	public final int getDimensionCount() {
 		return 2;
+	}
+
+	public StorageType getStorageType() {
+		return StorageType.SPARSE;
 	}
 
 	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {

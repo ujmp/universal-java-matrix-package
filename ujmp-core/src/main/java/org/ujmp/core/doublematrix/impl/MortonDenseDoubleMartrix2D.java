@@ -145,8 +145,8 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof MortonDenseDoubleMartrix2D) {
-			final MortonDenseDoubleMartrix2D ret = new MortonDenseDoubleMartrix2D(getRowCount(), m2
-					.getColumnCount());
+			final MortonDenseDoubleMartrix2D ret = new MortonDenseDoubleMartrix2D(getRowCount(),
+					m2.getColumnCount());
 			final double[] c = ret.values;
 			final double[] b = ((MortonDenseDoubleMartrix2D) m2).values;
 			final int retcols = ret.cols;

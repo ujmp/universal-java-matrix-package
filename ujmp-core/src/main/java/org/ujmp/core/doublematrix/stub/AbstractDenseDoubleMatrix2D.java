@@ -23,6 +23,7 @@
 
 package org.ujmp.core.doublematrix.stub;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
@@ -39,7 +40,7 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.VerifyUtil;
 
-public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix implements
+public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D implements
 		DenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4518790844453035022L;
 
@@ -58,14 +59,6 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
-	}
-
-	public final double getDouble(long... coordinates) {
-		return getDouble(coordinates[ROW], coordinates[COLUMN]);
-	}
-
-	public final void setDouble(double value, long... coordinates) {
-		setDouble(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
 	public final Double getObject(long row, long column) throws MatrixException {
@@ -192,6 +185,14 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDenseDoubleMat
 
 	public final int getDimensionCount() {
 		return 2;
+	}
+
+	public StorageType getStorageType() {
+		return StorageType.DENSE;
+	}
+
+	public final boolean contains(long... coordinates) {
+		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory() {

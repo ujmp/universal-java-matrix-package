@@ -154,8 +154,10 @@ public class FileUtil {
 		VerifyUtil.assertTrue(source.exists(), "source file does not exist");
 		VerifyUtil.assertFalse(target.exists(), "target file exists");
 
-		final FileChannel inChannel = new FileInputStream(source).getChannel();
-		final FileChannel outChannel = new FileOutputStream(target).getChannel();
+		final FileInputStream fis = new FileInputStream(source);
+		final FileOutputStream fos = new FileOutputStream(target);
+		final FileChannel inChannel = fis.getChannel();
+		final FileChannel outChannel = fos.getChannel();
 		final long maxCount = 67076096;
 		final long size = inChannel.size();
 		long position = 0;
@@ -166,10 +168,18 @@ public class FileUtil {
 		} catch (IOException e) {
 			throw e;
 		} finally {
-			if (inChannel != null)
+			if (inChannel != null) {
 				inChannel.close();
-			if (outChannel != null)
+			}
+			if (outChannel != null) {
 				outChannel.close();
+			}
+			if (fis != null) {
+				fis.close();
+			}
+			if (fos != null) {
+				fos.close();
+			}
 		}
 	}
 

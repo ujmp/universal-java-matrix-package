@@ -30,8 +30,8 @@ import org.ujmp.core.exceptions.MatrixException;
 
 public interface BigIntegerMatrix2DFactory extends Serializable {
 
-	public BigIntegerMatrix2D dense(long rows, long columns) throws MatrixException;
-
 	public BigIntegerMatrix2D zeros(long rows, long columns) throws MatrixException;
+
+	public BigIntegerMatrix2D zeros(long... size) throws MatrixException;
 
 }

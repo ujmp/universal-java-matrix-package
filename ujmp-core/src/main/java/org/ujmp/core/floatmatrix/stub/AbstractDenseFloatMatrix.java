@@ -54,7 +54,7 @@ public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix imple
 	}
 
 	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 
 }

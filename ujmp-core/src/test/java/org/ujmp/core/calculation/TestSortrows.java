@@ -27,14 +27,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 
 public class TestSortrows {
 
 	private Matrix getMatrix(ValueType valueType) {
-		Matrix m = MatrixFactory.zeros(valueType, 4, 4);
+		Matrix m = Matrix.Factory.zeros(valueType, 4, 4);
 		m.setRowLabel(0, "row0");
 		m.setRowLabel(1, "row1");
 		m.setRowLabel(2, "row2");
@@ -63,7 +62,7 @@ public class TestSortrows {
 	}
 
 	private Matrix getResult(ValueType valueType) {
-		Matrix m = MatrixFactory.zeros(valueType, 4, 4);
+		Matrix m = Matrix.Factory.zeros(valueType, 4, 4);
 		if (ValueType.STRING.equals(valueType) || ValueType.OBJECT.equals(valueType)) {
 			m.setRowLabel(0, "row2");
 			m.setRowLabel(1, "row1");
@@ -119,7 +118,7 @@ public class TestSortrows {
 	}
 
 	private Matrix getResultReverse(ValueType valueType) {
-		Matrix m = MatrixFactory.zeros(valueType, 4, 4);
+		Matrix m = Matrix.Factory.zeros(valueType, 4, 4);
 		if (ValueType.STRING.equals(valueType) || ValueType.OBJECT.equals(valueType)) {
 			m.setRowLabel(0, "row3");
 			m.setRowLabel(1, "row0");

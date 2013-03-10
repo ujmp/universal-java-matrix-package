@@ -24,16 +24,15 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Convert {
-	private static final long serialVersionUID = 6393277198816850597L;
+	public static final long serialVersionUID = 6393277198816850597L;
 
 	public static Matrix calcNew(ValueType valueType, Matrix source) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(valueType, source.getSize());
+		Matrix ret = Matrix.Factory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsObject(source.getAsObject(c), c);
 		}

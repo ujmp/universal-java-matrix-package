@@ -23,10 +23,6 @@
 
 package org.ujmp.core.matrix;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -139,8 +135,6 @@ import org.ujmp.core.doublematrix.calculation.general.statistical.Prod;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Sum;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Var;
-import org.ujmp.core.enums.DB;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
@@ -153,7 +147,8 @@ import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
 import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
-import org.ujmp.core.io.ExportMatrix;
+import org.ujmp.core.io.DefaultMatrixExporter;
+import org.ujmp.core.io.MatrixExporter;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
@@ -212,7 +207,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	private static long runningId = 0;
 
 	public MatrixFactoryRoot<? extends Matrix> getFactory() {
-		return Matrix.factory;
+		return Matrix.Factory;
 	}
 
 	public AbstractMatrix(long... size) {
@@ -363,7 +358,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix clone() {
-		return copy();
+		return Convert.calcNew(this);
 	}
 
 	public final Matrix select(Ret returnType, long[]... selection) throws MatrixException {
@@ -469,14 +464,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Center(ignoreNaN, dimension, this).calc(returnType);
 	}
 
-	/**
-	 * @deprecated Please do not use this method anymore, it will be removed.
-	 *             use <code>matrix.clone()</code> instead
-	 */
-	public Matrix copy() throws MatrixException {
-		return Convert.calcNew(this);
-	}
-
 	public boolean isResizable() {
 		return false;
 	}
@@ -501,25 +488,25 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix times(double factor) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.timesScalar.calc(this, factor, result);
 		return result;
 	}
 
 	public Matrix times(Matrix m) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.timesMatrix.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix divide(Matrix m) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.divideMatrix.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix divide(double divisor) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.divideScalar.calc(this, divisor, result);
 		return result;
 	}
@@ -898,7 +885,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) throws MatrixException {
-		Matrix result = MatrixFactory.like(this, getRowCount(), matrix.getColumnCount());
+		Matrix result = Matrix.Factory.like(this, getRowCount(), matrix.getColumnCount());
 		Matrix.mtimes.calc(this, matrix, result);
 		return result;
 	}
@@ -1066,7 +1053,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			result = this.getClass().getConstructor(long[].class)
 					.newInstance(Coordinates.transpose(getSize()));
 		} catch (Exception e) {
-			result = Matrix.factory.zeros(Coordinates.transpose(getSize()));
+			result = Matrix.Factory.zeros(Coordinates.transpose(getSize()));
 		}
 		Matrix.transpose.calc(this, result);
 		return result;
@@ -1148,25 +1135,25 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix plus(double value) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.plusScalar.calc(this, value, result);
 		return result;
 	}
 
 	public Matrix plus(Matrix m) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.plusMatrix.calc(this, m, result);
 		return result;
 	}
 
 	public Matrix minus(double value) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.minusScalar.calc(this, value, result);
 		return result;
 	}
 
 	public Matrix minus(Matrix m) throws MatrixException {
-		Matrix result = MatrixFactory.like(this);
+		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.minusMatrix.calc(this, m, result);
 		return result;
 	}
@@ -1525,51 +1512,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
-	public final void exportToFile(File file, Object... parameters) throws MatrixException,
-			IOException {
-		ExportMatrix.toFile(file, this, parameters);
-	}
-
-	public final void exportToClipboard(FileFormat format, Object... parameters)
-			throws MatrixException, IOException {
-		ExportMatrix.toClipboard(format, this, parameters);
-	}
-
-	public final void exportToFile(String file, Object... parameters) throws MatrixException,
-			IOException {
-		ExportMatrix.toFile(file, this, parameters);
-	}
-
-	public final void exportToJDBC(String url, String tablename, String username, String password)
-			throws MatrixException {
-		ExportMatrix.toJDBC(this, url, tablename, username, password);
-	}
-
-	public final void exportToJDBC(DB type, String host, int port, String database,
-			String tablename, String username, String password) throws MatrixException {
-		ExportMatrix.toJDBC(this, type, host, port, database, tablename, username, password);
-	}
-
-	public final void exportToFile(FileFormat format, String filename, Object... parameters)
-			throws MatrixException, IOException {
-		ExportMatrix.toFile(format, filename, this, parameters);
-	}
-
-	public final void exportToFile(FileFormat format, File file, Object... parameters)
-			throws MatrixException, IOException {
-		ExportMatrix.toFile(format, file, this, parameters);
-	}
-
-	public final void exportToStream(FileFormat format, OutputStream outputStream,
-			Object... parameters) throws MatrixException, IOException {
-		ExportMatrix.toStream(format, outputStream, this, parameters);
-	}
-
-	public final void exportToWriter(FileFormat format, Writer writer, Object... parameters)
-			throws MatrixException, IOException {
-		ExportMatrix.toWriter(format, writer, this, parameters);
-	}
-
 	public final void setLabel(String label) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation(getDimensionCount());
@@ -1747,7 +1689,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException {
-		Matrix ret = Matrix.factory.zeros(getSize());
+		Matrix ret = Matrix.Factory.zeros(getSize());
 		for (long[] c : allCoordinates()) {
 			double v = getAsDouble(c);
 			if (MathUtil.isNaNOrInfinite(v)) {
@@ -1862,11 +1804,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix chol() throws MatrixException {
 		return Chol.INSTANCE.calc(this);
-	}
-
-	public final String exportToString(FileFormat format, Object... parameters)
-			throws MatrixException, IOException {
-		return ExportMatrix.toString(format, this, parameters);
 	}
 
 	public void setSize(long... size) {
@@ -2373,7 +2310,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			annotation = new DefaultAnnotation(getDimensionCount());
 		}
 		annotation.setAxisLabelObject(dimension, label);
+	}
 
+	public MatrixExporter export() {
+		return new DefaultMatrixExporter(this);
 	}
 
 }

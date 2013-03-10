@@ -39,7 +39,7 @@ public class MatrixSystemProperties extends AbstractMapMatrix<Object, Object> {
 		return System.getProperties();
 	}
 
-	public MapMatrix<Object, Object> copy() {
+	public MapMatrix<Object, Object> clone() {
 		return new MatrixSystemProperties();
 	}
 

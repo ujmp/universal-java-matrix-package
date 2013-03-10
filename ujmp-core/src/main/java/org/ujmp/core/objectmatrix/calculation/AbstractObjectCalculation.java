@@ -25,7 +25,6 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -51,7 +50,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 	public final Matrix calcNew() throws MatrixException {
 		// Matrix result = MatrixFactory.zeros(getSource().getValueType(),
 		// getSize());
-		Matrix result = MatrixFactory.zeros(getValueType(), getSize());
+		Matrix result = Matrix.Factory.zeros(getValueType(), getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsObject(getObject(c), c);
 		}

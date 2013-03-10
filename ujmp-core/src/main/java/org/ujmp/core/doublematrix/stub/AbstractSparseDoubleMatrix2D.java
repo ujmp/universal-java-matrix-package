@@ -76,7 +76,7 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2
 	}
 
 	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {
-		return SparseDoubleMatrix2D.factory;
+		return SparseDoubleMatrix2D.Factory;
 	}
 
 }

@@ -23,15 +23,17 @@
 
 package org.ujmp.core.longmatrix.factory;
 
-import java.io.Serializable;
-
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix2D;
+import org.ujmp.core.matrix.factory.Matrix2DFactory;
 
-public interface LongMatrix2DFactory extends Serializable {
+public interface LongMatrix2DFactory<T extends LongMatrix2D> extends Matrix2DFactory<T>,
+		LongMatrixFactory<T> {
 
-	public LongMatrix2D dense(long rows, long columns) throws MatrixException;
+	public T ones(final long rows, final long cols);
 
-	public LongMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public T rand(final long rows, final long cols);
 
+	public T randn(final long rows, final long cols);
+
+	public T eye(final long rows, final long cols);
 }

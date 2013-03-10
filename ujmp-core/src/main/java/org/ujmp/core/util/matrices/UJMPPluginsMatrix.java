@@ -27,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.AbstractPlugin;
 
@@ -86,7 +85,7 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public void refresh() {
-		matrix = MatrixFactory.dense(ValueType.STRING, classes.size(), 5);
+		matrix = DenseObjectMatrix2D.Factory.zeros(classes.size(), 5);
 
 		int r = 0;
 

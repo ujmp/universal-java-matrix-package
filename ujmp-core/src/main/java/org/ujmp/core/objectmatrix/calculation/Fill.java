@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 
@@ -38,13 +37,12 @@ public class Fill extends AbstractObjectCalculation {
 		this.fill = value;
 	}
 
-	
 	public Object getObject(long... coordinates) {
 		return fill;
 	}
 
 	public static Matrix calc(Matrix source, Object fill) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(source.getValueType(), source.getSize());
+		Matrix ret = Matrix.Factory.zeros(source.getValueType(), source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsObject(fill, c);
 		}
@@ -54,11 +52,11 @@ public class Fill extends AbstractObjectCalculation {
 	public static Matrix calc(Object fill, long... size) throws MatrixException {
 		Matrix ret = null;
 		if (fill instanceof Number) {
-			ret = MatrixFactory.zeros(ValueType.DOUBLE, size);
+			ret = Matrix.Factory.zeros(ValueType.DOUBLE, size);
 		} else if (fill instanceof String) {
-			ret = MatrixFactory.zeros(ValueType.STRING, size);
+			ret = Matrix.Factory.zeros(ValueType.STRING, size);
 		} else {
-			ret = MatrixFactory.zeros(ValueType.OBJECT, size);
+			ret = Matrix.Factory.zeros(ValueType.OBJECT, size);
 		}
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsObject(fill, c);

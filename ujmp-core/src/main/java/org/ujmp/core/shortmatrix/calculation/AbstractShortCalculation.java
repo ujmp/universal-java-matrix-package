@@ -25,7 +25,6 @@ package org.ujmp.core.shortmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -49,7 +48,7 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 	}
 
 	public final ShortMatrix calcNew() throws MatrixException {
-		ShortMatrix result = (ShortMatrix) MatrixFactory.zeros(ValueType.SHORT, getSize());
+		ShortMatrix result = (ShortMatrix) Matrix.Factory.zeros(ValueType.SHORT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsShort(getShort(c), c);
 		}

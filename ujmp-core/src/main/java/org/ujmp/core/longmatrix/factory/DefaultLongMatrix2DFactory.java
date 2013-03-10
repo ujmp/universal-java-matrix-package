@@ -23,16 +23,13 @@
 
 package org.ujmp.core.longmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix2D;
 import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 
-public class DefaultLongMatrix2DFactory extends AbstractLongMatrix2DFactory {
-	private static final long serialVersionUID = 7430273868074744639L;
+public class DefaultLongMatrix2DFactory extends AbstractLongMatrix2DFactory<LongMatrix2D> {
 
-	
-	public LongMatrix2D dense(long rows, long columns) throws MatrixException {
-		return new DefaultDenseLongMatrix2D(rows, columns);
+	public LongMatrix2D zeros(long rows, long cols) {
+		return new DefaultDenseLongMatrix2D(rows, cols);
 	}
 
 }

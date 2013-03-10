@@ -40,7 +40,7 @@ public class UJMP extends org.ujmp.gui.UJMP {
 		generalOptions.put("benchmark", false);
 		generalOptions.put("help", false);
 		generalOptions.put("version", false);
-		MapMatrix<String, Object> config = generalOptions.copy();
+		MapMatrix<String, Object> config = generalOptions.clone();
 		CommandLineUtil.parse(config, args);
 
 		if (MathUtil.getBoolean(config.get("benchmark"))) {

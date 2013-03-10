@@ -25,7 +25,6 @@ package org.ujmp.core.floatmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -49,7 +48,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 	}
 
 	public final FloatMatrix calcNew() throws MatrixException {
-		FloatMatrix result = (FloatMatrix) MatrixFactory.zeros(ValueType.FLOAT, getSize());
+		FloatMatrix result = (FloatMatrix) Matrix.Factory.zeros(ValueType.FLOAT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsFloat(getFloat(c), c);
 		}

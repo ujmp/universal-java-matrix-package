@@ -45,8 +45,8 @@ public class SaveMatrixAction extends ObjectAction {
 		super(c, o);
 		putValue(Action.NAME, "Save...");
 		putValue(Action.SHORT_DESCRIPTION, "Save this Matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY,
+				KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {
@@ -90,7 +90,7 @@ public class SaveMatrixAction extends ObjectAction {
 			if (o instanceof MatrixGUIObject) {
 				MatrixGUIObject m = (MatrixGUIObject) o;
 				try {
-					m.getMatrix().exportToFile(file);
+					m.getMatrix().export().toFile(file);
 				} catch (Exception e) {
 				}
 			}

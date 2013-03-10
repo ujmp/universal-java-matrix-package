@@ -39,7 +39,7 @@ public class Ceil extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calcNew(Matrix source) throws MatrixException {
-		Matrix ret = Matrix.factory.zeros(source.getSize());
+		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.ceil(source.getAsDouble(c)), c);
 		}

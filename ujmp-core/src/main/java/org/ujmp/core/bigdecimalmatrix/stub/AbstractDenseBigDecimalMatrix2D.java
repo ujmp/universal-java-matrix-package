@@ -79,7 +79,7 @@ public abstract class AbstractDenseBigDecimalMatrix2D extends AbstractDenseBigDe
 	}
 
 	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 
 	public final int getDimensionCount() {

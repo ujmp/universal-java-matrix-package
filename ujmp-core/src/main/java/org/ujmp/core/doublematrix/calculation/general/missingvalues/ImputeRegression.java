@@ -74,7 +74,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 				firstGuess = getSource().impute(Ret.NEW, ImputationMethod.RowMean);
 			}
 
-			imputed = Matrix.factory.zeros(x.getSize());
+			imputed = Matrix.Factory.zeros(x.getSize());
 
 			ExecutorService executor = Executors.newFixedThreadPool(1);
 			List<Future<Long>> futures = new ArrayList<Future<Long>>();
@@ -139,13 +139,13 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		}
 
 		Matrix xdel = x.deleteRows(Ret.NEW, missingRows);
-		Matrix bias1 = DenseDoubleMatrix2D.factory.ones(xdel.getRowCount(), 1);
+		Matrix bias1 = DenseDoubleMatrix2D.Factory.ones(xdel.getRowCount(), 1);
 		Matrix xtrain = MatrixFactory.horCat(xdel, bias1);
 		Matrix ytrain = y.deleteRows(Ret.NEW, missingRows);
 
 		Matrix xinv = xtrain.pinv();
 		Matrix b = xinv.mtimes(ytrain);
-		Matrix bias2 = DenseDoubleMatrix2D.factory.ones(x.getRowCount(), 1);
+		Matrix bias2 = DenseDoubleMatrix2D.Factory.ones(x.getRowCount(), 1);
 		Matrix yPredicted = MatrixFactory.horCat(x, bias2).mtimes(b);
 
 		// set non-missing values back to original values

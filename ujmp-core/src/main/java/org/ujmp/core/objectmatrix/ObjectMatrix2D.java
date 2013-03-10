@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.factory.ObjectMatrix2DFactory;
 
 public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
 
-	public static DefaultDenseObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
+	public static DefaultDenseObjectMatrix2DFactory Factory = new DefaultDenseObjectMatrix2DFactory();
 
 	public Object getObject(long row, long column);
 

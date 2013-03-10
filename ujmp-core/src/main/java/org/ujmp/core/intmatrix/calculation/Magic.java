@@ -24,7 +24,6 @@
 package org.ujmp.core.intmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 /**
@@ -108,7 +107,7 @@ public class Magic extends AbstractIntCalculation {
 			M[k][k] = M[k + p][k];
 			M[k + p][k] = t;
 		}
-		return MatrixFactory.linkToArray(M);
+		return Matrix.Factory.linkToArray(M);
 	}
 
 }

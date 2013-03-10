@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
@@ -58,7 +57,7 @@ public class Rand extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source, double min, double max) throws MatrixException {
-		Matrix ret = Matrix.factory.zeros(source.getSize());
+		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextDouble(min, max), c);
 		}
@@ -66,7 +65,7 @@ public class Rand extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
-		Matrix ret = MatrixFactory.zeros(valueType, size);
+		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextDouble(), c);
 		}

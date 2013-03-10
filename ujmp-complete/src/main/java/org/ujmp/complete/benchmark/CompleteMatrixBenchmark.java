@@ -44,6 +44,7 @@ import org.ujmp.core.benchmark.BenchmarkUtil;
 import org.ujmp.core.benchmark.BlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
@@ -207,15 +208,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		File propFile = new File(resultDir + File.separator + "props.csv");
 		File confFile = new File(resultDir + File.separator + "conf.csv");
 		File versionFile = new File(resultDir + File.separator + "versions.csv");
-		new MatrixSystemEnvironment().exportToFile(FileFormat.CSV, envFile);
+		new MatrixSystemEnvironment().export().toFile(FileFormat.CSV, envFile);
 		Matrix props = new MatrixSystemProperties().replaceRegex(Ret.NEW, "\r\n", " ");
 		props = props.replaceRegex(Ret.NEW, "\n", " ");
-		props.exportToFile(FileFormat.CSV, propFile);
-		getConfig().exportToFile(FileFormat.CSV, confFile);
+		props.export().toFile(FileFormat.CSV, propFile);
+		getConfig().export().toFile(FileFormat.CSV, confFile);
 		Matrix libraries = new MatrixLibraries();
 		System.out.println(libraries);
 		Matrix versions = libraries.selectRows(Ret.NEW, 0, 1).transpose();
-		versions.exportToFile(FileFormat.CSV, versionFile);
+		versions.export().toFile(FileFormat.CSV, versionFile);
 	}
 
 	public void evaluate() throws Exception {
@@ -301,7 +302,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 						jamaRow = allmeans.getRowForLabel(DefaultDenseDoubleMatrix2D.class
 								.getSimpleName());
 					}
-					Matrix valueCount = MatrixFactory.zeros(1, allmeans.getColumnCount());
+					Matrix valueCount = DenseDoubleMatrix2D.Factory.zeros(1,
+							allmeans.getColumnCount());
 					for (int c = 0; c < valueCount.getColumnCount(); c++) {
 						int s = extractSize(allmeans.getColumnLabel(c));
 						if (allmeans.getLabel().contains("tall")) {
@@ -398,13 +400,13 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				matrix.getAnnotation().getDimensionMatrix(Matrix.COLUMN), matrix);
 		Matrix complete = MatrixFactory.vertCat(firstPart, lastPart);
 		try {
-			complete.exportToFile(FileFormat.CSV, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ name + ".csv"));
+			complete.export().toFile(FileFormat.CSV,
+					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"));
 		} catch (Exception e) {
 		}
 		try {
-			complete.exportToFile(FileFormat.XLS, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ name + ".xls"));
+			complete.export().toFile(FileFormat.XLS,
+					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".xls"));
 		} catch (Exception e) {
 		}
 		try {
@@ -420,8 +422,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			} else {
 				params = new Object[] { "xy", "logx", "logy" };
 			}
-			plt.exportToFile(FileFormat.PLT, new File(BenchmarkUtil.getResultDir(getConfig())
-					+ name + ".plt"), params);
+			plt.export().toFile(FileFormat.PLT,
+					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".plt"), params);
 		} catch (Exception e) {
 		}
 		// ChartConfiguration config = new ChartConfiguration();

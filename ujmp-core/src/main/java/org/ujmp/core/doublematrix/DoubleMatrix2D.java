@@ -23,10 +23,15 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DoubleMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
+
+	public static DoubleMatrix2DFactory<? extends DoubleMatrix2D> Factory = new DefaultDoubleMatrix2DFactory();
+
+	public DoubleMatrix2DFactory<? extends DoubleMatrix2D> getFactory();
 
 	public double getDouble(long row, long column);
 
@@ -36,5 +41,4 @@ public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
 
 	public void setDouble(double value, int row, int column);
 
-	public DoubleMatrix2DFactory<? extends DoubleMatrix2D> getFactory();
 }

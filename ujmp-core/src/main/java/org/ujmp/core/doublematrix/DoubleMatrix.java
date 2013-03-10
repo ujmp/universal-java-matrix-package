@@ -23,11 +23,17 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface DoubleMatrix extends GenericMatrix<Double> {
+
+	public static DoubleMatrixFactory<? extends DoubleMatrix> Factory = new DefaultDoubleMatrixFactory();
+
+	public DoubleMatrixFactory<? extends DoubleMatrix> getFactory();
+
 	/**
 	 * Returns a double representation of an entry in the matrix. The stored
 	 * value will be converted to a double as good as possible.
@@ -51,5 +57,4 @@ public interface DoubleMatrix extends GenericMatrix<Double> {
 	 */
 	public void setDouble(double value, long... coordinates) throws MatrixException;
 
-	public DoubleMatrixFactory<? extends DoubleMatrix> getFactory();
 }

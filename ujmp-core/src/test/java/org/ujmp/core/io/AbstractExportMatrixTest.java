@@ -42,7 +42,7 @@ public abstract class AbstractExportMatrixTest {
 	public abstract FileFormat getFormat();
 
 	public Matrix getMatrix() {
-		return DenseDoubleMatrix2D.factory.rand(5, 8);
+		return DenseDoubleMatrix2D.Factory.rand(5, 8);
 	}
 
 	public String getLabel() {
@@ -55,7 +55,7 @@ public abstract class AbstractExportMatrixTest {
 		// file.deleteOnExit();
 
 		Matrix m = getMatrix();
-		m.exportToFile(getFormat(), file);
+		m.export().toFile(getFormat(), file);
 
 		assertTrue(getLabel(), file.exists());
 		assertTrue(getLabel(), file.length() > 0);
@@ -78,7 +78,7 @@ public abstract class AbstractExportMatrixTest {
 		OutputStream os = new FileOutputStream(file);
 
 		Matrix m = getMatrix();
-		m.exportToStream(getFormat(), os);
+		m.export().toStream(getFormat(), os);
 
 		os.close();
 
@@ -98,7 +98,7 @@ public abstract class AbstractExportMatrixTest {
 		FileWriter fw = new FileWriter(file);
 
 		Matrix m = getMatrix();
-		m.exportToWriter(getFormat(), fw);
+		m.export().toWriter(getFormat(), fw);
 
 		fw.close();
 
@@ -112,7 +112,7 @@ public abstract class AbstractExportMatrixTest {
 	@Test
 	public void testExportToString() throws Exception {
 		Matrix m = getMatrix();
-		String s = m.exportToString(getFormat());
+		String s = m.export().toString(getFormat());
 
 		assertTrue(getLabel(), s != null);
 		assertTrue(getLabel(), s.length() > 0);
@@ -121,7 +121,7 @@ public abstract class AbstractExportMatrixTest {
 	@Test
 	public void testExportToClipboard() throws Exception {
 		Matrix m = getMatrix();
-		m.exportToClipboard(getFormat());
+		m.export().toClipboard(getFormat());
 	}
 
 }

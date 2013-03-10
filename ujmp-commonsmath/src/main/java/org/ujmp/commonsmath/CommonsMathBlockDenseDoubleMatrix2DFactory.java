@@ -23,23 +23,22 @@
 
 package org.ujmp.commonsmath;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class CommonsMathBlockDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory implements DenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<CommonsMathBlockDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 559376231363321539L;
 
 	public static final CommonsMathBlockDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathBlockDenseDoubleMatrix2DFactory();
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public CommonsMathBlockDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new CommonsMathBlockDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D zeros(long... size) throws MatrixException {
+	public CommonsMathBlockDenseDoubleMatrix2D zeros(long... size)
+			throws MatrixException {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 

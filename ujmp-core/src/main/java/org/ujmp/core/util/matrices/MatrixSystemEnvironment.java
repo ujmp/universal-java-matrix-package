@@ -39,7 +39,7 @@ public class MatrixSystemEnvironment extends AbstractMapMatrix<String, String> {
 		return System.getenv();
 	}
 
-	public MapMatrix<String, String> copy() {
+	public MapMatrix<String, String> clone() {
 		return new MatrixSystemEnvironment();
 	}
 

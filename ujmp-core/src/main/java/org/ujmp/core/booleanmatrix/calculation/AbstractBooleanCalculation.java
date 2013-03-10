@@ -45,7 +45,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 	}
 
 	public final BooleanMatrix calcNew() throws MatrixException {
-		BooleanMatrix result = (BooleanMatrix) MatrixFactory.zeros(ValueType.BOOLEAN, getSize());
+		BooleanMatrix result = (BooleanMatrix) Matrix.Factory.zeros(ValueType.BOOLEAN, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBoolean(getBoolean(c), c);
 		}

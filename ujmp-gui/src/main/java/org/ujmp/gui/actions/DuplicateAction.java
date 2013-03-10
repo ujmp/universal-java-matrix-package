@@ -42,12 +42,12 @@ public class DuplicateAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION,
 				"duplicate the content of this matrix to a new matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY,
+				KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {
-		Matrix m = getMatrixObject().getMatrix().copy();
+		Matrix m = getMatrixObject().getMatrix().clone();
 		m.showGUI();
 		return m;
 	}

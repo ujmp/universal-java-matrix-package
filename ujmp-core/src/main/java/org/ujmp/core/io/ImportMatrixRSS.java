@@ -36,6 +36,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -51,7 +52,7 @@ public class ImportMatrixRSS {
 		Document doc = dBuilder.parse(stream);
 
 		NodeList items = doc.getElementsByTagName("item");
-		m = MatrixFactory.dense(ValueType.OBJECT, items.getLength(), 5);
+		m = DenseObjectMatrix2D.Factory.zeros(items.getLength(), 5);
 		m.setColumnLabel(0, "Id");
 		m.setColumnLabel(1, "Label");
 		m.setColumnLabel(2, "Link");

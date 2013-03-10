@@ -24,7 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -287,8 +287,8 @@ public interface Chol<T> {
 		 * @return L
 		 */
 
-		public final Matrix getL() {
-			return MatrixFactory.linkToArray(L);
+		public final DenseDoubleMatrix2D getL() {
+			return Matrix.Factory.linkToArray(L);
 		}
 
 		/**
@@ -303,7 +303,7 @@ public interface Chol<T> {
 		 *                Matrix is not symmetric positive definite.
 		 */
 
-		public final Matrix solve(Matrix B) {
+		public final DenseDoubleMatrix2D solve(Matrix B) {
 			if (B.getRowCount() != n) {
 				throw new IllegalArgumentException("Matrix row dimensions must agree.");
 			}
@@ -335,7 +335,7 @@ public interface Chol<T> {
 				}
 			}
 
-			return MatrixFactory.linkToArray(X);
+			return Matrix.Factory.linkToArray(X);
 		}
 
 	}

@@ -167,7 +167,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 					getAnalyzer());
 			Query query = p.parse(searchString);
 			TopDocs docs = getIndexSearcher().search(query, 100);
-			ObjectMatrix2D result = ObjectMatrix2D.factory.zeros(docs.totalHits, 3);
+			ObjectMatrix2D result = ObjectMatrix2D.Factory.zeros(docs.totalHits, 3);
 			for (int row = 0; row < docs.totalHits; row++) {
 				ScoreDoc match = docs.scoreDocs[row];
 				Document doc = getIndexSearcher().doc(match.doc);

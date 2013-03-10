@@ -151,7 +151,7 @@ public class GnuPlot {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.exportToString(FileFormat.M));
+		execute(label + "=" + matrix.export().toString(FileFormat.M));
 	}
 
 	public static boolean isAvailable() {
@@ -159,7 +159,7 @@ public class GnuPlot {
 	}
 
 	public void plot(Matrix matrix, String... format) throws Exception {
-		matrix.exportToFile(FileFormat.CSV, matrixFile);
+		matrix.export().toFile(FileFormat.CSV, matrixFile);
 		execute(getPlotCommand(matrix, true, true));
 	}
 
@@ -189,7 +189,7 @@ public class GnuPlot {
 	}
 
 	public void scatterPlot(Matrix matrix, String... format) throws Exception {
-		matrix.exportToFile(FileFormat.CSV, matrixFile);
+		matrix.export().toFile(FileFormat.CSV, matrixFile);
 		execute(getPlotCommand(matrix, false, false));
 	}
 

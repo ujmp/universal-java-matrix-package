@@ -24,7 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -1028,8 +1028,8 @@ public interface Eig<T> {
 		 * @return V
 		 */
 
-		public final Matrix getV() {
-			return MatrixFactory.linkToArray(V);
+		public final DenseDoubleMatrix2D getV() {
+			return Matrix.Factory.linkToArray(V);
 		}
 
 		/**
@@ -1058,7 +1058,7 @@ public interface Eig<T> {
 		 * @return D
 		 */
 
-		public final Matrix getD() {
+		public final DenseDoubleMatrix2D getD() {
 			final double[][] D = new double[n][n];
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
@@ -1071,7 +1071,7 @@ public interface Eig<T> {
 					D[i][i - 1] = e[i];
 				}
 			}
-			return MatrixFactory.linkToArray(D);
+			return Matrix.Factory.linkToArray(D);
 		}
 
 	}

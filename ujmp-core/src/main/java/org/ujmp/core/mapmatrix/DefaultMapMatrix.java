@@ -62,7 +62,7 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 	}
 
 	@Override
-	public MapMatrix<K, V> copy() {
+	public MapMatrix<K, V> clone() {
 		MapMatrix<K, V> ret = new DefaultMapMatrix<K, V>();
 		ret.putAll(map);
 		return ret;

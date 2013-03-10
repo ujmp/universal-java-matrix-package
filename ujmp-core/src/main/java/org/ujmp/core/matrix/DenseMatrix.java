@@ -29,7 +29,7 @@ import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
 public interface DenseMatrix extends Matrix {
 
-	public static final DenseMatrixFactory<? extends DenseMatrix> factory = new DefaultDenseDoubleMatrixFactory();
+	public static final DenseMatrixFactory<? extends DenseMatrix> Factory = new DefaultDenseDoubleMatrixFactory();
 
 	public DenseMatrixFactory<? extends DenseMatrix> getFactory();
 

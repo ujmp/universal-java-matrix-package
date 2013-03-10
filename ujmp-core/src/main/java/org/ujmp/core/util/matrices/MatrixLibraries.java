@@ -671,8 +671,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(square(), SVD, JSCI);
 		setAsString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, JSCI);
 		setAsString(square(), QR, JSCI);
-		setAsString(yes() + footnote("s", "symmetric matrices only")
-				+ footnote("a", "results not directly accessible"), EIG, JSCI);
+		setAsString(
+				yes() + footnote("s", "symmetric matrices only")
+						+ footnote("a", "results not directly accessible"), EIG, JSCI);
 		setAsString(yes(), CHOL, JSCI);
 		setAsString("org.ujmp.jsci", PACKAGE, JSCI);
 
@@ -1136,14 +1137,13 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public static void main(String[] args) throws Exception {
 		MatrixLibraries ml = new MatrixLibraries(MatrixLibrariesFormat.LATEX);
 		Matrix m = ml.deleteRows(Ret.NEW, ml.getRowCount() - 1);
-		String s = m.exportToString(FileFormat.TEX);
+		String s = m.export().toString(FileFormat.TEX);
 		s = s.replaceAll("table", "sidewaystable");
 		s = s.replaceAll("\\\\centering", "");
 		s = s.replaceAll("\\\\toprule", "");
-		s = s
-				.replaceAll(
-						"\\\\begin\\{tabular\\}",
-						"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{centering}\n\\\\scalebox{0.8}{%\n\\\\begin{tabular}");
+		s = s.replaceAll(
+				"\\\\begin\\{tabular\\}",
+				"\\\\caption{Overview of matrix libraries in Java}\n\\\\bigskip\n\\\\begin{centering}\n\\\\scalebox{0.8}{%\n\\\\begin{tabular}");
 		s = s.replaceAll("latest version", "\\\\toprule\nlatest version");
 		s = s.replaceAll("\\\\end\\{sidewaystable\\}", "");
 		s = s.replaceAll("\\\\end\\{tabular\\}", "\\\\end{tabular}}\n\\\\end{centering}");

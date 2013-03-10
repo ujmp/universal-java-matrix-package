@@ -32,7 +32,8 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.GUIUtil;
@@ -45,8 +46,8 @@ public class NewMatrixAction extends ObjectAction {
 		putValue(Action.NAME, "New Matrix...");
 		putValue(Action.SHORT_DESCRIPTION, "Creates a new empty matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY,
+				KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {
@@ -56,8 +57,8 @@ public class NewMatrixAction extends ObjectAction {
 					.showOptionDialog(getComponent(),
 							"Select the value type for the new matrix",
 							"Sparse Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, ValueType
-									.values(), ValueType.DOUBLE)];
+							JOptionPane.QUESTION_MESSAGE, null,
+							ValueType.values(), ValueType.DOUBLE)];
 			long[] size = null;
 			while (size == null || size.length < 2) {
 				String s = JOptionPane.showInputDialog(getComponent(),
@@ -69,11 +70,18 @@ public class NewMatrixAction extends ObjectAction {
 				}
 			}
 			Matrix m = null;
-			if (isDense) {
-				m = MatrixFactory.dense(valueType, size);
-			} else {
-				m = MatrixFactory.sparse(valueType, size);
+			switch (valueType) {
+			case DOUBLE:
+				if (isDense) {
+					m = DenseDoubleMatrix2D.Factory.zeros(size);
+				} else {
+					m = SparseDoubleMatrix2D.Factory.zeros(size);
+				}
+				break;
+			default:
+				throw new RuntimeException("not implemented");
 			}
+
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 
 public interface ObjectMatrix extends GenericMatrix<Object> {
 
-	public static DefaultDenseObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
+	public static DefaultDenseObjectMatrixFactory Factory = new DefaultDenseObjectMatrixFactory();
 
 	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory();
 }

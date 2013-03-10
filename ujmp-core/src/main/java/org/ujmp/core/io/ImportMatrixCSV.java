@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.VerifyUtil;
@@ -140,7 +139,7 @@ public abstract class ImportMatrixCSV {
 				}
 			}
 			lr.close();
-			Matrix m = MatrixFactory.zeros(ValueType.STRING, rows, cols);
+			Matrix m = Matrix.Factory.zeros(ValueType.STRING, rows, cols);
 
 			int r = 0;
 			for (String[] fields : rowData) {

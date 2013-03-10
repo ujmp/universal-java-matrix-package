@@ -54,6 +54,6 @@ public abstract class AbstractDenseBigDecimalMatrix extends AbstractBigDecimalMa
 	}
 
 	public DenseObjectMatrixFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 }

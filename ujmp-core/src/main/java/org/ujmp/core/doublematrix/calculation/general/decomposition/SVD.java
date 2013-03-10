@@ -24,7 +24,7 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -614,7 +614,7 @@ public interface SVD<T> {
 		 * @return U
 		 */
 
-		public final Matrix getU() {
+		public final DenseDoubleMatrix2D getU() {
 			final double[][] x = new double[m][m >= n ? (thin ? Math.min(m + 1, n) : ncu) : ncu];
 
 			for (int r = 0; r < m; r++) {
@@ -623,7 +623,7 @@ public interface SVD<T> {
 				}
 			}
 
-			return MatrixFactory.linkToArray(x);
+			return Matrix.Factory.linkToArray(x);
 		}
 
 		/**
@@ -632,8 +632,8 @@ public interface SVD<T> {
 		 * @return V
 		 */
 
-		public final Matrix getV() {
-			return V == null ? null : MatrixFactory.linkToArray(V);
+		public final DenseDoubleMatrix2D getV() {
+			return V == null ? null : Matrix.Factory.linkToArray(V);
 		}
 
 		/**
@@ -652,11 +652,11 @@ public interface SVD<T> {
 		 * @return S
 		 */
 
-		public final Matrix getS() {
+		public final DenseDoubleMatrix2D getS() {
 			final double[][] X = new double[m >= n ? (thin ? n : ncu) : ncu][n];
 			for (int i = Math.min(m, n); --i >= 0;)
 				X[i][i] = s[i];
-			return MatrixFactory.linkToArray(X);
+			return Matrix.Factory.linkToArray(X);
 		}
 
 		/**
@@ -665,11 +665,11 @@ public interface SVD<T> {
 		 * @return S+
 		 */
 
-		public final Matrix getreciprocalS() {
+		public final DenseDoubleMatrix2D getreciprocalS() {
 			final double[][] X = new double[n][m >= n ? (thin ? n : ncu) : ncu];
 			for (int i = Math.min(m, n) - 1; i >= 0; i--)
 				X[i][i] = s[i] == 0.0 ? 0.0 : 1.0 / s[i];
-			return MatrixFactory.linkToArray(X);
+			return Matrix.Factory.linkToArray(X);
 		}
 
 		/**
@@ -682,7 +682,7 @@ public interface SVD<T> {
 		 * @return A+
 		 */
 
-		public final Matrix inverse(boolean omit) {
+		public final DenseDoubleMatrix2D inverse(boolean omit) {
 			final double[][] inverse = new double[n][m];
 			if (rank() > 0) {
 				final double[] reciprocalS = new double[s.length];
@@ -699,7 +699,7 @@ public interface SVD<T> {
 						for (int k = min - 1; k >= 0; k--)
 							inverse[i][j] += V[i][k] * reciprocalS[k] * U[j][k];
 			}
-			return MatrixFactory.linkToArray(inverse);
+			return Matrix.Factory.linkToArray(inverse);
 		}
 
 		/**

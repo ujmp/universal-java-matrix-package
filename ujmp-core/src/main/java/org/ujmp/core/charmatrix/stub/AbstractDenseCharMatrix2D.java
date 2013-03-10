@@ -76,7 +76,7 @@ public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix 
 	}
 
 	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 
 	public final int getDimensionCount() {

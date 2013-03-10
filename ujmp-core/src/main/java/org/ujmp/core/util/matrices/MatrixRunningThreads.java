@@ -45,7 +45,7 @@ public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
 		return ThreadMap.getInstance();
 	}
 
-	public MapMatrix<Object, Object> copy() {
+	public MapMatrix<Object, Object> clone() {
 		return new MatrixRunningThreads();
 	}
 

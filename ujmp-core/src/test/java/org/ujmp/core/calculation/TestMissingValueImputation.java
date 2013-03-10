@@ -77,7 +77,7 @@ public class TestMissingValueImputation {
 				}
 			}
 
-			Matrix orig = DenseDoubleMatrix2D.factory.randn(10, 10);
+			Matrix orig = DenseDoubleMatrix2D.Factory.randn(10, 10);
 			orig.addMissing(Ret.ORIG, Matrix.ALL, 0.05);
 			assertTrue(method.toString(), orig.containsMissingValues());
 			Matrix m = orig.impute(Ret.NEW, method);

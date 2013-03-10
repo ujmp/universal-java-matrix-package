@@ -41,7 +41,7 @@ public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 		return UIManager.getDefaults();
 	}
 
-	public MapMatrix<Object, Object> copy() {
+	public MapMatrix<Object, Object> clone() {
 		return new MatrixUIDefaults();
 	}
 

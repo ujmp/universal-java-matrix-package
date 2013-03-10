@@ -27,12 +27,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.ejml.alg.dense.decomposition.CholeskyDecomposition;
-import org.ejml.alg.dense.decomposition.DecompositionFactory;
-import org.ejml.alg.dense.decomposition.EigenDecomposition;
-import org.ejml.alg.dense.decomposition.LUDecomposition;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.Matrix64F;
+import org.ejml.factory.CholeskyDecomposition;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.EigenDecomposition;
+import org.ejml.factory.LUDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
@@ -238,7 +239,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix chol() {
-		CholeskyDecomposition chol = DecompositionFactory.chol();
+		CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(
+				matrix.numRows, false);
 		chol.decompose(matrix);
 		Matrix l = new EJMLDenseDoubleMatrix2D(chol.getT(null));
 		return l;
@@ -246,7 +248,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] lu() {
 		if (isSquare()) {
-			LUDecomposition lu = DecompositionFactory.lu();
+			LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(
+					matrix.numRows, matrix.numCols);
 			lu.decompose(matrix);
 			DenseMatrix64F lm = new DenseMatrix64F(matrix.numRows,
 					matrix.numCols);
@@ -266,7 +269,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] eig() {
-		EigenDecomposition eig = DecompositionFactory.eig();
+		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(
+				matrix.numCols, true);
 		eig.decompose(matrix);
 
 		int N = matrix.numRows;
@@ -280,7 +284,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			if (c.isReal()) {
 				D.set(i, i, c.real);
 
-				DenseMatrix64F v = eig.getEigenVector(i);
+				Matrix64F v = eig.getEigenVector(i);
 
 				if (v != null) {
 					for (int j = 0; j < N; j++) {

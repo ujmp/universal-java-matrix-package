@@ -23,8 +23,9 @@
 
 package org.ujmp.ejml.calculation;
 
-import org.ejml.alg.dense.decomposition.DecompositionFactory;
-import org.ejml.alg.dense.decomposition.SingularValueDecomposition;
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.SingularValueDecomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
@@ -35,18 +36,18 @@ public class SVD
 	public static SVD INSTANCE = new SVD();
 
 	public Matrix[] calc(Matrix source) {
-		SingularValueDecomposition svd = DecompositionFactory.svd();
+		SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory
+				.svd((int) source.getRowCount(), (int) source.getColumnCount(),
+						true, true, false);
 
 		if (source instanceof EJMLDenseDoubleMatrix2D) {
-			svd
-					.decompose(((EJMLDenseDoubleMatrix2D) source)
-							.getWrappedObject());
+			svd.decompose(((EJMLDenseDoubleMatrix2D) source).getWrappedObject());
 		} else {
 			svd.decompose(new EJMLDenseDoubleMatrix2D(source)
 					.getWrappedObject());
 		}
-		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU(false));
-		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV(false));
+		Matrix u = new EJMLDenseDoubleMatrix2D(svd.getU(null, false));
+		Matrix v = new EJMLDenseDoubleMatrix2D(svd.getV(null, false));
 		Matrix s = new EJMLDenseDoubleMatrix2D(svd.getW(null));
 		return new Matrix[] { u, s, v };
 	}

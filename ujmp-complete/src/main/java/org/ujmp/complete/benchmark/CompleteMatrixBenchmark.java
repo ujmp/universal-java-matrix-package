@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ojalgo.concurrent.ProcessorCount;
 import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
@@ -159,7 +158,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
 		UJMPSettings.setNumberOfThreads(getConfig().getNumberOfThreads());
-		ProcessorCount.RUNTIME = getConfig().getNumberOfThreads();
 		ConcurrencyUtils.setNumberOfThreads(getConfig().getNumberOfThreads());
 		System.setProperty("ATLAS_NUM_THREADS", "" + getConfig().getNumberOfThreads());
 

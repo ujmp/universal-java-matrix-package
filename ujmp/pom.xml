@@ -243,7 +243,7 @@
 			<dependency>
 				<groupId>mtj</groupId>
 				<artifactId>mtj</artifactId>
-				<version>0.9.12</version>
+				<version>0.9.14</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -369,13 +369,13 @@
 			<dependency>
 				<groupId>ojalgo</groupId>
 				<artifactId>ojalgo</artifactId>
-				<version>29.38</version>
+				<version>33.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>ejml</groupId>
 				<artifactId>ejml</artifactId>
-				<version>0.15</version>
+				<version>0.21</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -523,15 +523,15 @@
 			<url>http://download.java.net/maven/2/</url>
 		</repository>
 		<repository>
-			<id>repository.jboss.org.maven2</id>
-			<name>JBoss Repository for Maven</name>
-			<url>http://repository.jboss.org/maven2/</url>
-		</repository>
-		<repository>
 			<id>java-matrix</id>
 			<name>java-matrix maven repository</name>
 			<url>http://java-matrix.org/maven2</url>
 		</repository>
+		<repository>
+			<id>repository.jboss.org.maven2</id>
+			<name>JBoss Repository for Maven</name>
+			<url>http://repository.jboss.org/maven2/</url>
+		</repository>		
 		<repository>
 			<id>repo2_maven_org</id>
 			<url>http://repo2.maven.org/maven2</url>

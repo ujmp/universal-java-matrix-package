@@ -25,7 +25,6 @@ package org.ujmp.core.bytematrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.impl.ByteCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
@@ -45,7 +44,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 	}
 
 	public final ByteMatrix calcNew() throws MatrixException {
-		ByteMatrix result = (ByteMatrix) MatrixFactory.zeros(ValueType.BYTE, getSize());
+		ByteMatrix result = (ByteMatrix) Matrix.Factory.zeros(ValueType.BYTE, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setByte(getByte(c), c);
 		}

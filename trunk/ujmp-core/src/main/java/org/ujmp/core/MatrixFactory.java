@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
 import org.ujmp.core.bigintegermatrix.calculation.Fibonacci;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
@@ -45,7 +46,6 @@ import org.ujmp.core.datematrix.DenseDateMatrix2D;
 import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Pascal;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
@@ -58,7 +58,6 @@ import org.ujmp.core.enums.DB;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
@@ -70,13 +69,9 @@ import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
-import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
-import org.ujmp.core.matrix.DenseMatrix;
-import org.ujmp.core.matrix.SparseMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
 import org.ujmp.core.objectmatrix.calculation.Convert;
@@ -191,138 +186,6 @@ public abstract class MatrixFactory {
 		return new Concatenation(dimension, matrices).calc(Ret.NEW);
 	}
 
-	public static final Matrix importFromArray(boolean[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(byte[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(char[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(Date[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(double[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(float[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(int[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(long[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(Object[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(short[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final Matrix importFromArray(String[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public static final DenseBooleanMatrix2D linkToArray(boolean[]... values) {
-		return new DefaultDenseBooleanMatrix2D(values);
-	}
-
-	public static final DenseBooleanMatrix2D linkToArray(boolean... values) {
-		return new DefaultDenseBooleanMatrix2D(values);
-	}
-
-	public static final DenseByteMatrix2D linkToArray(byte[]... values) {
-		return new ArrayDenseByteMatrix2D(values);
-	}
-
-	public static final DenseByteMatrix2D linkToArray(byte... values) {
-		return new ArrayDenseByteMatrix2D(values);
-	}
-
-	public static final DenseCharMatrix2D linkToArray(char[]... values) {
-		return new ArrayDenseCharMatrix2D(values);
-	}
-
-	public static final DenseCharMatrix2D linkToArray(char... values) {
-		return new ArrayDenseCharMatrix2D(values);
-	}
-
-	public static final DenseDateMatrix2D linkToArray(Date[]... values) {
-		return new SimpleDenseDateMatrix2D(values);
-	}
-
-	public static final DenseDateMatrix2D linkToArray(Date... values) {
-		return new SimpleDenseDateMatrix2D(values);
-	}
-
-	public static final DenseDoubleMatrix2D linkToArray(double[]... values) {
-		return new ArrayDenseDoubleMatrix2D(values);
-	}
-
-	public static final DenseDoubleMatrix2D linkToArray(double... values) {
-		return new ArrayDenseDoubleMatrix2D(values);
-	}
-
-	public static final DenseFloatMatrix2D linkToArray(float[]... values) {
-		return new ArrayDenseFloatMatrix2D(values);
-	}
-
-	public static final DenseFloatMatrix2D linkToArray(float... values) {
-		return new ArrayDenseFloatMatrix2D(values);
-	}
-
-	public static final DenseIntMatrix2D linkToArray(int[]... values) {
-		return new SimpleDenseIntMatrix2D(values);
-	}
-
-	public static final DenseIntMatrix2D linkToArray(int... values) {
-		return new SimpleDenseIntMatrix2D(values);
-	}
-
-	public static final DenseLongMatrix2D linkToArray(long[]... values) {
-		return new SimpleDenseLongMatrix2D(values);
-	}
-
-	public static final DenseLongMatrix2D linkToArray(long... values) {
-		return new DefaultDenseLongMatrix2D(values);
-	}
-
-	public static final DenseObjectMatrix2D linkToArray(Object[]... values) {
-		return new SimpleDenseObjectMatrix2D(values);
-	}
-
-	public static final DenseObjectMatrix2D linkToArray(Object... values) {
-		return new SimpleDenseObjectMatrix2D(values);
-	}
-
-	public static final DenseShortMatrix2D linkToArray(short[]... values) {
-		return new SimpleDenseShortMatrix2D(values);
-	}
-
-	public static final DenseShortMatrix2D linkToArray(short... values) {
-		return new SimpleDenseShortMatrix2D(values);
-	}
-
-	public static final DenseStringMatrix2D linkToArray(String[]... values) {
-		return new SimpleDenseStringMatrix2D(values);
-	}
-
-	public static final DenseStringMatrix2D linkToArray(String... values) {
-		return new SimpleDenseStringMatrix2D(values);
-	}
-
 	/**
 	 * @deprecated Please do not use this method anymore, it will be removed.
 	 *             use <code>matrix.clone()</code> instead
@@ -357,7 +220,7 @@ public abstract class MatrixFactory {
 
 	public static final Matrix correlatedColumns(int rows, int columns, double correlationFactor)
 			throws MatrixException {
-		Matrix ret = Matrix.factory.zeros(rows, columns);
+		Matrix ret = Matrix.Factory.zeros(rows, columns);
 
 		Matrix orig = MatrixFactory.randn(rows, 1);
 
@@ -433,116 +296,6 @@ public abstract class MatrixFactory {
 		}
 	}
 
-	public static Matrix zeros(ValueType valueType, long... size) throws MatrixException {
-		return dense(valueType, size);
-	}
-
-	public static Matrix dense(ValueType valueType, long... size) throws MatrixException {
-		if (ValueType.DOUBLE.equals(valueType)) {
-			return dense(size);
-		}
-
-		try {
-			Constructor<?> con = null;
-
-			switch (size.length) {
-			case 0:
-				throw new MatrixException("Size not defined");
-			case 1:
-				throw new MatrixException("Size must be at least 2-dimensional");
-			case 2:
-				switch (valueType) {
-				case BOOLEAN:
-					con = matrixMapper.getDenseBooleanMatrix2DConstructor();
-					break;
-				case BYTE:
-					con = matrixMapper.getDenseByteMatrix2DConstructor();
-					break;
-				case CHAR:
-					con = matrixMapper.getDenseCharMatrix2DConstructor();
-					break;
-				case DATE:
-					con = matrixMapper.getDenseDateMatrix2DConstructor();
-					break;
-				case FLOAT:
-					con = matrixMapper.getDenseFloatMatrix2DConstructor();
-					break;
-				case INT:
-					con = matrixMapper.getDenseIntMatrix2DConstructor();
-					break;
-				case LONG:
-					con = matrixMapper.getDenseLongMatrix2DConstructor();
-					break;
-				case OBJECT:
-					con = matrixMapper.getDenseObjectMatrix2DConstructor();
-					break;
-				case SHORT:
-					con = matrixMapper.getDenseShortMatrix2DConstructor();
-					break;
-				case STRING:
-					con = matrixMapper.getDenseStringMatrix2DConstructor();
-					break;
-				case BIGINTEGER:
-					con = matrixMapper.getDenseBigIntegerMatrix2DConstructor();
-					break;
-				case BIGDECIMAL:
-					con = matrixMapper.getDenseBigDecimalMatrix2DConstructor();
-					break;
-				default:
-					throw new MatrixException("entry type not yet supported: " + valueType);
-				}
-				break;
-			default:
-				switch (valueType) {
-				case BOOLEAN:
-					con = matrixMapper.getDenseBooleanMatrixMultiDConstructor();
-					break;
-				case BYTE:
-					con = matrixMapper.getDenseByteMatrixMultiDConstructor();
-					break;
-				case CHAR:
-					con = matrixMapper.getDenseCharMatrixMultiDConstructor();
-					break;
-				case DATE:
-					con = matrixMapper.getDenseDateMatrixMultiDConstructor();
-					break;
-				case FLOAT:
-					con = matrixMapper.getDenseFloatMatrixMultiDConstructor();
-					break;
-				case INT:
-					con = matrixMapper.getDenseIntMatrixMultiDConstructor();
-					break;
-				case LONG:
-					con = matrixMapper.getDenseLongMatrixMultiDConstructor();
-					break;
-				case OBJECT:
-					con = matrixMapper.getDenseObjectMatrixMultiDConstructor();
-					break;
-				case SHORT:
-					con = matrixMapper.getDenseShortMatrixMultiDConstructor();
-					break;
-				case STRING:
-					con = matrixMapper.getDenseStringMatrixMultiDConstructor();
-					break;
-				case BIGINTEGER:
-					con = matrixMapper.getDenseBigIntegerMatrixMultiDConstructor();
-					break;
-				case BIGDECIMAL:
-					con = matrixMapper.getDenseBigDecimalMatrixMultiDConstructor();
-					break;
-				default:
-					throw new MatrixException("entry type not yet supported: " + valueType);
-				}
-			}
-
-			return (Matrix) con.newInstance(size);
-
-		} catch (Exception e) {
-			throw new MatrixException(e);
-		}
-
-	}
-
 	/**
 	 * @deprecated Please do not use this method anymore, it will be moved to
 	 *             <code>DenseMatrix.factory.ones</code>
@@ -555,37 +308,21 @@ public abstract class MatrixFactory {
 		return Fill.calc(value, size);
 	}
 
-	public static Matrix ones(ValueType valueType, long... size) throws MatrixException {
-		return Ones.calc(valueType, size);
-	}
-
-	/**
-	 * @deprecated Please do not use this method anymore, it will be moved to
-	 *             <code>DenseMatrix.factory.eye</code>
-	 */
-	public static Matrix eye(long... size) throws MatrixException {
-		return Eye.calc(size);
-	}
-
 	public static Matrix magic(int size) throws MatrixException {
 		return Magic.magic(size);
 	}
 
 	public static Matrix pascal(long... size) throws MatrixException {
-		return new Pascal(zeros(ValueType.BIGINTEGER, size)).calcOrig();
+		return new Pascal(DenseBigIntegerMatrix2D.Factory.zeros(size)).calcOrig();
 	}
 
 	public static Matrix fibonacci(int count) throws MatrixException {
 		return Fibonacci.calc(count);
 	}
 
-	public static Matrix eye(ValueType valueType, long... size) throws MatrixException {
-		return Eye.calc(valueType, size);
-	}
-
 	public static final Matrix createVectorForClass(int classID, int classCount)
 			throws MatrixException {
-		Matrix matrix = MatrixFactory.dense(classCount, 1);
+		Matrix matrix = DenseDoubleMatrix2D.Factory.zeros(classCount, 1);
 		matrix.setAsDouble(1.0, classID, 0);
 		return matrix;
 	}
@@ -792,22 +529,6 @@ public abstract class MatrixFactory {
 		}
 	}
 
-	/**
-	 * @deprecated Please do not use this method anymore, it will be replaced by
-	 *             <code>DenseMatrix.factory.zeros(long... size)</code>
-	 */
-	public static Matrix zeros(long... size) throws MatrixException {
-		return dense(size);
-	}
-
-	/**
-	 * @deprecated Please do not use this method anymore, it will be moved to
-	 *             <code>DenseMatrix.factory.zeros</code>
-	 */
-	public static Matrix dense(long... size) throws MatrixException {
-		return DenseMatrix.factory.zeros(size);
-	}
-
 	public static final Matrix linkToFile(FileFormat format, File file, Object... parameters)
 			throws MatrixException, IOException {
 		return LinkMatrix.toFile(format, file, parameters);
@@ -849,12 +570,12 @@ public abstract class MatrixFactory {
 	}
 
 	// Wolfer's sunspot data 1700 - 1987
-	public static final Matrix SUNSPOTDATASET() {
-		return MatrixFactory.linkToArray(new double[] { 5, 11, 16, 23, 36, 58, 29, 20, 10, 8, 3, 0,
-				0, 2, 11, 27, 47, 63, 60, 39, 28, 26, 22, 11, 21, 40, 78, 122, 103, 73, 47, 35, 11,
-				5, 16, 34, 70, 81, 111, 101, 73, 40, 20, 16, 5, 11, 22, 40, 60, 80.9, 83.4, 47.7,
-				47.8, 30.7, 12.2, 9.6, 10.2, 32.4, 47.6, 54, 62.9, 85.9, 61.2, 45.1, 36.4, 20.9,
-				11.4, 37.8, 69.8, 106.1, 100.8, 81.6, 66.5, 34.8, 30.6, 7, 19.8, 92.5, 154.4,
+	public static final DenseDoubleMatrix2D SUNSPOTDATASET() {
+		return Matrix.Factory.linkToArray(new double[] { 5, 11, 16, 23, 36, 58, 29, 20, 10, 8, 3,
+				0, 0, 2, 11, 27, 47, 63, 60, 39, 28, 26, 22, 11, 21, 40, 78, 122, 103, 73, 47, 35,
+				11, 5, 16, 34, 70, 81, 111, 101, 73, 40, 20, 16, 5, 11, 22, 40, 60, 80.9, 83.4,
+				47.7, 47.8, 30.7, 12.2, 9.6, 10.2, 32.4, 47.6, 54, 62.9, 85.9, 61.2, 45.1, 36.4,
+				20.9, 11.4, 37.8, 69.8, 106.1, 100.8, 81.6, 66.5, 34.8, 30.6, 7, 19.8, 92.5, 154.4,
 				125.9, 84.8, 68.1, 38.5, 22.8, 10.2, 24.1, 82.9, 132, 130.9, 118.1, 89.9, 66.6, 60,
 				46.9, 41, 21.3, 16, 6.4, 4.1, 6.8, 14.5, 34, 45, 43.1, 47.5, 42.2, 28.1, 10.1, 8.1,
 				2.5, 0, 1.4, 5, 12.2, 13.9, 35.4, 45.8, 41.1, 30.1, 23.9, 15.6, 6.6, 4, 1.8, 8.5,
@@ -892,22 +613,6 @@ public abstract class MatrixFactory {
 		return new WelcomeMatrix();
 	}
 
-	public static Matrix like(Matrix matrix) {
-		if (matrix.isSparse()) {
-			return MatrixFactory.sparse(matrix.getSize());
-		} else {
-			return MatrixFactory.dense(matrix.getSize());
-		}
-	}
-
-	public static Matrix like(Matrix matrix, long... size) {
-		if (matrix.isSparse()) {
-			return SparseMatrix.factory.zeros(size);
-		} else {
-			return DenseMatrix.factory.zeros(size);
-		}
-	}
-
 	public static Matrix vertCat(Matrix row, long rowCount) {
 		Matrix[] matrices = new Matrix[(int) rowCount];
 		Arrays.fill(matrices, row);
@@ -920,12 +625,12 @@ public abstract class MatrixFactory {
 		return horCat(matrices);
 	}
 
-	public static Matrix sequence(double start, double end) {
+	public static DenseDoubleMatrix2D sequence(double start, double end) {
 		return sequence(start, end, 1);
 	}
 
-	public static Matrix sequence(double start, double end, double stepsize) {
-		return MatrixFactory.linkToArray(MathUtil.sequenceDouble(start, end, stepsize));
+	public static DenseDoubleMatrix2D sequence(double start, double end, double stepsize) {
+		return Matrix.Factory.linkToArray(MathUtil.sequenceDouble(start, end, stepsize));
 	}
 
 }

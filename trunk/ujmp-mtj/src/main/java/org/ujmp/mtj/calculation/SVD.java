@@ -48,7 +48,7 @@ public class SVD
 			Matrix u = new MTJDenseDoubleMatrix2D(svd.getU());
 			Matrix v = new MTJDenseDoubleMatrix2D(svd.getVt()).transpose();
 			double[] svs = svd.getS();
-			Matrix s = SparseDoubleMatrix2D.factory.zeros(source.getSize());
+			Matrix s = SparseDoubleMatrix2D.Factory.zeros(source.getSize());
 			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 				s.setAsDouble(svs[i], i, i);
 			}

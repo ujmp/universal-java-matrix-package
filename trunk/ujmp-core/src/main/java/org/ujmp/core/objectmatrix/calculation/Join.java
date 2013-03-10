@@ -23,15 +23,12 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class Join extends AbstractObjectCalculation {
@@ -49,7 +46,6 @@ public class Join extends AbstractObjectCalculation {
 		this.column2 = column2;
 	}
 
-	
 	public Object getObject(long... coordinates) throws MatrixException {
 		if (result == null) {
 			createMatrix();
@@ -57,7 +53,6 @@ public class Join extends AbstractObjectCalculation {
 		return result.getAsObject(coordinates);
 	}
 
-	
 	public long[] getSize() {
 		if (result == null) {
 			createMatrix();
@@ -81,8 +76,8 @@ public class Join extends AbstractObjectCalculation {
 			list.add(r);
 		}
 
-		result = MatrixFactory.dense(getValueType(), m1.getRowCount(), m1.getColumnCount()
-				+ m2.getColumnCount());
+		result = Matrix.Factory.zeros(getValueType(), m1.getRowCount(),
+				m1.getColumnCount() + m2.getColumnCount());
 
 		for (long[] c : m1.allCoordinates()) {
 			result.setAsObject(m1.getAsObject(c), c);
@@ -100,12 +95,4 @@ public class Join extends AbstractObjectCalculation {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		Matrix m1 = MatrixFactory.importFromFile(FileFormat.CSV, new File(
-				"c:/Documents and Settings/holger/Desktop/original.log"), "\t");
-		Matrix m2 = MatrixFactory.importFromFile(FileFormat.CSV, new File(
-				"c:/Documents and Settings/holger/Desktop/js.log"), "\t");
-
-		new Join(m1, m2, 3, 3).calc(Ret.NEW).exportToFile("c:/test.txt");
-	}
 }

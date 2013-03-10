@@ -29,7 +29,7 @@ import org.ujmp.core.longmatrix.factory.LongMatrix2DFactory;
 
 public interface LongMatrix2D extends LongMatrix, GenericMatrix2D<Long> {
 
-	public static LongMatrix2DFactory factory = new DefaultLongMatrix2DFactory();
+	public static LongMatrix2DFactory<? extends LongMatrix2D> Factory = new DefaultLongMatrix2DFactory();
 
 	public long getLong(long row, long column);
 

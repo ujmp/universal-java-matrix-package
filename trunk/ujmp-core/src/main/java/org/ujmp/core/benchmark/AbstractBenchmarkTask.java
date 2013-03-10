@@ -68,11 +68,11 @@ public abstract class AbstractBenchmarkTask {
 					+ getMatrixLabel());
 			return;
 		}
-		Matrix2D resultTime = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+		Matrix2D resultTime = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
 				sizes.size());
-		Matrix2D resultDiff = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+		Matrix2D resultDiff = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
 				sizes.size());
-		Matrix2D resultMem = (Matrix2D) MatrixFactory.zeros(ValueType.STRING, config.getRuns(),
+		Matrix2D resultMem = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
 				sizes.size());
 
 		resultTime.setLabel(getMatrixLabel() + "-" + getTaskName());
@@ -92,12 +92,12 @@ public abstract class AbstractBenchmarkTask {
 			long[] size = sizes.get(s);
 			double bestStd = Double.MAX_VALUE;
 			int tmpTrialCount = config.getMinTrialCount();
-			DenseDoubleMatrix2D curTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
-			DenseDoubleMatrix2D curDiff = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
-			DenseDoubleMatrix2D curMem = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
-			DenseDoubleMatrix2D bestMem = DenseDoubleMatrix2D.factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D curTime = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestTime = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D curDiff = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestDiff = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D curMem = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
+			DenseDoubleMatrix2D bestMem = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
 			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
 				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
 				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");
@@ -167,17 +167,17 @@ public abstract class AbstractBenchmarkTask {
 			}
 		}
 
-		Matrix temp = MatrixFactory.vertCat(resultTime.getAnnotation().getDimensionMatrix(
-				Matrix.ROW), resultTime);
-		Matrix diff = MatrixFactory.vertCat(resultDiff.getAnnotation().getDimensionMatrix(
-				Matrix.ROW), resultDiff);
+		Matrix temp = MatrixFactory.vertCat(
+				resultTime.getAnnotation().getDimensionMatrix(Matrix.ROW), resultTime);
+		Matrix diff = MatrixFactory.vertCat(
+				resultDiff.getAnnotation().getDimensionMatrix(Matrix.ROW), resultDiff);
 		Matrix mem = MatrixFactory.vertCat(
 				resultMem.getAnnotation().getDimensionMatrix(Matrix.ROW), resultMem);
 		try {
-			temp.exportToFile(FileFormat.CSV, timeFile);
-			mem.exportToFile(FileFormat.CSV, memFile);
+			temp.export().toFile(FileFormat.CSV, timeFile);
+			mem.export().toFile(FileFormat.CSV, memFile);
 			if (!diff.containsMissingValues()) {
-				diff.exportToFile(FileFormat.CSV, diffFile);
+				diff.export().toFile(FileFormat.CSV, diffFile);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

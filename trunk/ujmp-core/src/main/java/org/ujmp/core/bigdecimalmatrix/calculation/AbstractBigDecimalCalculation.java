@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.impl.BigDecimalCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
@@ -47,7 +46,7 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 	}
 
 	public final BigDecimalMatrix calcNew() throws MatrixException {
-		BigDecimalMatrix result = (BigDecimalMatrix) MatrixFactory.zeros(ValueType.BIGDECIMAL,
+		BigDecimalMatrix result = (BigDecimalMatrix) Matrix.Factory.zeros(ValueType.BIGDECIMAL,
 				getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigDecimal(getBigDecimal(c), c);

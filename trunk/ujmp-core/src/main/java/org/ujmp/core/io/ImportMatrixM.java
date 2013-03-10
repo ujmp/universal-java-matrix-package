@@ -33,7 +33,6 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.util.StringUtil;
 
 public abstract class ImportMatrixM {
@@ -61,7 +60,7 @@ public abstract class ImportMatrixM {
 				values[r][c] = cols[c];
 			}
 		}
-		return MatrixFactory.linkToArray(values);
+		return Matrix.Factory.linkToArray(values);
 	}
 
 	public static Matrix fromFile(File file, Object... parameters) throws IOException {

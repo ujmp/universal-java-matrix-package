@@ -35,7 +35,7 @@ public class DefaultDenseDoubleMatrixFactory extends
 
 	public DenseDoubleMatrix zeros(long... size) throws MatrixException {
 		if (size.length == 2) {
-			return DenseDoubleMatrix2D.factory.zeros(size);
+			return DenseDoubleMatrix2D.Factory.zeros(size);
 		} else {
 			return new DefaultDenseDoubleMatrixMultiD(size);
 		}

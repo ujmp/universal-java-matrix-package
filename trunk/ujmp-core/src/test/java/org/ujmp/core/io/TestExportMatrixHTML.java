@@ -44,7 +44,7 @@ public class TestExportMatrixHTML extends AbstractExportMatrixTest {
 		file.deleteOnExit();
 
 		Matrix m = getMatrix();
-		m.exportToFile(getFormat(), file);
+		m.export().toFile(getFormat(), file);
 
 		assertTrue(getLabel(), file.exists());
 		assertTrue(getLabel(), file.length() > 0);

@@ -23,15 +23,7 @@
 
 package org.ujmp.core.bigintegermatrix.factory;
 
-import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
-
 public abstract class AbstractBigIntegerMatrix2DFactory implements BigIntegerMatrix2DFactory {
 	private static final long serialVersionUID = -7457982459283518321L;
-
-	
-	public BigIntegerMatrix2D zeros(long rows, long columns) throws MatrixException {
-		return dense(rows, columns);
-	}
 
 }

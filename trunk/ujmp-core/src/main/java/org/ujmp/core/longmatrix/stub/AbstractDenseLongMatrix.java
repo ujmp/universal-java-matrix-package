@@ -53,7 +53,7 @@ public abstract class AbstractDenseLongMatrix extends AbstractLongMatrix impleme
 	}
 
 	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 
 }

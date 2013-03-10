@@ -95,7 +95,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					m2.getColumnCount());
 			Mtimes.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
@@ -106,7 +106,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public Matrix times(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			TimesMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
@@ -117,7 +117,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public Matrix divide(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			DenseDoubleMatrix2D.divideMatrix.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
@@ -128,7 +128,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public Matrix plus(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			PlusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
@@ -139,7 +139,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public Matrix minus(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
-			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			MinusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
 			return result;
@@ -149,35 +149,35 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 	}
 
 	public Matrix minus(double v) {
-		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		MinusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix plus(double v) {
-		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		PlusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix times(double v) {
-		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		TimesScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix divide(double v) {
-		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getRowCount(),
+		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		DivideScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
 		return result;
 	}
 
 	public Matrix transpose() {
-		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.factory.zeros(getColumnCount(),
+		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getColumnCount(),
 				getRowCount());
 		Transpose.DENSEDOUBLEMATRIX2D.calc(this, result);
 		return result;
@@ -196,6 +196,6 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 	}
 
 	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory() {
-		return DenseDoubleMatrix2D.factory;
+		return DenseDoubleMatrix2D.Factory;
 	}
 }

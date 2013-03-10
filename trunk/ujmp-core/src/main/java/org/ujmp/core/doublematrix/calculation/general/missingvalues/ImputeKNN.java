@@ -61,7 +61,7 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 	}
 
 	private Matrix getDistanceMatrix() {
-		Matrix distanceMatrix = Matrix.factory.zeros(getSource().getRowCount(), getSource()
+		Matrix distanceMatrix = Matrix.Factory.zeros(getSource().getRowCount(), getSource()
 				.getRowCount());
 		for (int r = 0; r < getSource().getRowCount(); r++) {
 			for (int c = 0; c < getSource().getRowCount(); c++) {

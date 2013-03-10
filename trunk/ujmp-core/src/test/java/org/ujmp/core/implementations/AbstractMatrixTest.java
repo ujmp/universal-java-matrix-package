@@ -107,28 +107,28 @@ public abstract class AbstractMatrixTest {
 
 	@Test
 	public void testExtractAnnotation() throws Exception {
-		Matrix m1 = DenseDoubleMatrix2D.factory.randn(5, 5);
+		Matrix m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		Matrix m3 = m2.includeAnnotation(Ret.NEW, Matrix.ROW);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = DenseDoubleMatrix2D.factory.randn(5, 5);
+		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.ROW);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = DenseDoubleMatrix2D.factory.randn(5, 5);
+		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.NEW, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.NEW, Matrix.COLUMN);
 		m3.setAnnotation(null);
 		assertEquals(getLabel(), m1, m3);
 
-		m1 = DenseDoubleMatrix2D.factory.randn(5, 5);
+		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.COLUMN);
@@ -522,7 +522,7 @@ public abstract class AbstractMatrixTest {
 		byte[] data = SerializationUtil.serialize(m);
 		Matrix m2 = (Matrix) SerializationUtil.deserialize(data);
 		if (m2.isTransient()) {
-			Matrix m0 = Matrix.factory.zeros(2, 2);
+			Matrix m0 = Matrix.Factory.zeros(2, 2);
 			assertEquals(getLabel(), m0, m2);
 		} else {
 			assertEquals(getLabel(), m, m2);
@@ -1499,7 +1499,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1534,7 +1534,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.invSPD();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1575,7 +1575,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1613,7 +1613,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.invSPD();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {

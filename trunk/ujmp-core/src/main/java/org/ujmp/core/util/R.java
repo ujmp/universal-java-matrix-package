@@ -177,7 +177,7 @@ public class R {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + " <- " + matrix.exportToString(FileFormat.R));
+		execute(label + " <- " + matrix.export().toString(FileFormat.R));
 	}
 
 	private static String findR() {
@@ -209,13 +209,13 @@ public class R {
 			String rawText = execute("cat(" + label + ")");
 			String[] rawValues = rawText.split("\n")[1].split("[\\s]+");
 
-			Matrix matrix = Matrix.factory.zeros(rows, cols);
+			Matrix matrix = Matrix.Factory.zeros(rows, cols);
 
 			int i = 0;
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
-					matrix.setAsDouble(Double.parseDouble(rawValues[i++].replaceAll("\\>", "")
-							.trim()), r, c);
+					matrix.setAsDouble(
+							Double.parseDouble(rawValues[i++].replaceAll("\\>", "").trim()), r, c);
 				}
 			}
 

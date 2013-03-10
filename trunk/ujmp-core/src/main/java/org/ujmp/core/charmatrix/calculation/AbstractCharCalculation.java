@@ -25,7 +25,6 @@ package org.ujmp.core.charmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.impl.CharCalculationMatrix;
@@ -45,7 +44,7 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 	}
 
 	public final CharMatrix calcNew() throws MatrixException {
-		CharMatrix result = (CharMatrix) MatrixFactory.zeros(ValueType.CHAR, getSize());
+		CharMatrix result = (CharMatrix) Matrix.Factory.zeros(ValueType.CHAR, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsChar(getChar(c), c);
 		}

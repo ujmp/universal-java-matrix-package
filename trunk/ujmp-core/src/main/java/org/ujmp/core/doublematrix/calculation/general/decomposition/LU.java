@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
@@ -326,7 +325,7 @@ public interface LU<T> {
 		 * @return L
 		 */
 
-		public final Matrix getL() {
+		public final DenseDoubleMatrix2D getL() {
 			final int min = Math.min(m, n);
 			final double[][] L = new double[m][min];
 			for (int i = 0; i < m; i++) {
@@ -338,7 +337,7 @@ public interface LU<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(L);
+			return Matrix.Factory.linkToArray(L);
 		}
 
 		/**
@@ -347,7 +346,7 @@ public interface LU<T> {
 		 * @return U
 		 */
 
-		public final Matrix getU() {
+		public final DenseDoubleMatrix2D getU() {
 			final int min = Math.min(m, n);
 			final double[][] U = new double[min][n];
 			for (int i = 0; i < min; i++) {
@@ -357,7 +356,7 @@ public interface LU<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(U);
+			return Matrix.Factory.linkToArray(U);
 		}
 
 		/**
@@ -375,7 +374,7 @@ public interface LU<T> {
 		}
 
 		public final Matrix getP() {
-			final DenseDoubleMatrix2D p = DenseDoubleMatrix2D.factory.zeros(m, m);
+			final DenseDoubleMatrix2D p = DenseDoubleMatrix2D.Factory.zeros(m, m);
 			for (int i = 0; i < m; i++) {
 				p.setDouble(1, i, piv[i]);
 			}
@@ -427,7 +426,7 @@ public interface LU<T> {
 		 *                Matrix is singular.
 		 */
 
-		public final Matrix solve(Matrix B) {
+		public final DenseDoubleMatrix2D solve(Matrix B) {
 			if (B.getRowCount() != m) {
 				throw new IllegalArgumentException("Matrix row dimensions must agree.");
 			}
@@ -475,7 +474,7 @@ public interface LU<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(X);
+			return Matrix.Factory.linkToArray(X);
 		}
 
 	};

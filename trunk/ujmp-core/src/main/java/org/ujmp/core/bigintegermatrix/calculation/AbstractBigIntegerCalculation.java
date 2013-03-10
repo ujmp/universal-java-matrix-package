@@ -47,7 +47,7 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 	}
 
 	public final BigIntegerMatrix calcNew() throws MatrixException {
-		BigIntegerMatrix result = (BigIntegerMatrix) MatrixFactory.zeros(ValueType.BIGINTEGER,
+		BigIntegerMatrix result = (BigIntegerMatrix) Matrix.Factory.zeros(ValueType.BIGINTEGER,
 				getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigInteger(getBigInteger(c), c);

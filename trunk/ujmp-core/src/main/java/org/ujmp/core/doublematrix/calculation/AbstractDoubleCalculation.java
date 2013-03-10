@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DoubleCalculationMatrix;
@@ -50,7 +49,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 	}
 
 	public DoubleMatrix calcNew() throws MatrixException {
-		DoubleMatrix result = (DoubleMatrix) MatrixFactory.zeros(ValueType.DOUBLE, getSize());
+		DoubleMatrix result = (DoubleMatrix) Matrix.Factory.zeros(ValueType.DOUBLE, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
 		}

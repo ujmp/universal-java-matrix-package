@@ -25,7 +25,6 @@ package org.ujmp.core.longmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -49,7 +48,7 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 	}
 
 	public final LongMatrix calcNew() throws MatrixException {
-		LongMatrix result = (LongMatrix) MatrixFactory.zeros(ValueType.LONG, getSize());
+		LongMatrix result = (LongMatrix) Matrix.Factory.zeros(ValueType.LONG, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsLong(getLong(c), c);
 		}

@@ -158,7 +158,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 
 	}
 
-	public MapMatrix<String, Object> copy() {
+	public MapMatrix<String, Object> clone() {
 		try {
 			MapMatrix<String, Object> ret;
 			ret = new FileMatrix(map.getFinalFile());

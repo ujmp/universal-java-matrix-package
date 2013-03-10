@@ -32,7 +32,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 
 public class ImportMatrixSER {
@@ -59,9 +58,9 @@ public class ImportMatrixSER {
 
 		Matrix m = null;
 		if (isSparse) {
-			m = MatrixFactory.sparse(valueType, size);
+			m = Matrix.Factory.sparse(valueType, size);
 		} else {
-			m = MatrixFactory.dense(valueType, size);
+			m = Matrix.Factory.zeros(valueType, size);
 		}
 
 		long[] c = new long[sizeLength];

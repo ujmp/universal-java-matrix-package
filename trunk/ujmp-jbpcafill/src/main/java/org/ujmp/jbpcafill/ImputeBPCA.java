@@ -41,7 +41,6 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (xImputed == null) {
 			createMatrix();
@@ -55,10 +54,11 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 			m = m.replaceRegex(Ret.NEW, "NaN", "999");
 			File file1 = File.createTempFile("matrix", ".csv");
 			File file2 = File.createTempFile("matrix", ".csv");
-			m.exportToFile(FileFormat.CSV, file1);
+			m.export().toFile(FileFormat.CSV, file1);
 			Class<?> c = Class.forName("JBPCAfill");
 			Method me = c.getMethod("main", String[].class);
-			me.invoke(null, new Object[] { new String[] { file1.toString(), file2.toString() } });
+			me.invoke(null, new Object[] { new String[] { file1.toString(),
+					file2.toString() } });
 			m = MatrixFactory.importFromFile(FileFormat.CSV, file2, "\\s");
 			m = m.replaceRegex(Ret.NEW, ",", "");
 			file1.delete();

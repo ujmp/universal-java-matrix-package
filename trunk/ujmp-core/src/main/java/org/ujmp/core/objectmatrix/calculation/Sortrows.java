@@ -28,9 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix2D;
 import org.ujmp.core.util.Sortable;
@@ -156,8 +154,7 @@ public class Sortrows extends AbstractObjectCalculation {
 			Collections.reverse(rows);
 		}
 
-		LongMatrix2D indexMatrix = (LongMatrix2D) MatrixFactory.zeros(ValueType.LONG, rows.size(),
-				1);
+		LongMatrix2D indexMatrix = LongMatrix2D.Factory.zeros(rows.size(), 1);
 
 		Annotation annotation = m.getAnnotation();
 		if (annotation != null) {
@@ -168,8 +165,8 @@ public class Sortrows extends AbstractObjectCalculation {
 		for (int r = 0; r < rows.size(); r++) {
 			indexMatrix.setLong((Long) (rows.get(r)).getObject(), r, 0);
 			if (annotation != null) {
-				Object o = m.getAxisAnnotation(Matrix.COLUMN, new long[] {
-						(Long) (rows.get(r)).getObject(), 0 });
+				Object o = m.getAxisAnnotation(Matrix.COLUMN,
+						new long[] { (Long) (rows.get(r)).getObject(), 0 });
 				annotation.setAxisAnnotation(Matrix.COLUMN, o, new long[] { r, 0 });
 			}
 		}

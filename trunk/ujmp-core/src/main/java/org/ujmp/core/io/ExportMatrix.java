@@ -142,4 +142,5 @@ public abstract class ExportMatrix {
 			throw new MatrixException("jdbc not available", e);
 		}
 	}
+
 }

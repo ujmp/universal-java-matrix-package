@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
@@ -44,12 +44,10 @@ public class MutualInformation extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		return calculate(coordinates[ROW], coordinates[COLUMN], getSource());
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 	}
@@ -124,8 +122,7 @@ public class MutualInformation extends AbstractDoubleCalculation {
 		DefaultDenseIntMatrix2D matrix2 = (DefaultDenseIntMatrix2D) matrix;
 		long count = matrix.getColumnCount();
 		int samples = (int) matrix.getRowCount();
-		DoubleMatrix2D result = (DoubleMatrix2D) MatrixFactory
-				.zeros(ValueType.DOUBLE, count, count);
+		DoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(count, count);
 		int[] d_dc = new int[(int) count];
 		// int[][] matrixInt = matrix.toIntArray();
 		Arrays.fill(d_dc, (int) matrix.getMaxValue() + 1);

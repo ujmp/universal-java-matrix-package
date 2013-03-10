@@ -29,7 +29,7 @@ import org.ujmp.core.matrix.SparseMatrix2D;
 
 public interface SparseDoubleMatrix2D extends DoubleMatrix2D, SparseDoubleMatrix, SparseMatrix2D {
 
-	public static SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> factory = new DefaultSparseDoubleMatrix2DFactory();
+	public static SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> Factory = new DefaultSparseDoubleMatrix2DFactory();
 
 	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory();
 }

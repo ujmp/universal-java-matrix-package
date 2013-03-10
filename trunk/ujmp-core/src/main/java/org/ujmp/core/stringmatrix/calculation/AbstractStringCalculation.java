@@ -25,7 +25,6 @@ package org.ujmp.core.stringmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
@@ -61,7 +60,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 	}
 
 	public final StringMatrix calcNew() throws MatrixException {
-		StringMatrix result = (StringMatrix) MatrixFactory.zeros(ValueType.STRING, getSize());
+		StringMatrix result = (StringMatrix) Matrix.Factory.zeros(ValueType.STRING, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsString(getString(c), c);
 		}

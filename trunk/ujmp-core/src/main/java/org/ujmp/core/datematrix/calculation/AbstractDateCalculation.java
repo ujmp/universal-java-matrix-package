@@ -47,7 +47,7 @@ public abstract class AbstractDateCalculation extends AbstractCalculation implem
 	}
 
 	public final DateMatrix calcNew() throws MatrixException {
-		DateMatrix result = (DateMatrix) MatrixFactory.zeros(ValueType.DATE, getSize());
+		DateMatrix result = (DateMatrix) Matrix.Factory.zeros(ValueType.DATE, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDate(getDate(c), c);
 		}

@@ -64,7 +64,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Matrix m = MatrixFactory.zeros(ValueType.OBJECT, 5, 5);
+		Matrix m = Matrix.Factory.zeros(ValueType.OBJECT, 5, 5);
 		m.randn(Ret.ORIG);
 		m.setLabel("test");
 		m.setColumnLabel(0, "col0");

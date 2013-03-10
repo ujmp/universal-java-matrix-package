@@ -39,7 +39,7 @@ public class Sqrt extends AbstractDoubleCalculation {
 	}
 
 	public static Matrix calc(Matrix source) throws MatrixException {
-		Matrix ret = Matrix.factory.zeros(source.getSize());
+		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.sqrt(source.getAsDouble(c)), c);
 		}

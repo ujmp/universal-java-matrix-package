@@ -59,7 +59,7 @@ public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object>
 	}
 
 	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory() {
-		return ObjectMatrix.factory;
+		return ObjectMatrix.Factory;
 	}
 
 }

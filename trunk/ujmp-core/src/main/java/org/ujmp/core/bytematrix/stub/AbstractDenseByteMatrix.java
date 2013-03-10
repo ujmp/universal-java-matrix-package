@@ -53,6 +53,6 @@ public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix impleme
 	}
 
 	public DenseObjectMatrixFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.factory;
+		return DenseObjectMatrix2D.Factory;
 	}
 }

@@ -23,15 +23,14 @@
 
 package org.ujmp.vecmath;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class VecMathDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<VecMathDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 8234576107068440158L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public VecMathDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new VecMathDenseDoubleMatrix2D(rows, columns);
 	}

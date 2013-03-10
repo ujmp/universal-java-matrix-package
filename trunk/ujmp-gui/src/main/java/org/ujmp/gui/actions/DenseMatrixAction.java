@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -45,15 +45,14 @@ public class DenseMatrixAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 	}
 
-	
 	public Object call() {
 		try {
 			ValueType valueType = ValueType.values()[JOptionPane
 					.showOptionDialog(getComponent(),
 							"Select the value type for the new matrix",
 							"Sparse Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, ValueType
-									.values(), ValueType.DOUBLE)];
+							JOptionPane.QUESTION_MESSAGE, null,
+							ValueType.values(), ValueType.DOUBLE)];
 			long[] size = null;
 			while (size == null || size.length < 2) {
 				String s = JOptionPane.showInputDialog(getComponent(),
@@ -64,7 +63,15 @@ public class DenseMatrixAction extends ObjectAction {
 				} catch (Exception e) {
 				}
 			}
-			Matrix m = MatrixFactory.dense(valueType, size);
+			Matrix m = null;
+			switch (valueType) {
+			case DOUBLE:
+				m = DenseDoubleMatrix2D.Factory.zeros(size);
+				break;
+			default:
+				throw new RuntimeException("not implemented");
+			}
+
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

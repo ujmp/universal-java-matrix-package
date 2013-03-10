@@ -61,7 +61,9 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 
 public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D {
 
-	public static DenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> factory = new DefaultDenseDoubleMatrix2DFactory();
+	public static DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> Factory = new DefaultDenseDoubleMatrix2DFactory();
+
+	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory();
 
 	public static TransposeCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
 
@@ -105,5 +107,4 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory();
 }

@@ -23,15 +23,14 @@
 
 package org.ujmp.orbital;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class OrbitalDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<OrbitalDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -2350372463029926450L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public OrbitalDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new OrbitalDenseDoubleMatrix2D(rows, columns);
 	}

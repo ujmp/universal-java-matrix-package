@@ -23,16 +23,14 @@
 
 package org.ujmp.jsci;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class JSciDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<JSciDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -9135903625272489384L;
 
-	
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public JSciDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new JSciDenseDoubleMatrix2D(rows, columns);
 	}

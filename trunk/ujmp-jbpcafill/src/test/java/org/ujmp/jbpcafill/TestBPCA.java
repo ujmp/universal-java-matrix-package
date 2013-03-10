@@ -36,7 +36,7 @@ public class TestBPCA {
 
 	@Test
 	public void testBPCA() throws Exception {
-		Matrix m = DenseDoubleMatrix2D.factory.randn(30, 30);
+		Matrix m = DenseDoubleMatrix2D.Factory.randn(30, 30);
 		m.addMissing(Ret.ORIG, Matrix.ALL, 0.1);
 		assertTrue(m.containsMissingValues());
 		m = m.impute(Ret.NEW, ImputationMethod.BPCA);

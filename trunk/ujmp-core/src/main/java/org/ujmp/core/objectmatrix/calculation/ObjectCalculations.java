@@ -130,12 +130,6 @@ public interface ObjectCalculations {
 	public Matrix diag(Ret returnType) throws MatrixException;
 
 	/**
-	 * @deprecated Please do not use this method anymore, it will be removed.
-	 *             use <code>matrix.clone()</code> instead
-	 */
-	public Matrix copy() throws MatrixException;
-
-	/**
 	 * Creates a copy of the matrix with the desired type for matrix entries.
 	 * 
 	 * @param newValueType

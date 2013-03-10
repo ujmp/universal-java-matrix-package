@@ -23,15 +23,14 @@
 
 package org.ujmp.jmatharray;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class JMathArrayDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<JMathArrayDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 1951543109603957820L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public JMathArrayDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new JMathArrayDenseDoubleMatrix2D(rows, columns);
 	}

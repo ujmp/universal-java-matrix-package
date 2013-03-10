@@ -48,7 +48,7 @@ public class MandelbrotMatrixAction extends AbstractMatrixAction {
 		int cells = 500;
 		int iterations = 20;
 
-		Matrix m = Matrix.factory.zeros(cells, cells);
+		Matrix m = Matrix.Factory.zeros(cells, cells);
 		for (int column = 0; column < cells; column++) {
 			for (int row = 0; row < cells; row++) {
 				double x0 = xoffset - size / 2 + size * column / cells;

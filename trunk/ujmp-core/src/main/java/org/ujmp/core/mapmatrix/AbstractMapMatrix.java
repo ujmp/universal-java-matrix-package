@@ -62,7 +62,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	public final void setObject(Object key, int row, int column) {
 	}
 
-	public abstract MapMatrix<K, V> copy();
+	public abstract MapMatrix<K, V> clone();
 
 	// TODO: concurrentmodification exceptions can come from here
 	@SuppressWarnings("rawtypes")

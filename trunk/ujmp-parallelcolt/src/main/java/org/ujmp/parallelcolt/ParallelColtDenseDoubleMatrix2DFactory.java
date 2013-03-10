@@ -23,16 +23,14 @@
 
 package org.ujmp.parallelcolt;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class ParallelColtDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<ParallelColtDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -6399863648885565273L;
 
-	
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public ParallelColtDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new ParallelColtDenseDoubleMatrix2D(rows, columns);
 	}

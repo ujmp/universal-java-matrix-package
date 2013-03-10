@@ -23,15 +23,14 @@
 
 package org.ujmp.jlinalg;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 
 public class JLinAlgDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory {
+		AbstractDenseDoubleMatrix2DFactory<JLinAlgDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -2472796666760629969L;
 
-	public DenseDoubleMatrix2D zeros(long rows, long columns)
+	public JLinAlgDenseDoubleMatrix2D zeros(long rows, long columns)
 			throws MatrixException {
 		return new JLinAlgDenseDoubleMatrix2D(rows, columns);
 	}

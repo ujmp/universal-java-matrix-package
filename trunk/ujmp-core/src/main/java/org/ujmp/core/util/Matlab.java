@@ -151,7 +151,7 @@ public class Matlab {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.exportToString(FileFormat.M));
+		execute(label + "=" + matrix.export().toString(FileFormat.M));
 	}
 
 	public Matrix getMatrix(String label) throws Exception {
@@ -164,7 +164,7 @@ public class Matlab {
 			String rawText = execute("fprintf(1,'%55.55f\\n'," + label + ")");
 			String[] rawValues = rawText.split("\n");
 
-			Matrix matrix = Matrix.factory.zeros(rows, cols);
+			Matrix matrix = Matrix.Factory.zeros(rows, cols);
 
 			int i = 0;
 			for (int c = 0; c < cols; c++) {

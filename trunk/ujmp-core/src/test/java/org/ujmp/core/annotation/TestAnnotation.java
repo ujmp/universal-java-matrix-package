@@ -33,7 +33,7 @@ public class TestAnnotation {
 
 	@Test
 	public void testReverseAnnotation() throws Exception {
-		Matrix m = Matrix.factory.zeros(10, 10);
+		Matrix m = Matrix.Factory.zeros(10, 10);
 		m.setColumnLabel(3, "col3");
 		m.setRowLabel(3, "row3");
 		m.setColumnLabel(5, "col5");
@@ -49,10 +49,10 @@ public class TestAnnotation {
 
 	@Test
 	public void testRows() {
-		Matrix m1 = Matrix.factory.zeros(1, 2);
+		Matrix m1 = Matrix.Factory.zeros(1, 2);
 		m1.setLabel("label");
 		m1.setRowLabel(0, "row1");
-		Matrix m2 = m1.appendVertically(Ret.NEW, Matrix.factory.zeros(1, 2));
+		Matrix m2 = m1.appendVertically(Ret.NEW, Matrix.Factory.zeros(1, 2));
 		m2.setRowLabel(1, "row2");
 		assertEquals("label", m2.getLabelObject());
 		assertEquals("row1", m2.getRowLabel(0));
@@ -61,10 +61,10 @@ public class TestAnnotation {
 
 	@Test
 	public void testCols() {
-		Matrix m1 = Matrix.factory.zeros(2, 1);
+		Matrix m1 = Matrix.Factory.zeros(2, 1);
 		m1.setLabel("label");
 		m1.setColumnLabel(0, "col1");
-		Matrix m2 = m1.appendHorizontally(Ret.NEW, Matrix.factory.zeros(2, 1));
+		Matrix m2 = m1.appendHorizontally(Ret.NEW, Matrix.Factory.zeros(2, 1));
 		m2.setColumnLabel(1, "col2");
 		assertEquals("label", m2.getLabelObject());
 		assertEquals("col1", m2.getColumnLabel(0));

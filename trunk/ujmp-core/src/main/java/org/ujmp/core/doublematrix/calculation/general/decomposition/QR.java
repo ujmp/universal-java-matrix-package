@@ -24,8 +24,8 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
@@ -186,7 +186,7 @@ public interface QR<T> {
 	public static final QR<Matrix> MATRIXSMALLSINGLETHREADED = UJMP;
 
 	public class QRMatrix {
-		private static final long serialVersionUID = 2137461328307048867L;
+		public static final long serialVersionUID = 2137461328307048867L;
 
 		/**
 		 * Array for internal storage of decomposition.
@@ -287,7 +287,7 @@ public interface QR<T> {
 		 * @return Lower trapezoidal matrix whose columns define the reflections
 		 */
 
-		public final Matrix getH() {
+		public final DenseDoubleMatrix2D getH() {
 			final double[][] H = new double[m][n];
 			for (int i = 0; i < m; i++) {
 				for (int j = 0; j < n; j++) {
@@ -296,7 +296,7 @@ public interface QR<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(H);
+			return Matrix.Factory.linkToArray(H);
 		}
 
 		/**
@@ -305,7 +305,7 @@ public interface QR<T> {
 		 * @return R
 		 */
 
-		public final Matrix getR() {
+		public final DenseDoubleMatrix2D getR() {
 			final double[][] R = new double[n][n];
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
@@ -318,7 +318,7 @@ public interface QR<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(R);
+			return Matrix.Factory.linkToArray(R);
 		}
 
 		/**
@@ -327,7 +327,7 @@ public interface QR<T> {
 		 * @return Q
 		 */
 
-		public final Matrix getQ() {
+		public final DenseDoubleMatrix2D getQ() {
 			final double[][] Q = new double[m][n];
 			for (int k = n - 1; k >= 0; k--) {
 				for (int i = 0; i < m; i++) {
@@ -347,7 +347,7 @@ public interface QR<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(Q);
+			return Matrix.Factory.linkToArray(Q);
 		}
 
 		/**
@@ -398,7 +398,7 @@ public interface QR<T> {
 					}
 				}
 			}
-			return MatrixFactory.linkToArray(X).subMatrix(Ret.NEW, 0, 0, n - 1, nx - 1);
+			return Matrix.Factory.linkToArray(X).subMatrix(Ret.NEW, 0, 0, n - 1, nx - 1);
 		}
 	}
 }

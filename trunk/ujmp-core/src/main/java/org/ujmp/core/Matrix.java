@@ -59,7 +59,7 @@ import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
-import org.ujmp.core.io.ExportMatrixInterface;
+import org.ujmp.core.io.MatrixExporter;
 import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
 
 /**
@@ -76,9 +76,9 @@ import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
  * @log $Log$
  * 
  */
-public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFunctions,
-		GettersAndSetters, BasicMatrixProperties, CanPerformCalculations, DistanceMeasures,
-		Comparable<Matrix>, HasAnnotation, Conversions {
+public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSetters,
+		BasicMatrixProperties, CanPerformCalculations, DistanceMeasures, Comparable<Matrix>,
+		HasAnnotation, Conversions {
 
 	public enum StorageType {
 		DENSE, SPARSE, LIST, SET, MAP, TREE, GRAPH
@@ -87,7 +87,9 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 	/**
 	 * A factory for creating matrices.
 	 */
-	public static final MatrixFactoryRoot<? extends Matrix> factory = new MatrixFactoryTemp();
+	public static final MatrixFactoryTemp Factory = new MatrixFactoryTemp();
+
+	public MatrixFactoryRoot<? extends Matrix> getFactory();
 
 	public static final Ret LINK = Ret.LINK;
 
@@ -143,8 +145,8 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	public MatrixFactoryRoot<? extends Matrix> getFactory();
-
 	public Matrix clone();
+
+	public MatrixExporter export();
 
 }

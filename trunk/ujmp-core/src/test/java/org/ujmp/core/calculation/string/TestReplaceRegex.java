@@ -37,7 +37,7 @@ import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 public class TestReplaceRegex {
 
 	private static Matrix getTestMatrix() throws MatrixException {
-		Matrix m = MatrixFactory.zeros(ValueType.STRING, 2, 2);
+		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("aabbcabd", 0, 0);
 		m.setAsString(null, 0, 1);
 		m.setAsString("ad", 1, 0);
@@ -46,7 +46,7 @@ public class TestReplaceRegex {
 	}
 
 	private static Matrix getResultMatrix() throws MatrixException {
-		Matrix m = MatrixFactory.zeros(ValueType.STRING, 2, 2);
+		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("afgrbcfgrd", 0, 0);
 		m.setAsString(null, 0, 1);
 		m.setAsString("ad", 1, 0);

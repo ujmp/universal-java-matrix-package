@@ -30,7 +30,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -44,16 +43,15 @@ public class ImportMatrixFromClipboardAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 	}
 
-	
 	public Object call() {
 		try {
 			FileFormat fileFormat = FileFormat.values()[JOptionPane
 					.showOptionDialog(getComponent(), "Select format",
 							"Import Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, FileFormat
-									.values(), FileFormat.CSV)];
+							JOptionPane.QUESTION_MESSAGE, null,
+							FileFormat.values(), FileFormat.CSV)];
 
-			Matrix m = MatrixFactory.importFromClipboard(fileFormat);
+			Matrix m = Matrix.Factory.importFromClipboard(fileFormat);
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

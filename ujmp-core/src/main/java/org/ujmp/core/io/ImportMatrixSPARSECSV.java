@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileReader;
@@ -104,7 +103,7 @@ public abstract class ImportMatrixSPARSECSV {
 				}
 			}
 			lr.close();
-			Matrix m = MatrixFactory.sparse(ValueType.STRING, rows + 1, cols + 1);
+			Matrix m = Matrix.Factory.sparse(ValueType.STRING, rows + 1, cols + 1);
 
 			for (int i = 0; i < data.size(); i++) {
 				long row = rowData.get(i);

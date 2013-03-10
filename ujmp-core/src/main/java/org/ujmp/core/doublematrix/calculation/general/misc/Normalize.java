@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.general.misc;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Max;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Min;
@@ -47,10 +46,10 @@ public class Normalize extends AbstractDoubleCalculation {
 			Matrix diff = null;
 			switch (getDimension()) {
 			case ROW:
-				diff = getSource().minus(MatrixFactory.vertCat(min, getSource().getRowCount()));
+				diff = getSource().minus(Matrix.Factory.vertCat(min, getSource().getRowCount()));
 				break;
 			case COLUMN:
-				diff = getSource().minus(MatrixFactory.horCat(min, getSource().getColumnCount()));
+				diff = getSource().minus(Matrix.Factory.horCat(min, getSource().getColumnCount()));
 				break;
 			default:
 				diff = getSource().minus(min);
@@ -58,10 +57,10 @@ public class Normalize extends AbstractDoubleCalculation {
 			}
 			switch (getDimension()) {
 			case ROW:
-				ret = diff.divide(MatrixFactory.vertCat(range, getSource().getRowCount()));
+				ret = diff.divide(Matrix.Factory.vertCat(range, getSource().getRowCount()));
 				break;
 			case COLUMN:
-				ret = diff.divide(MatrixFactory.horCat(range, getSource().getColumnCount()));
+				ret = diff.divide(Matrix.Factory.horCat(range, getSource().getColumnCount()));
 				break;
 			default:
 				ret = diff.divide(range);

@@ -27,7 +27,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.enums.FileFormat;
@@ -72,7 +71,6 @@ public class LSImpute extends AbstractDoubleCalculation {
 
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		if (xImputed == null) {
 			createMatrix();
@@ -105,7 +103,7 @@ public class LSImpute extends AbstractDoubleCalculation {
 			Method me = c.getMethod("main", String[].class);
 			me.invoke(null, new Object[] { new String[] { file1.toString(),
 					file2.toString(), "" + method } });
-			m = MatrixFactory.importFromFile(FileFormat.CSV, file2, "\t");
+			m = Matrix.Factory.importFromFile(FileFormat.CSV, file2, "\t");
 			m = m.deleteRows(Ret.NEW, 0);
 			m = m.deleteColumns(Ret.NEW, 0);
 			m = m.replaceRegex(Ret.NEW, ",", "");

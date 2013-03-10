@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
@@ -167,12 +166,12 @@ public abstract class AbstractBenchmarkTask {
 			}
 		}
 
-		Matrix temp = MatrixFactory.vertCat(
+		Matrix temp = Matrix.Factory.vertCat(
 				resultTime.getAnnotation().getDimensionMatrix(Matrix.ROW), resultTime);
-		Matrix diff = MatrixFactory.vertCat(
+		Matrix diff = Matrix.Factory.vertCat(
 				resultDiff.getAnnotation().getDimensionMatrix(Matrix.ROW), resultDiff);
-		Matrix mem = MatrixFactory.vertCat(
-				resultMem.getAnnotation().getDimensionMatrix(Matrix.ROW), resultMem);
+		Matrix mem = Matrix.Factory.vertCat(resultMem.getAnnotation()
+				.getDimensionMatrix(Matrix.ROW), resultMem);
 		try {
 			temp.export().toFile(FileFormat.CSV, timeFile);
 			mem.export().toFile(FileFormat.CSV, memFile);

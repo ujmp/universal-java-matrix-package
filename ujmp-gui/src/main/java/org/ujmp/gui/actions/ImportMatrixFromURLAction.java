@@ -31,7 +31,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
@@ -46,7 +45,6 @@ public class ImportMatrixFromURLAction extends ObjectAction {
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
 	}
 
-	
 	public Object call() {
 		try {
 			URL url = null;
@@ -57,10 +55,10 @@ public class ImportMatrixFromURLAction extends ObjectAction {
 			FileFormat fileFormat = FileFormat.values()[JOptionPane
 					.showOptionDialog(getComponent(), "Select format",
 							"Import Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, FileFormat
-									.values(), FileFormat.CSV)];
+							JOptionPane.QUESTION_MESSAGE, null,
+							FileFormat.values(), FileFormat.CSV)];
 
-			Matrix m = MatrixFactory.importFromURL(fileFormat, url);
+			Matrix m = Matrix.Factory.importFromURL(fileFormat, url);
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

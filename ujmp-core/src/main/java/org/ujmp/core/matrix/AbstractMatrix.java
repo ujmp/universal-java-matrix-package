@@ -39,7 +39,6 @@ import javax.swing.JFrame;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
@@ -1724,7 +1723,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 				sel.add(r);
 		}
 		if (sel.isEmpty()) {
-			return MatrixFactory.emptyMatrix();
+			return Matrix.Factory.emptyMatrix();
 		} else {
 			return selectRows(returnType, sel);
 		}

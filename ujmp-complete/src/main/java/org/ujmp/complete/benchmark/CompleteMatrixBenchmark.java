@@ -36,7 +36,6 @@ import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchma
 import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.benchmark.BenchmarkUtil;
@@ -236,7 +235,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				Collections.sort(results);
 				for (File r : results) {
 					String benchmarkName = r.getName().replaceAll(".csv", "");
-					Matrix data = MatrixFactory.importFromFile(FileFormat.CSV, r, "\t");
+					Matrix data = Matrix.Factory.importFromFile(FileFormat.CSV, r, "\t");
 					data.setLabel(matrixName);
 					List<Matrix> list = statistics.get(benchmarkName);
 					if (list == null) {
@@ -282,7 +281,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 			Matrix allmeans = null;
 			try {
-				allmeans = MatrixFactory.vertCat(means);
+				allmeans = Matrix.Factory.vertCat(means);
 				allmeans.setLabel(benchmarkName + "-mean");
 				ListMatrix<String> matrixLabels = new DefaultListMatrix<String>();
 				for (Matrix m : means) {
@@ -310,7 +309,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 							valueCount.setAsInt(s * s, 0, c);
 						}
 					}
-					valueCount = MatrixFactory.vertCat(valueCount, allmeans.getRowCount());
+					valueCount = Matrix.Factory.vertCat(valueCount, allmeans.getRowCount());
 					Matrix perCell = allmeans.divide(Ret.NEW, false, valueCount).transpose(Ret.NEW);
 					perCell.setLabel(allmeans.getLabel() + "-percell");
 					for (int r = 0; r < perCell.getRowCount(); r++) {
@@ -318,7 +317,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 					}
 					export(perCell);
 					Matrix row = allmeans.selectRows(Ret.NEW, jamaRow);
-					Matrix m = MatrixFactory.vertCat(row, allmeans.getRowCount());
+					Matrix m = Matrix.Factory.vertCat(row, allmeans.getRowCount());
 					Matrix scaled = allmeans.divide(Ret.NEW, false, m).power(Ret.NEW, -1)
 							.transpose(Ret.NEW);
 					scaled.setLabel(allmeans.getLabel() + "-scaled");
@@ -335,7 +334,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			Matrix allstds = null;
 			Matrix stdPercent = null;
 			try {
-				allstds = MatrixFactory.vertCat(stds);
+				allstds = Matrix.Factory.vertCat(stds);
 				stdPercent = allstds.divide(Ret.NEW, false, allmeans).times(Ret.NEW, false, 100);
 				allstds.setLabel(benchmarkName + "-std");
 				stdPercent.setLabel(benchmarkName + "-stdpercent");
@@ -354,7 +353,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 			Matrix allmins = null;
 			try {
-				allmins = MatrixFactory.vertCat(mins);
+				allmins = Matrix.Factory.vertCat(mins);
 				allmins.setLabel(benchmarkName + "-min");
 				ListMatrix<String> minLabels = new DefaultListMatrix<String>();
 				for (Matrix m : mins) {
@@ -369,7 +368,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 			Matrix allmaxs = null;
 			try {
-				allmaxs = MatrixFactory.vertCat(maxs);
+				allmaxs = Matrix.Factory.vertCat(maxs);
 				allmaxs.setLabel(benchmarkName + "-max");
 				ListMatrix<String> maxLabels = new DefaultListMatrix<String>();
 				for (Matrix m : maxs) {
@@ -392,11 +391,11 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		for (int r = 0; r < matrix.getRowCount(); r++) {
 			matrix.setRowLabel(r, String.valueOf(extractSize(matrix.getRowLabel(r))));
 		}
-		Matrix firstPart = MatrixFactory.horCat(MatrixFactory.linkToValue(matrix.getLabel()),
+		Matrix firstPart = Matrix.Factory.horCat(Matrix.Factory.linkToValue(matrix.getLabel()),
 				matrix.getAnnotation().getDimensionMatrix(Matrix.ROW));
-		Matrix lastPart = MatrixFactory.horCat(
+		Matrix lastPart = Matrix.Factory.horCat(
 				matrix.getAnnotation().getDimensionMatrix(Matrix.COLUMN), matrix);
-		Matrix complete = MatrixFactory.vertCat(firstPart, lastPart);
+		Matrix complete = Matrix.Factory.vertCat(firstPart, lastPart);
 		try {
 			complete.export().toFile(FileFormat.CSV,
 					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"));

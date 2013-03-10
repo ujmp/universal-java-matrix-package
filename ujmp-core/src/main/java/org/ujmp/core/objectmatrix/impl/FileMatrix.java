@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.LazyMap;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
@@ -140,15 +140,15 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			if (file.isDirectory()) {
 				put(FILES, new FileListMatrix(finalFile, parameters));
 			} else {
-				put(BYTES, MatrixFactory.linkToFile(FileFormat.HEX, finalFile));
+				put(BYTES, Matrix.Factory.linkToFile(FileFormat.HEX, finalFile));
 			}
 			if (FileFormat.isImage(this.fileformat)) {
-				put(AVARAGECOLOR, MatrixFactory.linkToFile(this.fileformat, finalFile, 1, 1));
-				put(THUMBNAIL, MatrixFactory.linkToFile(this.fileformat, finalFile, 30, 30));
-				put(IMAGE, MatrixFactory.linkToFile(this.fileformat, finalFile));
+				put(AVARAGECOLOR, Matrix.Factory.linkToFile(this.fileformat, finalFile, 1, 1));
+				put(THUMBNAIL, Matrix.Factory.linkToFile(this.fileformat, finalFile, 30, 30));
+				put(IMAGE, Matrix.Factory.linkToFile(this.fileformat, finalFile));
 			}
 			if (this.fileformat == FileFormat.UNKNOWN || FileFormat.isText(this.fileformat)) {
-				put(TEXT, MatrixFactory.linkToFile(FileFormat.CSV, finalFile));
+				put(TEXT, Matrix.Factory.linkToFile(FileFormat.CSV, finalFile));
 			}
 		}
 

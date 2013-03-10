@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.enums.FileFormat;
 
 public class Matlab {
@@ -292,18 +291,18 @@ public class Matlab {
 	}
 
 	public void setDouble(String label, double value) throws Exception {
-		setMatrix(label, MatrixFactory.linkToValue(value));
+		setMatrix(label, Matrix.Factory.linkToValue(value));
 	}
 
 	public void setFloat(String label, float value) throws Exception {
-		setMatrix(label, MatrixFactory.linkToValue(value));
+		setMatrix(label, Matrix.Factory.linkToValue(value));
 	}
 
 	public void setInt(String label, int value) throws Exception {
-		setMatrix(label, MatrixFactory.linkToValue(value));
+		setMatrix(label, Matrix.Factory.linkToValue(value));
 	}
 
 	public void setLong(String label, long value) throws Exception {
-		setMatrix(label, MatrixFactory.linkToValue(value));
+		setMatrix(label, Matrix.Factory.linkToValue(value));
 	}
 }

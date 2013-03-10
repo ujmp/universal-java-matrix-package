@@ -22,13 +22,11 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import org.junit.Assert;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 
@@ -95,14 +93,14 @@ public class Fixture {
 		for (int i = 0; i < arr2.length; i++) {
 			double[] row2 = arr2[i];
 			for (int j = 0; j < arr2[0].length; j++) {
-				assertEquals(row2[j], mat.getAsDouble(i, j));
+				Assert.assertEquals(row2[j], mat.getAsDouble(i, j), 1e-6);
 			}
 		}
 	}
 
 	public static void toString(int[][] matrix) {
 		StringBuilder b = new StringBuilder();
-		assertTrue("matrix is null", matrix != null);
+		Assert.assertTrue("matrix is null", matrix != null);
 		for (int i = 0; i < matrix.length; i++) {
 			int[] row = matrix[i];
 			b.append("\n");
@@ -168,8 +166,9 @@ public class Fixture {
 		for (int j = 0; j < cols; j++) {
 			for (int i = 0; i < rows; i++) {
 				if (a.getAsDouble(i, j) != b.getAsDouble(i, j)) {
-					assertTrue(String.format("(i, j)=(%s, %s): expected [%s], was [%s]", i, j, a
-							.getAsDouble(i, j), b.getAsDouble(i, j)), false);
+					Assert.assertTrue(
+							String.format("(i, j)=(%s, %s): expected [%s], was [%s]", i, j,
+									a.getAsDouble(i, j), b.getAsDouble(i, j)), false);
 				}
 
 			}
@@ -190,8 +189,8 @@ public class Fixture {
 
 	public static <M extends Matrix> Callable<M> createBlockMultiplier(final M a, final M b) {
 		Callable<M> run = createMultiplier(a, b);
-		Callable<M> multiplyTimer = new TimerDecorator<M>(a.getRowCount(), a.getColumnCount(), b
-				.getColumnCount(), run);
+		Callable<M> multiplyTimer = new TimerDecorator<M>(a.getRowCount(), a.getColumnCount(),
+				b.getColumnCount(), run);
 		return multiplyTimer;
 	}
 

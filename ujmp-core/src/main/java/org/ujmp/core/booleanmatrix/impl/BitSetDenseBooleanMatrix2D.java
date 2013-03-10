@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.booleanmatrix.impl;
 import java.util.BitSet;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
 
 public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {

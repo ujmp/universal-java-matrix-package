@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,8 +29,8 @@ import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public interface DenseObjectMatrix2D extends ObjectMatrix2D, DenseObjectMatrix, DenseMatrix2D {
 
-	public static DenseObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
+	public static DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> factory = new DefaultDenseObjectMatrix2DFactory();
 
-	public DenseObjectMatrix2DFactory getFactory();
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory();
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,6 +24,7 @@
 package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.bytematrix.SparseByteMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
@@ -36,7 +37,7 @@ public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix implem
 		return StorageType.DENSE;
 	}
 
-	public SparseObjectMatrixFactory getFactory() {
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
 		return SparseObjectMatrix2D.factory;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -87,7 +87,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 	/**
 	 * A factory for creating matrices.
 	 */
-	public static final MatrixFactoryRoot factory = new MatrixFactoryTemp();
+	public static final MatrixFactoryRoot<? extends Matrix> factory = new MatrixFactoryTemp();
 
 	public static final Ret LINK = Ret.LINK;
 
@@ -143,7 +143,7 @@ public interface Matrix extends CoreObject, ExportMatrixInterface, CoordinateFun
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	public MatrixFactoryRoot getFactory();
+	public MatrixFactoryRoot<? extends Matrix> getFactory();
 
 	public Matrix clone();
 

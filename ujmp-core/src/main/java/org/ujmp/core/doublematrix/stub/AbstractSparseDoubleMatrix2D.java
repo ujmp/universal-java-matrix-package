@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
@@ -34,8 +33,6 @@ import org.ujmp.core.util.VerifyUtil;
 public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix implements
 		SparseDoubleMatrix2D {
 	private static final long serialVersionUID = 2930732801501704674L;
-
-	public SparseDoubleMatrix2DFactory factory = new DefaultSparseDoubleMatrix2DFactory();
 
 	public AbstractSparseDoubleMatrix2D() {
 		super();
@@ -78,12 +75,12 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractSparseDoubleM
 		setDouble(o, row, column);
 	}
 
-	public SparseDoubleMatrix2DFactory getFactory() {
-		return factory;
-	}
-
 	public final int getDimensionCount() {
 		return 2;
+	}
+
+	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {
+		return SparseDoubleMatrix2D.factory;
 	}
 
 }

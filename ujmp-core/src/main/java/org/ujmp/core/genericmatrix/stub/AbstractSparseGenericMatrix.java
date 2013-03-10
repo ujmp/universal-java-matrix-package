@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,6 +25,7 @@ package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix;
+import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.matrix.factory.SparseMatrixFactory;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 
@@ -48,7 +49,7 @@ public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatr
 		return StorageType.SPARSE;
 	}
 
-	public SparseMatrixFactory getFactory() {
+	public SparseMatrixFactory<? extends SparseMatrix> getFactory() {
 		return SparseObjectMatrix2D.factory;
 	}
 }

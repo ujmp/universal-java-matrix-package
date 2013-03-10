@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,8 +28,8 @@ import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
-public class DefaultDenseObjectMatrix2DFactory extends AbstractMatrixFactory implements
-		DenseObjectMatrix2DFactory {
+public class DefaultDenseObjectMatrix2DFactory extends AbstractMatrixFactory<DenseObjectMatrix2D>
+		implements DenseObjectMatrix2DFactory<DenseObjectMatrix2D> {
 	private static final long serialVersionUID = 3619615205620126281L;
 
 	public DenseObjectMatrix2D zeros(long rows, long columns) throws MatrixException {

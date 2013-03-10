@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  * 
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,6 +24,7 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.util.SerializationUtil;
@@ -49,7 +50,7 @@ public class SolveTallBenchmarkTask extends AbstractBenchmarkTask {
 				System.out.flush();
 				return BenchmarkResult.NOTAVAILABLE;
 			}
-			x = DoubleMatrix2D.factory.zeros(size[1], size[0]);
+			x = DenseDoubleMatrix2D.factory.zeros(size[1], size[0]);
 			BenchmarkUtil.rand(benchmarkSeed, run, 0, a);
 			BenchmarkUtil.rand(benchmarkSeed, run, 1, x);
 			b1 = new DefaultDenseDoubleMatrix2D(a).mtimes(new DefaultDenseDoubleMatrix2D(x));

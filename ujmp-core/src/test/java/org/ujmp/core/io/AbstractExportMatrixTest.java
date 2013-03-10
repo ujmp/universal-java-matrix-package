@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,6 +34,7 @@ import java.io.OutputStream;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
 
 public abstract class AbstractExportMatrixTest {
@@ -41,7 +42,7 @@ public abstract class AbstractExportMatrixTest {
 	public abstract FileFormat getFormat();
 
 	public Matrix getMatrix() {
-		return Matrix.factory.rand(5, 8);
+		return DenseDoubleMatrix2D.factory.rand(5, 8);
 	}
 
 	public String getLabel() {

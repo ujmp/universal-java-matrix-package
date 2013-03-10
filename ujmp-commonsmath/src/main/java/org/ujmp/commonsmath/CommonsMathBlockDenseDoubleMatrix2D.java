@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,7 @@
 
 package org.ujmp.commonsmath;
 
-import org.apache.commons.math.linear.BlockRealMatrix;
+import org.apache.commons.math3.linear.BlockRealMatrix;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;

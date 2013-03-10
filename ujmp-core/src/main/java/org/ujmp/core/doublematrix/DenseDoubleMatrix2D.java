@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -61,7 +61,7 @@ import org.ujmp.core.matrix.DenseMatrix2D;
 
 public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D {
 
-	public static DenseDoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
+	public static DenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> factory = new DefaultDenseDoubleMatrix2DFactory();
 
 	public static TransposeCalculation<DenseDoubleMatrix2D, DenseDoubleMatrix2D> transpose = Transpose.DENSEDOUBLEMATRIX2D;
 
@@ -105,5 +105,5 @@ public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, 
 
 	public static Eig<Matrix> eig = Eig.INSTANCE;
 
-	public DenseDoubleMatrix2DFactory getFactory();
+	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory();
 }

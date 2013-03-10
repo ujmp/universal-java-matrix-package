@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
 
-public interface MatrixFactoryRoot extends Serializable {
+public interface MatrixFactoryRoot<T extends Matrix> extends Serializable {
 
 	public static final int ROW = Matrix.ROW;
 
@@ -43,14 +43,5 @@ public interface MatrixFactoryRoot extends Serializable {
 
 	public static final int NONE = Matrix.NONE;
 
-	public Matrix zeros(final long... size);
-
-	public Matrix ones(final long... size);
-
-	public Matrix rand(final long... size);
-
-	public Matrix randn(final long... size);
-
-	public Matrix eye(final long... size);
-
+	public T zeros(final long... size);
 }

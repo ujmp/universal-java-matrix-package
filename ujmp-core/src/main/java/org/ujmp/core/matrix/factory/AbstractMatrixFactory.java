@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,34 +24,7 @@
 package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 
-public abstract class AbstractMatrixFactory implements MatrixFactoryRoot {
+public abstract class AbstractMatrixFactory<T extends Matrix> implements MatrixFactoryRoot<T> {
 	private static final long serialVersionUID = -3618488741326819828L;
-
-	public Matrix rand(final long... size) {
-		final Matrix m = zeros(size);
-		m.rand(Ret.ORIG);
-		return m;
-	}
-
-	public Matrix randn(final long... size) {
-		final Matrix m = zeros(size);
-		m.randn(Ret.ORIG);
-		return m;
-	}
-
-	public Matrix ones(final long... size) {
-		final Matrix m = zeros(size);
-		m.ones(Ret.ORIG);
-		return m;
-	}
-
-	public Matrix eye(final long... size) {
-		final Matrix m = zeros(size);
-		Eye.calcOrig(m);
-		return m;
-	}
-
 }

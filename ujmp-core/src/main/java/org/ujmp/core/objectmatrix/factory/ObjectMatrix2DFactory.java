@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,14 +23,9 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.matrix.factory.Matrix2DFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
-public interface ObjectMatrix2DFactory extends Matrix2DFactory, ObjectMatrixFactory {
-
-	public ObjectMatrix2D zeros(long rows, long columns) throws MatrixException;
-
-	public ObjectMatrix2D zeros(long... size) throws MatrixException;
-
+public interface ObjectMatrix2DFactory<T extends ObjectMatrix2D> extends Matrix2DFactory<T>,
+		ObjectMatrixFactory<T> {
 }

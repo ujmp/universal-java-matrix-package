@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.2.6</version>
+		<version>0.3.0</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
@@ -18,8 +18,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>commons-math</groupId>
-			<artifactId>commons-math</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
 		</dependency>
 
 		<dependency>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,10 +25,6 @@ package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.matrix.SparseMatrix2D;
 
-public interface SparseMatrix2DFactory extends SparseMatrixFactory, Matrix2DFactory {
-
-	public SparseMatrix2D zeros(long rows, long cols);
-
-	public SparseMatrix2D zeros(long... size);
-
+public interface SparseMatrix2DFactory<T extends SparseMatrix2D> extends SparseMatrixFactory<T>,
+		Matrix2DFactory<T> {
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,13 +29,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
 public class TestBPCA {
 
 	@Test
 	public void testBPCA() throws Exception {
-		Matrix m = Matrix.factory.randn(30, 30);
+		Matrix m = DenseDoubleMatrix2D.factory.randn(30, 30);
 		m.addMissing(Ret.ORIG, Matrix.ALL, 0.1);
 		assertTrue(m.containsMissingValues());
 		m = m.impute(Ret.NEW, ImputationMethod.BPCA);

@@ -2,9 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ujmp-commonsmath
 Bundle-SymbolicName: ujmp-commonsmath
-Bundle-Version: 0.2.4
+Bundle-Version: 0.3.0
 Export-Package: org.ujmp.commonsmath,
  org.ujmp.commonsmath.benchmark
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: ujmp;bundle-version="0.2.4",
- ujmp-core;bundle-version="0.2.4"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5,
+ JavaSE-1.6,
+ JavaSE-1.7
+Require-Bundle: ujmp;bundle-version="0.3.0",
+ ujmp-core;bundle-version="0.3.0"

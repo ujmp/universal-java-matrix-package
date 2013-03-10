@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  * 
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,8 +24,8 @@
 package org.ujmp.core.benchmark;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.matrix.DenseMatrix;
 import org.ujmp.core.util.SerializationUtil;
 
 public class InvSPDBenchmarkTask extends AbstractBenchmarkTask {
@@ -62,7 +62,8 @@ public class InvSPDBenchmarkTask extends AbstractBenchmarkTask {
 				return BenchmarkResult.ERROR;
 			}
 			Matrix result = m.mtimes(r);
-			double diff = BenchmarkUtil.difference(result, DenseMatrix.factory.eye(m.getSize()));
+			double diff = BenchmarkUtil.difference(result,
+					DenseDoubleMatrix2D.factory.eye(m.getSize()));
 			result = null;
 			long mem = m1 - m0 - SerializationUtil.sizeOf(r);
 			mem = mem > 0 ? mem : 0;

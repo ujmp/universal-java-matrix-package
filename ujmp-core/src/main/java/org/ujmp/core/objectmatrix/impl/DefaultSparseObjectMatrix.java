@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,6 +28,7 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
@@ -35,7 +36,7 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		ObjectMatrix {
 	private static final long serialVersionUID = -1130331544425728230L;
 
-	public static SparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
+	public static DefaultSparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
 
 	public DefaultSparseObjectMatrix(Matrix m) throws MatrixException {
 		super(m, -1);
@@ -57,7 +58,7 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		return ValueType.OBJECT;
 	}
 
-	public SparseObjectMatrixFactory getFactory() {
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
 		return factory;
 	}
 

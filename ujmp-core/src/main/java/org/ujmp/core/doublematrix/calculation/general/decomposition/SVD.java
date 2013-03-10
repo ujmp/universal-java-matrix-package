@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -493,9 +493,10 @@ public interface SVD<T> {
 
 					// Calculate the shift.
 
-					final double scale = Math.max(Math.max(Math.max(Math.max(Math.abs(s[p - 1]),
-							Math.abs(s[p - 2])), Math.abs(e[p - 2])), Math.abs(s[k])), Math
-							.abs(e[k]));
+					final double scale = Math.max(
+							Math.max(
+									Math.max(Math.max(Math.abs(s[p - 1]), Math.abs(s[p - 2])),
+											Math.abs(e[p - 2])), Math.abs(s[k])), Math.abs(e[k]));
 					final double sp = s[p - 1] / scale;
 					final double spm1 = s[p - 2] / scale;
 					final double epm1 = e[p - 2] / scale;

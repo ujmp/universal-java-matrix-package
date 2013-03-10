@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,11 +23,7 @@
 
 package org.ujmp.core.matrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.matrix.DenseMatrix;
 
-public interface DenseMatrixFactory extends MatrixFactoryRoot {
-
-	public DenseMatrix zeros(long... size) throws MatrixException;
-
+public interface DenseMatrixFactory<T extends DenseMatrix> extends MatrixFactoryRoot<T> {
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -184,7 +184,6 @@ import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.objectmatrix.calculation.UniqueValueCount;
-import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
@@ -210,9 +209,11 @@ import org.ujmp.core.util.VerifyUtil;
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
 
-	public static MatrixFactoryRoot factory = new DefaultDenseObjectMatrixFactory();
-
 	private static long runningId = 0;
+
+	public MatrixFactoryRoot<? extends Matrix> getFactory() {
+		return Matrix.factory;
+	}
 
 	public AbstractMatrix(long... size) {
 		this();
@@ -2361,10 +2362,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 		}
 		return false;
-	}
-
-	public MatrixFactoryRoot getFactory() {
-		return factory;
 	}
 
 	public Object getAxisLabelObject(int dimension) {

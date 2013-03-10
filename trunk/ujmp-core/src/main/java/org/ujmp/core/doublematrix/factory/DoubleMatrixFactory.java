@@ -24,9 +24,9 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DoubleMatrix;
-import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactory;
 
-public interface DoubleMatrixFactory<T extends DoubleMatrix> extends MatrixFactoryRoot<T> {
+public interface DoubleMatrixFactory<T extends DoubleMatrix> extends MatrixFactory<T> {
 
 	public T ones(final long... size);
 

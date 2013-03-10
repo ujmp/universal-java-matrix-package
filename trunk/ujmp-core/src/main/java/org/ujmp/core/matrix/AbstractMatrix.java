@@ -154,7 +154,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.matrix.factory.MatrixFactoryRoot;
+import org.ujmp.core.matrix.factory.MatrixFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
@@ -205,7 +205,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	private static long runningId = 0;
 
-	public MatrixFactoryRoot<? extends Matrix> getFactory() {
+	public MatrixFactory<? extends Matrix> getFactory() {
 		return Matrix.Factory;
 	}
 

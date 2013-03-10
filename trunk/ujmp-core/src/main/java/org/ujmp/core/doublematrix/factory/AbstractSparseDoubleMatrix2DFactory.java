@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,14 +23,39 @@
 
 package org.ujmp.core.doublematrix.factory;
 
-import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 
-public abstract class AbstractDoubleMatrix2DFactory extends AbstractMatrixFactory implements
-		DoubleMatrix2DFactory {
-	private static final long serialVersionUID = -2262202653249931934L;
+public abstract class AbstractSparseDoubleMatrix2DFactory<T extends SparseDoubleMatrix2D> extends
+		AbstractSparseDoubleMatrixFactory<T> implements DoubleMatrix2DFactory<T> {
+	private static final long serialVersionUID = 8897245731712863035L;
 
-	public DoubleMatrix2D zeros(final long... size) {
+	public T zeros(final long... size) {
 		return zeros(size[ROW], size[COLUMN]);
+	}
+
+	public final T rand(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.rand(Ret.ORIG);
+		return m;
+	}
+
+	public final T randn(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.randn(Ret.ORIG);
+		return m;
+	}
+
+	public final T ones(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.ones(Ret.ORIG);
+		return m;
+	}
+
+	public final T eye(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		Eye.calcOrig(m);
+		return m;
 	}
 }

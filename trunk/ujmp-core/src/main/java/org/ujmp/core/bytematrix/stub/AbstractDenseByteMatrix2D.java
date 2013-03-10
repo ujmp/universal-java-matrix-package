@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -75,7 +75,7 @@ public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix 
 		setByte(value, row, column);
 	}
 
-	public DenseObjectMatrix2DFactory getFactory() {
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
 		return DenseObjectMatrix2D.factory;
 	}
 

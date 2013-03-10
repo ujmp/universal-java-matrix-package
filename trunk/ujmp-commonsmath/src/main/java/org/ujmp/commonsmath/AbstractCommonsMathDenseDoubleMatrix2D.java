@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,18 +23,12 @@
 
 package org.ujmp.commonsmath;
 
-import org.apache.commons.math.linear.CholeskyDecomposition;
-import org.apache.commons.math.linear.CholeskyDecompositionImpl;
-import org.apache.commons.math.linear.EigenDecomposition;
-import org.apache.commons.math.linear.EigenDecompositionImpl;
-import org.apache.commons.math.linear.LUDecomposition;
-import org.apache.commons.math.linear.LUDecompositionImpl;
-import org.apache.commons.math.linear.QRDecomposition;
-import org.apache.commons.math.linear.QRDecompositionImpl;
-import org.apache.commons.math.linear.RealMatrix;
-import org.apache.commons.math.linear.SingularValueDecomposition;
-import org.apache.commons.math.linear.SingularValueDecompositionImpl;
-import org.apache.commons.math.util.MathUtils;
+import org.apache.commons.math3.linear.CholeskyDecomposition;
+import org.apache.commons.math3.linear.EigenDecomposition;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.QRDecomposition;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
@@ -90,13 +84,13 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 
 	public Matrix inv() {
 		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(new LUDecompositionImpl(matrix).getSolver().getInverse());
+				.dense(new LUDecomposition(matrix).getSolver().getInverse());
 	}
 
 	public Matrix invSPD() {
 		try {
 			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(new CholeskyDecompositionImpl(matrix).getSolver()
+					.dense(new CholeskyDecomposition(matrix).getSolver()
 							.getInverse());
 		} catch (Exception e) {
 			throw new MatrixException(e);
@@ -104,7 +98,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix[] lu() {
-		LUDecomposition lu = new LUDecompositionImpl(matrix);
+		LUDecomposition lu = new LUDecomposition(matrix);
 		Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
 				.getL());
 		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
@@ -115,7 +109,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix[] qr() {
-		QRDecomposition qr = new QRDecompositionImpl(matrix);
+		QRDecomposition qr = new QRDecomposition(matrix);
 		Matrix q = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr
 				.getQ());
 		Matrix r = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr
@@ -124,8 +118,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix[] svd() {
-		SingularValueDecomposition svd = new SingularValueDecompositionImpl(
-				matrix);
+		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
 		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd
 				.getU());
 		Matrix s = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd
@@ -136,8 +129,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix[] eig() {
-		EigenDecomposition evd = new EigenDecompositionImpl(matrix,
-				MathUtils.EPSILON);
+		EigenDecomposition evd = new EigenDecomposition(matrix);
 		Matrix v = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd
 				.getV());
 		Matrix d = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd
@@ -147,7 +139,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 
 	public Matrix chol() {
 		try {
-			CholeskyDecomposition chol = new CholeskyDecompositionImpl(matrix);
+			CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
 			Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
 					.dense(chol.getL());
 			return l;
@@ -240,13 +232,13 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
 			if (isSquare()) {
-				RealMatrix ret = new LUDecompositionImpl(matrix).getSolver()
-						.solve(b2.matrix);
+				RealMatrix ret = new LUDecomposition(matrix).getSolver().solve(
+						b2.matrix);
 				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
 						.dense(ret);
 			} else {
-				RealMatrix ret = new QRDecompositionImpl(matrix).getSolver()
-						.solve(b2.matrix);
+				RealMatrix ret = new QRDecomposition(matrix).getSolver().solve(
+						b2.matrix);
 				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
 						.dense(ret);
 			}
@@ -259,8 +251,8 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		try {
 			if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 				AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
-				RealMatrix ret = new CholeskyDecompositionImpl(matrix)
-						.getSolver().solve(b2.matrix);
+				RealMatrix ret = new CholeskyDecomposition(matrix).getSolver()
+						.solve(b2.matrix);
 				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
 						.dense(ret);
 			} else {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -36,7 +36,7 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		SparseDoubleMatrix {
 	private static final long serialVersionUID = -1168427818140098524L;
 
-	public static SparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
+	public static DefaultSparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
 
 	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {
 		super(m);
@@ -66,7 +66,7 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		setObject(value, coordinates);
 	}
 
-	public SparseDoubleMatrixFactory getFactory() {
+	public SparseDoubleMatrixFactory<? extends SparseDoubleMatrix> getFactory() {
 		return factory;
 	}
 

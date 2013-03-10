@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,7 @@
 
 package org.ujmp.commonsmath;
 
-import org.apache.commons.math.stat.inference.TestUtils;
+import org.apache.commons.math3.stat.inference.TestUtils;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.exceptions.MatrixException;
@@ -35,7 +35,6 @@ public class PairedTTest extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
 	public double getDouble(long... coordinates) throws MatrixException {
 		try {
 			long var1 = coordinates[ROW];
@@ -53,9 +52,9 @@ public class PairedTTest extends AbstractDoubleCalculation {
 		}
 	}
 
-	
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		return new long[] { getSource().getColumnCount(),
+				getSource().getColumnCount() };
 	}
 
 }

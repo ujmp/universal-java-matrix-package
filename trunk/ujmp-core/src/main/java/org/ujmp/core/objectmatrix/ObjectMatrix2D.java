@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.factory.ObjectMatrix2DFactory;
 
 public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
 
-	public static ObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
+	public static DefaultDenseObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
 
 	public Object getObject(long row, long column);
 
@@ -39,5 +39,5 @@ public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
 
 	public void setObject(Object value, int row, int column);
 
-	public ObjectMatrix2DFactory getFactory();
+	public ObjectMatrix2DFactory<? extends ObjectMatrix2D> getFactory();
 }

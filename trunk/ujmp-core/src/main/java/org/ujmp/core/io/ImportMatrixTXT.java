@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,31 +23,24 @@
 
 package org.ujmp.core.io;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-
-import org.ujmp.core.Matrix;
-import org.ujmp.core.MatrixFactory;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.io.IntelligentFileReader;
-
 public abstract class ImportMatrixTXT extends ImportMatrixCSV {
 
-//	public static final Matrix fromStream(InputStream stream, Object... parameters)
-//			throws MatrixException, IOException {
-//		return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
-//	}
-//
-//	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-//			IOException {
-//		return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
-//	}
-//
-//	public static final Matrix fromReader(Reader reader, Object... parameters)
-//			throws MatrixException {
-//		return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
-//	}
+	// public static final Matrix fromStream(InputStream stream, Object...
+	// parameters)
+	// throws MatrixException, IOException {
+	// return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
+	// }
+	//
+	// public static final Matrix fromFile(File file, Object... parameters)
+	// throws MatrixException,
+	// IOException {
+	// return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
+	// }
+	//
+	// public static final Matrix fromReader(Reader reader, Object...
+	// parameters)
+	// throws MatrixException {
+	// return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
+	// }
 
 }

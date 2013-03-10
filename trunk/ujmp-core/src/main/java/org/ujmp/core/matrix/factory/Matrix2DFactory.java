@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,10 +25,7 @@ package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.matrix.Matrix2D;
 
-public interface Matrix2DFactory extends MatrixFactoryRoot {
+public interface Matrix2DFactory<T extends Matrix2D> extends MatrixFactoryRoot<T> {
 
-	public Matrix2D zeros(final long rows, final long columns);
-
-	public Matrix2D zeros(final long... size);
-
+	public T zeros(final long rows, final long cols);
 }

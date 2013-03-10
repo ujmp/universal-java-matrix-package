@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,11 @@
 package org.ujmp.core.stringmatrix;
 
 import org.ujmp.core.matrix.DenseMatrix2D;
+import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
+import org.ujmp.core.stringmatrix.factory.StringMatrix2DFactory;
 
 public interface DenseStringMatrix2D extends StringMatrix2D, DenseStringMatrix, DenseMatrix2D {
+
+	public static StringMatrix2DFactory factory = new DefaultStringMatrix2DFactory();
 
 }

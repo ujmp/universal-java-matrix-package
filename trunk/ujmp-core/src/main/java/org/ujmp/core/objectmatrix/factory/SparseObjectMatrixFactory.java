@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,12 +23,9 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.matrix.factory.SparseMatrixFactory;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 
-public interface SparseObjectMatrixFactory extends SparseMatrixFactory, ObjectMatrixFactory {
-
-	public SparseObjectMatrix zeros(long... size) throws MatrixException;
-
+public interface SparseObjectMatrixFactory<T extends SparseObjectMatrix> extends
+		SparseMatrixFactory<T>, ObjectMatrixFactory<T> {
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,9 +30,10 @@ import org.junit.Test;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeBPCA;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.ImputeLS;
-import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
 public class TestMissingValueImputation {
 
@@ -76,7 +77,7 @@ public class TestMissingValueImputation {
 				}
 			}
 
-			Matrix orig = Matrix.factory.randn(10, 10);
+			Matrix orig = DenseDoubleMatrix2D.factory.randn(10, 10);
 			orig.addMissing(Ret.ORIG, Matrix.ALL, 0.05);
 			assertTrue(method.toString(), orig.containsMissingValues());
 			Matrix m = orig.impute(Ret.NEW, method);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
 import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
@@ -79,4 +80,7 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
 	}
 
+	public DenseDoubleMatrixFactory<DefaultDenseDoubleMatrixMultiD> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

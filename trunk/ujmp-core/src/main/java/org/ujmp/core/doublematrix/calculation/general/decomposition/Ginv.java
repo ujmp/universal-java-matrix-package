@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -996,7 +996,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 */
 	public static Matrix arbitrariness(Matrix source, Matrix inverse) {
 		Matrix intermediate = inverse.mtimes(source);
-		return Matrix.factory.eye(intermediate.getSize()).minus(intermediate);
+		return DenseDoubleMatrix2D.factory.eye(intermediate.getSize()).minus(intermediate);
 	}
 
 	public double getDouble(long... coordinates) throws MatrixException {

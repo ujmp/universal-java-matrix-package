@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,7 +33,7 @@ public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix imp
 		DenseObjectMatrix {
 	private static final long serialVersionUID = -4546702335648155424L;
 
-	public static DenseObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
+	public static DefaultDenseObjectMatrixFactory factory = new DefaultDenseObjectMatrixFactory();
 
 	public AbstractDenseObjectMatrix() {
 		super();
@@ -55,7 +55,7 @@ public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix imp
 		return StorageType.DENSE;
 	}
 
-	public DenseObjectMatrixFactory getFactory() {
+	public DenseObjectMatrixFactory<? extends DenseObjectMatrix> getFactory() {
 		return factory;
 	}
 

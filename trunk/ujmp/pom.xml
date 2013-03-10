@@ -5,7 +5,7 @@
 
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp</artifactId>
-	<version>0.2.6</version>
+	<version>0.3.0</version>
 	<packaging>pom</packaging>
 	<description>The Universal Java Matrix Package (UJMP) is a library for sparse and dense matrixes.</description>
 	<url>http://www.ujmp.org/</url>
@@ -112,13 +112,13 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.10</version>
+				<version>4.11</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>commons-math</groupId>
-				<artifactId>commons-math</artifactId>
-				<version>2.1</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>3.1.1</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -183,7 +183,7 @@
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
-				<version>2.3.1</version>
+				<version>2.6.5</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -213,7 +213,7 @@
 			<dependency>
 				<groupId>jblas</groupId>
 				<artifactId>jblas</artifactId>
-				<version>1.2.0</version>
+				<version>1.2.3</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,13 +23,10 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DoubleMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
-
-	public static DoubleMatrix2DFactory factory = new DefaultDenseDoubleMatrix2DFactory();
 
 	public double getDouble(long row, long column);
 
@@ -39,5 +36,5 @@ public interface DoubleMatrix2D extends DoubleMatrix, GenericMatrix2D<Double> {
 
 	public void setDouble(double value, int row, int column);
 
-	public DoubleMatrix2DFactory getFactory();
+	public DoubleMatrix2DFactory<? extends DoubleMatrix2D> getFactory();
 }

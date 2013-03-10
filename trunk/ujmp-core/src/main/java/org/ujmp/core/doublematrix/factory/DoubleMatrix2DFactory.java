@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 by Holger Arndt
+ * Copyright (C) 2008-2013 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,10 +26,14 @@ package org.ujmp.core.doublematrix.factory;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.matrix.factory.Matrix2DFactory;
 
-public interface DoubleMatrix2DFactory extends Matrix2DFactory, DoubleMatrixFactory {
+public interface DoubleMatrix2DFactory<T extends DoubleMatrix2D> extends Matrix2DFactory<T>,
+		DoubleMatrixFactory<T> {
 
-	public DoubleMatrix2D zeros(long rows, long columns);
+	public T ones(final long rows, final long cols);
 
-	public DoubleMatrix2D zeros(long... size);
+	public T rand(final long rows, final long cols);
 
+	public T randn(final long rows, final long cols);
+
+	public T eye(final long rows, final long cols);
 }

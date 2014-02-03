@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix;
 import org.ujmp.core.util.CoordinateIterator;
@@ -36,8 +35,7 @@ import org.ujmp.core.util.MathUtil;
 
 import shared.array.IntegerArray;
 
-public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements
-		Wrapper<IntegerArray> {
+public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements Wrapper<IntegerArray> {
 	private static final long serialVersionUID = 2319673263310965476L;
 
 	private transient IntegerArray data = null;
@@ -57,11 +55,11 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements
 		}
 	}
 
-	public int getInt(long... coordinates) throws MatrixException {
+	public int getInt(long... coordinates) {
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
 
-	public void setInt(int value, long... coordinates) throws MatrixException {
+	public void setInt(int value, long... coordinates) {
 		data.set(value, MathUtil.toIntArray(coordinates));
 
 	}
@@ -70,19 +68,17 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements
 		return MathUtil.toLongArray(data.dims());
 	}
 
-	public Iterable<long[]> allCoordinates() throws MatrixException {
+	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(this.getSize());
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		byte[] bytes = (byte[]) s.readObject();
 		data = IntegerArray.parse(bytes);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(data.getBytes());
 	}

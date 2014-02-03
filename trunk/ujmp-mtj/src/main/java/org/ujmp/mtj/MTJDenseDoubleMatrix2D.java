@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,13 +38,11 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.mtj.calculation.Inv;
 import org.ujmp.mtj.calculation.SVD;
 
-public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<DenseMatrix> {
+public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix> {
 	private static final long serialVersionUID = -2386081646062313108L;
 
 	private transient DenseMatrix matrix = null;
@@ -57,7 +55,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = new DenseMatrix(m);
 	}
 
-	public MTJDenseDoubleMatrix2D(Matrix m) throws MatrixException {
+	public MTJDenseDoubleMatrix2D(Matrix m) {
 		super(m);
 		if (m instanceof MTJDenseDoubleMatrix2D) {
 			this.matrix = ((MTJDenseDoubleMatrix2D) m).matrix.copy();
@@ -70,11 +68,11 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = new DenseMatrix((int) size[ROW], (int) size[COLUMN]);
 	}
 
-	public Matrix[] svd() throws MatrixException {
+	public Matrix[] svd() {
 		return SVD.INSTANCE.calc(this);
 	}
 
-	public Matrix[] qr() throws MatrixException {
+	public Matrix[] qr() {
 		if (getRowCount() >= getColumnCount()) {
 			try {
 				QR qr = QR.factorize(getWrappedObject());
@@ -82,14 +80,14 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				Matrix r = new MTJDenseDoubleMatrix2D(qr.getR());
 				return new Matrix[] { q, r };
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		} else {
-			throw new MatrixException("only allowed for matrices m>=n");
+			throw new RuntimeException("only allowed for matrices m>=n");
 		}
 	}
 
-	public Matrix[] lu() throws MatrixException {
+	public Matrix[] lu() {
 		try {
 			DenseLU lu = DenseLU.factorize(getWrappedObject());
 			Matrix l = new MTJDenseDoubleMatrix2D(lu.getL());
@@ -105,21 +103,21 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			p.eye(Ret.ORIG);
 			return new Matrix[] { l, u, p };
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	public Matrix chol() throws MatrixException {
+	public Matrix chol() {
 		try {
 			DenseCholesky chol = DenseCholesky.factorize(getWrappedObject());
 			Matrix l = new MTJDenseDoubleMatrix2D(chol.getL());
 			return l;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	public Matrix[] eig() throws MatrixException {
+	public Matrix[] eig() {
 		try {
 			EVD evd = EVD.factorize(getWrappedObject());
 			Matrix v = new MTJDenseDoubleMatrix2D(evd.getRightEigenvectors());
@@ -131,7 +129,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 			return new Matrix[] { v, d };
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -156,8 +154,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix transpose() {
-		DenseMatrix ret = new DenseMatrix((int) getColumnCount(),
-				(int) getRowCount());
+		DenseMatrix ret = new DenseMatrix((int) getColumnCount(), (int) getRowCount());
 		return new MTJDenseDoubleMatrix2D((DenseMatrix) matrix.transpose(ret));
 	}
 
@@ -173,20 +170,18 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] values = (double[][]) s.readObject();
 		matrix = new DenseMatrix(values);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(this.toDoubleArray());
 	}
 
-	public Matrix mtimes(Matrix m2) throws MatrixException {
+	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix a = matrix;
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
@@ -197,19 +192,16 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			} catch (Exception e) {
 				// sometimes BLAS cannot be found. Don't know why. Use direct
 				// method instead.
-				double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix) c)
-						.getData();
-				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c
-						.numColumns(), a.numColumns(), 1, a.getData(), 0, Math
-						.max(1, a.numRows()), Bd, 0, Math.max(1, b.numRows()),
-						1, Cd, 0, Math.max(1, c.numRows()));
+				double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix) c).getData();
+				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c.numColumns(), a.numColumns(), 1, a.getData(), 0, Math.max(1, a.numRows()), Bd,
+						0, Math.max(1, b.numRows()), 1, Cd, 0, Math.max(1, c.numRows()));
 				return new MTJDenseDoubleMatrix2D(c);
 			}
 		}
 		return super.mtimes(m2);
 	}
 
-	public Matrix plus(Matrix m2) throws MatrixException {
+	public Matrix plus(Matrix m2) {
 		if (m2 instanceof MTJDenseDoubleMatrix2D) {
 			DenseMatrix ret = matrix.copy();
 			ret.add(((MTJDenseDoubleMatrix2D) m2).getWrappedObject());
@@ -224,7 +216,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public Matrix times(double f) throws MatrixException {
+	public Matrix times(double f) {
 		DenseMatrix ret = matrix.copy();
 		ret.scale(f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
@@ -235,7 +227,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return result;
 	}
 
-	public Matrix divide(double f) throws MatrixException {
+	public Matrix divide(double f) {
 		DenseMatrix ret = matrix.copy();
 		ret.scale(1.0 / f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
@@ -257,8 +249,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix solve(Matrix b) {
 		if (b instanceof MTJDenseDoubleMatrix2D) {
 			MTJDenseDoubleMatrix2D b2 = (MTJDenseDoubleMatrix2D) b;
-			DenseMatrix x = new DenseMatrix((int) getColumnCount(), (int) b2
-					.getColumnCount());
+			DenseMatrix x = new DenseMatrix((int) getColumnCount(), (int) b2.getColumnCount());
 			matrix.solve(b2.matrix, x);
 			return new MTJDenseDoubleMatrix2D(x);
 		} else {
@@ -268,7 +259,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix invSPD() {
 		DenseCholesky chol = DenseCholesky.factorize(getWrappedObject());
-		return new MTJDenseDoubleMatrix2D(chol.solve(Matrices.identity(matrix
-				.numRows())));
+		return new MTJDenseDoubleMatrix2D(chol.solve(Matrices.identity(matrix.numRows())));
 	}
 }

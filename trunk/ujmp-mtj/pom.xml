@@ -18,16 +18,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mtj</groupId>
+			<groupId>com.googlecode.matrix-toolkits-java</groupId>
 			<artifactId>mtj</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>arpack-combo</groupId>
-			<artifactId>arpack-combo</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>netlib-java</groupId>
-			<artifactId>netlib-java</artifactId>
 		</dependency>
 
 		<dependency>

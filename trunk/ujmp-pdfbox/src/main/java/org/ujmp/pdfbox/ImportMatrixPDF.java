@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,12 +30,10 @@ import java.io.InputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class ImportMatrixPDF {
 
-	public static final Matrix fromFile(File file, Object... parameters)
-			throws MatrixException, IOException {
+	public static final Matrix fromFile(File file, Object... parameters) throws IOException {
 		try {
 			PDDocument pdd = PDDocument.load(file);
 			PDFTextStripper pts = new PDFTextStripper();
@@ -43,12 +41,11 @@ public abstract class ImportMatrixPDF {
 			pdd.close();
 			return Matrix.Factory.linkToValue(text);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	public static final Matrix fromStream(InputStream inputStream,
-			Object... parameters) throws IOException, MatrixException {
+	public static final Matrix fromStream(InputStream inputStream, Object... parameters) throws IOException {
 		try {
 			PDDocument pdd = PDDocument.load(inputStream);
 			PDFTextStripper pts = new PDFTextStripper();
@@ -56,7 +53,7 @@ public abstract class ImportMatrixPDF {
 			pdd.close();
 			return Matrix.Factory.linkToValue(text);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

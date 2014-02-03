@@ -18,7 +18,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ojalgo</groupId>
+			<groupId>org.ojalgo</groupId>
 			<artifactId>ojalgo</artifactId>
 		</dependency>
 

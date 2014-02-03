@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import org.spaceroots.mantissa.linalg.SquareMatrix;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -54,7 +53,7 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public MantissaDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public MantissaDenseDoubleMatrix2D(Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -95,10 +94,10 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
 						.getInverse(UJMPSettings.getTolerance()));
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -111,10 +110,10 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
 						.solve(b2, UJMPSettings.getTolerance()));
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,15 +27,14 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class TestDenseFileMatrix extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size) throws MatrixException, IOException {
+	public Matrix createMatrix(long... size) throws IOException {
 		return new DenseFileMatrix(size);
 	}
 
-	public Matrix createMatrix(Matrix source) throws MatrixException, IOException {
+	public Matrix createMatrix(Matrix source) throws IOException {
 		return new DenseFileMatrix(source);
 	}
 

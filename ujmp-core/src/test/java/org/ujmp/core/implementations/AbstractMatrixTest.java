@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -173,27 +173,27 @@ public abstract class AbstractMatrixTest {
 		List<Coordinates> clist = new ArrayList<Coordinates>();
 
 		for (long[] c : m.availableCoordinates()) {
-			clist.add(new Coordinates(c));
+			clist.add(Coordinates.wrap(c).clone());
 		}
 
 		if (m.isSparse()) {
 			assertEquals(getLabel(), 5, clist.size());
-			assertTrue(getLabel(), clist.contains(new Coordinates(0, 0)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 0)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 1)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(2, 1)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 2)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 0)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 0)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 1)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(2, 1)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 2)));
 		} else {
 			assertEquals(getLabel(), 9, clist.size());
-			assertTrue(getLabel(), clist.contains(new Coordinates(0, 0)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(0, 1)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(0, 2)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 0)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 1)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(1, 2)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(2, 0)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(2, 1)));
-			assertTrue(getLabel(), clist.contains(new Coordinates(2, 2)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 0)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 1)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 2)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 0)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 1)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 2)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(2, 0)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(2, 1)));
+			assertTrue(getLabel(), clist.contains(Coordinates.wrap(2, 2)));
 		}
 
 		if (m instanceof Erasable) {
@@ -217,16 +217,16 @@ public abstract class AbstractMatrixTest {
 		List<Coordinates> clist = new ArrayList<Coordinates>();
 
 		for (long[] c : m.selectedCoordinates("1:2;:")) {
-			clist.add(new Coordinates(c));
+			clist.add(Coordinates.wrap(c).clone());
 		}
 
 		assertEquals(getLabel(), 6, clist.size());
-		assertTrue(getLabel(), clist.contains(new Coordinates(0, 0)));
-		assertTrue(getLabel(), clist.contains(new Coordinates(0, 1)));
-		assertTrue(getLabel(), clist.contains(new Coordinates(0, 2)));
-		assertTrue(getLabel(), clist.contains(new Coordinates(1, 0)));
-		assertTrue(getLabel(), clist.contains(new Coordinates(1, 1)));
-		assertTrue(getLabel(), clist.contains(new Coordinates(1, 2)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 0)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 1)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(0, 2)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 0)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 1)));
+		assertTrue(getLabel(), clist.contains(Coordinates.wrap(1, 2)));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
@@ -1368,13 +1368,6 @@ public abstract class AbstractMatrixTest {
 	public void testMTimesFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(2, 2);
 
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
-
 		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
@@ -1426,13 +1419,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix m1 = createMatrixWithAnnotation(109, 111);
 
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
-
 		m1.setAsDouble(-1.0, 0, 0);
 		m1.setAsDouble(2.0, 0, 1);
 		m1.setAsDouble(-3.0, 1, 0);
@@ -1481,17 +1467,6 @@ public abstract class AbstractMatrixTest {
 	public void testInvRandSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(10, 10);
 
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
-
 		do {
 			m1.randn(Ret.ORIG);
 		} while (m1.isSingular());
@@ -1518,16 +1493,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testInvSPDRandSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(10, 10);
-
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
 
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, m1);
 
@@ -1556,17 +1521,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix m1 = createMatrixWithAnnotation(128, 128);
-
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
 
 		do {
 			m1.randn(Ret.ORIG);
@@ -1598,16 +1552,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix m1 = createMatrixWithAnnotation(128, 128);
 
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (m1.getClass().getName().startsWith("org.ujmp.jblas.")
-				&& System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")) {
-			// not working on 64 bit windows
-			return;
-		}
-
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, m1);
 
 		Matrix m2 = m1.invSPD();
@@ -1631,10 +1575,6 @@ public abstract class AbstractMatrixTest {
 
 	public void testInvFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(3, 3);
-
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
 
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1670,13 +1610,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testPinvFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(3, 3);
-
-		if (m1.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (m1.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1747,19 +1680,6 @@ public abstract class AbstractMatrixTest {
 	public void testEigRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
 
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			// only symmetric matrices
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			// only symmetric matrices
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			// only symmetric matrices
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
 		Matrix prod1 = a.mtimes(eig[0]);
@@ -1778,32 +1698,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(110, 110);
-
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			// only symmetric matrices
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			// only symmetric matrices
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			// only symmetric matrices
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
-			try {
-				// only symmetric matrices when JBlas is used
-				Class.forName("org.ujmp.jblas.Plugin");
-				return;
-			} catch (Throwable t) {
-			}
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			// doesn't provide eig function
-			return;
-		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
@@ -1826,13 +1720,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testEigSymmSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		setRandSymmetric(a);
 
@@ -1860,13 +1747,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(111, 111);
 
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		setRandSymmetric(a);
 
 		Matrix[] eig = a.eig();
@@ -1889,32 +1769,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testLUSquareSingularSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(5, 5);
-
-		// skip libraries which do not support singular matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		setAscending(a);
 
@@ -1976,32 +1830,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(116, 116);
 
-		// skip libraries which do not support square matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2023,13 +1851,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSolveRandSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(2, 2);
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(2, 4);
@@ -2062,13 +1883,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(125, 125);
 
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(125, 142);
 		x.randn(Ret.ORIG);
@@ -2099,13 +1913,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(125, 125);
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
 		Matrix x = createMatrixWithAnnotation(125, 125);
@@ -2138,13 +1945,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(15, 15);
 
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, a);
 		Matrix x = createMatrixWithAnnotation(15, 15);
 		x.randn(Ret.ORIG);
@@ -2172,19 +1972,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSolveRandTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 2);
-
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
-			return;
-		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(2, 4);
@@ -2217,16 +2004,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(169, 121);
 
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(121, 143);
 		x.randn(Ret.ORIG);
@@ -2255,19 +2032,6 @@ public abstract class AbstractMatrixTest {
 	public void testLUSquareRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
 
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2293,19 +2057,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(112, 112);
 
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2327,32 +2078,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testLUTallFixedSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
-
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -2379,32 +2104,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(161, 142);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2426,47 +2125,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testLUFatFixedSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
-
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -2492,47 +2150,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(141, 162);
-
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.commonsmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -2629,26 +2246,6 @@ public abstract class AbstractMatrixTest {
 		generators.add(EntryGenerator.RANDSYMM);
 		generators.add(EntryGenerator.RANDNSYMM);
 		generators.add(EntryGenerator.SPD);
-
-		// skip libraries which do not support QR
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
-			return;
-		}
 
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
@@ -2775,49 +2372,6 @@ public abstract class AbstractMatrixTest {
 		generators.add(EntryGenerator.RANDNSYMM);
 		generators.add(EntryGenerator.SPD);
 
-		// skip libraries which do not support LU
-		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
-			return;
-		}
-
-		// vecmath has some error
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
-		// mtj has some error
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
-		// gives wrong result for singular matrices
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			generators.remove(EntryGenerator.SINGULAR);
-		}
-
-		// gives wrong result for singular matrices
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			generators.remove(EntryGenerator.SINGULAR);
-		}
-
-		// gives wrong result for singular matrices
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			generators.remove(EntryGenerator.SINGULAR);
-		}
-
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
 				for (EntryGenerator generator : generators) {
@@ -2893,21 +2447,6 @@ public abstract class AbstractMatrixTest {
 		generators.add(EntryGenerator.RANDSYMM);
 		generators.add(EntryGenerator.RANDNSYMM);
 		generators.add(EntryGenerator.SPD);
-
-		// owlpack has some error
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-
-		// vecmath has some error
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
-		// problem with very small matrices
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			sizes.remove(Size.SINGLEENTRY);
-		}
 
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
@@ -3053,74 +2592,6 @@ public abstract class AbstractMatrixTest {
 	public void testQRFatSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.ehcache.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatio.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.lucene.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.jdmp.ehcache.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jdbc.")) {
-			return;
-		}
-
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -3146,68 +2617,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(140, 160);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.core.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.colt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jama.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jlinalg.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jblas.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatharray.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatio.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jscience.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.lucene.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mantissa.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.orbital.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.parallelcolt.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.sst.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.jdmp.ehcache.")) {
-			return;
-		}
-
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -3229,13 +2638,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testQRTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
-
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
-			return;
-		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -3262,13 +2664,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(168, 143);
 
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.ejml.")) {
-			return;
-		}
-
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -3291,23 +2686,6 @@ public abstract class AbstractMatrixTest {
 	public void testCholPascalSmall() throws Exception {
 		Matrix pascal = Matrix.Factory.pascal(5, 5);
 		Matrix a = createMatrixWithAnnotation(pascal);
-
-		// some error?
-		if (a.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-
-		// some error?
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& a.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		Matrix chol = a.chol();
 		Matrix cholTrans = chol.transpose();
@@ -3340,23 +2718,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -3379,23 +2740,6 @@ public abstract class AbstractMatrixTest {
 			}
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
-
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
 
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
@@ -3423,23 +2767,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.mtj.")) {
-			return;
-		}
-
-		// some error?
-		if (result.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-
-		// JBlas not supported for 64 bit on windows
-		if (System.getProperty("os.name").toLowerCase().contains("windows")
-				&& System.getProperty("java.vm.name").contains("64")
-				&& result.getClass().getName().startsWith("org.ujmp.jblas")) {
-			return;
-		}
-
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -3454,24 +2781,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 5);
-
-		// skip libraries which do not support fat matrices
-
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		a.setAsDouble(1, 0, 0);
 		a.setAsDouble(2, 0, 4);
@@ -3492,14 +2801,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSVDSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(5, 5);
-
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -3525,14 +2826,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(107, 107);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -3554,14 +2847,6 @@ public abstract class AbstractMatrixTest {
 	public void testSVDSquareRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 
 		Matrix[] svd = a.svd();
@@ -3582,14 +2867,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(109, 109);
 
-		// skip libraries which do not support fat matrices
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
 		a.randn(Ret.ORIG);
 
 		Matrix[] svd = a.svd();
@@ -3606,22 +2883,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSVDFatSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
-
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -3647,22 +2908,6 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix a = createMatrixWithAnnotation(123, 142);
 
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
-
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -3683,22 +2928,6 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testSVDTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
-
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -3723,22 +2952,6 @@ public abstract class AbstractMatrixTest {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(140, 121);
-
-		if (a.getClass().getName().startsWith("org.ujmp.jampack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jmatrices.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.jsci.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.owlpack.")) {
-			return;
-		}
-		if (a.getClass().getName().startsWith("org.ujmp.vecmath.")) {
-			return;
-		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {

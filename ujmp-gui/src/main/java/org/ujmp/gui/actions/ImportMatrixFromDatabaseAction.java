@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,10 +30,10 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.DB;
+import org.ujmp.core.enums.DBType;
 import org.ujmp.core.interfaces.GUIObject;
 
-public class ImportMatrixFromDatabaseAction extends ObjectAction {
+public class ImportMatrixFromDatabaseAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 1708309879911224591L;
 
 	public ImportMatrixFromDatabaseAction(JComponent c, GUIObject m) {
@@ -46,10 +46,10 @@ public class ImportMatrixFromDatabaseAction extends ObjectAction {
 
 	public Object call() {
 		try {
-			DB type = DB.values()[JOptionPane.showOptionDialog(getComponent(),
+			DBType type = DBType.values()[JOptionPane.showOptionDialog(getComponent(),
 					"Select database type", "Import Matrix",
 					JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-					DB.values(), DB.MySQL)];
+					DBType.values(), DBType.MySQL)];
 
 			String host = null;
 			while (host == null) {

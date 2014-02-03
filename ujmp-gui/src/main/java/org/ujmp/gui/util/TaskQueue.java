@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import org.ujmp.gui.actions.ObjectAction;
+import org.ujmp.gui.actions.AbstractObjectAction;
 
 public abstract class TaskQueue {
 
@@ -59,7 +59,7 @@ public abstract class TaskQueue {
 		}
 	}
 
-	public static final Future<?> submit(ObjectAction c) {
+	public static final Future<?> submit(AbstractObjectAction c) {
 		logger.log(Level.INFO, "New task added: " + c);
 		fireActionPerformed(new ActionEvent(c, 0, c.toString()));
 		return executor.submit(c);

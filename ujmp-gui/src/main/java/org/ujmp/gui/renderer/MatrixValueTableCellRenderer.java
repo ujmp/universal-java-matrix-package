@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
@@ -46,10 +47,8 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 
 	private final Border border = BorderFactory.createLineBorder(Color.blue, 2);
 
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		JLabel label = (JLabel) super.getTableCellRendererComponent(table,
-				value, isSelected, hasFocus, row, column);
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		label.setHorizontalAlignment(JLabel.CENTER);
 
 		MatrixGUIObject m = (MatrixGUIObject) table.getModel();
@@ -57,7 +56,7 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		Color c = ColorUtil.fromObject(value);
 
 		try {
-			setToolTipText(TooltipUtil.getTooltip(m, row, column));
+			setToolTipText(TooltipUtil.getTooltip(m.getMatrix(), row, column));
 		} catch (ConcurrentModificationException e) {
 			// not too bad
 		}
@@ -66,7 +65,24 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		if (width < 25) {
 			label.setText("");
 		} else {
-			String s = UJMPFormat.getSingleLineInstance().format(value);
+			String s;
+			if (value == null) {
+				s = "";
+			} else if (value instanceof Matrix) {
+				Matrix ma = (Matrix) value;
+				s = ma.getClass().getSimpleName();
+				if (ma.getLabel() != null) {
+					s += " [" + ma.getLabel() + "]";
+				}
+			} else if (value instanceof Integer) {
+				s = String.valueOf(value);
+			} else if (value instanceof Byte) {
+				s = String.valueOf(value);
+			} else if (value instanceof Long) {
+				s = String.valueOf(value);
+			} else {
+				s = UJMPFormat.getSingleLineInstance().format(value);
+			}
 			if (s != null && s.length() > 100) {
 				s = s.substring(0, 100) + "...";
 			}

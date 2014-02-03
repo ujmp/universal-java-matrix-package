@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,7 +35,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.interfaces.GUIObject;
 
-public class DenseMatrixAction extends ObjectAction {
+public class DenseMatrixAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 8315118041433423085L;
 
 	public DenseMatrixAction(JComponent c, GUIObject o) {

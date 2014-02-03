@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,10 +38,6 @@ public class MatrixEditorPanel extends JPanel {
 		setLayout(new BorderLayout());
 		editor = new MatrixTableEditorPanel(m);
 		add(editor, BorderLayout.CENTER);
-	}
-
-	public void setMatrix(MatrixGUIObject matrix) {
-		editor.setMatrix(matrix);
 	}
 
 }

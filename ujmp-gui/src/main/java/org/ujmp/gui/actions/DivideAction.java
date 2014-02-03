@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
@@ -46,7 +45,7 @@ public class DivideAction extends AbstractMatrixAction {
 				KeyEvent.VK_SLASH, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call() throws MatrixException {
+	public Object call()  {
 		Matrix m = getMatrixObject().getMatrix().divide(
 				getRet(),
 				getIgnoreMissing(),

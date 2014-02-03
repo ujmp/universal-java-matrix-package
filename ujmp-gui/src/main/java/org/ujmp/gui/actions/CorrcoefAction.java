@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
@@ -42,7 +41,7 @@ public class CorrcoefAction extends AbstractMatrixAction {
 				"Calculates the correlation coefficient for this matrix");
 	}
 
-	public Object call() throws MatrixException {
+	public Object call()  {
 		Matrix result = getMatrixObject().getMatrix().corrcoef(Ret.NEW,
 				getIgnoreMissing(), true);
 		result.showGUI();

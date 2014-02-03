@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,8 +25,10 @@ package org.ujmp.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.net.URL;
 import java.util.TimerTask;
 
 import javax.swing.JComponent;
@@ -35,13 +37,13 @@ import javax.swing.JFrame;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.util.GlobalTimer;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
 import org.ujmp.gui.util.FrameManager;
-import org.ujmp.gui.util.GlobalTimer;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 
@@ -58,6 +60,10 @@ public abstract class AbstractFrame extends JFrame {
 
 	private TimerTask updateTask = null;
 
+	public AbstractFrame(Matrix matrix, JComponent component) {
+		this(matrix.getGUIObject(), component);
+	}
+
 	public AbstractFrame(GUIObject o, JComponent component) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		UIDefaults.setDefaults();
@@ -67,13 +73,15 @@ public abstract class AbstractFrame extends JFrame {
 		if (o instanceof MatrixGUIObject) {
 			MatrixGUIObject mgui = (MatrixGUIObject) o;
 			Matrix m = mgui.getMatrix();
-			String size = Coordinates.toString(m.getSize())
-					.replaceAll(",", "x");
-			setTitle("[" + size + "] " + m.getClass().getSimpleName() + " ["
-					+ label + "]");
+			String size = Coordinates.toString("[", "x", "]", m.getSize());
+			setTitle(size + " " + m.getClass().getSimpleName() + " [" + label + "]");
 		} else {
 			setTitle(o.toString());
 		}
+
+		URL url = ClassLoader.getSystemResource("org/ujmp/gui/UJMP.png");
+		Image img = Toolkit.getDefaultToolkit().createImage(url);
+		setIconImage(img);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		if (d.getHeight() < 800) {

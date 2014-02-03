@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,411 +23,232 @@
 
 package org.ujmp.gui;
 
-import java.awt.Component;
-import java.awt.image.BufferedImage;
-
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.util.UJMPFormat;
-import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.gui.frame.MatrixFrame;
 import org.ujmp.gui.panels.MatrixPanel;
-import org.ujmp.gui.util.FastListSelectionModel;
+import org.ujmp.gui.table.FastListSelectionModel64;
+import org.ujmp.gui.table.TableModel64;
+import org.ujmp.gui.table.TableModelEvent64;
+import org.ujmp.gui.table.TableModelListener64;
 
-public class MatrixGUIObject extends AbstractGUIObject implements TableModel {
+public class MatrixGUIObject extends AbstractGUIObject implements TableModel64 {
 	private static final long serialVersionUID = -5777110889052748093L;
 
-	private Matrix matrix = null;
+	private final Matrix matrix;
 
-	private int modCount = 0;
-
-	private transient String tooltipText = null;
-
-	private transient ListSelectionModel rowSelectionModel = null;
-
-	private transient ListSelectionModel columnSelectionModel = null;
+	private transient FastListSelectionModel64 rowSelectionModel = null;
+	private transient FastListSelectionModel64 columnSelectionModel = null;
 
 	private transient EventListenerList listenerList = null;
 
 	private transient JFrame frame = null;
-
 	private transient JPanel panel = null;
 
 	public MatrixGUIObject(Matrix m) {
 		this.matrix = m;
 	}
 
-	public Matrix getMatrix() {
+	public final Matrix getMatrix() {
 		return matrix;
 	}
 
-	public void clear() {
+	public final void clear() {
 		matrix.clear();
 		fireValueChanged();
 	}
 
-	// Takes too much time and does not work for recursive objects
-
-	// public double getEstimatedMaxValue(long timeOut) throws MatrixException {
-	// double max = -Double.MAX_VALUE;
-	// long t0 = System.currentTimeMillis();
-	// long t1;
-	// double v = 0.0;
-	// for (long[] c : matrix.availableCoordinates()) {
-	// max = (v = matrix.getAsDouble(c)) > max ? v : max;
-	// t1 = System.currentTimeMillis();
-	// if (t1 - t0 > timeOut) {
-	// return max;
-	// }
-	// }
-	// return max;
-	// }
-
-	// public double getEstimatedMinValue(long timeOut) throws MatrixException {
-	// double min = Double.MAX_VALUE;
-	// long t0 = System.currentTimeMillis();
-	// long t1;
-	// double v = 0.0;
-	// for (long[] c : matrix.availableCoordinates()) {
-	// min = (v = matrix.getAsDouble(c)) < min ? v : min;
-	// t1 = System.currentTimeMillis();
-	// if (t1 - t0 > timeOut) {
-	// return min;
-	// }
-	// }
-	// return min;
-	// }
-
-	public long getValueCount() {
-		return matrix.getValueCount();
-	}
-
 	public final EventListenerList getListenerList() {
 		if (listenerList == null) {
-			listenerList = new EventListenerList();
+			synchronized (this) {
+				if (listenerList == null) {
+					listenerList = new EventListenerList();
+				}
+			}
 		}
 		return listenerList;
 	}
 
-	public String getLabel() {
+	public final String getLabel() {
 		return matrix.getLabel();
 	}
 
-	public void setLabel(String label) {
+	public final void setLabel(final String label) {
 		matrix.setLabel(label);
 	}
 
-	public Object getLabelObject() {
+	public final Object getLabelObject() {
 		return matrix.getLabelObject();
 	}
 
-	public void setLabelObject(Object label) {
+	public final void setLabelObject(final Object label) {
 		matrix.setLabelObject(label);
 	}
 
-	public final void addTableModelListener(TableModelListener l) {
+	public final void addTableModelListener(final TableModelListener64 l) {
+		getListenerList().add(TableModelListener64.class, l);
+	}
+
+	public final void removeTableModelListener(final TableModelListener64 l) {
+		getListenerList().remove(TableModelListener64.class, l);
+	}
+
+	public final void addTableModelListener(final TableModelListener l) {
 		getListenerList().add(TableModelListener.class, l);
 	}
 
-	public final void removeTableModelListener(TableModelListener l) {
+	public final void removeTableModelListener(final TableModelListener l) {
 		getListenerList().remove(TableModelListener.class, l);
 	}
 
-	public final String getToolTipText() {
-		try {
-			if (tooltipText == null) {
-				StringBuilder s = new StringBuilder();
-				s.append("<html>");
-				s.append("<table>");
-				s.append("<tr>");
-				s.append("<td colspan=2><h3>Matrix</h3></td>");
-				s.append("</tr>");
-				s.append("<tr>");
-				s.append("<td><b>Label:</b></td>");
-				s.append("<td>" + getLabel() + "</td>");
-				s.append("</tr>");
-				s.append("<tr>");
-				s.append("<td><b>Size:</b></td>");
-				s.append("<td>" + getRowCount() + "x" + getColumnCount()
-						+ "</td>");
-				s.append("</tr>");
-				s.append("<tr>");
-				s.append("<td><b>Values:</b></td>");
-				s.append("<td>");
-				s.append("<table border=1>");
-				int rowCount = getRowCount();
-				int columnCount = getColumnCount();
-
-				// header
-				s.append("<tr>");
-				s.append("<th></th>");
-				for (int col = 0; col < columnCount
-						&& col < UJMPSettings.getMaxToolTipCols(); col++) {
-					s.append("<th>" + matrix.getColumnLabel(col) + "</th>");
-				}
-				if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
-					s.append("<th>...</th>");
-				}
-				s.append("</tr>");
-
-				for (int row = 0; row < rowCount
-						&& row < UJMPSettings.getMaxToolTipRows(); row++) {
-					s.append("<tr>");
-					s.append("<th>" + matrix.getRowLabel(row) + "</th>");
-					for (int col = 0; col < columnCount
-							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
-						s.append("<td align=right>"
-								+ UJMPFormat.getSingleLineInstance().format(
-										matrix.getAsObject(row, col)) + "</td>");
-					}
-					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
-						s.append("<td align=right>...</td>");
-					}
-					s.append("</tr>");
-				}
-				if (getRowCount() > UJMPSettings.getMaxToolTipRows()) {
-					s.append("<tr>");
-					s.append("<td></td>");
-					for (int col = 0; col < getColumnCount()
-							&& col < UJMPSettings.getMaxToolTipCols(); col++) {
-						s.append("<td align=right>...</td>");
-					}
-					if (getColumnCount() > UJMPSettings.getMaxToolTipCols()) {
-						s.append("<td align=right>...</td>");
-					}
-					s.append("</tr>");
-				}
-				s.append("</table>");
-				s.append("</td>");
-				s.append("</tr>");
-				s.append("</table>");
-				s.append("</html>");
-				tooltipText = s.toString();
-			}
-			return tooltipText;
-		} catch (Exception e) {
-			// TODO
-			e.printStackTrace();
-			return "error getting tooltip text";
-		}
-	}
-
 	public final void fireValueChanged() {
-		for (Object o : getListenerList().getListenerList()) {
-			if (o instanceof TableModelListener)
-				((TableModelListener) o)
-						.tableChanged(new TableModelEvent(this));
+		for (final Object o : getListenerList().getListenerList()) {
+			if (o instanceof TableModelListener64) {
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this));
+			} else if (o instanceof TableModelListener) {
+				((TableModelListener) o).tableChanged(new TableModelEvent(this));
+			}
 		}
-		modCount++;
 	}
 
-	public final void fireValueChanged(int row, int column, Object value) {
-		for (Object o : getListenerList().getListenerList()) {
-			if (o instanceof TableModelListener)
-				((TableModelListener) o).tableChanged(new TableModelEvent(this,
-						row, row, column, TableModelEvent.UPDATE));
+	public final void fireValueChanged(final long row, final long column, final Object value) {
+		for (final Object o : getListenerList().getListenerList()) {
+			if (o instanceof TableModelListener64) {
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column, TableModelEvent64.UPDATE));
+			} else if (o instanceof TableModelListener) {
+				((TableModelListener) o).tableChanged(new TableModelEvent(this, (int) row, (int) row, (int) column, TableModelEvent.UPDATE));
+			}
 		}
-		modCount++;
 	}
 
-	public final Class<?> getColumnClass(int columnIndex) {
+	public final Class<?> getColumnClass(final long columnIndex) {
 		return Object.class;
 	}
 
-	public int getColumnCount() {
-		return (int) matrix.getColumnCount();
+	public final Class<?> getColumnClass(final int columnIndex) {
+		return getColumnClass((long) columnIndex);
 	}
 
-	// works only for 2D
-	public String getColumnName(int columnIndex) {
-		if (matrix.getDimensionCount() == 2) {
-			String label = matrix.getColumnLabel(columnIndex);
-			return label == null || "".equals(label) ? "" + columnIndex : label;
-		} else {
-			return "";
-		}
+	public final int getColumnCount() {
+		return (int) getColumnCount64();
 	}
 
-	public int getRowCount() {
-		return (int) matrix.getRowCount();
+	public final long getColumnCount64() {
+		return matrix.getColumnCount();
 	}
 
-	public Object getValueAt(long[] c) {
-		return getValueAt((int) c[Matrix.ROW], (int) c[Matrix.COLUMN]);
+	public final String getColumnName(final long columnIndex) {
+		return matrix.getColumnLabel(columnIndex);
 	}
 
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		try {
-			return matrix.getAsObject(rowIndex, columnIndex);
-		} catch (MatrixException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	public final String getColumnName(final int columnIndex) {
+		return getColumnName((long) columnIndex);
 	}
 
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
+	public final int getRowCount() {
+		return (int) getRowCount64();
+	}
+
+	public final long getRowCount64() {
+		return matrix.getRowCount();
+	}
+
+	public final Object getValueAt(final int rowIndex, final int columnIndex) {
+		return getValueAt((long) rowIndex, (long) columnIndex);
+	}
+
+	public final Object getValueAt(final long rowIndex, final long columnIndex) {
+		return matrix.getAsObject(rowIndex, columnIndex);
+	}
+
+	public final boolean isCellEditable(final int rowIndex, final int columnIndex) {
+		return isCellEditable((long) rowIndex, (long) columnIndex);
+	}
+
+	public final boolean isCellEditable(final long rowIndex, final long columnIndex) {
 		return !matrix.isReadOnly();
 	}
 
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		try {
-			matrix.setAsObject(aValue, rowIndex, columnIndex);
-		} catch (MatrixException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public final void setValueAt(final Object aValue, final int rowIndex, final int columnIndex) {
+		setValueAt(aValue, (long) rowIndex, (long) columnIndex);
+	}
+
+	public final void setValueAt(final Object aValue, final long rowIndex, final long columnIndex) {
+		matrix.setAsObject(aValue, rowIndex, columnIndex);
 		fireValueChanged(rowIndex, columnIndex, aValue);
-		tooltipText = null;
 	}
 
-	public Iterable<long[]> coordinates() {
-		return matrix.allCoordinates();
-	}
-
-	// works only for 2D
-	public final String getRowName(int row) {
-		if (matrix.getDimensionCount() == 2) {
-			String label = matrix.getRowLabel(row);
-			return label == null || "".equals(label) ? "" + row : label;
-		} else {
-			return "";
-		}
-	}
-
-	public int getZCount() {
-		return (int) matrix.getZCount();
-	}
-
-	public boolean isSquare() {
-		return matrix.isSquare();
-	}
-
-	public Double getDoubleValueAt(long... coordinates) throws MatrixException {
-		return matrix.getAsDouble(coordinates);
-	}
-
-	public boolean isSparse() {
-		return matrix.isSparse();
-	}
-
-	public boolean isScalar() {
-		return matrix.isScalar();
-	}
-
-	public ListSelectionModel getColumnSelectionModel() {
+	public final FastListSelectionModel64 getColumnSelectionModel() {
 		if (columnSelectionModel == null) {
-			columnSelectionModel = new FastListSelectionModel();
+			synchronized (this) {
+				if (columnSelectionModel == null) {
+					columnSelectionModel = new FastListSelectionModel64();
+				}
+			}
 		}
 		return columnSelectionModel;
 	}
 
-	public void setColumnSelectionModel(ListSelectionModel columnSelectionModel) {
-		this.columnSelectionModel = columnSelectionModel;
-	}
-
-	public ListSelectionModel getRowSelectionModel() {
+	public final FastListSelectionModel64 getRowSelectionModel() {
 		if (rowSelectionModel == null) {
-			rowSelectionModel = new FastListSelectionModel();
+			synchronized (this) {
+				if (rowSelectionModel == null) {
+					rowSelectionModel = new FastListSelectionModel64();
+				}
+			}
 		}
 		return rowSelectionModel;
 	}
 
-	public void setRowSelectionModel(ListSelectionModel rowSelectionModel) {
-		this.rowSelectionModel = rowSelectionModel;
-	}
-
-	public long[] getSize() {
-		return matrix.getSize();
-	}
-
 	public final Icon getIcon() {
-		try {
-			TableModel dataModel = new AbstractTableModel() {
-				private static final long serialVersionUID = 5562866897873790623L;
-
-				public int getColumnCount() {
-					return 1;
-				}
-
-				public int getRowCount() {
-					return 1;
-				}
-
-				public Object getValueAt(int row, int col) {
-					return this;
-				}
-			};
-			JTable table = new JTable(dataModel);
-			table.getColumnModel().getColumn(0).setWidth(32);
-			table.setRowHeight(32);
-
-			int WIDTH = table.getColumnModel().getColumn(0).getWidth() - 1;
-			int HEIGHT = table.getRowHeight(0) - 1;
-
-			Class<?> cl = Class.forName("org.ujmp.gui.matrix.MatrixRenderer");
-			DefaultTableCellRenderer mr = (DefaultTableCellRenderer) cl
-					.newInstance();
-			Component c = mr.getTableCellRendererComponent(table, this, false,
-					false, 0, 0);
-			BufferedImage bi = new BufferedImage(WIDTH, HEIGHT,
-					BufferedImage.TYPE_INT_RGB);
-			c.paint(bi.getGraphics());
-			return new ImageIcon(bi);
-
-		} catch (Exception e) {
-			return new ImageIcon("resources/icons/rebuild.png");
-		}
-	}
-
-	// Description not supported for Matrix
-	public String getDescription() {
 		return null;
 	}
 
-	// Description not supported for Matrix
-	public void setDescription(String description) {
+	public final String getDescription() {
+		return matrix.getLabel();
 	}
 
-	public String toString() {
+	public final void setDescription(final String description) {
+		matrix.setLabel(description);
+	}
+
+	public final String toString() {
 		if (matrix.getLabel() != null) {
-			return "[" + Coordinates.toString(matrix.getSize()) + "] "
-					+ matrix.getClass().getSimpleName() + " ["
-					+ matrix.getLabel() + "]";
+			return Coordinates.toString("[", "x", "]", matrix.getSize()) + matrix.getClass().getSimpleName() + " [" + matrix.getLabel() + "]";
 		} else {
-			return "[" + Coordinates.toString(matrix.getSize()) + "] "
-					+ matrix.getClass().getSimpleName();
+			return Coordinates.toString("[", "x", "]", matrix.getSize()) + matrix.getClass().getSimpleName();
 		}
 	}
 
-	public Matrix getCoreObject() {
+	public final Matrix getCoreObject() {
 		return matrix;
 	}
 
-	public JFrame getFrame() {
+	public final JFrame getFrame() {
 		if (frame == null) {
-			frame = new MatrixFrame(this);
+			synchronized (this) {
+				if (frame == null) {
+					frame = new MatrixFrame(this);
+				}
+			}
 		}
 		return frame;
 	}
 
-	public JPanel getPanel() {
+	public final JPanel getPanel() {
 		if (panel == null) {
-			panel = new MatrixPanel(this);
+			synchronized (this) {
+				if (panel == null) {
+					panel = new MatrixPanel(this);
+				}
+			}
 		}
 		return panel;
 	}

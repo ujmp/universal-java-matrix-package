@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,16 +23,22 @@
 
 package org.ujmp.gui.statusbar;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.JProgressBar;
 
-import org.ujmp.gui.util.GlobalTimer;
+import org.ujmp.core.util.GlobalTimer;
 
 public class MemoryUsage extends JProgressBar {
 	private static final long serialVersionUID = 5692292627429288637L;
+
+	private int used = 0;
 
 	public MemoryUsage() {
 		setBorder(BorderFactory.createEtchedBorder());
@@ -40,11 +46,25 @@ public class MemoryUsage extends JProgressBar {
 		GlobalTimer.getInstance().schedule(new UpdateTask(this), 0, 1000);
 	}
 
+	public void paint(Graphics g) {
+		super.paint(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		String s = used + "MB";
+		int stringWidth = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();
+		int stringHeight = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getHeight();
+		int x = (getWidth() - stringWidth) / 2;
+		int y = (getHeight() - stringHeight) / 2;
+		y = ((getHeight() - g2d.getFontMetrics().getHeight()) / 2) + g2d.getFontMetrics().getAscent();
+		g2d.setColor(Color.darkGray);
+		g2d.drawString(s, x, y);
+	}
+
 	public void update() {
 		int max = (int) Runtime.getRuntime().maxMemory() / 1048576;
 		int total = (int) Runtime.getRuntime().totalMemory() / 1048576;
 		int free = (int) Runtime.getRuntime().freeMemory() / 1048576;
-		int used = total - free;
+		used = total - free;
 		setMinimum(0);
 		setMaximum(max);
 		setValue(used);
@@ -59,7 +79,6 @@ public class MemoryUsage extends JProgressBar {
 			this.memoryUsage = memoryUsage;
 		}
 
-		
 		public void run() {
 			memoryUsage.update();
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,13 +35,13 @@ import javax.swing.JSeparator;
 
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.util.JMathLib;
-import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
-import org.ujmp.core.util.matrices.MatrixMemoryUsage;
-import org.ujmp.core.util.matrices.MatrixRandomSeed;
-import org.ujmp.core.util.matrices.MatrixRunningThreads;
-import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
-import org.ujmp.core.util.matrices.MatrixSystemProperties;
-import org.ujmp.core.util.matrices.MatrixSystemTime;
+import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
+import org.ujmp.core.util.matrices.MemoryUsageMatrix;
+import org.ujmp.core.util.matrices.RandomSeedMatrix;
+import org.ujmp.core.util.matrices.RunningThreadsMatrix;
+import org.ujmp.core.util.matrices.SystemEnvironmentMatrix;
+import org.ujmp.core.util.matrices.SystemPropertiesMatrix;
+import org.ujmp.core.util.matrices.SystemTimeMatrix;
 import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 import org.ujmp.gui.actions.ShowInFrameAction;
 import org.ujmp.gui.util.MatrixUIDefaults;
@@ -58,22 +58,22 @@ public class UJMPToolsMenu extends JMenu {
 		add(new JMenuItem(new ShowInFrameAction(component,
 				"Supported File Formats", FileFormat.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "System Properties",
-				MatrixSystemProperties.class)));
+				SystemPropertiesMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component,
-				"System Environment", MatrixSystemEnvironment.class)));
+				"System Environment", SystemEnvironmentMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "UI Defaults",
 				MatrixUIDefaults.class)));
 		add(new JSeparator());
 		add(new JMenuItem(new ShowInFrameAction(component, "Memory Usage",
-				MatrixMemoryUsage.class)));
+				MemoryUsageMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "Running Threads",
-				MatrixRunningThreads.class)));
+				RunningThreadsMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "System Time",
-				MatrixSystemTime.class)));
+				SystemTimeMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "Random Seed",
-				MatrixRandomSeed.class)));
+				RandomSeedMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component,
-				"Available Processors", MatrixAvailableProcessors.class)));
+				"Available Processors", AvailableProcessorsMatrix.class)));
 
 		if (JMathLib.isAvailable()) {
 			add(new JSeparator());

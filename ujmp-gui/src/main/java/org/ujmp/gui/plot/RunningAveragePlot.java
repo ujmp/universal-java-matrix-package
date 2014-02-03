@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -58,8 +58,7 @@ public class RunningAveragePlot {
 
 					double xs = plotSettings.getXStepSize();
 
-					double sum = plotSettings.getMatrixGUIObject().getDoubleValueAt((long) plotSettings.getMinXValue(),
-							column);
+					double sum = plotSettings.getMatrixGUIObject().getMatrix().getAsDouble((long) plotSettings.getMinXValue(), column);
 					double average = sum;
 					double oldAverage = average;
 					double firstPoint = plotSettings.getMinXValue();
@@ -72,9 +71,9 @@ public class RunningAveragePlot {
 						long row2 = (long) xr;
 						long rowRA = (long) (firstPoint);
 
-						double yv1 = plotSettings.getMatrixGUIObject().getDoubleValueAt(row1, column);
-						double yv2 = plotSettings.getMatrixGUIObject().getDoubleValueAt(row2, column);
-						double yvRA = plotSettings.getMatrixGUIObject().getDoubleValueAt(rowRA, column);
+						double yv1 = plotSettings.getMatrixGUIObject().getMatrix().getAsDouble(row1, column);
+						double yv2 = plotSettings.getMatrixGUIObject().getMatrix().getAsDouble(row2, column);
+						double yvRA = plotSettings.getMatrixGUIObject().getMatrix().getAsDouble(rowRA, column);
 
 						sum += yv2;
 						nmbOfPoints++;
@@ -89,8 +88,7 @@ public class RunningAveragePlot {
 						int x2 = (int) (xr * xf);
 						x2 = (x2 == x1) ? x2++ : x2;
 
-						int y1 = (int) (plotSettings.getHeight() - 1 - oldAverage * yf + plotSettings.getMinYValue()
-								* yf);
+						int y1 = (int) (plotSettings.getHeight() - 1 - oldAverage * yf + plotSettings.getMinYValue() * yf);
 						int y2 = (int) (plotSettings.getHeight() - 1 - average * yf + plotSettings.getMinYValue() * yf);
 
 						g2d.drawLine(x1, y1, x2, y2);

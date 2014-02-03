@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,8 +30,7 @@ import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
-	public static final Color[] TRACECOLORS = { Color.blue, Color.green,
-			Color.red, Color.black, Color.yellow, Color.cyan };
+	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow, Color.cyan };
 
 	public static final Color contrastBW(Color c) {
 		if ((c.getRed() + c.getGreen() + c.getBlue()) > 200.0) {
@@ -57,15 +56,13 @@ public abstract class ColorUtil {
 		else if (Double.isInfinite(v))
 			return (Color.CYAN);
 		else if (v > 1.0)
-			return (ColorMap.colorGreenToYellow[(int) (255.0 * Math
-					.tanh((v - 1.0) / 10.0))]);
+			return (ColorMap.colorGreenToYellow[(int) (255.0 * Math.tanh((v - 1.0) / 10.0))]);
 		else if (v > 0.0)
 			return (ColorMap.colorBlackToGreen[(int) (255.0 * v)]);
 		else if (v > -1.0)
 			return (ColorMap.colorRedToBlack[(int) (255.0 * (v + 1.0))]);
 		else
-			return (ColorMap.colorRedToMagenta[(int) (255.0 * Math
-					.tanh((-v - 1.0) / 10.0))]);
+			return (ColorMap.colorRedToMagenta[(int) (255.0 * Math.tanh((-v - 1.0) / 10.0))]);
 	}
 
 	private static Color fromString(String s) {
@@ -77,33 +74,38 @@ public abstract class ColorUtil {
 		int g = 192 + (hc % 256) / 4;
 		hc = hc / 256;
 		int b = 192 + (hc % 256) / 4;
-		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255
-				: b);
+		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255 : b);
 	}
 
 	public static Color fromObject(Object v) {
 		if (v == null) {
 			return Color.black;
-		}
-		if (v instanceof Double) {
+		} else if (v instanceof Double) {
 			return fromDouble((Double) v);
-		}
-		if (v instanceof Integer) {
+		} else if (v instanceof Float) {
+			return fromDouble((Float) v);
+		} else if (v instanceof Byte) {
+			return fromDouble((double) ((Byte) v) / Byte.MAX_VALUE);
+		} else if (v instanceof Integer) {
 			return fromRGB((Integer) v);
-		}
-		if (v instanceof Matrix) {
+		} else if (v instanceof Long) {
+			return fromDouble((Long) v);
+		} else if (v instanceof Matrix) {
 			Matrix m = (Matrix) v;
-			String s = m.getLabel();
-			s = s == null ? "[Matrix]" : s;
+			String s = m.getClass().getSimpleName();
+			if (m.getLabel() != null) {
+				s += " " + m.getLabel();
+			}
+			return fromString(s);
+		} else {
+			String s = StringUtil.format(v);
+			try {
+				double d = Double.parseDouble(s);
+				return fromDouble(d);
+			} catch (Exception e) {
+			}
 			return fromString(s);
 		}
-		String s = StringUtil.format(v);
-		try {
-			double d = Double.parseDouble(s);
-			return fromDouble(d);
-		} catch (Exception e) {
-		}
-		return fromString(s);
 	}
 
 	private static int hash(int h) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
-import org.ujmp.core.util.MathUtil;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class XYSeriesWrapper extends XYSeries {
@@ -101,7 +100,7 @@ public class XYSeriesWrapper extends XYSeries {
 
 		double row = index;
 		try {
-			row = Double.parseDouble(matrix.getRowName(index));
+			row = Double.parseDouble(matrix.getMatrix().getRowLabel(index));
 		} catch (Exception e) {
 		}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -36,17 +36,17 @@ import org.ujmp.core.UJMP;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 
+import com.itextpdf.awt.DefaultFontMapper;
+import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public abstract class ExportPDF {
 
-	private static final Logger logger = Logger.getLogger(ExportPDF.class
-			.getName());
+	private static final Logger logger = Logger.getLogger(ExportPDF.class.getName());
 
 	public static final File selectFile() {
 		return selectFile(null);
@@ -80,14 +80,12 @@ public abstract class ExportPDF {
 		}
 		try {
 			Document document = new Document(new Rectangle(width, height));
-			PdfWriter writer = PdfWriter.getInstance(document,
-					new FileOutputStream(file.getAbsolutePath()));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
 			document.addAuthor("UJMP v" + UJMP.UJMPVERSION);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
 			PdfTemplate tp = cb.createTemplate(width, height);
-			Graphics2D g2 = tp.createGraphics(width, height,
-					new DefaultFontMapper());
+			Graphics2D g2 = new PdfGraphics2D(cb, width, height, new DefaultFontMapper());
 			if (c instanceof CanRenderGraph) {
 				((CanRenderGraph) c).renderGraph(g2);
 			} else {

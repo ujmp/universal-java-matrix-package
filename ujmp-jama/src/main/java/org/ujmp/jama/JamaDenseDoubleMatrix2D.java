@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.jama;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import Jama.CholeskyDecomposition;
@@ -49,7 +48,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = matrix;
 	}
 
-	public JamaDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JamaDenseDoubleMatrix2D(Matrix source)  {
 		super(source);
 		this.matrix = new Jama.Matrix((int) source.getRowCount(), (int) source
 				.getColumnCount());
@@ -69,17 +68,17 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return A;
 	}
 
-	public Matrix inv() throws MatrixException {
+	public Matrix inv()  {
 		return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
-	public Matrix invSPD() throws MatrixException {
+	public Matrix invSPD()  {
 		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
 		return new JamaDenseDoubleMatrix2D(chol.solve(Jama.Matrix.identity(
 				matrix.getRowDimension(), matrix.getRowDimension())));
 	}
 
-	public Matrix[] svd() throws MatrixException {
+	public Matrix[] svd()  {
 		if (getColumnCount() > getRowCount()) {
 			SingularValueDecomposition svd = new SingularValueDecomposition(
 					matrix.transpose());
@@ -126,7 +125,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy()  {
 		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
@@ -145,7 +144,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JamaDenseDoubleMatrix2D(qr.getR());
 			return new Matrix[] { q, r };
 		} else {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"QR decomposition only works for matrices m>=n");
 		}
 	}

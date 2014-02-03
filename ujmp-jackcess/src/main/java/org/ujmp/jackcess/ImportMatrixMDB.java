@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,14 +27,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 
 public class ImportMatrixMDB {
 
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
-		JackcessDenseObjectMatrix2D ma = LinkMatrixMDB.toFile(file, parameters);		
+	public static final Matrix fromFile(File file, Object... parameters) throws IOException {
+		JackcessDenseObjectMatrix2D ma = LinkMatrixMDB.toFile(file, parameters);
 		Matrix m = new DefaultDenseObjectMatrix2D(ma);
 		ma.close();
 		return m;

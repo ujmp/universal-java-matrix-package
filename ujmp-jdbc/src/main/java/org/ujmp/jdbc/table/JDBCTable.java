@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -153,18 +153,16 @@ public class JDBCTable extends AbstractTable {
 		}
 	}
 
-	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName,
-			String username, String password, String... columnsForKeys) throws SQLException {
+	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName, String username, String password,
+			String... columnsForKeys) throws SQLException {
 		return new JDBCTable("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName
-				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, username,
-				password, columnsForKeys);
+				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, username, password, columnsForKeys);
 	}
 
-	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName,
-			String userName, String password) throws SQLException {
+	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName, String userName, String password)
+			throws SQLException {
 		return new JDBCTable("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName
-				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, userName,
-				password);
+				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, userName, password);
 	}
 
 	public static JDBCTable connectToHSQLDB(File filename, String tableName, String... columnForKeys) {
@@ -218,14 +216,6 @@ public class JDBCTable extends AbstractTable {
 	public List<Map<String, Object>> getAll(Map<String, Object> keys) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public static void main(String[] args) throws Exception {
-		JDBCTable table = JDBCTable.connectToHSQLDB(new File("c:/temp/test.hsqldb"), "testTable", "key1", "key2");
-		System.out.println(table.size());
-		table.add("key1", "test", "key2", "test2");
-		System.out.println(table.size());
-		System.out.println(table.getFirst("key1", "test"));
 	}
 
 	public int size() {

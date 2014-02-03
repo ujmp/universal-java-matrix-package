@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
@@ -118,7 +117,7 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		matrix = new MLDouble(name, values);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(matrix.name);
 		s.writeObject(this.toDoubleArray());
@@ -126,7 +125,6 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 
 	@Override
 	public DenseDoubleMatrixFactory<? extends DenseDoubleMatrix> getFactory() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

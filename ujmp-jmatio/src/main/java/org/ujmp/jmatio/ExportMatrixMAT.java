@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,15 +29,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 import com.jmatio.io.MatFileWriter;
 import com.jmatio.types.MLArray;
 
 public abstract class ExportMatrixMAT {
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException {
 		MatFileWriter writer = new MatFileWriter();
 		Collection<MLArray> matrixList = new ArrayList<MLArray>();
 		matrixList.add(new MLDoubleMatrix(matrix).getWrappedObject());

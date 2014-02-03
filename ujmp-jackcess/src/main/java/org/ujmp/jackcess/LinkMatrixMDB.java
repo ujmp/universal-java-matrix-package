@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,16 +27,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
 
 import com.healthmarketscience.jackcess.Database;
+import com.healthmarketscience.jackcess.DatabaseBuilder;
 
 public class LinkMatrixMDB {
 
 	public static final JackcessDenseObjectMatrix2D toFile(File file, Object... parameters)
-			throws MatrixException, IOException {
-		Database db = Database.open(file);
+			throws IOException {
+		Database db = DatabaseBuilder.open(file);
 		Set<String> tables = db.getTableNames();
 		String tablename = null;
 

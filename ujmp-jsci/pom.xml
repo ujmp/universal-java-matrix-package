@@ -18,8 +18,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jsci</groupId>
-			<artifactId>jsci-core</artifactId>
+			<groupId>net.sf.jsci</groupId>
+			<artifactId>jsci</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>

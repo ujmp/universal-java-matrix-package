@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,12 +27,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ExportMatrixMDB {
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException {
 		JackcessDenseObjectMatrix2D mdb = new JackcessDenseObjectMatrix2D(file, matrix);
 		mdb.close();
 	}

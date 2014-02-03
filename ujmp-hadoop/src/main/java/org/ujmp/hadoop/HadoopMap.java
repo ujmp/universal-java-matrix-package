@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -56,7 +56,6 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		MapFile.Writer.setIndexInterval(conf, 3);
 	}
 
-	
 	public void clear() {
 		// TODO Auto-generated method stub
 	}
@@ -77,30 +76,25 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 			reader = null;
 		}
 		if (writer == null) {
-			writer = new MapFile.Writer(conf, fs, qualifiedDirName.toString(),
-					Text.class, Text.class);
+			writer = new MapFile.Writer(conf, fs, qualifiedDirName.toString(), Text.class, Text.class);
 		}
 	}
 
-	
 	public boolean containsKey(Object key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	
 	public boolean containsValue(Object value) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
 	public V get(Object key) {
 		try {
 			prepareReader();
@@ -116,18 +110,15 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		}
 	}
 
-	
 	public boolean isEmpty() {
 		return size() == 0;
 	}
 
-	
 	public Set<K> keySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
 	public V put(K key, V value) {
 		try {
 			prepareWriter();
@@ -136,12 +127,10 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 			writer.append(k, v);
 			return null;
 		} catch (Exception e) {
-			throw new RuntimeException("could not store value: " + key + ", "
-					+ value, e);
+			throw new RuntimeException("could not store value: " + key + ", " + value, e);
 		}
 	}
 
-	
 	public void putAll(Map<? extends K, ? extends V> m) {
 		for (K k : m.keySet()) {
 			put(k, m.get(k));
@@ -149,29 +138,24 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 
 	}
 
-	
 	public V remove(Object key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
 	public int size() {
 		try {
 			prepareWriter();
-			return (int) (long) (Long) ReflectionUtil.extractPrivateField(
-					MapFile.Writer.class, writer, "size");
+			return (int) (long) (Long) ReflectionUtil.extractPrivateField(MapFile.Writer.class, writer, "size");
 		} catch (Exception e) {
 			throw new RuntimeException("could not query size", e);
 		}
 	}
 
-	
 	public Collection<V> values() {
 		return null;
 	}
 
-	
 	public void close() throws IOException {
 		if (reader != null) {
 			reader.close();
@@ -179,16 +163,6 @@ public class HadoopMap<K, V> implements Map<K, V>, Closeable {
 		if (writer != null) {
 			writer.close();
 		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		Map<Object, Object> map = new HadoopMap<Object, Object>();
-		System.out.println(map.size());
-		map.put("test", "test");
-		System.out.println(map.size());
-		map.put("a", "a");
-		System.out.println(map.get("test"));
-		System.out.println(map.get("test2"));
 	}
 
 }

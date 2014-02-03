@@ -18,7 +18,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jmatio</groupId>
+			<groupId>net.sourceforge.jmatio</groupId>
 			<artifactId>jmatio</artifactId>
 		</dependency>
 

@@ -18,7 +18,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jscience</groupId>
+			<groupId>org.jscience</groupId>
 			<artifactId>jscience</artifactId>
 		</dependency>
 		<dependency>

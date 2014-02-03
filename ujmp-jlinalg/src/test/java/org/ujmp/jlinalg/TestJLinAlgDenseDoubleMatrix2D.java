@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,20 +24,23 @@
 package org.ujmp.jlinalg;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestJLinAlgDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size) throws MatrixException {
+	public Matrix createMatrix(long... size) {
 		return new JLinAlgDenseDoubleMatrix2D(size);
 	}
 
-	public Matrix createMatrix(Matrix source) throws MatrixException {
+	public Matrix createMatrix(Matrix source) {
 		return new JLinAlgDenseDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return false;
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// fat not supported
 	}
 }

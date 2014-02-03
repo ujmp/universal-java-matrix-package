@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 import com.jmatio.io.MatFileReader;
 import com.jmatio.types.MLArray;
@@ -48,11 +47,11 @@ public class ImportMatrixMAT {
 		}
 		MLArray array = map.get(key);
 		if (array == null) {
-			throw new MatrixException("matrix with label [" + key + "] was not found in .mat file");
+			throw new RuntimeException("matrix with label [" + key + "] was not found in .mat file");
 		} else if (array instanceof MLDouble) {
 			return new MLDoubleMatrix((MLDouble) array);
 		} else {
-			throw new MatrixException("This type is not yet supported: " + array.getClass());
+			throw new RuntimeException("This type is not yet supported: " + array.getClass());
 		}
 	}
 

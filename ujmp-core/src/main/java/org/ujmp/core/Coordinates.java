@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,46 +26,46 @@ package org.ujmp.core;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Coordinates implements Serializable {
+import org.ujmp.core.util.MathUtil;
+
+public class Coordinates implements Serializable, Comparable<Coordinates> {
 	private static final long serialVersionUID = 8361257560328772093L;
 
-	public static final int Y = Matrix.Y;
-
 	public static final int X = Matrix.X;
-
+	public static final int Y = Matrix.Y;
 	public static final int Z = Matrix.Z;
-
 	public static final int ROW = Matrix.ROW;
-
 	public static final int COLUMN = Matrix.COLUMN;
-
 	public static final int ALL = Matrix.ALL;
 
 	public static final long[] ZERO2D = new long[] { 0, 0 };
 
-	public long[] co;
+	/**
+	 * wrapped values
+	 */
+	private final long[] coordinates;
 
-	public Coordinates(long... dimensions) {
-		// cannot use Arrays.copyOf(): not supported in Java 5
-		this.co = new long[dimensions.length];
-		System.arraycopy(dimensions, 0, this.co, 0, dimensions.length);
-	}
-
-	public Coordinates(Coordinates c) {
-		// cannot use Arrays.copyOf(): not supported in Java 5
-		this.co = new long[c.co.length];
-		System.arraycopy(c.co, 0, this.co, 0, c.co.length);
+	/**
+	 * Wraps an array of long values into a Coordinates object with proper
+	 * hashCode(), compareTo() and equals() methods. Use Coordinates.wrap() to
+	 * create a new object.
+	 * 
+	 * @param coordinates
+	 *            array of long values to wrap
+	 */
+	private Coordinates(final long... coordinates) {
+		this.coordinates = coordinates;
 	}
 
 	public final int hashCode() {
-		return Arrays.hashCode(co);
+		return Arrays.hashCode(coordinates);
 	}
 
-	public boolean equals(Coordinates c) {
-		return Arrays.equals(co, c.co);
+	public final boolean equals(final Coordinates c) {
+		return Arrays.equals(coordinates, c.coordinates);
 	}
 
-	public static long product(long[] c) {
+	public static final long product(final long... c) {
 		long product = 1;
 		for (int i = c.length - 1; i != -1; i--) {
 			product *= c[i];
@@ -73,176 +73,245 @@ public class Coordinates implements Serializable {
 		return product;
 	}
 
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("[");
-		for (int i = 0; i < co.length; i++) {
-			s.append(co[i]);
-			if (i < co.length - 1) {
-				s.append(", ");
+	public static final long product(final int... c) {
+		long product = 1;
+		for (int i = c.length - 1; i != -1; i--) {
+			product *= c[i];
+		}
+		return product;
+	}
+
+	public static final Coordinates wrap(final long... coordinates) {
+		return new Coordinates(coordinates);
+	}
+
+	public final String toString(final String separator) {
+		return toString("[", separator, "]");
+	}
+
+	public final String toString() {
+		return toString("[", ",", "]");
+	}
+
+	public final String toString(final String prefix, final String separator, final String suffix) {
+		final StringBuilder s = new StringBuilder();
+		s.append(prefix);
+		for (int i = 0; i < coordinates.length; i++) {
+			s.append(coordinates[i]);
+			if (i < coordinates.length - 1) {
+				s.append(separator);
 			}
 		}
-		s.append("]");
+		s.append(suffix);
 		return s.toString();
 	}
 
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		if (this == o) {
 			return true;
-		}
-		if (o instanceof Coordinates) {
+		} else if (o instanceof Coordinates) {
 			return equals((Coordinates) o);
 		} else {
 			return false;
 		}
 	}
 
-	public void fillWithValue(long value) {
-		Arrays.fill(co, value);
+	public final void fillWithValue(final long value) {
+		Arrays.fill(coordinates, value);
 	}
 
-	public void clear() {
-		Arrays.fill(co, 0);
+	public final void clear() {
+		Arrays.fill(coordinates, 0);
 	}
 
-	public static String toString(long... coordinates) {
-		return toString(',', coordinates);
+	public static final String toString(final long... coordinates) {
+		return toString(",", coordinates);
 	}
 
-	public static String toString(char separator, long... coordinates) {
-		StringBuilder buf = new StringBuilder();
+	public static final String toString(final String separator, final long... coordinates) {
+		return toString("[", separator, "]", coordinates);
+	}
+
+	public static final String toString(final String prefix, final String separator,
+			final String suffix, final long... coordinates) {
+		final StringBuilder s = new StringBuilder();
+		s.append(prefix);
 		for (int i = 0; i < coordinates.length; i++) {
-			buf.append(coordinates[i]);
+			s.append(coordinates[i]);
 			if (i < coordinates.length - 1) {
-				buf.append(separator);
+				s.append(separator);
 			}
 		}
-		return buf.toString();
+		s.append(suffix);
+		return s.toString();
 	}
 
-	public Coordinates clone() {
-		Coordinates c = new Coordinates(this);
-		return c;
+	public final Coordinates clone() {
+		return Coordinates.wrap(Arrays.copyOf(this.coordinates, this.coordinates.length));
 	}
 
-	public static final long[] plus(long[] c1, long[] c2) {
-		long[] co = copyOf(c1);
-		for (int i = co.length - 1; i != -1; i--) {
-			co[i] += c2[i];
+	public static final long[] plus(final long[] c1, final long[] c2) {
+		return plus(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] plus(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] + c2[i];
 		}
-		return co;
+		return result;
 	}
 
-	public static final long[] multiply(long[] c1, long[] c2) {
-		long[] co = copyOf(c1);
-		for (int i = co.length - 1; i != -1; i--) {
-			co[i] *= c2[i];
+	public static final long[] times(final long[] c1, final long[] c2) {
+		return times(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] times(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] * c2[i];
 		}
-		return co;
+		return result;
 	}
 
-	public static final long[] modulo(long[] c1, long[] c2) {
-		long[] co = new long[c1.length];
-		for (int i = co.length - 1; i != -1; i--) {
-			co[i] = c1[i] % c2[i];
+	public static final long[] divide(final long[] c1, final long[] c2) {
+		return divide(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] divide(final long[] c1, final int[] c2) {
+		return divide(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] divide(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] / c2[i];
 		}
-		return co;
+		return result;
 	}
 
-	public static final long[] minus(long[] c1, long[] c2) {
-		long[] co = copyOf(c1);
-		for (int i = co.length - 1; i != -1; i--) {
-			co[i] -= c2[i];
+	public static final long[] divide(final long[] result, final long[] c1, final int[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] / c2[i];
 		}
-		return co;
+		return result;
 	}
 
-	public static final long[] max(long[] c1, long[] c2) {
-		long[] co = copyOf(c1);
-		for (int i = co.length - 1; i != -1; i--) {
-			if (c2[i] > co[i]) {
-				co[i] = c2[i];
-			}
+	public static final long[] times(final long[] c, final long value) {
+		return times(new long[c.length], c, value);
+	}
+
+	public static final long[] times(final long[] result, final long[] c, final long value) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c[i] * value;
 		}
-		return co;
+		return result;
 	}
 
-	public static final long[] min(long[] c1, long[] c2) {
-		long[] co = copyOf(c1);
-		for (int i = co.length - 1; i != -1; i--) {
-			if (c2[i] < co[i]) {
-				co[i] = c2[i];
-			}
+	public static final long[] divide(final long[] c, final long value) {
+		return divide(new long[c.length], c, value);
+	}
+
+	public static final long[] divide(final long[] result, final long[] c, final long value) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c[i] / value;
 		}
-		return co;
+		return result;
 	}
 
-	public static long[] parseString(String s) {
-		String[] fields = s.split("[,;\tx]");
-		long[] dims = new long[fields.length];
+	public static final long[] modulo(final long[] c1, final long[] c2) {
+		return modulo(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] modulo(final long result[], final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] % c2[i];
+		}
+		return result;
+	}
+
+	public static final long[] minus(final long[] c1, final long[] c2) {
+		return minus(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] minus(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = c1[i] - c2[i];
+		}
+		return result;
+	}
+
+	public static final long[] max(final long[] c1, final long[] c2) {
+		return max(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] max(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = Math.max(c1[i], c2[i]);
+		}
+		return result;
+	}
+
+	public static final long[] min(final long[] c1, final long[] c2) {
+		return max(new long[c1.length], c1, c2);
+	}
+
+	public static final long[] min(final long[] result, final long[] c1, final long[] c2) {
+		for (int i = result.length - 1; i != -1; i--) {
+			result[i] = Math.min(c1[i], c2[i]);
+		}
+		return result;
+	}
+
+	public static final long[] parseString(final String s, final String splitRegex) {
+		return parseString(s, "[x,;\t]");
+	}
+
+	public static final long[] parseString(final String s) {
+		final String[] fields = s.split("[,;\tx]");
+		final long[] result = new long[fields.length];
 		for (int i = fields.length - 1; i != -1; i--) {
-			dims[i] = Long.parseLong(fields[i]);
+			result[i] = Long.parseLong(fields[i]);
 		}
-		return dims;
+		return result;
 	}
 
-	public int getDimensionCount() {
-		return co.length;
+	public final int getDimensionCount() {
+		return coordinates.length;
 	}
 
-	public static final boolean equals(long[] c1, long[] c2) {
-		if (c1 == c2) {
-			return true;
-		}
-		if (c1.length != c2.length) {
-			return false;
-		}
-		for (int i = 0; i < c1.length; i++) {
-			if (c1[i] != c2[i]) {
-				return false;
-			}
-		}
-		return true;
+	public static final boolean equals(final long[] c1, final long[] c2) {
+		return Arrays.equals(c1, c2);
 	}
 
-	public static long[] copyOf(long[] c) {
-		long[] ret = new long[c.length];
-		System.arraycopy(c, 0, ret, 0, c.length);
-		return ret;
+	public static final boolean equals(final int[] c1, final int[] c2) {
+		return Arrays.equals(c1, c2);
 	}
 
-	public static final long[] transpose(long[] c) {
-		long[] copy = copyOf(c);
-		copy[ROW] = c[COLUMN];
-		copy[COLUMN] = c[ROW];
-		return copy;
+	public static final long[] copyOf(final long[] c) {
+		return Arrays.copyOf(c, c.length);
 	}
 
-	public static final long[] transpose(long[] c, int swap1, int swap2) {
-		long[] copy = copyOf(c);
-		copy[swap1] = c[swap2];
-		copy[swap2] = c[swap1];
-		return copy;
+	public static final long[] transpose(final long[] c) {
+		return transpose(new long[c.length], c, ROW, COLUMN);
 	}
 
-	public static boolean isInsideOf(long[] coordinates, long[] position, long[] size) {
-		if (coordinates[ROW] < position[ROW]) {
-			return false;
-		}
-		if (coordinates[COLUMN] < position[COLUMN]) {
-			return false;
-		}
-		long[] secondCorner = Coordinates.plus(position, size);
-		if (coordinates[ROW] >= secondCorner[ROW]) {
-			return false;
-		}
-		if (coordinates[COLUMN] >= secondCorner[COLUMN]) {
-			return false;
-		}
-		return true;
+	public static final long[] transpose(final long[] c, final int swapDimension1,
+			final int swapDimension2) {
+		return transpose(new long[c.length], c, swapDimension1, swapDimension2);
 	}
 
-	public static boolean isSmallerThan(long[] coordinates, long[] size) {
+	public static final long[] transpose(final long[] result, final long[] c,
+			final int swapDimension1, final int swapDimension2) {
+		if (result == c) {
+			final long temp = c[swapDimension1];
+			result[swapDimension1] = c[swapDimension2];
+			result[swapDimension2] = temp;
+		} else {
+			result[swapDimension1] = c[swapDimension2];
+			result[swapDimension2] = c[swapDimension1];
+		}
+		return result;
+	}
+
+	public static final boolean isSmallerThan(final long[] coordinates, final long[] size) {
 		for (int i = coordinates.length - 1; i != -1; i--) {
 			if (coordinates[i] >= size[i])
 				return false;
@@ -250,36 +319,55 @@ public class Coordinates implements Serializable {
 		return true;
 	}
 
-	public static boolean isSmallerOrEqual(long[] coordinates, long[] size) {
+	public static final long[] minus(final long[] coordinates, final long value) {
+		return minus(new long[coordinates.length], coordinates, value);
+	}
+
+	public static final long[] minus(final long[] result, final long[] coordinates, final long value) {
 		for (int i = coordinates.length - 1; i != -1; i--) {
-			if (coordinates[i] > size[i])
+			result[i] = coordinates[i] - value;
+		}
+		return result;
+	}
+
+	public static final long[] plus(final long[] coordinates, final long value) {
+		return plus(new long[coordinates.length], coordinates, value);
+	}
+
+	public static final long[] plus(final long[] result, final long[] coordinates, final long value) {
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			result[i] = coordinates[i] + value;
+		}
+		return result;
+	}
+
+	public static final boolean allEquals(final long[] coordinates, final long value) {
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			if (coordinates[i] != value)
 				return false;
 		}
 		return true;
 	}
 
-	public static long[] minusOne(long[] coordinates) {
-		long[] ret = new long[coordinates.length];
-		for (int i = coordinates.length - 1; i != -1; i--) {
-			ret[i] = coordinates[i] - 1;
+	public static final long manhattenDistance(final long[] c1, final long[] c2) {
+		long distance = 0;
+		for (int i = c1.length - 1; i != -1; i--) {
+			distance += Math.abs(c1[i] - c2[i]);
 		}
-		return ret;
+		return distance;
 	}
 
-	public static long[] plusOne(long[] coordinates) {
-		long[] ret = new long[coordinates.length];
-		for (int i = coordinates.length - 1; i != -1; i--) {
-			ret[i] = coordinates[i] + 1;
+	public final int compareTo(final Coordinates coordinates) {
+		if (coordinates == null) {
+			throw new IllegalArgumentException("coordinates cannot be null");
+		} else {
+			final long distance = manhattenDistance(this.coordinates, coordinates.coordinates);
+			return MathUtil.longToIntClip(distance);
 		}
-		return ret;
 	}
 
-	public static boolean isZero(long[] coordinates) {
-		for (int i = coordinates.length - 1; i != -1; i--) {
-			if (coordinates[i] != 0)
-				return false;
-		}
-		return true;
+	public final long[] getLongCoordinates() {
+		return this.coordinates;
 	}
 
 }

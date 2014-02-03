@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -53,13 +53,13 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
-import org.ujmp.core.io.MatrixExporter;
 import org.ujmp.core.matrix.factory.DefaultMatrixFactory;
 import org.ujmp.core.matrix.factory.MatrixFactory;
 
@@ -80,10 +80,6 @@ import org.ujmp.core.matrix.factory.MatrixFactory;
 public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSetters,
 		BasicMatrixProperties, CanPerformCalculations, DistanceMeasures, Comparable<Matrix>,
 		HasAnnotation, Conversions {
-
-	public enum StorageType {
-		DENSE, SPARSE, LIST, SET, MAP, TREE, GRAPH
-	};
 
 	/**
 	 * A factory for creating matrices.
@@ -148,6 +144,6 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 
 	public Matrix clone();
 
-	public MatrixExporter export();
+	public MatrixExportDestinationSelector export();
 
 }

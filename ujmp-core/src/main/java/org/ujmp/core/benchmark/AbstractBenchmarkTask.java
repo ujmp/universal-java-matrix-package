@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *  
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,10 +28,9 @@ import java.util.List;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.Matrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.matrix.Matrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractBenchmarkTask {
@@ -98,7 +97,7 @@ public abstract class AbstractBenchmarkTask {
 			DenseDoubleMatrix2D curMem = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
 			DenseDoubleMatrix2D bestMem = DenseDoubleMatrix2D.Factory.zeros(config.getRuns(), 1);
 			for (int c = 0; !stopped && c < tmpTrialCount; c++) {
-				System.out.print(getTaskName() + " [" + Coordinates.toString('x', size) + "] ");
+				System.out.print(getTaskName() + " [" + Coordinates.toString("x", size) + "] ");
 				System.out.print((c + 1) + "/" + tmpTrialCount + ": ");
 				System.out.flush();
 
@@ -173,10 +172,10 @@ public abstract class AbstractBenchmarkTask {
 		Matrix mem = Matrix.Factory.vertCat(resultMem.getAnnotation()
 				.getDimensionMatrix(Matrix.ROW), resultMem);
 		try {
-			temp.export().toFile(FileFormat.CSV, timeFile);
-			mem.export().toFile(FileFormat.CSV, memFile);
+			temp.export().toFile(timeFile).asCSV();
+			mem.export().toFile(memFile).asCSV();
 			if (!diff.containsMissingValues()) {
-				diff.export().toFile(FileFormat.CSV, diffFile);
+				diff.export().toFile(diffFile).asCSV();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,46 +25,45 @@ package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface BooleanCalculations {
 
-	public Matrix le(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix le(Ret returnType, Matrix matrix) ;
 
-	public Matrix ge(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix ge(Ret returnType, Matrix matrix) ;
 
-	public Matrix gt(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix gt(Ret returnType, Matrix matrix) ;
 
-	public Matrix lt(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix lt(Ret returnType, Matrix matrix) ;
 
-	public Matrix eq(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix eq(Ret returnType, Matrix matrix) ;
 
-	public Matrix ne(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix ne(Ret returnType, Matrix matrix) ;
 
-	public Matrix and(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix and(Ret returnType, Matrix matrix) ;
 
-	public Matrix or(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix or(Ret returnType, Matrix matrix) ;
 
-	public Matrix xor(Ret returnType, Matrix matrix) throws MatrixException;
+	public Matrix xor(Ret returnType, Matrix matrix) ;
 
-	public Matrix not(Ret returnType) throws MatrixException;
+	public Matrix not(Ret returnType) ;
 
-	public Matrix le(Ret returnType, double value) throws MatrixException;
+	public Matrix le(Ret returnType, double value) ;
 
-	public Matrix ge(Ret returnType, double value) throws MatrixException;
+	public Matrix ge(Ret returnType, double value) ;
 
-	public Matrix gt(Ret returnType, double value) throws MatrixException;
+	public Matrix gt(Ret returnType, double value) ;
 
-	public Matrix lt(Ret returnType, double value) throws MatrixException;
+	public Matrix lt(Ret returnType, double value) ;
 
-	public Matrix eq(Ret returnType, Object value) throws MatrixException;
+	public Matrix eq(Ret returnType, Object value) ;
 
-	public Matrix ne(Ret returnType, Object value) throws MatrixException;
+	public Matrix ne(Ret returnType, Object value) ;
 
-	public Matrix and(Ret returnType, boolean value) throws MatrixException;
+	public Matrix and(Ret returnType, boolean value) ;
 
-	public Matrix or(Ret returnType, boolean value) throws MatrixException;
+	public Matrix or(Ret returnType, boolean value) ;
 
-	public Matrix xor(Ret returnType, boolean value) throws MatrixException;
+	public Matrix xor(Ret returnType, boolean value) ;
 
 }

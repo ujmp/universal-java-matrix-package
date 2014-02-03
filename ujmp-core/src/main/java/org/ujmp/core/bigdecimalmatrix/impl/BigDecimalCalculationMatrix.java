@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.bigdecimalmatrix.calculation.BigDecimalCalculation;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractBigDecimalMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 	private static final long serialVersionUID = -1984605379151298934L;
@@ -58,16 +57,12 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		}
 	}
 
-	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException {
+	public BigDecimal getBigDecimal(long... coordinates)  {
 		return calculation.getBigDecimal(coordinates);
 	}
 
-	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
+	public void setBigDecimal(BigDecimal value, long... coordinates)  {
 		calculation.setBigDecimal(value, coordinates);
-	}
-
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
@@ -60,19 +59,19 @@ public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanM
 		setBoolean(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final Boolean getObject(long row, long column) throws MatrixException {
+	public final Boolean getObject(long row, long column)  {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, long row, long column) throws MatrixException {
+	public final void setObject(Boolean o, long row, long column)  {
 		setBoolean(o, row, column);
 	}
 
-	public final Boolean getObject(int row, int column) throws MatrixException {
+	public final Boolean getObject(int row, int column)  {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, int row, int column) throws MatrixException {
+	public final void setObject(Boolean o, int row, int column)  {
 		setBoolean(o, row, column);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,13 +24,12 @@
 package org.ujmp.core.booleanmatrix.factory;
 
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractBooleanMatrix2DFactory implements BooleanMatrix2DFactory {
 	private static final long serialVersionUID = -9208052531077534453L;
 
 	
-	public BooleanMatrix2D zeros(long rows, long columns) throws MatrixException {
+	public BooleanMatrix2D zeros(long rows, long columns)  {
 		return dense(rows, columns);
 	}
 

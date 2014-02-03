@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,12 +26,11 @@ package org.ujmp.core.bigintegermatrix.calculation;
 import java.math.BigInteger;
 
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface BigIntegerCalculation extends Calculation {
 
-	public BigInteger getBigInteger(long... coordinates) throws MatrixException;
+	public BigInteger getBigInteger(long... coordinates) ;
 
-	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException;
+	public void setBigInteger(BigInteger value, long... coordinates) ;
 
 }

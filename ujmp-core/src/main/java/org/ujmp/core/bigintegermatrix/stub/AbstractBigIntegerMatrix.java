@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.math.BigInteger;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
 public abstract class AbstractBigIntegerMatrix extends AbstractGenericMatrix<BigInteger> implements
@@ -47,19 +46,19 @@ public abstract class AbstractBigIntegerMatrix extends AbstractGenericMatrix<Big
 		super(size);
 	}
 
-	public final BigInteger getObject(long... coordinates) throws MatrixException {
+	public final BigInteger getObject(long... coordinates)  {
 		return getBigInteger(coordinates);
 	}
 
-	public final void setObject(BigInteger o, long... coordinates) throws MatrixException {
+	public final void setObject(BigInteger o, long... coordinates)  {
 		setBigInteger(o, coordinates);
 	}
 
-	public final BigInteger getAsBigInteger(long... coordinates) throws MatrixException {
+	public final BigInteger getAsBigInteger(long... coordinates)  {
 		return getBigInteger(coordinates);
 	}
 
-	public final void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException {
+	public final void setAsBigInteger(BigInteger value, long... coordinates)  {
 		setBigInteger(value, coordinates);
 	}
 

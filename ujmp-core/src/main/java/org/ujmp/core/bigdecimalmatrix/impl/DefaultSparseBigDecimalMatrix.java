@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -36,12 +35,12 @@ public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<Bi
 		BigDecimalMatrix {
 	private static final long serialVersionUID = 7206154432953094472L;
 
-	public DefaultSparseBigDecimalMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseBigDecimalMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
 	public DefaultSparseBigDecimalMatrix(Matrix m, int maximumNumberOfEntries)
-			throws MatrixException {
+			 {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -59,12 +58,12 @@ public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<Bi
 	}
 
 	
-	public BigDecimal getBigDecimal(long... coordinates) throws MatrixException {
+	public BigDecimal getBigDecimal(long... coordinates)  {
 		return MathUtil.getBigDecimal(getObject(coordinates));
 	}
 
 	
-	public void setBigDecimal(BigDecimal value, long... coordinates) throws MatrixException {
+	public void setBigDecimal(BigDecimal value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

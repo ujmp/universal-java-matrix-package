@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.booleanmatrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -34,11 +33,11 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		BooleanMatrix {
 	private static final long serialVersionUID = 8467706530550022243L;
 
-	public DefaultSparseBooleanMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseBooleanMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseBooleanMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseBooleanMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -54,11 +53,11 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		return ValueType.BOOLEAN;
 	}
 
-	public boolean getBoolean(long... coordinates) throws MatrixException {
+	public boolean getBoolean(long... coordinates)  {
 		return MathUtil.getBoolean(getObject(coordinates));
 	}
 
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+	public void setBoolean(boolean value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

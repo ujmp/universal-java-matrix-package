@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.math.BigInteger;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -36,12 +35,12 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		BigIntegerMatrix {
 	private static final long serialVersionUID = -7680422900220897521L;
 
-	public DefaultSparseBigIntegerMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseBigIntegerMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
 	public DefaultSparseBigIntegerMatrix(Matrix m, int maximumNumberOfEntries)
-			throws MatrixException {
+			 {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -57,11 +56,11 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		return ValueType.BIGINTEGER;
 	}
 
-	public BigInteger getBigInteger(long... coordinates) throws MatrixException {
+	public BigInteger getBigInteger(long... coordinates)  {
 		return MathUtil.getBigInteger(getObject(coordinates));
 	}
 
-	public void setBigInteger(BigInteger value, long... coordinates) throws MatrixException {
+	public void setBigInteger(BigInteger value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

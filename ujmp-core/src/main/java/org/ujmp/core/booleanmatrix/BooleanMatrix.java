@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.booleanmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface BooleanMatrix extends GenericMatrix<Boolean> {
@@ -35,9 +34,9 @@ public interface BooleanMatrix extends GenericMatrix<Boolean> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a boolean representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public boolean getBoolean(long... coordinates) throws MatrixException;
+	public boolean getBoolean(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a boolean value. If the matrix cannot
@@ -47,8 +46,8 @@ public interface BooleanMatrix extends GenericMatrix<Boolean> {
 	 *            boolean value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException;
+	public void setBoolean(boolean value, long... coordinates) ;
 
 }

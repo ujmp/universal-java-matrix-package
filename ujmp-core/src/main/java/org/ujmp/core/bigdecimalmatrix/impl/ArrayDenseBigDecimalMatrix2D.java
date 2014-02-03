@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,14 +28,13 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = 5701752483223767209L;
 
 	private BigDecimal[][] values = null;
 
-	public ArrayDenseBigDecimalMatrix2D(Matrix m) throws MatrixException {
+	public ArrayDenseBigDecimalMatrix2D(Matrix m)  {
 		super(m);
 		if (m instanceof ArrayDenseBigDecimalMatrix2D) {
 			BigDecimal[][] v = ((ArrayDenseBigDecimalMatrix2D) m).values;

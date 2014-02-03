@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,12 +26,11 @@ package org.ujmp.core.bigintegermatrix.factory;
 import java.io.Serializable;
 
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface BigIntegerMatrix2DFactory extends Serializable {
 
-	public BigIntegerMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public BigIntegerMatrix2D zeros(long rows, long columns) ;
 
-	public BigIntegerMatrix2D zeros(long... size) throws MatrixException;
+	public BigIntegerMatrix2D zeros(long... size) ;
 
 }

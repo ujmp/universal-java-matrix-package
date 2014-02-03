@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.booleanmatrix.impl.BooleanCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractBooleanCalculation extends AbstractCalculation implements
 		BooleanCalculation {
@@ -43,7 +42,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		super(dimension, sources);
 	}
 
-	public final BooleanMatrix calcNew() throws MatrixException {
+	public final BooleanMatrix calcNew()  {
 		BooleanMatrix result = (BooleanMatrix) Matrix.Factory.zeros(ValueType.BOOLEAN, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBoolean(getBoolean(c), c);
@@ -54,13 +53,13 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		return result;
 	}
 
-	public final BooleanMatrix calcLink() throws MatrixException {
+	public final BooleanMatrix calcLink()  {
 		return new BooleanCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -72,7 +71,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setBoolean(boolean value, long... coordinates) throws MatrixException {
+	public void setBoolean(boolean value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

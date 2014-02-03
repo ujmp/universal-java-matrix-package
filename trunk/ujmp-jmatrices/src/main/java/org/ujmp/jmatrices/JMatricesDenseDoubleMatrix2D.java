@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import org.jmatrices.dbl.transformer.MatrixTransformer;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -55,7 +54,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public JMatricesDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
-			throws MatrixException {
+			 {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -118,7 +117,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JMatricesDenseDoubleMatrix2D(qr.getR());
 			return new Matrix[] { q, r };
 		} else {
-			throw new MatrixException("only allowed for matrices m>=n");
+			throw new RuntimeException("only allowed for matrices m>=n");
 		}
 	}
 
@@ -131,7 +130,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix v = new JMatricesDenseDoubleMatrix2D(qr.getV());
 			return new Matrix[] { u, s, v };
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -142,7 +141,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	// some error
-	// public Matrix invSPD() throws MatrixException {
+	// public Matrix invSPD()  {
 	// CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
 	// org.jmatrices.dbl.Matrix eye = MatrixFactory.getIdentityMatrix(matrix
 	// .rows(), null);
@@ -163,7 +162,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException("only allowed for matrices m>=n");
+			throw new RuntimeException("only allowed for matrices m>=n");
 		}
 	}
 

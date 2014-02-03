@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,13 +27,15 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JPanel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.util.GraphicsExecutor;
 
-public abstract class AbstractJMathPlotPanel extends JPanel implements
-		ComponentListener, CanBeRepainted {
+public abstract class AbstractJMathPlotPanel extends JPanel implements ComponentListener, CanBeRepainted, TableModelListener {
 	private static final long serialVersionUID = 2083997325942788081L;
 
 	private Matrix matrix = null;
@@ -47,6 +49,7 @@ public abstract class AbstractJMathPlotPanel extends JPanel implements
 	public AbstractJMathPlotPanel(Matrix matrix) {
 		this.matrix = matrix;
 		addComponentListener(this);
+		((MatrixGUIObject) matrix.getGUIObject()).addTableModelListener(this);
 	}
 
 	public void changeState() {
@@ -58,32 +61,37 @@ public abstract class AbstractJMathPlotPanel extends JPanel implements
 	}
 
 	public void destroy() {
-		remove(panel);
-		panel = null;
+		if (panel != null) {
+			remove(panel);
+			panel = null;
+		}
 	}
 
-	
 	public void componentHidden(ComponentEvent e) {
 		changeState();
 	}
 
-	
 	public void componentMoved(ComponentEvent e) {
 		changeState();
 	}
 
-	
 	public void componentResized(ComponentEvent e) {
 		changeState();
 	}
 
-	
 	public void componentShown(ComponentEvent e) {
 		changeState();
 	}
 
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
+	}
+
+	public void tableChanged(TableModelEvent e) {
+		if (isShowing()) {
+			destroy();
+			GraphicsExecutor.scheduleUpdate(this);
+		}
 	}
 
 }

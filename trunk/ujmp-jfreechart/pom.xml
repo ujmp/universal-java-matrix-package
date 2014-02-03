@@ -18,12 +18,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jfree</groupId>
+			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jcommon</artifactId>
 		</dependency>
 
 		<dependency>

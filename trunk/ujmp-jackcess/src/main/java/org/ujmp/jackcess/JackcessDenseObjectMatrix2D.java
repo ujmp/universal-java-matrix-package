@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,14 +32,16 @@ import java.util.List;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.VerifyUtil;
 
 import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.ColumnBuilder;
 import com.healthmarketscience.jackcess.Cursor;
+import com.healthmarketscience.jackcess.CursorBuilder;
 import com.healthmarketscience.jackcess.Database;
+import com.healthmarketscience.jackcess.Database.FileFormat;
+import com.healthmarketscience.jackcess.DatabaseBuilder;
 import com.healthmarketscience.jackcess.Table;
 import com.healthmarketscience.jackcess.TableBuilder;
 
@@ -50,19 +52,19 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 
 	private Table table = null;
 
-	private List<Column> columns = null;
+	private List<? extends Column> columns = null;
 
 	private Cursor cursor = null;
 
 	private Integer curPos = null;
 
 	public JackcessDenseObjectMatrix2D(File file, String tablename) throws IOException {
-		database = Database.open(file);
+		database = DatabaseBuilder.open(file);
 		VerifyUtil.assertNotNull(database, "database could not be opened");
 		table = database.getTable(tablename);
 		VerifyUtil.assertNotNull(table, "table not found in database");
 		columns = table.getColumns();
-		cursor = Cursor.createCursor(table);
+		cursor = CursorBuilder.createCursor(table);
 
 		for (int i = 0; i < columns.size(); i++) {
 			setColumnLabel(i, columns.get(i).getName());
@@ -78,7 +80,7 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 			throws IOException {
 		super(matrix);
 		try {
-			database = Database.create(file);
+			database = DatabaseBuilder.create(FileFormat.V2010, file);
 
 			TableBuilder tb = new TableBuilder(tablename);
 
@@ -108,15 +110,15 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 				table.addRow(data);
 			}
 		} catch (SQLException e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	public synchronized Object getObject(long row, long column) throws MatrixException {
+	public synchronized Object getObject(long row, long column) {
 		return getObject((int) row, (int) column);
 	}
 
-	public synchronized Object getObject(int row, int column) throws MatrixException {
+	public synchronized Object getObject(int row, int column) {
 		if (columns == null || cursor == null) {
 			return null;
 		}
@@ -136,7 +138,7 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 			curPos = row + 1;
 			return cursor.getCurrentRowValue(c);
 		} catch (IOException e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

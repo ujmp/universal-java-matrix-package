@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,14 +24,11 @@
 package org.ujmp.jlinalg;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class JLinAlgDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<JLinAlgDenseDoubleMatrix2D> {
+public class JLinAlgDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<JLinAlgDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -2472796666760629969L;
 
-	public JLinAlgDenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
+	public JLinAlgDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new JLinAlgDenseDoubleMatrix2D(rows, columns);
 	}
 

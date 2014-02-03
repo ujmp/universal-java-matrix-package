@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -40,12 +40,10 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.ReflectionUtil;
 
-public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<Float64Matrix> {
+public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Float64Matrix> {
 	private static final long serialVersionUID = -7874694468839411484L;
 
 	private transient Float64Matrix matrix = null;
@@ -56,8 +54,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public JScienceDenseDoubleMatrix2D(long... size) {
 		if (Coordinates.product(size) != 0) {
-			this.matrix = Float64Matrix
-					.valueOf(new double[(int) size[ROW]][(int) size[COLUMN]]);
+			this.matrix = Float64Matrix.valueOf(new double[(int) size[ROW]][(int) size[COLUMN]]);
 		}
 	}
 
@@ -73,7 +70,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = Float64Matrix.valueOf(Float64Vector.valueOf(values));
 	}
 
-	public JScienceDenseDoubleMatrix2D(Matrix matrix) throws MatrixException {
+	public JScienceDenseDoubleMatrix2D(Matrix matrix) {
 		this.matrix = Float64Matrix.valueOf(matrix.toDoubleArray());
 		if (matrix.getAnnotation() != null) {
 			setAnnotation(matrix.getAnnotation().clone());
@@ -97,28 +94,24 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] {
-				matrix.getNumberOfRows(), matrix.getNumberOfColumns() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getNumberOfRows(), matrix.getNumberOfColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
 		if (getTransposed()) {
 			Float64Vector f = getRowsTable().get((int) column);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(f,
-					"_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(f, "_values");
 			data[(int) row] = value;
 		} else {
 			Float64Vector f = getRowsTable().get((int) row);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(f,
-					"_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(f, "_values");
 			data[(int) column] = value;
 		}
 	}
 
 	private boolean getTransposed() {
 		if (transposed == null) {
-			transposed = (Boolean) ReflectionUtil.extractPrivateField(
-					Float64Matrix.class, matrix, "_transposed");
+			transposed = (Boolean) ReflectionUtil.extractPrivateField(Float64Matrix.class, matrix, "_transposed");
 		}
 		return transposed;
 	}
@@ -126,8 +119,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	@SuppressWarnings("unchecked")
 	private FastTable<Float64Vector> getRowsTable() {
 		if (rows == null) {
-			rows = (FastTable<Float64Vector>) ReflectionUtil
-					.extractPrivateField(Float64Matrix.class, matrix, "_rows");
+			rows = (FastTable<Float64Vector>) ReflectionUtil.extractPrivateField(Float64Matrix.class, matrix, "_rows");
 		}
 		return rows;
 	}
@@ -135,21 +127,18 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public void setDouble(double value, int row, int column) {
 		if (getTransposed()) {
 			Float64Vector f = getRowsTable().get(column);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(
-					Float64Vector.class, f, "_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(Float64Vector.class, f, "_values");
 			data[row] = value;
 		} else {
 			Float64Vector f = getRowsTable().get(row);
-			double[] data = (double[]) ReflectionUtil.extractPrivateField(
-					Float64Vector.class, f, "_values");
+			double[] data = (double[]) ReflectionUtil.extractPrivateField(Float64Vector.class, f, "_values");
 			data[column] = value;
 		}
 	}
 
 	public Matrix mtimes(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
-			return new JScienceDenseDoubleMatrix2D(matrix
-					.times(((JScienceDenseDoubleMatrix2D) that).matrix));
+			return new JScienceDenseDoubleMatrix2D(matrix.times(((JScienceDenseDoubleMatrix2D) that).matrix));
 		} else {
 			return super.mtimes(that);
 		}
@@ -157,8 +146,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
-			Matrix result = new JScienceDenseDoubleMatrix2D(matrix
-					.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
+			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -171,8 +159,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
-			Matrix result = new JScienceDenseDoubleMatrix2D(matrix
-					.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
+			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -184,8 +171,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix times(double value) {
-		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64
-				.valueOf(value)));
+		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -194,8 +180,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix divide(double value) {
-		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64
-				.valueOf(1.0 / value)));
+		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(1.0 / value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -226,7 +211,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException("matrix must be square");
+			throw new RuntimeException("matrix must be square");
 		}
 	}
 
@@ -238,15 +223,13 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] values = (double[][]) s.readObject();
 		matrix = Float64Matrix.valueOf(values);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(this.toDoubleArray());
 	}

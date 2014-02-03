@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
@@ -54,7 +53,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = matrix;
 	}
 
-	public JBlasDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JBlasDenseDoubleMatrix2D(Matrix source)  {
 		super(source);
 		if (source instanceof HasColumnMajorDoubleArray1D) {
 			final double[] data = ((HasColumnMajorDoubleArray1D) source)
@@ -89,11 +88,11 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				doubleArray);
 	}
 
-	public Matrix inv() throws MatrixException {
+	public Matrix inv()  {
 		return Inv.INSTANCE.calc(this);
 	}
 
-	public Matrix invSPD() throws MatrixException {
+	public Matrix invSPD()  {
 		return InvSPD.INSTANCE.calc(this);
 	}
 
@@ -125,7 +124,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy()  {
 		Matrix m = new JBlasDenseDoubleMatrix2D(matrix.dup());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());

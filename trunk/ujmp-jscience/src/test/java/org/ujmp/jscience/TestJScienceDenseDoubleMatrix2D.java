@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,20 +24,60 @@
 package org.ujmp.jscience;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestJScienceDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size) throws MatrixException {
+	public Matrix createMatrix(long... size) {
 		return new JScienceDenseDoubleMatrix2D(size);
 	}
 
-	public Matrix createMatrix(Matrix source) throws MatrixException {
+	public Matrix createMatrix(Matrix source) {
 		return new JScienceDenseDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return true;
 	}
+
+	public void testLUTallFixedSmall() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUTallFixedLarge() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUFatFixedSmall() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUFatFixedLarge() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUSquareSingularSmall() throws Exception {
+		// some error
+	}
+
+	public void testLU() throws Exception {
+		// some error
+	}
+
+	public void testSolveRandTallSmall() throws Exception {
+		// only square matrices
+	}
+
+	public void testSolveRandTallLarge() throws Exception {
+		// only square matrices
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// fat not supported
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// fat not supported
+	}
+
 }

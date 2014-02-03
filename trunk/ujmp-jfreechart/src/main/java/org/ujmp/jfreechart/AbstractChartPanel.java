@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import javax.swing.JFrame;
 
 import org.jfree.chart.ChartPanel;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 import org.ujmp.gui.io.ExportJPEG;
@@ -90,7 +89,7 @@ public abstract class AbstractChartPanel extends ChartPanel implements
 			} catch (Exception e) {
 			}
 		} else {
-			throw new MatrixException("FileFormat not yet supported: "
+			throw new RuntimeException("FileFormat not yet supported: "
 					+ fileFormat);
 		}
 		if (frame != null) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,7 +31,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import Jampack.Eig;
@@ -49,8 +48,7 @@ import Jampack.Zmat;
 import Jampack.Zqrd;
 import Jampack.Zsvd;
 
-public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<Zmat> {
+public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Zmat> {
 	private static final long serialVersionUID = 4929284378405884509L;
 
 	static {
@@ -71,20 +69,19 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = matrix;
 	}
 
-	public JampackDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JampackDenseDoubleMatrix2D(Matrix source) {
 		super(source);
-		this.matrix = new Zmat((int) source.getRowCount(), (int) source
-				.getColumnCount());
+		this.matrix = new Zmat((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
 	}
 
-	public Matrix inv() throws MatrixException {
+	public Matrix inv() {
 		try {
 			return new JampackDenseDoubleMatrix2D(Inv.o(matrix));
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -116,7 +113,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = object;
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy() {
 		Matrix m = new JampackDenseDoubleMatrix2D(new Zmat(matrix));
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
@@ -137,7 +134,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				Matrix v = new JampackDenseDoubleMatrix2D(svd.V);
 				return new Matrix[] { u, s, v };
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		} else {
 			return super.svd();
@@ -151,7 +148,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JampackDenseDoubleMatrix2D(qr.R);
 			return new Matrix[] { q, r };
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -161,14 +158,12 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix l = new JampackDenseDoubleMatrix2D(lu.L);
 			Matrix u = new JampackDenseDoubleMatrix2D(lu.U);
 			int m = (int) getRowCount();
-			JampackDenseDoubleMatrix2D eye = new JampackDenseDoubleMatrix2D(m,
-					m);
+			JampackDenseDoubleMatrix2D eye = new JampackDenseDoubleMatrix2D(m, m);
 			eye.eye(Ret.ORIG);
-			Matrix p = new JampackDenseDoubleMatrix2D(Pivot.row(eye
-					.getWrappedObject(), lu.pvt));
+			Matrix p = new JampackDenseDoubleMatrix2D(Pivot.row(eye.getWrappedObject(), lu.pvt));
 			return new Matrix[] { l, u, p };
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -179,7 +174,7 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix d = new JampackDenseDoubleMatrix2D(new Zmat(eig.D));
 			return new Matrix[] { v, d };
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -189,60 +184,55 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JampackDenseDoubleMatrix2D(chol.R);
 			return r;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public Matrix mtimes(Matrix m) {
 		try {
 			if (m instanceof JampackDenseDoubleMatrix2D) {
-				return new JampackDenseDoubleMatrix2D(Times.o(matrix,
-						((JampackDenseDoubleMatrix2D) m).matrix));
+				return new JampackDenseDoubleMatrix2D(Times.o(matrix, ((JampackDenseDoubleMatrix2D) m).matrix));
 			} else {
 				return super.mtimes(m);
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public Matrix times(double value) {
 		try {
-			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(value,
-					0), matrix));
+			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(value, 0), matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
 			}
 			return result;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public Matrix divide(double value) {
 		try {
-			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(
-					1.0 / value, 0), matrix));
+			Matrix result = new JampackDenseDoubleMatrix2D(Times.o(new Z(1.0 / value, 0), matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
 			}
 			return result;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] values = (double[][]) s.readObject();
 		matrix = new Zmat(values);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(matrix.getRe());
 	}
@@ -254,10 +244,10 @@ public class JampackDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				Zmat x = Solve.aib(matrix, b2.matrix);
 				return new JampackDenseDoubleMatrix2D(x);
 			} else {
-				throw new MatrixException("only supported for square matrices");
+				throw new RuntimeException("only supported for square matrices");
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

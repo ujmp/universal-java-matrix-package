@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import JSci.maths.matrices.AbstractDoubleMatrix;
@@ -41,7 +40,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	private AbstractDoubleMatrix matrix = null;
 
-	public JSciDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JSciDenseDoubleMatrix2D(Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -97,7 +96,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			return new JSciDenseDoubleMatrix2D(((DoubleSquareMatrix) matrix)
 					.inverse());
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -107,7 +106,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					.choleskyDecompose();
 			return new JSciDenseDoubleMatrix2D(chol[0]);
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -121,7 +120,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			p.eye(Ret.ORIG);
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -133,7 +132,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JSciDenseDoubleMatrix2D(qr[1]);
 			return new Matrix[] { q, r };
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 
@@ -146,7 +145,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix v = new JSciDenseDoubleMatrix2D(svd[2]);
 			return new Matrix[] { u, s, v };
 		} else {
-			throw new MatrixException("only allowed for square matrices");
+			throw new RuntimeException("only allowed for square matrices");
 		}
 	}
 

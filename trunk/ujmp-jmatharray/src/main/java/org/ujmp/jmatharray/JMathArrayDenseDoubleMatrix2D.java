@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import org.math.array.LinearAlgebra;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 import Jama.CholeskyDecomposition;
@@ -51,7 +50,7 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = m;
 	}
 
-	public JMathArrayDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JMathArrayDenseDoubleMatrix2D(Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -82,7 +81,7 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		matrix[row][column] = value;
 	}
 
-	public Matrix[] svd() throws MatrixException {
+	public Matrix[] svd()  {
 		if (getColumnCount() > getRowCount()) {
 			SingularValueDecomposition svd = new SingularValueDecomposition(
 					new Jama.Matrix(DoubleArray.transpose(matrix)));
@@ -108,7 +107,7 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JMathArrayDenseDoubleMatrix2D(qr.getR().getArray());
 			return new Matrix[] { q, r };
 		} else {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"QR decomposition only works for matrices m>=n");
 		}
 	}
@@ -141,7 +140,7 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			}
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"LU decomposition only works for matrices m>=n");
 		}
 	}

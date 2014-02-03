@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -94,7 +93,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		if (url.startsWith("jdbc:hsqldb:")) {
 			Class.forName("org.hsqldb.jdbcDriver");
 		} else if (url.startsWith("jdbc:mysql:")) {
-			Class.forName("org.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 		} else if (url.startsWith("jdbc:postgresql:")) {
 			Class.forName("org.postgresql.Driver");
 		} else if (url.startsWith("jdbc:derby:")) {
@@ -246,7 +245,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 			rs.close();
 			return o;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -282,7 +281,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 				ps.executeUpdate();
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -329,7 +328,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		return password;
 	}
 
-	public boolean contains(long... coordinates) throws MatrixException {
+	public boolean contains(long... coordinates)  {
 		return getObject(coordinates) != null;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,92 +25,123 @@ package org.ujmp.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.DB;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.enums.DBType;
 
 public abstract class ExportMatrixJDBC {
 
-	public static void toDatabase(Matrix matrix, String url, String tablename, String username, String password)
-			throws ClassNotFoundException, SQLException {
+	public static void toDatabase(Matrix matrix, String url, String tablename,
+			String username, String password) throws ClassNotFoundException,
+			SQLException {
+		if (matrix == null) {
+			return;
+		} else if (matrix.isEmpty()) {
+			return;
+		}
+
 		if (url.startsWith("jdbc:mysql://")) {
 			Class.forName("com.mysql.jdbc.Driver");
 		} else if (url.startsWith("jdbc:postgresql://")) {
 			Class.forName("org.postgresql.Driver");
 		} else {
-			throw new MatrixException("Database format not supported: " + url);
+			throw new RuntimeException("Database format not supported: " + url);
 		}
 
-		Connection connection = DriverManager.getConnection(url, username, password);
+		System.out.print("exporting...");
+
+		String[] fields = url.split("/");
+
+		if (fields.length == 4) {
+			String[] params = fields[3].split("\\?");
+			Connection connection = DriverManager.getConnection(fields[0] + "/"
+					+ fields[1] + "/" + fields[2], username, password);
+			Statement statement = connection.createStatement();
+			String db = "CREATE DATABASE IF NOT EXISTS " + params[0];
+			statement.executeUpdate(db);
+			statement.close();
+			connection.close();
+		}
+
+		Connection connection = DriverManager.getConnection(url, username,
+				password);
 
 		Statement statement = connection.createStatement();
 
-		String s = "CREATE TABLE IF NOT EXISTS " + tablename + " (";
-		for (int c = 0; c < matrix.getColumnCount(); c++) {
-			s += "`" + getColumnName(matrix, c) + "` TEXT";
-			if (c < matrix.getColumnCount() - 1) {
-				s += ", ";
-			}
-		}
-		s += ");";
+//		String sql = "CREATE TABLE IF NOT EXISTS `" + tablename + "` (";
+//		for (int c = 0; c < matrix.getColumnCount(); c++) {
+//			sql += "`" + getColumnName(matrix, c) + "` "
+//					+ getColumnType(getDBTypeFromUrl(url), matrix, c);
+//			if (c < matrix.getColumnCount() - 1) {
+//				sql += ", ";
+//			}
+//		}
+//		sql += ");";
+//
+//		statement.executeUpdate(sql);
+//
+//		sql = "INSERT IGNORE INTO `" + tablename + "` (";
+//		for (int c = 0; c < matrix.getColumnCount(); c++) {
+//			sql += "`" + getColumnName(matrix, c) + "`";
+//			if (c < matrix.getColumnCount() - 1) {
+//				sql += ", ";
+//			}
+//		}
+//		sql += ") VALUES (";
+//		for (int c = 0; c < matrix.getColumnCount(); c++) {
+//			sql += "?";
+//			if (c < matrix.getColumnCount() - 1) {
+//				sql += ", ";
+//			}
+//		}
+//		sql += ");";
+//
+//		connection.setAutoCommit(false);
+//
+//		PreparedStatement ps = connection.prepareStatement(sql);
+//
+//		for (long r = 0; r < matrix.getRowCount(); r++) {
+//			for (int c = 0; c < matrix.getColumnCount(); c++) {
+//				ps.setObject(c + 1, matrix.getAsObject(r, c));
+//			}
+//			ps.addBatch();
+//			if (r % 1000 == 0) {
+//				System.out.print(".");
+//				// ps.executeBatch();
+//			}
+//		}
+//
+//		ps.executeBatch();
+//		ps.close();
+//
+//		connection.commit();
+//		connection.close();
 
-		statement.executeUpdate(s);
-
-		s = "INSERT IGNORE INTO " + tablename + " (";
-		for (int c = 0; c < matrix.getColumnCount(); c++) {
-			s += "`" + getColumnName(matrix, c) + "`";
-			if (c < matrix.getColumnCount() - 1) {
-				s += ", ";
-			}
-		}
-		s += ") VALUES (";
-		for (int c = 0; c < matrix.getColumnCount(); c++) {
-			s += "?";
-			if (c < matrix.getColumnCount() - 1) {
-				s += ", ";
-			}
-		}
-		s += ");";
-
-		PreparedStatement ps = connection.prepareStatement(s);
-
-		for (long r = 0; r < matrix.getRowCount(); r++) {
-			for (int c = 0; c < matrix.getColumnCount(); c++) {
-				ps.setString(c + 1, matrix.getAsString(r, c));
-			}
-			ps.addBatch();
-			if (r % 1000 == 0) {
-				ps.executeBatch();
-			}
-		}
-
-		ps.executeBatch();
-
-		ps.close();
-
-		connection.close();
+		System.out.println("done");
 	}
 
-	private static final String getColumnName(Matrix matrix, long column) {
-		String columnName = matrix.getColumnLabel(column);
-		if (columnName == null || columnName.length() == 0) {
-			columnName = "column " + column;
+	private static DBType getDBTypeFromUrl(String url) {
+		if (url == null) {
+			return null;
+		} else if (url.startsWith("jdbc:mysql")) {
+			return DBType.MySQL;
+		} else {
+			return null;
 		}
-		return columnName;
 	}
 
-	public static void toDatabase(Matrix matrix, DB type, String host, int port, String databasename, String tablename,
-			String username, String password) throws ClassNotFoundException, SQLException {
+	public static void toDatabase(Matrix matrix, DBType type, String host,
+			int port, String databasename, String tablename, String username,
+			String password) throws ClassNotFoundException, SQLException {
 		switch (type) {
 		case MySQL:
-			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/" + databasename, tablename, username, password);
+			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/"
+					+ databasename, tablename, username, password);
 			break;
 		default:
-			throw new MatrixException("not supported: " + type);
+			throw new RuntimeException("not supported: " + type);
 		}
 	}
 

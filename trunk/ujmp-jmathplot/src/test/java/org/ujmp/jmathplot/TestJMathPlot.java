@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,7 @@ import org.junit.Test;
 public class TestJMathPlot extends TestCase {
 
 	@Test
-	public void notTestYet() {
+	public void noTestYet() {
 		return;
 	}
 

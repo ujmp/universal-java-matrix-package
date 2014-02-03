@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,13 +31,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Map;
 
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.collections.map.SoftHashMap;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
+import org.ujmp.jdbc.AutoCloseConnection;
 
-public abstract class AbstractDenseJDBCMatrix2D extends
-		AbstractDenseObjectMatrix2D implements Closeable {
+public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -9077208839474846706L;
+
+	private static final String PARAMETERS = "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull";
+
+	private int chunkSize = 1000;
+
+	private Map<Long, DenseObjectMatrix2D> dataCache = new SoftHashMap<Long, DenseObjectMatrix2D>();
 
 	private String url = null;
 
@@ -47,19 +55,19 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 
 	private String sqlStatement = null;
 
-	private PreparedStatement preparedStatement = null;
-
 	private Connection connection = null;
-
-	private ResultSet resultSet = null;
 
 	private long[] size = null;
 
-	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement,
-			String username, String password) {
+	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement, String username, String password) {
 		this.url = url;
 		this.username = username;
 		this.password = password;
+		this.sqlStatement = sqlStatement;
+	}
+
+	public AbstractDenseJDBCMatrix2D(Connection connection, String sqlStatement) {
+		this.connection = connection;
 		this.sqlStatement = sqlStatement;
 	}
 
@@ -67,20 +75,58 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		return sqlStatement;
 	}
 
-	public synchronized Object getObject(long row, long column) {
-		return getObject((int) row, (int) column);
+	public synchronized Object getObject(int row, int column) {
+		return getObject((long) row, (long) column);
 	}
 
-	public synchronized Object getObject(int row, int column) {
+	public synchronized Object getObject(long row, long column) {
 		try {
-			ResultSet rs = getResultSet(row);
-			return rs.getObject(column + 1);
-		} catch (SQLException e) {
-			if ("S1009".equals(e.getSQLState())) {
-				// ignore Value '0000-00-00' can not be represented
-				return null;
+			long chunkId = row / chunkSize;
+			DenseObjectMatrix2D m = dataCache.get(chunkId);
+
+			if (m == null) {
+				String sql = sqlStatement + " LIMIT ?,?";
+				PreparedStatement ps = getConnection().prepareStatement(sql);
+
+				System.out.println(row + " - " + chunkId);
+
+				long offset = chunkId * chunkSize;
+
+				ps.setLong(1, offset);
+				ps.setLong(2, chunkSize);
+
+				ResultSet rs = ps.executeQuery();
+
+				m = DenseObjectMatrix2D.Factory.zeros(chunkSize, getColumnCount());
+
+				long r = 0;
+				while (rs.next()) {
+					for (int c = 0; c < getColumnCount(); c++) {
+						try {
+							m.setObject(rs.getObject(c + 1), r, c);
+						} catch (SQLException e) {
+							if ("S1009".equals(e.getSQLState())) {
+								// ignore Value '0000-00-00' can not be
+								// represented
+							} else {
+								throw e;
+							}
+
+						}
+					}
+					r++;
+				}
+
+				dataCache.put(chunkId, m);
+
+				rs.close();
+				ps.close();
 			}
-			throw new MatrixException(e);
+
+			return m.getObject(row % chunkSize, column);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -97,16 +143,35 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 	public synchronized long[] getSize() {
 		try {
 			if (size == null) {
-				ResultSet rs = getResultSet(1);
-				ResultSetMetaData rsMetaData = rs.getMetaData();
-				long columnCount = rsMetaData.getColumnCount();
-				rs.last();
-				long rowCount = rs.getRow();
+				long rowCount = 0;
+				PreparedStatement ps = getConnection().prepareStatement("SELECT COUNT(1) FROM (" + sqlStatement + ") t");
+				ResultSet rsRows = ps.executeQuery();
+				if (rsRows.next()) {
+					rowCount = rsRows.getLong(1);
+				}
+				rsRows.close();
+				ps.close();
+
+				long columnCount = 0;
+				ps = getConnection().prepareStatement("SELECT * FROM (" + sqlStatement + ") t LIMIT 1");
+				ResultSet rsCols = ps.executeQuery();
+				if (rsCols.next()) {
+					columnCount = rsCols.getMetaData().getColumnCount();
+				}
+				if (getLabelObject() == null) {
+					setLabel(getUrl() + " " + getSelectString());
+					ResultSetMetaData rsm = rsCols.getMetaData();
+					for (int c = 0; c < rsm.getColumnCount(); c++) {
+						setColumnLabel(c, rsm.getColumnLabel(c + 1));
+					}
+				}
+				rsCols.close();
+				ps.close();
 				size = new long[] { rowCount, columnCount };
 			}
 			return size;
 		} catch (SQLException e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -120,35 +185,9 @@ public abstract class AbstractDenseJDBCMatrix2D extends
 		}
 	}
 
-	public synchronized ResultSet getResultSet(long row) throws SQLException {
-		if (resultSet == null) {
-			PreparedStatement ps = getSelectStatement();
-			resultSet = ps.executeQuery();
-			if (getLabelObject() == null) {
-				setLabel(getUrl() + " " + getSelectString());
-				ResultSetMetaData rsm = resultSet.getMetaData();
-				for (int c = 0; c < rsm.getColumnCount(); c++) {
-					setColumnLabel(c, rsm.getColumnLabel(c + 1));
-				}
-			}
-		}
-		return resultSet;
-	}
-
-	public synchronized PreparedStatement getSelectStatement()
-			throws SQLException {
-		if (preparedStatement == null) {
-			preparedStatement = getConnection().prepareStatement(
-					getSelectString(), ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-		}
-		return preparedStatement;
-	}
-
 	public synchronized Connection getConnection() throws SQLException {
 		if (connection == null) {
-			connection = DriverManager.getConnection(getUrl(), getUsername(),
-					getPassword());
+			connection = new AutoCloseConnection(DriverManager.getConnection(getUrl() + PARAMETERS, getUsername(), getPassword()));
 		}
 		return connection;
 	}

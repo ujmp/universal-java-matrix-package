@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,19 +32,16 @@ import org.jlinalg.doublewrapper.DoubleWrapper;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
-public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<org.jlinalg.Matrix<DoubleWrapper>> {
+public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<org.jlinalg.Matrix<DoubleWrapper>> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private transient org.jlinalg.Matrix<DoubleWrapper> matrix = null;
 
 	// matrix must be filled with zeros
 	public JLinAlgDenseDoubleMatrix2D(long... size) {
-		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>((int) size[ROW],
-				(int) size[COLUMN], DoubleWrapper.FACTORY);
+		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>((int) size[ROW], (int) size[COLUMN], DoubleWrapper.FACTORY);
 		for (long[] c : availableCoordinates()) {
 			setDouble(0, c);
 		}
@@ -54,7 +51,7 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = m;
 	}
 
-	public JLinAlgDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public JLinAlgDenseDoubleMatrix2D(Matrix source) {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
@@ -103,8 +100,7 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix
-				.add(new DoubleWrapper(value)));
+		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix.add(new DoubleWrapper(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -113,8 +109,7 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix times(double value) {
-		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix
-				.multiply(new DoubleWrapper(value)));
+		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix.multiply(new DoubleWrapper(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -124,10 +119,8 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JLinAlgDenseDoubleMatrix2D) {
-			org.jlinalg.Matrix<DoubleWrapper> b = ((JLinAlgDenseDoubleMatrix2D) m)
-					.getWrappedObject();
-			org.jlinalg.Matrix<DoubleWrapper> c = MatrixMultiplication
-					.strassenBodrato(matrix, b);
+			org.jlinalg.Matrix<DoubleWrapper> b = ((JLinAlgDenseDoubleMatrix2D) m).getWrappedObject();
+			org.jlinalg.Matrix<DoubleWrapper> c = MatrixMultiplication.strassenBodrato(matrix, b);
 			return new JLinAlgDenseDoubleMatrix2D(c);
 		} else {
 			return super.mtimes(m);
@@ -142,12 +135,10 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return m;
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] data = (double[][]) s.readObject();
-		matrix = new org.jlinalg.Matrix<DoubleWrapper>(data.length,
-				data[0].length, DoubleWrapper.FACTORY);
+		matrix = new org.jlinalg.Matrix<DoubleWrapper>(data.length, data[0].length, DoubleWrapper.FACTORY);
 		for (int r = 0; r < data.length; r++) {
 			for (int c = 0; c < data[0].length; c++) {
 				setDouble(data[r][c], r, c);
@@ -155,8 +146,7 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(toDoubleArray());
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
 public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double> implements
@@ -46,19 +45,19 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 		super(size);
 	}
 
-	public final Double getObject(long... coordinates) throws MatrixException {
+	public final Double getObject(long... coordinates)  {
 		return getAsDouble(coordinates);
 	}
 
-	public final void setObject(Double o, long... coordinates) throws MatrixException {
+	public final void setObject(Double o, long... coordinates)  {
 		setAsDouble(o, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public final double getAsDouble(long... coordinates)  {
 		return getDouble(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public final void setAsDouble(double value, long... coordinates)  {
 		setDouble(value, coordinates);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,9 +23,9 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.SparseMatrix2D;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
-import org.ujmp.core.matrix.SparseMatrix2D;
 
 public interface SparseDoubleMatrix2D extends DoubleMatrix2D, SparseDoubleMatrix, SparseMatrix2D {
 

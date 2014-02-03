@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.general.misc;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface MiscGeneralDoubleCalculations {
 
@@ -41,7 +40,7 @@ public interface MiscGeneralDoubleCalculations {
 	 *            should missing values be ignored
 	 * @return Matrix with zero mean.
 	 */
-	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN) throws MatrixException;
+	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN) ;
 
 	/**
 	 * Subtracts the mean from the matrix and divides by the standard deviation.
@@ -53,20 +52,20 @@ public interface MiscGeneralDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @return Matrix with zero mean and unit variance.
 	 */
-	public Matrix standardize(Ret returnType, int dimension) throws MatrixException;
+	public Matrix standardize(Ret returnType, int dimension) ;
 
-	public Matrix normalize(Ret returnType, int dimension) throws MatrixException;
+	public Matrix normalize(Ret returnType, int dimension) ;
 
-	public Matrix replaceMissingBy(Matrix matrix) throws MatrixException;
+	public Matrix replaceMissingBy(Matrix matrix) ;
 
-	public Matrix fadeIn(Ret ret, int dimension) throws MatrixException;
+	public Matrix fadeIn(Ret ret, int dimension) ;
 
-	public Matrix fadeOut(Ret ret, int dimensions) throws MatrixException;
+	public Matrix fadeOut(Ret ret, int dimensions) ;
 
-	public Matrix appendHorizontally(Ret returnType, Matrix... matrices) throws MatrixException;
+	public Matrix appendHorizontally(Ret returnType, Matrix... matrices) ;
 
-	public Matrix appendVertically(Ret returnType, Matrix... matrices) throws MatrixException;
+	public Matrix appendVertically(Ret returnType, Matrix... matrices) ;
 
-	public Matrix append(Ret returnType, int dimension, Matrix... matrices) throws MatrixException;
+	public Matrix append(Ret returnType, int dimension, Matrix... matrices) ;
 
 }

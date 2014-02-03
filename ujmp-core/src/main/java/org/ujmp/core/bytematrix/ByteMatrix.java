@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.bytematrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface ByteMatrix extends GenericMatrix<Byte> {
@@ -35,9 +34,9 @@ public interface ByteMatrix extends GenericMatrix<Byte> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a byte representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public byte getByte(long... coordinates) throws MatrixException;
+	public byte getByte(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a byte value. If the matrix cannot store
@@ -47,8 +46,8 @@ public interface ByteMatrix extends GenericMatrix<Byte> {
 	 *            byte value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setByte(byte value, long... coordinates) throws MatrixException;
+	public void setByte(byte value, long... coordinates) ;
 
 }

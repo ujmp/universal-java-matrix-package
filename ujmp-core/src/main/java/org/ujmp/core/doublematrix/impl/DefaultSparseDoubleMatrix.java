@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import org.ujmp.core.doublematrix.SparseDoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -38,11 +37,11 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 
 	public static DefaultSparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
 
-	public DefaultSparseDoubleMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseDoubleMatrix(Matrix m)  {
 		super(m);
 	}
 
-	public DefaultSparseDoubleMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseDoubleMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -58,11 +57,11 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		return ValueType.DOUBLE;
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setDouble(double value, long... coordinates) throws MatrixException {
+	public void setDouble(double value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

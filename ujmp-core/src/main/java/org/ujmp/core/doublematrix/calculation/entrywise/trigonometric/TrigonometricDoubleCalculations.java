@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.trigonometric;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 /**
  * This interface lists all trigonometric functions that can be calculated on a
@@ -44,7 +43,7 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with sinus values
 	 */
-	public Matrix sin(Ret returnType) throws MatrixException;
+	public Matrix sin(Ret returnType) ;
 
 	/**
 	 * Calculates the cosinus of all entries in the matrix.
@@ -54,7 +53,7 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with cosinus values
 	 */
-	public Matrix cos(Ret returnType) throws MatrixException;
+	public Matrix cos(Ret returnType) ;
 
 	/**
 	 * Calculates the tangens of all entries in the matrix.
@@ -64,6 +63,6 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with tangens values
 	 */
-	public Matrix tan(Ret returnType) throws MatrixException;
+	public Matrix tan(Ret returnType) ;
 
 }

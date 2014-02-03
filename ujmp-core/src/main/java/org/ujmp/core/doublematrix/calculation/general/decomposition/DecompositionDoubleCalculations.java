@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface DecompositionDoubleCalculations {
 
@@ -34,7 +33,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix inv() throws MatrixException;
+	public Matrix inv() ;
 
 	/**
 	 * Calculates the inverse of the Matrix using either LUDecomposition (for
@@ -42,7 +41,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix invSymm() throws MatrixException;
+	public Matrix invSymm() ;
 
 	/**
 	 * Calculates the inverse of a symmetric positive definite Matrix using
@@ -50,7 +49,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix invSPD() throws MatrixException;
+	public Matrix invSPD() ;
 
 	/**
 	 * Solve A*X = B
@@ -59,7 +58,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solve(Matrix b) throws MatrixException;
+	public Matrix solve(Matrix b) ;
 
 	/**
 	 * Solve A*X = B
@@ -68,7 +67,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solveSymm(Matrix b) throws MatrixException;
+	public Matrix solveSymm(Matrix b) ;
 
 	/**
 	 * Solve A*X = B
@@ -77,7 +76,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solveSPD(Matrix b) throws MatrixException;
+	public Matrix solveSPD(Matrix b) ;
 
 	/**
 	 * Calculates the pseudo inverse of the Matrix using Singular Value
@@ -85,62 +84,62 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Pseudo inverse of the Matrix
 	 */
-	public Matrix pinv() throws MatrixException;
+	public Matrix pinv() ;
 
 	/**
 	 * Calculates a generalized inverse of the Matrix
 	 * 
 	 * @return Pseudo inverse of the Matrix
 	 */
-	public Matrix ginv() throws MatrixException;
+	public Matrix ginv() ;
 
 	/**
 	 * Projects the matrix into the space of the principal components.
 	 * 
 	 * @return Matrix projected on principal components.
 	 */
-	public Matrix princomp() throws MatrixException;
+	public Matrix princomp() ;
 
 	/**
 	 * Calculates the singular value decomposition of the matrix: A = U*S*V'
 	 * 
 	 * @return Singular value decomposition of the matrix.
 	 */
-	public Matrix[] svd() throws MatrixException;
+	public Matrix[] svd() ;
 
 	/**
 	 * Calculates the Eigen decomposition of the matrix.
 	 * 
 	 * @return Eigen decomposition of the matrix.
 	 */
-	public Matrix[] eig() throws MatrixException;
+	public Matrix[] eig() ;
 
 	/**
 	 * Calculates the Eigen decomposition of a symmetric matrix.
 	 * 
 	 * @return Eigen decomposition of the matrix.
 	 */
-	public Matrix[] eigSymm() throws MatrixException;
+	public Matrix[] eigSymm() ;
 
 	/**
 	 * Calculates a QR decomposition of the matrix.
 	 * 
 	 * @return QR decomposition of the matrix.
 	 */
-	public Matrix[] qr() throws MatrixException;
+	public Matrix[] qr() ;
 
 	/**
 	 * Calculates a LU decomposition of the matrix.
 	 * 
 	 * @return LU decomposition of the matrix.
 	 */
-	public Matrix[] lu() throws MatrixException;
+	public Matrix[] lu() ;
 
 	/**
 	 * Calculates a Cholesky decomposition of the matrix.
 	 * 
 	 * @return Cholesky decomposition of the matrix.
 	 */
-	public Matrix chol() throws MatrixException;
+	public Matrix chol() ;
 
 }

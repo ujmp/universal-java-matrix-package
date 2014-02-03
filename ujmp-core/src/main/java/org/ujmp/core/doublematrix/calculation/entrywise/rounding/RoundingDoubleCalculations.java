@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.rounding;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface RoundingDoubleCalculations {
 
@@ -37,7 +36,7 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix round(Ret returnType) throws MatrixException;
+	public Matrix round(Ret returnType) ;
 
 	/**
 	 * Returns a matrix with all entries rounded down to the next integer. The
@@ -48,7 +47,7 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix floor(Ret returnType) throws MatrixException;
+	public Matrix floor(Ret returnType) ;
 
 	/**
 	 * Returns a matrix with all entries rounded up to the next integer. The
@@ -59,6 +58,6 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix ceil(Ret returnType) throws MatrixException;
+	public Matrix ceil(Ret returnType) ;
 
 }

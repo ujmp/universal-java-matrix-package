@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.rounding;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Round extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -5038322249059783563L;
@@ -34,11 +33,11 @@ public class Round extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return Math.round(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calcNew(Matrix source) throws MatrixException {
+	public static Matrix calcNew(Matrix source)  {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.round(source.getAsDouble(c)), c);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.util.Set;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class DiscretizeToColumns extends AbstractDoubleCalculation {
@@ -48,11 +47,10 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	
 	public long[] getSize() {
 		try {
 			countValues();
-		} catch (MatrixException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -61,8 +59,7 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 		return size;
 	}
 
-	
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates) {
 		countValues();
 		if (coordinates[COLUMN] < column) {
 			return getSource().getAsDouble(coordinates);
@@ -100,7 +97,7 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 		}
 	}
 
-	private void countValues() throws MatrixException {
+	private void countValues() {
 		if (values == null) {
 			Set<Object> set = new HashSet<Object>();
 			for (long row = getSource().getRowCount(); --row >= 0;) {

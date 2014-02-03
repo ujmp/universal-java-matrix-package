@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.charmatrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -34,11 +33,11 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		CharMatrix {
 	private static final long serialVersionUID = -5517642834164442745L;
 
-	public DefaultSparseCharMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseCharMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseCharMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseCharMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -54,11 +53,11 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		return ValueType.CHAR;
 	}
 
-	public char getChar(long... coordinates) throws MatrixException {
+	public char getChar(long... coordinates)  {
 		return MathUtil.getChar(getObject(coordinates));
 	}
 
-	public void setChar(char value, long... coordinates) throws MatrixException {
+	public void setChar(char value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

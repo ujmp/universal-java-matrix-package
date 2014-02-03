@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -44,7 +43,7 @@ public class MutualInformation extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return calculate(coordinates[ROW], coordinates[COLUMN], getSource());
 	}
 

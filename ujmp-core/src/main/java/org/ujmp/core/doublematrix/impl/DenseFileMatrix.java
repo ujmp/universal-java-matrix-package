@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -39,7 +39,6 @@ import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
@@ -189,7 +188,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 				}
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not open file", e);
+			throw new RuntimeException("could not open file", e);
 		}
 	}
 
@@ -336,10 +335,10 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 					}
 
 				} else {
-					throw new MatrixException("no such coordinates: " + Coordinates.toString(c));
+					throw new RuntimeException("no such coordinates: " + Coordinates.toString(c));
 				}
 			} catch (Exception e) {
-				throw new MatrixException("could not read value", e);
+				throw new RuntimeException("could not read value", e);
 			}
 		}
 		return 0.0;
@@ -456,7 +455,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 				throw new IOException("not supported");
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not write value at coordinates "
+			throw new RuntimeException("could not write value at coordinates "
 					+ Coordinates.toString(c), e);
 		}
 	}
@@ -491,7 +490,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		for (long[] c : availableCoordinates()) {
-			s.writeObject(new Coordinates(c));
+			s.writeObject(Coordinates.wrap(c).clone());
 			s.writeObject(getDouble(c));
 		}
 	}
@@ -502,7 +501,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 			try {
 				Coordinates c = (Coordinates) s.readObject();
 				Double o = (Double) s.readObject();
-				setDouble(o, c.co);
+				setDouble(o, c.getLongCoordinates());
 			} catch (OptionalDataException e) {
 				return;
 			}

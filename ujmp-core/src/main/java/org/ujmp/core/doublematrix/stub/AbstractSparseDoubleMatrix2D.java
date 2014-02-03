@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.stub;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -51,28 +50,24 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2
 		return new CoordinateIterator2D(getSize());
 	}
 
-	public final Double getObject(long row, long column) throws MatrixException {
+	public final Double getObject(long row, long column) {
 		return getDouble(row, column);
 	}
 
-	public final void setObject(Double o, long row, long column) throws MatrixException {
+	public final void setObject(Double o, long row, long column) {
 		setDouble(o, row, column);
 	}
 
-	public final Double getObject(int row, int column) throws MatrixException {
+	public final Double getObject(int row, int column) {
 		return getDouble(row, column);
 	}
 
-	public final void setObject(Double o, int row, int column) throws MatrixException {
+	public final void setObject(Double o, int row, int column) {
 		setDouble(o, row, column);
 	}
 
 	public final int getDimensionCount() {
 		return 2;
-	}
-
-	public StorageType getStorageType() {
-		return StorageType.SPARSE;
 	}
 
 	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {

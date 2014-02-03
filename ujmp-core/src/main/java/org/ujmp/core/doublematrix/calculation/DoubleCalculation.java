@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,12 +24,11 @@
 package org.ujmp.core.doublematrix.calculation;
 
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface DoubleCalculation extends Calculation {
 
-	public double getDouble(long... coordinates) throws MatrixException;
+	public double getDouble(long... coordinates) ;
 
-	public void setDouble(double value, long... coordinates) throws MatrixException;
+	public void setDouble(double value, long... coordinates) ;
 
 }

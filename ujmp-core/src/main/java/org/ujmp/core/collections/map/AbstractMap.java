@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,8 +35,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Serializable {
 	private static final long serialVersionUID = -6429342188863787235L;
@@ -82,7 +80,7 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 					}
 
 					public void remove() {
-						throw new MatrixException("not implemented");
+						throw new RuntimeException("not implemented");
 					}
 				};
 			}
@@ -121,13 +119,13 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 							}
 
 							public V setValue(V value) {
-								throw new MatrixException("not implemented");
+								throw new RuntimeException("not implemented");
 							}
 						};
 					}
 
 					public void remove() {
-						throw new MatrixException("not implemented");
+						throw new RuntimeException("not implemented");
 					}
 				};
 			}
@@ -154,7 +152,7 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 		}
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException, MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeInt(size());
 		for (Object k : keySet()) {

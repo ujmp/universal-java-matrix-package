@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.lang.reflect.Constructor;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ImputeBPCA extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 6803633047911888483L;
@@ -48,7 +47,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		return true;
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (imp == null) {
 			try {
 
@@ -64,13 +63,13 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 				}
 
 				if (calc == null) {
-					throw new MatrixException("could not find JBPCAfill.jar in your classpath");
+					throw new RuntimeException("could not find JBPCAfill.jar in your classpath");
 				}
 
 				imp = calc.calcNew();
 
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 		return imp.getAsDouble(coordinates);

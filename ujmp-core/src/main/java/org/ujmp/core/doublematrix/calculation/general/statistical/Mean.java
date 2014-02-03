@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Mean extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 4116408128004680574L;
@@ -56,7 +55,7 @@ public class Mean extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (sum == null) {
 			sum = new Sum(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
@@ -110,7 +109,7 @@ public class Mean extends AbstractDoubleCalculation {
 		return null;
 	}
 
-	public static double calc(Matrix m) throws MatrixException {
+	public static double calc(Matrix m)  {
 		double sum = 0.0;
 		for (long[] c : m.availableCoordinates()) {
 			sum += m.getAsDouble(c);

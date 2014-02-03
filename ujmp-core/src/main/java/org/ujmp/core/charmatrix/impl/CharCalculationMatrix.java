@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.charmatrix.impl;
 
 import org.ujmp.core.charmatrix.calculation.CharCalculation;
 import org.ujmp.core.charmatrix.stub.AbstractCharMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class CharCalculationMatrix extends AbstractCharMatrix {
 	private static final long serialVersionUID = -5805683275067052860L;
@@ -56,16 +55,12 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 		}
 	}
 
-	public char getChar(long... coordinates) throws MatrixException {
+	public char getChar(long... coordinates)  {
 		return calculation.getChar(coordinates);
 	}
 
-	public void setChar(char value, long... coordinates) throws MatrixException {
+	public void setChar(char value, long... coordinates)  {
 		calculation.setChar(value, coordinates);
-	}
-
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.concurrent.PFor;
 
@@ -52,15 +51,15 @@ public class Randn extends AbstractDoubleCalculation {
 		return MathUtil.nextGaussian(mean, sigma);
 	}
 
-	public static Matrix calc(long... size) throws MatrixException {
+	public static Matrix calc(long... size)  {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(Matrix source) throws MatrixException {
+	public static Matrix calc(Matrix source)  {
 		return calc(source, 0.0, 1.0);
 	}
 
-	public static Matrix calc(Matrix source, double mean, double sigma) throws MatrixException {
+	public static Matrix calc(Matrix source, double mean, double sigma)  {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(mean, sigma), c);
@@ -68,7 +67,7 @@ public class Randn extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
+	public static Matrix calc(ValueType valueType, long... size)  {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(), c);
@@ -76,7 +75,7 @@ public class Randn extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public Matrix calcOrig() throws MatrixException {
+	public Matrix calcOrig()  {
 		if (getSource() instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D source = (DenseDoubleMatrix2D) getSource();
 

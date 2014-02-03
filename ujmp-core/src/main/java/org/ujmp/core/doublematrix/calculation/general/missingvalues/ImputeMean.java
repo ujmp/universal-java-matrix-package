@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Mean;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class ImputeMean extends AbstractDoubleCalculation {
@@ -38,7 +37,7 @@ public class ImputeMean extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (mean == null) {
 			mean = new Mean(getDimension(), true, getSource()).calcNew();
 		}

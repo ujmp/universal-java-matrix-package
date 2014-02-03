@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,9 +23,9 @@
 
 package org.ujmp.core.doublematrix;
 
+import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
-import org.ujmp.core.matrix.DenseMatrix;
 
 public interface DenseDoubleMatrix extends DoubleMatrix, DenseMatrix {
 

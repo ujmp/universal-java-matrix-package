@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.basic;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class Times extends AbstractDoubleCalculation {
@@ -48,11 +47,11 @@ public class Times extends AbstractDoubleCalculation {
 		this(true, m1, m2);
 	}
 
-	public Times(Matrix m1, double v2) throws MatrixException {
+	public Times(Matrix m1, double v2)  {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Times(boolean ignoreNaN, Matrix m1, double v2) throws MatrixException {
+	public Times(boolean ignoreNaN, Matrix m1, double v2)  {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
@@ -60,7 +59,7 @@ public class Times extends AbstractDoubleCalculation {
 		super();
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				* MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
 				.getAsDouble(coordinates) * getSources()[1].getAsDouble(coordinates);

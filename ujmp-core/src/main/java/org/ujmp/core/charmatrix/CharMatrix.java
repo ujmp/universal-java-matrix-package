@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.charmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface CharMatrix extends GenericMatrix<Character> {
@@ -35,9 +34,9 @@ public interface CharMatrix extends GenericMatrix<Character> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a char representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public char getChar(long... coordinates) throws MatrixException;
+	public char getChar(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a char value. If the matrix cannot store
@@ -47,8 +46,8 @@ public interface CharMatrix extends GenericMatrix<Character> {
 	 *            char value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setChar(char value, long... coordinates) throws MatrixException;
+	public void setChar(char value, long... coordinates) ;
 
 }

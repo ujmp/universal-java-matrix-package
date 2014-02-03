@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -82,7 +82,12 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 	}
 
 	public int indexOf(Object o) {
-		return indexMap.get(o);
+		Integer index = indexMap.get(o);
+		if (index == null) {
+			return -1;
+		} else {
+			return index;
+		}
 	}
 
 	public int lastIndexOf(Object o) {

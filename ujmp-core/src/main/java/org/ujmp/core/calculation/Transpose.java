@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,14 +24,13 @@
 package org.ujmp.core.calculation;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
-import org.ujmp.core.matrix.DenseMatrix;
-import org.ujmp.core.matrix.DenseMatrix2D;
-import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PFor;
 
@@ -53,7 +52,7 @@ class TransposeMatrix implements TransposeCalculation<Matrix, Matrix> {
 
 	public final void calc(final Matrix source, final Matrix target) {
 		if (source == target) {
-			throw new MatrixException("cannot transpose into original matrix");
+			throw new RuntimeException("cannot transpose into original matrix");
 		}
 		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
 			Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,

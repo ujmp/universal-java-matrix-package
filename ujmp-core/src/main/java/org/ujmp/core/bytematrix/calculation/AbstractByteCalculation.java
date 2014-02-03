@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.impl.ByteCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractByteCalculation extends AbstractCalculation implements
 		ByteCalculation {
@@ -43,7 +42,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		super(dimension, sources);
 	}
 
-	public final ByteMatrix calcNew() throws MatrixException {
+	public final ByteMatrix calcNew()  {
 		ByteMatrix result = (ByteMatrix) Matrix.Factory.zeros(ValueType.BYTE, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setByte(getByte(c), c);
@@ -54,13 +53,13 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		return result;
 	}
 
-	public final ByteMatrix calcLink() throws MatrixException {
+	public final ByteMatrix calcLink()  {
 		return new ByteCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -72,7 +71,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setByte(byte value, long... coordinates) throws MatrixException {
+	public void setByte(byte value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

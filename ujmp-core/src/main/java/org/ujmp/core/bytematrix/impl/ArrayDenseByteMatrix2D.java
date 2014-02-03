@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,14 +25,13 @@ package org.ujmp.core.bytematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	private static final long serialVersionUID = 1111734188254187991L;
 
 	private byte[][] values = null;
 
-	public ArrayDenseByteMatrix2D(Matrix m) throws MatrixException {
+	public ArrayDenseByteMatrix2D(Matrix m)  {
 		super(m);
 		if (m instanceof ArrayDenseByteMatrix2D) {
 			byte[][] v = ((ArrayDenseByteMatrix2D) m).values;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Impute extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -8899889992449926887L;
@@ -47,8 +46,7 @@ public class Impute extends AbstractDoubleCalculation {
 		this.parameters = parameters;
 	}
 
-	
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates) {
 		if (imp == null) {
 			try {
 
@@ -99,7 +97,7 @@ public class Impute extends AbstractDoubleCalculation {
 				imp = calc.calcNew();
 
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 		return imp.getAsDouble(coordinates);

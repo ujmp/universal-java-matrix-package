@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.basic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicEntrywiseDoubleCalculations {
 
@@ -38,7 +37,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return A new Matrix with absolute values.
 	 */
-	public Matrix abs(Ret returnType) throws MatrixException;
+	public Matrix abs(Ret returnType) ;
 
 	/**
 	 * Calculates the logarithm with basis 2 of all entries in the Matrix.
@@ -48,7 +47,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log2(Ret returnType) throws MatrixException;
+	public Matrix log2(Ret returnType) ;
 
 	/**
 	 * Calculates the logarithm with basis 10 of all entries in the Matrix.
@@ -58,7 +57,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log10(Ret returnType) throws MatrixException;
+	public Matrix log10(Ret returnType) ;
 
 	/**
 	 * Calculates the natural logarithm of all entries in the Matrix.
@@ -68,7 +67,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log(Ret returnType) throws MatrixException;
+	public Matrix log(Ret returnType) ;
 
 	/**
 	 * Calculates the exponential function all entries in the Matrix.
@@ -78,7 +77,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with exp values.
 	 */
-	public Matrix exp(Ret returnType) throws MatrixException;
+	public Matrix exp(Ret returnType) ;
 
 	/**
 	 * Calculates the sign of the entries in a Matrix. For values greater than
@@ -90,7 +89,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with signum values
 	 */
-	public Matrix sign(Ret returnType) throws MatrixException;
+	public Matrix sign(Ret returnType) ;
 
 	/**
 	 * Calculates the square root of all the entries in a Matrix.
@@ -100,7 +99,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix containing the square roots of all entries
 	 */
-	public Matrix sqrt(Ret returnType) throws MatrixException;
+	public Matrix sqrt(Ret returnType) ;
 
 	/**
 	 * Calculates this matrix to the power of the given matrix (entrywise).
@@ -113,7 +112,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 * @return matrix with all entries to the power of the second matrix's
 	 *         entry.
 	 */
-	public Matrix power(Ret returnType, Matrix power) throws MatrixException;
+	public Matrix power(Ret returnType, Matrix power) ;
 
 	/**
 	 * Calculates this matrix to the power of the given value (entrywise).
@@ -125,6 +124,6 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            power factor
 	 * @return Matrix with all entries to the power of factor.
 	 */
-	public Matrix power(Ret returnType, double power) throws MatrixException;
+	public Matrix power(Ret returnType, double power) ;
 
 }

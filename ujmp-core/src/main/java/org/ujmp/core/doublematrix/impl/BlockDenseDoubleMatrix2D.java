@@ -29,12 +29,11 @@ import java.util.Arrays;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.util.UJMPSettings;
@@ -411,7 +410,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * @return transpose of this matrix.
 	 */
 	@Override
-	public Matrix transpose() throws MatrixException {
+	public Matrix transpose()  {
 		return transpose(Ret.NEW);
 	}
 

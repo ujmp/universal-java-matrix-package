@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
@@ -167,7 +166,7 @@ public interface QR<T> {
 				QRMatrix qr = new QRMatrix(source);
 				return new Matrix[] { qr.getQ(), qr.getR() };
 			} else {
-				throw new MatrixException("only matrices m>=n are allowed");
+				throw new RuntimeException("only matrices m>=n are allowed");
 			}
 		}
 
@@ -176,7 +175,7 @@ public interface QR<T> {
 				QRMatrix qr = new QRMatrix(source);
 				return qr.solve(b);
 			} else {
-				throw new MatrixException("only matrices m>=n are allowed");
+				throw new RuntimeException("only matrices m>=n are allowed");
 			}
 		}
 	};

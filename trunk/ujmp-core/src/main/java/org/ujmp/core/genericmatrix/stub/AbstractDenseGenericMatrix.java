@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -47,10 +47,6 @@ public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatri
 
 	public boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
-	}
-
-	public StorageType getStorageType() {
-		return StorageType.DENSE;
 	}
 
 	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {

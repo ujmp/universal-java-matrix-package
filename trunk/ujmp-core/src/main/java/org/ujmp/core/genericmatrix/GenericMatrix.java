@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,11 +24,10 @@
 package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface GenericMatrix<A> extends Matrix {
 
-	public A getObject(long... coordinates) throws MatrixException;
+	public A getObject(long... coordinates) ;
 
 	public void setObject(A value, long... coordinates);
 

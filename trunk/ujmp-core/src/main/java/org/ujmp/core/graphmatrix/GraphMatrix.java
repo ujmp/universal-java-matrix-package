@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -90,8 +90,14 @@ public interface GraphMatrix<N, E> extends GenericMatrix2D<E> {
 
 	public List<N> getParents(N node);
 
+	public List<E> getEdgesToParents(N node);
+
+	public List<E> getEdgesToChildren(N node);
+
 	public List<Long> getParentIndices(long nodeIndex);
 
 	public List<Long> getParentIndices(N node);
+	
+	public void removeEdge(E edge);
 
 }

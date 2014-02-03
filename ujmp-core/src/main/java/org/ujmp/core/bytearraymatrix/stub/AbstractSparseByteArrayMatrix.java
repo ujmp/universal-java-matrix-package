@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,15 +21,18 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core.bytearraymatrix.stub;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrixFactory;
-import org.ujmp.core.matrix.factory.SparseMatrixFactory;
+import org.ujmp.core.bytearraymatrix.SparseByteArrayMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
-public interface SparseMatrix extends Matrix {
+public abstract class AbstractSparseByteArrayMatrix extends AbstractByteArrayMatrix implements
+		SparseByteArrayMatrix {
+	private static final long serialVersionUID = -4924651670091888822L;
 
-	public static final DefaultSparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
-
-	public SparseMatrixFactory<? extends SparseMatrix> getFactory();
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
+		return SparseObjectMatrix2D.factory;
+	}
 }

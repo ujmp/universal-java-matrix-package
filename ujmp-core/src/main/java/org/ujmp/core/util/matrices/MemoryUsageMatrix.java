@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,33 +24,48 @@
 package org.ujmp.core.util.matrices;
 
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
-import org.ujmp.core.util.MathUtil;
 
-public class MatrixRandomSeed extends AbstractDenseLongMatrix2D {
-	private static final long serialVersionUID = 1950244958868637395L;
+public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
+	private static final long serialVersionUID = -3863745960302379726L;
 
-	public MatrixRandomSeed() {
-		setLabel("Random Seed");
-	}
-
-	public long[] getSize() {
-		return new long[] { 1, 1 };
-	}
-
-	public long getLong(long row, long column) {
-		return MathUtil.getSeed();
-	}
-
-	public void setLong(long value, long row, long column) {
-		MathUtil.setSeed(value);
+	public MemoryUsageMatrix() {
+		setLabel("Memory Usage");
 	}
 
 	public long getLong(int row, int column) {
-		return MathUtil.getSeed();
+		switch (row) {
+		case 0:
+			return Runtime.getRuntime().freeMemory();
+		case 1:
+			return Runtime.getRuntime().maxMemory();
+		default:
+			return Runtime.getRuntime().totalMemory();
+		}
+	}
+
+	public long getLong(long row, long column) {
+		switch ((int) row) {
+		case 0:
+			return Runtime.getRuntime().freeMemory();
+		case 1:
+			return Runtime.getRuntime().maxMemory();
+		default:
+			return Runtime.getRuntime().totalMemory();
+		}
+	}
+
+	public long[] getSize() {
+		return new long[] { 3, 1 };
+	}
+
+	public void setLong(long value, long row, long column) {
 	}
 
 	public void setLong(long value, int row, int column) {
-		MathUtil.setSeed(value);
+	}
+
+	public boolean isReadOnly() {
+		return true;
 	}
 
 }

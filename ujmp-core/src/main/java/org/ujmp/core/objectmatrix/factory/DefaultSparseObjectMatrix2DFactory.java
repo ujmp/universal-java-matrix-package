@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
@@ -32,11 +31,11 @@ public class DefaultSparseObjectMatrix2DFactory extends AbstractMatrixFactory<Sp
 		SparseObjectMatrix2DFactory {
 	private static final long serialVersionUID = -5593278693528246537L;
 
-	public SparseObjectMatrix2D zeros(long rows, long columns) throws MatrixException {
+	public SparseObjectMatrix2D zeros(long rows, long columns)  {
 		return new DefaultSparseRowObjectMatrix2D(rows, columns);
 	}
 
-	public SparseObjectMatrix2D zeros(long... size) throws MatrixException {
+	public SparseObjectMatrix2D zeros(long... size)  {
 		return new DefaultSparseRowObjectMatrix2D(size);
 	}
 }

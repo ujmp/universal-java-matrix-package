@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Transpose extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2749226948849267413L;
@@ -72,7 +71,7 @@ public class Transpose extends AbstractObjectCalculation {
 		return null;
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		return getSource().getAsObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 

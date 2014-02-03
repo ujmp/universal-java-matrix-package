@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class Bootstrap extends AbstractObjectCalculation {
@@ -46,7 +45,7 @@ public class Bootstrap extends AbstractObjectCalculation {
 		this.count = count;
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		if (selection == null) {
 			List<Integer> rows = new ArrayList<Integer>();
 			for (int i = 0; i < count; i++) {

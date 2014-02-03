@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
 
 public class Matlab {
 
@@ -150,7 +149,7 @@ public class Matlab {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.export().toString(FileFormat.M));
+		execute(matrix.export().toStringFormatted().asMatlabScript(label));
 	}
 
 	public Matrix getMatrix(String label) throws Exception {

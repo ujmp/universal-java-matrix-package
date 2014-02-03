@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.collections.map.SoftHashMap;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -93,7 +92,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 		return new long[] { sli.getLineCount(), columnCount };
 	}
 
-	public String getString(long row, long column) throws MatrixException {
+	public String getString(long row, long column)  {
 		try {
 			String fields[] = null;
 			fields = rows.get(row);
@@ -122,7 +121,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 				return fields[(int) column];
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 		return null;
 	}

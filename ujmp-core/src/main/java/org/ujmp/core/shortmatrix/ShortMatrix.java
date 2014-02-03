@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.shortmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface ShortMatrix extends GenericMatrix<Short> {
@@ -35,9 +34,9 @@ public interface ShortMatrix extends GenericMatrix<Short> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a short representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public short getShort(long... coordinates) throws MatrixException;
+	public short getShort(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a short value. If the matrix cannot store
@@ -47,8 +46,8 @@ public interface ShortMatrix extends GenericMatrix<Short> {
 	 *            short value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setShort(short value, long... coordinates) throws MatrixException;
+	public void setShort(short value, long... coordinates) ;
 
 }

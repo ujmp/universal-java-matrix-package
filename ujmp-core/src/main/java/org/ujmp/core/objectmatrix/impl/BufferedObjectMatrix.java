@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,20 +26,25 @@ package org.ujmp.core.objectmatrix.impl;
 import java.io.Flushable;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements Flushable {
 	private static final long serialVersionUID = 7750549087897737457L;
 
+	private boolean lazy = true;
+
 	private Matrix inputBuffer = null;
 
-	private Set<Coordinates> outputBuffer = null;
+	private SortedSet<Coordinates> outputToDoBuffer = Collections
+			.synchronizedSortedSet(new TreeSet<Coordinates>());
+
+	private SortedSet<Coordinates> inputToDoBuffer = Collections
+			.synchronizedSortedSet(new TreeSet<Coordinates>());
 
 	private int outputBufferSize = Integer.MAX_VALUE;
 
@@ -47,15 +52,20 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 
 	private Thread writeThread = null;
 
+	private Thread readThread = null;
+
 	private static final EmptyObject EMPTYOBJECT = new EmptyObject();
 
 	public BufferedObjectMatrix(Matrix original) {
 		super(original);
 		this.original = original;
+		inputBuffer = new DefaultSparseObjectMatrix(original.getSize());
 		setInputBufferSize(0);
 		setOutputBufferSize(Integer.MAX_VALUE);
 		writeThread = new WriteThread();
 		writeThread.start();
+		readThread = new ReadThread();
+		readThread.start();
 	}
 
 	public BufferedObjectMatrix(Matrix original, int outputBufferSize) {
@@ -76,15 +86,22 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		return inputBuffer.getSize();
 	}
 
-	public synchronized Object getObject(long... coordinates) throws MatrixException {
+	public synchronized Object getObject(long... coordinates)  {
 		Object o = null;
 		o = inputBuffer.getAsObject(coordinates);
 		if (o == null) {
-			o = original.getAsObject(coordinates);
-			if (o == null) {
-				inputBuffer.setAsObject(EMPTYOBJECT, coordinates);
+			if (lazy) {
+				Coordinates c = Coordinates.wrap(coordinates);
+				if (!inputToDoBuffer.contains(c)) {
+					inputToDoBuffer.add(c.clone());
+				}
 			} else {
-				inputBuffer.setAsObject(o, coordinates);
+				o = original.getAsObject(coordinates);
+				if (o == null) {
+					inputBuffer.setAsObject(EMPTYOBJECT, coordinates);
+				} else {
+					inputBuffer.setAsObject(o, coordinates);
+				}
 			}
 		} else if (o == EMPTYOBJECT) {
 			return null;
@@ -96,9 +113,9 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		return original.getValueCount();
 	}
 
-	public synchronized void setObject(Object value, long... coordinates) throws MatrixException {
+	public synchronized void setObject(Object value, long... coordinates)  {
 		inputBuffer.setAsObject(value, coordinates);
-		outputBuffer.add(new Coordinates(coordinates));
+		outputToDoBuffer.add(Coordinates.wrap(coordinates).clone());
 	}
 
 	public synchronized void setInputBufferSize(int numElements) {
@@ -112,19 +129,19 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	public synchronized void setOutputBufferSize(int numElements) {
 		try {
 			flush();
-			outputBuffer = Collections.synchronizedSet(new HashSet<Coordinates>());
+			outputToDoBuffer = Collections.synchronizedSortedSet(new TreeSet<Coordinates>());
 			outputBufferSize = numElements;
 		} catch (IOException e) {
-			throw new MatrixException("could not set output buffer", e);
+			throw new RuntimeException("could not set output buffer", e);
 		}
 	}
 
 	public synchronized void flush() throws IOException {
-		while (outputBuffer != null && outputBuffer.size() != 0) {
+		while (outputToDoBuffer != null && outputToDoBuffer.size() != 0) {
 			try {
-				outputBuffer.wait();
+				outputToDoBuffer.wait();
 			} catch (InterruptedException e) {
-				throw new MatrixException("could not flush buffer", e);
+				throw new RuntimeException("could not flush buffer", e);
 			}
 		}
 	}
@@ -138,15 +155,47 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		public void run() {
 			while (true) {
 				try {
-					while (outputBuffer != null && !outputBuffer.isEmpty()) {
-						Coordinates c = outputBuffer.iterator().next();
-						outputBuffer.remove(c);
-						double value = inputBuffer.getAsDouble(c.co);
-						original.setAsDouble(value, c.co);
+					while (outputToDoBuffer != null && !outputToDoBuffer.isEmpty()) {
+						Coordinates c = outputToDoBuffer.first();
+						outputToDoBuffer.remove(c);
+						Object value = inputBuffer.getAsObject(c.getLongCoordinates());
+						original.setAsObject(value, c.getLongCoordinates());
 					}
 					Thread.sleep(100);
 				} catch (Exception e) {
-					throw new MatrixException("error writing to matrix", e);
+					e.printStackTrace();
+					throw new RuntimeException("error writing to matrix", e);
+				}
+			}
+		}
+	}
+
+	class ReadThread extends Thread {
+
+		public void run() {
+			long t = System.currentTimeMillis();
+			boolean update = false;
+			while (true) {
+				try {
+					while (inputToDoBuffer != null && !inputToDoBuffer.isEmpty()) {
+						update = true;
+						Coordinates c = inputToDoBuffer.first();
+						inputToDoBuffer.remove(c);
+						Object value = original.getAsObject(c.getLongCoordinates());
+						inputBuffer.setAsObject(value, c.getLongCoordinates());
+						if (System.currentTimeMillis() - t > 500) {
+							t = System.currentTimeMillis();
+							notifyGUIObject();
+						}
+					}
+					if (update) {
+						update = false;
+						notifyGUIObject();
+					}
+					Thread.sleep(100);
+				} catch (Exception e) {
+					e.printStackTrace();
+					// throw new RuntimeException("error writing to matrix", e);
 				}
 			}
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.stringmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasStringArray;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 
@@ -40,7 +39,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 
 	private int cols = 0;
 
-	public DefaultDenseStringMatrix2D(Matrix m) throws MatrixException {
+	public DefaultDenseStringMatrix2D(Matrix m)  {
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
@@ -100,7 +99,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy()  {
 		String[] result = new String[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseStringMatrix2D(result, rows, cols);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.stringmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ToStringMatrix extends AbstractStringCalculation {
 	private static final long serialVersionUID = -3185241416665710791L;
@@ -34,11 +33,11 @@ public class ToStringMatrix extends AbstractStringCalculation {
 	}
 
 	
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		return getSource().getAsString(coordinates);
 	}
 
-	public void setString(String value, long coordinates) throws MatrixException {
+	public void setString(String value, long coordinates)  {
 		getSource().setAsString(value, coordinates);
 	}
 

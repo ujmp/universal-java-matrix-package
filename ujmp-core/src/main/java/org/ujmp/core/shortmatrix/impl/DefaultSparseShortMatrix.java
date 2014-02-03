@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.shortmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -34,11 +33,11 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		ShortMatrix {
 	private static final long serialVersionUID = -8927932400907638460L;
 
-	public DefaultSparseShortMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseShortMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseShortMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseShortMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -54,11 +53,11 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		return ValueType.SHORT;
 	}
 
-	public short getShort(long... coordinates) throws MatrixException {
+	public short getShort(long... coordinates)  {
 		return MathUtil.getShort(getObject(coordinates));
 	}
 
-	public void setShort(short value, long... coordinates) throws MatrixException {
+	public void setShort(short value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

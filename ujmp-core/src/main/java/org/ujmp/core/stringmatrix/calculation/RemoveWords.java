@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class RemoveWords extends AbstractStringCalculation {
 	private static final long serialVersionUID = 4976043243302036392L;
@@ -44,7 +43,7 @@ public class RemoveWords extends AbstractStringCalculation {
 		}
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String s = getSource().getAsString(coordinates);
 		if (s != null) {
 			StringBuilder result = new StringBuilder(s.length());

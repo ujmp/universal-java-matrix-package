@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import java.net.DatagramSocket;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
@@ -64,7 +63,7 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 			socket = new DatagramSocket(port);
 			thread.start();
 		} catch (Exception e) {
-			throw new MatrixException("could not open socket", e);
+			throw new RuntimeException("could not open socket", e);
 		}
 	}
 
@@ -72,11 +71,11 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.getSize();
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
+	public double getAsDouble(long... coordinates)  {
 		return matrix.getAsDouble(coordinates);
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		return matrix.getAsObject(coordinates);
 	}
 
@@ -84,11 +83,11 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.getValueCount();
 	}
 
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public void setAsDouble(double value, long... coordinates)  {
 		matrix.setAsDouble(value, coordinates);
 	}
 
-	public void setObject(Object o, long... coordinates) throws MatrixException {
+	public void setObject(Object o, long... coordinates)  {
 		matrix.setAsObject(o, coordinates);
 	}
 
@@ -118,12 +117,12 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 					case SETDOUBLEVALUE:
 						coordinates = (Coordinates) ois.readObject();
 						value = ois.readDouble();
-						setAsDouble(value, coordinates.co);
+						setAsDouble(value, coordinates.getLongCoordinates());
 						oos.writeInt(SETDOUBLEVALUE);
 						break;
 					case GETDOUBLEVALUE:
 						coordinates = (Coordinates) ois.readObject();
-						value = getAsDouble(coordinates.co);
+						value = getAsDouble(coordinates.getLongCoordinates());
 						oos.writeInt(GETDOUBLEVALUE);
 						oos.writeDouble(value);
 						break;
@@ -144,7 +143,7 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 				}
 
 			} catch (Exception e) {
-				throw new MatrixException("error in data transmission", e);
+				throw new RuntimeException("error in data transmission", e);
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -62,7 +61,6 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		return getSet().containsAll(c);
 	}
 
-	
 	public boolean isEmpty() {
 		return getSet().isEmpty();
 	}
@@ -110,11 +108,11 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 	}
 
 	public void setObject(A value, long row, long column) {
-		throw new MatrixException("modifications are only allowed over Set<?> interface");
+		throw new RuntimeException("modifications are only allowed over Set<?> interface");
 	}
 
 	public void setObject(A value, int row, int column) {
-		throw new MatrixException("modifications are only allowed over Set<?> interface");
+		throw new RuntimeException("modifications are only allowed over Set<?> interface");
 	}
 
 	public Object[] toArray() {
@@ -125,24 +123,16 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 		return getSet().toArray(a);
 	}
 
-	
-	public double getAsDouble(long... coordinates) throws MatrixException {
+	public double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public void setAsDouble(double value, long... coordinates)  {
 		setAsObject(value, coordinates);
 	}
 
-	
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
-	}
-
-	
-	public final StorageType getStorageType() {
-		return StorageType.SET;
 	}
 
 	public final void clear() {

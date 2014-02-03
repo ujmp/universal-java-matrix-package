@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,36 +23,34 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
-public class MatrixAvailableProcessors extends AbstractDenseIntMatrix2D {
-	private static final long serialVersionUID = -3768846722489359117L;
+public class RandomSeedMatrix extends AbstractDenseLongMatrix2D {
+	private static final long serialVersionUID = 1950244958868637395L;
 
-	public MatrixAvailableProcessors() {
-		setLabel("Available Processors");
+	public RandomSeedMatrix() {
+		setLabel("Random Seed");
 	}
 
 	public long[] getSize() {
 		return new long[] { 1, 1 };
 	}
 
-	public int getInt(long row, long column) {
-		return Runtime.getRuntime().availableProcessors();
+	public long getLong(long row, long column) {
+		return MathUtil.getSeed();
 	}
 
-	public void setInt(int value, long row, long column) {
+	public void setLong(long value, long row, long column) {
+		MathUtil.setSeed(value);
 	}
 
-	public int getInt(int row, int column) {
-		return Runtime.getRuntime().availableProcessors();
+	public long getLong(int row, int column) {
+		return MathUtil.getSeed();
 	}
 
-	public void setInt(int value, int row, int column) {
-	}
-
-	
-	public boolean isReadOnly() {
-		return true;
+	public void setLong(long value, int row, int column) {
+		MathUtil.setSeed(value);
 	}
 
 }

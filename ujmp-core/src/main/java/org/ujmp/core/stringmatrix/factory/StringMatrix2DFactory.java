@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,13 +25,12 @@ package org.ujmp.core.stringmatrix.factory;
 
 import java.io.Serializable;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.StringMatrix2D;
 
 public interface StringMatrix2DFactory extends Serializable {
 
-	public StringMatrix2D dense(long rows, long columns) throws MatrixException;
+	public StringMatrix2D dense(long rows, long columns) ;
 
-	public StringMatrix2D dense(long... size) throws MatrixException;
+	public StringMatrix2D dense(long... size) ;
 
 }

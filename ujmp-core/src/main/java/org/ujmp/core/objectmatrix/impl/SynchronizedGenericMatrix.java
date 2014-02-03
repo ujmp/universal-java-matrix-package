@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 
 public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
@@ -42,7 +41,7 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		return matrix.getSize();
 	}
 
-	public synchronized double getAsDouble(long... coordinates) throws MatrixException {
+	public synchronized double getAsDouble(long... coordinates)  {
 		return matrix.getAsDouble(coordinates);
 	}
 
@@ -50,16 +49,16 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		return matrix.getValueCount();
 	}
 
-	public synchronized void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public synchronized void setAsDouble(double value, long... coordinates)  {
 		matrix.setAsDouble(value, coordinates);
 	}
 
 	@SuppressWarnings("unchecked")
-	public synchronized T getObject(long... c) throws MatrixException {
+	public synchronized T getObject(long... c)  {
 		return (T) matrix.getAsObject(c);
 	}
 
-	public synchronized void setObject(T value, long... c) throws MatrixException {
+	public synchronized void setObject(T value, long... c)  {
 		matrix.setAsObject(value, c);
 	}
 
@@ -69,10 +68,6 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public synchronized StorageType getStorageType() {
-		return matrix.getStorageType();
 	}
 
 }

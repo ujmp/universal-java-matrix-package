@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface StringCalculations {
 
@@ -45,7 +44,7 @@ public interface StringCalculations {
 	 * @return matrix with modified entries
 	 */
 	public Matrix replaceRegex(Ret returnType, String search, String replacement)
-			throws MatrixException;
+			;
 
 	/**
 	 * Replaces matching text in every entry of the matrix.
@@ -60,23 +59,23 @@ public interface StringCalculations {
 	 * @return matrix with modified entries
 	 */
 	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
-			throws MatrixException;
+			;
 
-	public Matrix lowerCase(Ret returnType) throws MatrixException;
+	public Matrix lowerCase(Ret returnType) ;
 
-	public Matrix upperCase(Ret returnType) throws MatrixException;
+	public Matrix upperCase(Ret returnType) ;
 
 	public Matrix translate(Ret returnType, String sourceLanguage, String targetLanguage);
 
-	public Matrix convertEncoding(Ret returnType, String encoding) throws MatrixException;
+	public Matrix convertEncoding(Ret returnType, String encoding) ;
 
 	public Matrix tfIdf(boolean calculateTf, boolean calculateIdf, boolean normalize)
-			throws MatrixException;
+			;
 
-	public Matrix removePunctuation(Ret ret) throws MatrixException;
+	public Matrix removePunctuation(Ret ret) ;
 
-	public Matrix stem(Ret ret) throws MatrixException;
+	public Matrix stem(Ret ret) ;
 
-	public Matrix removeWords(Ret ret, Collection<String> words) throws MatrixException;
+	public Matrix removeWords(Ret ret, Collection<String> words) ;
 
 }

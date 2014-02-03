@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,15 +30,29 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimerTask;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.util.GlobalTimer;
 
-public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
+public class RunningThreadsMatrix extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -6988423129848472319L;
 
-	public MatrixRunningThreads() {
+	public RunningThreadsMatrix() {
 		setLabel("Running Threads");
+		setColumnLabel(0, "Thread");
+		setColumnLabel(1, "StackTrace");
+
+		final Matrix m = this;
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				m.notifyGUIObject();
+			}
+		};
+		GlobalTimer.getInstance().schedule(task, 1000, 1000);
 	}
 
 	public Map<Object, Object> getMap() {
@@ -46,7 +60,7 @@ public class MatrixRunningThreads extends AbstractMapMatrix<Object, Object> {
 	}
 
 	public MapMatrix<Object, Object> clone() {
-		return new MatrixRunningThreads();
+		return new RunningThreadsMatrix();
 	}
 
 }

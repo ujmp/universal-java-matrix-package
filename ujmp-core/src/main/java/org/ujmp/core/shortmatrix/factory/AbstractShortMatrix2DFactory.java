@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,14 +23,13 @@
 
 package org.ujmp.core.shortmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.shortmatrix.ShortMatrix2D;
 
 public abstract class AbstractShortMatrix2DFactory implements ShortMatrix2DFactory {
 	private static final long serialVersionUID = -997496895339826439L;
 
 	
-	public ShortMatrix2D zeros(long rows, long columns) throws MatrixException {
+	public ShortMatrix2D zeros(long rows, long columns)  {
 		return dense(rows, columns);
 	}
 

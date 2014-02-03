@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import java.util.TreeMap;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.SortedListSet;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4326920011599023858L;
@@ -55,7 +54,7 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	public void addEvent(long timestamp, Matrix value) {
 		if (value.getRowCount() != 1) {
-			throw new MatrixException("matrix cannot have more than one row");
+			throw new RuntimeException("matrix cannot have more than one row");
 		}
 		for (int id = 0; id < value.getColumnCount(); id++) {
 			addEvent(timestamp, id + 1, value.getAsDouble(0, id));
@@ -172,18 +171,18 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 				return value;
 
 			default:
-				throw new MatrixException("Interpolation method not (yet) supported: "
+				throw new RuntimeException("Interpolation method not (yet) supported: "
 						+ getInterpolation(seriesId));
 			}
 		}
 	}
 
 	public void setDouble(double value, long row, long column) {
-		throw new MatrixException("please use addEvent() for making changes");
+		throw new RuntimeException("please use addEvent() for making changes");
 	}
 
 	public void setDouble(double value, int row, int column) {
-		throw new MatrixException("please use addEvent() for making changes");
+		throw new RuntimeException("please use addEvent() for making changes");
 	}
 
 	public void setInterpolation(int column, Interpolation interpolation) {

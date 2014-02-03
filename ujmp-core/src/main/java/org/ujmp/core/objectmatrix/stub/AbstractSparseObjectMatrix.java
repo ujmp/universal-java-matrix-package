@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -44,10 +44,6 @@ public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix im
 
 	public AbstractSparseObjectMatrix(long... size) {
 		super(size);
-	}
-
-	public final StorageType getStorageType() {
-		return StorageType.SPARSE;
 	}
 
 	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {

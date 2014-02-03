@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.shortmatrix.impl;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.shortmatrix.calculation.ShortCalculation;
 import org.ujmp.core.shortmatrix.stub.AbstractShortMatrix;
 
@@ -56,15 +55,11 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		}
 	}
 
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
-	}
-
-	public short getShort(long... coordinates) throws MatrixException {
+	public short getShort(long... coordinates)  {
 		return calculation.getShort(coordinates);
 	}
 
-	public void setShort(short value, long... coordinates) throws MatrixException {
+	public void setShort(short value, long... coordinates)  {
 		calculation.setShort(value, coordinates);
 	}
 

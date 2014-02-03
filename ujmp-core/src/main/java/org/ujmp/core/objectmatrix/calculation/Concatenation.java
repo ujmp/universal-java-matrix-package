@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -76,7 +75,7 @@ public class Concatenation extends AbstractObjectCalculation {
 			Matrix m1 = matrices[i + 1];
 			long[] s0 = m0.getSize();
 			long[] s1 = Coordinates.copyOf(m1.getSize());
-			if (!Coordinates.isZero(s0) && !Coordinates.isZero(s1)) {
+			if (!Coordinates.allEquals(s0, 0) && !Coordinates.allEquals(s1, 0)) {
 				s1[dimension] = s0[dimension];
 				VerifyUtil.assertEquals(s0, s1, "matrices have different sizes");
 			}
@@ -130,7 +129,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		this(dimension, matrices.toArray(new Matrix[matrices.size()]));
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		int i = 0;
 		for (; i < positions.length; i++) {
 			if (positions[i] > coordinates[getDimension()]) {
@@ -148,7 +147,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		return size;
 	}
 
-	public void setObject(Object value, long... coordinates) throws MatrixException {
+	public void setObject(Object value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

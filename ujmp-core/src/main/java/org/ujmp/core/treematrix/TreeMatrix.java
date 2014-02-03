@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,6 +27,6 @@ import javax.swing.tree.TreeModel;
 
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 
-public interface TreeMatrix extends SparseDoubleMatrix2D, Tree, TreeModel {
+public interface TreeMatrix<T> extends SparseDoubleMatrix2D, Tree<T>, TreeModel {
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.stringmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.PorterStemmer;
 
 public class Stem extends AbstractStringCalculation {
@@ -37,7 +36,7 @@ public class Stem extends AbstractStringCalculation {
 	}
 
 	
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String s = getSource().getAsString(coordinates).toLowerCase();
 		StringBuilder result = new StringBuilder(s.length());
 		String[] words = s.split("\\s+");

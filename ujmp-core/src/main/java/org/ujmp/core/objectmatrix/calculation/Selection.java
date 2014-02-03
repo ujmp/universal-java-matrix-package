@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.Collection;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
@@ -61,7 +60,7 @@ public class Selection extends AbstractObjectCalculation {
 
 	private void createAnnotation() {
 		if (getSource().getDimensionCount() != 2) {
-			throw new MatrixException("only supported for 2d matrices");
+			throw new RuntimeException("only supported for 2d matrices");
 		}
 		Annotation a = getSource().getAnnotation();
 		if (a != null) {
@@ -94,7 +93,7 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);
@@ -121,7 +120,7 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	public void setObject(Object value, long... coordinates) throws MatrixException {
+	public void setObject(Object value, long... coordinates)  {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);

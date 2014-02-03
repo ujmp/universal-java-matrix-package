@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.util.Map;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.LazyMap;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
@@ -164,7 +163,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 			ret = new FileMatrix(map.getFinalFile());
 			return ret;
 		} catch (IOException e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,8 +25,6 @@ package org.ujmp.core.util;
 
 import java.lang.reflect.Method;
 
-import org.ujmp.core.exceptions.MatrixException;
-
 public abstract class JMathLib {
 
 	public static boolean isAvailable() {
@@ -44,7 +42,7 @@ public abstract class JMathLib {
 			Method method = c.getMethod("showGUI", new Class[] {});
 			method.invoke(null);
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

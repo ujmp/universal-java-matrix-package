@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.calculation.ObjectCalculation;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
@@ -52,15 +51,11 @@ public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
-	}
-
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		return calculation.getObject(coordinates);
 	}
 
-	public void setObject(Object value, long... coordinates) throws MatrixException {
+	public void setObject(Object value, long... coordinates)  {
 		calculation.setObject(value, coordinates);
 	}
 

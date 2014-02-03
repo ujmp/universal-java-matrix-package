@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
 
 public class GnuPlot {
 
@@ -151,7 +150,8 @@ public class GnuPlot {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + "=" + matrix.export().toString(FileFormat.M));
+		String script = matrix.export().toStringFormatted().asMatlabScript(label);
+		execute(script);
 	}
 
 	public static boolean isAvailable() {
@@ -159,7 +159,7 @@ public class GnuPlot {
 	}
 
 	public void plot(Matrix matrix, String... format) throws Exception {
-		matrix.export().toFile(FileFormat.CSV, matrixFile);
+		matrix.export().toFile(matrixFile).asCSV();
 		execute(getPlotCommand(matrix, true, true));
 	}
 
@@ -189,7 +189,7 @@ public class GnuPlot {
 	}
 
 	public void scatterPlot(Matrix matrix, String... format) throws Exception {
-		matrix.export().toFile(FileFormat.CSV, matrixFile);
+		matrix.export().toFile(matrixFile).asCSV();
 		execute(getPlotCommand(matrix, false, false));
 	}
 

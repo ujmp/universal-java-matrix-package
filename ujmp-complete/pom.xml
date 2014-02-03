@@ -35,6 +35,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ehcache</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-ejml</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -42,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-ehcache</artifactId>
+			<artifactId>ujmp-examples</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -119,14 +126,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jexcelapi</artifactId>
+			<artifactId>ujmp-jlinalg</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jlinalg</artifactId>
+			<artifactId>ujmp-jmatharray</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -154,13 +161,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatharray</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jsci</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -176,6 +176,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jung</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-la4j</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -239,6 +246,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-pdfbox</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-poi</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -305,6 +319,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-examples</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-gui</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -385,7 +407,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jexcelapi</artifactId>
+			<artifactId>ujmp-jlinalg</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -393,7 +415,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jlinalg</artifactId>
+			<artifactId>ujmp-jmatharray</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -425,14 +447,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatharray</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jsci</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -450,6 +464,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jung</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-la4j</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -529,6 +551,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-poi</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-sst</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -560,16 +590,17 @@
 		<module>../ujmp-jblas</module>
 		<module>../ujmp-jbpcafill</module>
 		<module>../ujmp-jdbc</module>
-		<module>../ujmp-jfreechart</module>
 		<module>../ujmp-jexcelapi</module>
+		<module>../ujmp-jfreechart</module>
 		<module>../ujmp-jlinalg</module>
+		<module>../ujmp-jmatharray</module>
 		<module>../ujmp-jmathplot</module>
 		<module>../ujmp-jmatio</module>
 		<module>../ujmp-jmatrices</module>
-		<module>../ujmp-jmatharray</module>
 		<module>../ujmp-jsci</module>
 		<module>../ujmp-jscience</module>
 		<module>../ujmp-jung</module>
+		<module>../ujmp-la4j</module>
 		<module>../ujmp-lsimpute</module>
 		<module>../ujmp-lucene</module>
 		<module>../ujmp-mail</module>
@@ -579,6 +610,7 @@
 		<module>../ujmp-orbital</module>
 		<module>../ujmp-parallelcolt</module>
 		<module>../ujmp-pdfbox</module>
+		<module>../ujmp-poi</module>
 		<module>../ujmp-sst</module>
 		<module>../ujmp-vecmath</module>
 	</modules>

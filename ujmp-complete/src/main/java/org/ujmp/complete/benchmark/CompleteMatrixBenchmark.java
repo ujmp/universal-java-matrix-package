@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -46,15 +46,14 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.CommandLineUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.matrices.MatrixLibraries;
-import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
-import org.ujmp.core.util.matrices.MatrixSystemProperties;
+import org.ujmp.core.util.matrices.SystemEnvironmentMatrix;
+import org.ujmp.core.util.matrices.SystemPropertiesMatrix;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
@@ -205,15 +204,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		File propFile = new File(resultDir + File.separator + "props.csv");
 		File confFile = new File(resultDir + File.separator + "conf.csv");
 		File versionFile = new File(resultDir + File.separator + "versions.csv");
-		new MatrixSystemEnvironment().export().toFile(FileFormat.CSV, envFile);
-		Matrix props = new MatrixSystemProperties().replaceRegex(Ret.NEW, "\r\n", " ");
+		new SystemEnvironmentMatrix().export().toFile(envFile).asCSV();
+		Matrix props = new SystemPropertiesMatrix().replaceRegex(Ret.NEW, "\r\n", " ");
 		props = props.replaceRegex(Ret.NEW, "\n", " ");
-		props.export().toFile(FileFormat.CSV, propFile);
-		getConfig().export().toFile(FileFormat.CSV, confFile);
+		props.export().toFile(propFile).asCSV();
+		getConfig().export().toFile(confFile).asCSV();
 		Matrix libraries = new MatrixLibraries();
 		System.out.println(libraries);
 		Matrix versions = libraries.selectRows(Ret.NEW, 0, 1).transpose();
-		versions.export().toFile(FileFormat.CSV, versionFile);
+		versions.export().toFile(versionFile).asCSV();
 	}
 
 	public void evaluate() throws Exception {
@@ -222,7 +221,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		System.out.println();
 		File dir = new File(BenchmarkUtil.getResultDir(getConfig()));
 		if (!dir.exists()) {
-			throw new MatrixException("no results found");
+			throw new RuntimeException("no results found");
 		}
 
 		Map<String, List<Matrix>> statistics = new HashMap<String, List<Matrix>>();
@@ -397,13 +396,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				matrix.getAnnotation().getDimensionMatrix(Matrix.COLUMN), matrix);
 		Matrix complete = Matrix.Factory.vertCat(firstPart, lastPart);
 		try {
-			complete.export().toFile(FileFormat.CSV,
-					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"));
+			complete.export()
+					.toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"))
+					.asCSV();
 		} catch (Exception e) {
 		}
 		try {
-			complete.export().toFile(FileFormat.XLS,
-					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".xls"));
+			complete.export()
+					.toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".xls"))
+					.asXLS();
 		} catch (Exception e) {
 		}
 		try {
@@ -419,8 +420,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			} else {
 				params = new Object[] { "xy", "logx", "logy" };
 			}
-			plt.export().toFile(FileFormat.PLT,
-					new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".plt"), params);
+			plt.export().toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".plt"))
+					.asPLT(params);
 		} catch (Exception e) {
 		}
 		// ChartConfiguration config = new ChartConfiguration();
@@ -442,12 +443,12 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	@Override
-	public DoubleMatrix2D createMatrix(long... size) throws MatrixException {
+	public DoubleMatrix2D createMatrix(long... size)  {
 		return null;
 	}
 
 	@Override
-	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
+	public DoubleMatrix2D createMatrix(Matrix source)  {
 		return null;
 	}
 

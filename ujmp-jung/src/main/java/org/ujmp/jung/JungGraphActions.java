@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,17 +34,15 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
 import org.ujmp.gui.actions.PanelActions;
-import org.ujmp.gui.io.ExportJPEG;
-import org.ujmp.gui.io.ExportPDF;
-import org.ujmp.gui.util.GraphicsExecutor;
+import org.ujmp.jung.JungVisualizationViewer.GraphLayout;
 
 public class JungGraphActions extends JPopupMenu {
 
 	private static final long serialVersionUID = -2307893165969916295L;
 
-	JungGraphPanel jungGraphPanel = null;
+	JungVisualizationViewer<?, ?> jungGraphPanel = null;
 
-	public JungGraphActions(JungGraphPanel m) {
+	public JungGraphActions(JungVisualizationViewer<?, ?> m) {
 		this.jungGraphPanel = m;
 
 		JMenu panelMenu = new JMenu("This Panel");
@@ -53,12 +51,15 @@ public class JungGraphActions extends JPopupMenu {
 		}
 		this.add(panelMenu);
 
-		JMenu layoutMenu = new JMenu("Layout");
+		JMenu layoutMenu = new JMenu("Select Layout");
+		layoutMenu.add(circleLayoutAction);
 		layoutMenu.add(frLayoutAction);
+		layoutMenu.add(frLayout2Action);
 		layoutMenu.add(kkLayoutAction);
 		layoutMenu.add(iSomLayoutAction);
 		layoutMenu.add(springLayoutAction);
-		layoutMenu.add(circleLayoutAction);
+		layoutMenu.add(springLayout2Action);
+
 		this.add(layoutMenu);
 		this.add(toggleEdgesAction);
 		this.add(toggleEdgeLabelsAction);
@@ -70,45 +71,59 @@ public class JungGraphActions extends JPopupMenu {
 		this.add(refreshAction);
 	}
 
-	public final Action frLayoutAction = new AbstractAction("FR Layout") {
+	public final Action frLayoutAction = new AbstractAction("FRLayout") {
 		private static final long serialVersionUID = 3149916178777567323L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.FRLayout);
+			jungGraphPanel.switchLayout(GraphLayout.FRLayout);
 		}
 	};
 
-	public final Action iSomLayoutAction = new AbstractAction("ISOM Layout") {
+	public final Action frLayout2Action = new AbstractAction("FRLayout2") {
 		private static final long serialVersionUID = 1862486279803190687L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.ISOMLayout);
+			jungGraphPanel.switchLayout(GraphLayout.FRLayout2);
 		}
 	};
 
-	public final Action kkLayoutAction = new AbstractAction("KK Layout") {
+	public final Action iSomLayoutAction = new AbstractAction("ISOMLayout") {
+		private static final long serialVersionUID = 1862486279803190687L;
+
+		public void actionPerformed(ActionEvent e) {
+			jungGraphPanel.switchLayout(GraphLayout.ISOMLayout);
+		}
+	};
+
+	public final Action kkLayoutAction = new AbstractAction("KKLayout") {
 		private static final long serialVersionUID = 8756219332341323478L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.switchLayout(JungGraphPanel.GraphLayout.KKLayout);
+			jungGraphPanel.switchLayout(GraphLayout.KKLayout);
 		}
 	};
 
-	public final Action springLayoutAction = new AbstractAction("Spring Layout") {
+	public final Action springLayoutAction = new AbstractAction("SpringLayout") {
 		private static final long serialVersionUID = -9129746911116351142L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel
-					.switchLayout(JungGraphPanel.GraphLayout.SpringLayout);
+			jungGraphPanel.switchLayout(GraphLayout.SpringLayout);
 		}
 	};
 
-	public final Action circleLayoutAction = new AbstractAction("Circle Layout") {
+	public final Action springLayout2Action = new AbstractAction("SpringLayout2") {
+		private static final long serialVersionUID = 2852217645436316157L;
+
+		public void actionPerformed(ActionEvent e) {
+			jungGraphPanel.switchLayout(GraphLayout.SpringLayout2);
+		}
+	};
+
+	public final Action circleLayoutAction = new AbstractAction("CircleLayout") {
 		private static final long serialVersionUID = -3030980988050670381L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel
-					.switchLayout(JungGraphPanel.GraphLayout.CircleLayout);
+			jungGraphPanel.switchLayout(GraphLayout.CircleLayout);
 		}
 	};
 
@@ -116,25 +131,23 @@ public class JungGraphActions extends JPopupMenu {
 		private static final long serialVersionUID = -8057389215808050942L;
 
 		public void actionPerformed(ActionEvent e) {
-			GraphicsExecutor.scheduleUpdate(jungGraphPanel);
+			jungGraphPanel.repaint(500);
 		}
 	};
 
-	public final Action exportToPdfAction = new AbstractAction(
-			"Export to PDF...", UIManager.getIcon("JDMP.icon.pdf")) {
+	public final Action exportToPdfAction = new AbstractAction("Export to PDF...", UIManager.getIcon("JDMP.icon.pdf")) {
 		private static final long serialVersionUID = -7413294854080175036L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.exportToPDF(ExportPDF.selectFile());
+			// jungGraphPanel.exportToPDF(ExportPDF.selectFile());
 		}
 	};
 
-	public final Action exportToJpgAction = new AbstractAction(
-			"Export to JPG...", UIManager.getIcon("JDMP.icon.image")) {
+	public final Action exportToJpgAction = new AbstractAction("Export to JPG...", UIManager.getIcon("JDMP.icon.image")) {
 		private static final long serialVersionUID = 2903870037000412488L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.exportToJPEG(ExportJPEG.selectFile());
+			// jungGraphPanel.exportToJPEG(ExportJPEG.selectFile());
 		}
 	};
 
@@ -142,27 +155,23 @@ public class JungGraphActions extends JPopupMenu {
 		private static final long serialVersionUID = -7632767332831157590L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.setShowEdges(!jungGraphPanel.isShowEdges());
+			// jungGraphPanel.setShowEdges(!jungGraphPanel.isShowEdges());
 		}
 	};
 
-	public final Action toggleEdgeLabelsAction = new AbstractAction(
-			"Toggle Edge Labels") {
+	public final Action toggleEdgeLabelsAction = new AbstractAction("Toggle Edge Labels") {
 		private static final long serialVersionUID = 5043606502712307760L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel
-					.setShowEdgeLabels(!jungGraphPanel.isShowEdgeLabels());
+			jungGraphPanel.setShowEdgeLabels(!jungGraphPanel.isShowEdgeLabels());
 		}
 	};
 
-	public final Action toggleVertexLabelsAction = new AbstractAction(
-			"Toggle Vertex Labels") {
+	public final Action toggleVertexLabelsAction = new AbstractAction("Toggle Vertex Labels") {
 		private static final long serialVersionUID = -8736147166116311565L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.setShowVertexLabels(!jungGraphPanel
-					.isShowVertexLabels());
+			jungGraphPanel.setShowNodeLabels(!jungGraphPanel.isShowNodeLabels());
 		}
 	};
 

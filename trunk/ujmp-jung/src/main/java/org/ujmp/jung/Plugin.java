@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,8 +38,11 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
-		dependencies.add("jung.jar");
-		dependencies.add("commons-collections.jar");
+		dependencies.add("jung-api.jar");
+		dependencies.add("jung-visualization.jar");
+		dependencies.add("jung-algorithms.jar");
+		dependencies.add("jung-graph-impl.jar");
+		dependencies.add("collections-generic.jar");
 		dependencies.add("colt.jar");
 		dependencies.add("concurrent.jar");
 		neededClasses.add("org.ujmp.gui.Plugin");

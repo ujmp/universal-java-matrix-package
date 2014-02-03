@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,21 +29,17 @@ import java.io.IOException;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
-public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper
-		implements Flushable, Closeable, Erasable {
+public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements Flushable, Closeable, Erasable {
 	private static final long serialVersionUID = -7743149828558906127L;
 
-	public EhcacheSparseObjectMatrix(Matrix m) throws MatrixException,
-			IOException {
+	public EhcacheSparseObjectMatrix(Matrix m) throws IOException {
 		super(new EhcacheMap<Coordinates, Object>(), m);
 	}
 
-	public EhcacheSparseObjectMatrix(long... size) throws MatrixException,
-			IOException {
+	public EhcacheSparseObjectMatrix(long... size) throws IOException {
 		super(new EhcacheMap<Coordinates, Object>(), size);
 	}
 

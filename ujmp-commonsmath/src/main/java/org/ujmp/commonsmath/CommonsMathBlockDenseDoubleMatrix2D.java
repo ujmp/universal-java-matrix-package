@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,24 +24,20 @@
 package org.ujmp.commonsmath;
 
 import org.apache.commons.math3.linear.BlockRealMatrix;
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.util.MathUtil;
 
-public class CommonsMathBlockDenseDoubleMatrix2D extends
-		AbstractCommonsMathDenseDoubleMatrix2D {
+public class CommonsMathBlockDenseDoubleMatrix2D extends AbstractCommonsMathDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4040628102089767983L;
 
 	public static final CommonsMathBlockDenseDoubleMatrix2DFactory Factory = new CommonsMathBlockDenseDoubleMatrix2DFactory();
 
 	public CommonsMathBlockDenseDoubleMatrix2D(long... size) {
-		super(Coordinates.isZero(size) ? null : new BlockRealMatrix(
-				(int) size[ROW], (int) size[COLUMN]));
+		super(new BlockRealMatrix(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN])));
 	}
 
-	public CommonsMathBlockDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
-			throws MatrixException {
+	public CommonsMathBlockDenseDoubleMatrix2D(org.ujmp.core.Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);

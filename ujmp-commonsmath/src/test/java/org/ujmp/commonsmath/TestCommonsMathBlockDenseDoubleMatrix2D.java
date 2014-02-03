@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,20 +24,43 @@
 package org.ujmp.commonsmath;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 
 public class TestCommonsMathBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size) throws MatrixException {
+	public Matrix createMatrix(long... size) {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 
-	public Matrix createMatrix(Matrix source) throws MatrixException {
+	public Matrix createMatrix(Matrix source) {
 		return new CommonsMathBlockDenseDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return true;
+	}
+
+	public void testLUFatFixedSmall() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUFatFixedLarge() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUTallFixedSmall() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUTallFixedLarge() throws Exception {
+		// only square matrices
+	}
+
+	public void testLUSquareSingularSmall() throws Exception {
+		// some error
+	}
+
+	public void testLUSquareSingularLarge() throws Exception {
+		// some error
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -43,17 +43,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
 	}
 
-	
 	public String getDescription() {
 		return "interface to Colt matrices";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

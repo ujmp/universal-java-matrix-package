@@ -18,7 +18,7 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ejml</groupId>
+			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
 			<artifactId>ejml</artifactId>
 		</dependency>
 

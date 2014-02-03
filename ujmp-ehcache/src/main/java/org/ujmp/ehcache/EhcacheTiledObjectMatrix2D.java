@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -36,8 +36,7 @@ import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToTiledMatrix2DWrapper;
 
-public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper implements
-		Erasable, Flushable, Closeable {
+public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper implements Erasable, Flushable, Closeable {
 	private static final long serialVersionUID = 4324063544046176423L;
 
 	public EhcacheTiledObjectMatrix2D(long... size) throws IOException {
@@ -51,7 +50,7 @@ public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrappe
 	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		for (long[] c : availableCoordinates()) {
-			s.writeObject(new Coordinates(c));
+			s.writeObject(Coordinates.wrap(c));
 			s.writeObject(getObject(c));
 		}
 	}
@@ -62,7 +61,7 @@ public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrappe
 			try {
 				Coordinates c = (Coordinates) s.readObject();
 				Object o = s.readObject();
-				setObject(o, c.co);
+				setObject(o, c.getLongCoordinates());
 			} catch (OptionalDataException e) {
 				return;
 			}

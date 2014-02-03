@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,7 @@ import javax.swing.KeyStroke;
 
 import org.ujmp.core.interfaces.GUIObject;
 
-public class ExitAction extends ObjectAction {
+public class ExitAction extends AbstractObjectAction {
 	private static final long serialVersionUID = -4139646496876151305L;
 
 	public ExitAction(JComponent c, GUIObject o) {

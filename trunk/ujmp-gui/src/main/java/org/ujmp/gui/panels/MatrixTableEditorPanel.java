@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,96 +23,86 @@
 
 package org.ujmp.gui.panels;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.editor.MatrixTableCellEditor;
 import org.ujmp.gui.menu.MatrixPopupMenu;
-import org.ujmp.gui.renderer.MatrixValueTableCellRenderer;
+import org.ujmp.gui.table.ColumnTableHeaderRenderer64;
+import org.ujmp.gui.table.DefaultTableColumnModel64;
+import org.ujmp.gui.table.JTable64;
+import org.ujmp.gui.table.JTableHeader64;
+import org.ujmp.gui.table.ListSelectionEvent64;
+import org.ujmp.gui.table.ListSelectionListener64;
+import org.ujmp.gui.table.MatrixTable64;
+import org.ujmp.gui.table.RowHeaderTableModel64;
+import org.ujmp.gui.table.RowTableHeaderRenderer64;
+import org.ujmp.gui.table.TableColumnModel64;
+import org.ujmp.gui.table.TableModelEvent64;
+import org.ujmp.gui.table.TableModelListener64;
 
-public class MatrixTableEditorPanel extends JPanel implements
-		TableModelListener, MouseListener, KeyListener, ListSelectionListener {
+public class MatrixTableEditorPanel extends JPanel implements TableModelListener64, MouseListener, KeyListener, ListSelectionListener64 {
 	private static final long serialVersionUID = -1794955656888362574L;
 
-	private MatrixGUIObject dataModel = null;
+	private final MatrixGUIObject dataModel;
 
-	private final TableModel emptyModel = new DefaultTableModel();
+	private JTable64 jTable = null;
 
-	private JTable jTable = null;
-
-	private JList rowHeader = null;
+	private JTable64 rowHeader = null;
 
 	private JScrollPane scrollPane = null;
 
 	private boolean scroll = true;
 
 	public MatrixTableEditorPanel(MatrixGUIObject m) {
-		this();
-		setMatrix(m);
-	}
+		dataModel = m;
 
-	public MatrixTableEditorPanel() {
 		setBorder(BorderFactory.createTitledBorder("Matrix Editor"));
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout());
 
-		jTable = new JTable();
-		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		jTable.getTableHeader().setReorderingAllowed(false);
-		jTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		jTable.setColumnSelectionAllowed(true);
-		jTable.setDefaultRenderer(Object.class,
-				new MatrixValueTableCellRenderer());
-		jTable.setDefaultEditor(Object.class, new MatrixTableCellEditor());
-		jTable.addMouseListener(this);
-		jTable.addKeyListener(this);
-		jTable.getSelectionModel().addListSelectionListener(this);
+		jTable = new MatrixTable64(m);
 
-		rowHeader = new JList();
-		rowHeader.setOpaque(true);
-		rowHeader.setFixedCellHeight(jTable.getRowHeight());
-		rowHeader.setCellRenderer(new RowHeaderRenderer(jTable));
+		rowHeader = new JTable64(new RowHeaderTableModel64(m), new SingleTableColumnModel(dataModel), dataModel.getRowSelectionModel());
+		rowHeader.getTableHeader().setReorderingAllowed(false);
+		rowHeader.setColumnSelectionAllowed(false);
+		rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		rowHeader.setPreferredScrollableViewportSize(new Dimension(DefaultTableColumnModel64.COLUMNWIDTH, Integer.MAX_VALUE));
+		rowHeader.setDefaultRenderer(Object.class, new RowTableHeaderRenderer64(jTable));
+
+		JTableHeader64 tableHeader = new JTableHeader64((TableColumnModel64) jTable.getColumnModel());
+		tableHeader.setReorderingAllowed(false);
+		tableHeader.setDefaultRenderer(new ColumnTableHeaderRenderer64(jTable));
+		tableHeader.setResizingAllowed(false);
+		jTable.setTableHeader(tableHeader);
 
 		scrollPane = new JScrollPane(jTable);
+		scrollPane.setRowHeaderView(rowHeader);
+
+		this.add(scrollPane, BorderLayout.CENTER);
 
 		this.addMouseListener(this);
+		jTable.addMouseListener(this);
+		jTable.addKeyListener(this);
+		dataModel.getRowSelectionModel().addListSelectionListener(this);
+		dataModel.getColumnSelectionModel().addListSelectionListener(this);
+	}
 
-		this.add(jTable.getTableHeader(), new GridBagConstraints(0, 0, 1, 1,
-				0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
-				new Insets(0, 0, 0, 0), 0, 0));
-		this.add(scrollPane, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0,
-						0, 0, 0), 0, 0));
+	public void tableChanged(TableModelEvent64 e) {
 	}
 
 	public void tableChanged(TableModelEvent e) {
@@ -164,16 +154,18 @@ public class MatrixTableEditorPanel extends JPanel implements
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
+		valueChanged(new ListSelectionEvent64(e.getSource(), e.getFirstIndex(), e.getLastIndex(), e.getValueIsAdjusting()));
+	}
+
+	public void valueChanged(ListSelectionEvent64 e) {
 		if (scroll && e.getValueIsAdjusting() == false) {
-			int minRow = jTable.getSelectionModel().getMinSelectionIndex();
-			int minCol = jTable.getColumnModel().getSelectionModel()
-					.getMinSelectionIndex();
-			int maxRow = jTable.getSelectionModel().getMaxSelectionIndex();
-			int maxCol = jTable.getColumnModel().getSelectionModel()
-					.getMaxSelectionIndex();
+			long minRow = jTable.getSelectionModel().getMinSelectionIndex();
+			long minCol = jTable.getColumnModel().getSelectionModel().getMinSelectionIndex();
+			long maxRow = jTable.getSelectionModel().getMaxSelectionIndex();
+			long maxCol = jTable.getColumnModel().getSelectionModel().getMaxSelectionIndex();
 			if (minRow == maxRow && minCol == maxCol) {
 				JViewport viewport = (JViewport) jTable.getParent();
-				Rectangle rect = jTable.getCellRect(minRow, minCol, true);
+				Rectangle rect = jTable.getCellRect((int) minRow, (int) minCol, true);
 				Rectangle viewRect = viewport.getViewRect();
 				rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
 				int centerX = (viewRect.width - rect.width) / 2;
@@ -196,100 +188,4 @@ public class MatrixTableEditorPanel extends JPanel implements
 			dataModel.removeTableModelListener(this);
 	}
 
-	public void setMatrix(MatrixGUIObject m) {
-		if (dataModel != null) {
-			dataModel.removeTableModelListener(this);
-			dataModel.getRowSelectionModel().removeListSelectionListener(this);
-			dataModel.getColumnSelectionModel().removeListSelectionListener(
-					this);
-		}
-
-		dataModel = m;
-
-		if (dataModel != null) {
-			jTable.setModel(dataModel);
-			jTable.setSelectionModel(dataModel.getRowSelectionModel());
-			jTable.getColumnModel().setSelectionModel(
-					dataModel.getColumnSelectionModel());
-			dataModel.getRowSelectionModel().addListSelectionListener(this);
-			dataModel.getColumnSelectionModel().addListSelectionListener(this);
-			if (dataModel.getRowCount() <= 100000) {
-				AbstractListModel rowListModel = new RowListModel(dataModel);
-				rowHeader.setModel(rowListModel);
-				scrollPane.setRowHeaderView(rowHeader);
-			} else {
-				scrollPane.setRowHeaderView(null);
-			}
-		} else {
-			jTable.setModel(emptyModel);
-			scrollPane.setRowHeaderView(null);
-		}
-	}
-
-}
-
-class RowListModel extends AbstractListModel {
-	private static final long serialVersionUID = 508583105448562780L;
-
-	private MatrixGUIObject model = null;
-
-	public RowListModel(MatrixGUIObject m) {
-		this.model = m;
-	}
-
-	public Object getElementAt(int index) {
-		return model.getRowName(index);
-	}
-
-	public int getSize() {
-		return model.getRowCount();
-	}
-
-}
-
-class RowHeaderRenderer extends JLabel implements ListCellRenderer {
-	private static final long serialVersionUID = -9181159352100487913L;
-
-	private final JTable table;
-
-	private final Border selectedBorder;
-
-	private final Border normalBorder;
-
-	private final Font selectedFont;
-
-	private final Font normalFont;
-
-	final JTableHeader header;
-
-	RowHeaderRenderer(JTable table) {
-		this.table = table;
-		normalBorder = UIManager.getBorder("TableHeader.cellBorder");
-		selectedBorder = BorderFactory.createRaisedBevelBorder();
-		header = table.getTableHeader();
-		normalFont = header.getFont();
-		// selectedFont = normalFont.deriveFont(normalFont.getStyle() |
-		// Font.BOLD);
-		selectedFont = normalFont;
-		setForeground(header.getForeground());
-		setBackground(header.getBackground());
-		setOpaque(true);
-		setHorizontalAlignment(RIGHT);
-	}
-
-	public Component getListCellRendererComponent(JList list, Object value,
-			int index, boolean isSelected, boolean cellHasFocus) {
-		if (table.getSelectionModel().isSelectedIndex(index)) {
-			setFont(selectedFont);
-			// setBackground(Color.blue);
-			// setBorder(selectedBorder);
-		} else {
-			setFont(normalFont);
-			setBackground(header.getBackground());
-			// setBorder(normalBorder);
-		}
-		String label = String.valueOf(value);
-		setText(label + " ");
-		return this;
-	}
 }

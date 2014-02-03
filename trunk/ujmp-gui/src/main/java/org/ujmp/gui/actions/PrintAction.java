@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,14 +23,12 @@
 
 package org.ujmp.gui.actions;
 
-import java.util.logging.Level;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
 
 import org.ujmp.core.interfaces.GUIObject;
 
-public class PrintAction extends ObjectAction {
+public class PrintAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 5977367168891486978L;
 
 	public PrintAction(JComponent c, GUIObject o) {

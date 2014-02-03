@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,7 +35,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
-public class LinkMatrixToFileAction extends ObjectAction {
+public class LinkMatrixToFileAction extends AbstractObjectAction {
 	private static final long serialVersionUID = -5948577771230452714L;
 
 	public LinkMatrixToFileAction(JComponent c, GUIObject m) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,6 +25,7 @@ package org.ujmp.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.JPanel;
@@ -32,11 +33,12 @@ import javax.swing.ToolTipManager;
 
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.interfaces.HasToolTip;
+import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 
-public abstract class AbstractPanel extends JPanel implements HasToolTip {
+public abstract class AbstractPanel extends JPanel implements HasToolTip, CanBeRepainted {
 	private static final long serialVersionUID = 4748216534779867441L;
 
 	GUIObject object = null;
@@ -50,7 +52,9 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip {
 		ToolTipManager.sharedInstance().registerComponent(this);
 	}
 
-	
+	public void paintToBuffer(BufferedImage image) {
+	}
+
 	protected void finalize() throws Throwable {
 		ToolTipManager.sharedInstance().unregisterComponent(this);
 		super.finalize();
@@ -68,9 +72,11 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip {
 		ExportPNG.save(file, this);
 	}
 
-	
 	public String getToolTipText() {
 		return object.getToolTipText();
 	}
 
+	public void repaintUI() {
+
+	}
 }

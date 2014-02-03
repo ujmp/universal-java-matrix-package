@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -42,7 +42,7 @@ import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
-public abstract class ObjectAction implements Action, Callable<Object>,
+public abstract class AbstractObjectAction implements Action, Callable<Object>,
 		Serializable {
 	private static final long serialVersionUID = -118767390543995981L;
 
@@ -64,7 +64,7 @@ public abstract class ObjectAction implements Action, Callable<Object>,
 
 	private transient final HashMap<String, Object> arrayTable = new HashMap<String, Object>();
 
-	public ObjectAction(JComponent c, GUIObject o) {
+	public AbstractObjectAction(JComponent c, GUIObject o) {
 		setGUIObject(o);
 		this.component = c;
 		icon = UIManager.getIcon("UJMP.icon." + getClass().getSimpleName());

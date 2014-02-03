@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -40,31 +40,22 @@ import org.ujmp.gui.actions.MatrixActions;
 public class MatrixPopupMenu extends JPopupMenu {
 	private static final long serialVersionUID = -5501347047922058729L;
 
-	public MatrixPopupMenu(JComponent c, MatrixGUIObject matrix, int row,
-			int column) {
+	public MatrixPopupMenu(JComponent c, MatrixGUIObject matrix, long row, long column) {
 		JLabel label = new JLabel();
 		label.setForeground(new Color(0, 0, 255));
 		List<JComponent> actions = null;
 
-		if (matrix.getRowSelectionModel().isSelectedIndex(row)
-				&& matrix.getColumnSelectionModel().isSelectedIndex(column)) {
-			int startX = matrix.getColumnSelectionModel()
-					.getMinSelectionIndex();
+		if (matrix.getRowSelectionModel().isSelectedIndex((int) row) && matrix.getColumnSelectionModel().isSelectedIndex((int) column)) {
+			int startX = matrix.getColumnSelectionModel().getMinSelectionIndex();
 			int endX = matrix.getColumnSelectionModel().getMaxSelectionIndex();
 			int startY = matrix.getRowSelectionModel().getMinSelectionIndex();
 			int endY = matrix.getRowSelectionModel().getMaxSelectionIndex();
-			Matrix subMatrix = matrix.getMatrix().subMatrix(Ret.LINK, startY,
-					startX, endY, endX);
-			actions = new MatrixActions(c, (MatrixGUIObject) subMatrix
-					.getGUIObject(), null);
-			label.setText(" Selection "
-					+ Coordinates.toString(subMatrix.getSize()).replaceAll(",",
-							"x"));
+			Matrix subMatrix = matrix.getMatrix().subMatrix(Ret.LINK, startY, startX, endY, endX);
+			actions = new MatrixActions(c, (MatrixGUIObject) subMatrix.getGUIObject(), null);
+			label.setText(" Selection " + Coordinates.toString(subMatrix.getSize()).replaceAll(",", "x"));
 		} else {
 			actions = new MatrixActions(c, matrix, null);
-			label.setText(" Matrix ["
-					+ Coordinates.toString(matrix.getSize()).replaceAll(",",
-							"x") + "]");
+			label.setText(" Matrix " + Coordinates.toString("[", "x", "]", matrix.getMatrix().getSize()) + "]");
 		}
 
 		add(label);

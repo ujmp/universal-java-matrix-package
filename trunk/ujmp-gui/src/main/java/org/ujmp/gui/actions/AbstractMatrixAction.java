@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public abstract class AbstractMatrixAction extends ObjectAction {
+public abstract class AbstractMatrixAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 7005218564058853146L;
 
 	public static final int ROW = Matrix.ROW;

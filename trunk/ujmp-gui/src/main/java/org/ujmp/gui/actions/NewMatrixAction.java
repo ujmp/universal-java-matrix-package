@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,7 +38,7 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
-public class NewMatrixAction extends ObjectAction {
+public class NewMatrixAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 1875202202123788470L;
 
 	public NewMatrixAction(JComponent c, GUIObject o) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,7 +38,7 @@ import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
 import org.ujmp.gui.MatrixGUIObject;
 
-public class SaveMatrixAction extends ObjectAction {
+public class SaveMatrixAction extends AbstractObjectAction {
 	private static final long serialVersionUID = -212812956173346428L;
 
 	public SaveMatrixAction(JComponent c, GUIObject o) {

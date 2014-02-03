@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,11 +32,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class MatrixSelection implements Transferable, ClipboardOwner,
-		Serializable {
+public class MatrixSelection implements Transferable, ClipboardOwner, Serializable {
 	private static final long serialVersionUID = -8462961141636462510L;
 
 	public static final int STRING = 0;
@@ -53,12 +50,11 @@ public class MatrixSelection implements Transferable, ClipboardOwner,
 
 	private String stringData = null;
 
-	public MatrixSelection(Matrix matrix) throws MatrixException, IOException {
-		stringData = matrix.export().toString(FileFormat.CSV);
+	public MatrixSelection(Matrix matrix) throws IOException {
+		stringData = matrix.export().toStringFormatted().asCSV();
 	}
 
-	public Object getTransferData(DataFlavor flavor)
-			throws UnsupportedFlavorException, IOException {
+	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 		if (flavor.equals(flavors[STRING])) {
 			return stringData;
 		} else {

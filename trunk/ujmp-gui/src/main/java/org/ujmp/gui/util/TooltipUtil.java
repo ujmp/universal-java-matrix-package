@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,187 +23,195 @@
 
 package org.ujmp.gui.util;
 
+import java.util.Date;
+
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
-import org.ujmp.gui.MatrixGUIObject;
 
 public abstract class TooltipUtil {
 
-	public static String getTooltip(MatrixGUIObject matrix, long... coordinates) {
-		String toolTip = "<html><b>[" + Coordinates.toString(coordinates)
-				+ "]</b>";
+	public static String getTooltip(Matrix matrix, long... coordinates) {
+		StringBuilder toolTip = new StringBuilder(200);
+		toolTip.append("<html><b>[");
+		toolTip.append(Coordinates.toString(coordinates));
+		toolTip.append("]</b>");
 
 		String columnLabel = null;
 		try {
-			columnLabel = matrix
-					.getColumnName((int) coordinates[Matrix.COLUMN]);
+			columnLabel = matrix.getColumnLabel(coordinates[Matrix.COLUMN]);
 		} catch (Exception e) {
 		}
 		if (columnLabel != null) {
-			toolTip += " <b>(" + columnLabel + ")</b>";
+			toolTip.append(" <b>(");
+			toolTip.append(columnLabel);
+			toolTip.append(")</b>");
 		}
 
-		toolTip += "<br><br>";
+		toolTip.append("<br><br>");
 
-		toolTip += "<table cellpadding=1 cellspacing=1>";
+		toolTip.append("<table cellpadding=1 cellspacing=1>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Object:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Object:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 
 		Object o = null;
 		try {
-			o = matrix.getValueAt((int) coordinates[0], (int) coordinates[1]);
+			o = matrix.getAsObject(coordinates[0], coordinates[1]);
 		} catch (Exception e) {
 		}
 
 		if (o != null) {
-			toolTip += o.getClass();
+			toolTip.append(o.getClass());
 		} else {
-			toolTip += "[null]";
+			toolTip.append("[null]");
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>String:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>String:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		try {
 			String s = StringUtil.getString(o);
 			if (s != null && s.length() > 25) {
 				s = s.substring(0, 25);
 			}
-			toolTip += s;
+			toolTip.append(s);
 		} catch (Exception e) {
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Double:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Double:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += Double.NaN;
+			toolTip.append(Double.NaN);
 		} else {
-			toolTip += MathUtil.getDouble(o);
+			toolTip.append(MathUtil.getDouble(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Float:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Float:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += Float.NaN;
+			toolTip.append(Float.NaN);
 		} else {
-			toolTip += MathUtil.getFloat(o);
+			toolTip.append(MathUtil.getFloat(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Long:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Long:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += "0";
+			toolTip.append("0");
 		} else {
-			toolTip += MathUtil.getLong(o);
+			toolTip.append(MathUtil.getLong(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Short:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Short:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += "0";
+			toolTip.append("0");
 		} else {
-			toolTip += MathUtil.getShort(o);
+			toolTip.append(MathUtil.getShort(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Int:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Int:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += "0";
+			toolTip.append("0");
 		} else {
-			toolTip += MathUtil.getInt(o);
+			toolTip.append(MathUtil.getInt(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Byte:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Byte:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += "0";
+			toolTip.append("0");
 		} else {
-			toolTip += MathUtil.getByte(o);
+			toolTip.append(MathUtil.getByte(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Char:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Char:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
 		} else {
-			toolTip += MathUtil.getChar(o);
+			toolTip.append(MathUtil.getChar(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Boolean:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Boolean:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += "false";
+			toolTip.append("false");
 		} else {
-			toolTip += MathUtil.getBoolean(o);
+			toolTip.append(MathUtil.getBoolean(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "<tr>";
-		toolTip += "<td>";
-		toolTip += "<b>Date:</b>";
-		toolTip += "</td>";
-		toolTip += "<td>";
+		toolTip.append("<tr>");
+		toolTip.append("<td>");
+		toolTip.append("<b>Date:</b>");
+		toolTip.append("</td>");
+		toolTip.append("<td>");
 		if (o instanceof Matrix) {
-			toolTip += MathUtil.getDate(null);
-		} else {
-			toolTip += MathUtil.getDate(o);
+			toolTip.append(MathUtil.getDate(null));
+		} else if (o instanceof Long) {
+			toolTip.append(MathUtil.getDate(o));
+		} else if (o instanceof String) {
+			toolTip.append(MathUtil.getDate(o));
+		} else if (o instanceof Date) {
+			toolTip.append(MathUtil.getDate(o));
 		}
-		toolTip += "</td>";
-		toolTip += "</tr>";
+		toolTip.append("</td>");
+		toolTip.append("</tr>");
 
-		toolTip += "</table>";
+		toolTip.append("</table>");
 
-		toolTip += "</html>";
-		return toolTip;
+		toolTip.append("</html>");
+		return toolTip.toString();
 	}
 }

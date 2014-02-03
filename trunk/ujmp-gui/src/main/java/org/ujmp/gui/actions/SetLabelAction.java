@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
 
 import org.ujmp.core.interfaces.GUIObject;
 
-public class SetLabelAction extends ObjectAction {
+public class SetLabelAction extends AbstractObjectAction {
 	private static final long serialVersionUID = 8660922548207382801L;
 
 	public SetLabelAction(JComponent c, GUIObject o) {

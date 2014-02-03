@@ -18,28 +18,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>parallelcolt</groupId>
+			<groupId>net.sourceforge.parallelcolt</groupId>
 			<artifactId>parallelcolt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>csparsej</groupId>
-			<artifactId>csparsej</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jtransforms</groupId>
-			<artifactId>jtransforms</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jplasma</groupId>
-			<artifactId>jplasma</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>netlib-java</groupId>
-			<artifactId>netlib-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>arpack-combo</groupId>
-			<artifactId>arpack-combo</artifactId>
 		</dependency>
 
 		<dependency>

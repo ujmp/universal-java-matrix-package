@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.util.Set;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
@@ -38,23 +37,20 @@ import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
 
-public class ParallelColtSparseDoubleMatrix2D extends
-		AbstractSparseDoubleMatrix2D implements Wrapper<SparseDoubleMatrix2D> {
+public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements Wrapper<SparseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private SparseDoubleMatrix2D matrix = null;
 
 	public ParallelColtSparseDoubleMatrix2D(long... size) {
-		this.matrix = new SparseDoubleMatrix2D((int) size[ROW],
-				(int) size[COLUMN]);
+		this.matrix = new SparseDoubleMatrix2D((int) size[ROW], (int) size[COLUMN]);
 	}
 
 	public ParallelColtSparseDoubleMatrix2D(SparseDoubleMatrix2D m) {
 		this.matrix = m;
 	}
 
-	public ParallelColtSparseDoubleMatrix2D(Matrix source)
-			throws MatrixException {
+	public ParallelColtSparseDoubleMatrix2D(Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -93,8 +89,7 @@ public class ParallelColtSparseDoubleMatrix2D extends
 	}
 
 	public Matrix inv() {
-		return new ParallelColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
+		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
 	}
 
 	public Iterable<long[]> availableCoordinates() {
@@ -103,12 +98,13 @@ public class ParallelColtSparseDoubleMatrix2D extends
 
 	class AvailableCoordinateIterable implements Iterable<long[]> {
 
+		// TODO: optimize
 		public Iterator<long[]> iterator() {
 			Set<Coordinates> cset = new HashSet<Coordinates>();
 			for (long r = getRowCount() - 1; r >= 0; r--) {
 				for (long c = getColumnCount() - 1; c >= 0; c--) {
 					if (getDouble(r, c) != 0.0) {
-						cset.add(new Coordinates(r, c));
+						cset.add(Coordinates.wrap(r, c).clone());
 					}
 				}
 			}

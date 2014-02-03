@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.sst;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.CoordinateIterator;
@@ -54,12 +53,12 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		}
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
 
 	public void setObject(Object value, long... coordinates)
-			throws MatrixException {
+			 {
 		data.set(value, MathUtil.toIntArray(coordinates));
 
 	}
@@ -68,7 +67,7 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		return MathUtil.toLongArray(data.dims());
 	}
 
-	public Iterable<long[]> allCoordinates() throws MatrixException {
+	public Iterable<long[]> allCoordinates()  {
 		return new CoordinateIterator(this.getSize());
 	}
 

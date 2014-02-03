@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class LSImpute extends AbstractDoubleCalculation {
@@ -65,13 +64,13 @@ public class LSImpute extends AbstractDoubleCalculation {
 			method = 6;
 			break;
 		default:
-			throw new MatrixException("Imputation method is not supported: "
+			throw new RuntimeException("Imputation method is not supported: "
 					+ impMethod);
 		}
 
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (xImputed == null) {
 			createMatrix();
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,14 +30,12 @@ import java.io.ObjectOutputStream;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.MathUtil;
 
 import shared.array.RealArray;
 
-public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<RealArray> {
+public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<RealArray> {
 	private static final long serialVersionUID = -9002457298955206969L;
 
 	private transient RealArray data = null;
@@ -61,21 +59,19 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public double getDouble(long rows, long columns) throws MatrixException {
+	public double getDouble(long rows, long columns) {
 		return data.get((int) rows, (int) columns);
 	}
 
-	public double getDouble(int rows, int columns) throws MatrixException {
+	public double getDouble(int rows, int columns) {
 		return data.get(rows, columns);
 	}
 
-	public void setDouble(double value, long rows, long columns)
-			throws MatrixException {
+	public void setDouble(double value, long rows, long columns) {
 		data.set(value, (int) rows, (int) columns);
 	}
 
-	public void setDouble(double value, int rows, int columns)
-			throws MatrixException {
+	public void setDouble(double value, int rows, int columns) {
 		data.set(value, rows, columns);
 	}
 
@@ -83,15 +79,13 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return MathUtil.toLongArray(data.dims());
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		byte[] bytes = (byte[]) s.readObject();
 		data = RealArray.parse(bytes);
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
+	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(data.getBytes());
 	}
@@ -129,8 +123,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			return new SSTDenseDoubleMatrix2D(data
-					.mMul(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			return new SSTDenseDoubleMatrix2D(data.mMul(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 		} else {
 			return super.mtimes(m);
 		}
@@ -147,8 +140,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(
-					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -161,8 +153,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(
-					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());

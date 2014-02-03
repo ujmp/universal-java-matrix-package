@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import no.uib.cipr.matrix.Matrices;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 
 public class Inv extends AbstractDoubleCalculation {
@@ -41,7 +40,7 @@ public class Inv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (inv == null) {
 			DenseMatrix A = new MTJDenseDoubleMatrix2D(getSource())
 					.getWrappedObject();

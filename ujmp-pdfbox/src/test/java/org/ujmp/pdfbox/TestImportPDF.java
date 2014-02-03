@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,7 +31,6 @@ import java.io.File;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.util.ResourceUtil;
 
 public class TestImportPDF {
@@ -45,7 +44,7 @@ public class TestImportPDF {
 
 		assertTrue(file.exists());
 
-		Matrix m = Matrix.Factory.importFromFile(file, FileFormat.PDF);
+		Matrix m = Matrix.Factory.importSelector().fromFile(file).asPDF();
 
 		String s = m.getAsString(0, 0);
 		assertEquals("test", s.trim());

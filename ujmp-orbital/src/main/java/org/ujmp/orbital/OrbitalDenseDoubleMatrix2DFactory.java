@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,14 +24,13 @@
 package org.ujmp.orbital;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class OrbitalDenseDoubleMatrix2DFactory extends
 		AbstractDenseDoubleMatrix2DFactory<OrbitalDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -2350372463029926450L;
 
 	public OrbitalDenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
+			 {
 		return new OrbitalDenseDoubleMatrix2D(rows, columns);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,18 +29,20 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 
 public class TestLSImpute {
 
 	@Test
-	public void testLSImpute() throws Exception {
-		Matrix m = DenseDoubleMatrix2D.Factory.randn(30, 30);
-		m.addMissing(Ret.ORIG, Matrix.ALL, 0.1);
-		assertTrue(m.containsMissingValues());
-		m = m.impute(Ret.NEW, ImputationMethod.LSimputeAdaptive);
-		assertFalse(m.containsMissingValues());
+	public void testLSImputeMathod1() throws Exception {
+		Matrix orig = Matrix.Factory.ones(30, 30);
+		Matrix missing = orig.addMissing(Ret.NEW, Matrix.ALL, 0.1);
+		assertTrue(missing.containsMissingValues());
+		Matrix imputed = missing.impute(Ret.NEW, ImputationMethod.LSimputeArray);
+		assertFalse(imputed.containsMissingValues());
+		double diff = orig.euklideanDistanceTo(imputed, true);
+		System.out.println(diff);
+		assertTrue(diff < 0.05);
 	}
 
 }

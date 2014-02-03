@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import orbital.math.Values;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
@@ -174,7 +173,7 @@ public class OrbitalDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix p = new OrbitalDenseDoubleMatrix2D(lu.getP());
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException("only square matrices allowed");
+			throw new RuntimeException("only square matrices allowed");
 		}
 	}
 

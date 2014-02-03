@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -39,7 +39,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.ojalgo.calculation.Chol;
@@ -98,7 +97,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix divide(final double factor) throws MatrixException {
+	public Matrix divide(final double factor)  {
 		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
 				.makeZero((int) this.getRowCount(), (int) this.getColumnCount());
 
@@ -113,7 +112,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix divide(final Matrix m) throws MatrixException {
+	public Matrix divide(final Matrix m)  {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 
 			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
@@ -182,7 +181,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix minus(final double factor) throws MatrixException {
+	public Matrix minus(final double factor)  {
 		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
 				.makeZero((int) this.getRowCount(), (int) this.getColumnCount());
 
@@ -192,7 +191,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix minus(final Matrix m) throws MatrixException {
+	public Matrix minus(final Matrix m)  {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 
 			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
@@ -231,7 +230,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix plus(final double factor) throws MatrixException {
+	public Matrix plus(final double factor)  {
 		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
 				.makeZero((int) this.getRowCount(), (int) this.getColumnCount());
 
@@ -246,7 +245,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix plus(final Matrix m) throws MatrixException {
+	public Matrix plus(final Matrix m)  {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 
 			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
@@ -304,7 +303,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix times(final double factor) throws MatrixException {
+	public Matrix times(final double factor)  {
 		final PhysicalStore<Double> retVal = PrimitiveDenseStore.FACTORY
 				.makeZero((int) this.getRowCount(), (int) this.getColumnCount());
 
@@ -319,7 +318,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public Matrix times(final Matrix m) throws MatrixException {
+	public Matrix times(final Matrix m)  {
 		if (m instanceof OjalgoDenseDoubleMatrix2D) {
 
 			final PrimitiveDenseStore tmpArg = ((OjalgoDenseDoubleMatrix2D) m)
@@ -345,7 +344,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	@Override
-	public double[][] toDoubleArray() throws MatrixException {
+	public double[][] toDoubleArray()  {
 		return ArrayUtils.toRawCopyOf((Access2D<Double>) matrix);
 	}
 

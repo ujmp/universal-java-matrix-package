@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.mail;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
 
 public abstract class ImportMatrixImapMessages {
@@ -32,7 +31,7 @@ public abstract class ImportMatrixImapMessages {
 	public static Matrix fromURL(String url, Object... parameters)
 			throws Exception {
 		if (parameters.length < 2) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"this methods needs additional parameters: user, password, [foldername]");
 		}
 		String user = StringUtil.convert(parameters[0]);

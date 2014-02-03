@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -50,7 +50,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.ujmp.core.collections.map.AbstractMap;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -122,7 +121,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		try {
 			getIndexWriter().deleteAll();
 		} catch (Exception e) {
-			throw new MatrixException("cannot clear index", e);
+			throw new RuntimeException("cannot clear index", e);
 		}
 	}
 
@@ -131,7 +130,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			Term term = new Term(KEYSTRING, getUniqueString(key));
 			return getIndexSearcher().docFreq(term) > 0;
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents: " + key, e);
+			throw new RuntimeException("could not search documents: " + key, e);
 		}
 	}
 
@@ -140,7 +139,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			Term term = new Term(VALUESTRING, getUniqueString(value));
 			return getIndexSearcher().docFreq(term) > 0;
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents: " + value, e);
+			throw new RuntimeException("could not search documents: " + value, e);
 		}
 	}
 
@@ -156,7 +155,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 				return (V) SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA));
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents: " + key, e);
+			throw new RuntimeException("could not search documents: " + key, e);
 		}
 		return null;
 	}
@@ -177,7 +176,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			}
 			return result;
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents: " + searchString, e);
+			throw new RuntimeException("could not search documents: " + searchString, e);
 		}
 	}
 
@@ -198,7 +197,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			}
 			return set;
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents", e);
+			throw new RuntimeException("could not search documents", e);
 		}
 	}
 
@@ -223,7 +222,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			getIndexWriter().updateDocument(term, doc);
 			return null;
 		} catch (Exception e) {
-			throw new MatrixException("could not add document: " + key, e);
+			throw new RuntimeException("could not add document: " + key, e);
 		}
 	}
 
@@ -233,7 +232,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			getIndexWriter().deleteDocuments(term);
 			return null;
 		} catch (Exception e) {
-			throw new MatrixException("could not delete document: " + key, e);
+			throw new RuntimeException("could not delete document: " + key, e);
 		}
 	}
 
@@ -258,7 +257,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 				return size;
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not count documents", e);
+			throw new RuntimeException("could not count documents", e);
 		}
 	}
 
@@ -316,7 +315,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			}
 			return indexWriter;
 		} catch (Exception e) {
-			throw new MatrixException("could not prepare writher", e);
+			throw new RuntimeException("could not prepare writher", e);
 		}
 	}
 
@@ -336,7 +335,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			}
 			return indexSearcher;
 		} catch (Exception e) {
-			throw new MatrixException("could not prepare reader", e);
+			throw new RuntimeException("could not prepare reader", e);
 		}
 	}
 
@@ -355,7 +354,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 				return null;
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not search documents", e);
+			throw new RuntimeException("could not search documents", e);
 		}
 	}
 

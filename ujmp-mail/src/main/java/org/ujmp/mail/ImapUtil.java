@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,6 +34,7 @@ import javax.mail.Store;
 
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
+import org.ujmp.core.util.DummySSLSocketFactory;
 
 public class ImapUtil implements Closeable {
 
@@ -66,16 +67,13 @@ public class ImapUtil implements Closeable {
 		Properties props = System.getProperties();
 		props.setProperty("mail.imap.host", host);
 		props.setProperty("mail.imap.port", "" + port);
-		props
-				.setProperty("mail.imap.connectiontimeout", ""
-						+ connectiontimeout);
+		props.setProperty("mail.imap.connectiontimeout", "" + connectiontimeout);
 		props.setProperty("mail.imap.timeout", "" + timeout);
 		props.setProperty("mail.store.protocol", protocol);
 		props.setProperty("mail.imap.ssl.enable", "" + sslEnable);
 
 		if (ignoreCertificate) {
-			Security.setProperty("ssl.SocketFactory.provider",
-					DummySSLSocketFactory.class.getName());
+			Security.setProperty("ssl.SocketFactory.provider", DummySSLSocketFactory.class.getName());
 		}
 
 		session = Session.getDefaultInstance(System.getProperties(), null);

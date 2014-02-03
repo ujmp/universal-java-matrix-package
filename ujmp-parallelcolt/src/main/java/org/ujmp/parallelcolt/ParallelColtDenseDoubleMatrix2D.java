@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.parallelcolt.calculation.Solve;
@@ -79,7 +78,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 	}
 
 	public ParallelColtDenseDoubleMatrix2D(Matrix source)
-			throws MatrixException {
+			 {
 		super(source);
 		if (source instanceof HasRowMajorDoubleArray2D) {
 			final double[][] data = ((HasRowMajorDoubleArray2D) source)
@@ -199,7 +198,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 		}
 	}
 
-	public Matrix mtimes(Matrix m) throws MatrixException {
+	public Matrix mtimes(Matrix m)  {
 		if (m instanceof ParallelColtDenseDoubleMatrix2D) {
 			cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D ret = new cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D(
 					(int) getRowCount(), (int) m.getColumnCount());
@@ -254,7 +253,7 @@ public class ParallelColtDenseDoubleMatrix2D extends
 			}
 			return new Matrix[] { l, u, p };
 		} else {
-			throw new MatrixException("only supported for matrices m>=n");
+			throw new RuntimeException("only supported for matrices m>=n");
 		}
 	}
 

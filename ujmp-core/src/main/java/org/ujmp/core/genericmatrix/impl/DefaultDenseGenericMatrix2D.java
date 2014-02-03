@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.genericmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 
 public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D<A> {
@@ -33,7 +32,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 
 	private Object[][] values = null;
 
-	public DefaultDenseGenericMatrix2D(Matrix m) throws MatrixException {
+	public DefaultDenseGenericMatrix2D(Matrix m)  {
 		super(m);
 		values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 		for (long[] c : m.allCoordinates()) {
@@ -41,7 +40,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		}
 	}
 
-	public DefaultDenseGenericMatrix2D(A[][] values) throws MatrixException {
+	public DefaultDenseGenericMatrix2D(A[][] values)  {
 		this.values = values;
 	}
 

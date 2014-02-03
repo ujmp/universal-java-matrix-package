@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.impl.FloatCalculationMatrix;
 
@@ -43,11 +42,11 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		super(dimension, sources);
 	}
 
-	public final FloatMatrix calcLink() throws MatrixException {
+	public final FloatMatrix calcLink()  {
 		return new FloatCalculationMatrix(this);
 	}
 
-	public final FloatMatrix calcNew() throws MatrixException {
+	public final FloatMatrix calcNew()  {
 		FloatMatrix result = (FloatMatrix) Matrix.Factory.zeros(ValueType.FLOAT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsFloat(getFloat(c), c);
@@ -58,9 +57,9 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		return result;
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -72,7 +71,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setFloat(float value, long... coordinates) throws MatrixException {
+	public void setFloat(float value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

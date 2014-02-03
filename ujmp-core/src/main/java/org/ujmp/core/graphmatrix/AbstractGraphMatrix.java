@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -37,7 +37,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	private static final long serialVersionUID = -4939918585100574441L;
 
 	public boolean contains(long... coordinates) {
-		return getEdgeList().contains(new Coordinates(coordinates));
+		return getEdgeList().contains(Coordinates.wrap(coordinates));
 	}
 
 	public boolean isConnected(N node1, N node2) {
@@ -53,6 +53,26 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 			objects.add(getNode(indices.get(i)));
 		}
 		return objects;
+	}
+
+	public List<E> getEdgesToParents(N node) {
+		long index = getIndexOfNode(node);
+		List<Long> parentIndices = getParentIndices(index);
+		List<E> edgeList = new ArrayList<E>(parentIndices.size());
+		for (long parentIndex : parentIndices) {
+			edgeList.add(getEdge(parentIndex, index));
+		}
+		return edgeList;
+	}
+
+	public List<E> getEdgesToChildren(N node) {
+		long index = getIndexOfNode(node);
+		List<Long> childIndices = getChildIndices(index);
+		List<E> edgeList = new ArrayList<E>(childIndices.size());
+		for (long childIndex : childIndices) {
+			edgeList.add(getEdge(index, childIndex));
+		}
+		return edgeList;
 	}
 
 	public List<N> getParents(N node) {
@@ -120,20 +140,28 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return super.availableCoordinates();
 	}
 
-	public long[] getSize() {
+	public final long[] getSize() {
 		return new long[] { getNodeCount(), getNodeCount() };
 	}
 
-	public E getObject(long row, long column) {
+	public final E getObject(long row, long column) {
 		return getEdge(row, column);
 	}
 
-	public E getObject(int row, int column) {
+	public final E getObject(int row, int column) {
 		return getEdge(row, column);
 	}
 
-	public long getValueCount() {
+	public final long getValueCount() {
 		return getEdgeList().size();
+	}
+
+	public final void setObject(E value, long row, long column) {
+		setEdge(value, row, column);
+	}
+
+	public final void setObject(E value, int row, int column) {
+		setEdge(value, row, column);
 	}
 
 	public final boolean isConnected(long node1, long node2) {
@@ -144,11 +172,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 		return getNodeList().indexOf(o);
 	}
 
-	public final StorageType getStorageType() {
-		return StorageType.GRAPH;
-	}
-
-	public SparseObjectMatrix2DFactory getFactory() {
+	public final SparseObjectMatrix2DFactory getFactory() {
 		return SparseObjectMatrix2D.factory;
 	}
 

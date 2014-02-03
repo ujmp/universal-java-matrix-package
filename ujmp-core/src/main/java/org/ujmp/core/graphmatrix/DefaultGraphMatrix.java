@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,7 +33,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.collections.list.ArrayIndexList;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
 public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
@@ -76,10 +75,6 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		nodes.remove(o);
 	}
 
-	public E getEdgeValue(long node1, long node2) {
-		return edges.get(new Coordinates(new long[] { node1, node2 }));
-	}
-
 	public int getEdgeCount() {
 		return edges.size();
 	}
@@ -89,14 +84,9 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	}
 
 	public void clear() {
-		// nodes.clear();
 		edges.clear();
 		parents.clear();
 		children.clear();
-	}
-
-	public void addChild(N node, N child) {
-		throw new MatrixException("not implemented!");
 	}
 
 	public int getChildCount(long nodeIndex) {
@@ -125,14 +115,6 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		return indices == null ? Collections.EMPTY_LIST : indices;
 	}
 
-	public void insertNode(N node, long index) {
-		nodes.add((int) index, node);
-	}
-
-	public void removeDirectedEdge(long nodeIndex1, long nodeIndex2) {
-		edges.remove(new Coordinates(new long[] { nodeIndex1, nodeIndex2 }));
-	}
-
 	public void removeNode(long node) {
 		nodes.remove((int) node);
 	}
@@ -152,12 +134,12 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	public synchronized void setEdge(E edge, long nodeIndex1, long nodeIndex2) {
 		int nmbOfNodes = nodes.size();
 		if (nodeIndex1 >= nmbOfNodes)
-			throw new MatrixException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes
+			throw new RuntimeException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes
 					+ " available");
 		if (nodeIndex2 >= nmbOfNodes)
-			throw new MatrixException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes
+			throw new RuntimeException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes
 					+ " available");
-		edges.put(new Coordinates(nodeIndex1, nodeIndex2), edge);
+		edges.put(Coordinates.wrap(nodeIndex1, nodeIndex2), edge);
 		List<Long> list = children.get(nodeIndex1);
 		if (list == null) {
 			list = new ArrayList<Long>();
@@ -175,7 +157,15 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 
 	public void setEdge(E edge, N node1, N node2) {
 		long index1 = getIndexOfNode(node1);
+		if (index1 == -1) {
+			addNode(node1);
+			index1 = getIndexOfNode(node1);
+		}
 		long index2 = getIndexOfNode(node2);
+		if (index2 == -1) {
+			addNode(node2);
+			index2 = getIndexOfNode(node2);
+		}
 		setEdge(edge, index1, index2);
 	}
 
@@ -184,13 +174,19 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 	}
 
 	public E getEdge(long nodeIndex1, long nodeIndex2) {
-		return null;
+		return edges.get(Coordinates.wrap(nodeIndex1, nodeIndex2));
 	}
 
-	public void setObject(E value, long row, long column) {
+	public void removeEdge(E edge) {
+		List<Coordinates> coordinatesToDelete = new ArrayList<Coordinates>();
+		for (Coordinates c : edges.keySet()) {
+			E e = edges.get(c);
+			if (e == edge) {
+				coordinatesToDelete.add(c);
+			}
+		}
+		for (Coordinates c : coordinatesToDelete) {
+			edges.remove(c);
+		}
 	}
-
-	public void setObject(E value, int row, int column) {
-	}
-
 }

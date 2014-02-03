@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.floatmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 
@@ -31,7 +30,7 @@ public class DefaultFloatMatrix2DFactory extends AbstractFloatMatrix2DFactory {
 	private static final long serialVersionUID = 4813771827445313121L;
 
 	
-	public FloatMatrix2D dense(long rows, long columns) throws MatrixException {
+	public FloatMatrix2D dense(long rows, long columns)  {
 		return new ArrayDenseFloatMatrix2D(rows, columns);
 	}
 

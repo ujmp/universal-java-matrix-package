@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,9 +23,9 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
+import org.ujmp.core.AbstractMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.GenericMatrix;
-import org.ujmp.core.matrix.AbstractMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
@@ -65,9 +65,6 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 			break;
 		case CHAR:
 			setAsChar(MathUtil.getChar(o), coordinates);
-			break;
-		case DATE:
-			setAsDate(MathUtil.getDate(o), coordinates);
 			break;
 		case DOUBLE:
 			setAsDouble(MathUtil.getDouble(o), coordinates);

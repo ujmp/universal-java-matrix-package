@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
@@ -33,11 +32,11 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 
 	private static final long serialVersionUID = 5833681469274664616L;
 
-	public final A getObject(long... coordinates) throws MatrixException {
+	public final A getObject(long... coordinates)  {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final void setObject(Object value, long... coordinates) throws MatrixException {
+	public final void setObject(A value, long... coordinates)  {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 

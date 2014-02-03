@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.floatmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -34,11 +33,11 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		FloatMatrix {
 	private static final long serialVersionUID = -3321607593194609473L;
 
-	public DefaultSparseFloatMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseFloatMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseFloatMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseFloatMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -54,11 +53,11 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		return ValueType.FLOAT;
 	}
 
-	public float getFloat(long... coordinates) throws MatrixException {
+	public float getFloat(long... coordinates)  {
 		return MathUtil.getFloat(getObject(coordinates));
 	}
 
-	public void setFloat(float value, long... coordinates) throws MatrixException {
+	public void setFloat(float value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

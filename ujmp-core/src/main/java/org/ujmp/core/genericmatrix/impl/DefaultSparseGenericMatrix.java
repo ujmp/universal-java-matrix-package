@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
@@ -43,11 +42,11 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	private int maximumNumberOfEntries = -1;
 
-	public DefaultSparseGenericMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseGenericMatrix(Matrix m)  {
 		this(m, -1);
 	}
 
-	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m);
 		this.size = Coordinates.copyOf(m.getSize());
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
@@ -76,7 +75,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public A getObject(long... coordinates) {
-		return values.get(new Coordinates(coordinates));
+		return values.get(Coordinates.wrap(coordinates));
 	}
 
 	public long getValueCount() {
@@ -90,9 +89,9 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		}
 		if (Coordinates.isSmallerThan(coordinates, size)) {
 			if (MathUtil.isNull(value)) {
-				values.remove(new Coordinates(coordinates));
+				values.remove(Coordinates.wrap(coordinates));
 			} else {
-				values.put(new Coordinates(coordinates), (A) value);
+				values.put(Coordinates.wrap(coordinates).clone(), (A) value);
 			}
 		}
 	}
@@ -102,23 +101,19 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public boolean contains(long... coordinates) {
-		return values.containsKey(new Coordinates(coordinates));
+		return values.containsKey(Coordinates.wrap(coordinates).clone());
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
+	public double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public void setAsDouble(double value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
-	}
-
-	public final StorageType getStorageType() {
-		return StorageType.SPARSE;
 	}
 
 	public final void clear() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,12 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix;
+package org.ujmp.core.bytearraymatrix;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.Matrix2DFactory;
+import org.ujmp.core.DenseMatrix2D;
 
-public interface Matrix2D extends Matrix {
+public interface DenseByteArrayMatrix2D extends ByteArrayMatrix2D, DenseByteArrayMatrix, DenseMatrix2D {
 
-	public Matrix2DFactory<? extends Matrix2D> getFactory();
 }

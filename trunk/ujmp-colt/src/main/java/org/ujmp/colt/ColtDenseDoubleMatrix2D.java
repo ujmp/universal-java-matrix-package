@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,8 +26,8 @@ package org.ujmp.colt;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix2D;
@@ -41,17 +41,15 @@ import cern.colt.matrix.linalg.SingularValueDecomposition;
 import cern.colt.matrix.linalg.SmpBlas;
 import cern.jet.math.Functions;
 
-public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<DenseDoubleMatrix2D> {
+public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
 	private static ColtDenseDoubleMatrix2DFactory factory = new ColtDenseDoubleMatrix2DFactory();
 
-	private DenseDoubleMatrix2D matrix = null;
+	private final DenseDoubleMatrix2D matrix;
 
-	public ColtDenseDoubleMatrix2D(long... size) {
-		this.matrix = new DenseDoubleMatrix2D((int) size[ROW],
-				(int) size[COLUMN]);
+	public ColtDenseDoubleMatrix2D(final long... size) {
+		this.matrix = new DenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN]));
 	}
 
 	public ColtDenseDoubleMatrix2D(DoubleMatrix2D m) {
@@ -66,17 +64,16 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = m;
 	}
 
-	public ColtDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public ColtDenseDoubleMatrix2D(Matrix source) {
 		super(source);
-		this.matrix = new DenseDoubleMatrix2D((int) source.getRowCount(),
-				(int) source.getColumnCount());
+		this.matrix = new DenseDoubleMatrix2D((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
 	}
 
 	public double getDouble(long row, long column) {
-		return matrix.getQuick((int) row, (int) column);
+		return matrix.getQuick(MathUtil.longToInt(row), MathUtil.longToInt(column));
 	}
 
 	public double getDouble(int row, int column) {
@@ -88,7 +85,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public void setDouble(double value, long row, long column) {
-		matrix.setQuick((int) row, (int) column, value);
+		matrix.setQuick(MathUtil.longToInt(row), MathUtil.longToInt(column), value);
 	}
 
 	public void setDouble(double value, int row, int column) {
@@ -99,30 +96,22 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(DenseDoubleMatrix2D object) {
-		this.matrix = object;
-	}
-
 	public Matrix transpose() {
-		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
-				.viewDice().copy());
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.viewDice().copy());
 	}
 
 	public Matrix inv() {
-		return new ColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) Algebra.DEFAULT.inverse(matrix));
+		return new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) Algebra.DEFAULT.inverse(matrix));
 	}
 
 	public Matrix solve(Matrix b) {
 		if (b instanceof ColtDenseDoubleMatrix2D) {
 			ColtDenseDoubleMatrix2D b2 = (ColtDenseDoubleMatrix2D) b;
 			if (isSquare()) {
-				DoubleMatrix2D ret = new LUDecomposition(matrix)
-						.solve(b2.matrix);
+				DoubleMatrix2D ret = new LUDecomposition(matrix).solve(b2.matrix);
 				return new ColtDenseDoubleMatrix2D(ret);
 			} else {
-				DoubleMatrix2D ret = new QRDecomposition(matrix)
-						.solve(b2.matrix);
+				DoubleMatrix2D ret = new QRDecomposition(matrix).solve(b2.matrix);
 				return new ColtDenseDoubleMatrix2D(ret);
 			}
 		} else {
@@ -133,8 +122,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix solveSPD(Matrix b) {
 		if (b instanceof ColtDenseDoubleMatrix2D) {
 			ColtDenseDoubleMatrix2D b2 = (ColtDenseDoubleMatrix2D) b;
-			DoubleMatrix2D ret = new CholeskyDecomposition(matrix)
-					.solve(b2.matrix);
+			DoubleMatrix2D ret = new CholeskyDecomposition(matrix).solve(b2.matrix);
 			return new ColtDenseDoubleMatrix2D(ret);
 		} else {
 			return super.solve(b);
@@ -142,15 +130,12 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix invSPD() {
-		DoubleMatrix2D ret = new CholeskyDecomposition(matrix)
-				.solve(DoubleFactory2D.dense.identity(matrix.rows()));
+		DoubleMatrix2D ret = new CholeskyDecomposition(matrix).solve(DoubleFactory2D.dense.identity(matrix.rows()));
 		return new ColtDenseDoubleMatrix2D(ret);
 	}
 
 	public Matrix plus(double value) {
-		Matrix result = new ColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) matrix.copy().assign(
-						Functions.plus(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.plus(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -159,9 +144,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix minus(double value) {
-		Matrix result = new ColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) matrix.copy().assign(
-						Functions.minus(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.minus(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -170,9 +153,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix times(double value) {
-		Matrix result = new ColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) matrix.copy().assign(
-						Functions.mult(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.mult(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -181,9 +162,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix divide(double value) {
-		Matrix result = new ColtDenseDoubleMatrix2D(
-				(DenseDoubleMatrix2D) matrix.copy()
-						.assign(Functions.div(value)));
+		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.div(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -193,8 +172,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof ColtDenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
-					(int) getRowCount(), (int) m.getColumnCount());
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D((int) getRowCount(), (int) m.getColumnCount());
 			matrix.zMult(((ColtDenseDoubleMatrix2D) m).matrix, ret);
 			return new ColtDenseDoubleMatrix2D(ret);
 		} else {
@@ -204,11 +182,9 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof ColtDenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
-					(int) getRowCount(), (int) m.getColumnCount());
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D((int) getRowCount(), (int) m.getColumnCount());
 			ret.assign(matrix);
-			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m)
-					.getWrappedObject(), ret);
+			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
 			Annotation a = getAnnotation();
 			if (a != null) {
@@ -222,11 +198,9 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof ColtDenseDoubleMatrix2D) {
-			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D(
-					(int) getRowCount(), (int) m.getColumnCount());
+			DenseDoubleMatrix2D ret = new DenseDoubleMatrix2D((int) getRowCount(), (int) m.getColumnCount());
 			ret.assign(matrix);
-			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m)
-					.getWrappedObject(), ret);
+			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
 			Annotation a = getAnnotation();
 			if (a != null) {
@@ -240,15 +214,13 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] svd() {
 		if (getColumnCount() > getRowCount()) {
-			SingularValueDecomposition svd = new SingularValueDecomposition(
-					matrix.viewDice());
+			SingularValueDecomposition svd = new SingularValueDecomposition(matrix.viewDice());
 			Matrix u = new ColtDenseDoubleMatrix2D(svd.getV());
 			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS());
 			Matrix v = new ColtDenseDoubleMatrix2D(svd.getU());
 			return new Matrix[] { u, s, v };
 		} else {
-			SingularValueDecomposition svd = new SingularValueDecomposition(
-					matrix);
+			SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
 			Matrix u = new ColtDenseDoubleMatrix2D(svd.getU());
 			Matrix s = new ColtDenseDoubleMatrix2D(svd.getS());
 			Matrix v = new ColtDenseDoubleMatrix2D(svd.getV());
@@ -258,7 +230,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] qr() {
 		if (getColumnCount() > getRowCount()) {
-			throw new MatrixException("matrix size must be m>=n");
+			throw new RuntimeException("matrix size must be m>=n");
 		}
 		QRDecomposition qr = new QRDecomposition(matrix);
 		Matrix q = new ColtDenseDoubleMatrix2D(qr.getQ());
@@ -281,12 +253,11 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] lu() {
 		if (getColumnCount() > getRowCount()) {
-			throw new MatrixException("only supported for m>=n");
+			throw new RuntimeException("only supported for m>=n");
 		}
 		LUDecomposition lu = new LUDecomposition(matrix);
 		Matrix l = new ColtDenseDoubleMatrix2D(lu.getL());
-		Matrix u = new ColtDenseDoubleMatrix2D(lu.getU().viewPart(0, 0,
-				(int) getColumnCount(), (int) getColumnCount()));
+		Matrix u = new ColtDenseDoubleMatrix2D(lu.getU().viewPart(0, 0, (int) getColumnCount(), (int) getColumnCount()));
 		int[] piv = lu.getPivot();
 		int m = (int) getRowCount();
 		Matrix p = new ColtDenseDoubleMatrix2D(m, m);
@@ -297,8 +268,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix copy() {
-		Matrix m = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix
-				.copy());
+		Matrix m = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
 		}

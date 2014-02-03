@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,19 +25,16 @@ package org.ujmp.colt;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class ColtDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> implements
+public class ColtDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> implements
 		DenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 1951543109603957820L;
 
-	public ColtDenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
+	public ColtDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new ColtDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public ColtDenseDoubleMatrix2D zeros(long... size) throws MatrixException {
+	public ColtDenseDoubleMatrix2D zeros(long... size) {
 		return new ColtDenseDoubleMatrix2D(size);
 	}
 

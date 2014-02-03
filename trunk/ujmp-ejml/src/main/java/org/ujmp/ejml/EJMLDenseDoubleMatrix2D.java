@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,10 +23,6 @@
 
 package org.ujmp.ejml;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.data.Matrix64F;
@@ -39,21 +35,20 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.calculation.Inv;
 import org.ujmp.ejml.calculation.InvSPD;
 import org.ujmp.ejml.calculation.QR;
 import org.ujmp.ejml.calculation.SVD;
 import org.ujmp.ejml.calculation.Solve;
 
-public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<DenseMatrix64F>, HasRowMajorDoubleArray1D {
+public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix64F>, HasRowMajorDoubleArray1D {
 	private static final long serialVersionUID = -3223474248020842822L;
 
-	private transient DenseMatrix64F matrix;
+	private final DenseMatrix64F matrix;
 
 	public EJMLDenseDoubleMatrix2D(long... size) {
 		this.matrix = new DenseMatrix64F((int) size[ROW], (int) size[COLUMN]);
@@ -63,21 +58,13 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		this.matrix = (DenseMatrix64F) m;
 	}
 
-	public EJMLDenseDoubleMatrix2D(Matrix source) throws MatrixException {
+	public EJMLDenseDoubleMatrix2D(Matrix source)  {
 		super(source);
-		// if (source instanceof HasColumnMajorDoubleArray1D) {
-		// final double[] data = ((HasColumnMajorDoubleArray1D) source)
-		// .getColumnMajorDoubleArray1D();
-		// this.matrix = new DenseMatrix64F((int) source.getRowCount(),
-		// (int) source.getColumnCount(), false, data);
-		// } else
 		if (source instanceof HasRowMajorDoubleArray2D) {
-			final double[][] data = ((HasRowMajorDoubleArray2D) source)
-					.getRowMajorDoubleArray2D();
+			final double[][] data = ((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D();
 			this.matrix = new DenseMatrix64F(data);
 		} else if (source instanceof DenseDoubleMatrix2D) {
-			this.matrix = new DenseMatrix64F((int) source.getRowCount(),
-					(int) source.getColumnCount());
+			this.matrix = new DenseMatrix64F((int) source.getRowCount(), (int) source.getColumnCount());
 			final DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) source;
 			for (int r = (int) source.getRowCount(); --r >= 0;) {
 				for (int c = (int) source.getColumnCount(); --c >= 0;) {
@@ -85,8 +72,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				}
 			}
 		} else {
-			this.matrix = new DenseMatrix64F((int) source.getRowCount(),
-					(int) source.getColumnCount());
+			this.matrix = new DenseMatrix64F((int) source.getRowCount(), (int) source.getColumnCount());
 			for (long[] c : source.availableCoordinates()) {
 				setDouble(source.getAsDouble(c), c);
 			}
@@ -94,7 +80,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public double getDouble(long row, long column) {
-		return matrix.get((int) row, (int) column);
+		return matrix.get(MathUtil.longToInt(row), MathUtil.longToInt(column));
 	}
 
 	public double getDouble(int row, int column) {
@@ -106,7 +92,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public void setDouble(double value, long row, long column) {
-		matrix.set((int) row, (int) column, value);
+		matrix.set(MathUtil.longToInt(row), MathUtil.longToInt(column), value);
 	}
 
 	public void setDouble(double value, int row, int column) {
@@ -115,10 +101,6 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public DenseMatrix64F getWrappedObject() {
 		return matrix;
-	}
-
-	public void setWrappedObject(DenseMatrix64F object) {
-		this.matrix = object;
 	}
 
 	public Matrix transpose() {
@@ -156,8 +138,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof EJMLDenseDoubleMatrix2D) {
-			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.add(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
 			Annotation a = getAnnotation();
@@ -172,8 +153,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof EJMLDenseDoubleMatrix2D) {
-			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
+			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.sub(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
 			Annotation a = getAnnotation();
@@ -239,8 +219,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix chol() {
-		CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(
-				matrix.numRows, false);
+		CholeskyDecomposition<DenseMatrix64F> chol = DecompositionFactory.chol(matrix.numRows, false);
 		chol.decompose(matrix);
 		Matrix l = new EJMLDenseDoubleMatrix2D(chol.getT(null));
 		return l;
@@ -248,13 +227,10 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] lu() {
 		if (isSquare()) {
-			LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(
-					matrix.numRows, matrix.numCols);
+			LUDecomposition<DenseMatrix64F> lu = DecompositionFactory.lu(matrix.numRows, matrix.numCols);
 			lu.decompose(matrix);
-			DenseMatrix64F lm = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
-			DenseMatrix64F um = new DenseMatrix64F(matrix.numRows,
-					matrix.numCols);
+			DenseMatrix64F lm = new DenseMatrix64F(matrix.numRows, matrix.numCols);
+			DenseMatrix64F um = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			lu.getLower(lm);
 			lu.getUpper(um);
 
@@ -269,8 +245,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix[] eig() {
-		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(
-				matrix.numCols, true);
+		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(matrix.numCols, true);
 		eig.decompose(matrix);
 
 		int N = matrix.numRows;
@@ -306,23 +281,6 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			m.setAnnotation(getAnnotation().clone());
 		}
 		return m;
-	}
-
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
-		s.defaultReadObject();
-		int rows = (Integer) s.readObject();
-		int columns = (Integer) s.readObject();
-		double[] values = (double[]) s.readObject();
-		matrix = new DenseMatrix64F(rows, columns, true, values);
-	}
-
-	private void writeObject(ObjectOutputStream s) throws IOException,
-			MatrixException {
-		s.defaultWriteObject();
-		s.writeObject(matrix.numRows);
-		s.writeObject(matrix.numCols);
-		s.writeObject(matrix.data);
 	}
 
 	public double[] getRowMajorDoubleArray1D() {

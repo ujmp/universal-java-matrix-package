@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,39 +29,33 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class CommonsMathDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<CommonsMathArrayDenseDoubleMatrix2D> {
+public class CommonsMathDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<CommonsMathArrayDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -4938756141859017575L;
 
 	public static final CommonsMathDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathDenseDoubleMatrix2DFactory();
 
-	public CommonsMathArrayDenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
+	public CommonsMathArrayDenseDoubleMatrix2D zeros(long rows, long columns)  {
 		return new CommonsMathArrayDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D dense(Array2DRowRealMatrix matrix)
-			throws MatrixException {
+	public DenseDoubleMatrix2D dense(Array2DRowRealMatrix matrix)  {
 		return new CommonsMathArrayDenseDoubleMatrix2D(matrix);
 	}
 
-	public DenseDoubleMatrix2D dense(BlockRealMatrix matrix)
-			throws MatrixException {
+	public DenseDoubleMatrix2D dense(BlockRealMatrix matrix)  {
 		return new CommonsMathBlockDenseDoubleMatrix2D(matrix);
 	}
 
 	public Matrix dense(RealMatrix matrix) {
 		if (matrix == null) {
-			throw new MatrixException("matrix is null");
+			throw new RuntimeException("matrix is null");
 		} else if (matrix instanceof BlockRealMatrix) {
 			return dense((BlockRealMatrix) matrix);
 		} else if (matrix instanceof Array2DRowRealMatrix) {
 			return dense((Array2DRowRealMatrix) matrix);
 		} else {
-			throw new MatrixException("implementation not available: "
-					+ matrix.getClass());
+			throw new RuntimeException("implementation not available: " + matrix.getClass());
 		}
 	}
 

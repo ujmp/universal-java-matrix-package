@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,21 +24,17 @@
 package org.ujmp.commonsmath;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class CommonsMathBlockDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<CommonsMathBlockDenseDoubleMatrix2D> {
+public class CommonsMathBlockDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<CommonsMathBlockDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 559376231363321539L;
 
 	public static final CommonsMathBlockDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathBlockDenseDoubleMatrix2DFactory();
 
-	public CommonsMathBlockDenseDoubleMatrix2D zeros(long rows, long columns)
-			throws MatrixException {
+	public CommonsMathBlockDenseDoubleMatrix2D zeros(long rows, long columns)  {
 		return new CommonsMathBlockDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public CommonsMathBlockDenseDoubleMatrix2D zeros(long... size)
-			throws MatrixException {
+	public CommonsMathBlockDenseDoubleMatrix2D zeros(long... size)  {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 

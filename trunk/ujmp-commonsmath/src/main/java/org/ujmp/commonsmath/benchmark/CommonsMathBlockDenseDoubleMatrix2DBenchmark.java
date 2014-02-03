@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,16 +28,14 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
-public class CommonsMathBlockDenseDoubleMatrix2DBenchmark extends
-		AbstractMatrix2DBenchmark {
+public class CommonsMathBlockDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size) throws MatrixException {
+	public DoubleMatrix2D createMatrix(long... size)  {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source) throws MatrixException {
+	public DoubleMatrix2D createMatrix(Matrix source)  {
 		return new CommonsMathBlockDenseDoubleMatrix2D(source);
 	}
 

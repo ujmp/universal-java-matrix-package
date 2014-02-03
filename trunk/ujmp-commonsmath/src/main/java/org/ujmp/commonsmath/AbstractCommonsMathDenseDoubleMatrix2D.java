@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,14 +33,13 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
-		AbstractDenseDoubleMatrix2D implements Wrapper<RealMatrix> {
+public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<RealMatrix> {
 	private static final long serialVersionUID = -1161807620507675926L;
 
-	private RealMatrix matrix = null;
+	private final RealMatrix matrix;
 
 	public AbstractCommonsMathDenseDoubleMatrix2D(RealMatrix matrix) {
 		this.matrix = matrix;
@@ -50,109 +49,85 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		return matrix;
 	}
 
-	public void setWrappedObject(RealMatrix object) {
-		this.matrix = object;
+	public double getDouble(long row, long column)  {
+		return matrix.getEntry(MathUtil.longToInt(row), MathUtil.longToInt(column));
 	}
 
-	public double getDouble(long row, long column) throws MatrixException {
-		return matrix.getEntry((int) row, (int) column);
-	}
-
-	public double getDouble(int row, int column) throws MatrixException {
+	public double getDouble(int row, int column)  {
 		return matrix.getEntry(row, column);
 	}
 
-	public void setDouble(double value, long row, long column)
-			throws MatrixException {
-		matrix.setEntry((int) row, (int) column, value);
+	public void setDouble(double value, long row, long column)  {
+		matrix.setEntry(MathUtil.longToInt(row), MathUtil.longToInt(column), value);
 	}
 
-	public void setDouble(double value, int row, int column)
-			throws MatrixException {
-		matrix.setEntry((int) row, (int) column, value);
+	public void setDouble(double value, int row, int column)  {
+		matrix.setEntry(row, column, value);
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] {
-				matrix.getRowDimension(), matrix.getColumnDimension() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
 	}
 
 	public Matrix transpose() {
-		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
-				.transpose());
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.transpose());
 	}
 
 	public Matrix inv() {
-		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(new LUDecomposition(matrix).getSolver().getInverse());
+		return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(new LUDecomposition(matrix).getSolver().getInverse());
 	}
 
 	public Matrix invSPD() {
 		try {
-			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(new CholeskyDecomposition(matrix).getSolver()
-							.getInverse());
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(new CholeskyDecomposition(matrix).getSolver().getInverse());
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public Matrix[] lu() {
 		LUDecomposition lu = new LUDecomposition(matrix);
-		Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
-				.getL());
-		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
-				.getU());
-		Matrix p = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu
-				.getP());
+		Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu.getL());
+		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu.getU());
+		Matrix p = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(lu.getP());
 		return new Matrix[] { l, u, p };
 	}
 
 	public Matrix[] qr() {
 		QRDecomposition qr = new QRDecomposition(matrix);
-		Matrix q = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr
-				.getQ());
-		Matrix r = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr
-				.getR());
+		Matrix q = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr.getQ());
+		Matrix r = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(qr.getR());
 		return new Matrix[] { q, r };
 	}
 
 	public Matrix[] svd() {
 		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
-		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd
-				.getU());
-		Matrix s = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd
-				.getS());
-		Matrix v = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd
-				.getV());
+		Matrix u = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd.getU());
+		Matrix s = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd.getS());
+		Matrix v = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(svd.getV());
 		return new Matrix[] { u, s, v };
 	}
 
 	public Matrix[] eig() {
 		EigenDecomposition evd = new EigenDecomposition(matrix);
-		Matrix v = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd
-				.getV());
-		Matrix d = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd
-				.getD());
+		Matrix v = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd.getV());
+		Matrix d = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(evd.getD());
 		return new Matrix[] { v, d };
 	}
 
 	public Matrix chol() {
 		try {
 			CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
-			Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(chol.getL());
+			Matrix l = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(chol.getL());
 			return l;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
-			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(matrix
-							.multiply(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+			return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.multiply(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
 		} else {
 			return super.mtimes(m2);
 		}
@@ -160,9 +135,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 
 	public Matrix plus(Matrix m2) {
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
-			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(matrix
-							.add(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.add(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -175,9 +148,8 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 
 	public Matrix minus(Matrix m2) {
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
-			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-					.dense(matrix
-							.subtract(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
+			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
+					.subtract(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -189,8 +161,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix times(double value) {
-		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(matrix.scalarMultiply(value));
+		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(value));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -199,8 +170,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix divide(double value) {
-		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(matrix.scalarMultiply(1.0 / value));
+		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(1.0 / value));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -209,8 +179,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix plus(double value) {
-		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(matrix.scalarAdd(value));
+		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(value));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -219,8 +188,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 	}
 
 	public Matrix minus(double value) {
-		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-				.dense(matrix.scalarAdd(-value));
+		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(-value));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -232,15 +200,11 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
 			if (isSquare()) {
-				RealMatrix ret = new LUDecomposition(matrix).getSolver().solve(
-						b2.matrix);
-				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-						.dense(ret);
+				RealMatrix ret = new LUDecomposition(matrix).getSolver().solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(ret);
 			} else {
-				RealMatrix ret = new QRDecomposition(matrix).getSolver().solve(
-						b2.matrix);
-				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-						.dense(ret);
+				RealMatrix ret = new QRDecomposition(matrix).getSolver().solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(ret);
 			}
 		} else {
 			return super.solve(b);
@@ -251,15 +215,13 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends
 		try {
 			if (b instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 				AbstractCommonsMathDenseDoubleMatrix2D b2 = (AbstractCommonsMathDenseDoubleMatrix2D) b;
-				RealMatrix ret = new CholeskyDecomposition(matrix).getSolver()
-						.solve(b2.matrix);
-				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE
-						.dense(ret);
+				RealMatrix ret = new CholeskyDecomposition(matrix).getSolver().solve(b2.matrix);
+				return CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(ret);
 			} else {
 				return super.solve(b);
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 }

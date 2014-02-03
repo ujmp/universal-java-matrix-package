@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
@@ -48,9 +48,6 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
-import org.ujmp.core.datematrix.DateMatrix;
-import org.ujmp.core.datematrix.DenseDateMatrix2D;
-import org.ujmp.core.datematrix.impl.SimpleDenseDateMatrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
@@ -62,14 +59,15 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
-import org.ujmp.core.enums.DB;
+import org.ujmp.core.enums.DBType;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.importer.sourceselector.DefaultMatrixImportSourceSelector;
+import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Magic;
@@ -84,6 +82,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.mapper.MatrixMapper;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
@@ -104,13 +103,15 @@ import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 import org.ujmp.core.stringmatrix.impl.SimpleDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.matrices.MatrixAvailableProcessors;
-import org.ujmp.core.util.matrices.MatrixMemoryUsage;
-import org.ujmp.core.util.matrices.MatrixRandomSeed;
-import org.ujmp.core.util.matrices.MatrixRunningThreads;
-import org.ujmp.core.util.matrices.MatrixSystemEnvironment;
-import org.ujmp.core.util.matrices.MatrixSystemProperties;
-import org.ujmp.core.util.matrices.MatrixSystemTime;
+import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
+import org.ujmp.core.util.matrices.IrisMatrix;
+import org.ujmp.core.util.matrices.LocalhostMatrix;
+import org.ujmp.core.util.matrices.MemoryUsageMatrix;
+import org.ujmp.core.util.matrices.RandomSeedMatrix;
+import org.ujmp.core.util.matrices.RunningThreadsMatrix;
+import org.ujmp.core.util.matrices.SystemEnvironmentMatrix;
+import org.ujmp.core.util.matrices.SystemPropertiesMatrix;
+import org.ujmp.core.util.matrices.SystemTimeMatrix;
 
 public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	private static final long serialVersionUID = -6788016781517917785L;
@@ -119,22 +120,22 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	private static MatrixMapper matrixMapper = MatrixMapper.getInstance();
 
-	public final Matrix zeros(long... size) throws MatrixException {
+	public final Matrix zeros(long... size) {
 		if (size.length == 2) {
 			return DenseDoubleMatrix2D.Factory.zeros(size[ROW], size[COLUMN]);
 		} else if (size.length > 2) {
 			return DoubleMatrix.Factory.zeros(size);
 		} else {
-			throw new MatrixException("Size must be at least 2-dimensional");
+			throw new RuntimeException("Size must be at least 2-dimensional");
 		}
 	}
 
 	public final Matrix zeros(ValueType valueType, long... size) {
 		switch (size.length) {
 		case 0:
-			throw new MatrixException("Size not defined");
+			throw new RuntimeException("Size not defined");
 		case 1:
-			throw new MatrixException("Size must be at least 2-dimensional");
+			throw new RuntimeException("Size must be at least 2-dimensional");
 		default:
 			switch (valueType) {
 			case BIGDECIMAL:
@@ -147,8 +148,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 				return ByteMatrix.Factory.zeros(size);
 			case CHAR:
 				return CharMatrix.Factory.zeros(size);
-			case DATE:
-				return DateMatrix.Factory.zeros(size);
 			case DOUBLE:
 				return DoubleMatrix.Factory.zeros(size);
 			case FLOAT:
@@ -162,18 +161,22 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 			case SHORT:
 				return ShortMatrix.Factory.zeros(size);
 			case STRING:
-				return StringMatrix.Factory.zeros(size);
+				return StringMatrix.Factory.dense(size);
 			default:
 				throw new RuntimeException("unknown value type: " + valueType);
 			}
 		}
 	}
 
+	public final MatrixImportSourceSelector importSelector() {
+		return new DefaultMatrixImportSourceSelector();
+	}
+
 	public final Matrix like(Matrix matrix, long rowCount, long columnCount) {
 		return matrix.getFactory().zeros(rowCount, columnCount);
 	}
 
-	public final Matrix copyFromMatrix(Matrix matrix) throws MatrixException {
+	public final Matrix copyFromMatrix(Matrix matrix) {
 		return Convert.calcNew(matrix);
 	}
 
@@ -186,10 +189,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final Matrix importFromArray(char[]... values) {
-		return linkToArray(values).clone();
-	}
-
-	public final Matrix importFromArray(Date[]... values) {
 		return linkToArray(values).clone();
 	}
 
@@ -243,14 +242,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	public final DenseCharMatrix2D linkToArray(char... values) {
 		return new ArrayDenseCharMatrix2D(values);
-	}
-
-	public final DenseDateMatrix2D linkToArray(Date[]... values) {
-		return new SimpleDenseDateMatrix2D(values);
-	}
-
-	public final DenseDateMatrix2D linkToArray(Date... values) {
-		return new SimpleDenseDateMatrix2D(values);
 	}
 
 	public final DenseDoubleMatrix2D linkToArray(double[]... values) {
@@ -310,46 +301,42 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final Matrix linkToFile(FileFormat format, File file, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return LinkMatrix.toFile(format, file, parameters);
 	}
 
-	public final Matrix linkToFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public final Matrix linkToFile(File file, Object... parameters) throws IOException {
 		return LinkMatrix.toFile(file, parameters);
 	}
 
-	public final Matrix importFromFile(String filename, Object... parameters)
-			throws MatrixException, IOException {
+	public final Matrix importFromFile(String filename, Object... parameters) throws IOException {
 		return ImportMatrix.fromFile(new File(filename), parameters);
 	}
 
-	public final Matrix importFromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public final Matrix importFromFile(File file, Object... parameters) throws IOException {
 		return ImportMatrix.fromFile(file, parameters);
 	}
 
 	public final Matrix importFromFile(FileFormat format, String file, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return ImportMatrix.fromFile(format, new File(file), parameters);
 	}
 
 	public final Matrix importFromResource(FileFormat format, String name, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return ImportMatrix.fromResource(format, name, parameters);
 	}
 
 	public final Matrix importFromFile(FileFormat format, File file, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return ImportMatrix.fromFile(format, file, parameters);
 	}
 
-	public final Matrix importFromClipboard(FileFormat format, Object... parameters)
-			throws MatrixException {
+	public final Matrix importFromClipboard(FileFormat format, Object... parameters) {
 		return ImportMatrix.fromClipboard(format, parameters);
 	}
 
-	public final Matrix createVectorForClass(int classID, int classCount) throws MatrixException {
+	public final Matrix createVectorForClass(int classID, int classCount) {
 		Matrix matrix = DenseDoubleMatrix2D.Factory.zeros(classCount, 1);
 		matrix.setAsDouble(1.0, classID, 0);
 		return matrix;
@@ -363,10 +350,9 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return new FileListMatrix(dir);
 	}
 
-	@SuppressWarnings("unchecked")
-	public final Matrix linkToMap(Map<?, ?> map) {
-		if (map instanceof Matrix) {
-			return (Matrix) map;
+	public final MapMatrix<?, ?> linkToMap(Map<?, ?> map) {
+		if (map instanceof MapMatrix<?, ?>) {
+			return (MapMatrix<?, ?>) map;
 		} else {
 			return new DefaultMapMatrix(map);
 		}
@@ -381,22 +367,21 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final Matrix importFromStream(FileFormat format, InputStream stream,
-			Object... parameters) throws MatrixException, IOException {
+			Object... parameters) throws IOException {
 		return ImportMatrix.fromStream(format, stream, parameters);
 	}
 
 	public final Matrix importFromURL(FileFormat format, URL url, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return ImportMatrix.fromURL(format, url, parameters);
 	}
 
 	public final Matrix importFromURL(FileFormat format, String url, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		return ImportMatrix.fromURL(format, url, parameters);
 	}
 
-	public final Matrix importFromString(FileFormat format, String string, Object... parameters)
-			throws MatrixException {
+	public final Matrix importFromString(FileFormat format, String string, Object... parameters) {
 		return ImportMatrix.fromString(format, string, parameters);
 	}
 
@@ -421,18 +406,26 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return LinkMatrixJDBC.toDatabase(url, sqlStatement, username, password);
 	}
 
-	public final ObjectMatrix2D linkToJDBC(DB type, String host, int port, String database,
+	public final ObjectMatrix2D linkToJDBC(Connection connection, String sqlStatement) {
+		return LinkMatrixJDBC.toDatabase(connection, sqlStatement);
+	}
+
+	public final ObjectMatrix2D linkToJDBC(DBType type, String host, int port, String database,
 			String sqlStatement, String username, String password) {
 		return LinkMatrixJDBC.toDatabase(type, host, port, database, sqlStatement, username,
 				password);
 	}
 
-	public final ObjectMatrix2D importFromJDBC(String url, String sqlStatement, String username,
+	public final ObjectMatrix importFromJDBC(String url, String sqlStatement, String username,
 			String password) {
 		return ImportMatrixJDBC.fromDatabase(url, sqlStatement, username, password);
 	}
 
-	public final ObjectMatrix2D importFromJDBC(DB type, String host, int port, String database,
+	public final ObjectMatrix importFromJDBC(Connection connection, String sqlStatement) {
+		return ImportMatrixJDBC.fromDatabase(connection, sqlStatement);
+	}
+
+	public final ObjectMatrix importFromJDBC(DBType type, String host, int port, String database,
 			String sqlStatement, String username, String password) {
 		return ImportMatrixJDBC.fromDatabase(type, host, port, database, sqlStatement, username,
 				password);
@@ -448,10 +441,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	public final DenseCharMatrix2D linkToValue(char value) {
 		return new ArrayDenseCharMatrix2D(new char[][] { { value } });
-	}
-
-	public final DenseDateMatrix2D linkToValue(Date value) {
-		return new SimpleDenseDateMatrix2D(new Date[][] { { value } });
 	}
 
 	public final DenseBooleanMatrix2D linkToValue(boolean value) {
@@ -498,7 +487,7 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		}
 	}
 
-	public final Matrix emptyMatrix() {
+	public final EmptyMatrix emptyMatrix() {
 		return EMPTYMATRIX;
 	}
 
@@ -506,7 +495,7 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return new Repmat(matrix, count).calc(returnType);
 	}
 
-	public final Matrix welcomeMatrix() {
+	public final WelcomeMatrix welcomeMatrix() {
 		return new WelcomeMatrix();
 	}
 
@@ -530,52 +519,52 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return Matrix.Factory.linkToArray(MathUtil.sequenceDouble(start, end, stepsize));
 	}
 
-	public final Matrix runningThreads() {
-		return new MatrixRunningThreads();
+	public final RunningThreadsMatrix runningThreads() {
+		return new RunningThreadsMatrix();
 	}
 
-	public final Matrix systemEnvironment() {
-		return new MatrixSystemEnvironment();
+	public final SystemEnvironmentMatrix systemEnvironment() {
+		return new SystemEnvironmentMatrix();
 	}
 
-	public final Matrix systemProperties() {
-		return new MatrixSystemProperties();
+	public final SystemPropertiesMatrix systemProperties() {
+		return new SystemPropertiesMatrix();
 	}
 
-	public final Matrix horCat(Matrix... matrices) throws MatrixException {
+	public final Matrix horCat(Matrix... matrices) {
 		return concat(COLUMN, matrices);
 	}
 
-	public final <A> Matrix vertCat(Matrix... matrices) throws MatrixException {
+	public final <A> Matrix vertCat(Matrix... matrices) {
 		return concat(ROW, matrices);
 	}
 
-	public final <A> Matrix vertCat(Collection<Matrix> matrices) throws MatrixException {
+	public final <A> Matrix vertCat(Collection<Matrix> matrices) {
 		return concat(ROW, matrices);
 	}
 
-	public final Matrix horCat(Collection<Matrix> matrices) throws MatrixException {
+	public final Matrix horCat(Collection<Matrix> matrices) {
 		return concat(COLUMN, matrices);
 	}
 
-	public final Matrix concat(int dimension, Matrix... matrices) throws MatrixException {
+	public final Matrix concat(int dimension, Matrix... matrices) {
 		return concat(dimension, Arrays.asList(matrices));
 	}
 
-	public final Matrix concat(int dimension, Collection<Matrix> matrices) throws MatrixException {
+	public final Matrix concat(int dimension, Collection<Matrix> matrices) {
 		return new Concatenation(dimension, matrices).calc(Ret.NEW);
 	}
 
-	public final Matrix systemTime() {
-		return new MatrixSystemTime();
+	public final SystemTimeMatrix systemTime() {
+		return new SystemTimeMatrix();
 	}
 
-	public final Matrix availableProcessors() {
-		return new MatrixAvailableProcessors();
+	public final AvailableProcessorsMatrix availableProcessors() {
+		return new AvailableProcessorsMatrix();
 	}
 
-	public final Matrix memoryUsage() {
-		return new MatrixMemoryUsage();
+	public final MemoryUsageMatrix memoryUsage() {
+		return new MemoryUsageMatrix();
 	}
 
 	public final Matrix range(double start, double end, double stepSize) {
@@ -586,27 +575,27 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return range(start, 1.0, end);
 	}
 
-	public final Matrix randomSeed() {
-		return new MatrixRandomSeed();
+	public final RandomSeedMatrix randomSeed() {
+		return new RandomSeedMatrix();
 	}
 
-	public final Matrix ones(long... size) throws MatrixException {
+	public final Matrix ones(long... size) {
 		return Ones.calc(size);
 	}
 
-	public final Matrix fill(Object value, long... size) throws MatrixException {
+	public final Matrix fill(Object value, long... size) {
 		return Fill.calc(value, size);
 	}
 
-	public final Matrix magic(int size) throws MatrixException {
+	public final Matrix magic(int size) {
 		return Magic.magic(size);
 	}
 
-	public final Matrix pascal(long... size) throws MatrixException {
+	public final Matrix pascal(long... size) {
 		return new Pascal(DenseBigIntegerMatrix2D.Factory.zeros(size)).calcOrig();
 	}
 
-	public final Matrix fibonacci(int count) throws MatrixException {
+	public final Matrix fibonacci(int count) {
 		return Fibonacci.calc(count);
 	}
 
@@ -614,24 +603,23 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return Dense2Sparse.calc(indices);
 	}
 
-	public final Matrix randn(long... size) throws MatrixException {
+	public final Matrix randn(long... size) {
 		return Randn.calc(size);
 	}
 
-	public final Matrix randn(ValueType valueType, long... size) throws MatrixException {
+	public final Matrix randn(ValueType valueType, long... size) {
 		return Randn.calc(valueType, size);
 	}
 
-	public final Matrix rand(long... size) throws MatrixException {
+	public final Matrix rand(long... size) {
 		return Rand.calc(size);
 	}
 
-	public final Matrix rand(ValueType valueType, long... size) throws MatrixException {
+	public final Matrix rand(ValueType valueType, long... size) {
 		return Rand.calc(valueType, size);
 	}
 
-	public final Matrix correlatedColumns(int rows, int columns, double correlationFactor)
-			throws MatrixException {
+	public final Matrix correlatedColumns(int rows, int columns, double correlationFactor) {
 		Matrix ret = Matrix.Factory.zeros(rows, columns);
 
 		Matrix orig = Matrix.Factory.randn(rows, 1);
@@ -648,15 +636,15 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return ret;
 	}
 
-	public final Matrix sparse(ValueType valueType, long... size) throws MatrixException {
+	public final Matrix sparse(ValueType valueType, long... size) {
 		try {
 			Constructor<?> con = null;
 
 			switch (size.length) {
 			case 0:
-				throw new MatrixException("Size not defined");
+				throw new RuntimeException("Size not defined");
 			case 1:
-				throw new MatrixException("Size must be at least 2-dimensional");
+				throw new RuntimeException("Size must be at least 2-dimensional");
 			case 2:
 				switch (valueType) {
 				case BOOLEAN:
@@ -667,9 +655,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 					break;
 				case CHAR:
 					con = matrixMapper.getSparseCharMatrix2DConstructor();
-					break;
-				case DATE:
-					con = matrixMapper.getSparseDateMatrix2DConstructor();
 					break;
 				case DOUBLE:
 					con = matrixMapper.getSparseDoubleMatrix2DConstructor();
@@ -699,7 +684,7 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 					con = matrixMapper.getSparseBigDecimalMatrix2DConstructor();
 					break;
 				default:
-					throw new MatrixException("entry type not supported: " + valueType);
+					throw new RuntimeException("entry type not supported: " + valueType);
 				}
 				break;
 			default:
@@ -712,9 +697,6 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 					break;
 				case CHAR:
 					con = matrixMapper.getSparseCharMatrixMultiDConstructor();
-					break;
-				case DATE:
-					con = matrixMapper.getSparseDateMatrixMultiDConstructor();
 					break;
 				case DOUBLE:
 					con = matrixMapper.getSparseDoubleMatrixMultiDConstructor();
@@ -744,14 +726,14 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 					con = matrixMapper.getSparseBigDecimalMatrixMultiDConstructor();
 					break;
 				default:
-					throw new MatrixException("entry type not  supported: " + valueType);
+					throw new RuntimeException("entry type not  supported: " + valueType);
 				}
 			}
 
 			return (Matrix) con.newInstance(size);
 
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -777,6 +759,14 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 				141.7, 190.2, 184.8, 159, 112.3, 53.9, 37.5, 27.9, 10.2, 15.1, 47, 93.8, 105.9,
 				105.5, 104.5, 66.6, 68.9, 38, 34.5, 15.5, 12.6, 27.5, 92.5, 155.4, 154.6, 140.4,
 				115.9, 66.6, 45.9, 17.9, 13.4, 29.3 });
+	}
+
+	public final IrisMatrix irisMatrix() {
+		return new IrisMatrix();
+	}
+
+	public final LocalhostMatrix localhostMatrix() {
+		return new LocalhostMatrix();
 	}
 
 }

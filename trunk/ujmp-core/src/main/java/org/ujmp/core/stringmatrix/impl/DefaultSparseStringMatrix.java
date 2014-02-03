@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.stringmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.util.StringUtil;
@@ -34,11 +33,11 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		StringMatrix {
 	private static final long serialVersionUID = -356455543850218966L;
 
-	public DefaultSparseStringMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseStringMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseStringMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseStringMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -54,19 +53,19 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		return ValueType.STRING;
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	public void setString(String string, long... coordinates) throws MatrixException {
+	public void setString(String string, long... coordinates)  {
 		setObject(string, coordinates);
 	}
 
-	public String getAsString(long... coordinates) throws MatrixException {
+	public String getAsString(long... coordinates)  {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	public void setAsString(String string, long... coordinates) throws MatrixException {
+	public void setAsString(String string, long... coordinates)  {
 		setObject(string, coordinates);
 	}
 

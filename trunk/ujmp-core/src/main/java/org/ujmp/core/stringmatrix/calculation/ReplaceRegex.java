@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ReplaceRegex extends AbstractStringCalculation {
 	private static final long serialVersionUID = 8158807887609103123L;
@@ -46,14 +45,14 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		this.replaceString = replaceString;
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String src = getSource().getAsString(coordinates);
 
 		return (src == null) ? null : searchPattern.matcher(src).replaceAll(replaceString);
 	}
 
 	public static Matrix calc(Matrix source, Pattern search, String replacement)
-			throws MatrixException {
+			 {
 		Matrix ret = Matrix.Factory.zeros(ValueType.STRING, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			String src = source.getAsString(c);
@@ -63,7 +62,7 @@ public class ReplaceRegex extends AbstractStringCalculation {
 	}
 
 	public static Matrix calc(Matrix source, String searchString, String replacement)
-			throws MatrixException {
+			 {
 		return calc(source, Pattern.compile(searchString), replacement);
 	}
 

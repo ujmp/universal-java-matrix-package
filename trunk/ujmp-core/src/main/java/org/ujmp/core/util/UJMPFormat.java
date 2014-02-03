@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -36,8 +36,6 @@ import java.util.Date;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
-import org.ujmp.core.datematrix.DateMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class UJMPFormat extends Format {
 	private static final long serialVersionUID = -557618747324763226L;
@@ -91,6 +89,8 @@ public class UJMPFormat extends Format {
 			return format((Matrix) obj, toAppendTo, pos);
 		} else if (obj instanceof Date) {
 			return format((Date) obj, toAppendTo, pos);
+		} else if (obj instanceof byte[]) {
+			return format((byte[]) obj, toAppendTo, pos);
 		} else if (obj instanceof Number) {
 			return format((Number) obj, toAppendTo, pos);
 		} else {
@@ -122,6 +122,13 @@ public class UJMPFormat extends Format {
 		length = width - (toAppendTo.length() - length);
 		if (usePadding) {
 			pad(toAppendTo, ' ', length);
+		}
+		return toAppendTo;
+	}
+
+	private StringBuffer format(byte[] obj, StringBuffer toAppendTo, FieldPosition pos) {
+		for (int i = 0; i < obj.length; i++) {
+			toAppendTo.append(obj[i]);
 		}
 		return toAppendTo;
 	}
@@ -176,7 +183,7 @@ public class UJMPFormat extends Format {
 		if (m.getDimensionCount() > 2) {
 			toAppendTo.append(m.getDimensionCount());
 			toAppendTo.append("D-Matrix [");
-			toAppendTo.append(Coordinates.toString('x', m.getSize()));
+			toAppendTo.append(Coordinates.toString("x", m.getSize()));
 			toAppendTo.append("]: only two dimensions are printed");
 			toAppendTo.append(EOL);
 		}
@@ -210,7 +217,7 @@ public class UJMPFormat extends Format {
 			for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
 					&& cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
 				Object o = m.getAsObject(cursor);
-				if (o == null && (m instanceof BigDecimalMatrix || m instanceof DateMatrix)) {
+				if (o == null && m instanceof BigDecimalMatrix) {
 					toAppendTo = format(Double.NaN, toAppendTo, pos);
 				} else {
 					toAppendTo = format(o, toAppendTo, pos);
@@ -234,6 +241,6 @@ public class UJMPFormat extends Format {
 
 	@Override
 	public Object parseObject(String source, ParsePosition pos) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 }

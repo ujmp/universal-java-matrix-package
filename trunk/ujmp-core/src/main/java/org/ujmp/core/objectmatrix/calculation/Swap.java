@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Swap extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -6182660661622835051L;
@@ -40,7 +39,7 @@ public class Swap extends AbstractObjectCalculation {
 	}
 
 	
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		if (pos1 == pos2) {
 			return getSource().getAsObject(coordinates);
 		} else if (coordinates[getDimension()] == pos1) {
@@ -56,10 +55,10 @@ public class Swap extends AbstractObjectCalculation {
 		}
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		Matrix m = getSource();
 		if (m.getDimensionCount() > 2) {
-			throw new MatrixException("ORIG works only for 2d matrices, use LINK or COPY instead");
+			throw new RuntimeException("ORIG works only for 2d matrices, use LINK or COPY instead");
 		}
 
 		if (getDimension() == Matrix.ROW) {
@@ -77,7 +76,7 @@ public class Swap extends AbstractObjectCalculation {
 				m.setAsObject(temp, i, pos2);
 			}
 		} else {
-			throw new MatrixException("this only works for rows or columns");
+			throw new RuntimeException("this only works for rows or columns");
 		}
 
 		return getSource();

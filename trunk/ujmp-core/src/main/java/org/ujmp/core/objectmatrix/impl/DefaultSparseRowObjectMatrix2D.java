@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -57,12 +56,12 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	public Object getObject(long row, long column) throws MatrixException {
+	public Object getObject(long row, long column)  {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
-	public Object getObject(int row, int column) throws MatrixException {
+	public Object getObject(int row, int column)  {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
@@ -87,15 +86,15 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
+	public double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public void setAsDouble(double value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 
-	public void setObject(Object o, long row, long column) throws MatrixException {
+	public void setObject(Object o, long row, long column)  {
 		Matrix m = rows.get(row);
 		if (m == null) {
 			// TODO: there should be a faster implementation than this:
@@ -105,7 +104,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		m.setAsObject(o, 0, column);
 	}
 
-	public void setObject(Object o, int row, int column) throws MatrixException {
+	public void setObject(Object o, int row, int column)  {
 		setObject(o, (long) row, (long) column);
 	}
 
@@ -126,7 +125,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return rows.get(row);
 	}
 
-	public Matrix max(Ret returnType, int dimension) throws MatrixException {
+	public Matrix max(Ret returnType, int dimension)  {
 		if (returnType == Ret.NEW) {
 
 			if (dimension == ROW) {
@@ -150,10 +149,10 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 			}
 
 		}
-		throw new MatrixException("not supported");
+		throw new RuntimeException("not supported");
 	}
 
-	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
+	public Matrix selectRows(Ret returnType, long... rows)  {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,10 +26,7 @@ package org.ujmp.core.util;
 import java.util.Random;
 
 /**
- * Better than java.util.Random and almost as fast.
- * 
- * @author arndt
- * 
+ * Better than java.util.Random and almost as fast
  */
 public class RandomMersenne extends Random {
 	private static final long serialVersionUID = 5949991470054762974L;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,12 +24,11 @@
 package org.ujmp.core.shortmatrix.calculation;
 
 import org.ujmp.core.calculation.Calculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface ShortCalculation extends Calculation {
 
-	public short getShort(long... coordinates) throws MatrixException;
+	public short getShort(long... coordinates) ;
 
-	public void setShort(short value, long... coordinates) throws MatrixException;
+	public void setShort(short value, long... coordinates) ;
 
 }

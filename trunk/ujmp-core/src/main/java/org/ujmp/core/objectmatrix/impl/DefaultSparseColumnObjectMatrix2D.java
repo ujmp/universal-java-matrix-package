@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
 
@@ -56,12 +55,12 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		}
 	}
 
-	public Object getObject(long row, long column) throws MatrixException {
+	public Object getObject(long row, long column)  {
 		Matrix m = columns.get(column);
 		return m == null ? null : m.getAsObject(row, 0);
 	}
 
-	public Object getObject(int row, int column) throws MatrixException {
+	public Object getObject(int row, int column)  {
 		Matrix m = columns.get(column);
 		return m == null ? null : m.getAsObject(row, 0);
 	}
@@ -86,7 +85,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		}
 	}
 
-	public void setObject(Object o, long row, long column) throws MatrixException {
+	public void setObject(Object o, long row, long column)  {
 		Matrix m = columns.get(column);
 		if (m == null) {
 			// TODO: there should be a faster implementation than this:
@@ -96,7 +95,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		m.setAsObject(o, row, 0);
 	}
 
-	public void setObject(Object o, int row, int column) throws MatrixException {
+	public void setObject(Object o, int row, int column)  {
 		setObject(o, (long) row, (long) column);
 	}
 
@@ -117,7 +116,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return columns.get((int) column);
 	}
 
-	public Matrix max(Ret returnType, int dimension) throws MatrixException {
+	public Matrix max(Ret returnType, int dimension)  {
 		if (returnType == Ret.NEW) {
 
 			if (dimension == ROW) {
@@ -141,10 +140,10 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 			}
 
 		}
-		throw new MatrixException("not supported");
+		throw new RuntimeException("not supported");
 	}
 
-	public Matrix selectColumns(Ret returnType, long... columns) throws MatrixException {
+	public Matrix selectColumns(Ret returnType, long... columns)  {
 		if (returnType == Ret.LINK && columns.length == 1) {
 			return getColumn(columns[0]);
 		}

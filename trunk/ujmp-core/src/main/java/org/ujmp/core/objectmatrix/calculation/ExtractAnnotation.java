@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ExtractAnnotation extends AbstractObjectCalculation {
 	private static final long serialVersionUID = 1461447576658284276L;
@@ -58,11 +57,11 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 			}
 			getAnnotation().setDimensionMatrix(COLUMN, m.selectColumns(Ret.NEW, 0));
 		} else {
-			throw new MatrixException("only supported for 2D matrices");
+			throw new RuntimeException("only supported for 2D matrices");
 		}
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		coordinates = Coordinates.copyOf(coordinates);
 		coordinates[getDimension()]++;
 		return getSource().getAsObject(coordinates);

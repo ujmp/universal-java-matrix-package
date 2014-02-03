@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,7 @@ import java.util.Map;
 
 import org.ujmp.core.collections.list.ArrayIndexList;
 
-public class ObjectTreeMatrix extends AbstractTreeMatrix {
+public class ObjectTreeMatrix extends AbstractTreeMatrix<Object> {
 	private static final long serialVersionUID = -7343649063964349539L;
 
 	private final List<Object> objects = new ArrayIndexList<Object>();
@@ -122,7 +122,6 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 		}
 	}
 
-	
 	public List<Object> getChildren(Object o) {
 		List<Object> children = childrenMap.get(o);
 		if (children == null) {
@@ -132,17 +131,14 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix {
 		return children;
 	}
 
-	
 	public Collection<Object> getObjectList() {
 		return objects;
 	}
 
-	
 	public Object getRoot() {
 		return root;
 	}
 
-	
 	public void setRoot(Object o) {
 		root = o;
 	}
@@ -160,7 +156,6 @@ class NameAndValue {
 		this.value = value;
 	}
 
-	
 	public String toString() {
 		String s = name + " = " + value;
 		if (s.length() > 50) {
@@ -169,12 +164,10 @@ class NameAndValue {
 		return s;
 	}
 
-	
 	public int hashCode() {
 		return (name + " - " + value).hashCode();
 	}
 
-	
 	public boolean equals(Object o) {
 		if (o instanceof NameAndValue) {
 			NameAndValue no = (NameAndValue) o;

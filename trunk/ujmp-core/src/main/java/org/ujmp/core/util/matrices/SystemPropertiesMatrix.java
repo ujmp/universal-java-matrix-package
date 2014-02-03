@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,10 +28,10 @@ import java.util.Map;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 
-public class MatrixSystemProperties extends AbstractMapMatrix<Object, Object> {
+public class SystemPropertiesMatrix extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -5746939082111495919L;
 
-	public MatrixSystemProperties() {
+	public SystemPropertiesMatrix() {
 		setLabel("System Properties");
 	}
 
@@ -40,7 +40,7 @@ public class MatrixSystemProperties extends AbstractMapMatrix<Object, Object> {
 	}
 
 	public MapMatrix<Object, Object> clone() {
-		return new MatrixSystemProperties();
+		return new SystemPropertiesMatrix();
 	}
 
 }

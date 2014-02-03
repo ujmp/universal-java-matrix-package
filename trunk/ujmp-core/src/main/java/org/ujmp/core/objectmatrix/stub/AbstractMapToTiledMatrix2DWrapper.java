@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
@@ -63,7 +62,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		}
 	}
 
-	public synchronized Object getObject(int row, int column) throws MatrixException {
+	public synchronized Object getObject(int row, int column)  {
 		return getObject((long) row, (long) column);
 	}
 
@@ -71,8 +70,8 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		return values;
 	}
 
-	public synchronized Object getObject(long row, long column) throws MatrixException {
-		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
+	public synchronized Object getObject(long row, long column)  {
+		Coordinates c = Coordinates.wrap(row / tileSize[ROW], column / tileSize[COLUMN]);
 		Matrix m = getMap().get(c);
 		if (m == null) {
 			return null;
@@ -86,28 +85,28 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 	}
 
 	public final void setWrappedObject(Map<Coordinates, ObjectMatrix2D> object) {
-		throw new MatrixException("cannot change map");
+		throw new RuntimeException("cannot change map");
 	}
 
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
 	}
 
-	public synchronized final double getAsDouble(long... coordinates) throws MatrixException {
+	public synchronized final double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
 	public synchronized final void setAsDouble(double v, long... coordinates)
-			throws MatrixException {
+			 {
 		setObject(v, coordinates);
 	}
 
-	public synchronized void setObject(Object o, int row, int column) throws MatrixException {
+	public synchronized void setObject(Object o, int row, int column)  {
 		setObject(o, (long) row, (long) column);
 	}
 
-	public synchronized void setObject(Object o, long row, long column) throws MatrixException {
-		Coordinates c = new Coordinates(row / tileSize[ROW], column / tileSize[COLUMN]);
+	public synchronized void setObject(Object o, long row, long column)  {
+		Coordinates c = Coordinates.wrap(row / tileSize[ROW], column / tileSize[COLUMN]);
 		ObjectMatrix2D m = getMap().get(c);
 		if (m == null) {
 			m = new DefaultDenseObjectMatrix2D(tileSize[ROW], tileSize[COLUMN]);

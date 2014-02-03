@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,10 +23,12 @@
 
 package org.ujmp.core.stringmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
 
 public interface StringMatrix extends GenericMatrix<String> {
+
+	public static final DefaultStringMatrix2DFactory Factory = new DefaultStringMatrix2DFactory();
 
 	/**
 	 * Returns a String representation of an entry in the matrix. The stored
@@ -35,9 +37,9 @@ public interface StringMatrix extends GenericMatrix<String> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a String representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public String getString(long... coordinates) throws MatrixException;
+	public String getString(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a String value. If the matrix cannot store
@@ -47,8 +49,8 @@ public interface StringMatrix extends GenericMatrix<String> {
 	 *            String value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setString(String string, long... coordinates) throws MatrixException;
+	public void setString(String string, long... coordinates) ;
 
 }

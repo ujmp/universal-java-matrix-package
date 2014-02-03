@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.util;
 import java.util.Iterator;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class CoordinateIterator implements Iterable<long[]> {
 
@@ -51,7 +50,7 @@ public class CoordinateIterator implements Iterable<long[]> {
 
 		public It(long... size) {
 			this.size = size;
-			this.lastEntry = Coordinates.minusOne(size);
+			this.lastEntry = Coordinates.minus(size, 1);
 			this.cursor = new long[size.length];
 			cursor[cursor.length - 1]--;
 			isNotEmpty = Coordinates.product(size) != 0;
@@ -75,7 +74,7 @@ public class CoordinateIterator implements Iterable<long[]> {
 		}
 
 		public void remove() {
-			throw new MatrixException("not implemented");
+			throw new RuntimeException("not implemented");
 		}
 	}
 

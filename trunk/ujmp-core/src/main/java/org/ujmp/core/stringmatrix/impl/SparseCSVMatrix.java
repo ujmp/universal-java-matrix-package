@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.collections.map.SoftHashMap;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.stub.AbstractSparseStringMatrix2D;
 import org.ujmp.core.util.io.IntelligentFileReader;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -104,7 +103,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		return size;
 	}
 
-	public String getString(long row, long column) throws MatrixException {
+	public String getString(long row, long column)  {
 		try {
 			List<Long> linesToCheck = rowToLine.get(row);
 			if (linesToCheck == null) {
@@ -132,7 +131,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 				}
 			}
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 		return null;
 	}
@@ -152,7 +151,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	}
 
 	
-	public boolean contains(long... coordinates) throws MatrixException {
+	public boolean contains(long... coordinates)  {
 		return getString(coordinates) != null;
 	}
 
@@ -182,7 +181,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 				l++;
 				return c;
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 

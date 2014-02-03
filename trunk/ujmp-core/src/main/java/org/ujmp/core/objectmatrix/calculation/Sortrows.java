@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.LongMatrix2D;
 import org.ujmp.core.util.Sortable;
 
@@ -52,7 +51,7 @@ public class Sortrows extends AbstractObjectCalculation {
 		createSortIndex();
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
@@ -73,13 +72,6 @@ public class Sortrows extends AbstractObjectCalculation {
 		case BIGINTEGER:
 			for (long r = 0; r < rowCount; r++) {
 				Comparable<?> c = (Comparable<?>) m.getAsBigInteger(r, column);
-				Sortable s = new Sortable(c, r, true);
-				rows.add(s);
-			}
-			break;
-		case DATE:
-			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsDate(r, column);
 				Sortable s = new Sortable(c, r, true);
 				rows.add(s);
 			}

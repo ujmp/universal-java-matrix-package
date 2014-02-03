@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Replace extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -1668944121367955215L;
@@ -40,7 +39,7 @@ public class Replace extends AbstractObjectCalculation {
 	}
 
 	
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		Object src = getSource().getAsObject(coordinates);
 
 		if (search == null) {

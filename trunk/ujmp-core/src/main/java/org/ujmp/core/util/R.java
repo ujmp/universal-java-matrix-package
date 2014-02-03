@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,7 +31,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
 
 public class R {
 
@@ -177,7 +176,7 @@ public class R {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(label + " <- " + matrix.export().toString(FileFormat.R));
+		execute(matrix.export().toStringFormatted().asRScript(label));
 	}
 
 	private static String findR() {

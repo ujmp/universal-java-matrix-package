@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class StringUtil {
 
@@ -172,7 +171,7 @@ public abstract class StringUtil {
 			return (String) o;
 		}
 		if (o instanceof Matrix) {
-			return ((Matrix) o).stringValue();
+			return "[Matrix]";
 		}
 		if (o instanceof Number) {
 			return String.valueOf(((Number) o).doubleValue());
@@ -238,7 +237,7 @@ public abstract class StringUtil {
 	}
 
 	private static long[][] parseSelectionComma(String selectionString, long[] size) {
-		throw new MatrixException(
+		throw new RuntimeException(
 				"Matlab style is not supported yet. Please use a semicolon (;) to separate rows and columns");
 	}
 
@@ -270,12 +269,12 @@ public abstract class StringUtil {
 							long end = Long.parseLong(endS.replaceAll("\\D", ""));
 
 							if (end > size[i]) {
-								throw new MatrixException("Selection is bigger than size");
+								throw new RuntimeException("Selection is bigger than size");
 							}
 
 							list.addAll(MathUtil.sequenceListLong(start, end));
 						} else {
-							throw new MatrixException("Selection not supported: " + dimsel);
+							throw new RuntimeException("Selection not supported: " + dimsel);
 						}
 
 					} else {

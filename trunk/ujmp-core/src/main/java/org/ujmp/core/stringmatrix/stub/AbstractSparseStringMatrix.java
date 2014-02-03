@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,10 +30,6 @@ import org.ujmp.core.stringmatrix.SparseStringMatrix;
 public abstract class AbstractSparseStringMatrix extends AbstractStringMatrix implements
 		SparseStringMatrix {
 	private static final long serialVersionUID = -7749735785708631991L;
-
-	public final StorageType getStorageType() {
-		return StorageType.SPARSE;
-	}
 
 	public SparseObjectMatrix2DFactory getFactory() {
 		return SparseObjectMatrix2D.factory;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,38 +21,37 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util.matrices;
+package org.ujmp.core.util;
 
-import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import java.util.Timer;
 
-public class MatrixSystemTime extends AbstractDenseLongMatrix2D {
-	private static final long serialVersionUID = 8552917654861598011L;
+public class GlobalTimer extends Timer {
 
-	public MatrixSystemTime() {
-		setLabel("System Time");
+	private static final Object lock = new Object();
+
+	private static GlobalTimer timer = null;
+
+	public static final GlobalTimer getInstance() {
+		if (timer == null) {
+			synchronized (lock) {
+				if (timer == null) {
+					timer = new GlobalTimer();
+				}
+			}
+		}
+		return timer;
 	}
 
-	public long[] getSize() {
-		return new long[] { 1, 1 };
+	private GlobalTimer() {
+		super("UJMP Global Timer", true);
 	}
 
-	public long getLong(long row, long column) {
-		return System.currentTimeMillis();
-	}
+	public static synchronized void shutDown() {
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
 
-	public void setLong(long value, long row, long column) {
-	}
-
-	public long getLong(int row, int column) {
-		return System.currentTimeMillis();
-	}
-
-	public void setLong(long value, int row, int column) {
-	}
-
-	
-	public boolean isReadOnly() {
-		return true;
 	}
 
 }

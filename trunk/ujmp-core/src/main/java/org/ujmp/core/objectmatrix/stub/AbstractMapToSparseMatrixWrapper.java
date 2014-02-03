@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
@@ -72,32 +71,32 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 	}
 
 	public final void setWrappedObject(Map<Coordinates, Object> object) {
-		throw new MatrixException("not allowed");
+		throw new RuntimeException("not allowed");
 	}
 
-	public final Object getObject(long... coordinates) throws MatrixException {
-		Object v = getMap().get(new Coordinates(coordinates));
+	public final Object getObject(long... coordinates)  {
+		Object v = getMap().get(Coordinates.wrap(coordinates));
 		return v == null ? defaultValue : v;
 	}
 
 	public final boolean contains(long... coordinates) {
-		return getMap().containsKey(new Coordinates(coordinates));
+		return getMap().containsKey(Coordinates.wrap(coordinates));
 	}
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public final double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public final void setAsDouble(double v, long... coordinates) throws MatrixException {
+	public final void setAsDouble(double v, long... coordinates)  {
 		setObject(v, coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates) throws MatrixException {
+	public final void setObject(Object o, long... coordinates)  {
 		while (maximumNumberOfEntries > 0 && getMap().size() > maximumNumberOfEntries) {
 			getMap().remove(getMap().keySet().iterator().next());
 		}
 		if (Coordinates.isSmallerThan(coordinates, getSize())) {
-			getMap().put(new Coordinates(coordinates), o);
+			getMap().put(Coordinates.wrap(coordinates).clone(), o);
 		}
 	}
 

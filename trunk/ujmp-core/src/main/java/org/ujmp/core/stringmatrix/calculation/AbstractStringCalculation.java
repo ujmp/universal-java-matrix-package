@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.stringmatrix.impl.StringCalculationMatrix;
 
@@ -43,13 +42,13 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public final StringMatrix calcLink() throws MatrixException {
+	public final StringMatrix calcLink()  {
 		return new StringCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -59,7 +58,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 		return getSource();
 	}
 
-	public final StringMatrix calcNew() throws MatrixException {
+	public final StringMatrix calcNew()  {
 		StringMatrix result = (StringMatrix) Matrix.Factory.zeros(ValueType.STRING, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsString(getString(c), c);
@@ -72,7 +71,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setString(String value, long... coordinates) throws MatrixException {
+	public void setString(String value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

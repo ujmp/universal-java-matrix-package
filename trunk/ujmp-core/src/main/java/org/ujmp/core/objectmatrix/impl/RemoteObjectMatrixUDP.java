@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
 public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
@@ -55,7 +54,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 			destination = new InetSocketAddress(server, port);
 			receivedPacket = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
 		} catch (Exception e) {
-			throw new MatrixException("could not connnect to matrix", e);
+			throw new RuntimeException("could not connnect to matrix", e);
 		}
 	}
 
@@ -76,12 +75,12 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDIMENSIONCOUNT) {
-				throw new MatrixException("could not set value");
+				throw new RuntimeException("could not set value");
 			}
 			ois.close();
 			return null;
 		} catch (Exception e) {
-			throw new MatrixException("could not send packet", e);
+			throw new RuntimeException("could not send packet", e);
 		}
 	}
 
@@ -101,13 +100,13 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDOUBLEVALUE) {
-				throw new MatrixException("could not get value");
+				throw new RuntimeException("could not get value");
 			}
 			double result = ois.readDouble();
 			ois.close();
 			return result;
 		} catch (Exception e) {
-			throw new MatrixException("could not send packet", e);
+			throw new RuntimeException("could not send packet", e);
 		}
 	}
 
@@ -129,10 +128,10 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 			int command = ois.readInt();
 			ois.close();
 			if (command != ServerObjectMatrixUDP.SETDOUBLEVALUE) {
-				throw new MatrixException("could not set value");
+				throw new RuntimeException("could not set value");
 			}
 		} catch (Exception e) {
-			throw new MatrixException("could not send packet", e);
+			throw new RuntimeException("could not send packet", e);
 		}
 	}
 

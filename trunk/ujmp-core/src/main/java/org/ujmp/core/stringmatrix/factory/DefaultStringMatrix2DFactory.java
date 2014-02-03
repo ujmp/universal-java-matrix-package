@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,18 +23,17 @@
 
 package org.ujmp.core.stringmatrix.factory;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.StringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 
 public class DefaultStringMatrix2DFactory extends AbstractStringMatrix2DFactory {
 	private static final long serialVersionUID = 9070985885433278717L;
 
-	public StringMatrix2D dense(long rows, long columns) throws MatrixException {
+	public StringMatrix2D dense(long rows, long columns)  {
 		return new DefaultDenseStringMatrix2D(rows, columns);
 	}
 
-	public StringMatrix2D dense(long... size) throws MatrixException {
+	public StringMatrix2D dense(long... size)  {
 		return new DefaultDenseStringMatrix2D(size);
 	}
 

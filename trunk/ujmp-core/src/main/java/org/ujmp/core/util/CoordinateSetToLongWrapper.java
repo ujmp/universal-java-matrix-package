@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -47,7 +47,7 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 	}
 
 	public boolean add(long[] e) {
-		return set.add(new Coordinates(e));
+		return set.add(Coordinates.wrap(e).clone());
 	}
 
 	public boolean addAll(Collection<? extends long[]> c) {
@@ -59,7 +59,7 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 	}
 
 	public boolean contains(Object o) {
-		return set.contains(new Coordinates((long[]) o));
+		return set.contains(Coordinates.wrap((long[]) o));
 	}
 
 	public boolean containsAll(Collection<?> c) {
@@ -87,7 +87,7 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 		}
 
 		public long[] next() {
-			return it.next().co;
+			return it.next().getLongCoordinates();
 		}
 
 		public void remove() {
@@ -97,7 +97,7 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 	}
 
 	public boolean remove(Object o) {
-		return set.remove(new Coordinates((long[]) o));
+		return set.remove(Coordinates.wrap((long[]) o));
 	}
 
 	public boolean removeAll(Collection<?> c) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.util;
 import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class CoordinateIterator2D implements Iterable<long[]> {
 
@@ -70,7 +69,7 @@ public class CoordinateIterator2D implements Iterable<long[]> {
 			}
 
 			public void remove() {
-				throw new MatrixException("not implemented");
+				throw new RuntimeException("not implemented");
 			}
 		};
 	}

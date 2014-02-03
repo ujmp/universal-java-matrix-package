@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class BLAS {
 
@@ -63,7 +62,7 @@ public abstract class BLAS {
 	public static final DenseDoubleMatrix2D mtimes(DefaultDenseDoubleMatrix2D A,
 			DefaultDenseDoubleMatrix2D B) {
 		if (A.getColumnCount() != B.getRowCount()) {
-			throw new MatrixException("matrices have wrong size: "
+			throw new RuntimeException("matrices have wrong size: "
 					+ Coordinates.toString(A.getSize()) + " and "
 					+ Coordinates.toString(B.getSize()));
 		}

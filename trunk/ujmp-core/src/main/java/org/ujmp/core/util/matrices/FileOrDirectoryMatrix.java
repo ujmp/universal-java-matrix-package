@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,12 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util;
+package org.ujmp.core.util.matrices;
 
-public abstract class Constants {
+import org.ujmp.core.Matrix;
 
-	public static final String ExportMatrixMDB = "org.ujmp.jackcess.ExportMatrixMDB";
-
-	public static final String ExportMatrixMAT = "org.ujmp.jmatio.ExportMatrixMAT";
+public interface FileOrDirectoryMatrix extends Matrix {
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,8 @@ import javax.swing.tree.TreePath;
 
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 
-public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D implements TreeMatrix {
+public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D implements
+		TreeMatrix<T> {
 	private static final long serialVersionUID = 7731771819651651188L;
 
 	public boolean contains(long... coordinates) {
@@ -44,29 +45,35 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 	}
 
 	public final boolean isChild(int parentId, int childId) {
-		Object parent = getObject(parentId);
-		Object child = getObject(childId);
+		T parent = getObject(parentId);
+		T child = getObject(childId);
 		return isChild(parent, child);
 	}
 
-	@SuppressWarnings("unchecked")
-	public final Object getObject(int index) {
+	public final T getObject(int index) {
 		if (getObjectList() instanceof List) {
-			return ((List) getObjectList()).get(index);
+			return ((List<T>) getObjectList()).get(index);
 		} else {
 			// TODO: improve
-			return new ArrayList(getObjectList()).get(index);
+			return new ArrayList<T>(getObjectList()).get(index);
 		}
 	}
 
-	
-	public Object getParent(Object o) {
+	public final long getChildCountRecursive(Object parent) {
+		long count = 0;
+		count += getChildCount(parent);
+		for (T child : getChildren(parent)) {
+			count += getChildCountRecursive(child);
+		}
+		return count;
+	}
+
+	public T getParent(Object o) {
 		return getParentMap().get(o);
 	}
 
-	
-	public void addChildren(Object parent, Collection<? extends Object> children) {
-		for (Object child : children) {
+	public void addChildren(T parent, Collection<? extends T> children) {
+		for (T child : children) {
 			addChild(parent, child);
 		}
 	}
@@ -83,7 +90,7 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		return getDouble((int) row, (int) column);
 	}
 
-	public final void addChild(Object parent, Object child) {
+	public final void addChild(T parent, T child) {
 		if (!getObjectList().contains(child)) {
 			getObjectList().add(child);
 		}
@@ -92,9 +99,9 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		notifyGUIObject();
 	}
 
-	public final void removeChild(Object parent, Object child) {
+	public final void removeChild(T parent, T child) {
 		getChildren(parent).remove(child);
-		Object oldParent = getParentMap().get(child);
+		T oldParent = getParentMap().get(child);
 		if (parent.equals(oldParent)) {
 			getParentMap().remove(child);
 		}
@@ -106,8 +113,8 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 	}
 
 	public void setDouble(double value, int row, int column) {
-		Object parent = getObject(row);
-		Object child = getObject(column);
+		T parent = getObject(row);
+		T child = getObject(column);
 		if (value == 0.0) {
 			removeChild(parent, child);
 		} else {
@@ -118,7 +125,7 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 	public void addTreeModelListener(TreeModelListener l) {
 	}
 
-	public final Object getChild(Object parent, int index) {
+	public final T getChild(Object parent, int index) {
 		return getChildren(parent).get(index);
 	}
 
@@ -144,13 +151,8 @@ public abstract class AbstractTreeMatrix extends AbstractSparseDoubleMatrix2D im
 		return getObjectList().size();
 	}
 
-	public void addObject(Object o) {
+	public void addObject(T o) {
 		getObjectList().add(o);
-	}
-
-	
-	public final StorageType getStorageType() {
-		return StorageType.TREE;
 	}
 
 }

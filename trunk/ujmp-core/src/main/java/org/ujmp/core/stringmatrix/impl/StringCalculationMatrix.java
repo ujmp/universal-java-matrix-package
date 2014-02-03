@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.calculation.StringCalculation;
 import org.ujmp.core.stringmatrix.stub.AbstractStringMatrix;
 
@@ -56,16 +55,12 @@ public class StringCalculationMatrix extends AbstractStringMatrix {
 		}
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		return calculation.getString(coordinates);
 	}
 
-	public void setString(String value, long... coordinates) throws MatrixException {
+	public void setString(String value, long... coordinates)  {
 		calculation.setString(value, coordinates);
-	}
-
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
 	}
 
 }

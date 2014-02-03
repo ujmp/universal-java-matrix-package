@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
 
 public class RemovePunctuation extends AbstractStringCalculation {
@@ -50,7 +49,7 @@ public class RemovePunctuation extends AbstractStringCalculation {
 		super(m);
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String s = getSource().getAsString(coordinates);
 		s = StringUtil.retainChars(s, allowedChars, ' ');
 		s = s.replaceAll("\\s+", " ");

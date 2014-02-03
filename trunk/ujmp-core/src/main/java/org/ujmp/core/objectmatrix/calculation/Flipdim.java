@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Flipdim extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -4669640817211533725L;
@@ -35,14 +34,14 @@ public class Flipdim extends AbstractObjectCalculation {
 	}
 
 	
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		coordinates = Coordinates.copyOf(coordinates);
 		long newValue = getSize()[getDimension()] - coordinates[getDimension()] - 1;
 		coordinates[getDimension()] = newValue;
 		return getSource().getAsObject(coordinates);
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		long size = getSize()[getDimension()];
 		long max = size / 2;
 		Matrix m = getSource();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -1279,6 +1279,27 @@ public abstract class MathUtil {
 			}
 		}
 		return f1Measure(tp, fp, fn);
+	}
+
+	public static final int longToIntClip(final long value) {
+		final int intValue = (int) value;
+		if (value == intValue) {
+			return intValue;
+		} else if (value >= Integer.MAX_VALUE) {
+			return Integer.MAX_VALUE;
+		} else {
+			return Integer.MIN_VALUE;
+		}
+	}
+
+	public static final int longToInt(final long value) {
+		final int intValue = (int) value;
+		if (value == intValue) {
+			return intValue;
+		} else {
+			throw new IllegalArgumentException(
+					"long value too large, it cannot be converted to int");
+		}
 	}
 
 }

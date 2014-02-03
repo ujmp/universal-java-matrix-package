@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
@@ -39,7 +38,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 
 	private long[] size = null;
 
-	public VolatileSparseObjectMatrix(Matrix m) throws MatrixException {
+	public VolatileSparseObjectMatrix(Matrix m)  {
 		super(m);
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
@@ -60,7 +59,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	}
 
 	public Object getObject(long... coordinates) {
-		return values.get(new Coordinates(coordinates));
+		return values.get(Coordinates.wrap(coordinates));
 	}
 
 	public long getValueCount() {
@@ -68,7 +67,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	}
 
 	public void setObject(Object value, long... coordinates) {
-		values.put(new Coordinates(coordinates), value);
+		values.put(Coordinates.wrap(coordinates).clone(), value);
 	}
 
 	public Iterable<long[]> entries() {
@@ -76,7 +75,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	}
 
 	public boolean contains(long... coordinates) {
-		return values.containsKey(new Coordinates(coordinates));
+		return values.containsKey(Coordinates.wrap(coordinates));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,43 +30,39 @@ import java.util.Map;
 
 import org.ujmp.core.collections.list.ArrayIndexList;
 
-public class DefaultTreeMatrix extends AbstractTreeMatrix {
+public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 	private static final long serialVersionUID = -6752285310555819432L;
 
-	private final List<Object> objects = new ArrayIndexList<Object>();
+	private final List<T> objects = new ArrayIndexList<T>();
 
-	private Object root = null;
+	private T root = null;
 
-	private final Map<Object, List<Object>> childrenMap = new HashMap<Object, List<Object>>();
+	private final Map<T, List<T>> childrenMap = new HashMap<T, List<T>>();
 
-	private final Map<Object, Object> parentMap = new HashMap<Object, Object>();
+	private final Map<T, T> parentMap = new HashMap<T, T>();
 
-	
-	public List<Object> getChildren(Object o) {
-		List<Object> children = childrenMap.get(o);
+	public List<T> getChildren(Object o) {
+		List<T> children = childrenMap.get(o);
 		if (children == null) {
-			children = new ArrayList<Object>();
-			childrenMap.put(o, children);
+			children = new ArrayList<T>();
+			childrenMap.put((T) o, children);
 		}
 		return children;
 	}
 
-	public Map<Object, Object> getParentMap() {
+	public Map<T, T> getParentMap() {
 		return parentMap;
 	}
 
-	
-	public List<Object> getObjectList() {
+	public List<T> getObjectList() {
 		return objects;
 	}
 
-	
 	public Object getRoot() {
 		return root;
 	}
 
-	
-	public void setRoot(Object o) {
+	public void setRoot(T o) {
 		this.root = o;
 		if (!objects.contains(o)) {
 			objects.add(o);

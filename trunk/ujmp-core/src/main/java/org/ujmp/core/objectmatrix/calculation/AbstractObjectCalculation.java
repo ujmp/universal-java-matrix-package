@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix;
 
@@ -43,11 +42,11 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public final ObjectMatrix calcLink() throws MatrixException {
+	public final ObjectMatrix calcLink()  {
 		return new ObjectCalculationMatrix(this);
 	}
 
-	public final Matrix calcNew() throws MatrixException {
+	public final Matrix calcNew()  {
 		// Matrix result = MatrixFactory.zeros(getSource().getValueType(),
 		// getSize());
 		Matrix result = Matrix.Factory.zeros(getValueType(), getSize());
@@ -60,9 +59,9 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		return result;
 	}
 
-	public Matrix calcOrig() throws MatrixException {
+	public Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -74,7 +73,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setObject(Object value, long... coordinates) throws MatrixException {
+	public void setObject(Object value, long... coordinates)  {
 	}
 
 	public ValueType getValueType() {

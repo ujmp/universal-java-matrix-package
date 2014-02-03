@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -59,8 +58,7 @@ public class FileUtil {
 			}
 		}
 
-		throw new MatrixException(
-				"could not guess file format, please use exportToFile(Format,File,Matrix)");
+		throw new RuntimeException("could not guess file format: " + suffix);
 	}
 
 	public static boolean deleteRecursive(File path) {
@@ -145,6 +143,10 @@ public class FileUtil {
 		VerifyUtil.assertFalse(target.exists(), "target file exists");
 
 		return source.renameTo(target);
+	}
+
+	public static String loadToString(File file) {
+		return IntelligentFileReader.load(file);
 	}
 
 	public static void copyFile(File source, File target) throws IOException {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Fill extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -3477957135967841340L;
@@ -41,7 +40,7 @@ public class Fill extends AbstractObjectCalculation {
 		return fill;
 	}
 
-	public static Matrix calc(Matrix source, Object fill) throws MatrixException {
+	public static Matrix calc(Matrix source, Object fill)  {
 		Matrix ret = Matrix.Factory.zeros(source.getValueType(), source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsObject(fill, c);
@@ -49,7 +48,7 @@ public class Fill extends AbstractObjectCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Object fill, long... size) throws MatrixException {
+	public static Matrix calc(Object fill, long... size)  {
 		Matrix ret = null;
 		if (fill instanceof Number) {
 			ret = Matrix.Factory.zeros(ValueType.DOUBLE, size);

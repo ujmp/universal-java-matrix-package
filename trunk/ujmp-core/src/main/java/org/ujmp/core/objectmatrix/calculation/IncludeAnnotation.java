@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class IncludeAnnotation extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2165678807795583946L;
@@ -42,7 +41,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		getAnnotation().setLabelObject(m.getLabelObject());
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates)  {
 		coordinates = Coordinates.copyOf(coordinates);
 		if (coordinates[getDimension()] == 0) {
 			if (getDimension() == ROW) {
@@ -50,7 +49,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 			} else if (getDimension() == COLUMN) {
 				return getSource().getAxisAnnotation(COLUMN, coordinates);
 			} else {
-				throw new MatrixException("only possible for Matrix.ROW and Matrix.COLUMN");
+				throw new RuntimeException("only possible for Matrix.ROW and Matrix.COLUMN");
 			}
 		} else {
 			coordinates[getDimension()]--;

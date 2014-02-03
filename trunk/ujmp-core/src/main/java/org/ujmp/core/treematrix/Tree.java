@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,31 +27,33 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public interface Tree {
+public interface Tree<T> {
 
-	public Map<Object, Object> getParentMap();
+	public Map<T, T> getParentMap();
 
-	public void setRoot(Object o);
+	public void setRoot(T root);
 
-	public List<Object> getChildren(Object o);
+	public List<T> getChildren(Object parent);
 
-	public Object getParent(Object o);
+	public long getChildCountRecursive(Object parent);
 
-	public Collection<Object> getObjectList();
+	public T getParent(T o);
+
+	public Collection<T> getObjectList();
 
 	public boolean isChild(Object parent, Object child);
 
 	public boolean isChild(int parentId, int childId);
 
-	public Object getObject(int index);
+	public T getObject(int index);
 
-	public void addChild(Object parent, Object child);
+	public void addChild(T parent, T child);
 
-	public void addChildren(Object parent, Collection<? extends Object> children);
+	public void addChildren(T parent, Collection<? extends T> children);
 
-	public void removeChild(Object parent, Object child);
+	public void removeChild(T parent, T child);
 
-	public void addObject(Object o);
+	public void addObject(T o);
 
 	public int getNumberOfObjects();
 

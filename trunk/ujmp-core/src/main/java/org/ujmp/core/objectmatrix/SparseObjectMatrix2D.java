@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,7 @@
 
 package org.ujmp.core.objectmatrix;
 
-import org.ujmp.core.matrix.SparseMatrix2D;
+import org.ujmp.core.SparseMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 
 public class MatrixLibraries extends DefaultDenseStringMatrix2D {
@@ -133,21 +132,23 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	public static final int JSCIENCE = 12;
 
-	public static final int MANTISSA = 13;
+	public static final int LA4J = 13;
 
-	public static final int MTJ = 14;
+	public static final int MANTISSA = 14;
 
-	public static final int OJALGO = 15;
+	public static final int MTJ = 15;
 
-	public static final int ORBITAL = 16;
+	public static final int OJALGO = 16;
 
-	public static final int PARALLELCOLT = 17;
+	public static final int ORBITAL = 17;
 
-	public static final int SST = 18;
+	public static final int PARALLELCOLT = 18;
 
-	public static final int UJMP = 19;
+	public static final int SST = 19;
 
-	public static final int VECMATH = 20;
+	public static final int UJMP = 20;
+
+	public static final int VECMATH = 21;
 
 	public static final String NONSINGULARLETTER = "n";
 
@@ -168,7 +169,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(36, 21);
+		super(36, 22);
 		this.format = format;
 
 		setAsString(turn("Array4J"), LABELROW, ARRAY4J);
@@ -183,6 +184,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(turn("JMatrices"), LABELROW, JMATRICES);
 		setAsString(turn("JSci"), LABELROW, JSCI);
 		setAsString(turn("JScience"), LABELROW, JSCIENCE);
+		setAsString(turn("la4j"), LABELROW, LA4J);
 		setAsString(turn("Mantissa"), LABELROW, MANTISSA);
 		setAsString(turn("MTJ"), LABELROW, MTJ);
 		setAsString(turn("ojAlgo"), LABELROW, OJALGO);
@@ -713,6 +715,42 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setAsString(notSupported(), CHOL, JSCIENCE);
 		setAsString("org.ujmp.jscience", PACKAGE, JSCIENCE);
 
+		setAsString("unknown", VERSION, LA4J);
+		setAsString("unknown", DATE, LA4J);
+		setAsString("unknown", LICENCE, LA4J);
+		setAsString("unknown", JAVA14, LA4J);
+		setAsString("unknown", JAVA5, LA4J);
+		setAsString("unknown", JAVA6, LA4J);
+		setAsString("unknown", MULTITHREADED, LA4J);
+		setAsString("unknown", CACHEDRESULTS, LA4J);
+		setAsString("unknown", INPLACE, LA4J);
+		setAsString(yes(), TRANSPOSE, LA4J);
+		setAsString(yes(), PLUSMINUS, LA4J);
+		setAsString(yes(), SCALE, LA4J);
+		setAsString("unknown", DENSESA, LA4J);
+		setAsString("unknown", DENSEAA, LA4J);
+		setAsString("unknown", DENSEBLOCK, LA4J);
+		setAsString("unknown", SPARSEDOK, LA4J);
+		setAsString("unknown", SPARSEYALE, LA4J);
+		setAsString("unknown", SPARSELIL, LA4J);
+		setAsString("unknown", SPARSECRS, LA4J);
+		setAsString("unknown", SPARSECDS, LA4J);
+		setAsString(notSupported(), COMPLEX, LA4J);
+		setAsString(yes(), DOUBLE, LA4J);
+		setAsString(notSupported(), FLOAT, LA4J);
+		setAsString(notSupported(), BIGDECIMAL, LA4J);
+		setAsString(yes(), D2, LA4J);
+		setAsString(notSupported(), D3, LA4J);
+		setAsString(notSupported(), D3PLUS, LA4J);
+		setAsString("unknown", INV, LA4J);
+		setAsString("unknown", SOLVE, LA4J);
+		setAsString("unknown", SVD, LA4J);
+		setAsString("unknown", LU, LA4J);
+		setAsString("unknown", QR, LA4J);
+		setAsString("unknown", EIG, LA4J);
+		setAsString("unknown", CHOL, LA4J);
+		setAsString("org.ujmp.la4j", PACKAGE, LA4J);
+
 		setAsString(small("7.2"), VERSION, MANTISSA);
 		setAsString(small("2007"), DATE, MANTISSA);
 		setAsString(small("BSD"), LICENCE, MANTISSA);
@@ -1137,7 +1175,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public static void main(String[] args) throws Exception {
 		MatrixLibraries ml = new MatrixLibraries(MatrixLibrariesFormat.LATEX);
 		Matrix m = ml.deleteRows(Ret.NEW, ml.getRowCount() - 1);
-		String s = m.export().toString(FileFormat.TEX);
+		String s = m.export().toStringFormatted().asLatex();
 		s = s.replaceAll("table", "sidewaystable");
 		s = s.replaceAll("\\\\centering", "");
 		s = s.replaceAll("\\\\toprule", "");

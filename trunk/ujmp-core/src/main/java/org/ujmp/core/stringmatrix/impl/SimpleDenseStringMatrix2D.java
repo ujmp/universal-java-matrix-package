@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.stringmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.StringUtil;
 
@@ -46,7 +45,7 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 		}
 	}
 
-	public SimpleDenseStringMatrix2D(Matrix source) throws MatrixException {
+	public SimpleDenseStringMatrix2D(Matrix source)  {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setAsString(source.getAsString(c), c);

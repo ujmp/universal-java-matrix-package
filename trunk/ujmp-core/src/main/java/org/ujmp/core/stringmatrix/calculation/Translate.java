@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.stringmatrix.calculation;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Translate extends AbstractStringCalculation {
 	private static final long serialVersionUID = -4472157760970152847L;
@@ -46,12 +45,12 @@ public class Translate extends AbstractStringCalculation {
 			method = translator.getMethod("translateString", String.class, String.class,
 					String.class);
 		} catch (Exception e) {
-			throw new MatrixException("translation not supported. needs ujmp-googletranslate");
+			throw new RuntimeException("translation not supported. needs ujmp-googletranslate");
 		}
 
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String s = getSource().getAsString(coordinates);
 		if (s == null || method == null) {
 			return null;
@@ -59,7 +58,7 @@ public class Translate extends AbstractStringCalculation {
 			try {
 				return (String) method.invoke(null, sourceLanguage, targetLanguage, s);
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 	}

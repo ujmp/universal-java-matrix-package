@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.stringmatrix.calculation;
 import java.io.UnsupportedEncodingException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ConvertEncoding extends AbstractStringCalculation {
 	private static final long serialVersionUID = 6849849503531827615L;
@@ -38,7 +37,7 @@ public class ConvertEncoding extends AbstractStringCalculation {
 		this.encoding = encoding;
 	}
 
-	public String getString(long... coordinates) throws MatrixException {
+	public String getString(long... coordinates)  {
 		String s = getSource().getAsString(coordinates);
 		if (s == null) {
 			return null;
@@ -46,7 +45,7 @@ public class ConvertEncoding extends AbstractStringCalculation {
 			try {
 				return new String(s.getBytes(), encoding);
 			} catch (UnsupportedEncodingException e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 	}

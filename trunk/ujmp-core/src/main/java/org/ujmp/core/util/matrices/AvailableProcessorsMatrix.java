@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,45 +23,31 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 
-public class MatrixMemoryUsage extends AbstractDenseLongMatrix2D {
-	private static final long serialVersionUID = -3863745960302379726L;
+public class AvailableProcessorsMatrix extends AbstractDenseIntMatrix2D {
+	private static final long serialVersionUID = -3768846722489359117L;
 
-	public MatrixMemoryUsage() {
-		setLabel("Memory Usage");
-	}
-
-	public long getLong(int row, int column) {
-		switch (row) {
-		case 0:
-			return Runtime.getRuntime().freeMemory();
-		case 1:
-			return Runtime.getRuntime().maxMemory();
-		default:
-			return Runtime.getRuntime().totalMemory();
-		}
-	}
-
-	public long getLong(long row, long column) {
-		switch ((int) row) {
-		case 0:
-			return Runtime.getRuntime().freeMemory();
-		case 1:
-			return Runtime.getRuntime().maxMemory();
-		default:
-			return Runtime.getRuntime().totalMemory();
-		}
+	public AvailableProcessorsMatrix() {
+		setLabel("Available Processors");
 	}
 
 	public long[] getSize() {
-		return new long[] { 3, 1 };
+		return new long[] { 1, 1 };
 	}
 
-	public void setLong(long value, long row, long column) {
+	public int getInt(long row, long column) {
+		return Runtime.getRuntime().availableProcessors();
 	}
 
-	public void setLong(long value, int row, int column) {
+	public void setInt(int value, long row, long column) {
+	}
+
+	public int getInt(int row, int column) {
+		return Runtime.getRuntime().availableProcessors();
+	}
+
+	public void setInt(int value, int row, int column) {
 	}
 
 	

@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ujmp-examples</artifactId>
+	<packaging>jar</packaging>
+	<name>ujmp-examples</name>
+
+	<parent>
+		<groupId>org.ujmp</groupId>
+		<artifactId>ujmp</artifactId>
+		<version>0.3.0</version>
+		<relativePath>../ujmp</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-gui</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jung</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-ojalgo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jmathplot</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+</project>

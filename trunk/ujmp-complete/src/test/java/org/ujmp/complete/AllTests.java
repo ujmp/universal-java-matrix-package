@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import org.junit.runners.Suite;
 		org.ujmp.ehcache.AllTests.class, org.ujmp.jackcess.AllTests.class,
 		org.ujmp.itext.AllTests.class, org.ujmp.jampack.AllTests.class,
 		org.ujmp.jama.AllTests.class, org.ujmp.jfreechart.AllTests.class,
-		org.ujmp.jexcelapi.AllTests.class, org.ujmp.jdbc.AllTests.class,
 		org.ujmp.jlinalg.AllTests.class, org.ujmp.jmatharray.AllTests.class,
 		org.ujmp.jmathplot.AllTests.class, org.ujmp.jblas.AllTests.class,
 		org.ujmp.commonsmath.AllTests.class, org.ujmp.jmatrices.AllTests.class,

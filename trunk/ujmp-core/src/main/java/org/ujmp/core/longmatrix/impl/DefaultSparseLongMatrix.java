@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.longmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -33,11 +32,11 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -7047230020224347032L;
 
-	public DefaultSparseLongMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseLongMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseLongMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseLongMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,11 +52,11 @@ public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> im
 		return ValueType.LONG;
 	}
 
-	public long getLong(long... coordinates) throws MatrixException {
+	public long getLong(long... coordinates)  {
 		return MathUtil.getLong(getObject(coordinates));
 	}
 
-	public void setLong(long value, long... coordinates) throws MatrixException {
+	public void setLong(long value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

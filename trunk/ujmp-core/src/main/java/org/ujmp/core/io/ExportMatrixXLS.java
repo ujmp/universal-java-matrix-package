@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ExportMatrixXLS {
 
@@ -39,7 +38,7 @@ public class ExportMatrixXLS {
 					Object[].class });
 			method.invoke(null, file, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
+			throw new RuntimeException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 
@@ -50,7 +49,7 @@ public class ExportMatrixXLS {
 					Object[].class });
 			method.invoke(null, stream, matrix, parameters);
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jexcelapi not found in classpath", e);
+			throw new RuntimeException("ujmp-jexcelapi not found in classpath", e);
 		}
 	}
 

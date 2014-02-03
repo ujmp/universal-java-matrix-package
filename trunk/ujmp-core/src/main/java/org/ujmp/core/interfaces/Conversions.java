@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.charmatrix.CharMatrix;
-import org.ujmp.core.datematrix.DateMatrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
@@ -51,8 +50,6 @@ public interface Conversions {
 	public ByteMatrix toByteMatrix();
 
 	public CharMatrix toCharMatrix();
-
-	public DateMatrix toDateMatrix();
 
 	public DoubleMatrix toDoubleMatrix();
 

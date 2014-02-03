@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.longmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ToLongMatrix extends AbstractLongCalculation {
 	private static final long serialVersionUID = 807079620849420977L;
@@ -34,11 +33,11 @@ public class ToLongMatrix extends AbstractLongCalculation {
 	}
 
 	
-	public long getLong(long... coordinates) throws MatrixException {
+	public long getLong(long... coordinates)  {
 		return getSource().getAsLong(coordinates);
 	}
 
-	public void setLong(long value, long coordinates) throws MatrixException {
+	public void setLong(long value, long coordinates)  {
 		getSource().setAsLong(value, coordinates);
 	}
 

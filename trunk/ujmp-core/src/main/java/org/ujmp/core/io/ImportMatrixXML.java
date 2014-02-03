@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -90,7 +90,7 @@ public class ImportMatrixXML {
 	// currentEvent = eventReader.nextEvent();
 	// if (!"cell".equals(currentEvent.asEndElement().getName().getLocalPart()))
 	// {
-	// throw new MatrixException("xml does not have excected format: " +
+	// throw new RuntimeException("xml does not have excected format: " +
 	// currentEvent);
 	// }
 	// currentEvent = eventReader.nextEvent();
@@ -132,7 +132,7 @@ public class ImportMatrixXML {
 	// currentEvent = eventReader.nextEvent();
 	// skipCharacters();
 	// } else {
-	// throw new MatrixException("xml does not have excected format: " +
+	// throw new RuntimeException("xml does not have excected format: " +
 	// currentEvent);
 	// }
 	//
@@ -145,7 +145,7 @@ public class ImportMatrixXML {
 	//
 	// if (!"data".equals(currentEvent.asEndElement().getName().getLocalPart()))
 	// {
-	// throw new MatrixException("xml does not have excected format: " +
+	// throw new RuntimeException("xml does not have excected format: " +
 	// currentEvent);
 	// }
 	//
@@ -155,12 +155,12 @@ public class ImportMatrixXML {
 	// if
 	// (!"matrix".equals(currentEvent.asEndElement().getName().getLocalPart()))
 	// {
-	// throw new MatrixException("xml does not have excected format: " +
+	// throw new RuntimeException("xml does not have excected format: " +
 	// currentEvent);
 	// }
 	//
 	// } else {
-	// throw new MatrixException("xml does not have excected format: " +
+	// throw new RuntimeException("xml does not have excected format: " +
 	// currentEvent);
 	// }
 	// return matrix;

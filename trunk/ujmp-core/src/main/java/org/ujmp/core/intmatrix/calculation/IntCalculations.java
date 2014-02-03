@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,11 +25,10 @@ package org.ujmp.core.intmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 
 public interface IntCalculations {
 
 	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
-			int numberOfBins) throws MatrixException;
+			int numberOfBins) ;
 }

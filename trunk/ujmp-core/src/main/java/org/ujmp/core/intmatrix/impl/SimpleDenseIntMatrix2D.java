@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.intmatrix.impl;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 
@@ -34,7 +33,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 
 	private int[][] values = null;
 
-	public SimpleDenseIntMatrix2D(Matrix m) throws MatrixException {
+	public SimpleDenseIntMatrix2D(Matrix m)  {
 		if (m instanceof SimpleDenseIntMatrix2D) {
 			int[][] v = ((SimpleDenseIntMatrix2D) m).values;
 			this.values = new int[v.length][v[0].length];
@@ -155,7 +154,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix plus(IntMatrix m2) throws MatrixException {
+	public final IntMatrix plus(IntMatrix m2)  {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -165,7 +164,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix minus(IntMatrix m2) throws MatrixException {
+	public final IntMatrix minus(IntMatrix m2)  {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -175,7 +174,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix times(IntMatrix m2) throws MatrixException {
+	public final IntMatrix times(IntMatrix m2)  {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -185,7 +184,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix divide(IntMatrix m2) throws MatrixException {
+	public final IntMatrix divide(IntMatrix m2)  {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -195,9 +194,9 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public IntMatrix mtimes(IntMatrix matrix) throws MatrixException {
+	public IntMatrix mtimes(IntMatrix matrix)  {
 		if (values[0].length != matrix.getRowCount()) {
-			throw new MatrixException("matrices have wrong size: "
+			throw new RuntimeException("matrices have wrong size: "
 					+ Coordinates.toString(getSize()) + " and "
 					+ Coordinates.toString(matrix.getSize()));
 		}

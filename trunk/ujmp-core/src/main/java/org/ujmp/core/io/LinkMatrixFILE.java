@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,13 +27,11 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
 public class LinkMatrixFILE {
 
-	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static Matrix toFile(File file, Object... parameters) throws IOException {
 		return new FileMatrix(file, parameters);
 	}
 

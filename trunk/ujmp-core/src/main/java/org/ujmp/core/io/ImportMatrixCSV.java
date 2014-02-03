@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -35,7 +35,6 @@ import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
@@ -47,10 +46,11 @@ public abstract class ImportMatrixCSV {
 
 	private static final boolean ignoreQuotationMarks = true;
 
+	public static final boolean labelsInFirstLine = false;
+
 	private static final String quotation = "\"";
 
-	public static final Matrix fromString(String string, Object... parameters)
-			throws MatrixException {
+	public static final Matrix fromString(String string, Object... parameters) {
 		StringReader sr = new StringReader(string);
 		IntelligentFileReader r = new IntelligentFileReader(sr);
 		Matrix m = fromReader(r, parameters);
@@ -59,7 +59,7 @@ public abstract class ImportMatrixCSV {
 	}
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		VerifyUtil.assertNotNull(stream, "InputStream is null");
 		InputStreamReader r = new InputStreamReader(stream);
 		Matrix m = fromReader(r, parameters);
@@ -67,8 +67,7 @@ public abstract class ImportMatrixCSV {
 		return m;
 	}
 
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static final Matrix fromFile(File file, Object... parameters) throws IOException {
 		String encoding = "UTF-8";
 		if (parameters != null) {
 			for (Object o : parameters) {
@@ -93,8 +92,7 @@ public abstract class ImportMatrixCSV {
 		return m;
 	}
 
-	public static final Matrix fromReader(Reader reader, Object... parameters)
-			throws MatrixException {
+	public static final Matrix fromReader(Reader reader, Object... parameters) {
 		List<String[]> rowData = new ArrayList<String[]>();
 
 		if (parameters.length > 0 && parameters[0] instanceof String) {
@@ -111,6 +109,29 @@ public abstract class ImportMatrixCSV {
 			int rows = 0;
 			int cols = 0;
 			String line = null;
+			String[] labels = null;
+
+			if (labelsInFirstLine) {
+				line = lr.readLine();
+				if (line.length() > 0) {
+					String[] fields = p.split(line);
+					if (trimFields) {
+						for (int i = 0; i < fields.length; i++) {
+							fields[i] = fields[i].trim();
+						}
+					}
+					if (ignoreQuotationMarks) {
+						for (int i = 0; i < fields.length; i++) {
+							String s = fields[i];
+							if (s.length() > 1 && s.startsWith(quotation) && s.endsWith(quotation)) {
+								fields[i] = s.substring(1, s.length() - 1);
+							}
+						}
+					}
+					labels = fields;
+				}
+			}
+
 			while ((line = lr.readLine()) != null) {
 				if (line.length() > 0) {
 					String[] fields = p.split(line);
@@ -141,6 +162,12 @@ public abstract class ImportMatrixCSV {
 			lr.close();
 			Matrix m = Matrix.Factory.zeros(ValueType.STRING, rows, cols);
 
+			if (labels != null) {
+				for (int c = 0; c < labels.length; c++) {
+					m.setColumnLabel(c, labels[c]);
+				}
+			}
+
 			int r = 0;
 			for (String[] fields : rowData) {
 				for (int c = fields.length - 1; c != -1; c--) {
@@ -151,7 +178,7 @@ public abstract class ImportMatrixCSV {
 
 			return m;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

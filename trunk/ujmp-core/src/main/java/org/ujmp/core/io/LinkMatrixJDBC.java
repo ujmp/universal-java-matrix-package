@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,38 +24,51 @@
 package org.ujmp.core.io;
 
 import java.lang.reflect.Method;
+import java.sql.Connection;
 
-import org.ujmp.core.enums.DB;
-import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.enums.DBType;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 
 public class LinkMatrixJDBC {
 
-	public static ObjectMatrix2D toDatabase(String url, String sqlStatement, String username,
+	public static DenseObjectMatrix2D toDatabase(String url, String sqlStatement, String username,
 			String password) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
 			Method method = c.getMethod("toDatabase", new Class[] { String.class, String.class,
 					String.class, String.class });
-			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(null, url, sqlStatement,
-					username, password);
+			DenseObjectMatrix2D matrix = (DenseObjectMatrix2D) method.invoke(null, url,
+					sqlStatement, username, password);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jdbc not found in classpath", e);
+			throw new RuntimeException("ujmp-jdbc not found in classpath", e);
 		}
 	}
 
-	public static ObjectMatrix2D toDatabase(DB type, String host, int port, String database,
+	public static DenseObjectMatrix2D toDatabase(DBType type, String host, int port, String database,
 			String sqlStatement, String username, String password) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
-			Method method = c.getMethod("toDatabase", new Class[] { DB.class, String.class,
+			Method method = c.getMethod("toDatabase", new Class[] { DBType.class, String.class,
 					Integer.TYPE, String.class, String.class, String.class, String.class });
-			ObjectMatrix2D matrix = (ObjectMatrix2D) method.invoke(null, type, host, port,
-					database, sqlStatement, username, password);
+			DenseObjectMatrix2D matrix = (DenseObjectMatrix2D) method.invoke(null, type, host,
+					port, database, sqlStatement, username, password);
 			return matrix;
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jdbc not found in classpath", e);
+			throw new RuntimeException("ujmp-jdbc not found in classpath", e);
+		}
+	}
+
+	public static DenseObjectMatrix2D toDatabase(Connection connection, String sqlStatement) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
+			Method method = c.getMethod("toDatabase",
+					new Class[] { Connection.class, String.class });
+			DenseObjectMatrix2D matrix = (DenseObjectMatrix2D) method.invoke(null, connection,
+					sqlStatement);
+			return matrix;
+		} catch (Exception e) {
+			throw new RuntimeException("ujmp-jdbc not found in classpath", e);
 		}
 	}
 

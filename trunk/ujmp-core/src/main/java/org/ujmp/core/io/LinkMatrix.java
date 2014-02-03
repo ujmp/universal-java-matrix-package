@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -31,20 +31,18 @@ import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.FileUtil;
 
 public abstract class LinkMatrix {
 
-	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static Matrix toFile(File file, Object... parameters) throws IOException {
 		return toFile(FileUtil.guessFormat(file), file, parameters);
 	}
 
 	public static Matrix toFile(FileFormat format, File file, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
 			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
@@ -55,14 +53,14 @@ public abstract class LinkMatrix {
 			try {
 				return new DelayedContentMatrix(format, file, parameters);
 			} catch (ClassCastException ex) {
-				throw new MatrixException("format not supported: " + format, e);
+				throw new RuntimeException("format not supported: " + format, e);
 			}
 		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
@@ -92,7 +90,7 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 		this.parameters = parameters;
 	}
 
-	public Object getObject(long... coordinates) throws MatrixException {
+	public Object getObject(long... coordinates) {
 		return getMatrix().getAsObject(coordinates);
 	}
 
@@ -112,16 +110,12 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 		getMatrix().setAsObject(value, coordinates);
 	}
 
-	public boolean contains(long... coordinates) throws MatrixException {
+	public boolean contains(long... coordinates) {
 		return getMatrix().contains(coordinates);
 	}
 
 	public long[] getSize() {
 		return getMatrix().getSize();
-	}
-
-	public final StorageType getStorageType() {
-		return getMatrix().getStorageType();
 	}
 
 }

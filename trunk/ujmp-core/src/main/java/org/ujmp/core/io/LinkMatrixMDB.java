@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixMDB {
 
@@ -38,7 +37,7 @@ public class LinkMatrixMDB {
 			Matrix m = (Matrix) method.invoke(null, file, parameters);
 			return m;
 		} catch (Exception e) {
-			throw new MatrixException("ujmp-jackcess not found in classpath", e);
+			throw new RuntimeException("ujmp-jackcess not found in classpath", e);
 		}
 	}
 

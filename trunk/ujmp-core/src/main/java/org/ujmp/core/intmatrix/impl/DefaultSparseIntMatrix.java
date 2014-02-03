@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.intmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -34,11 +33,11 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 		IntMatrix {
 	private static final long serialVersionUID = 7865221689702604727L;
 
-	public DefaultSparseIntMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseIntMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseIntMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseIntMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -56,12 +55,12 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 	}
 
 	
-	public int getInt(long... coordinates) throws MatrixException {
+	public int getInt(long... coordinates)  {
 		return MathUtil.getInt(getObject(coordinates));
 	}
 
 	
-	public void setInt(int value, long... coordinates) throws MatrixException {
+	public void setInt(int value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

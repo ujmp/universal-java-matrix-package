@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *  
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.benchmark;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -34,9 +33,9 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
 	private static final BenchmarkConfig config = new BenchmarkConfig();
 
-	public abstract DoubleMatrix2D createMatrix(long... size) throws MatrixException;
+	public abstract DoubleMatrix2D createMatrix(long... size) ;
 
-	public abstract DoubleMatrix2D createMatrix(Matrix source) throws MatrixException;
+	public abstract DoubleMatrix2D createMatrix(Matrix source) ;
 
 	private static long benchmarkSeed = 3345454363676l;
 
@@ -62,7 +61,7 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
 	public final void run() {
 		if (Runtime.getRuntime().maxMemory() < 900 * 1024 * 1024) {
-			throw new MatrixException("You must start Java with more memory: -Xmx1024M");
+			throw new RuntimeException("You must start Java with more memory: -Xmx1024M");
 		}
 
 		// adjust maximal size to fit into memory:
@@ -84,10 +83,10 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 		System.out.println("   maxTime: " + config.getMaxTime());
 		System.out.println("   maxStd: " + config.getMaxStd());
 		System.out.println("   minSize: "
-				+ Coordinates.toString('x', config.getSquareSizes().get(0)));
+				+ Coordinates.toString("x", config.getSquareSizes().get(0)));
 		System.out.println("   maxSize: "
-				+ Coordinates.toString('x', config.getSquareSizes().get(
-						config.getSquareSizes().size() - 1)));
+				+ Coordinates.toString("x",
+						config.getSquareSizes().get(config.getSquareSizes().size() - 1)));
 
 		System.out.println();
 

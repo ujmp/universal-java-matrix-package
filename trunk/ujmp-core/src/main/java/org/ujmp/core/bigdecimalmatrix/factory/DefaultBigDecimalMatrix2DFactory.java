@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,13 +25,12 @@ package org.ujmp.core.bigdecimalmatrix.factory;
 
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix2D;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultBigDecimalMatrix2DFactory extends AbstractBigDecimalMatrix2DFactory {
 	private static final long serialVersionUID = 1996140590280640948L;
 
 	
-	public BigDecimalMatrix2D dense(long rows, long columns) throws MatrixException {
+	public BigDecimalMatrix2D dense(long rows, long columns)  {
 		return new DefaultDenseBigDecimalMatrix2D(rows, columns);
 	}
 

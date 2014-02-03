@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,16 +25,15 @@ package org.ujmp.core.bigintegermatrix.factory;
 
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
 import org.ujmp.core.bigintegermatrix.impl.DefaultDenseBigIntegerMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultBigIntegerMatrix2DFactory extends AbstractBigIntegerMatrix2DFactory {
 	private static final long serialVersionUID = -311255322148769964L;
 
-	public BigIntegerMatrix2D zeros(long rows, long columns) throws MatrixException {
+	public BigIntegerMatrix2D zeros(long rows, long columns)  {
 		return new DefaultDenseBigIntegerMatrix2D(rows, columns);
 	}
 
-	public BigIntegerMatrix2D zeros(long... size) throws MatrixException {
+	public BigIntegerMatrix2D zeros(long... size)  {
 		return new DefaultDenseBigIntegerMatrix2D(size);
 	}
 

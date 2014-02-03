@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Not extends AbstractBooleanCalculation {
 	private static final long serialVersionUID = -6064819896020842750L;
@@ -34,7 +33,7 @@ public class Not extends AbstractBooleanCalculation {
 	}
 
 	
-	public boolean getBoolean(long... coordinates) throws MatrixException {
+	public boolean getBoolean(long... coordinates)  {
 		return !getSource().getAsBoolean(coordinates);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import static org.ujmp.core.util.VerifyUtil.assertTrue;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -49,27 +48,27 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		super(size);
 	}
 
-	public final Boolean getObject(long... coordinates) throws MatrixException {
+	public final Boolean getObject(long... coordinates)  {
 		return getBoolean(coordinates);
 	}
 
-	public final void setObject(Boolean o, long... coordinates) throws MatrixException {
+	public final void setObject(Boolean o, long... coordinates)  {
 		setBoolean(o, coordinates);
 	}
 
-	public final boolean getAsBoolean(long... coordinates) throws MatrixException {
+	public final boolean getAsBoolean(long... coordinates)  {
 		return getBoolean(coordinates);
 	}
 
-	public final void setAsBoolean(boolean value, long... coordinates) throws MatrixException {
+	public final void setAsBoolean(boolean value, long... coordinates)  {
 		setBoolean(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public final double getAsDouble(long... coordinates)  {
 		return getBoolean(coordinates) ? 1 : 0;
 	}
 
-	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public final void setAsDouble(double value, long... coordinates)  {
 		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setBoolean(value != 0, coordinates);
 	}

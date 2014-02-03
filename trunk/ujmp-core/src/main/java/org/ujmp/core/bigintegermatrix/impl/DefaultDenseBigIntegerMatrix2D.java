@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,7 +28,6 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = 443424906231157395L;
@@ -41,7 +40,7 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 
 	private int cols = 0;
 
-	public DefaultDenseBigIntegerMatrix2D(Matrix m) throws MatrixException {
+	public DefaultDenseBigIntegerMatrix2D(Matrix m)  {
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();

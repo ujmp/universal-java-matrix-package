@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.booleanmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Ge extends AbstractBooleanCalculation {
 	private static final long serialVersionUID = 6844835787123352849L;
@@ -39,15 +38,15 @@ public class Ge extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Ge(Matrix m1, double v2) throws MatrixException {
+	public Ge(Matrix m1, double v2)  {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Ge(double v1, Matrix m2) throws MatrixException {
+	public Ge(double v1, Matrix m2)  {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates) throws MatrixException {
+	public boolean getBoolean(long... coordinates)  {
 		return getSource().getAsDouble(coordinates) >= getSources()[1].getAsDouble(coordinates);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultAnnotation extends AbstractAnnotation {
 	private static final long serialVersionUID = -7988756144808776868L;
@@ -97,7 +96,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 
 	public long[] getPositionForLabel(int dimension, Object label) {
 		if (label == null) {
-			throw new MatrixException("label is null");
+			throw new RuntimeException("label is null");
 		}
 		Matrix m = getDimensionMatrix(dimension);
 		for (long[] c : m.availableCoordinates()) {
@@ -116,7 +115,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		long old = position[dimension];
 		position[dimension] = 0;
 		if (!Coordinates.isSmallerThan(position, m.getSize())) {
-			long[] newSize = Coordinates.max(m.getSize(), Coordinates.plusOne(position));
+			long[] newSize = Coordinates.max(m.getSize(), Coordinates.plus(position, 1));
 			m.setSize(newSize);
 		}
 		m.setAsObject(label, position);

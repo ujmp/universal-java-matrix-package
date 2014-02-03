@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,14 +25,13 @@ package org.ujmp.core.booleanmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private static final long serialVersionUID = -4334380160318525360L;
 
 	private boolean[][] values = null;
 
-	public DefaultDenseBooleanMatrix2D(Matrix m) throws MatrixException {
+	public DefaultDenseBooleanMatrix2D(Matrix m)  {
 		super(m);
 		if (m instanceof DefaultDenseBooleanMatrix2D) {
 			boolean[][] v = ((DefaultDenseBooleanMatrix2D) m).values;

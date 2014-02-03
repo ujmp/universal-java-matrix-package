@@ -4,7 +4,7 @@
 % or singular value decomposition in Matlab, Octave, FreeMat or compatible
 % software.
 %
-% Copyright (C) 2008-2013 by Holger Arndt
+% Copyright (C) 2008-2014 by Holger Arndt
 %
 % This file is part of the Universal Java Matrix Package (UJMP).
 % See the NOTICE file distributed with this work for additional

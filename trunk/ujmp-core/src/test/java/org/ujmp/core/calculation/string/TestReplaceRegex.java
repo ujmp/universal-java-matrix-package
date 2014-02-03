@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,12 +30,11 @@ import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 
 public class TestReplaceRegex {
 
-	private static Matrix getTestMatrix() throws MatrixException {
+	private static Matrix getTestMatrix()  {
 		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("aabbcabd", 0, 0);
 		m.setAsString(null, 0, 1);
@@ -44,7 +43,7 @@ public class TestReplaceRegex {
 		return m;
 	}
 
-	private static Matrix getResultMatrix() throws MatrixException {
+	private static Matrix getResultMatrix()  {
 		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("afgrbcfgrd", 0, 0);
 		m.setAsString(null, 0, 1);
@@ -54,7 +53,7 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testConstructor1() throws MatrixException {
+	public void testConstructor1()  {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, "ab", "fgr");
 		Matrix resultMatrix = ra.calc(Ret.NEW);
@@ -62,7 +61,7 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testConstructor2() throws MatrixException {
+	public void testConstructor2()  {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, Pattern.compile("ab"), "fgr");
 		Matrix resultMatrix = ra.calc(Ret.NEW);
@@ -70,14 +69,14 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testCalc1() throws MatrixException {
+	public void testCalc1()  {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, "ab", "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
 	@Test
-	public void testCalc2() throws MatrixException {
+	public void testCalc2()  {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, Pattern.compile("ab"), "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);

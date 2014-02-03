@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { MatrixFactoryTest.class, org.ujmp.core.doublematrix.impl.AllTests.class,
+@Suite.SuiteClasses({ org.ujmp.core.doublematrix.impl.AllTests.class,
 		org.ujmp.core.calculation.AllTests.class, org.ujmp.core.collections.AllTests.class,
-		org.ujmp.core.implementations.AllTests.class, org.ujmp.core.io.AllTests.class,
-		org.ujmp.core.util.AllTests.class, org.ujmp.core.annotation.AllTests.class })
+		org.ujmp.core.implementations.AllTests.class, org.ujmp.core.util.AllTests.class,
+		org.ujmp.core.annotation.AllTests.class })
 public class AllTests {
 }

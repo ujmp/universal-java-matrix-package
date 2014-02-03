@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,13 +21,11 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.datematrix.stub;
+package org.ujmp.core;
 
-public abstract class AbstractSparseDateMatrix extends AbstractDateMatrix {
-	private static final long serialVersionUID = 960775559298514193L;
+import org.ujmp.core.matrix.factory.Matrix2DFactory;
 
-	public final StorageType getStorageType() {
-		return StorageType.SPARSE;
-	}
+public interface Matrix2D extends Matrix {
 
+	public Matrix2DFactory<? extends Matrix2D> getFactory();
 }

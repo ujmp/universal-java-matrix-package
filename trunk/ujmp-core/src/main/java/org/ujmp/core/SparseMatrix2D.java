@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,17 +21,11 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.datematrix.factory;
+package org.ujmp.core;
 
-import java.io.Serializable;
+import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
 
-import org.ujmp.core.datematrix.DateMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
+public interface SparseMatrix2D extends SparseMatrix, Matrix2D {
 
-public interface DateMatrix2DFactory extends Serializable {
-
-	public DateMatrix2D dense(long rows, long columns) throws MatrixException;
-
-	public DateMatrix2D zeros(long rows, long columns) throws MatrixException;
-
+	public SparseMatrix2DFactory<? extends SparseMatrix2D> getFactory();
 }

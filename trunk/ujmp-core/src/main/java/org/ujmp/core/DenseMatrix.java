@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -21,21 +21,15 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.exceptions;
+package org.ujmp.core;
 
-public abstract class UJMPException extends RuntimeException {
-	private static final long serialVersionUID = 3298619773181832722L;
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrixFactory;
+import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
-	public UJMPException(String message) {
-		super(message);
-	}
+public interface DenseMatrix extends Matrix {
 
-	public UJMPException(String message, Throwable cause) {
-		super(message, cause);
-	}
+	public static final DenseMatrixFactory<? extends DenseMatrix> Factory = new DefaultDenseDoubleMatrixFactory();
 
-	public UJMPException(Throwable cause) {
-		super(cause);
-	}
+	public DenseMatrixFactory<? extends DenseMatrix> getFactory();
 
 }

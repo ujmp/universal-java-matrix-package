@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -28,12 +28,10 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class LinkMatrixHEX {
 
-	public static Matrix toFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static Matrix toFile(File file, Object... parameters) throws IOException {
 		return new DenseFileMatrix(file);
 	}
 

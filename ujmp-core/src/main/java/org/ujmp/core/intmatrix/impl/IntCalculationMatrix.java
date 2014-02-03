@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.intmatrix.impl;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.calculation.IntCalculation;
 import org.ujmp.core.intmatrix.stub.AbstractIntMatrix;
 
@@ -56,16 +55,12 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		}
 	}
 
-	public int getInt(long... coordinates) throws MatrixException {
+	public int getInt(long... coordinates)  {
 		return calculation.getInt(coordinates);
 	}
 
-	public void setInt(int value, long... coordinates) throws MatrixException {
+	public void setInt(int value, long... coordinates)  {
 		calculation.setInt(value, coordinates);
-	}
-
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
 	}
 
 }

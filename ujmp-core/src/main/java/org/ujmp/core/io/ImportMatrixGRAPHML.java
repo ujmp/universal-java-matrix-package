@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,7 +38,7 @@ public class ImportMatrixGRAPHML {
 //	}
 //
 //	public static final Matrix fromString(String string, Object... parameters)
-//			throws MatrixException, XMLStreamException {
+//			, XMLStreamException {
 //		StringReader sr = new StringReader(string);
 //		IntelligentFileReader r = new IntelligentFileReader(sr);
 //		Matrix m = fromReader(r, parameters);
@@ -47,14 +47,14 @@ public class ImportMatrixGRAPHML {
 //	}
 //
 //	public static final Matrix fromStream(InputStream stream, Object... parameters)
-//			throws MatrixException, IOException, XMLStreamException {
+//			, IOException, XMLStreamException {
 //		InputStreamReader r = new InputStreamReader(stream);
 //		Matrix m = fromReader(r, parameters);
 //		r.close();
 //		return m;
 //	}
 //
-//	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
+//	public static final Matrix fromFile(File file, Object... parameters) ,
 //			IOException, XMLStreamException {
 //		FileReader lr = new FileReader(file);
 //		Matrix m = fromReader(lr, parameters);
@@ -106,12 +106,12 @@ public class ImportMatrixGRAPHML {
 //				currentEvent = eventReader.nextEvent();
 //				skipCharacters();
 //				if (!"default".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//					throw new MatrixException("xml does not have excected format: " + currentEvent);
+//					throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //				}
 //				currentEvent = eventReader.nextEvent();
 //			}
 //			if (!"key".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//				throw new MatrixException("xml does not have excected format: " + currentEvent);
+//				throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //			}
 //			currentEvent = eventReader.nextEvent();
 //			keys.add(key);
@@ -137,7 +137,7 @@ public class ImportMatrixGRAPHML {
 //				String data = currentEvent.asCharacters().getData();
 //				currentEvent = eventReader.nextEvent();
 //				if (!"data".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//					throw new MatrixException("xml does not have excected format: " + currentEvent);
+//					throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //				}
 //				currentEvent = eventReader.nextEvent();
 //				skipCharacters();
@@ -145,7 +145,7 @@ public class ImportMatrixGRAPHML {
 //				node.put(key, data);
 //			}
 //			if (!"node".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//				throw new MatrixException("xml does not have excected format: " + currentEvent);
+//				throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //			}
 //			currentEvent = eventReader.nextEvent();
 //
@@ -175,7 +175,7 @@ public class ImportMatrixGRAPHML {
 //				String data = currentEvent.asCharacters().getData();
 //				currentEvent = eventReader.nextEvent();
 //				if (!"data".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//					throw new MatrixException("xml does not have excected format: " + currentEvent);
+//					throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //				}
 //				currentEvent = eventReader.nextEvent();
 //				skipCharacters();
@@ -183,7 +183,7 @@ public class ImportMatrixGRAPHML {
 //				edge.put(key, data);
 //			}
 //			if (!"edge".equals(currentEvent.asEndElement().getName().getLocalPart())) {
-//				throw new MatrixException("xml does not have excected format: " + currentEvent);
+//				throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //			}
 //			currentEvent = eventReader.nextEvent();
 //
@@ -215,7 +215,7 @@ public class ImportMatrixGRAPHML {
 //			}
 //
 //		} else {
-//			throw new MatrixException("xml does not have excected format: " + currentEvent);
+//			throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //		}
 //		return result;
 //	}
@@ -244,12 +244,12 @@ public class ImportMatrixGRAPHML {
 //			}
 //
 //		} else {
-//			throw new MatrixException("xml does not have excected format: " + currentEvent);
+//			throw new RuntimeException("xml does not have excected format: " + currentEvent);
 //		}
 //		return matrix;
 //	}
 //
-//	public Matrix read(Reader reader) throws MatrixException, XMLStreamException {
+//	public Matrix read(Reader reader) , XMLStreamException {
 //		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 //		eventReader = inputFactory.createXMLEventReader(reader);
 //		currentEvent = eventReader.nextEvent();
@@ -265,7 +265,7 @@ public class ImportMatrixGRAPHML {
 //	}
 //
 //	public static final Matrix fromReader(Reader reader, Object... parameters)
-//			throws MatrixException, XMLStreamException {
+//			, XMLStreamException {
 //		return new ImportMatrixGRAPHML().read(reader);
 //
 //	}

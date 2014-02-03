@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -56,25 +56,36 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		}
 	}
 
-	public final void setObject(Object key, long row, long column) {
+	public final void setObject(Object value, int row, int column) {
+		if (column == 0) {
+			// remove old key and add new key with old value
+			K key = getKey(row);
+			V oldValue = get(key);
+			remove(key);
+			put((K) value, oldValue);
+		} else if (column == 1) {
+			K key = getKey(row);
+			put(key, (V) value);
+		}
 	}
 
-	public final void setObject(Object key, int row, int column) {
+	public final void setObject(Object value, long row, long column) {
+		setObject(value, (int) row, (int) column);
 	}
 
 	public abstract MapMatrix<K, V> clone();
 
-	// TODO: concurrentmodification exceptions can come from here
-	@SuppressWarnings("rawtypes")
-	private final Object getKey(int index) {
+	private final K getKey(int index) {
 		if (getMap() instanceof List) {
-			return ((List) getMap()).get(index);
+			return ((List<K>) getMap()).get(index);
 		}
-		Iterator<K> it = keySet().iterator();
-		for (int i = 0; it.hasNext() && i < index; i++) {
-			it.next();
+		synchronized (this) {
+			Iterator<K> it = keySet().iterator();
+			for (int i = 0; it.hasNext() && i < index; i++) {
+				it.next();
+			}
+			return it.hasNext() ? it.next() : null;
 		}
-		return it.hasNext() ? it.next() : null;
 	}
 
 	public final boolean containsKey(Object key) {
@@ -124,10 +135,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 
 	public final Collection<V> values() {
 		return getMap().values();
-	}
-
-	public final StorageType getStorageType() {
-		return StorageType.MAP;
 	}
 
 	public final void clear() {

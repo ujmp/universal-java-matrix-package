@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.intmatrix.impl;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,44 +30,26 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
-import org.ujmp.core.util.MathUtil;
 
 public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
 
 	private BufferedImage bufferedImage = null;
 
-	public ImageMatrix(String filename, Object... parameters) throws IOException {
+	public ImageMatrix(String filename) throws IOException {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(BufferedImage image, Object... parameters) throws IOException {
-		if (parameters.length == 2) {
-			int width = MathUtil.getInt(parameters[0]);
-			int height = MathUtil.getInt(parameters[1]);
-			if (width > 0 && width < 100000 && height > 0 && height < 100000) {
-				Image tempImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-				if (tempImage instanceof BufferedImage) {
-					bufferedImage = (BufferedImage) tempImage;
-				} else {
-					bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-					bufferedImage.getGraphics().drawImage(tempImage, 0, 0, null);
-				}
-			} else {
-				bufferedImage = image;
-			}
-		} else {
-			bufferedImage = image;
-		}
+	public ImageMatrix(BufferedImage image) throws IOException {
+		bufferedImage = image;
 	}
 
-	public ImageMatrix(File file, Object... parameters) throws IOException {
-		this(ImageIO.read(file), parameters);
+	public ImageMatrix(File file) throws IOException {
+		this(ImageIO.read(file));
 	}
 
-	public ImageMatrix(InputStream stream, Object... parameters) throws IOException {
+	public ImageMatrix(InputStream stream) throws IOException {
 		this(ImageIO.read(stream));
 	}
 
@@ -80,11 +61,11 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		setInt(value, (int) row, (int) column);
 	}
 
-	public int getInt(int row, int column) throws MatrixException {
+	public int getInt(int row, int column)  {
 		return bufferedImage.getRGB(column, row);
 	}
 
-	public void setInt(int value, int row, int column) throws MatrixException {
+	public void setInt(int value, int row, int column)  {
 		bufferedImage.setRGB(column, row, value);
 	}
 

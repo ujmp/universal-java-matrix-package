@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,7 +33,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -43,7 +42,7 @@ import org.xml.sax.SAXException;
 public class ImportMatrixATOM {
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
-			throws MatrixException, ParserConfigurationException, SAXException, IOException {
+			throws ParserConfigurationException, SAXException, IOException {
 		Matrix m = null;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -93,8 +92,8 @@ public class ImportMatrixATOM {
 		return m;
 	}
 
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			ParserConfigurationException, SAXException, IOException {
+	public static final Matrix fromFile(File file, Object... parameters)
+			throws ParserConfigurationException, SAXException, IOException {
 		FileInputStream lr = new FileInputStream(file);
 		Matrix m = fromStream(lr, parameters);
 		lr.close();

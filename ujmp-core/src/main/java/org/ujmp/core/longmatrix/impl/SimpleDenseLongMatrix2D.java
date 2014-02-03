@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.longmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 
 public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
@@ -32,7 +31,7 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 
 	private long[][] values = null;
 
-	public SimpleDenseLongMatrix2D(Matrix m) throws MatrixException {
+	public SimpleDenseLongMatrix2D(Matrix m)  {
 		super(m);
 		if (m instanceof SimpleDenseLongMatrix2D) {
 			long[][] v = ((SimpleDenseLongMatrix2D) m).values;

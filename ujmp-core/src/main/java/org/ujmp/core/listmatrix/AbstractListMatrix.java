@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -172,20 +171,16 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().toArray(a);
 	}
 
-	public double getAsDouble(long... coordinates) throws MatrixException {
+	public double getAsDouble(long... coordinates)  {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public void setAsDouble(double value, long... coordinates)  {
 		setAsObject(value, coordinates);
 	}
 
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
-	}
-
-	public final StorageType getStorageType() {
-		return StorageType.LIST;
 	}
 
 }

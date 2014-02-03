@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -36,13 +36,11 @@ import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
 public abstract class ImportMatrixSPARSECSV {
 
-	public static final Matrix fromString(String string, Object... parameters)
-			throws MatrixException {
+	public static final Matrix fromString(String string, Object... parameters) {
 		StringReader sr = new StringReader(string);
 		IntelligentFileReader r = new IntelligentFileReader(sr);
 		Matrix m = fromReader(r);
@@ -51,15 +49,14 @@ public abstract class ImportMatrixSPARSECSV {
 	}
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		InputStreamReader r = new InputStreamReader(stream);
 		Matrix m = fromReader(r, parameters);
 		r.close();
 		return m;
 	}
 
-	public static final Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static final Matrix fromFile(File file, Object... parameters) throws IOException {
 		FileReader lr = new FileReader(file);
 		Matrix m = fromReader(lr, parameters);
 		m.setLabel(file.getAbsolutePath());
@@ -67,8 +64,7 @@ public abstract class ImportMatrixSPARSECSV {
 		return m;
 	}
 
-	public static final Matrix fromReader(Reader reader, Object... parameters)
-			throws MatrixException {
+	public static final Matrix fromReader(Reader reader, Object... parameters) {
 		List<Long> rowData = new ArrayList<Long>();
 		List<Long> colData = new ArrayList<Long>();
 		List<String> data = new ArrayList<String>();
@@ -114,7 +110,7 @@ public abstract class ImportMatrixSPARSECSV {
 
 			return m;
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,11 +33,11 @@ import org.ujmp.core.intmatrix.impl.ImageMatrix;
 public abstract class ImportMatrixJPG {
 
 	public static Matrix fromFile(File file, Object... parameters) throws IOException {
-		return new ImageMatrix(file, parameters);
+		return new ImageMatrix(file);
 	}
 
 	public static Matrix fromStream(InputStream stream, Object... parameters) throws IOException {
-		return new ImageMatrix(stream, parameters);
+		return new ImageMatrix(stream);
 	}
 
 }

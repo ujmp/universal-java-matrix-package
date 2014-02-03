@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.intmatrix.calculation;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Discretize extends AbstractIntCalculation {
 	private static final long serialVersionUID = -2045926868254834270L;
@@ -46,11 +45,11 @@ public class Discretize extends AbstractIntCalculation {
 			discretized = new DiscretizeStandardBinning(dimension, matrix, numberOfBins).calcLink();
 			break;
 		default:
-			throw new MatrixException("method not yet implemented");
+			throw new RuntimeException("method not yet implemented");
 		}
 	}
 
-	public int getInt(long... coordinates) throws MatrixException {
+	public int getInt(long... coordinates)  {
 		return discretized.getAsInt(coordinates);
 	}
 

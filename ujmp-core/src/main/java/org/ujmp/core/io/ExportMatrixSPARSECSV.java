@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,29 +30,27 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public abstract class ExportMatrixSPARSECSV {
 
 	private static String separator = "\t";
 
-	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException,
-			MatrixException {
+	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException {
 		IntelligentFileWriter writer = new IntelligentFileWriter(file);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
 	public static void toStream(OutputStream outputStream, Matrix matrix, Object... parameters)
-			throws IOException, MatrixException {
+			throws IOException {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		toWriter(writer, matrix, parameters);
 		writer.close();
 	}
 
 	public static void toWriter(Writer writer, Matrix matrix, Object... parameters)
-			throws IOException, MatrixException {
+			throws IOException {
 		String lineend = System.getProperty("line.separator");
 
 		for (long[] c : matrix.availableCoordinates()) {

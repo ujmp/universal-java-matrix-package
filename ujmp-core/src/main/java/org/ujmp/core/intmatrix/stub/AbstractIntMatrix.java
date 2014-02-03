@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import static org.ujmp.core.util.VerifyUtil.assertTrue;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -47,27 +46,27 @@ public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> i
 		super(size);
 	}
 
-	public final Integer getObject(long... coordinates) throws MatrixException {
+	public final Integer getObject(long... coordinates)  {
 		return getInt(coordinates);
 	}
 
-	public final void setObject(Integer o, long... coordinates) throws MatrixException {
+	public final void setObject(Integer o, long... coordinates)  {
 		setInt(o, coordinates);
 	}
 
-	public final int getAsInt(long... coordinates) throws MatrixException {
+	public final int getAsInt(long... coordinates)  {
 		return getInt(coordinates);
 	}
 
-	public final void setAsInt(int value, long... coordinates) throws MatrixException {
+	public final void setAsInt(int value, long... coordinates)  {
 		setInt(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public final double getAsDouble(long... coordinates)  {
 		return getInt(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public final void setAsDouble(double value, long... coordinates)  {
 		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setInt((int) value, coordinates);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
 
@@ -44,27 +43,27 @@ public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> imp
 		super(size);
 	}
 
-	public final Long getObject(long... coordinates) throws MatrixException {
+	public final Long getObject(long... coordinates)  {
 		return getLong(coordinates);
 	}
 
-	public final void setObject(Long o, long... coordinates) throws MatrixException {
+	public final void setObject(Long o, long... coordinates)  {
 		setLong(o, coordinates);
 	}
 
-	public final long getAsLong(long... coordinates) throws MatrixException {
+	public final long getAsLong(long... coordinates)  {
 		return getLong(coordinates);
 	}
 
-	public final void setAsLong(long value, long... coordinates) throws MatrixException {
+	public final void setAsLong(long value, long... coordinates)  {
 		setLong(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates) throws MatrixException {
+	public final double getAsDouble(long... coordinates)  {
 		return getLong(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates) throws MatrixException {
+	public final void setAsDouble(double value, long... coordinates)  {
 		setLong((int) value, coordinates);
 	}
 

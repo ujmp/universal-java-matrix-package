@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.longmatrix.impl;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.longmatrix.calculation.LongCalculation;
 import org.ujmp.core.longmatrix.stub.AbstractLongMatrix;
 
@@ -56,16 +55,12 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 		}
 	}
 
-	public long getLong(long... coordinates) throws MatrixException {
+	public long getLong(long... coordinates)  {
 		return calculation.getLong(coordinates);
 	}
 
-	public void setLong(long value, long... coordinates) throws MatrixException {
+	public void setLong(long value, long... coordinates)  {
 		calculation.setLong(value, coordinates);
-	}
-
-	public final StorageType getStorageType() {
-		return calculation.getStorageType();
 	}
 
 }

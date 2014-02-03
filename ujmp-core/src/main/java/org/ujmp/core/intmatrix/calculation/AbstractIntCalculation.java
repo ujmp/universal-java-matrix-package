@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.impl.IntCalculationMatrix;
 
@@ -42,11 +41,11 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 		super(dimension, sources);
 	}
 
-	public final IntMatrix calcLink() throws MatrixException {
+	public final IntMatrix calcLink()  {
 		return new IntCalculationMatrix(this);
 	}
 
-	public final IntMatrix calcNew() throws MatrixException {
+	public final IntMatrix calcNew()  {
 		IntMatrix result = (IntMatrix) Matrix.Factory.zeros(ValueType.INT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsInt(getInt(c), c);
@@ -57,9 +56,9 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 		return result;
 	}
 
-	public final Matrix calcOrig() throws MatrixException {
+	public final Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 		for (long[] c : getSource().allCoordinates()) {
@@ -71,7 +70,7 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setInt(int value, long... coordinates) throws MatrixException {
+	public void setInt(int value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

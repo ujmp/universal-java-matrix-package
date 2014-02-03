@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.intmatrix;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 
 public interface IntMatrix extends GenericMatrix<Integer> {
@@ -35,9 +34,9 @@ public interface IntMatrix extends GenericMatrix<Integer> {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return an int representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public int getInt(long... coordinates) throws MatrixException;
+	public int getInt(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to an int value. If the matrix cannot store
@@ -47,8 +46,8 @@ public interface IntMatrix extends GenericMatrix<Integer> {
 	 *            int value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setInt(int value, long... coordinates) throws MatrixException;
+	public void setInt(int value, long... coordinates) ;
 
 }

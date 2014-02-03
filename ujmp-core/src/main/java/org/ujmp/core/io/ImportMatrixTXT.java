@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,19 +27,19 @@ public abstract class ImportMatrixTXT extends ImportMatrixCSV {
 
 	// public static final Matrix fromStream(InputStream stream, Object...
 	// parameters)
-	// throws MatrixException, IOException {
+	// , IOException {
 	// return MatrixFactory.linkToValue(IntelligentFileReader.load(stream));
 	// }
 	//
 	// public static final Matrix fromFile(File file, Object... parameters)
-	// throws MatrixException,
+	// ,
 	// IOException {
 	// return MatrixFactory.linkToValue(IntelligentFileReader.load(file));
 	// }
 	//
 	// public static final Matrix fromReader(Reader reader, Object...
 	// parameters)
-	// throws MatrixException {
+	//  {
 	// return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
 	// }
 

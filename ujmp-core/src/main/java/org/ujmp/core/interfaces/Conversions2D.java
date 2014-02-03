@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.interfaces;
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
 import org.ujmp.core.bytematrix.ByteMatrix2D;
 import org.ujmp.core.charmatrix.CharMatrix2D;
-import org.ujmp.core.datematrix.DateMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
 import org.ujmp.core.intmatrix.IntMatrix2D;
@@ -42,8 +41,6 @@ public interface Conversions2D extends Conversions {
 	public ByteMatrix2D toByteMatrix();
 
 	public CharMatrix2D toCharMatrix();
-
-	public DateMatrix2D toDateMatrix();
 
 	public DoubleMatrix2D toDoubleMatrix();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,7 +23,6 @@
 
 package org.ujmp.core.interfaces;
 
-import org.ujmp.core.exceptions.MatrixException;
 
 /**
  * This interface defines functions on a Matrix that have to do with the
@@ -34,7 +33,7 @@ import org.ujmp.core.exceptions.MatrixException;
  */
 public interface CoordinateFunctions {
 
-	public Iterable<long[]> nonZeroCoordinates() throws MatrixException;
+	public Iterable<long[]> nonZeroCoordinates() ;
 
 	/**
 	 * Returns an Iterator that goes over all coordinates in the Matrix. It goes
@@ -42,7 +41,7 @@ public interface CoordinateFunctions {
 	 * 
 	 * @return Iterable over all coordinates within a Matrix.
 	 */
-	public Iterable<long[]> allCoordinates() throws MatrixException;
+	public Iterable<long[]> allCoordinates() ;
 
 	/**
 	 * Returns an Iterator that only goes over the coordinates in the Matrix
@@ -51,7 +50,7 @@ public interface CoordinateFunctions {
 	 * 
 	 * @return Iterable over the saved entries in a Matrix.
 	 */
-	public Iterable<long[]> availableCoordinates() throws MatrixException;
+	public Iterable<long[]> availableCoordinates() ;
 
 	/**
 	 * Returns an Iterator that goes only over the Coordinates defined by the
@@ -64,7 +63,7 @@ public interface CoordinateFunctions {
 	 *            The String defining the selection of rows or columns
 	 * @return Iterable over the desired Coordinates
 	 */
-	public Iterable<long[]> selectedCoordinates(String selection) throws MatrixException;
+	public Iterable<long[]> selectedCoordinates(String selection) ;
 
 	/**
 	 * Returns an Iterator that goes only over the Coordinates defined by the
@@ -75,9 +74,9 @@ public interface CoordinateFunctions {
 	 * @param selection
 	 *            A list of long arrays defining the desired rows or columns
 	 * @return Iterable over the desired Coordinates
-	 * @throws MatrixException
+	 * @
 	 */
-	public Iterable<long[]> selectedCoordinates(long[]... selection) throws MatrixException;
+	public Iterable<long[]> selectedCoordinates(long[]... selection) ;
 
 	/**
 	 * Returns the position of the maximum value in a Matrix. If there is more
@@ -87,9 +86,9 @@ public interface CoordinateFunctions {
 	 * coordinates -1,-1 are returned.
 	 * 
 	 * @return Coordinates of the maximum value
-	 * @throws MatrixException
+	 * @
 	 */
-	public long[] getCoordinatesOfMaximum() throws MatrixException;
+	public long[] getCoordinatesOfMaximum() ;
 
 	/**
 	 * Returns the position of the minimum value in a Matrix. If there is more
@@ -99,9 +98,9 @@ public interface CoordinateFunctions {
 	 * coordinates -1,-1 are returned.
 	 * 
 	 * @return Coordinates of the minimum value
-	 * @throws MatrixException
+	 * @
 	 */
-	public long[] getCoordinatesOfMinimum() throws MatrixException;
+	public long[] getCoordinatesOfMinimum() ;
 
 	/**
 	 * Determines if the given Coordinates are part of the Matrix. If the Matrix
@@ -113,6 +112,6 @@ public interface CoordinateFunctions {
 	 *            The coordinates to check
 	 * @return a boolean stating if the coordinates are part of the Matrix
 	 */
-	public boolean contains(long... coordinates) throws MatrixException;
+	public boolean contains(long... coordinates) ;
 
 }

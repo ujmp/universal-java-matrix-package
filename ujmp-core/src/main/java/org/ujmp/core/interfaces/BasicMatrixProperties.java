@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,9 +27,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface BasicMatrixProperties {
 
@@ -49,21 +47,21 @@ public interface BasicMatrixProperties {
 
 	public boolean equalsAnnotation(Object o);
 
-	public int rank() throws MatrixException;
+	public int rank() ;
 
-	public double trace() throws MatrixException;
+	public double trace() ;
 
-	public double det() throws MatrixException;
+	public double det() ;
 
-	public boolean isDiagonal() throws MatrixException;
+	public boolean isDiagonal() ;
 
 	public boolean isSquare();
 
 	public boolean isSymmetric();
 
-	public boolean isSPD() throws MatrixException;
+	public boolean isSPD() ;
 
-	public boolean isEmpty() throws MatrixException;
+	public boolean isEmpty() ;
 
 	public boolean isColumnVector();
 
@@ -79,49 +77,49 @@ public interface BasicMatrixProperties {
 
 	public boolean isTransient();
 
-	public boolean containsMissingValues() throws MatrixException;
+	public boolean containsMissingValues() ;
 
-	public double doubleValue() throws MatrixException;
+	public double doubleValue() ;
 
-	public int intValue() throws MatrixException;
+	public int intValue() ;
 
-	public long longValue() throws MatrixException;
+	public long longValue() ;
 
-	public short shortValue() throws MatrixException;
+	public short shortValue() ;
 
-	public byte byteValue() throws MatrixException;
+	public byte byteValue() ;
 
-	public boolean booleanValue() throws MatrixException;
+	public boolean booleanValue() ;
 
-	public String stringValue() throws MatrixException;
+	public String stringValue() ;
 
-	public Date dateValue() throws MatrixException;
+	public Date dateValue() ;
 
-	public char charValue() throws MatrixException;
+	public char charValue() ;
 
-	public BigInteger bigIntegerValue() throws MatrixException;
+	public BigInteger bigIntegerValue() ;
 
-	public BigDecimal bigDecimalValue() throws MatrixException;
+	public BigDecimal bigDecimalValue() ;
 
-	public float floatValue() throws MatrixException;
+	public float floatValue() ;
 
-	public double getMinValue() throws MatrixException;
+	public double getMinValue() ;
 
-	public double getMeanValue() throws MatrixException;
+	public double getMeanValue() ;
 
-	public double getStdValue() throws MatrixException;
+	public double getStdValue() ;
 
-	public double getMaxValue() throws MatrixException;
+	public double getMaxValue() ;
 
-	public double getEuklideanValue() throws MatrixException;
+	public double getEuklideanValue() ;
 
-	public double getValueSum() throws MatrixException;
+	public double getValueSum() ;
 
-	public double getAbsoluteValueSum() throws MatrixException;
+	public double getAbsoluteValueSum() ;
 
-	public double getAbsoluteValueMean() throws MatrixException;
+	public double getAbsoluteValueMean() ;
 
-	public double getRMS() throws MatrixException;
+	public double getRMS() ;
 
 	public long getRowCount();
 
@@ -154,8 +152,6 @@ public interface BasicMatrixProperties {
 	public double normF();
 
 	public double normInf();
-
-	public StorageType getStorageType();
 
 	public boolean containsNull();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,7 +29,6 @@ import java.util.Date;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 /**
  * This interface declares the getters and setters for the entries in the Matrix
@@ -51,9 +50,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a double representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public double getAsDouble(long... coordinates) throws MatrixException;
+	public double getAsDouble(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a double value. If the matrix cannot store
@@ -63,9 +62,9 @@ public interface GettersAndSetters {
 	 *            double value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsDouble(double value, long... coordinates) throws MatrixException;
+	public void setAsDouble(double value, long... coordinates) ;
 
 	/**
 	 * Returns a raw entry in the matrix as it is stored. If the matrix supports
@@ -74,9 +73,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return entry object
-	 * @throws MatrixException
+	 * @
 	 */
-	public Object getAsObject(long... coordinates) throws MatrixException;
+	public Object getAsObject(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to an object. If the matrix cannot store this
@@ -86,9 +85,9 @@ public interface GettersAndSetters {
 	 *            the object to store
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsObject(Object o, long... coordinates) throws MatrixException;
+	public void setAsObject(Object o, long... coordinates) ;
 
 	/**
 	 * Returns a String representation of an entry in the matrix. The stored
@@ -97,9 +96,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a String representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public String getAsString(long... coordinates) throws MatrixException;
+	public String getAsString(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a String value. If the matrix cannot store
@@ -109,18 +108,18 @@ public interface GettersAndSetters {
 	 *            String value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsString(String string, long... coordinates) throws MatrixException;
+	public void setAsString(String string, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of double
 	 * values.
 	 * 
 	 * @return double array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public double[][] toDoubleArray() throws MatrixException;
+	public double[][] toDoubleArray() ;
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value
@@ -129,9 +128,20 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a byte representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public byte getAsByte(long... coordinates) throws MatrixException;
+	public byte getAsByte(long... coordinates) ;
+
+	/**
+	 * Returns a byte array representation of an entry in the matrix. The stored
+	 * value will be converted to a byte array as good as possible.
+	 * 
+	 * @param coordinates
+	 *            location of the entry
+	 * @return a byte array representation of the entry
+	 * @
+	 */
+	public byte[] getAsByteArray(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a byte value. If the matrix cannot store
@@ -141,31 +151,43 @@ public interface GettersAndSetters {
 	 *            byte value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsByte(byte value, long... coordinates) throws MatrixException;
+	public void setAsByte(byte value, long... coordinates) ;
+
+	/**
+	 * Sets an entry in the matrix to a byte array. If the matrix cannot store
+	 * byte array, the value will be represented as good as possible.
+	 * 
+	 * @param value
+	 *            byte array
+	 * @param coordinates
+	 *            location of the entry
+	 * @
+	 */
+	public void setAsByteArray(byte[] value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of boolean
 	 * values.
 	 * 
 	 * @return boolean array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public boolean[][] toBooleanArray() throws MatrixException;
+	public boolean[][] toBooleanArray() ;
 
-	public BigDecimal[][] toBigDecimalArray() throws MatrixException;
+	public BigDecimal[][] toBigDecimalArray() ;
 
-	public BigInteger[][] toBigIntegerArray() throws MatrixException;
+	public BigInteger[][] toBigIntegerArray() ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of byte
 	 * values.
 	 * 
 	 * @return byte array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public byte[][] toByteArray() throws MatrixException;
+	public byte[][] toByteArray() ;
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value
@@ -174,13 +196,13 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a boolean representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public boolean getAsBoolean(long... coordinates) throws MatrixException;
+	public boolean getAsBoolean(long... coordinates) ;
 
-	public BigInteger getAsBigInteger(long... coordinates) throws MatrixException;
+	public BigInteger getAsBigInteger(long... coordinates) ;
 
-	public BigDecimal getAsBigDecimal(long... coordinates) throws MatrixException;
+	public BigDecimal getAsBigDecimal(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a boolean value. If the matrix cannot
@@ -190,13 +212,13 @@ public interface GettersAndSetters {
 	 *            boolean value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsBoolean(boolean value, long... coordinates) throws MatrixException;
+	public void setAsBoolean(boolean value, long... coordinates) ;
 
-	public void setAsBigInteger(BigInteger value, long... coordinates) throws MatrixException;
+	public void setAsBigInteger(BigInteger value, long... coordinates) ;
 
-	public void setAsBigDecimal(BigDecimal value, long... coordinates) throws MatrixException;
+	public void setAsBigDecimal(BigDecimal value, long... coordinates) ;
 
 	/**
 	 * Returns a char representation of an entry in the matrix. The stored value
@@ -205,9 +227,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a char representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public char getAsChar(long... coordinates) throws MatrixException;
+	public char getAsChar(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a char value. If the matrix cannot store
@@ -217,18 +239,18 @@ public interface GettersAndSetters {
 	 *            char value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsChar(char value, long... coordinates) throws MatrixException;
+	public void setAsChar(char value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of char
 	 * values.
 	 * 
 	 * @return char array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public char[][] toCharArray() throws MatrixException;
+	public char[][] toCharArray() ;
 
 	/**
 	 * Returns a Date representation of an entry in the matrix. The stored value
@@ -237,9 +259,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a String representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public Date getAsDate(long... coordinates) throws MatrixException;
+	public Date getAsDate(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a Date value. If the matrix cannot store
@@ -249,18 +271,18 @@ public interface GettersAndSetters {
 	 *            Date object to store
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsDate(Date date, long... coordinates) throws MatrixException;
+	public void setAsDate(Date date, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Date
 	 * values.
 	 * 
 	 * @return Date array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public Date[][] toDateArray() throws MatrixException;
+	public Date[][] toDateArray() ;
 
 	/**
 	 * Returns a float representation of an entry in the matrix. The stored
@@ -269,9 +291,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a float representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public float getAsFloat(long... coordinates) throws MatrixException;
+	public float getAsFloat(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a float value. If the matrix cannot store
@@ -281,18 +303,18 @@ public interface GettersAndSetters {
 	 *            float value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsFloat(float value, long... coordinates) throws MatrixException;
+	public void setAsFloat(float value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of float
 	 * values.
 	 * 
 	 * @return float array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public float[][] toFloatArray() throws MatrixException;
+	public float[][] toFloatArray() ;
 
 	/**
 	 * Returns an int representation of an entry in the matrix. The stored value
@@ -301,9 +323,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return an int representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public int getAsInt(long... coordinates) throws MatrixException;
+	public int getAsInt(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to an int value. If the matrix cannot store
@@ -313,18 +335,18 @@ public interface GettersAndSetters {
 	 *            int value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsInt(int value, long... coordinates) throws MatrixException;
+	public void setAsInt(int value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of int
 	 * values.
 	 * 
 	 * @return int array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public int[][] toIntArray() throws MatrixException;
+	public int[][] toIntArray() ;
 
 	/**
 	 * Returns a long representation of an entry in the matrix. The stored value
@@ -333,9 +355,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a long representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public long getAsLong(long... coordinates) throws MatrixException;
+	public long getAsLong(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a long value. If the matrix cannot store
@@ -345,26 +367,26 @@ public interface GettersAndSetters {
 	 *            long value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsLong(long value, long... coordinates) throws MatrixException;
+	public void setAsLong(long value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of long
 	 * values.
 	 * 
 	 * @return long array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public long[][] toLongArray() throws MatrixException;
+	public long[][] toLongArray() ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Objects.
 	 * 
 	 * @return Object array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public Object[][] toObjectArray() throws MatrixException;
+	public Object[][] toObjectArray() ;
 
 	/**
 	 * Returns a short representation of an entry in the matrix. The stored
@@ -373,9 +395,9 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return a short representation of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public short getAsShort(long... coordinates) throws MatrixException;
+	public short getAsShort(long... coordinates) ;
 
 	/**
 	 * Sets an entry in the matrix to a short value. If the matrix cannot store
@@ -385,26 +407,26 @@ public interface GettersAndSetters {
 	 *            short value
 	 * @param coordinates
 	 *            location of the entry
-	 * @throws MatrixException
+	 * @
 	 */
-	public void setAsShort(short value, long... coordinates) throws MatrixException;
+	public void setAsShort(short value, long... coordinates) ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of short
 	 * values.
 	 * 
 	 * @return short array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public short[][] toShortArray() throws MatrixException;
+	public short[][] toShortArray() ;
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Strings.
 	 * 
 	 * @return String array with matrix entries
-	 * @throws MatrixException
+	 * @
 	 */
-	public String[][] toStringArray() throws MatrixException;
+	public String[][] toStringArray() ;
 
 	/**
 	 * Returns a representation of the entry in the matrix that reflects the
@@ -415,13 +437,13 @@ public interface GettersAndSetters {
 	 * @param coordinates
 	 *            location of the entry
 	 * @return object that represents the matrix entry best
-	 * @throws MatrixException
+	 * @
 	 */
-	public Object getPreferredObject(long... coordinates) throws MatrixException;
+	public Object getPreferredObject(long... coordinates) ;
 
-	public Matrix getAsMatrix(long... coordinates) throws MatrixException;
+	public Matrix getAsMatrix(long... coordinates) ;
 
-	public void setAsMatrix(Matrix m, long... coordinates) throws MatrixException;
+	public void setAsMatrix(Matrix m, long... coordinates) ;
 
 	/**
 	 * Inserts data into the matrix at the specified position

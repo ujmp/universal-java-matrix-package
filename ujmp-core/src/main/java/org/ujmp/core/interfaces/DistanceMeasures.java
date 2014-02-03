@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,16 +24,24 @@
 package org.ujmp.core.interfaces;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.core.calculation.Calculation.Ret;
 
 public interface DistanceMeasures {
 
-	public double euklideanDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException;
+	public double euklideanDistanceTo(Matrix m, boolean ignoreNaN);
 
-	public double manhattenDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException;
+	public double manhattenDistanceTo(Matrix m, boolean ignoreNaN);
 
-	public double minkowskiDistanceTo(Matrix m, double p, boolean ignoreNaN) throws MatrixException;
+	public double minkowskiDistanceTo(Matrix m, double p, boolean ignoreNaN);
 
-	public double chebyshevDistanceTo(Matrix m, boolean ignoreNaN) throws MatrixException;
+	public double chebyshevDistanceTo(Matrix m, boolean ignoreNaN);
+
+	public Matrix euklideanDistance(Ret returnType, boolean ignoreNaN);
+
+	public Matrix manhattenDistance(Ret returnType, boolean ignoreNaN);
+
+	public Matrix minkowskiDistance(Ret returnType, double p, boolean ignoreNaN);
+
+	public Matrix cosineSimilarity(Ret returnType, boolean ignoreNaN);
 
 }

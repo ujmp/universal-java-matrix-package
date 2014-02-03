@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -38,31 +38,29 @@ import java.net.URLConnection;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.io.FileUtil;
 
 public abstract class ImportMatrix {
 
-	public static Matrix fromFile(File file, Object... parameters) throws MatrixException,
-			IOException {
+	public static Matrix fromFile(File file, Object... parameters) throws IOException {
 		return fromFile(FileUtil.guessFormat(file), file, parameters);
 	}
 
 	public static Matrix fromFile(FileFormat format, File file, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromFile", new Class<?>[] { File.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
@@ -70,26 +68,25 @@ public abstract class ImportMatrix {
 		return ImportMatrixCSV.fromString(string, parameters);
 	}
 
-	public static Matrix fromString(FileFormat format, String string, Object... parameters)
-			throws MatrixException {
+	public static Matrix fromString(FileFormat format, String string, Object... parameters) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromString", new Class<?>[] { String.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, string, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
 	public static Matrix fromURL(FileFormat format, URL url, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		URLConnection connection = url.openConnection();
 		connection.setRequestProperty("User-Agent",
 				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
@@ -102,16 +99,18 @@ public abstract class ImportMatrix {
 	}
 
 	public static Matrix fromURL(FileFormat format, String urlString, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		if (FileFormat.ImapMessages.equals(format)) {
 			return ImportMatrixImapMessages.fromURL(urlString, parameters);
 		} else if (FileFormat.ImapFolders.equals(format)) {
 			return ImportMatrixImapFolders.fromURL(urlString, parameters);
 		} else {
-			
+
 			/**
-			 * TODO Hack to encode whitespace characters in URL since URLEncoder.encode() for the url.getPath() does not work as expected. 
-			 * Make utility which handles the encoding as specified in RFC 1738
+			 * TODO Hack to encode whitespace characters in URL since
+			 * URLEncoder.encode() for the url.getPath() does not work as
+			 * expected. Make utility which handles the encoding as specified in
+			 * RFC 1738
 			 **/
 			urlString = urlString.replace(" ", "%20");
 			return fromURL(format, new URL(urlString), parameters);
@@ -119,7 +118,7 @@ public abstract class ImportMatrix {
 	}
 
 	public static Matrix fromStream(FileFormat format, InputStream stream, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromStream",
@@ -127,18 +126,18 @@ public abstract class ImportMatrix {
 			Matrix matrix = (Matrix) m.invoke(null, stream, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
 	public static Matrix fromResource(FileFormat format, String name, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		try {
 			InputStream stream = ImportMatrix.class.getClassLoader().getResourceAsStream(name);
 			if (stream == null) {
@@ -148,30 +147,29 @@ public abstract class ImportMatrix {
 			stream.close();
 			return m;
 		} catch (Exception e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
 	public static Matrix fromReader(FileFormat format, Reader reader, Object... parameters)
-			throws MatrixException, IOException {
+			throws IOException {
 		try {
 			Class<?> c = Class.forName("org.ujmp.core.io.ImportMatrix" + format.name());
 			Method m = c.getMethod("fromReader", new Class<?>[] { Reader.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, reader, parameters);
 			return matrix;
 		} catch (ClassNotFoundException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (NoSuchMethodException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (IllegalAccessException e) {
-			throw new MatrixException("format not supported: " + format, e);
+			throw new RuntimeException("format not supported: " + format, e);
 		} catch (InvocationTargetException e) {
-			throw new MatrixException("could not import", e);
+			throw new RuntimeException("could not import", e);
 		}
 	}
 
-	public static Matrix fromClipboard(FileFormat format, Object... parameters)
-			throws MatrixException {
+	public static Matrix fromClipboard(FileFormat format, Object... parameters) {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable clipData = clipboard.getContents(null);
 		String s;

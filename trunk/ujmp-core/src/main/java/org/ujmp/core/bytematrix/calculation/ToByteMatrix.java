@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,7 +24,6 @@
 package org.ujmp.core.bytematrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ToByteMatrix extends AbstractByteCalculation {
 	private static final long serialVersionUID = -434734810039412266L;
@@ -33,12 +32,11 @@ public class ToByteMatrix extends AbstractByteCalculation {
 		super(matrix);
 	}
 
-	
-	public byte getByte(long... coordinates) throws MatrixException {
+	public byte getByte(long... coordinates)  {
 		return getSource().getAsByte(coordinates);
 	}
 
-	public void setByte(byte value, long... coordinates) throws MatrixException {
+	public void setByte(byte value, long... coordinates)  {
 		getSource().setAsByte(value, coordinates);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -999,24 +998,24 @@ public class Ginv extends AbstractDoubleCalculation {
 		return DenseDoubleMatrix2D.Factory.eye(intermediate.getSize()).minus(intermediate);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
-		throw new MatrixException("this method should never be called: LINK not possible");
+	public double getDouble(long... coordinates)  {
+		throw new RuntimeException("this method should never be called: LINK not possible");
 	}
 
-	public DenseDoubleMatrix2D calcLink() throws MatrixException {
-		throw new MatrixException("linking not possible, use ORIG or NEW");
+	public DenseDoubleMatrix2D calcLink()  {
+		throw new RuntimeException("linking not possible, use ORIG or NEW");
 	}
 
-	public DenseDoubleMatrix2D calcNew() throws MatrixException {
+	public DenseDoubleMatrix2D calcNew()  {
 		Matrix source = getSource();
 		ArrayDenseDoubleMatrix2D matrix = new ArrayDenseDoubleMatrix2D(source);
 		return inverse(matrix.getRowMajorDoubleArray2D());
 	}
 
-	public DenseDoubleMatrix2D calcOrig() throws MatrixException {
+	public DenseDoubleMatrix2D calcOrig()  {
 		Matrix source = getSource();
 		if (!source.isSquare()) {
-			throw new MatrixException("ORIG only possible for square matrices");
+			throw new RuntimeException("ORIG only possible for square matrices");
 		}
 
 		if (source instanceof HasRowMajorDoubleArray2D) {

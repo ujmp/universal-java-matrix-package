@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,9 +27,9 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DoubleCalculationMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractDoubleCalculation extends AbstractCalculation implements
 		DoubleCalculation {
@@ -44,12 +44,12 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public DoubleMatrix calcLink() throws MatrixException {
+	public DoubleMatrix calcLink()  {
 		return new DoubleCalculationMatrix(this);
 	}
 
-	public DoubleMatrix calcNew() throws MatrixException {
-		DoubleMatrix result = (DoubleMatrix) Matrix.Factory.zeros(ValueType.DOUBLE, getSize());
+	public DoubleMatrix calcNew()  {
+		DoubleMatrix result = DoubleMatrix2D.Factory.zeros(getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
 		}
@@ -59,14 +59,15 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		return result;
 	}
 
-	public Matrix calcOrig() throws MatrixException {
+	public Matrix calcOrig()  {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
-			throw new MatrixException(
+			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
 		}
 
-		for (long[] c : getSource().allCoordinates()) {
-			getSource().setAsDouble(getDouble(c), c);
+		final Matrix matrix = getSource();
+		for (final long[] c : getSource().allCoordinates()) {
+			matrix.setAsDouble(getDouble(c), c);
 		}
 		getSource().notifyGUIObject();
 		return getSource();
@@ -74,7 +75,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setDouble(double value, long... coordinates) throws MatrixException {
+	public void setDouble(double value, long... coordinates)  {
 	}
 
 	public final ValueType getValueType() {

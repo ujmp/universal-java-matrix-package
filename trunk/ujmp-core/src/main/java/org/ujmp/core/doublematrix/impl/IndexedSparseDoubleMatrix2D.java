@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -8455710302874238051L;
@@ -141,7 +140,7 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 		setDouble(value, (long) row, (long) column);
 	}
 
-	public boolean contains(long... coordinates) throws MatrixException {
+	public boolean contains(long... coordinates)  {
 		return getDouble(coordinates) == 0.0;
 	}
 

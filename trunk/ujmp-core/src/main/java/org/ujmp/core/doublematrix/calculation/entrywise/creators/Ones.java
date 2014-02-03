@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Ones extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 2547827499345834225L;
@@ -39,7 +38,7 @@ public class Ones extends AbstractDoubleCalculation {
 		return 1.0;
 	}
 
-	public static Matrix calc(Matrix source) throws MatrixException {
+	public static Matrix calc(Matrix source)  {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(1.0, c);
@@ -47,11 +46,11 @@ public class Ones extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(long... size) throws MatrixException {
+	public static Matrix calc(long... size)  {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(ValueType valueType, long... size) throws MatrixException {
+	public static Matrix calc(ValueType valueType, long... size)  {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(1.0, c);

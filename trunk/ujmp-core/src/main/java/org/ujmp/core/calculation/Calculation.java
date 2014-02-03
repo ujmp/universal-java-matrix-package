@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,10 +26,8 @@ package org.ujmp.core.calculation;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 
 /**
  * Interface for matrix calculations.
@@ -56,25 +54,19 @@ public interface Calculation extends Serializable {
 
 	public static final Ret ORIG = Ret.ORIG;
 
-	public Matrix calc(Ret returnType) throws MatrixException;
+	public Matrix calc(Ret returnType) ;
 
-	public Matrix calcNew() throws MatrixException;
+	public Matrix calcNew() ;
 
-	public Matrix calcLink() throws MatrixException;
+	public Matrix calcLink() ;
 
-	public Matrix calcOrig() throws MatrixException;
-
-	public boolean isSparse();
+	public Matrix calcOrig() ;
 
 	public Annotation getAnnotation();
 
 	public void setAnnotation(Annotation annotation);
 
-	public long getValueCount();
-
 	public Iterable<long[]> availableCoordinates();
-
-	public Iterable<long[]> allCoordinates();
 
 	public boolean contains(long... coordinates);
 
@@ -82,18 +74,10 @@ public interface Calculation extends Serializable {
 
 	public Matrix[] getSources();
 
-	public void setSources(Matrix... sources);
-
 	public int getDimension();
-
-	public void setDimension(int dimension);
 
 	public long[] getSize();
 
 	public ValueType getValueType();
-
-	public Matrix[] calcMulti();
-
-	public StorageType getStorageType();
 
 }

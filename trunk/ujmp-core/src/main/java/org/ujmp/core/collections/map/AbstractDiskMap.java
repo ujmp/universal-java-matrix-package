@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -37,7 +37,6 @@ import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.StringUtil;
@@ -66,7 +65,7 @@ public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements
 					path.mkdirs();
 				}
 			} catch (Exception e) {
-				throw new MatrixException(e);
+				throw new RuntimeException(e);
 			}
 		}
 		return path;
@@ -216,7 +215,7 @@ public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements
 
 			return null;
 		} catch (Exception e) {
-			throw new MatrixException("could not put object " + key, e);
+			throw new RuntimeException("could not put object " + key, e);
 		}
 	}
 
@@ -242,7 +241,7 @@ public abstract class AbstractDiskMap<K, V> extends AbstractMap<K, V> implements
 
 			return o;
 		} catch (Exception e) {
-			throw new MatrixException("could not get object " + key, e);
+			throw new RuntimeException("could not get object " + key, e);
 		}
 	}
 

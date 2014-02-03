@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Sinh extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 2083545526665186477L;
@@ -34,11 +33,11 @@ public class Sinh extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return Math.sinh(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source) throws MatrixException {
+	public static Matrix calc(Matrix source)  {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.sinh(source.getAsDouble(c)), c);

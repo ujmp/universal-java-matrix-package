@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import org.ujmp.core.exceptions.MatrixException;
 
 public class SortedListSet<A> extends AbstractList<A> implements SortedSet<A>, List<A>,
 		Serializable {
@@ -130,11 +128,11 @@ public class SortedListSet<A> extends AbstractList<A> implements SortedSet<A>, L
 	}
 
 	public void add(int index, A element) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean addAll(int index, Collection<? extends A> c) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	public synchronized A get(int index) {
@@ -171,7 +169,7 @@ public class SortedListSet<A> extends AbstractList<A> implements SortedSet<A>, L
 	}
 
 	public A set(int index, A element) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	public synchronized List<A> subList(int fromIndex, int toIndex) {

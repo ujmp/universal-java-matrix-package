@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,7 +32,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
@@ -57,18 +56,17 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		}
 	}
 
-	public double getDouble(long row, long column) throws MatrixException {
+	public double getDouble(long row, long column)  {
 		Matrix m = rows.get(row);
-		return m == null ? null : m.getAsDouble(0, column);
+		return m == null ? 0.0 : m.getAsDouble(0, column);
 	}
 
-	public double getDouble(int row, int column) throws MatrixException {
+	public double getDouble(int row, int column)  {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsDouble(0, column);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
-
 	public Iterable<long[]> availableCoordinates() {
 		List<long[]> coordinates = new ArrayList<long[]>();
 		for (Long r : rows.keySet()) {
@@ -88,7 +86,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		}
 	}
 
-	public void setDouble(double o, long row, long column) throws MatrixException {
+	public void setDouble(double o, long row, long column)  {
 		Matrix m = rows.get(row);
 		if (m == null) {
 			// TODO: there should be a faster implementation than this:
@@ -98,7 +96,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		m.setAsDouble(o, 0, column);
 	}
 
-	public void setDouble(double o, int row, int column) throws MatrixException {
+	public void setDouble(double o, int row, int column)  {
 		setDouble(o, (long) row, (long) column);
 	}
 
@@ -119,7 +117,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return rows.get(row);
 	}
 
-	public Matrix selectRows(Ret returnType, long... rows) throws MatrixException {
+	public Matrix selectRows(Ret returnType, long... rows)  {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
 		}

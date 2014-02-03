@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface MissingValueDoubleCalculations {
 
@@ -40,11 +39,9 @@ public interface MissingValueDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @param percentMissing
 	 *            defines how many values are missing 0.0 to 1.0
-	 * @return Matrix with missing values
-	 * @throws MatrixException
+	 * @return Matrix with missing values @
 	 */
-	public Matrix addMissing(Ret returnType, int dimension, double... percentMissing)
-			throws MatrixException;
+	public Matrix addMissing(Ret returnType, int dimension, double... percentMissing);
 
 	/**
 	 * Counts the missing values within the matrix, i.e. Infinity or NaN
@@ -54,10 +51,9 @@ public interface MissingValueDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @param dimension
 	 *            The axis along which to calculate
-	 * @return Matrix with counts of missing values
-	 * @throws MatrixException
+	 * @return Matrix with counts of missing values @
 	 */
-	public Matrix countMissing(Ret returnType, int dimension) throws MatrixException;
+	public Matrix countMissing(Ret returnType, int dimension);
 
 	/**
 	 * Replaces missing values with various methods
@@ -69,15 +65,12 @@ public interface MissingValueDoubleCalculations {
 	 *            the imputation method to use
 	 * @param parameters
 	 *            specify a set of parameters if needed
-	 * @return Matrix with missing values replaced
-	 * @throws MatrixException
+	 * @return Matrix with missing values replaced @
 	 */
-	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters)
-			throws MatrixException;
+	public Matrix impute(Ret returnType, ImputationMethod method, Object... parameters);
 
-	public Matrix deleteColumnsWithMissingValues(Ret returnType) throws MatrixException;
+	public Matrix deleteColumnsWithMissingValues(Ret returnType);
 
-	public Matrix deleteRowsWithMissingValues(Ret returnType, long threshold)
-			throws MatrixException;
+	public Matrix deleteRowsWithMissingValues(Ret returnType, long threshold);
 
 }

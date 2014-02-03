@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.basic;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Power extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -6766560469728046231L;
@@ -38,16 +37,16 @@ public class Power extends AbstractDoubleCalculation {
 		}
 	}
 
-	public Power(Matrix m1, double v2) throws MatrixException {
+	public Power(Matrix m1, double v2)  {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return Math.pow(getSource().getAsDouble(coordinates),
 				getSources()[1].getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source, Matrix power) throws MatrixException {
+	public static Matrix calc(Matrix source, Matrix power)  {
 		if (power.isScalar() && !Coordinates.equals(source.getSize(), power.getSize())) {
 			power = Matrix.Factory.fill(power.getAsDouble(0, 0), source.getSize());
 		}
@@ -58,7 +57,7 @@ public class Power extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Matrix source, double power) throws MatrixException {
+	public static Matrix calc(Matrix source, double power)  {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.pow(source.getAsDouble(c), power), c);

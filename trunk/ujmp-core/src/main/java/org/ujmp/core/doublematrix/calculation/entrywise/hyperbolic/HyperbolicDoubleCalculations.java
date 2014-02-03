@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface HyperbolicDoubleCalculations {
 
@@ -40,7 +39,7 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic sinus values
 	 */
-	public Matrix sinh(Ret returnType) throws MatrixException;
+	public Matrix sinh(Ret returnType) ;
 
 	/**
 	 * Calculates the hyperbolic cosinus of all entries in the matrix.
@@ -50,7 +49,7 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic cosinus values
 	 */
-	public Matrix cosh(Ret returnType) throws MatrixException;
+	public Matrix cosh(Ret returnType) ;
 
 	/**
 	 * Calculates the hyperbolic tangens of all entries in the matrix.
@@ -60,6 +59,6 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic tangens values
 	 */
-	public Matrix tanh(Ret returnType) throws MatrixException;
+	public Matrix tanh(Ret returnType) ;
 
 }

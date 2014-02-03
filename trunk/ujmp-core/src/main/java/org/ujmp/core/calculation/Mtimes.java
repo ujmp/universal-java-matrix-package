@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt, Frode Carlsen
+ * Copyright (C) 2008-2014 by Holger Arndt, Frode Carlsen
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,17 +32,17 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout;
-import org.ujmp.core.doublematrix.impl.BlockMultiply;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
+import org.ujmp.core.doublematrix.impl.BlockMultiply;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
-import org.ujmp.core.matrix.DenseMatrix;
-import org.ujmp.core.matrix.DenseMatrix2D;
-import org.ujmp.core.matrix.SparseMatrix;
 import org.ujmp.core.util.AbstractPlugin;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.UJMPSettings;
 
@@ -39,7 +38,7 @@ public interface InvSymm<T> extends Inv<T> {
 
 		public final Matrix calc(Matrix source) {
 			if (source.getDimensionCount() != 2 || source.getRowCount() != source.getColumnCount()) {
-				throw new MatrixException(
+				throw new RuntimeException(
 						"inverse only possible for square matrices. use pinv or ginv instead");
 			}
 			if (UJMPSettings.getNumberOfThreads() == 1) {

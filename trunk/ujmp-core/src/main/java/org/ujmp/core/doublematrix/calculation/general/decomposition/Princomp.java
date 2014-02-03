@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Princomp extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -6137993493011004670L;
@@ -37,7 +36,7 @@ public class Princomp extends AbstractDoubleCalculation {
 	}
 
 	
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (pca == null) {
 
 			Matrix[] usv;

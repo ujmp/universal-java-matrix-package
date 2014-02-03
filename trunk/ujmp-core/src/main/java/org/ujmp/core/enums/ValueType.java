@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -29,5 +29,5 @@ package org.ujmp.core.enums;
  * object types.
  */
 public enum ValueType {
-	BOOLEAN, BIGINTEGER, BIGDECIMAL, BYTE, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, DATE, OBJECT
+	BOOLEAN, BIGINTEGER, BIGDECIMAL, BYTE, BYTEARRAY, CHAR, SHORT, INT, LONG, FLOAT, DOUBLE, STRING, OBJECT
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,9 +25,7 @@ package org.ujmp.core.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.Matrix.StorageType;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.CoordinateIterator;
 
 public abstract class AbstractCalculation implements Calculation {
@@ -51,23 +49,11 @@ public abstract class AbstractCalculation implements Calculation {
 		this.dimension = dimension;
 	}
 
-	public boolean isSparse() {
-		return false;
-	}
-
 	public void setAnnotation(Annotation annotation) {
 		this.annotation = annotation;
 	}
 
-	public long getValueCount() {
-		return Coordinates.product(getSize());
-	}
-
 	public Iterable<long[]> availableCoordinates() {
-		return allCoordinates();
-	}
-
-	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(getSize());
 	}
 
@@ -87,23 +73,15 @@ public abstract class AbstractCalculation implements Calculation {
 		return sources;
 	}
 
-	public void setSources(Matrix... sources) {
-		this.sources = sources;
-	}
-
 	public int getDimension() {
 		return dimension;
-	}
-
-	public void setDimension(int dimension) {
-		this.dimension = dimension;
 	}
 
 	public long[] getSize() {
 		return getSource().getSize();
 	}
 
-	public final Matrix calc(Ret returnType) throws MatrixException {
+	public final Matrix calc(Ret returnType)  {
 		switch (returnType) {
 		case ORIG:
 			return calcOrig();
@@ -112,14 +90,6 @@ public abstract class AbstractCalculation implements Calculation {
 		default: // must be NEW
 			return calcNew();
 		}
-	}
-
-	public Matrix[] calcMulti() throws MatrixException {
-		return new Matrix[] { calcNew() };
-	}
-
-	public final StorageType getStorageType() {
-		return getSource().getStorageType();
 	}
 
 }

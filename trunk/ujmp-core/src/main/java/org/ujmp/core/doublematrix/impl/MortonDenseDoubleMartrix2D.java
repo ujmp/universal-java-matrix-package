@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
@@ -55,7 +54,7 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		init();
 	}
 
-	public MortonDenseDoubleMartrix2D(Matrix m) throws MatrixException {
+	public MortonDenseDoubleMartrix2D(Matrix m)  {
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
@@ -133,7 +132,7 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		values[TABLE1[row] + TABLE0[column]] = value;
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy()  {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new MortonDenseDoubleMartrix2D(result, rows, cols);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,18 +26,17 @@ package org.ujmp.core.bytematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 765072872179964518L;
 
-	public DefaultSparseByteMatrix(Matrix m) throws MatrixException {
+	public DefaultSparseByteMatrix(Matrix m)  {
 		super(m, -1);
 	}
 
-	public DefaultSparseByteMatrix(Matrix m, int maximumNumberOfEntries) throws MatrixException {
+	public DefaultSparseByteMatrix(Matrix m, int maximumNumberOfEntries)  {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,11 +52,11 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> im
 		return ValueType.BYTE;
 	}
 
-	public byte getByte(long... coordinates) throws MatrixException {
+	public byte getByte(long... coordinates)  {
 		return MathUtil.getByte(getObject(coordinates));
 	}
 
-	public void setByte(byte value, long... coordinates) throws MatrixException {
+	public void setByte(byte value, long... coordinates)  {
 		setObject(value, coordinates);
 	}
 

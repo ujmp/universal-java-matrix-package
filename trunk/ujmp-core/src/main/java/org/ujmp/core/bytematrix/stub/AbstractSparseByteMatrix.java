@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,10 +32,6 @@ public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix implem
 		SparseByteMatrix {
 
 	private static final long serialVersionUID = 1233020617561440217L;
-
-	public final StorageType getStorageType() {
-		return StorageType.DENSE;
-	}
 
 	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
 		return SparseObjectMatrix2D.factory;

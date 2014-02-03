@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.Wrapper;
 
 public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializable {
@@ -59,7 +58,7 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public void add(int index, A element) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
@@ -69,7 +68,7 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public boolean addAll(int index, Collection<? extends A> c) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
@@ -129,12 +128,12 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public ListIterator<A> listIterator() {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
 	public ListIterator<A> listIterator(int index) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
@@ -144,7 +143,7 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public A remove(int index) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
@@ -159,7 +158,7 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public A set(int index, A element) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	
@@ -169,7 +168,7 @@ public class SetToListWrapper<A> implements Wrapper<Set<A>>, List<A>, Serializab
 
 	
 	public List<A> subList(int fromIndex, int toIndex) {
-		throw new MatrixException("not implemented");
+		throw new RuntimeException("not implemented");
 	}
 
 	

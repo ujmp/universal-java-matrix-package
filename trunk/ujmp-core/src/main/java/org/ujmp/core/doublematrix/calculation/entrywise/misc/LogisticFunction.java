@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.misc;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class LogisticFunction extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -82780095324379021L;
@@ -35,7 +34,7 @@ public class LogisticFunction extends AbstractDoubleCalculation {
 	}
 
 	
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		return 1.0 / (Math.exp(-getSource().getAsDouble(coordinates)) + 1);
 	}
 

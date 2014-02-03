@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.bytematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.interfaces.HasColumnMajorByteArray1D;
 
 public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements
@@ -41,7 +40,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 
 	private int cols = 0;
 
-	public DefaultDenseByteMatrix2D(Matrix m) throws MatrixException {
+	public DefaultDenseByteMatrix2D(Matrix m)  {
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
@@ -133,7 +132,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy() throws MatrixException {
+	public final Matrix copy()  {
 		byte[] result = new byte[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseByteMatrix2D(result, rows, cols);

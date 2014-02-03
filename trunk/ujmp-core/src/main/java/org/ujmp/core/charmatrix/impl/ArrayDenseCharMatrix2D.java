@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,14 +25,13 @@ package org.ujmp.core.charmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 	private static final long serialVersionUID = -172129670809500830L;
 
 	private char[][] values = null;
 
-	public ArrayDenseCharMatrix2D(Matrix m) throws MatrixException {
+	public ArrayDenseCharMatrix2D(Matrix m)  {
 		super(m);
 		if (m instanceof ArrayDenseCharMatrix2D) {
 			char[][] v = ((ArrayDenseCharMatrix2D) m).values;

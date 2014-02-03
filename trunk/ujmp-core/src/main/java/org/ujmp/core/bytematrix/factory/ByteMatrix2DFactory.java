@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,12 +26,11 @@ package org.ujmp.core.bytematrix.factory;
 import java.io.Serializable;
 
 import org.ujmp.core.bytematrix.ByteMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public interface ByteMatrix2DFactory extends Serializable {
 
-	public ByteMatrix2D dense(long rows, long columns) throws MatrixException;
+	public ByteMatrix2D dense(long rows, long columns) ;
 
-	public ByteMatrix2D zeros(long rows, long columns) throws MatrixException;
+	public ByteMatrix2D zeros(long rows, long columns) ;
 
 }

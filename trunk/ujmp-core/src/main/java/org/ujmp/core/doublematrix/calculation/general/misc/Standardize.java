@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.calculation.general.misc;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
-import org.ujmp.core.exceptions.MatrixException;
 
 public class Standardize extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 6454174968175712888L;
@@ -39,7 +38,7 @@ public class Standardize extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (center == null) {
 			center = new Center(true, getDimension(), getSource()).calcNew();
 		}

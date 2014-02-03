@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,13 +24,12 @@
 package org.ujmp.core.charmatrix.factory;
 
 import org.ujmp.core.charmatrix.CharMatrix2D;
-import org.ujmp.core.exceptions.MatrixException;
 
 public abstract class AbstractCharMatrix2DFactory implements CharMatrix2DFactory {
 	private static final long serialVersionUID = -8247193970156242595L;
 
 	
-	public CharMatrix2D zeros(long rows, long columns) throws MatrixException {
+	public CharMatrix2D zeros(long rows, long columns)  {
 		return dense(rows, columns);
 	}
 

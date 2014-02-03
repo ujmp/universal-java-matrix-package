@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 by Holger Arndt
+ * Copyright (C) 2008-2014 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -34,7 +34,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
-import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.core.util.MathUtil;
 
 public class ImputeRegression extends AbstractDoubleCalculation {
@@ -53,7 +52,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		this.firstGuess = firstGuess;
 	}
 
-	public double getDouble(long... coordinates) throws MatrixException {
+	public double getDouble(long... coordinates)  {
 		if (imputed == null) {
 			createMatrix();
 		}
@@ -97,7 +96,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 			executor.shutdown();
 
 		} catch (Exception e) {
-			throw new MatrixException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -120,7 +119,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 	}
 
 	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column)
-			throws MatrixException {
+			 {
 
 		Matrix x = firstGuess.deleteColumns(Ret.NEW, column);
 		Matrix y = original.selectColumns(Ret.NEW, column);

@@ -88,14 +88,7 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jampack</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
@@ -228,14 +221,7 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-orbital</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -364,15 +350,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jampack</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
@@ -524,15 +502,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-orbital</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -586,7 +556,6 @@
 		<module>../ujmp-itext</module>
 		<module>../ujmp-jackcess</module>
 		<module>../ujmp-jama</module>
-		<module>../ujmp-jampack</module>
 		<module>../ujmp-jblas</module>
 		<module>../ujmp-jbpcafill</module>
 		<module>../ujmp-jdbc</module>
@@ -607,7 +576,6 @@
 		<module>../ujmp-mantissa</module>
 		<module>../ujmp-mtj</module>
 		<module>../ujmp-ojalgo</module>
-		<module>../ujmp-orbital</module>
 		<module>../ujmp-parallelcolt</module>
 		<module>../ujmp-pdfbox</module>
 		<module>../ujmp-poi</module>

@@ -395,20 +395,12 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runOjalgoDenseDoubleMatrix2D", runOjalgoDenseDoubleMatrix2D);
 	}
 
-	public boolean isRunOrbitalDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runOrbitalDenseDoubleMatrix2D"));
-	}
-
 	public void setRunOrbitalDenseDoubleMatrix2D(boolean runOrbitalDenseDoubleMatrix2D) {
 		put("runOrbitalDenseDoubleMatrix2D", runOrbitalDenseDoubleMatrix2D);
 	}
 
 	public boolean isRunOwlpackDenseDoubleMatrix2D() {
 		return MathUtil.getBoolean(get("runOwlpackDenseDoubleMatrix2D"));
-	}
-
-	public void setRunOwlpackDenseDoubleMatrix2D(boolean runOwlpackDenseDoubleMatrix2D) {
-		put("runOwlpackDenseDoubleMatrix2D", runOwlpackDenseDoubleMatrix2D);
 	}
 
 	public boolean isRunJScienceDenseDoubleMatrix2D() {

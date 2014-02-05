@@ -57,7 +57,6 @@ import org.ujmp.core.util.matrices.SystemPropertiesMatrix;
 import org.ujmp.ejml.benchmark.EJMLDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jama.benchmark.JamaDenseDoubleMatrix2DBenchmark;
-import org.ujmp.jampack.benchmark.JampackDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jblas.benchmark.JBlasDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jlinalg.benchmark.JLinAlgDenseDoubleMatrix2DBenchmark;
 import org.ujmp.jmatharray.benchmark.JMathArrayDenseDoubleMatrix2DBenchmark;
@@ -67,7 +66,6 @@ import org.ujmp.jscience.benchmark.JScienceDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mantissa.benchmark.MantissaDenseDoubleMatrix2DBenchmark;
 import org.ujmp.mtj.benchmark.MTJDenseDoubleMatrix2DBenchmark;
 import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
-import org.ujmp.orbital.benchmark.OrbitalDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.sst.benchmark.SSTDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
@@ -97,9 +95,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		if (getConfig().isRunSSTDenseDoubleMatrix2D()) {
 			list.add(new SSTDenseDoubleMatrix2DBenchmark());
 		}
-		if (getConfig().isRunOrbitalDenseDoubleMatrix2D()) {
-			list.add(new OrbitalDenseDoubleMatrix2DBenchmark());
-		}
 		if (getConfig().isRunOjalgoDenseDoubleMatrix2D()) {
 			list.add(new OjalgoDenseDoubleMatrix2DBenchmark());
 		}
@@ -126,9 +121,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		}
 		if (getConfig().isRunJBlasDenseDoubleMatrix2D()) {
 			list.add(new JBlasDenseDoubleMatrix2DBenchmark());
-		}
-		if (getConfig().isRunJampackDenseDoubleMatrix2D()) {
-			list.add(new JampackDenseDoubleMatrix2DBenchmark());
 		}
 		if (getConfig().isRunJamaDenseDoubleMatrix2D()) {
 			list.add(new JamaDenseDoubleMatrix2DBenchmark());
@@ -443,12 +435,12 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	}
 
 	@Override
-	public DoubleMatrix2D createMatrix(long... size)  {
+	public DoubleMatrix2D createMatrix(long... size) {
 		return null;
 	}
 
 	@Override
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return null;
 	}
 

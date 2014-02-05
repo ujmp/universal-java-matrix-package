@@ -32,7 +32,6 @@ import org.junit.runners.Suite;
 		org.ujmp.gui.AllTests.class, org.ujmp.jbpcafill.AllTests.class,
 		org.ujmp.hadoop.AllTests.class, org.ujmp.colt.AllTests.class,
 		org.ujmp.ehcache.AllTests.class, org.ujmp.jackcess.AllTests.class,
-		org.ujmp.itext.AllTests.class, org.ujmp.jampack.AllTests.class,
 		org.ujmp.jama.AllTests.class, org.ujmp.jfreechart.AllTests.class,
 		org.ujmp.jlinalg.AllTests.class, org.ujmp.jmatharray.AllTests.class,
 		org.ujmp.jmathplot.AllTests.class, org.ujmp.jblas.AllTests.class,
@@ -42,7 +41,6 @@ import org.junit.runners.Suite;
 		org.ujmp.jung.AllTests.class, org.ujmp.lsimpute.AllTests.class,
 		org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
 		org.ujmp.mantissa.AllTests.class, org.ujmp.mtj.AllTests.class,
-		org.ujmp.ojalgo.AllTests.class, org.ujmp.orbital.AllTests.class,
 		org.ujmp.pdfbox.AllTests.class, org.ujmp.vecmath.AllTests.class,
 		org.ujmp.ejml.AllTests.class, org.ujmp.sst.AllTests.class })
 public class AllTests {

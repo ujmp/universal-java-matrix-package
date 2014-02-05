@@ -29,7 +29,6 @@ import org.ujmp.core.floatmatrix.impl.DefaultSparseFloatMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
-import org.ujmp.jampack.JampackDenseDoubleMatrix2D;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 import org.ujmp.jlinalg.JLinAlgDenseDoubleMatrix2D;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
@@ -38,7 +37,6 @@ import org.ujmp.jscience.JScienceDenseDoubleMatrix2D;
 import org.ujmp.mantissa.MantissaDenseDoubleMatrix2D;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
-import org.ujmp.orbital.OrbitalDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
 import org.ujmp.sst.SSTDenseDoubleMatrix2D;
@@ -77,11 +75,9 @@ public class TestCompareMatrices {
 		ALLFLOATMATRIXCLASSES.add(MantissaDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(MTJDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(OjalgoDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(OrbitalDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtSparseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(VecMathDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(JampackDenseDoubleMatrix2D.class);
 
 		// some libraries do not support Java 5
 		if (!"1.5".equals(System.getProperty("java.specification.version"))) {

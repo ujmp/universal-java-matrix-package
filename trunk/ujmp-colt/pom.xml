@@ -20,11 +20,7 @@
 		<dependency>
 			<groupId>colt</groupId>
 			<artifactId>colt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>concurrent</groupId>
-			<artifactId>concurrent</artifactId>
-		</dependency>
+		</dependency>		
 
 		<dependency>
 			<groupId>org.ujmp</groupId>

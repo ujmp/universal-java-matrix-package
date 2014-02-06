@@ -22,15 +22,6 @@
 			<artifactId>ehcache</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-core</artifactId>
 			<version>${project.version}</version>

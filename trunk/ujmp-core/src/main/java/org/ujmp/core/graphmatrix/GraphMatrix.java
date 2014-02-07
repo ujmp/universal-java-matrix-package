@@ -23,7 +23,6 @@
 
 package org.ujmp.core.graphmatrix;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
@@ -35,8 +34,6 @@ public interface GraphMatrix<N, E> extends GenericMatrix2D<E> {
 	public boolean isDirected();
 
 	public void setDirected(boolean directed);
-
-	public Collection<E> getEdgeList();
 
 	public E getEdge(long nodeIndex1, long nodeIndex2);
 
@@ -90,14 +87,12 @@ public interface GraphMatrix<N, E> extends GenericMatrix2D<E> {
 
 	public List<N> getParents(N node);
 
-	public List<E> getEdgesToParents(N node);
-
-	public List<E> getEdgesToChildren(N node);
-
 	public List<Long> getParentIndices(long nodeIndex);
 
 	public List<Long> getParentIndices(N node);
-	
-	public void removeEdge(E edge);
+
+	public void removeEdge(N node1, N node2);
+
+	public void removeEdge(long nodeIndex1, long nodeIndex2);
 
 }

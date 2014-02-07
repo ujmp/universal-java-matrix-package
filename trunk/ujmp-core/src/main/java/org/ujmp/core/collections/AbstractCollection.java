@@ -39,17 +39,34 @@ public abstract class AbstractCollection<E> implements Serializable, Collection<
 		return somethingAdded;
 	}
 
+	public boolean containsAll(Collection<?> c) {
+		for (Object o : c) {
+			if (!contains(o)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean isEmpty() {
 		return size() == 0;
 	}
-	
+
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not allowed");
 	}
 
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not allowed");
+	}
+
+	public boolean removeAll(Collection<?> c) {
+		boolean somethingRemoved = false;
+		for (Object o : c) {
+			if (remove(o)) {
+				somethingRemoved = true;
+			}
+		}
+		return somethingRemoved;
 	}
 }

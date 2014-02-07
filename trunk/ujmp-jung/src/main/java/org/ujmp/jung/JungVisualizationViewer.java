@@ -24,6 +24,8 @@
 package org.ujmp.jung;
 
 import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -54,28 +56,33 @@ import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsideP
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import edu.uci.ics.jung.visualization.util.Animator;
 
-public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> implements MouseListener, TableModelListener {
+public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, EdgeWrapper<E>> implements MouseListener,
+		TableModelListener, ComponentListener {
 	private static final long serialVersionUID = 7328433763448698033L;
 
 	public static enum GraphLayout {
 		CircleLayout, FRLayout, FRLayout2, ISOMLayout, KKLayout, SpringLayout, SpringLayout2
 	};
 
-	private final Graph<N, E> graph;
+	private final Graph<N, EdgeWrapper<E>> graph;
 	private boolean showNodeLabels;
 	private boolean showEdgeLabels;
 	private final Transformer<N, String> emptyNodeLabelTransformer;
-	private final Transformer<E, String> emptyEdgeLabelTransformer;
+	private final Transformer<EdgeWrapper<E>, String> emptyEdgeLabelTransformer;
 
-	public JungVisualizationViewer(Graph<N, E> graph, boolean showNodeLabels, boolean showEdgeLabels) {
-		super(new KKLayout<N, E>(graph), new Dimension(800, 600));
+	public JungVisualizationViewer(Graph<N, EdgeWrapper<E>> graph, boolean showNodeLabels, boolean showEdgeLabels) {
+		super(graph.getVertexCount() < 1000 ? new FRLayout<N, EdgeWrapper<E>>(graph)
+				: new ISOMLayout<N, EdgeWrapper<E>>(graph), new Dimension(800, 600));
+
+		this.addComponentListener(this);
 
 		this.graph = graph;
 		this.showNodeLabels = showNodeLabels;
 		this.showEdgeLabels = showEdgeLabels;
 
 		if (graph instanceof GraphMatrixWrapper) {
-			((MatrixGUIObject) ((GraphMatrixWrapper<N, E>) graph).getGraphMatrix().getGUIObject()).addTableModelListener(this);
+			((MatrixGUIObject) ((GraphMatrixWrapper<N, E>) graph).getGraphMatrix().getGUIObject())
+					.addTableModelListener(this);
 		}
 
 		emptyNodeLabelTransformer = getRenderContext().getVertexLabelTransformer();
@@ -85,9 +92,9 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 		setGraphMouse(graphMouse);
 		graphMouse.setMode(Mode.PICKING);
 
-		getRenderContext().setEdgeDrawPaintTransformer(new ColorTransformer<E>());
-		getRenderContext().setArrowFillPaintTransformer(new ColorTransformer<E>());
-		getRenderContext().setArrowDrawPaintTransformer(new ColorTransformer<E>());
+		getRenderContext().setEdgeDrawPaintTransformer(new ColorTransformer<EdgeWrapper<E>>());
+		getRenderContext().setArrowFillPaintTransformer(new ColorTransformer<EdgeWrapper<E>>());
+		getRenderContext().setArrowDrawPaintTransformer(new ColorTransformer<EdgeWrapper<E>>());
 
 		getRenderContext().setVertexFillPaintTransformer(new ColorTransformer<N>(getPickedVertexState()));
 
@@ -99,7 +106,7 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 		}
 
 		if (showEdgeLabels) {
-			getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<E>());
+			getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<EdgeWrapper<E>>());
 		}
 
 		setVertexToolTipTransformer(new ToStringLabeller<N>());
@@ -107,7 +114,7 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 		addMouseListener(this);
 	}
 
-	public JungVisualizationViewer(Graph<N, E> graph) {
+	public JungVisualizationViewer(Graph<N, EdgeWrapper<E>> graph) {
 		this(graph, graph.getVertexCount() < 100, graph.getVertexCount() < 100);
 	}
 
@@ -120,29 +127,29 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 	}
 
 	public void switchLayout(GraphLayout type) {
-		Layout<N, E> layout = null;
+		Layout<N, EdgeWrapper<E>> layout = null;
 
 		switch (type) {
 		case KKLayout:
-			layout = new KKLayout<N, E>(graph);
+			layout = new KKLayout<N, EdgeWrapper<E>>(graph);
 			break;
 		case FRLayout:
-			layout = new FRLayout<N, E>(graph);
+			layout = new FRLayout<N, EdgeWrapper<E>>(graph);
 			break;
 		case ISOMLayout:
-			layout = new ISOMLayout<N, E>(graph);
+			layout = new ISOMLayout<N, EdgeWrapper<E>>(graph);
 			break;
 		case SpringLayout:
-			layout = new SpringLayout<N, E>(graph);
+			layout = new SpringLayout<N, EdgeWrapper<E>>(graph);
 			break;
 		case CircleLayout:
-			layout = new CircleLayout<N, E>(graph);
+			layout = new CircleLayout<N, EdgeWrapper<E>>(graph);
 			break;
 		case FRLayout2:
-			layout = new FRLayout2<N, E>(graph);
+			layout = new FRLayout2<N, EdgeWrapper<E>>(graph);
 			break;
 		case SpringLayout2:
-			layout = new SpringLayout2<N, E>(graph);
+			layout = new SpringLayout2<N, EdgeWrapper<E>>(graph);
 			break;
 		default:
 			break;
@@ -151,13 +158,14 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 		if (graph.getVertexCount() < 100) {
 			layout.setInitializer(getGraphLayout());
 			layout.setSize(getSize());
-			LayoutTransition<N, E> lt = new LayoutTransition<N, E>(this, getGraphLayout(), layout);
+			LayoutTransition<N, EdgeWrapper<E>> lt = new LayoutTransition<N, EdgeWrapper<E>>(this, getGraphLayout(),
+					layout);
 			Animator animator = new Animator(lt);
 			animator.start();
 			getRenderContext().getMultiLayerTransformer().setToIdentity();
 			repaint(500);
 		} else {
-			setModel(new DefaultVisualizationModel<N, E>(layout));
+			setModel(new DefaultVisualizationModel<N, EdgeWrapper<E>>(layout));
 			repaint(500);
 		}
 	}
@@ -209,19 +217,34 @@ public class JungVisualizationViewer<N, E> extends VisualizationViewer<N, E> imp
 	public void setShowEdgeLabels(boolean showEdgeLabels) {
 		this.showEdgeLabels = showEdgeLabels;
 		if (showEdgeLabels) {
-			getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<E>());
+			getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<EdgeWrapper<E>>());
 		} else {
 			getRenderContext().setEdgeLabelTransformer(emptyEdgeLabelTransformer);
 		}
 		repaint(500);
 	}
 
-	public Graph<N, E> getGraph() {
+	public Graph<N, EdgeWrapper<E>> getGraph() {
 		return graph;
 	}
 
 	public void tableChanged(TableModelEvent e) {
 		repaint(500);
+	}
+
+	public void componentResized(ComponentEvent e) {
+		getGraphLayout().setSize(getSize());
+		setModel(new DefaultVisualizationModel<N, EdgeWrapper<E>>(getGraphLayout()));
+		repaint(500);
+	}
+
+	public void componentMoved(ComponentEvent e) {
+	}
+
+	public void componentShown(ComponentEvent e) {
+	}
+
+	public void componentHidden(ComponentEvent e) {
 	}
 
 }

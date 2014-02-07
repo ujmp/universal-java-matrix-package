@@ -37,9 +37,19 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
+import org.ujmp.core.util.io.FileSelector;
+
 public abstract class ExportPNG {
 
 	private static final Logger logger = Logger.getLogger(ExportPNG.class.getName());
+
+	public static final File selectFile() {
+		return selectFile(null);
+	}
+
+	public static final File selectFile(Component c) {
+		return FileSelector.selectFile(c, "PNG Files", ".png");
+	}
 
 	public static final void save(String file, Component c) {
 		save(file, c, c.getWidth());

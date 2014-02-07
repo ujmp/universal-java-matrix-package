@@ -23,7 +23,7 @@
 
 package org.ujmp.examples;
 
-import java.io.File;
+import java.io.InputStream;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.impl.ImageMatrix;
@@ -31,12 +31,16 @@ import org.ujmp.core.intmatrix.impl.ImageMatrix;
 public class ImageMatrixExample {
 
 	public static void main(String[] args) throws Exception {
-		File file = new File("c:/temp/image.jpg");
 
-		// load image matrix
-		Matrix imageMatrix = new ImageMatrix(file);
+		// get an image
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("org/ujmp/examples/data/bigdata.jpg");
+
+		// load image into matrix. of course, this works with files, too.
+		Matrix imageMatrix = new ImageMatrix(is);
 
 		// show on screen
 		imageMatrix.showGUI();
+
+		is.close();
 	}
 }

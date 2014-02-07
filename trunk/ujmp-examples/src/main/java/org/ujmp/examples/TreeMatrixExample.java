@@ -33,6 +33,7 @@ public class TreeMatrixExample {
 		// create a TreeMatrix with Strings as elements
 		TreeMatrix<String> treeMatrix = new DefaultTreeMatrix<String>();
 
+		// create data
 		treeMatrix.setRoot("root");
 		treeMatrix.addChild("root", "child1");
 		treeMatrix.addChild("root", "child2");
@@ -47,6 +48,7 @@ public class TreeMatrixExample {
 		treeMatrix.addChild("subChild12", "subSubChild122");
 		treeMatrix.addChild("subSubChild122", "subSubSubChild1221");
 
+		// show on screen
 		treeMatrix.showGUI();
 	}
 }

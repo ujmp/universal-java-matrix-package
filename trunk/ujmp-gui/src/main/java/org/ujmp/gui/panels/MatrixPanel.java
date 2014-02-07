@@ -40,6 +40,7 @@ import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.graph.GraphPanel;
 import org.ujmp.gui.plot.MatrixPlot;
 
 public class MatrixPanel extends AbstractPanel {
@@ -56,12 +57,18 @@ public class MatrixPanel extends AbstractPanel {
 
 		tabbedPane.add("Heatmap", new MatrixHeatmapPanel(m, false));
 
-		if (m.getMatrix() instanceof GraphMatrix) {
+		if (m.getMatrix() instanceof GraphMatrix && m.getColumnCount() < 1000) {
+			tabbedPane.add("Graph", new GraphPanel(m));
+			tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
+		}
+
+		if (m.getMatrix() instanceof GraphMatrix && ((GraphMatrix<?, ?>) m.getMatrix()).getNodeCount() < 1000) {
 			try {
 				Class<?> graphPanelClass = Class.forName("org.ujmp.jung.JungVisualizationViewer");
 				Constructor<?> graphPanelConstructor = graphPanelClass.getConstructor(GraphMatrix.class);
 				JPanel graphPanel = (JPanel) graphPanelConstructor.newInstance(m.getMatrix());
-				tabbedPane.add("Graph", graphPanel);
+				tabbedPane.add("JUNG Graph", graphPanel);
+				tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
 			} catch (Throwable e) {
 			}
 		}

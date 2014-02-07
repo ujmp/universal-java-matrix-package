@@ -38,7 +38,6 @@ public class UJMPFileFilter extends FileFilter {
 		this.suffix = suffix;
 	}
 
-	
 	public boolean accept(File f) {
 		if (f.isDirectory()) {
 			return true;
@@ -52,7 +51,6 @@ public class UJMPFileFilter extends FileFilter {
 		return false;
 	}
 
-	
 	public String getDescription() {
 		return toString();
 	}
@@ -61,9 +59,8 @@ public class UJMPFileFilter extends FileFilter {
 		return suffix;
 	}
 
-	
 	public String toString() {
-		return label + " (." + suffix[0] + ")";
+		return label + " (" + suffix[0] + ")";
 	}
 
 }

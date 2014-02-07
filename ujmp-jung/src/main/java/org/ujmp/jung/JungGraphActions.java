@@ -34,6 +34,8 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
 import org.ujmp.gui.actions.PanelActions;
+import org.ujmp.gui.io.ExportJPEG;
+import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.jung.JungVisualizationViewer.GraphLayout;
 
 public class JungGraphActions extends JPopupMenu {
@@ -61,12 +63,9 @@ public class JungGraphActions extends JPopupMenu {
 		layoutMenu.add(springLayout2Action);
 
 		this.add(layoutMenu);
-		this.add(toggleEdgesAction);
 		this.add(toggleEdgeLabelsAction);
 		this.add(toggleVertexLabelsAction);
-		this.add(new JSeparator());
-		this.add(exportToJpgAction);
-		this.add(exportToPdfAction);
+		this.add(new JSeparator());		
 		this.add(new JSeparator());
 		this.add(refreshAction);
 	}
@@ -131,34 +130,11 @@ public class JungGraphActions extends JPopupMenu {
 		private static final long serialVersionUID = -8057389215808050942L;
 
 		public void actionPerformed(ActionEvent e) {
-			jungGraphPanel.repaint(500);
+			jungGraphPanel.refreshUI();
 		}
 	};
 
-	public final Action exportToPdfAction = new AbstractAction("Export to PDF...", UIManager.getIcon("JDMP.icon.pdf")) {
-		private static final long serialVersionUID = -7413294854080175036L;
-
-		public void actionPerformed(ActionEvent e) {
-			// jungGraphPanel.exportToPDF(ExportPDF.selectFile());
-		}
-	};
-
-	public final Action exportToJpgAction = new AbstractAction("Export to JPG...", UIManager.getIcon("JDMP.icon.image")) {
-		private static final long serialVersionUID = 2903870037000412488L;
-
-		public void actionPerformed(ActionEvent e) {
-			// jungGraphPanel.exportToJPEG(ExportJPEG.selectFile());
-		}
-	};
-
-	public final Action toggleEdgesAction = new AbstractAction("Toggle Edges") {
-		private static final long serialVersionUID = -7632767332831157590L;
-
-		public void actionPerformed(ActionEvent e) {
-			// jungGraphPanel.setShowEdges(!jungGraphPanel.isShowEdges());
-		}
-	};
-
+	
 	public final Action toggleEdgeLabelsAction = new AbstractAction("Toggle Edge Labels") {
 		private static final long serialVersionUID = 5043606502712307760L;
 

@@ -21,18 +21,38 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.examples;
+package org.ujmp.core.util;
 
-import java.io.File;
+public class Complex {
 
-import org.ujmp.core.util.io.DenseTiledFileDoubleMatrix2D;
+	final double real;
+	final double img;
 
-public class HugeFileMatrixOnDiskExample {
+	public Complex(final double real, final double img) {
+		this.real = real;
+		this.img = img;
+	}
 
-	public static void main(String[] args) throws Exception {
-		File file = new File("c:/Temp/test.bz2");
-		DenseTiledFileDoubleMatrix2D mm = new DenseTiledFileDoubleMatrix2D(1024 * 32, 1024 * 32);
-		mm.showGUI();
+	public final double abs() {
+		return Math.sqrt(real * real + img * img);
+	}
+
+	public final Complex times(final Complex c2) {
+		final double real2 = this.real * c2.real - this.img * c2.img;
+		final double img2 = this.img * c2.real + this.real * c2.img;
+		return new Complex(real2, img2);
+	}
+
+	public final Complex plus(final Complex c2) {
+		final double real = this.real + c2.real;
+		final double img = this.img + c2.img;
+		return new Complex(real, img);
+	}
+
+	public final Complex minus(final Complex c2) {
+		final double real = this.real - c2.real;
+		final double img = this.img - c2.img;
+		return new Complex(real, img);
 	}
 
 }

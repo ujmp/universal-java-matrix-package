@@ -31,14 +31,29 @@ public class ExtractExcelDataExample {
 
 	public static void main(String[] args) throws Exception {
 
+		// find all Excel files in one directory
 		File[] files = new File("c:/temp/").listFiles();
+
+		// create matrix to store result
 		Matrix result = Matrix.Factory.zeros(files.length, 2);
+
+		// iterate over all files
 		for (int i = 0; i < files.length; i++) {
+
+			// import file as matrix
 			Matrix m = Matrix.Factory.importFromFile(files[i]);
+
+			// store file name in result matrix
 			result.setAsString(files[i].getName(), i, 0);
+
+			// search for "Invoice"
 			if (m.containsString("Invoice"))
+
+				// extract value at row 10 and column 3 and store in result
 				result.setAsDouble(m.getAsDouble(10, 3), i, 1);
 		}
+
+		// display result on screen
 		result.showGUI();
 	}
 

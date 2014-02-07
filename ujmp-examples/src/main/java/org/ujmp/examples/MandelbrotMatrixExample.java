@@ -21,16 +21,19 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jung;
+package org.ujmp.examples;
 
-import org.ujmp.core.graphmatrix.GraphMatrix;
-import org.ujmp.gui.frame.AbstractFrame;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.util.matrices.MandelbrotMatrix;
 
-public class JungGraphFrame extends AbstractFrame {
-	private static final long serialVersionUID = 3515031833415481255L;
+public class MandelbrotMatrixExample {
 
-	public JungGraphFrame(GraphMatrix<?, ?> graphMatrix) {
-		super(graphMatrix, new JungVisualizationViewer(graphMatrix));
+	public static void main(String args[]) throws Exception {
+
+		// create a matrix from the Mandelbrot set
+		Matrix m = new MandelbrotMatrix();
+
+		// show on screen
+		m.showGUI();
 	}
-
 }

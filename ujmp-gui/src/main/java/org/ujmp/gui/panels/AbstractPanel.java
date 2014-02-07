@@ -41,10 +41,10 @@ import org.ujmp.gui.io.ExportPNG;
 public abstract class AbstractPanel extends JPanel implements HasToolTip, CanBeRepainted {
 	private static final long serialVersionUID = 4748216534779867441L;
 
-	GUIObject object = null;
+	private final GUIObject guiObject;
 
 	public AbstractPanel(GUIObject o) {
-		this.object = o;
+		this.guiObject = o;
 		setDoubleBuffered(true);
 		setPreferredSize(new Dimension(800, 600));
 		setSize(new Dimension(800, 600));
@@ -53,6 +53,10 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip, CanBeR
 	}
 
 	public void paintToBuffer(BufferedImage image) {
+	}
+
+	public GUIObject getGUIObject() {
+		return guiObject;
 	}
 
 	protected void finalize() throws Throwable {
@@ -73,7 +77,7 @@ public abstract class AbstractPanel extends JPanel implements HasToolTip, CanBeR
 	}
 
 	public String getToolTipText() {
-		return object.getToolTipText();
+		return guiObject.getToolTipText();
 	}
 
 	public void repaintUI() {

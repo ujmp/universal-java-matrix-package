@@ -23,19 +23,23 @@
 
 package org.ujmp.examples;
 
-import java.util.Random;
-
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.util.MathUtil;
 
-public class HugeSparseMatrixExample {
+public class BigSparseMatrixExample {
 
 	public static void main(String[] args) throws Exception {
+
+		// create a very large sparse matrix
 		Matrix m = Matrix.Factory.sparse(ValueType.DOUBLE, 100000000, 100000000);
-		Random random = new Random();
+
+		// set some values to 1
 		for (int i = 0; i < 10000; i++) {
-			m.setAsDouble(1, random.nextInt(100000), random.nextInt(100000));
+			m.setAsDouble(1, MathUtil.nextInteger(0, 100000), MathUtil.nextInteger(0, 100000));
 		}
+
+		// show on screen
 		m.showGUI();
 	}
 

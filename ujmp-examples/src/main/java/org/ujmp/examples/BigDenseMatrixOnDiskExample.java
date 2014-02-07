@@ -21,16 +21,33 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jung;
+package org.ujmp.examples;
 
-import org.ujmp.core.graphmatrix.GraphMatrix;
-import org.ujmp.gui.frame.AbstractFrame;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.util.io.DenseTiledFileDoubleMatrix2D;
 
-public class JungGraphFrame extends AbstractFrame {
-	private static final long serialVersionUID = 3515031833415481255L;
+public class BigDenseMatrixOnDiskExample {
 
-	public JungGraphFrame(GraphMatrix<?, ?> graphMatrix) {
-		super(graphMatrix, new JungVisualizationViewer(graphMatrix));
+	public static void main(String[] args) throws Exception {
+
+		// create matrix on disk in a temporary file
+		DenseTiledFileDoubleMatrix2D m = new DenseTiledFileDoubleMatrix2D(8192, 8192);
+
+		// fill an area with random values between -1 and 1
+		m.subMatrix(Ret.LINK, 1000, 1000, 2000, 2000).randn(Ret.ORIG);
+
+		// fill an area with random values between 0 and 1
+		m.subMatrix(Ret.LINK, 4000, 7000, 6000, 8000).rand(Ret.ORIG);
+
+		// set an area to a constant value of 10
+		m.subMatrix(Ret.LINK, 3000, 4000, 4000, 5000).fill(Ret.ORIG, 10);
+
+		// let's see the result
+		m.showGUI();
+
+		// Try to set the matrix size to larger values and see that you can
+		// handle several gigabytes easily with UJMP. Don't forget to delete the
+		// matrix in your temporary folder to save space
 	}
 
 }

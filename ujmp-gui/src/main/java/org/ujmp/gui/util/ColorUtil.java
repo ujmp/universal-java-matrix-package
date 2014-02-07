@@ -30,7 +30,8 @@ import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
-	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow, Color.cyan };
+	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow,
+			Color.cyan };
 
 	public static final Color contrastBW(Color c) {
 		if ((c.getRed() + c.getGreen() + c.getBlue()) > 200.0) {
@@ -51,21 +52,31 @@ public abstract class ColorUtil {
 		// -1 = 255 0 0 red
 		// -inf = 255 0 255 magenta
 		// nan = 0 255 255 cyan
-		if (v == Double.MIN_VALUE || Double.isNaN(v))
+		if (v == Double.MIN_VALUE || Double.isNaN(v)) {
 			return (Color.MAGENTA);
-		else if (Double.isInfinite(v))
+		} else if (Double.isInfinite(v)) {
 			return (Color.CYAN);
-		else if (v > 1.0)
+		} else if (v > 1.0) {
 			return (ColorMap.colorGreenToYellow[(int) (255.0 * Math.tanh((v - 1.0) / 10.0))]);
-		else if (v > 0.0)
+		} else if (v > 0.0) {
 			return (ColorMap.colorBlackToGreen[(int) (255.0 * v)]);
-		else if (v > -1.0)
+		} else if (v > -1.0) {
 			return (ColorMap.colorRedToBlack[(int) (255.0 * (v + 1.0))]);
-		else
+		} else {
 			return (ColorMap.colorRedToMagenta[(int) (255.0 * Math.tanh((-v - 1.0) / 10.0))]);
+		}
 	}
 
-	private static Color fromString(String s) {
+	public static final Color fromDouble(double v, int alpha) {
+		Color c = fromDouble(v);
+		return new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
+	}
+
+	public static Color fromString(String s) {
+		return fromString(s, 255);
+	}
+
+	public static Color fromString(String s, int alpha) {
 		if (s == null)
 			return Color.black;
 		int hc = Math.abs(hash(s.hashCode()));
@@ -74,37 +85,41 @@ public abstract class ColorUtil {
 		int g = 192 + (hc % 256) / 4;
 		hc = hc / 256;
 		int b = 192 + (hc % 256) / 4;
-		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255 : b);
+		return new Color(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255 : b, alpha);
 	}
 
 	public static Color fromObject(Object v) {
+		return fromObject(v, 255);
+	}
+
+	public static Color fromObject(Object v, int alpha) {
 		if (v == null) {
 			return Color.black;
 		} else if (v instanceof Double) {
-			return fromDouble((Double) v);
+			return fromDouble((Double) v, alpha);
 		} else if (v instanceof Float) {
-			return fromDouble((Float) v);
+			return fromDouble((Float) v, alpha);
 		} else if (v instanceof Byte) {
-			return fromDouble((double) ((Byte) v) / Byte.MAX_VALUE);
+			return fromDouble((double) ((Byte) v) / Byte.MAX_VALUE, alpha);
 		} else if (v instanceof Integer) {
 			return fromRGB((Integer) v);
 		} else if (v instanceof Long) {
-			return fromDouble((Long) v);
+			return fromDouble((Long) v, alpha);
 		} else if (v instanceof Matrix) {
 			Matrix m = (Matrix) v;
 			String s = m.getClass().getSimpleName();
 			if (m.getLabel() != null) {
 				s += " " + m.getLabel();
 			}
-			return fromString(s);
+			return fromString(s, alpha);
 		} else {
 			String s = StringUtil.format(v);
 			try {
 				double d = Double.parseDouble(s);
-				return fromDouble(d);
+				return fromDouble(d, alpha);
 			} catch (Exception e) {
 			}
-			return fromString(s);
+			return fromString(s, alpha);
 		}
 	}
 

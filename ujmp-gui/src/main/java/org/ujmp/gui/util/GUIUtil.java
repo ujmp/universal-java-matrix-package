@@ -31,16 +31,30 @@ import org.ujmp.core.util.MathUtil;
 public abstract class GUIUtil {
 
 	public static Object getObject(String message, Object... objects) {
-		return objects[JOptionPane.showOptionDialog(null, message, message,
-				JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-				objects, null)];
+		return objects[JOptionPane.showOptionDialog(null, message, message, JOptionPane.OK_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, objects, null)];
+	}
+
+	public static double getDouble(String message, double min, double max, Double initialValue) {
+		double i = Double.NaN;
+		while (MathUtil.isNaNOrInfinite(i)) {
+			String s = JOptionPane.showInputDialog(message + " (" + min + " to " + max + ")", initialValue);
+			try {
+				i = Double.parseDouble(s);
+			} catch (Exception e) {
+			}
+		}
+		return i;
 	}
 
 	public static int getInt(String message, int min, int max) {
-		int i = Integer.MAX_VALUE;
-		while (i == Integer.MAX_VALUE) {
-			String s = JOptionPane.showInputDialog(message + " (" + min
-					+ " to " + max + ")");
+		return getInt(message, min, max, null);
+	}
+
+	public static int getInt(String message, int min, int max, Integer initialValue) {
+		Integer i = null;
+		while (i == null) {
+			String s = JOptionPane.showInputDialog(message + " (" + min + " to " + max + ")", initialValue);
 			try {
 				i = Integer.parseInt(s);
 			} catch (Exception e) {
@@ -50,16 +64,7 @@ public abstract class GUIUtil {
 	}
 
 	public static double getDouble(String message, double min, double max) {
-		double i = Double.NaN;
-		while (MathUtil.isNaNOrInfinite(i)) {
-			String s = JOptionPane.showInputDialog(message + " (" + min
-					+ " to " + max + ")");
-			try {
-				i = Double.parseDouble(s);
-			} catch (Exception e) {
-			}
-		}
-		return i;
+		return getDouble(message, min, max, null);
 	}
 
 	public static String getString(String message) {
@@ -67,8 +72,7 @@ public abstract class GUIUtil {
 	}
 
 	public static boolean getBoolean(String message) {
-		int i = JOptionPane.showConfirmDialog(null, message, message,
-				JOptionPane.YES_NO_OPTION);
+		int i = JOptionPane.showConfirmDialog(null, message, message, JOptionPane.YES_NO_OPTION);
 		return JOptionPane.YES_OPTION == i;
 	}
 

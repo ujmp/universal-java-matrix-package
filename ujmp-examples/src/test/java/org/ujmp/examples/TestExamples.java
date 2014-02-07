@@ -46,12 +46,12 @@ public class TestExamples {
 
 	@Test
 	public void testHugeFileMatrixOnDisk() throws Exception {
-		HugeFileMatrixOnDiskExample.main(args);
+		BigDenseMatrixOnDiskExample.main(args);
 	}
 
 	@Test
 	public void testHugeSparseMatrix() throws Exception {
-		HugeSparseMatrixExample.main(args);
+		BigSparseMatrixExample.main(args);
 	}
 
 	@Test

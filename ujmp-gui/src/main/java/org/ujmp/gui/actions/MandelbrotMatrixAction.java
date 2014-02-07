@@ -28,6 +28,7 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.util.matrices.MandelbrotMatrix;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class MandelbrotMatrixAction extends AbstractMatrixAction {
@@ -36,68 +37,13 @@ public class MandelbrotMatrixAction extends AbstractMatrixAction {
 	public MandelbrotMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Mandelbrot Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a matrix from the mandelbrot set");
+		putValue(Action.SHORT_DESCRIPTION, "creates a matrix from the mandelbrot set");
 	}
 
-	public Object call()  {
-		double xoffset = -.5;
-		double yoffset = 0;
-		double size = 2;
-		int cells = 500;
-		int iterations = 20;
-
-		Matrix m = Matrix.Factory.zeros(cells, cells);
-		for (int column = 0; column < cells; column++) {
-			for (int row = 0; row < cells; row++) {
-				double x0 = xoffset - size / 2 + size * column / cells;
-				double y0 = yoffset - size / 2 + size * row / cells;
-				Complex z0 = new Complex(x0, y0);
-				double gray = iterations - calc(z0, iterations);
-				m.setAsDouble((gray - (iterations / 2)) / (iterations / 2),
-						cells - 1 - row, column);
-			}
-		}
+	public Object call() {
+		Matrix m = new MandelbrotMatrix();
 		m.showGUI();
 		return m;
 	}
 
-	public int calc(Complex c, int iterations) {
-		Complex z = c;
-		for (int i = 0; i < iterations; i++) {
-			if (z.abs() > 2.0) {
-				return i;
-			}
-			z = z.times(z).plus(c);
-		}
-		return iterations;
-	}
-
-}
-
-class Complex {
-	double real = 0;
-
-	double img = 0;
-
-	public Complex(double real, double img) {
-		this.real = real;
-		this.img = img;
-	}
-
-	public double abs() {
-		return Math.sqrt(real * real + img * img);
-	}
-
-	public Complex times(Complex c2) {
-		double real2 = this.real * c2.real - this.img * c2.img;
-		double img2 = this.img * c2.real + this.real * c2.img;
-		return new Complex(real2, img2);
-	}
-
-	public Complex plus(Complex c2) {
-		double real = this.real + c2.real;
-		double img = this.img + c2.img;
-		return new Complex(real, img);
-	}
 }

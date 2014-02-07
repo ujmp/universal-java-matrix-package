@@ -17,6 +17,7 @@ Export-Package: org.ujmp.gui,
  org.ujmp.gui.print,
  org.ujmp.gui.renderer,
  org.ujmp.gui.statusbar,
+ org.ujmp.gui.table,
  org.ujmp.gui.toolbar,
  org.ujmp.gui.util
 Require-Bundle: ujmp;bundle-version="0.3.0",

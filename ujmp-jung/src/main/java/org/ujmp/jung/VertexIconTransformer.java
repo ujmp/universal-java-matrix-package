@@ -23,7 +23,12 @@
 
 package org.ujmp.jung;
 
-import java.awt.Paint;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.Icon;
 
 import org.apache.commons.collections15.Transformer;
 import org.ujmp.gui.util.ColorUtil;
@@ -31,25 +36,36 @@ import org.ujmp.gui.util.UIDefaults;
 
 import edu.uci.ics.jung.visualization.picking.PickedState;
 
-public class ColorTransformer<T> implements Transformer<T, Paint> {
+public class VertexIconTransformer<N> implements Transformer<N, Icon> {
 
-	private PickedState<T> pickedState = null;
+	private final PickedState<N> pickedVertexState;
 
-	public ColorTransformer(PickedState<T> pickedState) {
-		this.pickedState = pickedState;
+	public VertexIconTransformer(PickedState<N> pickedVertexState) {
+		this.pickedVertexState = pickedVertexState;
 	}
 
-	public ColorTransformer() {
-	}
+	public Icon transform(final N v) {
+		return new Icon() {
 
-	public Paint transform(T input) {
-		if (pickedState == null) {
-			return ColorUtil.fromObject(input, 100);
-		} else if (pickedState.isPicked(input)) {
-			return UIDefaults.SELECTEDCOLOR;
-		} else {
-			return ColorUtil.fromObject(input, 100);
-		}
-	}
+			public int getIconHeight() {
+				return 10;
+			}
 
+			public int getIconWidth() {
+				return 10;
+			}
+
+			public void paintIcon(Component c, Graphics g, int x, int y) {
+				Graphics2D g2d = (Graphics2D) g;
+				if (pickedVertexState.isPicked(v)) {
+					g2d.setColor(UIDefaults.SELECTEDCOLOR);
+				} else {
+					g2d.setColor(ColorUtil.fromObject(v));
+				}
+				g2d.fillOval(x, y, 10, 10);
+				g2d.setColor(new Color(150, 150, 150, 150));
+				g2d.drawOval(x, y, 10, 10);
+			}
+		};
+	}
 }

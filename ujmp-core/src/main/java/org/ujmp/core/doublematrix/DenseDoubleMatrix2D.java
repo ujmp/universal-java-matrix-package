@@ -58,8 +58,10 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSymm;
 import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix2D;
 
-public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D {
+public interface DenseDoubleMatrix2D extends DoubleMatrix2D, DenseDoubleMatrix, DenseMatrix2D,
+		DenseGenericMatrix2D<Double> {
 
 	public static DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> Factory = new DefaultDenseDoubleMatrix2DFactory();
 

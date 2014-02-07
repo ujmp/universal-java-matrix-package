@@ -24,9 +24,9 @@
 package org.ujmp.core.graphmatrix;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
@@ -37,7 +37,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	private static final long serialVersionUID = -4939918585100574441L;
 
 	public boolean contains(long... coordinates) {
-		return getEdgeList().contains(Coordinates.wrap(coordinates));
+		return isConnected(coordinates[ROW], coordinates[COLUMN]);
 	}
 
 	public boolean isConnected(N node1, N node2) {
@@ -136,8 +136,50 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	}
 
 	public Iterable<long[]> availableCoordinates() {
-		// TODO: improve
-		return super.availableCoordinates();
+		Iterable<long[]> iterable = new Iterable<long[]>() {
+
+			public Iterator<long[]> iterator() {
+				Iterator<long[]> iterator = new Iterator<long[]>() {
+
+					Iterator<N> parents = getNodeList().iterator();
+					N parent = parents.next();
+					long parentIndex = getIndexOfNode(parent);
+					Iterator<N> children = getChildren(parent).iterator();
+					long[] current = null;
+
+					public boolean hasNext() {
+						if (current != null) {
+							return true;
+						}
+
+						while (!children.hasNext() && parents.hasNext()) {
+							parent = parents.next();
+							parentIndex = getIndexOfNode(parent);
+							children = getChildren(parent).iterator();
+						}
+
+						if (children.hasNext()) {
+							current = new long[] { parentIndex, getIndexOfNode(children.next()) };
+							return true;
+						} else {
+							return false;
+						}
+					}
+
+					public long[] next() {
+						long[] tmp = current;
+						current = null;
+						return tmp;
+					}
+
+					public void remove() {
+						throw new UnsupportedOperationException("remove not allowed");
+					}
+				};
+				return iterator;
+			}
+		};
+		return iterable;
 	}
 
 	public final long[] getSize() {
@@ -153,7 +195,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	}
 
 	public final long getValueCount() {
-		return getEdgeList().size();
+		return getEdgeCount();
 	}
 
 	public final void setObject(E value, long row, long column) {

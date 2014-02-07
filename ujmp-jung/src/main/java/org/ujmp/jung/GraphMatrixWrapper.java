@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.graphmatrix.GraphMatrix;
 
 import edu.uci.ics.jung.graph.AbstractTypedGraph;
@@ -34,7 +35,8 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.util.Pair;
 
-public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implements DirectedGraph<V, E> {
+public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, EdgeWrapper<E>> implements
+		DirectedGraph<V, EdgeWrapper<E>> {
 	private static final long serialVersionUID = -3871581250021217530L;
 
 	private final GraphMatrix<V, E> graphMatrix;
@@ -44,12 +46,28 @@ public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implement
 		this.graphMatrix = graphMatrix;
 	}
 
-	public Collection<E> getInEdges(V vertex) {
-		return graphMatrix.getEdgesToParents(vertex);
+	public Collection<EdgeWrapper<E>> getInEdges(V vertex) {
+		long childIndex = graphMatrix.getIndexOfNode(vertex);
+		List<Long> parentIndices = graphMatrix.getParentIndices(vertex);
+		List<EdgeWrapper<E>> edges = new ArrayList<EdgeWrapper<E>>();
+		for (long parentIndex : parentIndices) {
+			E edge = graphMatrix.getEdge(parentIndex, childIndex);
+			EdgeWrapper<E> edgeWrapper = new EdgeWrapper<E>(parentIndex, childIndex, edge);
+			edges.add(edgeWrapper);
+		}
+		return edges;
 	}
 
-	public Collection<E> getOutEdges(V vertex) {
-		return graphMatrix.getEdgesToChildren(vertex);
+	public Collection<EdgeWrapper<E>> getOutEdges(V vertex) {
+		long parentIndex = graphMatrix.getIndexOfNode(vertex);
+		List<Long> childIndices = graphMatrix.getChildIndices(vertex);
+		List<EdgeWrapper<E>> edges = new ArrayList<EdgeWrapper<E>>();
+		for (long childIndex : childIndices) {
+			E edge = graphMatrix.getEdge(parentIndex, childIndex);
+			EdgeWrapper<E> edgeWrapper = new EdgeWrapper<E>(parentIndex, childIndex, edge);
+			edges.add(edgeWrapper);
+		}
+		return edges;
 	}
 
 	public Collection<V> getPredecessors(V vertex) {
@@ -60,50 +78,31 @@ public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implement
 		return graphMatrix.getChildren(vertex);
 	}
 
-	public V getSource(E directed_edge) {
-		for (V node : graphMatrix.getNodeList()) {
-			for (E edge : graphMatrix.getEdgesToChildren(node)) {
-				if (edge == directed_edge) {
-					return node;
-				}
-			}
-		}
-		return null;
+	public V getSource(EdgeWrapper<E> directed_edge) {
+		return graphMatrix.getNode(directed_edge.getCoordinates().getLongCoordinates()[Matrix.ROW]);
 	}
 
-	public V getDest(E directed_edge) {
-		for (V node : graphMatrix.getNodeList()) {
-			for (E edge : graphMatrix.getEdgesToParents(node)) {
-				if (edge == directed_edge) {
-					return node;
-				}
-			}
-		}
-		return null;
+	public V getDest(EdgeWrapper<E> directed_edge) {
+		return graphMatrix.getNode(directed_edge.getCoordinates().getLongCoordinates()[Matrix.COLUMN]);
 	}
 
-	public boolean isSource(V vertex, E edge) {
+	public boolean isSource(V vertex, EdgeWrapper<E> edge) {
 		V source = getSource(edge);
 		return vertex == source;
 	}
 
-	public boolean isDest(V vertex, E edge) {
+	public boolean isDest(V vertex, EdgeWrapper<E> edge) {
 		V dest = getDest(edge);
 		return vertex == dest;
 	}
 
-	public Pair<V> getEndpoints(E edge) {
-		for (final long[] c : graphMatrix.availableCoordinates()) {
-			final E e = graphMatrix.getEdge(c[0], c[1]);
-			if (e.equals(edge)) {
-				return new Pair<V>(graphMatrix.getNode(c[0]), graphMatrix.getNode(c[1]));
-			}
-		}
-		return null;
+	public Pair<V> getEndpoints(EdgeWrapper<E> edge) {
+		long[] c = edge.getCoordinates().getLongCoordinates();
+		return new Pair<V>(graphMatrix.getNode(c[0]), graphMatrix.getNode(c[1]));
 	}
 
-	public Collection<E> getEdges() {
-		return graphMatrix.getEdgeList();
+	public Collection<EdgeWrapper<E>> getEdges() {
+		return new EdgeWrapperCollection<E>(graphMatrix);
 	}
 
 	public Collection<V> getVertices() {
@@ -114,8 +113,13 @@ public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implement
 		return graphMatrix.getNodeList().contains(vertex);
 	}
 
-	public boolean containsEdge(E edge) {
-		return graphMatrix.getEdgeList().contains(edge);
+	public boolean containsEdge(EdgeWrapper<E> edge) {
+		for (EdgeWrapper<E> edgeWrapper : getEdges()) {
+			if (edgeWrapper.equals(edge)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getEdgeCount() {
@@ -133,10 +137,10 @@ public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implement
 		return neighbors;
 	}
 
-	public Collection<E> getIncidentEdges(V vertex) {
-		List<E> edges = new ArrayList<E>();
-		edges.addAll(graphMatrix.getEdgesToParents(vertex));
-		edges.addAll(graphMatrix.getEdgesToChildren(vertex));
+	public Collection<EdgeWrapper<E>> getIncidentEdges(V vertex) {
+		List<EdgeWrapper<E>> edges = new ArrayList<EdgeWrapper<E>>();
+		edges.addAll(getInEdges(vertex));
+		edges.addAll(getOutEdges(vertex));
 		return edges;
 	}
 
@@ -150,16 +154,17 @@ public class GraphMatrixWrapper<V, E> extends AbstractTypedGraph<V, E> implement
 		return true;
 	}
 
-	public boolean removeEdge(E edge) {
-		graphMatrix.removeEdge(edge);
+	public boolean removeEdge(EdgeWrapper<E> edge) {
+		long[] coordinates = edge.getCoordinates().getLongCoordinates();
+		graphMatrix.removeEdge(coordinates[Matrix.ROW], coordinates[Matrix.COLUMN]);
 		return true;
 	}
 
 	@Override
-	public boolean addEdge(E edge, Pair<? extends V> endpoints, EdgeType edgeType) {
-		graphMatrix.setEdge(edge, endpoints.getFirst(), endpoints.getSecond());
+	public boolean addEdge(EdgeWrapper<E> edge, Pair<? extends V> endpoints, EdgeType edgeType) {
+		graphMatrix.setEdge(edge.getEdge(), endpoints.getFirst(), endpoints.getSecond());
 		if (edgeType == EdgeType.UNDIRECTED) {
-			graphMatrix.setEdge(edge, endpoints.getSecond(), endpoints.getFirst());
+			graphMatrix.setEdge(edge.getEdge(), endpoints.getSecond(), endpoints.getFirst());
 		}
 		return true;
 	}

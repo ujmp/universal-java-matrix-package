@@ -133,26 +133,40 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 
 	public synchronized void setEdge(E edge, long nodeIndex1, long nodeIndex2) {
 		int nmbOfNodes = nodes.size();
-		if (nodeIndex1 >= nmbOfNodes)
+		if (nodeIndex1 >= nmbOfNodes) {
 			throw new RuntimeException("accessed node " + nodeIndex1 + ", but only " + nmbOfNodes
 					+ " available");
-		if (nodeIndex2 >= nmbOfNodes)
+		}
+		if (nodeIndex2 >= nmbOfNodes) {
 			throw new RuntimeException("accessed node " + nodeIndex2 + ", but only " + nmbOfNodes
 					+ " available");
-		edges.put(Coordinates.wrap(nodeIndex1, nodeIndex2), edge);
-		List<Long> list = children.get(nodeIndex1);
-		if (list == null) {
-			list = new ArrayList<Long>();
-			children.put(nodeIndex1, list);
 		}
-		list.add(nodeIndex2);
+		if (edge == null) {
+			edges.remove(Coordinates.wrap(nodeIndex1, nodeIndex2));
+			List<Long> childrenNode1 = children.get(nodeIndex1);
+			if (childrenNode1 != null) {
+				childrenNode1.remove(nodeIndex1);
+			}
+			List<Long> parentsNode2 = parents.get(nodeIndex2);
+			if (parentsNode2 != null) {
+				parentsNode2.remove(nodeIndex2);
+			}
+		} else {
+			edges.put(Coordinates.wrap(nodeIndex1, nodeIndex2), edge);
+			List<Long> childrenNode1 = children.get(nodeIndex1);
+			if (childrenNode1 == null) {
+				childrenNode1 = new ArrayList<Long>();
+				children.put(nodeIndex1, childrenNode1);
+			}
+			childrenNode1.add(nodeIndex2);
 
-		list = parents.get(nodeIndex2);
-		if (list == null) {
-			list = new ArrayList<Long>();
-			parents.put(nodeIndex2, list);
+			List<Long> parentsNode2 = parents.get(nodeIndex2);
+			if (parentsNode2 == null) {
+				parentsNode2 = new ArrayList<Long>();
+				parents.put(nodeIndex2, parentsNode2);
+			}
+			parentsNode2.add(nodeIndex1);
 		}
-		list.add(nodeIndex1);
 	}
 
 	public void setEdge(E edge, N node1, N node2) {
@@ -188,5 +202,13 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		for (Coordinates c : coordinatesToDelete) {
 			edges.remove(c);
 		}
+	}
+
+	public void removeEdge(N node1, N node2) {
+		setEdge(null, node1, node2);
+	}
+
+	public void removeEdge(long nodeIndex1, long nodeIndex2) {
+		setEdge(null, nodeIndex1, nodeIndex2);
 	}
 }

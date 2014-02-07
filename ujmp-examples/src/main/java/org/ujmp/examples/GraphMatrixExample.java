@@ -23,10 +23,43 @@
 
 package org.ujmp.examples;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
+import org.ujmp.core.AbstractMatrix;
+import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.Matrix2D;
+import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.SparseMatrix2D;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix;
+import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix2D;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix2D;
+import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
+import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix;
+import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
+import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.graphmatrix.DefaultGraphMatrix;
 import org.ujmp.core.graphmatrix.GraphMatrix;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
+import org.ujmp.core.matrix.factory.DefaultMatrixFactory;
+import org.ujmp.core.matrix.factory.MatrixFactory;
 import org.ujmp.jung.JungGraphFrame;
 
 public class GraphMatrixExample {
@@ -37,22 +70,54 @@ public class GraphMatrixExample {
 		GraphMatrix<String, Double> graphMatrix = new DefaultGraphMatrix<String, Double>();
 		graphMatrix.setLabel("Interface Graph");
 
-		// add some nodes
-		graphMatrix.addNode("Matrix");
-		graphMatrix.addNode("GenericMatrix");
+		List<Class<?>> classList = new ArrayList<Class<?>>();
+		classList.add(Matrix.class);
 
-		// connect the nodes with directed edges,
-		// non-existing nodes will be added automatically
-		graphMatrix.setEdge(1.0, "Matrix", "GenericMatrix");
-		graphMatrix.setEdge(1.0, "Matrix", "Matrix2D");
-		graphMatrix.setEdge(1.0, "Matrix", "DenseMatrix");
-		graphMatrix.setEdge(1.0, "Matrix", "SpaseMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "BigDecimalMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "BigIntegerMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "BooleanMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "ByteArrayMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "ByteMatrix");
-		graphMatrix.setEdge(1.0, "GenericMatrix", "CharMatrix");
+		classList.add(Matrix2D.class);
+		classList.add(DenseMatrix.class);
+		classList.add(DenseMatrix2D.class);
+		classList.add(SparseMatrix.class);
+		classList.add(SparseMatrix2D.class);
+		classList.add(GenericMatrix.class);
+		classList.add(DoubleMatrix.class);
+		classList.add(GenericMatrix2D.class);
+		classList.add(DenseGenericMatrix2D.class);
+		classList.add(SparseGenericMatrix2D.class);
+		classList.add(DenseGenericMatrix.class);
+		classList.add(SparseGenericMatrix.class);
+		classList.add(DoubleMatrix2D.class);
+		classList.add(DenseDoubleMatrix2D.class);
+		classList.add(DenseDoubleMatrix.class);
+		classList.add(SparseDoubleMatrix2D.class);
+		classList.add(SparseDoubleMatrix.class);
+
+		classList.add(AbstractMatrix.class);
+		classList.add(AbstractGenericMatrix.class);
+		classList.add(AbstractDenseGenericMatrix.class);
+		classList.add(AbstractDenseGenericMatrix2D.class);
+		classList.add(AbstractDoubleMatrix.class);
+		classList.add(AbstractDoubleMatrix2D.class);
+		classList.add(AbstractDenseDoubleMatrix.class);
+		classList.add(AbstractDenseDoubleMatrix2D.class);
+
+		classList.add(DefaultDenseDoubleMatrix2D.class);
+
+		classList.add(MatrixFactory.class);
+		classList.add(AbstractMatrixFactory.class);
+		classList.add(DefaultMatrixFactory.class);
+
+		for (Class<?> c1 : classList) {
+			for (Class<?> c2 : classList) {
+				if (c2.getSuperclass() == c1) {
+					graphMatrix.setEdge(1.0, c1.getSimpleName(), c2.getSimpleName());
+				}
+				for (Class<?> c3 : c2.getInterfaces()) {
+					if (c1 == c3) {
+						graphMatrix.setEdge(1.0, c1.getSimpleName(), c2.getSimpleName());
+					}
+				}
+			}
+		}
 
 		// visualize using JUNG
 		JFrame frame = new JungGraphFrame(graphMatrix);

@@ -28,20 +28,22 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
 import JSci.maths.matrices.AbstractDoubleMatrix;
 import JSci.maths.matrices.AbstractDoubleSquareMatrix;
 import JSci.maths.matrices.DoubleMatrix;
 import JSci.maths.matrices.DoubleSquareMatrix;
 
-public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<AbstractDoubleMatrix> {
+public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<AbstractDoubleMatrix> {
 	private static final long serialVersionUID = -4314440110211101868L;
 
-	private AbstractDoubleMatrix matrix = null;
+	public static final JSciDenseDoubleMatrix2DFactory Factory = new JSciDenseDoubleMatrix2DFactory();
 
-	public JSciDenseDoubleMatrix2D(Matrix source)  {
-		this(source.getSize());
+	private final AbstractDoubleMatrix matrix;
+
+	public JSciDenseDoubleMatrix2D(Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -50,18 +52,17 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		}
 	}
 
-	public JSciDenseDoubleMatrix2D(long... size) {
-		if (Coordinates.product(size) != 0) {
-			if (size[ROW] == size[COLUMN]) {
-				this.matrix = new DoubleSquareMatrix((int) size[ROW]);
-			} else {
-				this.matrix = new DoubleMatrix((int) size[ROW],
-						(int) size[COLUMN]);
-			}
+	public JSciDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		if (rows == columns) {
+			this.matrix = new DoubleSquareMatrix(rows);
+		} else {
+			this.matrix = new DoubleMatrix(rows, columns);
 		}
 	}
 
 	public JSciDenseDoubleMatrix2D(AbstractDoubleMatrix m) {
+		super(m.rows(), m.columns());
 		this.matrix = m;
 	}
 
@@ -74,8 +75,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] {
-				matrix.rows(), matrix.columns() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.rows(), matrix.columns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
@@ -87,14 +87,12 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix transpose() {
-		return new JSciDenseDoubleMatrix2D((AbstractDoubleMatrix) matrix
-				.transpose());
+		return new JSciDenseDoubleMatrix2D((AbstractDoubleMatrix) matrix.transpose());
 	}
 
 	public Matrix inv() {
 		if (matrix instanceof DoubleSquareMatrix) {
-			return new JSciDenseDoubleMatrix2D(((DoubleSquareMatrix) matrix)
-					.inverse());
+			return new JSciDenseDoubleMatrix2D(((DoubleSquareMatrix) matrix).inverse());
 		} else {
 			throw new RuntimeException("only allowed for square matrices");
 		}
@@ -102,8 +100,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix chol() {
 		if (matrix instanceof DoubleSquareMatrix) {
-			AbstractDoubleSquareMatrix[] chol = ((DoubleSquareMatrix) matrix)
-					.choleskyDecompose();
+			AbstractDoubleSquareMatrix[] chol = ((DoubleSquareMatrix) matrix).choleskyDecompose();
 			return new JSciDenseDoubleMatrix2D(chol[0]);
 		} else {
 			throw new RuntimeException("only allowed for square matrices");
@@ -112,11 +109,10 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] lu() {
 		if (matrix instanceof DoubleSquareMatrix) {
-			AbstractDoubleSquareMatrix[] lu = ((DoubleSquareMatrix) matrix)
-					.luDecompose();
+			AbstractDoubleSquareMatrix[] lu = ((DoubleSquareMatrix) matrix).luDecompose();
 			Matrix l = new JSciDenseDoubleMatrix2D(lu[0]);
 			Matrix u = new JSciDenseDoubleMatrix2D(lu[1]);
-			Matrix p = new JSciDenseDoubleMatrix2D(getRowCount(), getRowCount());
+			Matrix p = new JSciDenseDoubleMatrix2D(MathUtil.longToInt(getRowCount()), MathUtil.longToInt(getRowCount()));
 			p.eye(Ret.ORIG);
 			return new Matrix[] { l, u, p };
 		} else {
@@ -126,8 +122,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] qr() {
 		if (matrix instanceof DoubleSquareMatrix) {
-			AbstractDoubleSquareMatrix[] qr = ((DoubleSquareMatrix) matrix)
-					.qrDecompose();
+			AbstractDoubleSquareMatrix[] qr = ((DoubleSquareMatrix) matrix).qrDecompose();
 			Matrix q = new JSciDenseDoubleMatrix2D(qr[0]);
 			Matrix r = new JSciDenseDoubleMatrix2D(qr[1]);
 			return new Matrix[] { q, r };
@@ -138,8 +133,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] svd() {
 		if (matrix instanceof DoubleSquareMatrix) {
-			AbstractDoubleSquareMatrix[] svd = ((DoubleSquareMatrix) matrix)
-					.singularValueDecompose();
+			AbstractDoubleSquareMatrix[] svd = ((DoubleSquareMatrix) matrix).singularValueDecompose();
 			Matrix u = new JSciDenseDoubleMatrix2D(svd[0]);
 			Matrix s = new JSciDenseDoubleMatrix2D(svd[1]);
 			Matrix v = new JSciDenseDoubleMatrix2D(svd[2]);
@@ -151,8 +145,7 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JSciDenseDoubleMatrix2D) {
-			return new JSciDenseDoubleMatrix2D(matrix
-					.multiply(((JSciDenseDoubleMatrix2D) m).matrix));
+			return new JSciDenseDoubleMatrix2D(matrix.multiply(((JSciDenseDoubleMatrix2D) m).matrix));
 		} else {
 			return super.mtimes(m);
 		}
@@ -162,8 +155,8 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(AbstractDoubleMatrix object) {
-		this.matrix = object;
+	public JSciDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

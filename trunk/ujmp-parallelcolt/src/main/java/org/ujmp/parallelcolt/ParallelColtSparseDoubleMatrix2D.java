@@ -29,29 +29,36 @@ import java.util.Set;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
+import org.ujmp.core.util.MathUtil;
 
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
 
-public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements Wrapper<SparseDoubleMatrix2D> {
+public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements
+		Wrapper<SparseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
-	private SparseDoubleMatrix2D matrix = null;
+	public static final ParallelColtSparseDoubleMatrix2DFactory Factory = new ParallelColtSparseDoubleMatrix2DFactory();
 
-	public ParallelColtSparseDoubleMatrix2D(long... size) {
-		this.matrix = new SparseDoubleMatrix2D((int) size[ROW], (int) size[COLUMN]);
+	private final SparseDoubleMatrix2D matrix;
+
+	public ParallelColtSparseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new SparseDoubleMatrix2D(rows, columns);
 	}
 
 	public ParallelColtSparseDoubleMatrix2D(SparseDoubleMatrix2D m) {
+		super(m.rows(), m.columns());
 		this.matrix = m;
 	}
 
-	public ParallelColtSparseDoubleMatrix2D(Matrix source)  {
-		this(source.getSize());
+	public ParallelColtSparseDoubleMatrix2D(Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -84,10 +91,6 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 		return matrix;
 	}
 
-	public void setWrappedObject(SparseDoubleMatrix2D object) {
-		this.matrix = object;
-	}
-
 	public Matrix inv() {
 		return new ParallelColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) new DenseDoubleAlgebra().inverse(matrix));
 	}
@@ -114,5 +117,9 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 
 	public final boolean contains(long... coordinates) {
 		return getAsDouble(coordinates) != 0.0;
+	}
+
+	public SparseDoubleMatrix2DFactory<ParallelColtSparseDoubleMatrix2D> getFactory() {
+		return Factory;
 	}
 }

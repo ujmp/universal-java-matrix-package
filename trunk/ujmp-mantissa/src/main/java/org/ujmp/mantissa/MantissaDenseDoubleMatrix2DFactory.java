@@ -24,14 +24,13 @@
 package org.ujmp.mantissa;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class MantissaDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<MantissaDenseDoubleMatrix2D> {
+public class MantissaDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<MantissaDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 7414828578642066439L;
 
-	public MantissaDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new MantissaDenseDoubleMatrix2D(rows, columns);
+	public MantissaDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new MantissaDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

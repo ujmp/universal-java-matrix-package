@@ -29,9 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 
-public class SVD
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.SVD<Matrix> {
+public class SVD implements org.ujmp.core.doublematrix.calculation.general.decomposition.SVD<Matrix> {
 
 	public static org.ujmp.core.doublematrix.calculation.general.decomposition.SVD<Matrix> INSTANCE = new SVD();
 

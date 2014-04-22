@@ -41,17 +41,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("shared.array.Array");
 	}
 
-	
 	public String getDescription() {
 		return "interface to the Shared Scientific Toolbox";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

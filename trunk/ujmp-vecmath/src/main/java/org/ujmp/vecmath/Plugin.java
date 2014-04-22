@@ -41,17 +41,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("javax.vecmath.GMatrix");
 	}
 
-	
 	public String getDescription() {
 		return "interface to Java3D vecmath";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

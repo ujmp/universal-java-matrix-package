@@ -28,14 +28,12 @@ import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class QR implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.QR<Matrix> {
+public class QR implements org.ujmp.core.doublematrix.calculation.general.decomposition.QR<Matrix> {
 
 	public static QR INSTANCE = new QR();
 
 	public Matrix[] calc(Matrix source) {
-		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
-				.makePrimitive();
+		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition.makePrimitive();
 		PrimitiveDenseStore matrix = null;
 		if (source instanceof OjalgoDenseDoubleMatrix2D) {
 			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
@@ -49,8 +47,7 @@ public class QR implements
 	}
 
 	public Matrix solve(Matrix a, Matrix b) {
-		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition
-				.makePrimitive();
+		final org.ojalgo.matrix.decomposition.QR<Double> qr = QRDecomposition.makePrimitive();
 		PrimitiveDenseStore a2 = null;
 		PrimitiveDenseStore b2 = null;
 		if (a instanceof OjalgoDenseDoubleMatrix2D) {

@@ -40,12 +40,10 @@ public class Inv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (inv == null) {
-			DenseMatrix A = new MTJDenseDoubleMatrix2D(getSource())
-					.getWrappedObject();
-			DenseMatrix I = Matrices.identity((int) getSource()
-					.getColumnCount());
+			DenseMatrix A = new MTJDenseDoubleMatrix2D(getSource()).getWrappedObject();
+			DenseMatrix I = Matrices.identity((int) getSource().getColumnCount());
 			DenseMatrix AI = I.copy();
 			inv = new MTJDenseDoubleMatrix2D((DenseMatrix) A.solve(I, AI));
 		}

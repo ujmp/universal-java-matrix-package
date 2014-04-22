@@ -28,9 +28,7 @@ import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class Inv
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
+public class Inv implements org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
 
 	public static Inv INSTANCE = new Inv();
 
@@ -41,8 +39,7 @@ public class Inv
 		} else {
 			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
 		}
-		org.ojalgo.matrix.decomposition.LU<Double> lu = LUDecomposition
-				.makePrimitive();
+		org.ojalgo.matrix.decomposition.LU<Double> lu = LUDecomposition.makePrimitive();
 		lu.compute(matrix);
 		return new OjalgoDenseDoubleMatrix2D(lu.getInverse());
 	}

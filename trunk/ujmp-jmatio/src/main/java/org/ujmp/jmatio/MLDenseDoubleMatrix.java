@@ -29,22 +29,25 @@ import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 import com.jmatio.types.MLDouble;
 
-public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper<MLDouble> {
+public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD implements
+		Wrapper<MLDouble> {
 	private static final long serialVersionUID = 5687213209146399315L;
+
+	public static final MLDenseDoubleMatrixFactory Factory = new MLDenseDoubleMatrixFactory();
 
 	private transient MLDouble matrix = null;
 
 	private int[] pack = null;
 
-	public MLDoubleMatrix(Matrix m) {
+	public MLDenseDoubleMatrix(Matrix m) {
+		super(m.getSize());
 		if (m.getAnnotation() != null) {
 			setAnnotation(m.getAnnotation().clone());
 			this.matrix = new MLDouble(m.getLabel(), MathUtil.toIntArray(m.getSize()));
@@ -58,7 +61,8 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		}
 	}
 
-	public MLDoubleMatrix(long... size) {
+	public MLDenseDoubleMatrix(long... size) {
+		super(size);
 		if (Coordinates.product(size) > 0) {
 			this.matrix = new MLDouble("matrix" + System.nanoTime(), MathUtil.toIntArray(size));
 			init();
@@ -82,7 +86,8 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		return index;
 	}
 
-	public MLDoubleMatrix(MLDouble matrix) {
+	public MLDenseDoubleMatrix(MLDouble matrix) {
+		super(MathUtil.toLongArray(matrix.getDimensions()));
 		this.matrix = matrix;
 		setLabel(matrix.getName());
 		init();
@@ -106,10 +111,6 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		return matrix;
 	}
 
-	public void setWrappedObject(MLDouble object) {
-		this.matrix = object;
-	}
-
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		String name = (String) s.readObject();
@@ -123,9 +124,8 @@ public class MLDoubleMatrix extends AbstractDenseDoubleMatrix implements Wrapper
 		s.writeObject(this.toDoubleArray());
 	}
 
-	@Override
-	public DenseDoubleMatrixFactory<? extends DenseDoubleMatrix> getFactory() {
-		return null;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

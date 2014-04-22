@@ -63,16 +63,14 @@ public class MatrixChartPanel extends AbstractChartPanel {
 		// dataset = new CategoryDatasetWrapper(getMatrix());
 
 		String title = getMatrix().getLabel();
-		String xLabel = StringUtil.format(getMatrix().getMatrix()
-				.getAxisLabel(Matrix.ROW));
+		String xLabel = StringUtil.format(getMatrix().getMatrix().getAxisLabel(Matrix.ROW));
 		String yLabel = null;
 
 		// setChart(ChartFactory.createLineChart(title, xLabel, yLabel,
 		// (CategoryDataset) dataset, PlotOrientation.VERTICAL, true,
 		// true, false));
-		setChart(ChartFactory.createXYLineChart(title, xLabel, yLabel,
-				(XYDataset) dataset, PlotOrientation.VERTICAL, true, true,
-				false));
+		setChart(ChartFactory.createXYLineChart(title, xLabel, yLabel, (XYDataset) dataset, PlotOrientation.VERTICAL,
+				true, true, false));
 
 		XYPlot plot = getChart().getXYPlot();
 

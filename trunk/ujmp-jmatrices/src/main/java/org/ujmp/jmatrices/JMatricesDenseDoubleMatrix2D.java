@@ -35,27 +35,28 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
-public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<org.jmatrices.dbl.Matrix> {
+public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		Wrapper<org.jmatrices.dbl.Matrix> {
 	private static final long serialVersionUID = 513251881654621L;
 
-	private org.jmatrices.dbl.Matrix matrix = null;
+	public static final JMatricesDenseDoubleMatrix2DFactory Factory = new JMatricesDenseDoubleMatrix2DFactory();
+
+	private final org.jmatrices.dbl.Matrix matrix;
 
 	public JMatricesDenseDoubleMatrix2D(org.jmatrices.dbl.Matrix matrix) {
+		super(matrix.rows(), matrix.cols());
 		this.matrix = matrix;
 	}
 
-	public JMatricesDenseDoubleMatrix2D(long... size) {
-		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			this.matrix = MatrixFactory.getMatrix((int) size[ROW],
-					(int) size[COLUMN], null);
-		}
+	public JMatricesDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = MatrixFactory.getMatrix(rows, columns, null);
 	}
 
-	public JMatricesDenseDoubleMatrix2D(org.ujmp.core.Matrix source)
-			 {
-		this(source.getSize());
+	public JMatricesDenseDoubleMatrix2D(org.ujmp.core.Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -73,8 +74,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] {
-				matrix.rows(), matrix.cols() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.rows(), matrix.cols() };
 	}
 
 	public void setDouble(double value, long row, long column) {
@@ -89,18 +89,12 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(org.jmatrices.dbl.Matrix object) {
-		this.matrix = object;
-	}
-
 	public Matrix transpose() {
-		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer
-				.transpose(matrix));
+		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer.transpose(matrix));
 	}
 
 	public Matrix inv() {
-		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer
-				.inverse(matrix));
+		return new JMatricesDenseDoubleMatrix2D(MatrixTransformer.inverse(matrix));
 	}
 
 	public Matrix[] eig() {
@@ -123,8 +117,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix[] svd() {
 		if (isSquare()) {
-			SingularValueDecomposition qr = new SingularValueDecomposition(
-					matrix);
+			SingularValueDecomposition qr = new SingularValueDecomposition(matrix);
 			Matrix u = new JMatricesDenseDoubleMatrix2D(qr.getU());
 			Matrix s = new JMatricesDenseDoubleMatrix2D(qr.getS());
 			Matrix v = new JMatricesDenseDoubleMatrix2D(qr.getV());
@@ -141,7 +134,7 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	// some error
-	// public Matrix invSPD()  {
+	// public Matrix invSPD() {
 	// CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
 	// org.jmatrices.dbl.Matrix eye = MatrixFactory.getIdentityMatrix(matrix
 	// .rows(), null);
@@ -152,8 +145,8 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (getRowCount() >= getColumnCount()) {
 			LUDecomposition lu = new LUDecomposition(matrix);
 			Matrix l = new JMatricesDenseDoubleMatrix2D(lu.getL());
-			Matrix u = new JMatricesDenseDoubleMatrix2D(lu.getU().getSubMatrix(
-					1, 1, (int) getColumnCount(), (int) getColumnCount()));
+			Matrix u = new JMatricesDenseDoubleMatrix2D(lu.getU().getSubMatrix(1, 1, (int) getColumnCount(),
+					(int) getColumnCount()));
 			int m = (int) getRowCount();
 			int[] piv = lu.getPivot();
 			Matrix p = new JMatricesDenseDoubleMatrix2D(m, m);
@@ -168,8 +161,8 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof JMatricesDenseDoubleMatrix2D) {
-			return new JMatricesDenseDoubleMatrix2D(MatrixOperator.multiply(
-					matrix, ((JMatricesDenseDoubleMatrix2D) m2).matrix));
+			return new JMatricesDenseDoubleMatrix2D(MatrixOperator.multiply(matrix,
+					((JMatricesDenseDoubleMatrix2D) m2).matrix));
 		} else {
 			return super.mtimes(m2);
 		}
@@ -179,16 +172,18 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		if (b instanceof JMatricesDenseDoubleMatrix2D) {
 			JMatricesDenseDoubleMatrix2D b2 = (JMatricesDenseDoubleMatrix2D) b;
 			if (isSquare()) {
-				org.jmatrices.dbl.Matrix x = new LUDecomposition(matrix)
-						.solve(b2.matrix);
+				org.jmatrices.dbl.Matrix x = new LUDecomposition(matrix).solve(b2.matrix);
 				return new JMatricesDenseDoubleMatrix2D(x);
 			} else {
-				org.jmatrices.dbl.Matrix x = new QRDecomposition(matrix)
-						.solve(b2.matrix);
+				org.jmatrices.dbl.Matrix x = new QRDecomposition(matrix).solve(b2.matrix);
 				return new JMatricesDenseDoubleMatrix2D(x);
 			}
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public JMatricesDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 }

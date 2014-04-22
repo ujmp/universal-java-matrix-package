@@ -32,29 +32,33 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
-public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<GMatrix> {
+public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<GMatrix> {
 	private static final long serialVersionUID = 3792684800581150214L;
 
-	private GMatrix matrix = null;
+	public static final VecMathDenseDoubleMatrix2DFactory Factory = new VecMathDenseDoubleMatrix2DFactory();
+
+	private final GMatrix matrix;
 
 	public VecMathDenseDoubleMatrix2D(GMatrix m) {
+		super(m.getNumRow(), m.getNumCol());
 		this.matrix = m;
 	}
 
-	public VecMathDenseDoubleMatrix2D(long... size) {
-		this.matrix = new GMatrix((int) size[ROW], (int) size[COLUMN]);
+	public VecMathDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new GMatrix(rows, columns);
 		// matrix is not empty by default!
-		for (int r = 0; r < size[ROW]; r++) {
-			for (int c = 0; c < size[COLUMN]; c++) {
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
 				setDouble(0.0, r, c);
 			}
 		}
 	}
 
-	public VecMathDenseDoubleMatrix2D(Matrix source)  {
-		this(source.getSize());
+	public VecMathDenseDoubleMatrix2D(Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
@@ -85,10 +89,6 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public GMatrix getWrappedObject() {
 		return matrix;
-	}
-
-	public void setWrappedObject(GMatrix object) {
-		this.matrix = object;
 	}
 
 	public VecMathDenseDoubleMatrix2D transpose() {
@@ -129,8 +129,7 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof VecMathDenseDoubleMatrix2D) {
-			GMatrix result = new GMatrix(matrix.getNumRow(), (int) m
-					.getColumnCount());
+			GMatrix result = new GMatrix(matrix.getNumRow(), (int) m.getColumnCount());
 			result.mul(matrix, ((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
 			Annotation a = getAnnotation();
@@ -176,8 +175,8 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				l.setAsDouble(1, i, i);
 			}
 			Matrix u = new VecMathDenseDoubleMatrix2D(lu).triu(Ret.NEW, 0);
-			VecMathDenseDoubleMatrix2D p = new VecMathDenseDoubleMatrix2D(
-					getSize());
+			VecMathDenseDoubleMatrix2D p = new VecMathDenseDoubleMatrix2D(MathUtil.longToInt(getRowCount()),
+					MathUtil.longToInt(getColumnCount()));
 			for (int i = piv.getSize() - 1; i != -1; i--) {
 				p.setDouble(1, i, (int) piv.getElement(i));
 			}
@@ -185,6 +184,10 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} else {
 			throw new RuntimeException("only allowed for square matrices");
 		}
+	}
+
+	public VecMathDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

@@ -35,11 +35,13 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -52,7 +54,6 @@ import org.apache.lucene.util.Version;
 import org.ujmp.core.collections.map.AbstractMap;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
-import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.io.FileUtil;
@@ -75,8 +76,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 	private transient IndexSearcher indexSearcher = null;
 
 	private static final int MAXSEARCHSIZE = 1000000;
-
-	private static final Version LUCENEVERSION = Version.LUCENE_35;
 
 	private boolean readOnly = false;
 
@@ -128,7 +127,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 	public synchronized boolean containsKey(Object key) {
 		try {
 			Term term = new Term(KEYSTRING, getUniqueString(key));
-			return getIndexSearcher().docFreq(term) > 0;
+			return getIndexSearcher().getIndexReader().docFreq(term) > 0;
 		} catch (Exception e) {
 			throw new RuntimeException("could not search documents: " + key, e);
 		}
@@ -137,7 +136,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 	public synchronized boolean containsValue(Object value) {
 		try {
 			Term term = new Term(VALUESTRING, getUniqueString(value));
-			return getIndexSearcher().docFreq(term) > 0;
+			return getIndexSearcher().getIndexReader().docFreq(term) > 0;
 		} catch (Exception e) {
 			throw new RuntimeException("could not search documents: " + value, e);
 		}
@@ -152,7 +151,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			if (docs.totalHits > 0) {
 				ScoreDoc match = docs.scoreDocs[0];
 				Document doc = getIndexSearcher().doc(match.doc);
-				return (V) SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA));
+				return (V) SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA).bytes);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("could not search documents: " + key, e);
@@ -162,7 +161,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 
 	public synchronized ObjectMatrix2D search(String searchString) {
 		try {
-			MultiFieldQueryParser p = new MultiFieldQueryParser(LUCENEVERSION, new String[] { VALUESTRING },
+			MultiFieldQueryParser p = new MultiFieldQueryParser(Version.LUCENE_47, new String[] { VALUESTRING },
 					getAnalyzer());
 			Query query = p.parse(searchString);
 			TopDocs docs = getIndexSearcher().search(query, 100);
@@ -171,8 +170,8 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 				ScoreDoc match = docs.scoreDocs[row];
 				Document doc = getIndexSearcher().doc(match.doc);
 				result.setAsFloat(match.score, row, 0);
-				result.setAsObject(SerializationUtil.deserialize(doc.getBinaryValue(KEYDATA)), row, 1);
-				result.setAsObject(SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA)), row, 2);
+				result.setAsObject(SerializationUtil.deserialize(doc.getBinaryValue(KEYDATA).bytes), row, 1);
+				result.setAsObject(SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA).bytes), row, 2);
 			}
 			return result;
 		} catch (Exception e) {
@@ -193,7 +192,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 
 			for (ScoreDoc sd : docs.scoreDocs) {
 				Document d = getIndexSearcher().doc(sd.doc);
-				set.add((K) SerializationUtil.deserialize(d.getBinaryValue(KEYDATA)));
+				set.add((K) SerializationUtil.deserialize(d.getBinaryValue(KEYDATA).bytes));
 			}
 			return set;
 		} catch (Exception e) {
@@ -215,10 +214,10 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		try {
 			Term term = new Term(KEYSTRING, getUniqueString(key));
 			Document doc = new Document();
-			doc.add(new Field(KEYSTRING, getUniqueString(key), Field.Store.YES, Field.Index.NOT_ANALYZED));
-			doc.add(new Field(KEYDATA, SerializationUtil.serialize((Serializable) key)));
-			doc.add(new Field(VALUESTRING, getUniqueString(value), Field.Store.YES, Field.Index.NOT_ANALYZED));
-			doc.add(new Field(VALUEDATA, SerializationUtil.serialize((Serializable) value)));
+			doc.add(new StringField(KEYSTRING, getUniqueString(key), Field.Store.YES));
+			doc.add(new StoredField(KEYDATA, SerializationUtil.serialize((Serializable) key)));
+			doc.add(new StringField(VALUESTRING, getUniqueString(value), Field.Store.YES));
+			doc.add(new StoredField(VALUEDATA, SerializationUtil.serialize((Serializable) value)));
 			getIndexWriter().updateDocument(term, doc);
 			return null;
 		} catch (Exception e) {
@@ -238,7 +237,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 
 	public Analyzer getAnalyzer() {
 		if (analyzer == null) {
-			analyzer = new StandardAnalyzer(LUCENEVERSION);
+			analyzer = new StandardAnalyzer(Version.LUCENE_47);
 		}
 		return analyzer;
 	}
@@ -250,7 +249,7 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 	public synchronized int size() {
 		try {
 			flush();
-			if (indexSearcher != null && indexSearcher.getIndexReader().isCurrent()) {
+			if (indexSearcher != null) {
 				return indexSearcher.getIndexReader().numDocs();
 			} else {
 				int size = getIndexWriter().numDocs();
@@ -266,7 +265,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		iw.commit();
 		iw.close(true);
 		indexWriter = null;
-
 	}
 
 	public synchronized void close() throws IOException {
@@ -275,7 +273,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		}
 		if (indexSearcher != null) {
 			indexSearcher.getIndexReader().close();
-			indexSearcher.close();
 		}
 		if (indexWriter != null) {
 			indexWriter.close(true);
@@ -283,7 +280,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		}
 		if (indexSearcher != null) {
 			indexSearcher.getIndexReader().close();
-			indexSearcher.close();
 			indexSearcher = null;
 		}
 		if (directory != null) {
@@ -294,21 +290,21 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 	private synchronized IndexWriter getIndexWriter() {
 		try {
 			if (!readOnly && indexSearcher != null) {
-				indexSearcher.close();
+				indexSearcher.getIndexReader().close();
 				indexSearcher = null;
 			}
 			if (indexWriter == null) {
-				if (IndexReader.indexExists(getDirectory())) {
+				if (DirectoryReader.indexExists(getDirectory())) {
 					if (!readOnly) {
 						if (IndexWriter.isLocked(getDirectory())) {
 							IndexWriter.unlock(getDirectory());
 						}
-						indexWriter = new IndexWriter(getDirectory(), new IndexWriterConfig(LUCENEVERSION,
+						indexWriter = new IndexWriter(getDirectory(), new IndexWriterConfig(Version.LUCENE_47,
 								getAnalyzer()));
 					}
 				} else {
 					if (!readOnly) {
-						indexWriter = new IndexWriter(getDirectory(), new IndexWriterConfig(LUCENEVERSION,
+						indexWriter = new IndexWriter(getDirectory(), new IndexWriterConfig(Version.LUCENE_47,
 								getAnalyzer()));
 					}
 				}
@@ -321,17 +317,12 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 
 	private synchronized IndexSearcher getIndexSearcher() {
 		try {
-			if (!IndexReader.indexExists(getDirectory())) {
+			if (!DirectoryReader.indexExists(getDirectory())) {
 				getIndexWriter();
 			}
 
-			if (indexSearcher != null && !indexSearcher.getIndexReader().isCurrent()) {
-				indexSearcher.close();
-				indexSearcher = null;
-			}
-
 			if (indexSearcher == null) {
-				indexSearcher = new IndexSearcher(IndexReader.open(getIndexWriter(), true));
+				indexSearcher = new IndexSearcher(DirectoryReader.open(getIndexWriter(), true));
 			}
 			return indexSearcher;
 		} catch (Exception e) {
@@ -343,19 +334,6 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 		clear();
 		close();
 		FileUtil.deleteRecursive(path);
-	}
-
-	public V getRandomValue() {
-		try {
-			if (getIndexSearcher().maxDoc() > 0) {
-				Document doc = getIndexSearcher().doc(MathUtil.nextInteger(0, getIndexSearcher().maxDoc() - 1));
-				return (V) SerializationUtil.deserialize(doc.getBinaryValue(VALUEDATA));
-			} else {
-				return null;
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("could not search documents", e);
-		}
 	}
 
 }

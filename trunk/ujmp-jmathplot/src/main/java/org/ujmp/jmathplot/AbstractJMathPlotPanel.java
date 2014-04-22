@@ -35,7 +35,8 @@ import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.util.GraphicsExecutor;
 
-public abstract class AbstractJMathPlotPanel extends JPanel implements ComponentListener, CanBeRepainted, TableModelListener {
+public abstract class AbstractJMathPlotPanel extends JPanel implements ComponentListener, CanBeRepainted,
+		TableModelListener {
 	private static final long serialVersionUID = 2083997325942788081L;
 
 	private Matrix matrix = null;

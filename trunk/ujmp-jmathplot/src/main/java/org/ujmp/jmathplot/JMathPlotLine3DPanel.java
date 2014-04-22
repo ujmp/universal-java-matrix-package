@@ -35,7 +35,6 @@ public class JMathPlotLine3DPanel extends AbstractJMathPlotPanel {
 		super(matrix);
 	}
 
-	
 	public void repaintUI() {
 		Matrix matrix = getMatrix();
 		Plot3DPanel panel = new Plot3DPanel();

@@ -21,7 +21,6 @@
  * Boston, MA  02110-1301  USA
  */
 
-
 package org.ujmp.lucene;
 
 import java.io.File;
@@ -34,11 +33,11 @@ public class LuceneList<V> extends MapToListWrapper<V> {
 	public LuceneList() throws IOException {
 		super(new LuceneMap<Integer, V>());
 	}
-	
+
 	public LuceneList(File file) throws IOException {
 		super(new LuceneMap<Integer, V>(file));
 	}
-	
+
 	public LuceneList(String file) throws IOException {
 		super(new LuceneMap<Integer, V>(file));
 	}

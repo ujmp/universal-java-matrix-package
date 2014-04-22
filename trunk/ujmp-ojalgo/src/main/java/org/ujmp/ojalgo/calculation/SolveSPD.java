@@ -29,9 +29,7 @@ import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class SolveSPD
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD<Matrix> {
+public class SolveSPD implements org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD<Matrix> {
 
 	public static SolveSPD INSTANCE = new SolveSPD();
 

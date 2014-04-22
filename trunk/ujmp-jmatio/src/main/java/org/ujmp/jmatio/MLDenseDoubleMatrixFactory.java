@@ -21,27 +21,16 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.ojalgo.calculation;
+package org.ujmp.jmatio;
 
-import org.ojalgo.matrix.decomposition.Cholesky;
-import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
-import org.ojalgo.matrix.store.MatrixStore;
-import org.ujmp.core.Matrix;
-import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrixMultiDFactory;
 
-public class InvSPD implements org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
+public class MLDenseDoubleMatrixFactory extends
+		AbstractDenseDoubleMatrixMultiDFactory<MLDenseDoubleMatrix> {
+	private static final long serialVersionUID = 7143112958171026775L;
 
-	public static InvSPD INSTANCE = new InvSPD();
-
-	public Matrix calc(Matrix source) {
-		MatrixStore<Double> matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
-		}
-		Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-		chol.compute(matrix);
-		return new OjalgoDenseDoubleMatrix2D(chol.getInverse());
+	public MLDenseDoubleMatrix zeros(long... size) {
+		return new MLDenseDoubleMatrix(size);
 	}
+
 }

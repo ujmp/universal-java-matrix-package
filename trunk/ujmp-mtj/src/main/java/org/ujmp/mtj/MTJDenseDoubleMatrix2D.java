@@ -45,27 +45,35 @@ import org.ujmp.mtj.calculation.SVD;
 public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix> {
 	private static final long serialVersionUID = -2386081646062313108L;
 
+	public static final MTJDenseDoubleMatrix2DFactory Factory = new MTJDenseDoubleMatrix2DFactory();
+
 	private transient DenseMatrix matrix = null;
 
 	public MTJDenseDoubleMatrix2D(DenseMatrix m) {
+		super(m.numRows(), m.numColumns());
 		this.matrix = m;
 	}
 
 	public MTJDenseDoubleMatrix2D(no.uib.cipr.matrix.Matrix m) {
+		super(m.numRows(), m.numColumns());
 		this.matrix = new DenseMatrix(m);
 	}
 
 	public MTJDenseDoubleMatrix2D(Matrix m) {
-		super(m);
+		super(m.getRowCount(), m.getColumnCount());
 		if (m instanceof MTJDenseDoubleMatrix2D) {
 			this.matrix = ((MTJDenseDoubleMatrix2D) m).matrix.copy();
 		} else {
 			this.matrix = new DenseMatrix(m.toDoubleArray());
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public MTJDenseDoubleMatrix2D(long... size) {
-		this.matrix = new DenseMatrix((int) size[ROW], (int) size[COLUMN]);
+	public MTJDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new DenseMatrix(rows, columns);
 	}
 
 	public Matrix[] svd() {
@@ -166,10 +174,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		return matrix;
 	}
 
-	public void setWrappedObject(DenseMatrix object) {
-		this.matrix = object;
-	}
-
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 		double[][] values = (double[][]) s.readObject();
@@ -193,8 +197,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 				// sometimes BLAS cannot be found. Don't know why. Use direct
 				// method instead.
 				double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix) c).getData();
-				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c.numColumns(), a.numColumns(), 1, a.getData(), 0, Math.max(1, a.numRows()), Bd,
-						0, Math.max(1, b.numRows()), 1, Cd, 0, Math.max(1, c.numRows()));
+				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c.numColumns(), a.numColumns(), 1, a.getData(), 0,
+						Math.max(1, a.numRows()), Bd, 0, Math.max(1, b.numRows()), 1, Cd, 0, Math.max(1, c.numRows()));
 				return new MTJDenseDoubleMatrix2D(c);
 			}
 		}
@@ -260,5 +264,9 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	public Matrix invSPD() {
 		DenseCholesky chol = DenseCholesky.factorize(getWrappedObject());
 		return new MTJDenseDoubleMatrix2D(chol.solve(Matrices.identity(matrix.numRows())));
+	}
+
+	public MTJDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 }

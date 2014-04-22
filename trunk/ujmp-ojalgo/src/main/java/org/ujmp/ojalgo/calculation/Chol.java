@@ -28,15 +28,12 @@ import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class Chol
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Chol<Matrix> {
+public class Chol implements org.ujmp.core.doublematrix.calculation.general.decomposition.Chol<Matrix> {
 
 	public static Chol INSTANCE = new Chol();
 
 	public Matrix calc(Matrix source) {
-		final org.ojalgo.matrix.decomposition.Cholesky<Double> chol = CholeskyDecomposition
-				.makePrimitive();
+		final org.ojalgo.matrix.decomposition.Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
 		PrimitiveDenseStore matrix = null;
 		if (source instanceof OjalgoDenseDoubleMatrix2D) {
 			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
@@ -48,8 +45,7 @@ public class Chol
 	}
 
 	public Matrix solve(Matrix a, Matrix b) {
-		final org.ojalgo.matrix.decomposition.Cholesky<Double> chol = CholeskyDecomposition
-				.makePrimitive();
+		final org.ojalgo.matrix.decomposition.Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
 		PrimitiveDenseStore a2 = null;
 		PrimitiveDenseStore b2 = null;
 		if (a instanceof OjalgoDenseDoubleMatrix2D) {

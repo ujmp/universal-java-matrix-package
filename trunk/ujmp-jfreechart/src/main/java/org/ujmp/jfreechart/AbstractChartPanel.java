@@ -37,8 +37,7 @@ import org.ujmp.gui.interfaces.CanRenderGraph;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 
-public abstract class AbstractChartPanel extends ChartPanel implements
-		CanRenderGraph {
+public abstract class AbstractChartPanel extends ChartPanel implements CanRenderGraph {
 	private static final long serialVersionUID = -7609107739440534835L;
 
 	private ChartConfiguration config = null;
@@ -89,8 +88,7 @@ public abstract class AbstractChartPanel extends ChartPanel implements
 			} catch (Exception e) {
 			}
 		} else {
-			throw new RuntimeException("FileFormat not yet supported: "
-					+ fileFormat);
+			throw new RuntimeException("FileFormat not yet supported: " + fileFormat);
 		}
 		if (frame != null) {
 			frame.setVisible(false);

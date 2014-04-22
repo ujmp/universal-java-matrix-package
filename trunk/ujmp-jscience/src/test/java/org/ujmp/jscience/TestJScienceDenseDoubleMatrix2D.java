@@ -25,11 +25,13 @@ package org.ujmp.jscience;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestJScienceDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new JScienceDenseDoubleMatrix2D(size);
+		return new JScienceDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 	public Matrix createMatrix(Matrix source) {

@@ -24,14 +24,13 @@
 package org.ujmp.vecmath;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class VecMathDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<VecMathDenseDoubleMatrix2D> {
+public class VecMathDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<VecMathDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 8234576107068440158L;
 
-	public VecMathDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new VecMathDenseDoubleMatrix2D(rows, columns);
+	public VecMathDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new VecMathDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

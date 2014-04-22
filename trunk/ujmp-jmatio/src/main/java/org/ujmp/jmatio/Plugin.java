@@ -41,17 +41,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("com.jmatio.io.MatTag");
 	}
 
-	
 	public String getDescription() {
 		return "import and export filters for .mat files (Matlab)";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

@@ -38,18 +38,22 @@ import shared.array.RealArray;
 public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<RealArray> {
 	private static final long serialVersionUID = -9002457298955206969L;
 
+	public static final SSTDenseDoubleMatrix2DFactory Factory = new SSTDenseDoubleMatrix2DFactory();
+
 	private transient RealArray data = null;
 
 	public SSTDenseDoubleMatrix2D(RealArray data) {
+		super(data.dims()[0], data.dims()[1]);
 		this.data = data;
 	}
 
-	public SSTDenseDoubleMatrix2D(long... size) {
-		data = new RealArray(MathUtil.toIntArray(size));
+	public SSTDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		data = new RealArray(rows, columns);
 	}
 
 	public SSTDenseDoubleMatrix2D(Matrix source) {
-		super(source);
+		super(source.getRowCount(), source.getColumnCount());
 		data = new RealArray(MathUtil.toIntArray(source.getSize()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
@@ -94,10 +98,6 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		return data;
 	}
 
-	public void setWrappedObject(RealArray object) {
-		this.data = object;
-	}
-
 	public Matrix transpose() {
 		return new SSTDenseDoubleMatrix2D(data.mTranspose());
 	}
@@ -140,7 +140,8 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(
+					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -153,7 +154,8 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof SSTDenseDoubleMatrix2D) {
-			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
+			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(
+					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -189,6 +191,10 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 			result.setAnnotation(a.clone());
 		}
 		return result;
+	}
+
+	public SSTDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

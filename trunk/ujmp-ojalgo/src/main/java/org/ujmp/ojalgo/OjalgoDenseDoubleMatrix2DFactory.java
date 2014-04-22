@@ -24,14 +24,13 @@
 package org.ujmp.ojalgo;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class OjalgoDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<OjalgoDenseDoubleMatrix2D> {
+public class OjalgoDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<OjalgoDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -2350372463029926450L;
 
-	public OjalgoDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new OjalgoDenseDoubleMatrix2D(rows, columns);
+	public OjalgoDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new OjalgoDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

@@ -43,17 +43,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.math.plot.PlotPanel");
 	}
 
-	
 	public String getDescription() {
 		return "visualize matrices as line plot, scatter plot, histogram, etc.";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

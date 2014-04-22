@@ -37,6 +37,7 @@ import javax.mail.MessagingException;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class MessagesMatrix extends AbstractListMatrix<Matrix> implements Closeable {
 	private static final long serialVersionUID = -8489199262755536077L;
@@ -65,6 +66,10 @@ public class MessagesMatrix extends AbstractListMatrix<Matrix> implements Closea
 
 	public void close() throws IOException {
 		list.close();
+	}
+
+	public DenseMatrix2DFactory<MessagesMatrix> getFactory() {
+		return null;
 	}
 
 }

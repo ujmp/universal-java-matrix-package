@@ -27,16 +27,17 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class OjalgoDenseDoubleMatrix2DBenchmark extends
-		AbstractMatrix2DBenchmark {
+public class OjalgoDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size)  {
-		return new OjalgoDenseDoubleMatrix2D(size);
+	public DoubleMatrix2D createMatrix(long... size) {
+		return new OjalgoDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return new OjalgoDenseDoubleMatrix2D(source);
 	}
 

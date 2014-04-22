@@ -38,7 +38,7 @@ public abstract class ExportMatrixMAT {
 	public static void toFile(File file, Matrix matrix, Object... parameters) throws IOException {
 		MatFileWriter writer = new MatFileWriter();
 		Collection<MLArray> matrixList = new ArrayList<MLArray>();
-		matrixList.add(new MLDoubleMatrix(matrix).getWrappedObject());
+		matrixList.add(new MLDenseDoubleMatrix(matrix).getWrappedObject());
 		writer.write(file, matrixList);
 	}
 

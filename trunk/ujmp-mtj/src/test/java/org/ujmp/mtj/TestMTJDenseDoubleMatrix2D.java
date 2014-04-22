@@ -25,11 +25,12 @@ package org.ujmp.mtj;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new MTJDenseDoubleMatrix2D(size);
+		return new MTJDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]), MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 	public Matrix createMatrix(Matrix source) {
@@ -51,7 +52,7 @@ public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public void testLUSquareSingularSmall() throws Exception {
 		// not supported
 	}
-	
+
 	public void testLUSquareSingularLarge() throws Exception {
 		// not supported
 	}

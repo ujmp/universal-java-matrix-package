@@ -25,11 +25,13 @@ package org.ujmp.mantissa;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestMantissaMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new MantissaDenseDoubleMatrix2D(size);
+		return new MantissaDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 	public Matrix createMatrix(Matrix source) {

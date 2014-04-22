@@ -34,21 +34,28 @@ import org.ujmp.core.util.MathUtil;
 public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = 904914110868813155L;
 
+	public static final La4JDenseDoubleMatrix2DFactory Factory = new La4JDenseDoubleMatrix2DFactory();
+
 	private final Basic2DMatrix matrix;
 
-	public La4JDenseDoubleMatrix2D(long... size) {
-		this.matrix = new Basic2DMatrix(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN]));
+	public La4JDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new Basic2DMatrix(rows, columns);
 	}
 
 	public La4JDenseDoubleMatrix2D(Basic2DMatrix matrix) {
+		super(matrix.rows(), matrix.columns());
 		this.matrix = matrix;
 	}
 
 	public La4JDenseDoubleMatrix2D(Matrix source) {
-		super(source);
+		super(source.getRowCount(), source.getColumnCount());
 		this.matrix = new Basic2DMatrix((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -83,7 +90,8 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
-			Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.add(((La4JDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new La4JDenseDoubleMatrix2D(
+					(Basic2DMatrix) matrix.add(((La4JDenseDoubleMatrix2D) m).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -96,7 +104,8 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
-			Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.multiply(((La4JDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new La4JDenseDoubleMatrix2D(
+					(Basic2DMatrix) matrix.multiply(((La4JDenseDoubleMatrix2D) m).matrix));
 			return result;
 		} else {
 			return super.mtimes(m);
@@ -114,7 +123,8 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
-			Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.subtract(((La4JDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new La4JDenseDoubleMatrix2D(
+					(Basic2DMatrix) matrix.subtract(((La4JDenseDoubleMatrix2D) m).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -192,6 +202,10 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
 		return result;
+	}
+
+	public La4JDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

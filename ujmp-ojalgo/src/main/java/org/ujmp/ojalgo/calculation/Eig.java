@@ -29,9 +29,7 @@ import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class Eig
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
+public class Eig implements org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
 
 	public static Eig INSTANCE = new Eig();
 

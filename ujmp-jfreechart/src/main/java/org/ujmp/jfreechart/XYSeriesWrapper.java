@@ -104,8 +104,7 @@ public class XYSeriesWrapper extends XYSeries {
 		} catch (Exception e) {
 		}
 
-		return new XYDataItem(row, matrix.getMatrix().getAsDouble(index,
-				seriesId));
+		return new XYDataItem(row, matrix.getMatrix().getAsDouble(index, seriesId));
 	}
 
 	public int getItemCount() {
@@ -148,7 +147,7 @@ public class XYSeriesWrapper extends XYSeries {
 // setPaint(new Color(255, 100, 100, 60));
 // }
 //
-//	
+//
 // public double getEndValue() {
 // try {
 // return variable.getVariable().getMeanMatrix().getAsDouble(0, number)
@@ -158,7 +157,7 @@ public class XYSeriesWrapper extends XYSeries {
 // }
 // }
 //
-//	
+//
 // public double getStartValue() {
 // try {
 // return variable.getVariable().getMeanMatrix().getAsDouble(0, number)
@@ -183,7 +182,7 @@ public class XYSeriesWrapper extends XYSeries {
 // setPaint(new Color(255, 200, 200, 50));
 // }
 //
-//	
+//
 // public double getEndValue() {
 // try {
 // return variable.getVariable().getMaxMatrix().getAsDouble(0, number);
@@ -192,7 +191,7 @@ public class XYSeriesWrapper extends XYSeries {
 // }
 // }
 //
-//	
+//
 // public double getStartValue() {
 // try {
 // return variable.getVariable().getMinMatrix().getAsDouble(0, number);
@@ -219,7 +218,7 @@ public class XYSeriesWrapper extends XYSeries {
 // setLabelTextAnchor(TextAnchor.TOP_RIGHT);
 // }
 //
-//	
+//
 // public String getLabel() {
 // try {
 // return
@@ -230,7 +229,7 @@ public class XYSeriesWrapper extends XYSeries {
 // }
 // }
 //
-//	
+//
 // public double getValue() {
 // try {
 // return variable.getVariable().getMeanMatrix().getAsDouble(0, number);
@@ -239,7 +238,7 @@ public class XYSeriesWrapper extends XYSeries {
 // }
 // }
 //
-//	
+//
 // public void setValue(double arg0) {
 // }
 

@@ -34,7 +34,7 @@ public class Test3D {
 
 	@Test
 	public void testIndexCalc() {
-		MLDoubleMatrix mlDouble = new MLDoubleMatrix(3, 4, 5);
+		MLDenseDoubleMatrix mlDouble = new MLDenseDoubleMatrix(3, 4, 5);
 		assertEquals(0, mlDouble.getIndex(0, 0, 0));
 		assertEquals(1, mlDouble.getIndex(1, 0, 0));
 		assertEquals(3, mlDouble.getIndex(0, 1, 0));
@@ -53,7 +53,7 @@ public class Test3D {
 	@Test
 	public void testUJMP() {
 		Matrix original = Matrix.Factory.rand(ValueType.DOUBLE, 3, 4, 5);
-		MLDoubleMatrix mlDouble = new MLDoubleMatrix(original);
+		MLDenseDoubleMatrix mlDouble = new MLDenseDoubleMatrix(original);
 		assertEquals("dimension count", original.getDimensionCount(), mlDouble.getDimensionCount());
 		assertEquals("row count", original.getRowCount(), mlDouble.getRowCount());
 		assertEquals("column count", original.getColumnCount(), mlDouble.getColumnCount());

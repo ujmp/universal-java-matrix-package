@@ -30,31 +30,33 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 
-public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<org.spaceroots.mantissa.linalg.Matrix> {
+public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		Wrapper<org.spaceroots.mantissa.linalg.Matrix> {
 	private static final long serialVersionUID = 6954233090244549806L;
 
-	private org.spaceroots.mantissa.linalg.Matrix matrix = null;
+	public static final MantissaDenseDoubleMatrix2DFactory Factory = new MantissaDenseDoubleMatrix2DFactory();
+
+	private final org.spaceroots.mantissa.linalg.Matrix matrix;
 
 	public MantissaDenseDoubleMatrix2D(org.spaceroots.mantissa.linalg.Matrix m) {
+		super(m.getRows(), m.getColumns());
 		this.matrix = m;
 	}
 
-	public MantissaDenseDoubleMatrix2D(long... size) {
-		if (size[ROW] > 0 && size[COLUMN] > 0) {
-			if (size[ROW] == size[COLUMN]) {
-				this.matrix = new GeneralSquareMatrix((int) size[ROW]);
-			} else {
-				this.matrix = new GeneralMatrix((int) size[ROW],
-						(int) size[COLUMN]);
-			}
+	public MantissaDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		if (rows == columns) {
+			this.matrix = new GeneralSquareMatrix(rows);
+		} else {
+			this.matrix = new GeneralMatrix(rows, columns);
 		}
 	}
 
-	public MantissaDenseDoubleMatrix2D(Matrix source)  {
-		this(source.getSize());
+	public MantissaDenseDoubleMatrix2D(Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
@@ -72,8 +74,7 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] {
-				matrix.getRows(), matrix.getColumns() };
+		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getRows(), matrix.getColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
@@ -91,8 +92,7 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix inv() {
 		if (matrix instanceof SquareMatrix) {
 			try {
-				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
-						.getInverse(UJMPSettings.getTolerance()));
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).getInverse(UJMPSettings.getTolerance()));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -102,13 +102,10 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix solve(Matrix b) {
-		if (matrix instanceof SquareMatrix
-				&& b instanceof MantissaDenseDoubleMatrix2D) {
+		if (matrix instanceof SquareMatrix && b instanceof MantissaDenseDoubleMatrix2D) {
 			try {
-				org.spaceroots.mantissa.linalg.Matrix b2 = ((MantissaDenseDoubleMatrix2D) b)
-						.getWrappedObject();
-				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix)
-						.solve(b2, UJMPSettings.getTolerance()));
+				org.spaceroots.mantissa.linalg.Matrix b2 = ((MantissaDenseDoubleMatrix2D) b).getWrappedObject();
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).solve(b2, UJMPSettings.getTolerance()));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -119,8 +116,7 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof MantissaDenseDoubleMatrix2D) {
-			return new MantissaDenseDoubleMatrix2D(matrix
-					.mul(((MantissaDenseDoubleMatrix2D) m).getWrappedObject()));
+			return new MantissaDenseDoubleMatrix2D(matrix.mul(((MantissaDenseDoubleMatrix2D) m).getWrappedObject()));
 		} else {
 			return super.mtimes(m);
 		}
@@ -130,8 +126,8 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(org.spaceroots.mantissa.linalg.Matrix object) {
-		this.matrix = object;
+	public MantissaDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

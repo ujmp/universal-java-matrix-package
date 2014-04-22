@@ -86,7 +86,8 @@ public abstract class AbstractMatrixExcelImporter {
 		return matrix;
 	}
 
-	public DenseObjectMatrix2D importFromWorkbook(final Workbook workbook, final int sheetNumber) throws InvalidFormatException, IOException {
+	public DenseObjectMatrix2D importFromWorkbook(final Workbook workbook, final int sheetNumber)
+			throws InvalidFormatException, IOException {
 		final Sheet sheet = workbook.getSheetAt(sheetNumber);
 		return importFromSheet(sheet);
 	}

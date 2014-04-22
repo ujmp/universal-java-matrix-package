@@ -37,7 +37,6 @@ public class JMathPlotHistogramPanel extends AbstractJMathPlotPanel {
 		super(matrix);
 	}
 
-	
 	public void repaintUI() {
 		Matrix matrix = getMatrix();
 		Plot2DPanel panel = new Plot2DPanel();

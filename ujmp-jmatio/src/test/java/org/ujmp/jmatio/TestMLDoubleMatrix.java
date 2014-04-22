@@ -29,11 +29,11 @@ import org.ujmp.core.implementations.AbstractMatrixTest;
 public class TestMLDoubleMatrix extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws Exception {
-		return new MLDoubleMatrix(size);
+		return new MLDenseDoubleMatrix(size);
 	}
 
 	public Matrix createMatrix(Matrix source) throws Exception {
-		return new MLDoubleMatrix(source);
+		return new MLDenseDoubleMatrix(source);
 	}
 
 	public boolean isTestLarge() {

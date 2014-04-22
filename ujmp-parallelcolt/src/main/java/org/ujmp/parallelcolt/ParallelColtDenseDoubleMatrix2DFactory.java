@@ -24,14 +24,14 @@
 package org.ujmp.parallelcolt;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
 public class ParallelColtDenseDoubleMatrix2DFactory extends
 		AbstractDenseDoubleMatrix2DFactory<ParallelColtDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -6399863648885565273L;
 
-	public ParallelColtDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new ParallelColtDenseDoubleMatrix2D(rows, columns);
+	public ParallelColtDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new ParallelColtDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

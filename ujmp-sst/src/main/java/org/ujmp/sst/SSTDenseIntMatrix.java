@@ -30,6 +30,7 @@ import java.io.ObjectOutputStream;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix;
+import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.MathUtil;
 
@@ -41,14 +42,17 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements Wrapper
 	private transient IntegerArray data = null;
 
 	public SSTDenseIntMatrix(IntegerArray data) {
+		super(MathUtil.toLongArray(data.dims()));
 		this.data = data;
 	}
 
 	public SSTDenseIntMatrix(long... size) {
+		super(size);
 		data = new IntegerArray(MathUtil.toIntArray(size));
 	}
 
 	public SSTDenseIntMatrix(Matrix source) {
+		super(source.getSize());
 		data = new IntegerArray(MathUtil.toIntArray(source.getSize()));
 		for (long[] c : source.availableCoordinates()) {
 			setInt(source.getAsInt(c), c);
@@ -87,8 +91,8 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements Wrapper
 		return data;
 	}
 
-	public void setWrappedObject(IntegerArray object) {
-		this.data = object;
+	public DenseMatrixFactory<SSTDenseIntMatrix> getFactory() {
+		return null;
 	}
 
 }

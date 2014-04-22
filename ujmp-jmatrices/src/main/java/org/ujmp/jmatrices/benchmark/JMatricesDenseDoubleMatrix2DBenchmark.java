@@ -27,16 +27,17 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 
-public class JMatricesDenseDoubleMatrix2DBenchmark extends
-		AbstractMatrix2DBenchmark {
+public class JMatricesDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size)  {
-		return new JMatricesDenseDoubleMatrix2D(size);
+	public DoubleMatrix2D createMatrix(long... size) {
+		return new JMatricesDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return new JMatricesDenseDoubleMatrix2D(source);
 	}
 

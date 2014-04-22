@@ -49,7 +49,7 @@ public class ImportMatrixMAT {
 		if (array == null) {
 			throw new RuntimeException("matrix with label [" + key + "] was not found in .mat file");
 		} else if (array instanceof MLDouble) {
-			return new MLDoubleMatrix((MLDouble) array);
+			return new MLDenseDoubleMatrix((MLDouble) array);
 		} else {
 			throw new RuntimeException("This type is not yet supported: " + array.getClass());
 		}

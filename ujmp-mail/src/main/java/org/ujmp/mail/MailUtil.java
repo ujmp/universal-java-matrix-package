@@ -38,23 +38,18 @@ import org.ujmp.core.util.ConsoleUtil;
 
 public class MailUtil {
 
-	public static void sendSystemOut(String recipient, String subject,
-			String smtpServer, String userName, String password)
-			throws Exception {
-		sendMessage(recipient, subject, ConsoleUtil.getSystemOut(), smtpServer,
-				userName, password);
+	public static void sendSystemOut(String recipient, String subject, String smtpServer, String userName,
+			String password) throws Exception {
+		sendMessage(recipient, subject, ConsoleUtil.getSystemOut(), smtpServer, userName, password);
 	}
 
-	public static void sendSystemErr(String recipient, String subject,
-			String smtpServer, String userName, String password)
-			throws Exception {
-		sendMessage(recipient, subject, ConsoleUtil.getSystemErr(), smtpServer,
-				userName, password);
+	public static void sendSystemErr(String recipient, String subject, String smtpServer, String userName,
+			String password) throws Exception {
+		sendMessage(recipient, subject, ConsoleUtil.getSystemErr(), smtpServer, userName, password);
 	}
 
-	public static void sendMessage(String recipient, String subject,
-			String text, String smtpServer, String userName, String password)
-			throws Exception {
+	public static void sendMessage(String recipient, String subject, String text, String smtpServer, String userName,
+			String password) throws Exception {
 
 		Properties properties = new Properties();
 		// properties.put("mail.store.protocol", "pop3");
@@ -66,15 +61,13 @@ public class MailUtil {
 		if (password != null) {
 			properties.put("Password", password);
 		}
-		properties.put("mail.from", "ujmp@"
-				+ InetAddress.getLocalHost().getHostName());
+		properties.put("mail.from", "ujmp@" + InetAddress.getLocalHost().getHostName());
 
 		Session mailSession = Session.getInstance(properties);
 
 		Message message = new MimeMessage(mailSession);
 		message.setSubject(subject);
-		message.setRecipient(Message.RecipientType.TO, new InternetAddress(
-				recipient));
+		message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 		MimeMultipart mimeMultipart = new MimeMultipart();
 		MimeBodyPart textPart = new MimeBodyPart();
 		textPart.setText(text);

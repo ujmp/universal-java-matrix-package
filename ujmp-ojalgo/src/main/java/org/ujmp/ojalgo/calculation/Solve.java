@@ -31,9 +31,7 @@ import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
-public class Solve
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
+public class Solve implements org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
 	public static Solve INSTANCE = new Solve();
 

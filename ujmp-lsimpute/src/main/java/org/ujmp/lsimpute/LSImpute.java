@@ -64,13 +64,12 @@ public class LSImpute extends AbstractDoubleCalculation {
 			method = 6;
 			break;
 		default:
-			throw new RuntimeException("Imputation method is not supported: "
-					+ impMethod);
+			throw new RuntimeException("Imputation method is not supported: " + impMethod);
 		}
 
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (xImputed == null) {
 			createMatrix();
 		}
@@ -100,8 +99,7 @@ public class LSImpute extends AbstractDoubleCalculation {
 			fw.close();
 			Class<?> c = Class.forName("Impute");
 			Method me = c.getMethod("main", String[].class);
-			me.invoke(null, new Object[] { new String[] { file1.toString(),
-					file2.toString(), "" + method } });
+			me.invoke(null, new Object[] { new String[] { file1.toString(), file2.toString(), "" + method } });
 			m = Matrix.Factory.importFromFile(FileFormat.CSV, file2, "\t");
 			m = m.deleteRows(Ret.NEW, 0);
 			m = m.deleteColumns(Ret.NEW, 0);

@@ -31,11 +31,8 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.UIManager;
 
 import org.ujmp.gui.actions.PanelActions;
-import org.ujmp.gui.io.ExportJPEG;
-import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.jung.JungVisualizationViewer.GraphLayout;
 
 public class JungGraphActions extends JPopupMenu {
@@ -65,7 +62,7 @@ public class JungGraphActions extends JPopupMenu {
 		this.add(layoutMenu);
 		this.add(toggleEdgeLabelsAction);
 		this.add(toggleVertexLabelsAction);
-		this.add(new JSeparator());		
+		this.add(new JSeparator());
 		this.add(new JSeparator());
 		this.add(refreshAction);
 	}
@@ -134,7 +131,6 @@ public class JungGraphActions extends JPopupMenu {
 		}
 	};
 
-	
 	public final Action toggleEdgeLabelsAction = new AbstractAction("Toggle Edge Labels") {
 		private static final long serialVersionUID = 5043606502712307760L;
 

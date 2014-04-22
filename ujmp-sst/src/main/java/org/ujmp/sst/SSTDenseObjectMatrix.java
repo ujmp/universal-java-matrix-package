@@ -26,39 +26,40 @@ package org.ujmp.sst;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.MathUtil;
 
 import shared.array.ObjectArray;
 
-public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
-		implements Wrapper<ObjectArray<Object>> {
+public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object> implements Wrapper<ObjectArray<Object>> {
 	private static final long serialVersionUID = 2319673263310965476L;
 
 	private transient ObjectArray<Object> data = null;
 
 	public SSTDenseObjectMatrix(ObjectArray<Object> data) {
+		super(MathUtil.toLongArray(data.dims()));
 		this.data = data;
 	}
 
 	public SSTDenseObjectMatrix(long... size) {
+		super(size);
 		data = new ObjectArray<Object>(Object.class, MathUtil.toIntArray(size));
 	}
 
 	public SSTDenseObjectMatrix(Matrix source) {
-		data = new ObjectArray<Object>(Object.class, MathUtil.toIntArray(source
-				.getSize()));
+		super(source.getSize());
+		data = new ObjectArray<Object>(Object.class, MathUtil.toIntArray(source.getSize()));
 		for (long[] c : source.availableCoordinates()) {
 			setObject(source.getAsObject(c), c);
 		}
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return data.get(MathUtil.toIntArray(coordinates));
 	}
 
-	public void setObject(Object value, long... coordinates)
-			 {
+	public void setObject(Object value, long... coordinates) {
 		data.set(value, MathUtil.toIntArray(coordinates));
 
 	}
@@ -67,7 +68,7 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		return MathUtil.toLongArray(data.dims());
 	}
 
-	public Iterable<long[]> allCoordinates()  {
+	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(this.getSize());
 	}
 
@@ -75,8 +76,8 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object>
 		return data;
 	}
 
-	public void setWrappedObject(ObjectArray<Object> object) {
-		this.data = object;
+	public DenseMatrixFactory<SSTDenseObjectMatrix> getFactory() {
+		return null;
 	}
 
 }

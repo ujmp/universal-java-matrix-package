@@ -51,17 +51,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
 	}
 
-	
 	public String getDescription() {
 		return "library for plotting graphs";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

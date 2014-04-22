@@ -46,31 +46,36 @@ import org.ujmp.core.util.ReflectionUtil;
 public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Float64Matrix> {
 	private static final long serialVersionUID = -7874694468839411484L;
 
+	public static final JScienceDenseDoubleMatrix2DFactory Factory = new JScienceDenseDoubleMatrix2DFactory();
+
 	private transient Float64Matrix matrix = null;
 
 	private Boolean transposed = false;
 
 	private transient FastTable<Float64Vector> rows = null;
 
-	public JScienceDenseDoubleMatrix2D(long... size) {
-		if (Coordinates.product(size) != 0) {
-			this.matrix = Float64Matrix.valueOf(new double[(int) size[ROW]][(int) size[COLUMN]]);
-		}
+	public JScienceDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = Float64Matrix.valueOf(new double[rows][columns]);
 	}
 
 	public JScienceDenseDoubleMatrix2D(Float64Matrix matrix) {
+		super(matrix.getNumberOfRows(), matrix.getNumberOfColumns());
 		this.matrix = matrix;
 	}
 
 	public JScienceDenseDoubleMatrix2D(double[][] values) {
+		super(values.length, values[0].length);
 		this.matrix = Float64Matrix.valueOf(values);
 	}
 
 	public JScienceDenseDoubleMatrix2D(double[] values) {
+		super(values.length, 1);
 		this.matrix = Float64Matrix.valueOf(Float64Vector.valueOf(values));
 	}
 
 	public JScienceDenseDoubleMatrix2D(Matrix matrix) {
+		super(matrix.getRowCount(), matrix.getColumnCount());
 		this.matrix = Float64Matrix.valueOf(matrix.toDoubleArray());
 		if (matrix.getAnnotation() != null) {
 			setAnnotation(matrix.getAnnotation().clone());
@@ -78,10 +83,12 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	}
 
 	public JScienceDenseDoubleMatrix2D(DenseMatrix<Float64> matrix) {
+		super(matrix.getNumberOfRows(), matrix.getNumberOfColumns());
 		this.matrix = Float64Matrix.valueOf(matrix);
 	}
 
 	public JScienceDenseDoubleMatrix2D(SparseMatrix<Float64> matrix) {
+		super(matrix.getNumberOfRows(), matrix.getNumberOfColumns());
 		this.matrix = Float64Matrix.valueOf(matrix);
 	}
 
@@ -94,7 +101,8 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	}
 
 	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getNumberOfRows(), matrix.getNumberOfColumns() };
+		return matrix == null ? Coordinates.ZERO2D
+				: new long[] { matrix.getNumberOfRows(), matrix.getNumberOfColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {
@@ -242,5 +250,9 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public JScienceDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 }

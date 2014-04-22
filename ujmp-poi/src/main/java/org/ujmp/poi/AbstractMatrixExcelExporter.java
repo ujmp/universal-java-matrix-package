@@ -38,7 +38,8 @@ import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractMatrixExcelExporter {
 
-	public void exportToExcelFile(final Workbook workbook, final Matrix matrix, final File file, String sheetName) throws IOException {
+	public void exportToExcelFile(final Workbook workbook, final Matrix matrix, final File file, String sheetName)
+			throws IOException {
 		final Sheet sheet = workbook.createSheet(sheetName);
 
 		final int rowCount = (int) matrix.getRowCount();

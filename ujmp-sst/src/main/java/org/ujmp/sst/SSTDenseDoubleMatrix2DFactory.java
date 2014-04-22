@@ -24,14 +24,13 @@
 package org.ujmp.sst;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class SSTDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<SSTDenseDoubleMatrix2D> {
+public class SSTDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<SSTDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -1454666644074596760L;
 
-	public SSTDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new SSTDenseDoubleMatrix2D(rows, columns);
+	public SSTDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new SSTDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

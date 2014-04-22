@@ -27,6 +27,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestVecMathDenseDoubleMatrix2D.class })
-public class AllTests {
+@Suite.SuiteClasses({ TestVecMathDenseDoubleMatrix2D.class })
+public abstract class AllTests {
 }

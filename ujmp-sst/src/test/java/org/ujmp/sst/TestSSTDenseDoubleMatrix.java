@@ -26,14 +26,15 @@ package org.ujmp.sst;
 import org.junit.Test;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new SSTDenseDoubleMatrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new SSTDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]), MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new SSTDenseDoubleMatrix2D(source);
 	}
 

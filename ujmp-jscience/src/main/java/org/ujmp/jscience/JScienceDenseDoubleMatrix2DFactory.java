@@ -24,14 +24,13 @@
 package org.ujmp.jscience;
 
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class JScienceDenseDoubleMatrix2DFactory extends
-		AbstractDenseDoubleMatrix2DFactory<JScienceDenseDoubleMatrix2D> {
+public class JScienceDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<JScienceDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -6726214990943687191L;
 
-	public JScienceDenseDoubleMatrix2D zeros(long rows, long columns)
-			 {
-		return new JScienceDenseDoubleMatrix2D(rows, columns);
+	public JScienceDenseDoubleMatrix2D zeros(long rows, long columns) {
+		return new JScienceDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 }

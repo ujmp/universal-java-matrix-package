@@ -28,11 +28,9 @@ import org.ujmp.core.util.StringUtil;
 
 public abstract class ImportMatrixImapFolders {
 
-	public static Matrix fromURL(String url, Object... parameters)
-			throws Exception {
+	public static Matrix fromURL(String url, Object... parameters) throws Exception {
 		if (parameters.length < 2) {
-			throw new RuntimeException(
-					"this methods needs additional parameters: user, password, [foldername]");
+			throw new RuntimeException("this methods needs additional parameters: user, password, [foldername]");
 		}
 		String user = StringUtil.convert(parameters[0]);
 		String password = StringUtil.convert(parameters[1]);

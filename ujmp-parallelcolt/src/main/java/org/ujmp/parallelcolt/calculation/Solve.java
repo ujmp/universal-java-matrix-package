@@ -26,9 +26,7 @@ package org.ujmp.parallelcolt.calculation;
 import org.ujmp.core.Matrix;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 
-public class Solve
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
+public class Solve implements org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
 	public static Solve INSTANCE = new Solve();
 
@@ -45,8 +43,7 @@ public class Solve
 		} else {
 			b2 = new ParallelColtDenseDoubleMatrix2D(b).getWrappedObject();
 		}
-		return new ParallelColtDenseDoubleMatrix2D(
-				ParallelColtDenseDoubleMatrix2D.ALG.solve(a2, b2));
+		return new ParallelColtDenseDoubleMatrix2D(ParallelColtDenseDoubleMatrix2D.ALG.solve(a2, b2));
 	}
 
 }

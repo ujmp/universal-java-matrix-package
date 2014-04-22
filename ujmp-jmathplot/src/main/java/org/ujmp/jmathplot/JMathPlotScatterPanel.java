@@ -35,7 +35,6 @@ public class JMathPlotScatterPanel extends AbstractJMathPlotPanel {
 		super(matrix);
 	}
 
-	
 	public void repaintUI() {
 		Matrix matrix = getMatrix();
 

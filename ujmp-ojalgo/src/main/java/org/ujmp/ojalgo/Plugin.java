@@ -41,17 +41,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.ojalgo.array.PrimitiveArray");
 	}
 
-	
 	public String getDescription() {
 		return "interface to the ojAlgo library";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

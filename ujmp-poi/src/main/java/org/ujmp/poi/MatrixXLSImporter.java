@@ -35,7 +35,8 @@ import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 
 public class MatrixXLSImporter extends AbstractMatrixExcelImporter {
 
-	public DenseObjectMatrix2D importFromXLS(final File file, final int sheetNumber) throws InvalidFormatException, IOException {
+	public DenseObjectMatrix2D importFromXLS(final File file, final int sheetNumber) throws InvalidFormatException,
+			IOException {
 		final FileInputStream fileInputStream = new FileInputStream(file);
 		final BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 		final DenseObjectMatrix2D matrix = importFromXLS(bufferedInputStream, sheetNumber);
@@ -44,11 +45,13 @@ public class MatrixXLSImporter extends AbstractMatrixExcelImporter {
 		return matrix;
 	}
 
-	public DenseObjectMatrix2D importFromXLS(final String filename, final int sheetNumber) throws InvalidFormatException, IOException {
+	public DenseObjectMatrix2D importFromXLS(final String filename, final int sheetNumber)
+			throws InvalidFormatException, IOException {
 		return importFromXLS(new File(filename), sheetNumber);
 	}
 
-	public DenseObjectMatrix2D importFromXLS(final InputStream inputStream, final int sheetNumber) throws InvalidFormatException, IOException {
+	public DenseObjectMatrix2D importFromXLS(final InputStream inputStream, final int sheetNumber)
+			throws InvalidFormatException, IOException {
 		final HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
 		return importFromWorkbook(workbook, sheetNumber);
 	}

@@ -27,6 +27,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestLuceneMap.class, TestLuceneSparseObjectMatrix.class })
-public class AllTests {
+@Suite.SuiteClasses({ TestLuceneMap.class, TestLuceneSparseObjectMatrix.class })
+public abstract class AllTests {
 }

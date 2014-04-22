@@ -42,17 +42,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("findp");
 	}
 
-	
 	public String getDescription() {
 		return "library for imputing missing values using the least sqaures method";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

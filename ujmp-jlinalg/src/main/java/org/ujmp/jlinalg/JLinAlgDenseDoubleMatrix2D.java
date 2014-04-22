@@ -33,26 +33,32 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.util.MathUtil;
 
-public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<org.jlinalg.Matrix<DoubleWrapper>> {
+public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
+		Wrapper<org.jlinalg.Matrix<DoubleWrapper>> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
-	private transient org.jlinalg.Matrix<DoubleWrapper> matrix = null;
+	public static final JLinAlgDenseDoubleMatrix2DFactory Factory = new JLinAlgDenseDoubleMatrix2DFactory();
+
+	private transient org.jlinalg.Matrix<DoubleWrapper> matrix;
 
 	// matrix must be filled with zeros
-	public JLinAlgDenseDoubleMatrix2D(long... size) {
-		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>((int) size[ROW], (int) size[COLUMN], DoubleWrapper.FACTORY);
+	public JLinAlgDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new org.jlinalg.Matrix<DoubleWrapper>(rows, columns, DoubleWrapper.FACTORY);
 		for (long[] c : availableCoordinates()) {
 			setDouble(0, c);
 		}
 	}
 
 	public JLinAlgDenseDoubleMatrix2D(org.jlinalg.Matrix<DoubleWrapper> m) {
+		super(m.getRows(), m.getCols());
 		this.matrix = m;
 	}
 
 	public JLinAlgDenseDoubleMatrix2D(Matrix source) {
-		this(source.getSize());
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
@@ -85,10 +91,6 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public org.jlinalg.Matrix<DoubleWrapper> getWrappedObject() {
 		return matrix;
-	}
-
-	public void setWrappedObject(org.jlinalg.Matrix<DoubleWrapper> object) {
-		this.matrix = object;
 	}
 
 	public Matrix transpose() {
@@ -149,6 +151,10 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(toDoubleArray());
+	}
+
+	public JLinAlgDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

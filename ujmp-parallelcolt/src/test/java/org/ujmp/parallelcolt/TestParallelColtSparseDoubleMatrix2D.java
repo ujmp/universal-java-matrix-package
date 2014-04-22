@@ -25,14 +25,16 @@ package org.ujmp.parallelcolt;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestParallelColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new ParallelColtSparseDoubleMatrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new ParallelColtSparseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new ParallelColtSparseDoubleMatrix2D(source);
 	}
 

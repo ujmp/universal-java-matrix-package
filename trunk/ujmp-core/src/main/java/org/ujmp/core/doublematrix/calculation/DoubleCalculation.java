@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface DoubleCalculation extends Calculation {
 
-	public double getDouble(long... coordinates) ;
+	public double getDouble(long... coordinates);
 
-	public void setDouble(double value, long... coordinates) ;
+	public void setDouble(double value, long... coordinates);
 
 }

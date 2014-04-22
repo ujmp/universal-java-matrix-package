@@ -37,11 +37,10 @@ public class IrisMatrixAction extends AbstractMatrixAction {
 	public IrisMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Iris Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a matrix with the Iris flower data set");
+		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with the Iris flower data set");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = new IrisMatrix();
 		m.showGUI();
 		return m;

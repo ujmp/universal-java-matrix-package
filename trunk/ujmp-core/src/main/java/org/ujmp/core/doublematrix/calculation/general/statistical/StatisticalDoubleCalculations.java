@@ -25,16 +25,17 @@ package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.DoubleMatrix;
 
 public interface StatisticalDoubleCalculations {
 
-	public Matrix diff(Ret returnType, int dimension, boolean ignoreNaN) ;
+	public Matrix diff(Ret returnType, int dimension, boolean ignoreNaN);
 
-	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) ;
+	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN);
 
-	public Matrix cumsum(boolean ignoreNaN) ;
+	public Matrix cumsum(boolean ignoreNaN);
 
-	public Matrix cumprod(boolean ignoreNaN) ;
+	public Matrix cumprod(boolean ignoreNaN);
 
 	/**
 	 * Calculates the mimimum of the values in the matrix either rowwise,
@@ -48,7 +49,7 @@ public interface StatisticalDoubleCalculations {
 	 *            COLUMN=1 or ALL
 	 * @return A new matrix containing the minimum values
 	 */
-	public Matrix min(Ret returnType, int dimension) ;
+	public Matrix min(Ret returnType, int dimension);
 
 	/**
 	 * Calculates the maximum of the values in the matrix either rowwise,
@@ -62,7 +63,7 @@ public interface StatisticalDoubleCalculations {
 	 *            COLUMN=1 or ALL
 	 * @return A new matrix containing the maximum values
 	 */
-	public Matrix max(Ret returnType, int dimension) ;
+	public Matrix max(Ret returnType, int dimension);
 
 	/**
 	 * Calculates the sum of all entries in the Matrix either per row, per
@@ -77,7 +78,7 @@ public interface StatisticalDoubleCalculations {
 	 *            should missing values be ignored
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix sum(Ret returnType, int dimension, boolean ignoreNaN) ;
+	public Matrix sum(Ret returnType, int dimension, boolean ignoreNaN);
 
 	/**
 	 * Calculates the mean of all entries in the Matrix either per row, per
@@ -92,7 +93,7 @@ public interface StatisticalDoubleCalculations {
 	 *            should missing values be ignored
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix mean(Ret returnType, int dimension, boolean ignoreNaN) ;
+	public Matrix mean(Ret returnType, int dimension, boolean ignoreNaN);
 
 	/**
 	 * Calculates the variance of all entries in the Matrix either per row, per
@@ -109,8 +110,7 @@ public interface StatisticalDoubleCalculations {
 	 *            use (n-1) instead of n
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
-			;
+	public Matrix var(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection);
 
 	/**
 	 * Calculates the standard deviation of all entries in the Matrix either per
@@ -127,8 +127,7 @@ public interface StatisticalDoubleCalculations {
 	 *            use (n-1) instead of n
 	 * @return Matrix with the sum of the values along the desired axis
 	 */
-	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection)
-			;
+	public Matrix std(Ret returnType, int dimension, boolean ignoreNaN, boolean besselsCorrection);
 
 	/**
 	 * Calculates the covariance Matrix. Each row is an observation and each
@@ -143,8 +142,7 @@ public interface StatisticalDoubleCalculations {
 	 *            use (n-1) instead of n
 	 * @return Covariance Matrix
 	 */
-	public Matrix cov(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
-			;
+	public Matrix cov(Ret returnType, boolean ignoreNaN, boolean besselsCorrection);
 
 	/**
 	 * Calculates the Pearson correlation. Each row is an observation and each
@@ -159,8 +157,7 @@ public interface StatisticalDoubleCalculations {
 	 *            use (n-1) instead of n
 	 * @return Covariance Matrix
 	 */
-	public Matrix corrcoef(Ret returnType, boolean ignoreNaN, boolean besselsCorrection)
-			;
+	public Matrix corrcoef(Ret returnType, boolean ignoreNaN, boolean besselsCorrection);
 
 	/**
 	 * Calculates the mutual information. Each row is an observation and each
@@ -171,7 +168,7 @@ public interface StatisticalDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with mutual information
 	 */
-	public Matrix mutualInf(Ret returnType) ;
+	public Matrix mutualInf(Ret returnType);
 
 	/**
 	 * Calculates a paired T-Test on the matrix. Each row is an observation and
@@ -182,7 +179,7 @@ public interface StatisticalDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with p-values of the T-Test
 	 */
-	public Matrix pairedTTest(Ret returnType) ;
+	public Matrix pairedTTest(Ret returnType);
 
 	/**
 	 * Finds the index of the maximum value in the matrix
@@ -194,7 +191,7 @@ public interface StatisticalDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @return Matrix containing the coordinates of the Maximum
 	 */
-	public Matrix indexOfMax(Ret returnType, int dimension) ;
+	public Matrix indexOfMax(Ret returnType, int dimension);
 
 	/**
 	 * Finds the index of the minimum value in the matrix
@@ -206,6 +203,6 @@ public interface StatisticalDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @return Matrix containing the coordinates of the Minimum
 	 */
-	public Matrix indexOfMin(Ret returnType, int dimension) ;
+	public Matrix indexOfMin(Ret returnType, int dimension);
 
 }

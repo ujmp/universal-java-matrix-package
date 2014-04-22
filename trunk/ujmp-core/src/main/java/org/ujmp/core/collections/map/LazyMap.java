@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-
 public class LazyMap<K, V> extends AbstractMap<K, V> {
 	private static final long serialVersionUID = -5970508001189550492L;
 

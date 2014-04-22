@@ -25,17 +25,20 @@ package org.ujmp.core.importer.source;
 
 import java.io.File;
 
+import org.ujmp.core.Matrix;
+
 public abstract class AbstractMatrixFileImportSource extends AbstractMatrixImportSource implements
 		MatrixFileImportSource {
 
 	private final File file;
 
-	public AbstractMatrixFileImportSource(File file) {
+	public AbstractMatrixFileImportSource(Matrix matrix, File file) {
+		super(matrix);
 		this.file = file;
 	}
 
-	public AbstractMatrixFileImportSource(String file) {
-		this(new File(file));
+	public AbstractMatrixFileImportSource(Matrix matrix, String file) {
+		this(matrix, new File(file));
 	}
 
 	public File getFile() {

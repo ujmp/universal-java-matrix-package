@@ -24,8 +24,8 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
+import org.ujmp.core.numbermatrix.factory.SparseNumberMatrix2DFactory;
 
 public interface SparseDoubleMatrix2DFactory<T extends SparseDoubleMatrix2D> extends
-		SparseMatrix2DFactory<T>, SparseDoubleMatrixFactory<T>, DoubleMatrix2DFactory<T> {
+		SparseNumberMatrix2DFactory<T>, SparseDoubleMatrixFactory<T>, DoubleMatrix2DFactory<T> {
 }

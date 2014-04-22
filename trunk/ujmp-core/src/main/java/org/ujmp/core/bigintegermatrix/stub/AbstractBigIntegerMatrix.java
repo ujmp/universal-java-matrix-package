@@ -28,37 +28,41 @@ import java.math.BigInteger;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.numbermatrix.stub.AbstractNumberMatrix;
 
-public abstract class AbstractBigIntegerMatrix extends AbstractGenericMatrix<BigInteger> implements
+public abstract class AbstractBigIntegerMatrix extends AbstractNumberMatrix<BigInteger> implements
 		BigIntegerMatrix {
 	private static final long serialVersionUID = 3292181924433131789L;
 
-	public AbstractBigIntegerMatrix() {
-		super();
-	}
-
 	public AbstractBigIntegerMatrix(Matrix m) {
-		super(m);
+		super(m.getSize());
 	}
 
-	public AbstractBigIntegerMatrix(long... size) {
+	public AbstractBigIntegerMatrix(long[] size) {
 		super(size);
 	}
 
-	public final BigInteger getObject(long... coordinates)  {
+	public BigInteger getNumber(long... coordinates) {
 		return getBigInteger(coordinates);
 	}
 
-	public final void setObject(BigInteger o, long... coordinates)  {
+	public void setNumber(BigInteger value, long... coordinates) {
+		setBigInteger(value, coordinates);
+	}
+
+	public final BigInteger getObject(long... coordinates) {
+		return getBigInteger(coordinates);
+	}
+
+	public final void setObject(BigInteger o, long... coordinates) {
 		setBigInteger(o, coordinates);
 	}
 
-	public final BigInteger getAsBigInteger(long... coordinates)  {
+	public final BigInteger getAsBigInteger(long... coordinates) {
 		return getBigInteger(coordinates);
 	}
 
-	public final void setAsBigInteger(BigInteger value, long... coordinates)  {
+	public final void setAsBigInteger(BigInteger value, long... coordinates) {
 		setBigInteger(value, coordinates);
 	}
 

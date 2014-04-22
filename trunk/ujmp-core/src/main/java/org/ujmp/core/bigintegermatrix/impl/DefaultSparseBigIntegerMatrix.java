@@ -35,12 +35,11 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		BigIntegerMatrix {
 	private static final long serialVersionUID = -7680422900220897521L;
 
-	public DefaultSparseBigIntegerMatrix(Matrix m)  {
+	public DefaultSparseBigIntegerMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseBigIntegerMatrix(Matrix m, int maximumNumberOfEntries)
-			 {
+	public DefaultSparseBigIntegerMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -56,12 +55,20 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		return ValueType.BIGINTEGER;
 	}
 
-	public BigInteger getBigInteger(long... coordinates)  {
+	public BigInteger getBigInteger(long... coordinates) {
 		return MathUtil.getBigInteger(getObject(coordinates));
 	}
 
-	public void setBigInteger(BigInteger value, long... coordinates)  {
+	public void setBigInteger(BigInteger value, long... coordinates) {
 		setObject(value, coordinates);
+	}
+
+	public BigInteger getNumber(long... coordinates) {
+		return getBigInteger(coordinates);
+	}
+
+	public void setNumber(BigInteger value, long... coordinates) {
+		setBigInteger(value, coordinates);
 	}
 
 }

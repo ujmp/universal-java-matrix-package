@@ -26,27 +26,29 @@ package org.ujmp.core.genericmatrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D<A> {
 	private static final long serialVersionUID = 3132491298449205914L;
 
-	private Object[][] values = null;
+	private final Object[][] values;
 
-	public DefaultDenseGenericMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseGenericMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 		for (long[] c : m.allCoordinates()) {
 			setAsObject(m.getAsObject(c), c);
 		}
 	}
 
-	public DefaultDenseGenericMatrix2D(A[][] values)  {
+	public DefaultDenseGenericMatrix2D(A[][] values) {
+		super(values.length, values[0].length);
 		this.values = values;
 	}
 
-	public DefaultDenseGenericMatrix2D(long... size) {
-		super(size);
-		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
+	public DefaultDenseGenericMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new Object[rows][columns];
 	}
 
 	public long[] getSize() {
@@ -83,4 +85,7 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		return ValueType.OBJECT;
 	}
 
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

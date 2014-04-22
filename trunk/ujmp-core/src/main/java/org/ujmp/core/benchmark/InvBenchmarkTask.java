@@ -63,7 +63,7 @@ public class InvBenchmarkTask extends AbstractBenchmarkTask {
 			}
 			Matrix result = m.mtimes(r);
 			double diff = BenchmarkUtil.difference(result,
-					DenseDoubleMatrix2D.Factory.eye(m.getSize()));
+					DenseDoubleMatrix2D.Factory.eye(m.getRowCount(), m.getColumnCount()));
 			result = null;
 			long mem = m1 - m0 - SerializationUtil.sizeOf(r);
 			mem = mem > 0 ? mem : 0;

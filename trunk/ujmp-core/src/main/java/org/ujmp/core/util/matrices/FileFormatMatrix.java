@@ -26,12 +26,15 @@ package org.ujmp.core.util.matrices;
 import java.util.Arrays;
 
 import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
 	private static final long serialVersionUID = 1386986795129799225L;
 
 	public FileFormatMatrix() {
+		super(FileFormat.values().length, 3);
 		setLabel("Supported File Formats");
 		setColumnLabel(0, "File Format");
 		setColumnLabel(1, "Description");
@@ -62,6 +65,10 @@ public class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
 
 	public long[] getSize() {
 		return new long[] { FileFormat.values().length, 3 };
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

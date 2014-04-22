@@ -30,8 +30,6 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Set;
 
-
-
 public class WebMap extends AbstractMap<String, String> {
 	private static final long serialVersionUID = 4489821220210347429L;
 

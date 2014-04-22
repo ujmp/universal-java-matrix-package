@@ -24,23 +24,22 @@
 package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
 		implements SparseGenericMatrix2D<A> {
 
+	public AbstractSparseGenericMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
+	}
+
 	private static final long serialVersionUID = 5833681469274664616L;
 
-	public final A getObject(long... coordinates)  {
+	public final A getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final void setObject(A value, long... coordinates)  {
+	public final void setObject(A value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
-	}
 }

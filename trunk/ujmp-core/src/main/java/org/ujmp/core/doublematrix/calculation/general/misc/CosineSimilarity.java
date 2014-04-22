@@ -40,7 +40,7 @@ public class CosineSimilarity extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		Matrix m1 = getSource().selectRows(Ret.LINK, coordinates[ROW]);
 		Matrix m2 = getSource().selectRows(Ret.LINK, coordinates[COLUMN]);
 		double aiSum = 0;

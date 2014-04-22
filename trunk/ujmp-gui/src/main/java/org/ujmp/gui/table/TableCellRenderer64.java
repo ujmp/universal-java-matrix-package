@@ -30,6 +30,7 @@ import javax.swing.table.TableCellRenderer;
 
 public interface TableCellRenderer64 extends TableCellRenderer {
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, long row, long column);
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			long row, long column);
 
 }

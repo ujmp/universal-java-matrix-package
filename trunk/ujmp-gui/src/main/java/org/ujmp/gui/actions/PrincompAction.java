@@ -36,12 +36,10 @@ public class PrincompAction extends AbstractMatrixAction {
 	public PrincompAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Principal Components");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the principal components of a matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the principal components of a matrix");
 	}
 
-	
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().princomp();
 		result.showGUI();
 		return result;

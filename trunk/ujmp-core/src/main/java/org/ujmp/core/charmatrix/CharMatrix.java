@@ -33,10 +33,9 @@ public interface CharMatrix extends GenericMatrix<Character> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a char representation of the entry
-	 * @
+	 * @return a char representation of the entry @
 	 */
-	public char getChar(long... coordinates) ;
+	public char getChar(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a char value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface CharMatrix extends GenericMatrix<Character> {
 	 * @param value
 	 *            char value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setChar(char value, long... coordinates) ;
+	public void setChar(char value, long... coordinates);
 
 }

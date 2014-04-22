@@ -36,11 +36,10 @@ public class SunSpotDataMatrixAction extends AbstractMatrixAction {
 	public SunSpotDataMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sunspot DataSet Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a matrix with Wolfer's sunspot data 1700 - 1987");
+		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with Wolfer's sunspot data 1700 - 1987");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = Matrix.Factory.sunSpotDataset();
 		m.showGUI();
 		return m;

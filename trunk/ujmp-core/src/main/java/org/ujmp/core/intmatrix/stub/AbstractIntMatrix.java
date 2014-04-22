@@ -23,9 +23,8 @@
 
 package org.ujmp.core.intmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
@@ -34,40 +33,32 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
 	private static final long serialVersionUID = -5153569448031492210L;
 
-	public AbstractIntMatrix() {
-		super();
-	}
-
-	public AbstractIntMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractIntMatrix(long... size) {
+	public AbstractIntMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Integer getObject(long... coordinates)  {
+	public final Integer getObject(long... coordinates) {
 		return getInt(coordinates);
 	}
 
-	public final void setObject(Integer o, long... coordinates)  {
+	public final void setObject(Integer o, long... coordinates) {
 		setInt(o, coordinates);
 	}
 
-	public final int getAsInt(long... coordinates)  {
+	public final int getAsInt(long... coordinates) {
 		return getInt(coordinates);
 	}
 
-	public final void setAsInt(int value, long... coordinates)  {
+	public final void setAsInt(int value, long... coordinates) {
 		setInt(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return getInt(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
-		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+	public final void setAsDouble(double value, long... coordinates) {
+		verifyTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setInt((int) value, coordinates);
 	}
 

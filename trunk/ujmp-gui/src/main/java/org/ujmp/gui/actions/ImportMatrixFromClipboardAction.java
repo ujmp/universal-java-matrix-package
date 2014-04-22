@@ -45,11 +45,9 @@ public class ImportMatrixFromClipboardAction extends AbstractObjectAction {
 
 	public Object call() {
 		try {
-			FileFormat fileFormat = FileFormat.values()[JOptionPane
-					.showOptionDialog(getComponent(), "Select format",
-							"Import Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null,
-							FileFormat.values(), FileFormat.CSV)];
+			FileFormat fileFormat = FileFormat.values()[JOptionPane.showOptionDialog(getComponent(), "Select format",
+					"Import Matrix", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, FileFormat.values(),
+					FileFormat.CSV)];
 
 			Matrix m = Matrix.Factory.importFromClipboard(fileFormat);
 			m.showGUI();

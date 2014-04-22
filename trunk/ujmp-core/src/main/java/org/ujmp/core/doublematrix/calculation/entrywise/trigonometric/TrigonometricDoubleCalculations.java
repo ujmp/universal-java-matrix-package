@@ -43,7 +43,7 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with sinus values
 	 */
-	public Matrix sin(Ret returnType) ;
+	public Matrix sin(Ret returnType);
 
 	/**
 	 * Calculates the cosinus of all entries in the matrix.
@@ -53,7 +53,7 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with cosinus values
 	 */
-	public Matrix cos(Ret returnType) ;
+	public Matrix cos(Ret returnType);
 
 	/**
 	 * Calculates the tangens of all entries in the matrix.
@@ -63,6 +63,6 @@ public interface TrigonometricDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with tangens values
 	 */
-	public Matrix tan(Ret returnType) ;
+	public Matrix tan(Ret returnType);
 
 }

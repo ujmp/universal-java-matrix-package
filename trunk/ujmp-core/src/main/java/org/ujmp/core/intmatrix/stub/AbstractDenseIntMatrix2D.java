@@ -23,7 +23,6 @@
 
 package org.ujmp.core.intmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.VerifyUtil;
@@ -32,17 +31,9 @@ public abstract class AbstractDenseIntMatrix2D extends AbstractDenseIntMatrix im
 		DenseIntMatrix2D {
 	private static final long serialVersionUID = -8351776461068550919L;
 
-	public AbstractDenseIntMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseIntMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseIntMatrix2D(long... size) {
+	public AbstractDenseIntMatrix2D(long[] size) {
 		super(size);
-		VerifyUtil.assert2D(size);
+		VerifyUtil.verify2D(size);
 	}
 
 	public final Iterable<long[]> allCoordinates() {

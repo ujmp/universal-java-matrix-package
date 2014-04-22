@@ -23,14 +23,10 @@
 
 package org.ujmp.core.floatmatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 
-public interface FloatMatrix2DFactory extends Serializable {
-
-	public FloatMatrix2D dense(long rows, long columns) ;
-
-	public FloatMatrix2D zeros(long rows, long columns) ;
+public interface FloatMatrix2DFactory<T extends FloatMatrix2D> extends GenericMatrix2DFactory<T>,
+		FloatMatrixFactory<T> {
 
 }

@@ -37,10 +37,9 @@ public class PrintAction extends AbstractObjectAction {
 		putValue(Action.SHORT_DESCRIPTION, "Print a screenshot of this object");
 	}
 
-	
 	public Object call() {
 		if (getComponent() == null) {
-			//logger.log(Level.WARNING, "no panel provided for printing");
+			// logger.log(Level.WARNING, "no panel provided for printing");
 		} else {
 			// PrintPreviewDialog ppd = new PrintPreviewDialog(getPanel());
 			// ppd.setVisible(true);

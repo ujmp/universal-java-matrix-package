@@ -23,6 +23,18 @@
 
 package org.ujmp.core.importer.source;
 
+import org.ujmp.core.Matrix;
+
 public abstract class AbstractMatrixImportSource implements MatrixImportSource {
+
+	private final Matrix matrix;
+
+	public AbstractMatrixImportSource(Matrix matrix) {
+		this.matrix = matrix;
+	}
+
+	public Matrix getTargetMatrix() {
+		return matrix;
+	}
 
 }

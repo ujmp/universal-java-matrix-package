@@ -28,8 +28,11 @@ import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseCharMatrix2D extends AbstractSparseCharMatrix implements
 		SparseCharMatrix2D {
-
 	private static final long serialVersionUID = -3805321813335029419L;
+
+	public AbstractSparseCharMatrix2D(long[] size) {
+		super(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -43,22 +46,18 @@ public abstract class AbstractSparseCharMatrix2D extends AbstractSparseCharMatri
 		setChar(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Character getObject(long row, long column) {
 		return getChar(row, column);
 	}
 
-	
 	public final Character getObject(int row, int column) {
 		return getChar(row, column);
 	}
 
-	
 	public final void setObject(Character value, long row, long column) {
 		setChar(value, row, column);
 	}
 
-	
 	public final void setObject(Character value, int row, int column) {
 		setChar(value, row, column);
 	}

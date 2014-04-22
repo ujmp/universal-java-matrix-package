@@ -32,11 +32,11 @@ public class ToByteMatrix extends AbstractByteCalculation {
 		super(matrix);
 	}
 
-	public byte getByte(long... coordinates)  {
+	public byte getByte(long... coordinates) {
 		return getSource().getAsByte(coordinates);
 	}
 
-	public void setByte(byte value, long... coordinates)  {
+	public void setByte(byte value, long... coordinates) {
 		getSource().setAsByte(value, coordinates);
 	}
 

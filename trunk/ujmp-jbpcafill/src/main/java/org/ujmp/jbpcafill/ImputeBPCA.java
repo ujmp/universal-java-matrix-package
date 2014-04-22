@@ -39,7 +39,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (xImputed == null) {
 			createMatrix();
 		}

@@ -33,10 +33,9 @@ public interface BooleanMatrix extends GenericMatrix<Boolean> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a boolean representation of the entry
-	 * @
+	 * @return a boolean representation of the entry @
 	 */
-	public boolean getBoolean(long... coordinates) ;
+	public boolean getBoolean(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a boolean value. If the matrix cannot
@@ -45,9 +44,8 @@ public interface BooleanMatrix extends GenericMatrix<Boolean> {
 	 * @param value
 	 *            boolean value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setBoolean(boolean value, long... coordinates) ;
+	public void setBoolean(boolean value, long... coordinates);
 
 }

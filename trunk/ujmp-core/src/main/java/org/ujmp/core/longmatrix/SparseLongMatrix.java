@@ -23,8 +23,8 @@
 
 package org.ujmp.core.longmatrix;
 
-import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
-public interface SparseLongMatrix extends LongMatrix, SparseMatrix {
+public interface SparseLongMatrix extends LongMatrix, SparseGenericMatrix<Long> {
 
 }

@@ -32,55 +32,36 @@ import org.ujmp.core.collections.map.LazyMap;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 
 public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
 
 	public static final String FILES = "Files";
-
 	public static final String TEXT = "Text";
-
 	public static final String BYTES = "Bytes";
-
 	public static final String SIZE = "Size";
-
 	public static final String CANREAD = "CanRead";
-
 	public static final String CANWRITE = "CanWrite";
-
 	public static final String ISHIDDEN = "IsHidden";
-
 	public static final String ISFILE = "IsFile";
-
 	public static final String ISDIRECTORY = "IsDirectory";
-
 	public static final String LASTMODIFIED = "LastModified";
-
 	public static final String FILENAME = "FileName";
-
 	public static final String CANEXECUTE = "CanExecute";
-
 	public static final String PATH = "Path";
-
 	public static final String EXTENSION = "Extension";
-
 	public static final String FILEFORMAT = "FileFormat";
-
 	public static final String MD5 = "MD5";
-
 	public static final String AVARAGECOLOR = "AvarageColor";
-
 	public static final String THUMBNAIL = "Thumbnail";
-
 	public static final String IMAGE = "Image";
 
 	private FileMap map = null;
-
 	private final FileFormat fileFormat;
-
 	private final File file;
-
 	private final Object[] parameters;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
@@ -165,6 +146,10 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

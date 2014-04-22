@@ -23,9 +23,8 @@
 
 package org.ujmp.core.booleanmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -33,43 +32,34 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolean> implements
 		BooleanMatrix {
-
 	private static final long serialVersionUID = -6190735100426536876L;
 
-	public AbstractBooleanMatrix() {
-		super();
-	}
-
-	public AbstractBooleanMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractBooleanMatrix(long... size) {
+	public AbstractBooleanMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Boolean getObject(long... coordinates)  {
+	public final Boolean getObject(long... coordinates) {
 		return getBoolean(coordinates);
 	}
 
-	public final void setObject(Boolean o, long... coordinates)  {
+	public final void setObject(Boolean o, long... coordinates) {
 		setBoolean(o, coordinates);
 	}
 
-	public final boolean getAsBoolean(long... coordinates)  {
+	public final boolean getAsBoolean(long... coordinates) {
 		return getBoolean(coordinates);
 	}
 
-	public final void setAsBoolean(boolean value, long... coordinates)  {
+	public final void setAsBoolean(boolean value, long... coordinates) {
 		setBoolean(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return getBoolean(coordinates) ? 1 : 0;
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
-		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+	public final void setAsDouble(double value, long... coordinates) {
+		verifyTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setBoolean(value != 0, coordinates);
 	}
 

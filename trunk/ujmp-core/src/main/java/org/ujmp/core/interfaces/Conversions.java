@@ -23,18 +23,18 @@
 
 package org.ujmp.core.interfaces;
 
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.charmatrix.CharMatrix;
-import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.BaseDoubleMatrix;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.objectmatrix.BaseObjectMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.stringmatrix.StringMatrix;
@@ -43,7 +43,7 @@ public interface Conversions {
 
 	public BooleanMatrix toBooleanMatrix();
 
-	public BigDecimalMatrix toBigDecimalMatrix();
+	public BaseBigDecimalMatrix toBigDecimalMatrix();
 
 	public BigIntegerMatrix toBigIntegerMatrix();
 
@@ -51,7 +51,7 @@ public interface Conversions {
 
 	public CharMatrix toCharMatrix();
 
-	public DoubleMatrix toDoubleMatrix();
+	public BaseDoubleMatrix toDoubleMatrix();
 
 	public FloatMatrix toFloatMatrix();
 
@@ -63,7 +63,7 @@ public interface Conversions {
 
 	public StringMatrix toStringMatrix();
 
-	public ObjectMatrix toObjectMatrix();
+	public BaseObjectMatrix toObjectMatrix();
 
 	public ListMatrix<?> toListMatrix();
 

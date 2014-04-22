@@ -38,15 +38,15 @@ public class Lt extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Lt(Matrix m1, double v2)  {
+	public Lt(Matrix m1, double v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Lt(double v1, Matrix m2)  {
+	public Lt(double v1, Matrix m2) {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return getSource().getAsDouble(coordinates) < getSources()[1].getAsDouble(coordinates);
 	}
 }

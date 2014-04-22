@@ -23,15 +23,22 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
+import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrixMultiD;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseObjectMatrixFactory extends AbstractMatrixFactory<DenseObjectMatrix>
 		implements DenseObjectMatrixFactory<DenseObjectMatrix> {
 	private static final long serialVersionUID = 2613102688458521347L;
 
-	public DenseObjectMatrix zeros(long... size)  {
+	public DenseObjectMatrix zeros(long... size) {
 		return new DefaultDenseObjectMatrixMultiD(size);
+	}
+
+	public Matrix zeros(long rows, long columns) {
+		return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 }

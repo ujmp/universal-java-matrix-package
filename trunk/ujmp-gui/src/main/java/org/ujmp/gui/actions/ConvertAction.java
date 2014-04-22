@@ -41,16 +41,13 @@ public class ConvertAction extends AbstractMatrixAction {
 	public ConvertAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Convert");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Convert all entries to another format");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_SPACE, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "Convert all entries to another format");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().convert(
-				(ValueType) GUIUtil.getObject("New entry type",
-						(Object[]) ValueType.values()));
+				(ValueType) GUIUtil.getObject("New entry type", (Object[]) ValueType.values()));
 		m.showGUI();
 		return m;
 	}

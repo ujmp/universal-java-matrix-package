@@ -28,11 +28,13 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
 import org.ujmp.core.benchmark.MatrixBenchmark;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class ColtDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
 	public DoubleMatrix2D createMatrix(long... size) {
-		return new ColtDenseDoubleMatrix2D(size);
+		return new ColtDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 	public DoubleMatrix2D createMatrix(Matrix source) {

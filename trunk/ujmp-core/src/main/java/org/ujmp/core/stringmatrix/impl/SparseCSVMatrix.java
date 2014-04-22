@@ -31,7 +31,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.ujmp.core.SparseMatrix2D;
 import org.ujmp.core.collections.map.SoftHashMap;
+import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractSparseStringMatrix2D;
 import org.ujmp.core.util.io.IntelligentFileReader;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -54,6 +56,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	}
 
 	public SparseCSVMatrix(File file, Object... parameters) throws IOException {
+		super(new long[] { 1, 1 });
 		if (parameters.length != 0 && parameters[0] instanceof String) {
 			this.fieldDelimiter = (String) parameters[0];
 		}
@@ -103,7 +106,11 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		return size;
 	}
 
-	public String getString(long row, long column)  {
+	public final boolean isSparse() {
+		return true;
+	}
+
+	public String getString(long row, long column) {
 		try {
 			List<Long> linesToCheck = rowToLine.get(row);
 			if (linesToCheck == null) {
@@ -136,11 +143,9 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		return null;
 	}
 
-	
 	public Iterable<long[]> availableCoordinates() {
 		return new Iterable<long[]>() {
 
-			
 			public Iterator<long[]> iterator() {
 				return new SparseCSVMatrixIterator();
 			}
@@ -150,8 +155,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	public void setString(String value, long row, long column) {
 	}
 
-	
-	public boolean contains(long... coordinates)  {
+	public boolean contains(long... coordinates) {
 		return getString(coordinates) != null;
 	}
 
@@ -159,12 +163,10 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 
 		long l = 0;
 
-		
 		public boolean hasNext() {
 			return l < sli.getLineCount();
 		}
 
-		
 		public long[] next() {
 			try {
 				Object[] objects = data.get(l);
@@ -185,10 +187,13 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 			}
 		}
 
-		
 		public void remove() {
 		}
 
+	}
+
+	public SparseMatrix2DFactory<? extends SparseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

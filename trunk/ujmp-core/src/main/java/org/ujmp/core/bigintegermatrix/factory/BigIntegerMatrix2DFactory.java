@@ -23,14 +23,10 @@
 
 package org.ujmp.core.bigintegermatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 
-public interface BigIntegerMatrix2DFactory extends Serializable {
-
-	public BigIntegerMatrix2D zeros(long rows, long columns) ;
-
-	public BigIntegerMatrix2D zeros(long... size) ;
+public interface BigIntegerMatrix2DFactory<T extends BigIntegerMatrix2D> extends
+		GenericMatrix2DFactory<T>, BigIntegerMatrixFactory<T> {
 
 }

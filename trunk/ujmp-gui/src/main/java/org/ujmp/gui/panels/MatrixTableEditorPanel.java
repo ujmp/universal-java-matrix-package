@@ -41,6 +41,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.SampleList;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.menu.MatrixPopupMenu;
 import org.ujmp.gui.table.ColumnTableHeaderRenderer64;
@@ -56,7 +57,8 @@ import org.ujmp.gui.table.TableColumnModel64;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
 
-public class MatrixTableEditorPanel extends JPanel implements TableModelListener64, MouseListener, KeyListener, ListSelectionListener64 {
+public class MatrixTableEditorPanel extends JPanel implements TableModelListener64, MouseListener, KeyListener,
+		ListSelectionListener64 {
 	private static final long serialVersionUID = -1794955656888362574L;
 
 	private final MatrixGUIObject dataModel;
@@ -77,11 +79,13 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 
 		jTable = new MatrixTable64(m);
 
-		rowHeader = new JTable64(new RowHeaderTableModel64(m), new SingleTableColumnModel(dataModel), dataModel.getRowSelectionModel());
+		rowHeader = new JTable64(new RowHeaderTableModel64(m), new SingleTableColumnModel(dataModel),
+				dataModel.getRowSelectionModel());
 		rowHeader.getTableHeader().setReorderingAllowed(false);
 		rowHeader.setColumnSelectionAllowed(false);
 		rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		rowHeader.setPreferredScrollableViewportSize(new Dimension(DefaultTableColumnModel64.COLUMNWIDTH, Integer.MAX_VALUE));
+		rowHeader.setPreferredScrollableViewportSize(new Dimension(DefaultTableColumnModel64.COLUMNWIDTH,
+				Integer.MAX_VALUE));
 		rowHeader.setDefaultRenderer(Object.class, new RowTableHeaderRenderer64(jTable));
 
 		JTableHeader64 tableHeader = new JTableHeader64((TableColumnModel64) jTable.getColumnModel());
@@ -126,6 +130,8 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 			Object o = dataModel.getMatrix().getAsObject(row, col);
 			if (o instanceof Matrix) {
 				((Matrix) o).showGUI();
+			} else if (dataModel.getMatrix() instanceof SampleList) {
+				((SampleList) dataModel.getMatrix()).getSample(row).showGUI();
 			}
 		}
 	}
@@ -154,7 +160,8 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
-		valueChanged(new ListSelectionEvent64(e.getSource(), e.getFirstIndex(), e.getLastIndex(), e.getValueIsAdjusting()));
+		valueChanged(new ListSelectionEvent64(e.getSource(), e.getFirstIndex(), e.getLastIndex(),
+				e.getValueIsAdjusting()));
 	}
 
 	public void valueChanged(ListSelectionEvent64 e) {

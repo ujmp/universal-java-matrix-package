@@ -64,11 +64,11 @@ class TransposeMatrix implements TransposeCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
 		} else {
-			VerifyUtil.assert2D(source);
-			VerifyUtil.assert2D(target);
-			VerifyUtil.assertEquals(source.getRowCount(), target.getColumnCount(),
+			VerifyUtil.verify2D(source);
+			VerifyUtil.verify2D(target);
+			VerifyUtil.verifyEquals(source.getRowCount(), target.getColumnCount(),
 					"matrices have wrong size");
-			VerifyUtil.assertEquals(source.getColumnCount(), target.getRowCount(),
+			VerifyUtil.verifyEquals(source.getColumnCount(), target.getRowCount(),
 					"matrices have wrong size");
 			for (long[] c : source.allCoordinates()) {
 				Object o = source.getAsObject(c);
@@ -84,11 +84,11 @@ class TransposeDenseMatrix implements TransposeCalculation<DenseMatrix, DenseMat
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
 		} else {
-			VerifyUtil.assert2D(source);
-			VerifyUtil.assert2D(target);
-			VerifyUtil.assertEquals(source.getRowCount(), target.getColumnCount(),
+			VerifyUtil.verify2D(source);
+			VerifyUtil.verify2D(target);
+			VerifyUtil.verifyEquals(source.getRowCount(), target.getColumnCount(),
 					"matrices have wrong size");
-			VerifyUtil.assertEquals(source.getColumnCount(), target.getRowCount(),
+			VerifyUtil.verifyEquals(source.getColumnCount(), target.getRowCount(),
 					"matrices have wrong size");
 			for (long[] c : source.allCoordinates()) {
 				Object o = source.getAsObject(c);
@@ -101,11 +101,11 @@ class TransposeDenseMatrix implements TransposeCalculation<DenseMatrix, DenseMat
 class TransposeSparseMatrix implements TransposeCalculation<SparseMatrix, SparseMatrix> {
 
 	public final void calc(final SparseMatrix source, final SparseMatrix target) {
-		VerifyUtil.assert2D(source);
-		VerifyUtil.assert2D(target);
-		VerifyUtil.assertEquals(source.getRowCount(), target.getColumnCount(),
+		VerifyUtil.verify2D(source);
+		VerifyUtil.verify2D(target);
+		VerifyUtil.verifyEquals(source.getRowCount(), target.getColumnCount(),
 				"matrices have wrong size");
-		VerifyUtil.assertEquals(source.getColumnCount(), target.getRowCount(),
+		VerifyUtil.verifyEquals(source.getColumnCount(), target.getRowCount(),
 				"matrices have wrong size");
 		for (long[] c : source.availableCoordinates()) {
 			Object o = source.getAsObject(c);
@@ -121,11 +121,11 @@ class TransposeDenseMatrix2D implements TransposeCalculation<DenseMatrix2D, Dens
 			Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
 					(DenseDoubleMatrix2D) target);
 		} else {
-			VerifyUtil.assert2D(source);
-			VerifyUtil.assert2D(target);
-			VerifyUtil.assertEquals(source.getRowCount(), target.getColumnCount(),
+			VerifyUtil.verify2D(source);
+			VerifyUtil.verify2D(target);
+			VerifyUtil.verifyEquals(source.getRowCount(), target.getColumnCount(),
 					"matrices have wrong size");
-			VerifyUtil.assertEquals(source.getColumnCount(), target.getRowCount(),
+			VerifyUtil.verifyEquals(source.getColumnCount(), target.getRowCount(),
 					"matrices have wrong size");
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
@@ -151,11 +151,11 @@ class TransposeDenseDoubleMatrix2D implements
 			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(),
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
-			VerifyUtil.assert2D(source);
-			VerifyUtil.assert2D(target);
-			VerifyUtil.assertEquals(source.getRowCount(), target.getColumnCount(),
+			VerifyUtil.verify2D(source);
+			VerifyUtil.verify2D(target);
+			VerifyUtil.verifyEquals(source.getRowCount(), target.getColumnCount(),
 					"matrices have wrong size");
-			VerifyUtil.assertEquals(source.getColumnCount(), target.getRowCount(),
+			VerifyUtil.verifyEquals(source.getColumnCount(), target.getRowCount(),
 					"matrices have wrong size");
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
@@ -166,12 +166,12 @@ class TransposeDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[][] source, final double[][] target) {
-		VerifyUtil.assertNotNull(source, "source cannot be null");
-		VerifyUtil.assertNotNull(target, "target cannot be null");
-		VerifyUtil.assertNotNull(source[0], "source must be 2d");
-		VerifyUtil.assertNotNull(target[0], "target must be 2d");
-		VerifyUtil.assertEquals(source.length, target.length, "matrices have wrong size");
-		VerifyUtil.assertEquals(source[0].length, target[0].length, "matrices have wrong size");
+		VerifyUtil.verifyNotNull(source, "source cannot be null");
+		VerifyUtil.verifyNotNull(target, "target cannot be null");
+		VerifyUtil.verifyNotNull(source[0], "source must be 2d");
+		VerifyUtil.verifyNotNull(target[0], "target must be 2d");
+		VerifyUtil.verifyEquals(source.length, target.length, "matrices have wrong size");
+		VerifyUtil.verifyEquals(source[0].length, target[0].length, "matrices have wrong size");
 		final int retcols = source.length;
 		final int retrows = source[0].length;
 		if (retcols * retrows > 10000) {
@@ -194,9 +194,9 @@ class TransposeDenseDoubleMatrix2D implements
 
 	private final void calc(final int rows, final int cols, final double[] source,
 			final double[] target) {
-		VerifyUtil.assertNotNull(source, "source cannot be null");
-		VerifyUtil.assertNotNull(target, "target cannot be null");
-		VerifyUtil.assertEquals(source.length, target.length, "matrices have different sizes");
+		VerifyUtil.verifyNotNull(source, "source cannot be null");
+		VerifyUtil.verifyNotNull(target, "target cannot be null");
+		VerifyUtil.verifyEquals(source.length, target.length, "matrices have different sizes");
 		if (source.length > 10000) {
 			new PFor(0, rows - 1) {
 

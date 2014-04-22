@@ -42,4 +42,11 @@ public class TestDenseFileMatrix extends AbstractMatrixTest {
 		return false;
 	}
 
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
 }

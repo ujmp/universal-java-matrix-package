@@ -23,8 +23,10 @@
 
 package org.ujmp.core.intmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.intmatrix.calculation.IntCalculation;
 import org.ujmp.core.intmatrix.stub.AbstractIntMatrix;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class IntCalculationMatrix extends AbstractIntMatrix {
 	private static final long serialVersionUID = 8014789624797305597L;
@@ -32,6 +34,7 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 	private IntCalculation calculation = null;
 
 	public IntCalculationMatrix(IntCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -55,12 +58,20 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 		}
 	}
 
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		return calculation.getInt(coordinates);
 	}
 
-	public void setInt(int value, long... coordinates)  {
+	public void setInt(int value, long... coordinates) {
 		calculation.setInt(value, coordinates);
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

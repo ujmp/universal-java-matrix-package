@@ -59,8 +59,8 @@ public interface Inv<T> {
 
 	public final Inv<Matrix> UJMP = new Inv<Matrix>() {
 		public final Matrix calc(Matrix source) {
-			DenseDoubleMatrix2D b = DenseDoubleMatrix2D.Factory.zeros(source.getRowCount(), source
-					.getRowCount());
+			DenseDoubleMatrix2D b = DenseDoubleMatrix2D.Factory.zeros(source.getRowCount(),
+					source.getRowCount());
 			for (int i = (int) source.getRowCount(); --i >= 0;) {
 				b.setDouble(1.0, i, i);
 			}

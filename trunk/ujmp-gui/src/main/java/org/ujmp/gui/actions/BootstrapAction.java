@@ -40,13 +40,11 @@ public class BootstrapAction extends AbstractMatrixAction {
 	public BootstrapAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Bootstrap");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a new matrix by sampling over the rows");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_B,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "creates a new matrix by sampling over the rows");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().bootstrap(getNewOrLink(),
 				GUIUtil.getInt("Number of samples", 1, 10000000));
 		m.showGUI();

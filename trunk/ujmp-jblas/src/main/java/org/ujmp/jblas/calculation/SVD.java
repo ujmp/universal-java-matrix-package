@@ -27,11 +27,10 @@ import org.jblas.DoubleMatrix;
 import org.jblas.Singular;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class SVD
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.SVD<Matrix> {
+public class SVD implements org.ujmp.core.doublematrix.calculation.general.decomposition.SVD<Matrix> {
 
 	public static SVD INSTANCE = new SVD();
 
@@ -40,16 +39,17 @@ public class SVD
 		if (source instanceof JBlasDenseDoubleMatrix2D) {
 			matrix = ((JBlasDenseDoubleMatrix2D) source).getWrappedObject();
 		} else if (source instanceof HasColumnMajorDoubleArray1D) {
-			matrix = new JBlasDenseDoubleMatrix2D(source.getRowCount(), source
-					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source)
-					.getColumnMajorDoubleArray1D()).getWrappedObject();
+			matrix = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source
+					.getColumnCount()), ((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D())
+					.getWrappedObject();
 		} else {
 			matrix = new JBlasDenseDoubleMatrix2D(source).getWrappedObject();
 		}
 		final DoubleMatrix[] svd = Singular.fullSVD(matrix);
 		final Matrix u = new JBlasDenseDoubleMatrix2D(svd[0]);
 		DoubleMatrix sVector = svd[1];
-		final Matrix s = new JBlasDenseDoubleMatrix2D(source.getSize());
+		final Matrix s = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(source.getRowCount()),
+				MathUtil.longToInt(source.getColumnCount()));
 		for (int i = 0; i < sVector.rows; i++) {
 			s.setAsDouble(sVector.get(i), i, i);
 		}

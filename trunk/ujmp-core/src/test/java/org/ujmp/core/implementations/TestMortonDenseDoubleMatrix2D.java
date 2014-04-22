@@ -25,19 +25,29 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.MortonDenseDoubleMartrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class TestMortonDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new MortonDenseDoubleMartrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new MortonDenseDoubleMartrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new MortonDenseDoubleMartrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return false;
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
 	}
 
 }

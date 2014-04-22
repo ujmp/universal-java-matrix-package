@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 
 public interface BasicMatrixProperties {
@@ -47,21 +49,21 @@ public interface BasicMatrixProperties {
 
 	public boolean equalsAnnotation(Object o);
 
-	public int rank() ;
+	public int rank();
 
-	public double trace() ;
+	public double trace();
 
-	public double det() ;
+	public double det();
 
-	public boolean isDiagonal() ;
+	public boolean isDiagonal();
 
 	public boolean isSquare();
 
 	public boolean isSymmetric();
 
-	public boolean isSPD() ;
+	public boolean isSPD();
 
-	public boolean isEmpty() ;
+	public boolean isEmpty();
 
 	public boolean isColumnVector();
 
@@ -77,49 +79,49 @@ public interface BasicMatrixProperties {
 
 	public boolean isTransient();
 
-	public boolean containsMissingValues() ;
+	public boolean containsMissingValues();
 
-	public double doubleValue() ;
+	public double doubleValue();
 
-	public int intValue() ;
+	public int intValue();
 
-	public long longValue() ;
+	public long longValue();
 
-	public short shortValue() ;
+	public short shortValue();
 
-	public byte byteValue() ;
+	public byte byteValue();
 
-	public boolean booleanValue() ;
+	public boolean booleanValue();
 
-	public String stringValue() ;
+	public String stringValue();
 
-	public Date dateValue() ;
+	public Date dateValue();
 
-	public char charValue() ;
+	public char charValue();
 
-	public BigInteger bigIntegerValue() ;
+	public BigInteger bigIntegerValue();
 
-	public BigDecimal bigDecimalValue() ;
+	public BigDecimal bigDecimalValue();
 
-	public float floatValue() ;
+	public float floatValue();
 
-	public double getMinValue() ;
+	public double getMinValue();
 
-	public double getMeanValue() ;
+	public double getMeanValue();
 
-	public double getStdValue() ;
+	public double getStdValue();
 
-	public double getMaxValue() ;
+	public double getMaxValue();
 
-	public double getEuklideanValue() ;
+	public double getEuklideanValue();
 
-	public double getValueSum() ;
+	public double getValueSum();
 
-	public double getAbsoluteValueSum() ;
+	public double getAbsoluteValueSum();
 
-	public double getAbsoluteValueMean() ;
+	public double getAbsoluteValueMean();
 
-	public double getRMS() ;
+	public double getRMS();
 
 	public long getRowCount();
 
@@ -180,5 +182,7 @@ public interface BasicMatrixProperties {
 	public boolean containsShort(short v);
 
 	public boolean containsString(String s);
+
+	public Matrix setContent(Ret ret, Matrix matrix, long... coordinates);
 
 }

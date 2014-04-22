@@ -34,8 +34,7 @@ public class ImputeZero extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double v = getSource().getAsDouble(coordinates);
 		if (MathUtil.isNaNOrInfinite(v)) {
 			return 0.0;

@@ -23,30 +23,17 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public abstract class AbstractSparseObjectMatrix extends AbstractObjectMatrix implements
 		SparseObjectMatrix {
 	private static final long serialVersionUID = -8252625246356993341L;
 
-	public static DefaultSparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
-
-	public AbstractSparseObjectMatrix() {
-		super();
-	}
-
-	public AbstractSparseObjectMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractSparseObjectMatrix(long... size) {
+	public AbstractSparseObjectMatrix(long[] size) {
 		super(size);
 	}
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		return factory;
+	public final boolean isSparse() {
+		return true;
 	}
 }

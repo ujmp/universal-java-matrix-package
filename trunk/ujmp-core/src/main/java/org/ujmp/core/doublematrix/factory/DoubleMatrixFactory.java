@@ -24,15 +24,10 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DoubleMatrix;
-import org.ujmp.core.matrix.factory.MatrixFactory;
+import org.ujmp.core.numbermatrix.factory.NumberMatrixFactory;
 
-public interface DoubleMatrixFactory<T extends DoubleMatrix> extends MatrixFactory<T> {
+public interface DoubleMatrixFactory<T extends DoubleMatrix> extends DenseDoubleMatrix2DFactory<T>,
+		DenseDoubleMatrixMultiDFactory<T>, SparseDoubleMatrix2DFactory<T>,
+		SparseDoubleMatrixMultiDFactory<T>, NumberMatrixFactory<T> {
 
-	public T ones(final long... size);
-
-	public T rand(final long... size);
-
-	public T randn(final long... size);
-
-	public T eye(final long... size);
 }

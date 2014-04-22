@@ -39,8 +39,7 @@ public class Center extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (mean == null) {
 			mean = new Mean(getDimension(), ignoreNaN, getSource()).calcNew();
 		}

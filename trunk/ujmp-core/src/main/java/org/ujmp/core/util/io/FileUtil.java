@@ -97,12 +97,12 @@ public class FileUtil {
 	}
 
 	public static boolean equalsContent(File file1, File file2) throws IOException {
-		VerifyUtil.assertNotNull(file1, "file1 is null");
-		VerifyUtil.assertNotNull(file2, "file2 is null");
-		VerifyUtil.assertTrue(file1.exists(), "file1 does not exist");
-		VerifyUtil.assertTrue(file2.exists(), "file2 does not exist");
-		VerifyUtil.assertTrue(file1.canRead(), "cannot read file1");
-		VerifyUtil.assertTrue(file2.canRead(), "cannot read file2");
+		VerifyUtil.verifyNotNull(file1, "file1 is null");
+		VerifyUtil.verifyNotNull(file2, "file2 is null");
+		VerifyUtil.verifyTrue(file1.exists(), "file1 does not exist");
+		VerifyUtil.verifyTrue(file2.exists(), "file2 does not exist");
+		VerifyUtil.verifyTrue(file1.canRead(), "cannot read file1");
+		VerifyUtil.verifyTrue(file2.canRead(), "cannot read file2");
 
 		if (file1.length() != file2.length()) {
 			return false;
@@ -136,11 +136,11 @@ public class FileUtil {
 	}
 
 	public static boolean move(File source, File target) {
-		VerifyUtil.assertNotNull(source, "source file is null");
-		VerifyUtil.assertNotNull(target, "target file is null");
-		VerifyUtil.assertTrue(source.canRead(), "cannot read source file");
-		VerifyUtil.assertTrue(source.exists(), "source file does not exist");
-		VerifyUtil.assertFalse(target.exists(), "target file exists");
+		VerifyUtil.verifyNotNull(source, "source file is null");
+		VerifyUtil.verifyNotNull(target, "target file is null");
+		VerifyUtil.verifyTrue(source.canRead(), "cannot read source file");
+		VerifyUtil.verifyTrue(source.exists(), "source file does not exist");
+		VerifyUtil.verifyFalse(target.exists(), "target file exists");
 
 		return source.renameTo(target);
 	}
@@ -150,11 +150,11 @@ public class FileUtil {
 	}
 
 	public static void copyFile(File source, File target) throws IOException {
-		VerifyUtil.assertNotNull(source, "source file is null");
-		VerifyUtil.assertNotNull(target, "target file is null");
-		VerifyUtil.assertTrue(source.canRead(), "cannot read source file");
-		VerifyUtil.assertTrue(source.exists(), "source file does not exist");
-		VerifyUtil.assertFalse(target.exists(), "target file exists");
+		VerifyUtil.verifyNotNull(source, "source file is null");
+		VerifyUtil.verifyNotNull(target, "target file is null");
+		VerifyUtil.verifyTrue(source.canRead(), "cannot read source file");
+		VerifyUtil.verifyTrue(source.exists(), "source file does not exist");
+		VerifyUtil.verifyFalse(target.exists(), "target file exists");
 
 		final FileInputStream fis = new FileInputStream(source);
 		final FileOutputStream fos = new FileOutputStream(target);

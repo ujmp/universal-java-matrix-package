@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.calculation.general.decomposition;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
@@ -92,9 +93,9 @@ public class Ginv extends AbstractDoubleCalculation {
 		for (long row = 0; row < timesRows; row++) {
 			for (long col = 0; col < timesCols; col++) {
 				for (long inner = 0; inner < timesInner; inner++) {
-					response.setDouble(matrix1.getAsDouble(row, inner)
-							* matrix2.getDouble(inner, col) + response.getDouble(row, col), row,
-							col);
+					response.setDouble(
+							matrix1.getAsDouble(row, inner) * matrix2.getDouble(inner, col)
+									+ response.getDouble(row, col), row, col);
 				}
 			}
 		}
@@ -539,8 +540,8 @@ public class Ginv extends AbstractDoubleCalculation {
 	public static void addColTimes(Matrix matrix, long diag, long fromRow, long col, double factor) {
 		long rows = matrix.getRowCount();
 		for (long row = fromRow; row < rows; row++) {
-			matrix.setAsDouble(matrix.getAsDouble(row, col) - factor
-					* matrix.getAsDouble(row, diag), row, col);
+			matrix.setAsDouble(
+					matrix.getAsDouble(row, col) - factor * matrix.getAsDouble(row, diag), row, col);
 		}
 	}
 
@@ -653,8 +654,8 @@ public class Ginv extends AbstractDoubleCalculation {
 	public static void addRowTimes(Matrix matrix, long diag, long fromCol, long row, double factor) {
 		long cols = matrix.getColumnCount();
 		for (long col = fromCol; col < cols; col++) {
-			matrix.setAsDouble(matrix.getAsDouble(row, col) - factor
-					* matrix.getAsDouble(diag, col), row, col);
+			matrix.setAsDouble(
+					matrix.getAsDouble(row, col) - factor * matrix.getAsDouble(diag, col), row, col);
 		}
 	}
 
@@ -995,24 +996,25 @@ public class Ginv extends AbstractDoubleCalculation {
 	 */
 	public static Matrix arbitrariness(Matrix source, Matrix inverse) {
 		Matrix intermediate = inverse.mtimes(source);
-		return DenseDoubleMatrix2D.Factory.eye(intermediate.getSize()).minus(intermediate);
+		return DenseDoubleMatrix2D.Factory.eye(intermediate.getRowCount(),
+				intermediate.getColumnCount()).minus(intermediate);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		throw new RuntimeException("this method should never be called: LINK not possible");
 	}
 
-	public DenseDoubleMatrix2D calcLink()  {
+	public DoubleMatrix calcLink() {
 		throw new RuntimeException("linking not possible, use ORIG or NEW");
 	}
 
-	public DenseDoubleMatrix2D calcNew()  {
+	public DenseDoubleMatrix2D calcNew() {
 		Matrix source = getSource();
 		ArrayDenseDoubleMatrix2D matrix = new ArrayDenseDoubleMatrix2D(source);
 		return inverse(matrix.getRowMajorDoubleArray2D());
 	}
 
-	public DenseDoubleMatrix2D calcOrig()  {
+	public DenseDoubleMatrix2D calcOrig() {
 		Matrix source = getSource();
 		if (!source.isSquare()) {
 			throw new RuntimeException("ORIG only possible for square matrices");

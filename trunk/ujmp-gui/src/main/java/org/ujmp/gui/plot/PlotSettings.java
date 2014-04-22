@@ -75,8 +75,8 @@ public class PlotSettings {
 
 	public static final float[] DASHPATTERN = { 2f, 2f };
 
-	public static final Stroke DASHEDSTROKE = new BasicStroke(0.5f,
-			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0.0f, DASHPATTERN, 0);
+	public static final Stroke DASHEDSTROKE = new BasicStroke(0.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+			0.0f, DASHPATTERN, 0);
 
 	private Stroke yGridStroke = DASHEDSTROKE;
 

@@ -54,13 +54,13 @@ public interface Calculation extends Serializable {
 
 	public static final Ret ORIG = Ret.ORIG;
 
-	public Matrix calc(Ret returnType) ;
+	public Matrix calc(Ret returnType);
 
-	public Matrix calcNew() ;
+	public Matrix calcNew();
 
-	public Matrix calcLink() ;
+	public Matrix calcLink();
 
-	public Matrix calcOrig() ;
+	public Matrix calcOrig();
 
 	public Annotation getAnnotation();
 
@@ -77,6 +77,10 @@ public interface Calculation extends Serializable {
 	public int getDimension();
 
 	public long[] getSize();
+
+	public long getRowCount();
+
+	public long getColumnCount();
 
 	public ValueType getValueType();
 

@@ -34,12 +34,11 @@ public class ToBigIntegerMatrix extends AbstractBigIntegerCalculation {
 		super(matrix);
 	}
 
-	
-	public BigInteger getBigInteger(long... coordinates)  {
+	public BigInteger getBigInteger(long... coordinates) {
 		return getSource().getAsBigInteger(coordinates);
 	}
 
-	public void setBigInteger(BigInteger value, long coordinates)  {
+	public void setBigInteger(BigInteger value, long coordinates) {
 		getSource().setAsBigInteger(value, coordinates);
 	}
 

@@ -32,12 +32,11 @@ public class ToStringMatrix extends AbstractStringCalculation {
 		super(matrix);
 	}
 
-	
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		return getSource().getAsString(coordinates);
 	}
 
-	public void setString(String value, long coordinates)  {
+	public void setString(String value, long coordinates) {
 		getSource().setAsString(value, coordinates);
 	}
 

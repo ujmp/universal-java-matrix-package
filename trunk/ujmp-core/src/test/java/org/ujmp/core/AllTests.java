@@ -31,5 +31,5 @@ import org.junit.runners.Suite;
 		org.ujmp.core.calculation.AllTests.class, org.ujmp.core.collections.AllTests.class,
 		org.ujmp.core.implementations.AllTests.class, org.ujmp.core.util.AllTests.class,
 		org.ujmp.core.annotation.AllTests.class })
-public class AllTests {
+public abstract class AllTests {
 }

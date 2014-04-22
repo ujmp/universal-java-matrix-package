@@ -29,8 +29,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface BigDecimalCalculation extends Calculation {
 
-	public BigDecimal getBigDecimal(long... coordinates) ;
+	public BigDecimal getBigDecimal(long... coordinates);
 
-	public void setBigDecimal(BigDecimal value, long... coordinates) ;
+	public void setBigDecimal(BigDecimal value, long... coordinates);
 
 }

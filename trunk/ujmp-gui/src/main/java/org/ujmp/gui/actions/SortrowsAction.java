@@ -41,15 +41,12 @@ public class SortrowsAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Sortrows");
 		putValue(Action.SHORT_DESCRIPTION, "Sorts the rows in the matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().sortrows(
-				getNewOrLink(),
-				GUIUtil.getInt("Column used for sorting", 0,
-						(int) getMatrixObject().getColumnCount() - 1),
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().sortrows(getNewOrLink(),
+				GUIUtil.getInt("Column used for sorting", 0, (int) getMatrixObject().getColumnCount() - 1),
 				GUIUtil.getBoolean("reverse order?"));
 		result.showGUI();
 		return result;

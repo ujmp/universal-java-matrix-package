@@ -23,7 +23,6 @@
 
 package org.ujmp.core.longmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.longmatrix.LongMatrix;
@@ -31,39 +30,31 @@ import org.ujmp.core.longmatrix.LongMatrix;
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -47058946507188869L;
 
-	public AbstractLongMatrix() {
-		super();
-	}
-
-	public AbstractLongMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractLongMatrix(long... size) {
+	public AbstractLongMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Long getObject(long... coordinates)  {
+	public final Long getObject(long... coordinates) {
 		return getLong(coordinates);
 	}
 
-	public final void setObject(Long o, long... coordinates)  {
+	public final void setObject(Long o, long... coordinates) {
 		setLong(o, coordinates);
 	}
 
-	public final long getAsLong(long... coordinates)  {
+	public final long getAsLong(long... coordinates) {
 		return getLong(coordinates);
 	}
 
-	public final void setAsLong(long value, long... coordinates)  {
+	public final void setAsLong(long value, long... coordinates) {
 		setLong(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return getLong(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
+	public final void setAsDouble(double value, long... coordinates) {
 		setLong((int) value, coordinates);
 	}
 

@@ -42,15 +42,13 @@ public class FillAction extends AbstractMatrixAction {
 		this(c, m, v, "");
 	}
 
-	public FillAction(JComponent c, MatrixGUIObject m, GUIObject v,
-			String initialValue) {
+	public FillAction(JComponent c, MatrixGUIObject m, GUIObject v, String initialValue) {
 		super(c, m, v);
 		this.initialValue = initialValue;
 		putValue(Action.NAME, "Fill");
 		putValue(Action.SHORT_DESCRIPTION, "sets all entries to the same value");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {

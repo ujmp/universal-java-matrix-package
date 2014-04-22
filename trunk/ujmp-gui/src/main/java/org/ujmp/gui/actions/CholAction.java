@@ -36,11 +36,10 @@ public class CholAction extends AbstractMatrixAction {
 	public CholAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Chol");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a Cholesky decomposition of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a Cholesky decomposition of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().chol();
 		result.showGUI();
 		return result;

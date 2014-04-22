@@ -25,7 +25,7 @@ package org.ujmp.core.collections.list;
 
 import java.util.List;
 
-import org.ujmp.core.collections.SortedListSet;
+import org.ujmp.core.collections.composite.SortedListSet;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.mapmatrix.MapMatrix;
 
@@ -35,6 +35,7 @@ public abstract class AbstractMapMatrixList<K, V> extends AbstractDenseGenericMa
 	private SortedListSet<K> keys = null;
 
 	public AbstractMapMatrixList() {
+		super(2, 0);
 	}
 
 	private SortedListSet<K> getKeys() {

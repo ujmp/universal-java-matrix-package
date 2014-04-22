@@ -41,16 +41,12 @@ public class DivideAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Divide");
 		putValue(Action.SHORT_DESCRIPTION, "divide all cells by a value");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_SLASH, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_SLASH, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().divide(
-				getRet(),
-				getIgnoreMissing(),
-				GUIUtil.getDouble("Value to divide by", -Double.MAX_VALUE,
-						Double.MAX_VALUE));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().divide(getRet(), getIgnoreMissing(),
+				GUIUtil.getDouble("Value to divide by", -Double.MAX_VALUE, Double.MAX_VALUE));
 		m.showGUI();
 		return m;
 	}

@@ -31,6 +31,8 @@ import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.objectmatrix.ObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.FileUtil;
@@ -47,7 +49,7 @@ public abstract class LinkMatrix {
 			Class<?> c = Class.forName("org.ujmp.core.io.LinkMatrix" + format.name());
 			Method m = c.getMethod("toFile", new Class<?>[] { File.class, Object[].class });
 			Matrix matrix = (Matrix) m.invoke(null, file, parameters);
-			VerifyUtil.assertNotNull(matrix, "matrix could not be linked");
+			VerifyUtil.verifyNotNull(matrix, "matrix could not be linked");
 			return matrix;
 		} catch (ClassNotFoundException e) {
 			try {
@@ -94,6 +96,10 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 		return getMatrix().getAsObject(coordinates);
 	}
 
+	public final boolean isSparse() {
+		return getMatrix().isSparse();
+	}
+
 	private Matrix getMatrix() {
 		if (matrix == null || matrix.get() == null) {
 			try {
@@ -116,6 +122,10 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 
 	public long[] getSize() {
 		return getMatrix().getSize();
+	}
+
+	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

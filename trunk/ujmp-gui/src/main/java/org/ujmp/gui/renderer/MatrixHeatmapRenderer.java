@@ -60,7 +60,8 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 	public MatrixHeatmapRenderer() {
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 
 		if (value instanceof MatrixGUIObject) {
 			matrix = ((MatrixGUIObject) value).getMatrix();
@@ -165,7 +166,8 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 					}
 				}
 
-				g2d.drawImage(bufferedImage, PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY - PADDINGY, null);
+				g2d.drawImage(bufferedImage, PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY
+						- PADDINGY, null);
 
 				if (width > 20 && matrix.isScalar()) {
 					Color col = ColorUtil.fromObject(matrix.getAsObject(0, 0));
@@ -174,7 +176,8 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 					if (s != null && s.length() > 25) {
 						s = s.substring(0, 25) + "...";
 					}
-					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER, GraphicsUtil.ALIGNCENTER, s);
+					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
+							GraphicsUtil.ALIGNCENTER, s);
 				}
 
 			} else {
@@ -243,14 +246,16 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 					bg.fillRect((int) (col / xStepSize), (int) (row / yStepSize), 1, 1);
 				}
 			}
-			g2d.drawImage(bufferedImage, 0, 0, width, height, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null);
+			g2d.drawImage(bufferedImage, 0, 0, width, height, 0, 0, bufferedImage.getWidth(),
+					bufferedImage.getHeight(), null);
 			if (width > 20 && matrix.isScalar()) {
 				String s = UJMPFormat.getSingleLineInstance().format(matrix.getAsObject(0, 0));
 				if (s != null && s.length() > 25) {
 					s = s.substring(0, 25) + "...";
 				}
 				g2d.setColor(ColorUtil.contrastBW(bg.getColor()));
-				GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER, GraphicsUtil.ALIGNCENTER, s);
+				GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
+						GraphicsUtil.ALIGNCENTER, s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

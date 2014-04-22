@@ -45,21 +45,26 @@ import org.ujmp.ejml.calculation.QR;
 import org.ujmp.ejml.calculation.SVD;
 import org.ujmp.ejml.calculation.Solve;
 
-public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix64F>, HasRowMajorDoubleArray1D {
+public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseMatrix64F>,
+		HasRowMajorDoubleArray1D {
 	private static final long serialVersionUID = -3223474248020842822L;
+
+	public static final EJMLDenseDoubleMatrix2DFactory Factory = new EJMLDenseDoubleMatrix2DFactory();
 
 	private final DenseMatrix64F matrix;
 
-	public EJMLDenseDoubleMatrix2D(long... size) {
-		this.matrix = new DenseMatrix64F((int) size[ROW], (int) size[COLUMN]);
+	public EJMLDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new DenseMatrix64F(rows, columns);
 	}
 
 	public EJMLDenseDoubleMatrix2D(DenseMatrix64F m) {
+		super(m.numRows, m.numCols);
 		this.matrix = (DenseMatrix64F) m;
 	}
 
-	public EJMLDenseDoubleMatrix2D(Matrix source)  {
-		super(source);
+	public EJMLDenseDoubleMatrix2D(Matrix source) {
+		super(source.getRowCount(), source.getColumnCount());
 		if (source instanceof HasRowMajorDoubleArray2D) {
 			final double[][] data = ((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D();
 			this.matrix = new DenseMatrix64F(data);
@@ -76,6 +81,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			for (long[] c : source.availableCoordinates()) {
 				setDouble(source.getAsDouble(c), c);
 			}
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -285,6 +293,10 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public double[] getRowMajorDoubleArray1D() {
 		return matrix.getData();
+	}
+
+	public EJMLDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

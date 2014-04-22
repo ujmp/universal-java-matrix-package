@@ -36,11 +36,10 @@ public class SVDAction extends AbstractMatrixAction {
 	public SVDAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "SVD");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a singular value decomposition of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a singular value decomposition of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix[] result = getMatrixObject().getMatrix().svd();
 		result[0].showGUI();
 		result[1].showGUI();

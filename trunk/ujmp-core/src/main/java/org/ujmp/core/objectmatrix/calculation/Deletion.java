@@ -81,7 +81,7 @@ public class Deletion extends AbstractObjectCalculation {
 		selection[COLUMN] = MathUtil.collectionToLong(columns);
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 				selection[COLUMN][(int) coordinates[COLUMN]]);
 	}

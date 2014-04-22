@@ -23,8 +23,8 @@
 
 package org.ujmp.core.shortmatrix;
 
-import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
-public interface SparseShortMatrix extends ShortMatrix, SparseMatrix {
+public interface SparseShortMatrix extends ShortMatrix, SparseGenericMatrix<Short> {
 
 }

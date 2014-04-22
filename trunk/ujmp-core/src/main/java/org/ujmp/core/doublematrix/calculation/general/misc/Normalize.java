@@ -37,7 +37,7 @@ public class Normalize extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (ret == null) {
 			Matrix max = new Max(getDimension(), getSource()).calcNew();
 			Matrix min = new Min(getDimension(), getSource()).calcNew();

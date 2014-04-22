@@ -25,15 +25,18 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 
 import java.math.BigDecimal;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.calculation.BigDecimalCalculation;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractBigDecimalMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 	private static final long serialVersionUID = -1984605379151298934L;
 
-	private BigDecimalCalculation calculation = null;
+	private final BigDecimalCalculation calculation;
 
 	public BigDecimalCalculationMatrix(BigDecimalCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -57,12 +60,43 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		}
 	}
 
-	public BigDecimal getBigDecimal(long... coordinates)  {
+	public BigDecimal getBigDecimal(long... coordinates) {
 		return calculation.getBigDecimal(coordinates);
 	}
 
-	public void setBigDecimal(BigDecimal value, long... coordinates)  {
+	public void setBigDecimal(BigDecimal value, long... coordinates) {
 		calculation.setBigDecimal(value, coordinates);
 	}
 
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public BigDecimal getBigDecimal(long row, long column) {
+		return calculation.getBigDecimal(new long[] { row, column });
+	}
+
+	public void setBigDecimal(BigDecimal value, long row, long column) {
+		calculation.setBigDecimal(value, new long[] { row, column });
+	}
+
+	public BigDecimal getBigDecimal(int row, int column) {
+		return calculation.getBigDecimal(new long[] { row, column });
+	}
+
+	public void setBigDecimal(BigDecimal value, int row, int column) {
+		calculation.setBigDecimal(value, new long[] { row, column });
+	}
+
+	public BigDecimal getNumber(long... coordinates) {
+		return calculation.getBigDecimal(coordinates);
+	}
+
+	public void setNumber(BigDecimal value, long... coordinates) {
+		calculation.setBigDecimal(value, coordinates);
+	}
+
+	public final boolean isSparse() {
+		return false;
+	}
 }

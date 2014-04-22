@@ -36,11 +36,10 @@ public class UniqueAction extends AbstractMatrixAction {
 	public UniqueAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Unique");
-		putValue(Action.SHORT_DESCRIPTION,
-				"gets all unique entries of the matrix");
+		putValue(Action.SHORT_DESCRIPTION, "gets all unique entries of the matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().unique(getNewOrLink());
 		result.showGUI();
 		return result;

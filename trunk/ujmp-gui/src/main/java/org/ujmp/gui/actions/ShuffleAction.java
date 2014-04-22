@@ -39,7 +39,7 @@ public class ShuffleAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "Shuffle the entries in the matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().shuffle(getNewOrLink());
 		result.showGUI();
 		return result;

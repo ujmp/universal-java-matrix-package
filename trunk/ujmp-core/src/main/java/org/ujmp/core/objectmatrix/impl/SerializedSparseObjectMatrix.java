@@ -30,6 +30,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.collections.map.SerializedObjectMap;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
 public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements
@@ -53,6 +54,31 @@ public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapp
 
 	public void erase() throws IOException {
 		((Erasable) getMap()).erase();
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return new BaseMatrixFactory<SerializedSparseObjectMatrix>() {
+
+			public Matrix zeros(long rows, long columns) {
+				try {
+					return new SerializedSparseObjectMatrix(rows, columns);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+
+			public Matrix zeros(long... size) {
+				try {
+					return new SerializedSparseObjectMatrix(size);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		};
 	}
 
 }

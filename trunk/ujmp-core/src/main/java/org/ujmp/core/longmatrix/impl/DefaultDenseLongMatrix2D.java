@@ -23,24 +23,23 @@
 
 package org.ujmp.core.longmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasLongArray;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implements HasLongArray {
 	private static final long serialVersionUID = 3453563407578179206L;
 
-	private long[] values = null;
+	private final long[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseLongMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseLongMatrix2D(Matrix m) {
+		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -65,6 +64,7 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 	}
 
 	public DefaultDenseLongMatrix2D(long[] v, int rows, int cols) {
+		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -131,7 +131,7 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		long[] result = new long[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseLongMatrix2D(result, rows, cols);
@@ -153,6 +153,10 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 
 	public long[] getLongArray() {
 		return values;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

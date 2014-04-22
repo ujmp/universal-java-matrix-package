@@ -39,13 +39,11 @@ public class FloorAction extends AbstractMatrixAction {
 	public FloorAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Floor");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replace cells with the closest lower integer");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_DOWN, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "replace cells with the closest lower integer");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().floor(getRet());
 		m.showGUI();
 		return m;

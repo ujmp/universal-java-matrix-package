@@ -36,7 +36,7 @@ public class Repmat extends AbstractObjectCalculation {
 		size = Coordinates.times(matrix.getSize(), count);
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return getSource().getAsObject(Coordinates.modulo(coordinates, getSource().getSize()));
 	}
 
@@ -44,7 +44,7 @@ public class Repmat extends AbstractObjectCalculation {
 		return size;
 	}
 
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 		getSource().setAsObject(value, Coordinates.modulo(coordinates, getSource().getSize()));
 	}
 

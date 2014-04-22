@@ -49,10 +49,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a double representation of the entry
-	 * @
+	 * @return a double representation of the entry @
 	 */
-	public double getAsDouble(long... coordinates) ;
+	public double getAsDouble(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a double value. If the matrix cannot store
@@ -61,10 +60,9 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            double value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsDouble(double value, long... coordinates) ;
+	public void setAsDouble(double value, long... coordinates);
 
 	/**
 	 * Returns a raw entry in the matrix as it is stored. If the matrix supports
@@ -72,10 +70,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return entry object
-	 * @
+	 * @return entry object @
 	 */
-	public Object getAsObject(long... coordinates) ;
+	public Object getAsObject(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to an object. If the matrix cannot store this
@@ -84,10 +81,9 @@ public interface GettersAndSetters {
 	 * @param o
 	 *            the object to store
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsObject(Object o, long... coordinates) ;
+	public void setAsObject(Object o, long... coordinates);
 
 	/**
 	 * Returns a String representation of an entry in the matrix. The stored
@@ -95,10 +91,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a String representation of the entry
-	 * @
+	 * @return a String representation of the entry @
 	 */
-	public String getAsString(long... coordinates) ;
+	public String getAsString(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a String value. If the matrix cannot store
@@ -107,19 +102,17 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            String value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsString(String string, long... coordinates) ;
+	public void setAsString(String string, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of double
 	 * values.
 	 * 
-	 * @return double array with matrix entries
-	 * @
+	 * @return double array with matrix entries @
 	 */
-	public double[][] toDoubleArray() ;
+	public double[][] toDoubleArray();
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value
@@ -127,10 +120,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a byte representation of the entry
-	 * @
+	 * @return a byte representation of the entry @
 	 */
-	public byte getAsByte(long... coordinates) ;
+	public byte getAsByte(long... coordinates);
 
 	/**
 	 * Returns a byte array representation of an entry in the matrix. The stored
@@ -138,10 +130,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a byte array representation of the entry
-	 * @
+	 * @return a byte array representation of the entry @
 	 */
-	public byte[] getAsByteArray(long... coordinates) ;
+	public byte[] getAsByteArray(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a byte value. If the matrix cannot store
@@ -150,10 +141,9 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            byte value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsByte(byte value, long... coordinates) ;
+	public void setAsByte(byte value, long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a byte array. If the matrix cannot store
@@ -162,32 +152,29 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            byte array
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsByteArray(byte[] value, long... coordinates) ;
+	public void setAsByteArray(byte[] value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of boolean
 	 * values.
 	 * 
-	 * @return boolean array with matrix entries
-	 * @
+	 * @return boolean array with matrix entries @
 	 */
-	public boolean[][] toBooleanArray() ;
+	public boolean[][] toBooleanArray();
 
-	public BigDecimal[][] toBigDecimalArray() ;
+	public BigDecimal[][] toBigDecimalArray();
 
-	public BigInteger[][] toBigIntegerArray() ;
+	public BigInteger[][] toBigIntegerArray();
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of byte
 	 * values.
 	 * 
-	 * @return byte array with matrix entries
-	 * @
+	 * @return byte array with matrix entries @
 	 */
-	public byte[][] toByteArray() ;
+	public byte[][] toByteArray();
 
 	/**
 	 * Returns a byte representation of an entry in the matrix. The stored value
@@ -195,14 +182,13 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a boolean representation of the entry
-	 * @
+	 * @return a boolean representation of the entry @
 	 */
-	public boolean getAsBoolean(long... coordinates) ;
+	public boolean getAsBoolean(long... coordinates);
 
-	public BigInteger getAsBigInteger(long... coordinates) ;
+	public BigInteger getAsBigInteger(long... coordinates);
 
-	public BigDecimal getAsBigDecimal(long... coordinates) ;
+	public BigDecimal getAsBigDecimal(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a boolean value. If the matrix cannot
@@ -211,14 +197,13 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            boolean value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsBoolean(boolean value, long... coordinates) ;
+	public void setAsBoolean(boolean value, long... coordinates);
 
-	public void setAsBigInteger(BigInteger value, long... coordinates) ;
+	public void setAsBigInteger(BigInteger value, long... coordinates);
 
-	public void setAsBigDecimal(BigDecimal value, long... coordinates) ;
+	public void setAsBigDecimal(BigDecimal value, long... coordinates);
 
 	/**
 	 * Returns a char representation of an entry in the matrix. The stored value
@@ -226,10 +211,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a char representation of the entry
-	 * @
+	 * @return a char representation of the entry @
 	 */
-	public char getAsChar(long... coordinates) ;
+	public char getAsChar(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a char value. If the matrix cannot store
@@ -238,19 +222,17 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            char value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsChar(char value, long... coordinates) ;
+	public void setAsChar(char value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of char
 	 * values.
 	 * 
-	 * @return char array with matrix entries
-	 * @
+	 * @return char array with matrix entries @
 	 */
-	public char[][] toCharArray() ;
+	public char[][] toCharArray();
 
 	/**
 	 * Returns a Date representation of an entry in the matrix. The stored value
@@ -258,10 +240,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a String representation of the entry
-	 * @
+	 * @return a String representation of the entry @
 	 */
-	public Date getAsDate(long... coordinates) ;
+	public Date getAsDate(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a Date value. If the matrix cannot store
@@ -270,19 +251,17 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            Date object to store
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsDate(Date date, long... coordinates) ;
+	public void setAsDate(Date date, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Date
 	 * values.
 	 * 
-	 * @return Date array with matrix entries
-	 * @
+	 * @return Date array with matrix entries @
 	 */
-	public Date[][] toDateArray() ;
+	public Date[][] toDateArray();
 
 	/**
 	 * Returns a float representation of an entry in the matrix. The stored
@@ -290,10 +269,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a float representation of the entry
-	 * @
+	 * @return a float representation of the entry @
 	 */
-	public float getAsFloat(long... coordinates) ;
+	public float getAsFloat(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a float value. If the matrix cannot store
@@ -302,19 +280,17 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            float value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsFloat(float value, long... coordinates) ;
+	public void setAsFloat(float value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of float
 	 * values.
 	 * 
-	 * @return float array with matrix entries
-	 * @
+	 * @return float array with matrix entries @
 	 */
-	public float[][] toFloatArray() ;
+	public float[][] toFloatArray();
 
 	/**
 	 * Returns an int representation of an entry in the matrix. The stored value
@@ -322,10 +298,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return an int representation of the entry
-	 * @
+	 * @return an int representation of the entry @
 	 */
-	public int getAsInt(long... coordinates) ;
+	public int getAsInt(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to an int value. If the matrix cannot store
@@ -334,19 +309,17 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            int value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsInt(int value, long... coordinates) ;
+	public void setAsInt(int value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of int
 	 * values.
 	 * 
-	 * @return int array with matrix entries
-	 * @
+	 * @return int array with matrix entries @
 	 */
-	public int[][] toIntArray() ;
+	public int[][] toIntArray();
 
 	/**
 	 * Returns a long representation of an entry in the matrix. The stored value
@@ -354,10 +327,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a long representation of the entry
-	 * @
+	 * @return a long representation of the entry @
 	 */
-	public long getAsLong(long... coordinates) ;
+	public long getAsLong(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a long value. If the matrix cannot store
@@ -366,27 +338,24 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            long value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsLong(long value, long... coordinates) ;
+	public void setAsLong(long value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of long
 	 * values.
 	 * 
-	 * @return long array with matrix entries
-	 * @
+	 * @return long array with matrix entries @
 	 */
-	public long[][] toLongArray() ;
+	public long[][] toLongArray();
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Objects.
 	 * 
-	 * @return Object array with matrix entries
-	 * @
+	 * @return Object array with matrix entries @
 	 */
-	public Object[][] toObjectArray() ;
+	public Object[][] toObjectArray();
 
 	/**
 	 * Returns a short representation of an entry in the matrix. The stored
@@ -394,10 +363,9 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a short representation of the entry
-	 * @
+	 * @return a short representation of the entry @
 	 */
-	public short getAsShort(long... coordinates) ;
+	public short getAsShort(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a short value. If the matrix cannot store
@@ -406,27 +374,24 @@ public interface GettersAndSetters {
 	 * @param value
 	 *            short value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setAsShort(short value, long... coordinates) ;
+	public void setAsShort(short value, long... coordinates);
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of short
 	 * values.
 	 * 
-	 * @return short array with matrix entries
-	 * @
+	 * @return short array with matrix entries @
 	 */
-	public short[][] toShortArray() ;
+	public short[][] toShortArray();
 
 	/**
 	 * Converts the content of a matrix into a 2-dimensional array of Strings.
 	 * 
-	 * @return String array with matrix entries
-	 * @
+	 * @return String array with matrix entries @
 	 */
-	public String[][] toStringArray() ;
+	public String[][] toStringArray();
 
 	/**
 	 * Returns a representation of the entry in the matrix that reflects the
@@ -436,14 +401,13 @@ public interface GettersAndSetters {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return object that represents the matrix entry best
-	 * @
+	 * @return object that represents the matrix entry best @
 	 */
-	public Object getPreferredObject(long... coordinates) ;
+	public Object getPreferredObject(long... coordinates);
 
-	public Matrix getAsMatrix(long... coordinates) ;
+	public Matrix getAsMatrix(long... coordinates);
 
-	public void setAsMatrix(Matrix m, long... coordinates) ;
+	public void setAsMatrix(Matrix m, long... coordinates);
 
 	/**
 	 * Inserts data into the matrix at the specified position

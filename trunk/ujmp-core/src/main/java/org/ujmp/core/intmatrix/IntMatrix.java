@@ -33,10 +33,9 @@ public interface IntMatrix extends GenericMatrix<Integer> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return an int representation of the entry
-	 * @
+	 * @return an int representation of the entry @
 	 */
-	public int getInt(long... coordinates) ;
+	public int getInt(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to an int value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface IntMatrix extends GenericMatrix<Integer> {
 	 * @param value
 	 *            int value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setInt(int value, long... coordinates) ;
+	public void setInt(int value, long... coordinates);
 
 }

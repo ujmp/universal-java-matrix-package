@@ -36,11 +36,10 @@ public class CosAction extends AbstractMatrixAction {
 	public CosAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Cos");
-		putValue(Action.SHORT_DESCRIPTION,
-				"cosinus of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "cosinus of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cos(getRet());
 		m.showGUI();
 		return m;

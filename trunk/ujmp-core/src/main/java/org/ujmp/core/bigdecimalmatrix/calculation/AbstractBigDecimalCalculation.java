@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.impl.BigDecimalCalculationMatrix;
 import org.ujmp.core.calculation.AbstractCalculation;
 import org.ujmp.core.enums.ValueType;
@@ -44,8 +44,8 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 		super(dimension, sources);
 	}
 
-	public final BigDecimalMatrix calcNew()  {
-		BigDecimalMatrix result = (BigDecimalMatrix) Matrix.Factory.zeros(ValueType.BIGDECIMAL,
+	public final BaseBigDecimalMatrix calcNew() {
+		BaseBigDecimalMatrix result = (BaseBigDecimalMatrix) Matrix.Factory.zeros(ValueType.BIGDECIMAL,
 				getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigDecimal(getBigDecimal(c), c);
@@ -56,11 +56,11 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 		return result;
 	}
 
-	public final BigDecimalMatrix calcLink()  {
+	public final BaseBigDecimalMatrix calcLink() {
 		return new BigDecimalCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -74,7 +74,7 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setBigDecimal(BigDecimal value, long... coordinates)  {
+	public void setBigDecimal(BigDecimal value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

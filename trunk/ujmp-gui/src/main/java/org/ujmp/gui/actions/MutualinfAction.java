@@ -37,12 +37,10 @@ public class MutualinfAction extends AbstractMatrixAction {
 	public MutualinfAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Mutual Information");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the mutual information for this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the mutual information for this matrix");
 	}
 
-	
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().mutualInf(Ret.NEW);
 		result.showGUI();
 		return result;

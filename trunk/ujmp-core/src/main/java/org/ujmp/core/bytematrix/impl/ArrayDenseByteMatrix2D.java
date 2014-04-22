@@ -25,14 +25,15 @@ package org.ujmp.core.bytematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	private static final long serialVersionUID = 1111734188254187991L;
 
-	private byte[][] values = null;
+	private final byte[][] values;
 
-	public ArrayDenseByteMatrix2D(Matrix m)  {
-		super(m);
+	public ArrayDenseByteMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		if (m instanceof ArrayDenseByteMatrix2D) {
 			byte[][] v = ((ArrayDenseByteMatrix2D) m).values;
 			this.values = new byte[v.length][v[0].length];
@@ -50,15 +51,17 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	}
 
 	public ArrayDenseByteMatrix2D(byte[]... v) {
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseByteMatrix2D(long... size) {
-		super(size);
-		values = new byte[(int) size[ROW]][(int) size[COLUMN]];
+	public ArrayDenseByteMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new byte[rows][columns];
 	}
 
 	public ArrayDenseByteMatrix2D(byte[] v) {
+		super(v.length, 1);
 		this.values = new byte[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
@@ -101,6 +104,10 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 			}
 		}
 		return new ArrayDenseByteMatrix2D(result);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

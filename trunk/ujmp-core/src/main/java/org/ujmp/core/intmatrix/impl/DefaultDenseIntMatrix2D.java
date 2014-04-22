@@ -27,20 +27,18 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasIntArray;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements HasIntArray {
 	private static final long serialVersionUID = 2911903176935762073L;
 
-	private int[] values = null;
+	private final int[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseIntMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseIntMatrix2D(Matrix m) {
+		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -65,6 +63,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 	}
 
 	public DefaultDenseIntMatrix2D(int[] v, int rows, int cols) {
+		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -131,7 +130,7 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		int[] result = new int[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseIntMatrix2D(result, rows, cols);
@@ -153,6 +152,10 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 
 	public int[] getIntArray() {
 		return values;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

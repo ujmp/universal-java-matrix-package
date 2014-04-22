@@ -25,39 +25,32 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = -1951357825977485935L;
 
 	public static final int ONES0 = 0xaaaaaaaa;
-
 	public static final int ONES1 = 0x55555555;
-
 	public static final int ONES0P1 = ONES0 + 1;
-
 	public static final int ONES1P1 = ONES1 + 1;
-
 	public static final int[] TABLE0 = new int[32767];
-
 	public static final int[] TABLE1 = new int[32767];
 
 	private double[] values = null;
-
 	private long[] size = null;
-
 	private int rows = 0;
-
 	private int cols = 0;
 
 	static {
 		init();
 	}
 
-	public MortonDenseDoubleMartrix2D(Matrix m)  {
-		super(m);
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
+	public MortonDenseDoubleMartrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
+		this.rows = MathUtil.longToInt(m.getRowCount());
+		this.cols = MathUtil.longToInt(m.getColumnCount());
 		this.size = new long[] { rows, cols };
 		int length = (int) Math.pow(Math.pow(2, Math.ceil(MathUtil.log2(Math.max(rows, cols)))), 2);
 		if (m instanceof MortonDenseDoubleMartrix2D) {
@@ -70,18 +63,23 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public MortonDenseDoubleMartrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
-		int length = (int) Math.pow(Math.pow(2, Math.ceil(MathUtil.log2(Math.max(rows, cols)))), 2);
+	public MortonDenseDoubleMartrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
+		this.size = new long[] { rows, columns };
+		int length = (int) Math.pow(Math.pow(2, Math.ceil(MathUtil.log2(Math.max(rows, columns)))),
+				2);
 		this.values = new double[length];
 	}
 
 	public MortonDenseDoubleMartrix2D(double[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -132,7 +130,7 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		values[TABLE1[row] + TABLE0[column]] = value;
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new MortonDenseDoubleMartrix2D(result, rows, cols);
@@ -144,8 +142,8 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof MortonDenseDoubleMartrix2D) {
-			final MortonDenseDoubleMartrix2D ret = new MortonDenseDoubleMartrix2D(getRowCount(),
-					m2.getColumnCount());
+			final MortonDenseDoubleMartrix2D ret = new MortonDenseDoubleMartrix2D(
+					MathUtil.longToInt(getRowCount()), MathUtil.longToInt(m2.getColumnCount()));
 			final double[] c = ret.values;
 			final double[] b = ((MortonDenseDoubleMartrix2D) m2).values;
 			final int retcols = ret.cols;
@@ -183,6 +181,10 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 			TABLE1[i] = v;
 			v = (v + ONES1P1) & ONES0;
 		}
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

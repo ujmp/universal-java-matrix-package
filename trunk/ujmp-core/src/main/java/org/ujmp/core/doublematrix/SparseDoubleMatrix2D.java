@@ -23,15 +23,13 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.SparseMatrix2D;
 import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
-import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
+import org.ujmp.core.numbermatrix.SparseNumberMatrix2D;
 
-public interface SparseDoubleMatrix2D extends DoubleMatrix2D, SparseDoubleMatrix, SparseMatrix2D,
-		SparseGenericMatrix2D<Double> {
+public interface SparseDoubleMatrix2D extends DoubleMatrix2D, SparseDoubleMatrix,
+		SparseNumberMatrix2D<Double> {
 
 	public static SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> Factory = new DefaultSparseDoubleMatrix2DFactory();
 
-	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory();
 }

@@ -36,11 +36,10 @@ public class LUAction extends AbstractMatrixAction {
 	public LUAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "LU");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a LU decomposition of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a LU decomposition of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix[] result = getMatrixObject().getMatrix().lu();
 		result[0].showGUI();
 		result[1].showGUI();

@@ -45,7 +45,8 @@ public class MatrixPopupMenu extends JPopupMenu {
 		label.setForeground(new Color(0, 0, 255));
 		List<JComponent> actions = null;
 
-		if (matrix.getRowSelectionModel().isSelectedIndex((int) row) && matrix.getColumnSelectionModel().isSelectedIndex((int) column)) {
+		if (matrix.getRowSelectionModel().isSelectedIndex((int) row)
+				&& matrix.getColumnSelectionModel().isSelectedIndex((int) column)) {
 			int startX = matrix.getColumnSelectionModel().getMinSelectionIndex();
 			int endX = matrix.getColumnSelectionModel().getMaxSelectionIndex();
 			int startY = matrix.getRowSelectionModel().getMinSelectionIndex();

@@ -26,11 +26,10 @@ package org.ujmp.jblas.calculation;
 import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class Solve
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
+public class Solve implements org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
 	public static Solve INSTANCE = new Solve();
 
@@ -40,18 +39,18 @@ public class Solve
 		if (a instanceof JBlasDenseDoubleMatrix2D) {
 			a2 = ((JBlasDenseDoubleMatrix2D) a).getWrappedObject();
 		} else if (a instanceof HasColumnMajorDoubleArray1D) {
-			a2 = new JBlasDenseDoubleMatrix2D(a.getRowCount(), a
-					.getColumnCount(), ((HasColumnMajorDoubleArray1D) a)
-					.getColumnMajorDoubleArray1D()).getWrappedObject();
+			a2 = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(a.getRowCount()), MathUtil.longToInt(a
+					.getColumnCount()), ((HasColumnMajorDoubleArray1D) a).getColumnMajorDoubleArray1D())
+					.getWrappedObject();
 		} else {
 			a2 = new JBlasDenseDoubleMatrix2D(a).getWrappedObject();
 		}
 		if (b instanceof JBlasDenseDoubleMatrix2D) {
 			b2 = ((JBlasDenseDoubleMatrix2D) b).getWrappedObject();
 		} else if (b instanceof HasColumnMajorDoubleArray1D) {
-			b2 = new JBlasDenseDoubleMatrix2D(b.getRowCount(), b
-					.getColumnCount(), ((HasColumnMajorDoubleArray1D) b)
-					.getColumnMajorDoubleArray1D()).getWrappedObject();
+			b2 = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(b.getRowCount()), MathUtil.longToInt(b
+					.getColumnCount()), ((HasColumnMajorDoubleArray1D) b).getColumnMajorDoubleArray1D())
+					.getWrappedObject();
 		} else {
 			b2 = new JBlasDenseDoubleMatrix2D(b).getWrappedObject();
 		}
@@ -59,8 +58,7 @@ public class Solve
 			final DoubleMatrix x = org.jblas.Solve.solve(a2, b2);
 			return new JBlasDenseDoubleMatrix2D(x);
 		} catch (final Throwable t) {
-			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMPSQUARE
-					.calc(a, b);
+			return org.ujmp.core.doublematrix.calculation.general.decomposition.Solve.UJMPSQUARE.calc(a, b);
 		}
 	}
 

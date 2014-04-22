@@ -38,7 +38,7 @@ public class Ones extends AbstractDoubleCalculation {
 		return 1.0;
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(1.0, c);
@@ -46,11 +46,11 @@ public class Ones extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(long... size)  {
+	public static Matrix calc(long... size) {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(ValueType valueType, long... size)  {
+	public static Matrix calc(ValueType valueType, long... size) {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(1.0, c);

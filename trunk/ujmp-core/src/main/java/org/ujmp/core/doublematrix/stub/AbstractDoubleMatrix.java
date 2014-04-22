@@ -23,41 +23,31 @@
 
 package org.ujmp.core.doublematrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix;
-import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.numbermatrix.stub.AbstractNumberMatrix;
 
-public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double> implements
+public abstract class AbstractDoubleMatrix extends AbstractNumberMatrix<Double> implements
 		DoubleMatrix {
 	private static final long serialVersionUID = 8234957657491264944L;
 
-	public AbstractDoubleMatrix() {
-		super();
-	}
-
-	public AbstractDoubleMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDoubleMatrix(long... size) {
+	public AbstractDoubleMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Double getObject(long... coordinates)  {
+	public final Double getObject(long... coordinates) {
 		return getAsDouble(coordinates);
 	}
 
-	public final void setObject(Double o, long... coordinates)  {
+	public final void setObject(Double o, long... coordinates) {
 		setAsDouble(o, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return getDouble(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
+	public final void setAsDouble(double value, long... coordinates) {
 		setDouble(value, coordinates);
 	}
 
@@ -65,6 +55,12 @@ public abstract class AbstractDoubleMatrix extends AbstractGenericMatrix<Double>
 		return ValueType.DOUBLE;
 	}
 
-	public abstract DoubleMatrixFactory<? extends DoubleMatrix> getFactory();
+	public final Double getNumber(long... coordinates) {
+		return getAsDouble(coordinates);
+	}
+
+	public final void setNumber(Double value, long... coordinates) {
+		setAsDouble(value, coordinates);
+	}
 
 }

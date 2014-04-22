@@ -81,7 +81,15 @@ public abstract class AbstractCalculation implements Calculation {
 		return getSource().getSize();
 	}
 
-	public final Matrix calc(Ret returnType)  {
+	public long getRowCount() {
+		return getSource().getRowCount();
+	}
+
+	public long getColumnCount() {
+		return getSource().getColumnCount();
+	}
+
+	public final Matrix calc(Ret returnType) {
 		switch (returnType) {
 		case ORIG:
 			return calcOrig();

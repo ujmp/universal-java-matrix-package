@@ -23,9 +23,8 @@
 
 package org.ujmp.core.charmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
@@ -35,40 +34,32 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 		CharMatrix {
 	private static final long serialVersionUID = 1967840166659276033L;
 
-	public AbstractCharMatrix() {
-		super();
-	}
-
-	public AbstractCharMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractCharMatrix(long... size) {
+	public AbstractCharMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Character getObject(long... coordinates)  {
+	public final Character getObject(long... coordinates) {
 		return getChar(coordinates);
 	}
 
-	public final void setObject(Character o, long... coordinates)  {
+	public final void setObject(Character o, long... coordinates) {
 		setChar(o, coordinates);
 	}
 
-	public final char getAsChar(long... coordinates)  {
+	public final char getAsChar(long... coordinates) {
 		return getChar(coordinates);
 	}
 
-	public final void setAsChar(char value, long... coordinates)  {
+	public final void setAsChar(char value, long... coordinates) {
 		setChar(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return getChar(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
-		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+	public final void setAsDouble(double value, long... coordinates) {
+		verifyTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setChar((char) value, coordinates);
 	}
 

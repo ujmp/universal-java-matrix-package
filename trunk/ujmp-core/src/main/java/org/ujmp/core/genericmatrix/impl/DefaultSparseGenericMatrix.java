@@ -30,6 +30,7 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
 
@@ -42,16 +43,19 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	private int maximumNumberOfEntries = -1;
 
-	public DefaultSparseGenericMatrix(Matrix m)  {
+	public DefaultSparseGenericMatrix(Matrix m) {
 		this(m, -1);
 	}
 
-	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries)  {
-		super(m);
+	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries) {
+		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
+		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
 		}
 	}
 
@@ -104,11 +108,11 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return values.containsKey(Coordinates.wrap(coordinates).clone());
 	}
 
-	public double getAsDouble(long... coordinates)  {
+	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates)  {
+	public void setAsDouble(double value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 
@@ -118,6 +122,10 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	public final void clear() {
 		values.clear();
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

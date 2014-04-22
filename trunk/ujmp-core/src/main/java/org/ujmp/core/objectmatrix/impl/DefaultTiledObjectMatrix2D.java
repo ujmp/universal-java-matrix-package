@@ -27,18 +27,32 @@ import java.util.HashMap;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToTiledMatrix2DWrapper;
 
 public class DefaultTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper {
 	private static final long serialVersionUID = 6745798685307431625L;
 
-	public DefaultTiledObjectMatrix2D(long... size) {
-		super(new HashMap<Coordinates, ObjectMatrix2D>(), size);
+	public DefaultTiledObjectMatrix2D(long rows, long columns) {
+		super(new HashMap<Coordinates, ObjectMatrix2D>(), rows, columns);
 	}
 
 	public DefaultTiledObjectMatrix2D(Matrix source) {
 		super(new HashMap<Coordinates, ObjectMatrix2D>(), source);
 	}
 
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		return new DenseObjectMatrix2DFactory<DenseObjectMatrix2D>() {
+
+			public DenseObjectMatrix2D zeros(long... size) {
+				return new DefaultTiledObjectMatrix2D(size[ROW], size[COLUMN]);
+			}
+
+			public DenseObjectMatrix2D zeros(long rows, long cols) {
+				return new DefaultTiledObjectMatrix2D(rows, cols);
+			}
+		};
+	}
 }

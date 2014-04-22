@@ -41,7 +41,7 @@ public class Eye extends AbstractDoubleCalculation {
 		return coordinates[ROW] == coordinates[COLUMN] ? 1.0 : 0.0;
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		long[] c = Coordinates.copyOf(source.getSize());
 		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
@@ -51,7 +51,7 @@ public class Eye extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calcOrig(Matrix source)  {
+	public static Matrix calcOrig(Matrix source) {
 		long[] c = new long[source.getSize().length];
 		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
 			source.setAsDouble(1.0, c);
@@ -60,11 +60,11 @@ public class Eye extends AbstractDoubleCalculation {
 		return source;
 	}
 
-	public static Matrix calc(long... size)  {
+	public static Matrix calc(long... size) {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(ValueType valueType, long... size)  {
+	public static Matrix calc(ValueType valueType, long... size) {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		long[] c = new long[size.length];
 		for (int i = 0; Coordinates.isSmallerThan(c, size); i++) {

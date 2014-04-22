@@ -36,6 +36,10 @@ public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D
 		TreeMatrix<T> {
 	private static final long serialVersionUID = 7731771819651651188L;
 
+	public AbstractTreeMatrix() {
+		super(1, 1);
+	}
+
 	public boolean contains(long... coordinates) {
 		return false;
 	}

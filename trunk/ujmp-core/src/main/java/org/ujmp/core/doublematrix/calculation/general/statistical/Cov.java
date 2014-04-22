@@ -42,7 +42,7 @@ public class Cov extends AbstractDoubleCalculation {
 		this.besselsCorrection = besselsCorrection;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double sumProd = 0.0;
 		long rows = getSource().getRowCount();
 		long N = 0;

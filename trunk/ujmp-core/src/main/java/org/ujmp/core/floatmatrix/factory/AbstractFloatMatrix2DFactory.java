@@ -23,14 +23,7 @@
 
 package org.ujmp.core.floatmatrix.factory;
 
-import org.ujmp.core.floatmatrix.FloatMatrix2D;
-
 public abstract class AbstractFloatMatrix2DFactory implements FloatMatrix2DFactory {
 	private static final long serialVersionUID = 6436157519292393559L;
-
-	
-	public FloatMatrix2D zeros(long rows, long columns)  {
-		return dense(rows, columns);
-	}
 
 }

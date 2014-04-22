@@ -40,17 +40,13 @@ public class PowerAction extends AbstractMatrixAction {
 	public PowerAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Power");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates all cells to the power of x");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_CIRCUMFLEX, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "calculates all cells to the power of x");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_CIRCUMFLEX, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().power(
-				getRet(),
-				GUIUtil.getDouble("All cells to the power of",
-						-Double.MAX_VALUE, Double.MAX_VALUE));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().power(getRet(),
+				GUIUtil.getDouble("All cells to the power of", -Double.MAX_VALUE, Double.MAX_VALUE));
 		m.showGUI();
 		return m;
 	}

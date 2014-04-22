@@ -23,8 +23,10 @@
 
 package org.ujmp.core.bigintegermatrix;
 
-import org.ujmp.core.DenseMatrix;
+import java.math.BigInteger;
 
-public interface DenseBigIntegerMatrix extends BigIntegerMatrix, DenseMatrix {
+import org.ujmp.core.numbermatrix.DenseNumberMatrix;
+
+public interface DenseBigIntegerMatrix extends BaseBigIntegerMatrix, DenseNumberMatrix<BigInteger> {
 
 }

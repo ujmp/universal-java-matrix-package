@@ -24,6 +24,7 @@
 package org.ujmp.core.shortmatrix.impl;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
 
 public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
@@ -31,8 +32,8 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 
 	private short[][] values = null;
 
-	public SimpleDenseShortMatrix2D(Matrix m)  {
-		super(m);
+	public SimpleDenseShortMatrix2D(Matrix m) {
+		super(m.getSize());
 		if (m instanceof SimpleDenseShortMatrix2D) {
 			short[][] v = ((SimpleDenseShortMatrix2D) m).values;
 			this.values = new short[v.length][v[0].length];
@@ -50,6 +51,7 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 	}
 
 	public SimpleDenseShortMatrix2D(short[]... v) {
+		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
@@ -86,6 +88,10 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 			}
 		}
 		return new SimpleDenseShortMatrix2D(result);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

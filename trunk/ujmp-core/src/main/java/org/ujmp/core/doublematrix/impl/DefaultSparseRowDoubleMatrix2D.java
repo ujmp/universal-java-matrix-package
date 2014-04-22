@@ -33,6 +33,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
 public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements
@@ -41,27 +42,27 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 
 	private long[] size = new long[] { 1, 1 };
 
-	private Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
+	private final Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
-	public DefaultSparseRowDoubleMatrix2D(long... size) {
-		super(size);
-		setSize(size);
+	public DefaultSparseRowDoubleMatrix2D(long rows, long columns) {
+		super(rows, columns);
+		setSize(new long[] { rows, columns });
 	}
 
 	public DefaultSparseRowDoubleMatrix2D(Matrix m) {
-		super(m);
+		super(m.getRowCount(), m.getColumnCount());
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setDouble(m.getAsDouble(c), c);
 		}
 	}
 
-	public double getDouble(long row, long column)  {
+	public double getDouble(long row, long column) {
 		Matrix m = rows.get(row);
 		return m == null ? 0.0 : m.getAsDouble(0, column);
 	}
 
-	public double getDouble(int row, int column)  {
+	public double getDouble(int row, int column) {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsDouble(0, column);
 	}
@@ -86,7 +87,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		}
 	}
 
-	public void setDouble(double o, long row, long column)  {
+	public void setDouble(double o, long row, long column) {
 		Matrix m = rows.get(row);
 		if (m == null) {
 			// TODO: there should be a faster implementation than this:
@@ -96,7 +97,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		m.setAsDouble(o, 0, column);
 	}
 
-	public void setDouble(double o, int row, int column)  {
+	public void setDouble(double o, int row, int column) {
 		setDouble(o, (long) row, (long) column);
 	}
 
@@ -117,7 +118,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return rows.get(row);
 	}
 
-	public Matrix selectRows(Ret returnType, long... rows)  {
+	public Matrix selectRows(Ret returnType, long... rows) {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
 		}
@@ -128,8 +129,8 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return rows;
 	}
 
-	public void setWrappedObject(Map<Long, Matrix> object) {
-		this.rows = object;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

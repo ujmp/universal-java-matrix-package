@@ -28,19 +28,18 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> implements
 		SparseObjectMatrix {
 	private static final long serialVersionUID = -1130331544425728230L;
 
-	public static DefaultSparseObjectMatrixFactory factory = new DefaultSparseObjectMatrixFactory();
+	public static final DefaultSparseObjectMatrixFactory Factory = new DefaultSparseObjectMatrixFactory();
 
-	public DefaultSparseObjectMatrix(Matrix m)  {
+	public DefaultSparseObjectMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseObjectMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseObjectMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -56,8 +55,8 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		return ValueType.OBJECT;
 	}
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		return factory;
+	public DefaultSparseObjectMatrixFactory getFactory() {
+		return Factory;
 	}
 
 }

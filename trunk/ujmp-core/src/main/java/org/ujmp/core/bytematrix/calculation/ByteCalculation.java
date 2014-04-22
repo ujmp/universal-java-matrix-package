@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface ByteCalculation extends Calculation {
 
-	public byte getByte(long... coordinates) ;
+	public byte getByte(long... coordinates);
 
-	public void setByte(byte value, long... coordinates) ;
+	public void setByte(byte value, long... coordinates);
 
 }

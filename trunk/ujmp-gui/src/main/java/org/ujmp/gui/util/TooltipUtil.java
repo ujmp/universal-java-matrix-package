@@ -34,9 +34,9 @@ public abstract class TooltipUtil {
 
 	public static String getTooltip(Matrix matrix, long... coordinates) {
 		StringBuilder toolTip = new StringBuilder(200);
-		toolTip.append("<html><b>[");
+		toolTip.append("<html><b>");
 		toolTip.append(Coordinates.toString(coordinates));
-		toolTip.append("]</b>");
+		toolTip.append("</b>");
 
 		String columnLabel = null;
 		try {

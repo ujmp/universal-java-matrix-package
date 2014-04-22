@@ -43,7 +43,7 @@ public class MutualInformation extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return calculate(coordinates[ROW], coordinates[COLUMN], getSource());
 	}
 

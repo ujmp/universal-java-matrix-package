@@ -25,13 +25,13 @@ package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.Matrix2D;
 
-public interface GenericMatrix2D<A> extends GenericMatrix<A>, Matrix2D {
+public interface GenericMatrix2D<T> extends BaseGenericMatrix<T>, Matrix2D {
 
-	public A getObject(long row, long column);
+	public T getObject(long row, long column);
 
-	public void setObject(A value, long row, long column);
+	public void setObject(T value, long row, long column);
 
-	public A getObject(int row, int column);
+	public T getObject(int row, int column);
 
-	public void setObject(A value, int row, int column);
+	public void setObject(T value, int row, int column);
 }

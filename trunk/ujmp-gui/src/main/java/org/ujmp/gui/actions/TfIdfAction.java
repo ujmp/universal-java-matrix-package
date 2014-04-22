@@ -37,15 +37,12 @@ public class TfIdfAction extends AbstractMatrixAction {
 	public TfIdfAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Tf-idf");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates a document term matrix with weight according to tf-idf");
+		putValue(Action.SHORT_DESCRIPTION, "calculates a document term matrix with weight according to tf-idf");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().tfIdf(
-				GUIUtil.getBoolean("Calculate term frequency"),
-				GUIUtil.getBoolean("Calculate inverse document frequency"),
-				GUIUtil.getBoolean("Normalize"));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().tfIdf(GUIUtil.getBoolean("Calculate term frequency"),
+				GUIUtil.getBoolean("Calculate inverse document frequency"), GUIUtil.getBoolean("Normalize"));
 		m.showGUI();
 		return m;
 	}

@@ -38,11 +38,13 @@ public class RowTableHeaderRenderer64 extends JLabel implements TableCellRendere
 		setHorizontalAlignment(RIGHT);
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 		return getTableCellRendererComponent(table, value, isSelected, hasFocus, (long) row, (long) column);
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, long row, long column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			long row, long column) {
 		if (isSelected) {
 			setBackground(table.getSelectionBackground());
 		} else {

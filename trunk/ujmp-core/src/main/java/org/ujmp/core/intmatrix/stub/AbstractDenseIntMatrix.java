@@ -24,23 +24,12 @@
 package org.ujmp.core.intmatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.DenseIntMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix implements DenseIntMatrix {
 	private static final long serialVersionUID = 8649917347029363622L;
 
-	public AbstractDenseIntMatrix() {
-		super();
-	}
-
-	public AbstractDenseIntMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseIntMatrix(long... size) {
+	public AbstractDenseIntMatrix(long[] size) {
 		super(size);
 	}
 
@@ -48,8 +37,8 @@ public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix implement
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

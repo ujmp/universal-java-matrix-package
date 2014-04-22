@@ -44,12 +44,12 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public DoubleMatrix calcLink()  {
+	public DoubleMatrix calcLink() {
 		return new DoubleCalculationMatrix(this);
 	}
 
-	public DoubleMatrix calcNew()  {
-		DoubleMatrix result = DoubleMatrix2D.Factory.zeros(getSize());
+	public Matrix calcNew() {
+		Matrix result = DoubleMatrix2D.Factory.zeros(getSize()[ROW], getSize()[COLUMN]);
 		for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
 		}
@@ -59,7 +59,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		return result;
 	}
 
-	public Matrix calcOrig()  {
+	public Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -75,7 +75,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setDouble(double value, long... coordinates)  {
+	public void setDouble(double value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

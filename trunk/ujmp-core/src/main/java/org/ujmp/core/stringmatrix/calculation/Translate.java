@@ -50,7 +50,7 @@ public class Translate extends AbstractStringCalculation {
 
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates);
 		if (s == null || method == null) {
 			return null;

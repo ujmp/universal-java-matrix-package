@@ -35,7 +35,7 @@ import java.util.Date;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 
 public class UJMPFormat extends Format {
 	private static final long serialVersionUID = -557618747324763226L;
@@ -217,7 +217,7 @@ public class UJMPFormat extends Format {
 			for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
 					&& cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
 				Object o = m.getAsObject(cursor);
-				if (o == null && m instanceof BigDecimalMatrix) {
+				if (o == null && m instanceof BaseBigDecimalMatrix) {
 					toAppendTo = format(Double.NaN, toAppendTo, pos);
 				} else {
 					toAppendTo = format(o, toAppendTo, pos);

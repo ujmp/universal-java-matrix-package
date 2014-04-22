@@ -37,15 +37,13 @@ public class SelectAction extends AbstractMatrixAction {
 	public SelectAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Select...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Select rows or columns in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Select rows or columns in this matrix");
 	}
 
 	public Object call() {
 		try {
 			String s = JOptionPane.showInputDialog(getComponent(),
-					"Enter the rows and columns to select, e.g. 1,3-5;4-5,7",
-					"Select", JOptionPane.QUESTION_MESSAGE);
+					"Enter the rows and columns to select, e.g. 1,3-5;4-5,7", "Select", JOptionPane.QUESTION_MESSAGE);
 
 			Matrix m = getMatrixObject().getMatrix().select(getNewOrLink(), s);
 			m.showGUI();

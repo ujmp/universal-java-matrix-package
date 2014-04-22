@@ -23,14 +23,10 @@
 
 package org.ujmp.core.stringmatrix.factory;
 
-import java.io.Serializable;
-
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 import org.ujmp.core.stringmatrix.StringMatrix2D;
 
-public interface StringMatrix2DFactory extends Serializable {
-
-	public StringMatrix2D dense(long rows, long columns) ;
-
-	public StringMatrix2D dense(long... size) ;
+public interface StringMatrix2DFactory<T extends StringMatrix2D> extends GenericMatrix2DFactory<T>,
+		StringMatrixFactory<T> {
 
 }

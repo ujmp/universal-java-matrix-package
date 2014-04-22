@@ -39,11 +39,9 @@ public class DuplicateAction extends AbstractMatrixAction {
 	public DuplicateAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Duplicate");
-		putValue(Action.SHORT_DESCRIPTION,
-				"duplicate the content of this matrix to a new matrix");
+		putValue(Action.SHORT_DESCRIPTION, "duplicate the content of this matrix to a new matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
-		putValue(Action.ACCELERATOR_KEY,
-				KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {

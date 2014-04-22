@@ -34,4 +34,9 @@ public class DefaultDenseLongMatrixFactory extends AbstractDenseLongMatrixFactor
 		return null;
 	}
 
+	public DenseLongMatrix zeros(long rows, long columns) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -61,7 +61,7 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		}
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		coordinates = Coordinates.copyOf(coordinates);
 		coordinates[getDimension()]++;
 		return getSource().getAsObject(coordinates);

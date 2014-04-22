@@ -29,6 +29,8 @@ import javax.swing.UIManager;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 6721967669100263805L;
@@ -43,6 +45,10 @@ public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
 
 	public MapMatrix<Object, Object> clone() {
 		return new MatrixUIDefaults();
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		return null;
 	}
 
 }

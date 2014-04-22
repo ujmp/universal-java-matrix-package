@@ -267,25 +267,25 @@ public class Matlab {
 
 	public double getDouble(String label) throws Exception {
 		Matrix m = getMatrix(label);
-		VerifyUtil.assertSingleValue(m);
+		VerifyUtil.verifySingleValue(m);
 		return m.doubleValue();
 	}
 
 	public long getLong(String label) throws Exception {
 		Matrix m = getMatrix(label);
-		VerifyUtil.assertSingleValue(m);
+		VerifyUtil.verifySingleValue(m);
 		return m.longValue();
 	}
 
 	public int getInt(String label) throws Exception {
 		Matrix m = getMatrix(label);
-		VerifyUtil.assertSingleValue(m);
+		VerifyUtil.verifySingleValue(m);
 		return m.intValue();
 	}
 
 	public float getFloat(String label) throws Exception {
 		Matrix m = getMatrix(label);
-		VerifyUtil.assertSingleValue(m);
+		VerifyUtil.verifySingleValue(m);
 		return m.floatValue();
 	}
 

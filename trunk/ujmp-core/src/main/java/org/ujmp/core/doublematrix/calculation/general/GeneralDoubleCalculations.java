@@ -29,7 +29,8 @@ import org.ujmp.core.doublematrix.calculation.general.misc.MiscGeneralDoubleCalc
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.MissingValueDoubleCalculations;
 import org.ujmp.core.doublematrix.calculation.general.statistical.StatisticalDoubleCalculations;
 
-public interface GeneralDoubleCalculations extends StatisticalDoubleCalculations, DecompositionDoubleCalculations, MissingValueDoubleCalculations,
+public interface GeneralDoubleCalculations extends StatisticalDoubleCalculations,
+		DecompositionDoubleCalculations, MissingValueDoubleCalculations,
 		MiscGeneralDoubleCalculations, DiscretizeCalculations {
 
 }

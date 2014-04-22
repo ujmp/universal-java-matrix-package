@@ -23,24 +23,14 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object> implements
 		ObjectMatrix {
 	private static final long serialVersionUID = -2861884195413889506L;
-
-	public AbstractObjectMatrix() {
-		super();
-	}
-
-	public AbstractObjectMatrix(Matrix m) {
-		super(m);
-	}
 
 	public AbstractObjectMatrix(long... size) {
 		super(size);
@@ -56,10 +46,6 @@ public abstract class AbstractObjectMatrix extends AbstractGenericMatrix<Object>
 
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
-	}
-
-	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory() {
-		return ObjectMatrix.Factory;
 	}
 
 }

@@ -43,30 +43,25 @@ public abstract class AbstractMatrixAction extends AbstractObjectAction {
 
 	private GUIObject variable = null;
 
-	public AbstractMatrixAction(JComponent c, MatrixGUIObject matrix,
-			GUIObject v) {
+	public AbstractMatrixAction(JComponent c, MatrixGUIObject matrix, GUIObject v) {
 		super(c, matrix);
 		this.variable = v;
 	}
 
 	public Ret getRet() {
-		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG,
-				Ret.NEW, Ret.LINK);
+		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG, Ret.NEW, Ret.LINK);
 	}
 
 	public Ret getOrigOrNew() {
-		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG,
-				Ret.NEW);
+		return (Ret) GUIUtil.getObject("Select return method", Ret.ORIG, Ret.NEW);
 	}
 
 	public Ret getNewOrLink() {
-		return (Ret) GUIUtil.getObject("Select return method", Ret.NEW,
-				Ret.LINK);
+		return (Ret) GUIUtil.getObject("Select return method", Ret.NEW, Ret.LINK);
 	}
 
 	public long[] getSize() {
-		return GUIUtil
-				.getSize("Enter the size of the matrix (e.g. '5,4' -> 5 rows, 4 columns)");
+		return GUIUtil.getSize("Enter the size of the matrix (e.g. '5,4' -> 5 rows, 4 columns)");
 	}
 
 	public int getDimension() {
@@ -80,10 +75,9 @@ public abstract class AbstractMatrixAction extends AbstractObjectAction {
 			}
 		}
 		if (dimension == -1) {
-			int i = JOptionPane.showOptionDialog(getComponent(), "Dimension",
-					"Select Dimension", JOptionPane.OK_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, new String[] { "Row",
-							"Column", "All" }, "Row");
+			int i = JOptionPane.showOptionDialog(getComponent(), "Dimension", "Select Dimension",
+					JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Row", "Column", "All" },
+					"Row");
 			if (i == 2) {
 				dimension = ALL;
 			} else {
@@ -110,13 +104,10 @@ public abstract class AbstractMatrixAction extends AbstractObjectAction {
 		if (m != null) {
 			int startRow = m.getRowSelectionModel().getMinSelectionIndex();
 			int endRow = m.getRowSelectionModel().getMaxSelectionIndex();
-			int startColumn = m.getColumnSelectionModel()
-					.getMinSelectionIndex();
+			int startColumn = m.getColumnSelectionModel().getMinSelectionIndex();
 			int endColumn = m.getColumnSelectionModel().getMaxSelectionIndex();
-			if (startRow != -1 && startColumn != -1
-					&& (startRow != endRow || startColumn != endColumn)) {
-				m = (MatrixGUIObject) m.getMatrix().subMatrix(Ret.LINK,
-						startRow, startColumn, endRow, endColumn)
+			if (startRow != -1 && startColumn != -1 && (startRow != endRow || startColumn != endColumn)) {
+				m = (MatrixGUIObject) m.getMatrix().subMatrix(Ret.LINK, startRow, startColumn, endRow, endColumn)
 						.getGUIObject();
 			}
 			return m;

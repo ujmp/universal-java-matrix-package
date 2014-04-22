@@ -39,9 +39,8 @@ public class NormalizeAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries between 0 1");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().normalize(getOrigOrNew(),
-				getDimension());
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().normalize(getOrigOrNew(), getDimension());
 		m.showGUI();
 		return m;
 	}

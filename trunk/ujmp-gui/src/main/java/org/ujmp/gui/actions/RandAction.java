@@ -38,14 +38,12 @@ public class RandAction extends AbstractMatrixAction {
 	public RandAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Rand");
-		putValue(Action.SHORT_DESCRIPTION,
-				"set entries to random values between -1.0 and 1.0");
+		putValue(Action.SHORT_DESCRIPTION, "set entries to random values between -1.0 and 1.0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		m.getMatrix().rand(getRet());
 		return m;

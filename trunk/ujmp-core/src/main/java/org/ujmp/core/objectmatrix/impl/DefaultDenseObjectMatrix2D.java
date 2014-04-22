@@ -25,22 +25,22 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasObjectArray;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D implements
 		HasObjectArray {
 	private static final long serialVersionUID = 8929799323811301397L;
 
-	private Object[] values = null;
+	private final Object[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseObjectMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseObjectMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -54,17 +54,21 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 				setObject(m.getAsObject(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public DefaultDenseObjectMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
-		this.values = new Object[rows * cols];
+	public DefaultDenseObjectMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
+		this.size = new long[] { rows, columns };
+		this.values = new Object[rows * columns];
 	}
 
 	public DefaultDenseObjectMatrix2D(Object[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -99,7 +103,7 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		Object[] result = new Object[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseObjectMatrix2D(result, rows, cols);
@@ -121,6 +125,21 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 
 	public Object[] getObjectArray() {
 		return values;
+	}
+
+	public DenseObjectMatrix2DFactory<DenseObjectMatrix2D> getFactory() {
+		return new DenseObjectMatrix2DFactory<DenseObjectMatrix2D>() {
+
+			public DenseObjectMatrix2D zeros(long... size) {
+				return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
+			}
+
+			public DenseObjectMatrix2D zeros(long rows, long cols) {
+				return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(rows),
+						MathUtil.longToInt(cols));
+			}
+		};
 	}
 
 }

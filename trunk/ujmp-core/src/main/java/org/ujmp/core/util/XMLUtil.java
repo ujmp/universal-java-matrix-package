@@ -92,7 +92,7 @@ public class XMLUtil {
 	}
 
 	public static void write(Writer pw, Matrix matrix) throws IOException {
-		VerifyUtil.assertNotNull(matrix, "matrix is null");
+		VerifyUtil.verifyNotNull(matrix, "matrix is null");
 		final String EOL = UJMPSettings.getLineEnd();
 		pw.write(XMLHEADER);
 		pw.write(EOL);

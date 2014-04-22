@@ -33,11 +33,11 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		FloatMatrix {
 	private static final long serialVersionUID = -3321607593194609473L;
 
-	public DefaultSparseFloatMatrix(Matrix m)  {
+	public DefaultSparseFloatMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseFloatMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseFloatMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,11 +53,11 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		return ValueType.FLOAT;
 	}
 
-	public float getFloat(long... coordinates)  {
+	public float getFloat(long... coordinates) {
 		return MathUtil.getFloat(getObject(coordinates));
 	}
 
-	public void setFloat(float value, long... coordinates)  {
+	public void setFloat(float value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

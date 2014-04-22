@@ -37,6 +37,10 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 
 	public abstract Map<K, V> getMap();
 
+	public AbstractMapMatrix() {
+		super(0, 2);
+	}
+
 	public final long[] getSize() {
 		return new long[] { size(), 2 };
 	}

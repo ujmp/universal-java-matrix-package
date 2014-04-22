@@ -32,12 +32,11 @@ public class ToObjectMatrix extends AbstractObjectCalculation {
 		super(matrix);
 	}
 
-	
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return getSource().getAsObject(coordinates);
 	}
 
-	public void setObject(Object value, long coordinates)  {
+	public void setObject(Object value, long coordinates) {
 		getSource().setAsObject(value, coordinates);
 	}
 

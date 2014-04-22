@@ -42,11 +42,11 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 		super(dimension, sources);
 	}
 
-	public final ShortMatrix calcLink()  {
+	public final ShortMatrix calcLink() {
 		return new ShortCalculationMatrix(this);
 	}
 
-	public final ShortMatrix calcNew()  {
+	public final ShortMatrix calcNew() {
 		ShortMatrix result = (ShortMatrix) Matrix.Factory.zeros(ValueType.SHORT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsShort(getShort(c), c);
@@ -57,7 +57,7 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 		return result;
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setShort(short value, long... coordinates)  {
+	public void setShort(short value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

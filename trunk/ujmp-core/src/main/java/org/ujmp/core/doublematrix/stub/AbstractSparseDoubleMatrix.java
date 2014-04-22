@@ -23,25 +23,14 @@
 
 package org.ujmp.core.doublematrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
-import org.ujmp.core.doublematrix.factory.SparseDoubleMatrixFactory;
 
 public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix implements
 		SparseDoubleMatrix {
 	private static final long serialVersionUID = 3204626510806761165L;
 
-	public AbstractSparseDoubleMatrix() {
-		super();
-	}
-
-	public AbstractSparseDoubleMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractSparseDoubleMatrix(long... size) {
+	public AbstractSparseDoubleMatrix(long[] size) {
 		super(size);
 	}
 
-	public abstract SparseDoubleMatrixFactory<? extends SparseDoubleMatrix> getFactory();
 }

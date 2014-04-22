@@ -36,11 +36,10 @@ public class ExpAction extends AbstractMatrixAction {
 	public ExpAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Exp");
-		putValue(Action.SHORT_DESCRIPTION,
-				"exponential function of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "exponential function of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().exp(getRet());
 		m.showGUI();
 		return m;

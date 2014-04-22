@@ -26,14 +26,16 @@ package org.ujmp.core.benchmark;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size)  {
-		return new DefaultDenseDoubleMatrix2D(size);
+	public DoubleMatrix2D createMatrix(long... size) {
+		return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return new DefaultDenseDoubleMatrix2D(source);
 	}
 

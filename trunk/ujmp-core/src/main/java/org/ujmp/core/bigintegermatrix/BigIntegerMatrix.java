@@ -25,12 +25,12 @@ package org.ujmp.core.bigintegermatrix;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.numbermatrix.NumberMatrix;
 
-public interface BigIntegerMatrix extends GenericMatrix<BigInteger> {
+public interface BigIntegerMatrix extends NumberMatrix<BigInteger> {
 
-	public BigInteger getBigInteger(long... coordinates) ;
+	public BigInteger getBigInteger(long... coordinates);
 
-	public void setBigInteger(BigInteger value, long... coordinates) ;
+	public void setBigInteger(BigInteger value, long... coordinates);
 
 }

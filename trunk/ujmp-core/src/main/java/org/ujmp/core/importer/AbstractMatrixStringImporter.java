@@ -23,11 +23,15 @@
 
 package org.ujmp.core.importer;
 
-public class AbstractMatrixStringImporter implements MatrixStringImporter {
+import org.ujmp.core.Matrix;
+
+public class AbstractMatrixStringImporter extends AbstractMatrixImporter implements
+		MatrixStringImporter {
 
 	private final String string;
 
-	public AbstractMatrixStringImporter(String string) {
+	public AbstractMatrixStringImporter(Matrix matrix, String string) {
+		super(matrix);
 		this.string = string;
 	}
 

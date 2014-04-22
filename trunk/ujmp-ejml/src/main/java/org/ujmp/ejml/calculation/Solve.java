@@ -28,9 +28,7 @@ import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
-public class Solve
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
+public class Solve implements org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
 	public static Solve INSTANCE = new Solve();
 

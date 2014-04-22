@@ -37,7 +37,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return A new Matrix with absolute values.
 	 */
-	public Matrix abs(Ret returnType) ;
+	public Matrix abs(Ret returnType);
 
 	/**
 	 * Calculates the logarithm with basis 2 of all entries in the Matrix.
@@ -47,7 +47,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log2(Ret returnType) ;
+	public Matrix log2(Ret returnType);
 
 	/**
 	 * Calculates the logarithm with basis 10 of all entries in the Matrix.
@@ -57,7 +57,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log10(Ret returnType) ;
+	public Matrix log10(Ret returnType);
 
 	/**
 	 * Calculates the natural logarithm of all entries in the Matrix.
@@ -67,7 +67,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with logarithm values.
 	 */
-	public Matrix log(Ret returnType) ;
+	public Matrix log(Ret returnType);
 
 	/**
 	 * Calculates the exponential function all entries in the Matrix.
@@ -77,7 +77,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with exp values.
 	 */
-	public Matrix exp(Ret returnType) ;
+	public Matrix exp(Ret returnType);
 
 	/**
 	 * Calculates the sign of the entries in a Matrix. For values greater than
@@ -89,7 +89,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with signum values
 	 */
-	public Matrix sign(Ret returnType) ;
+	public Matrix sign(Ret returnType);
 
 	/**
 	 * Calculates the square root of all the entries in a Matrix.
@@ -99,7 +99,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix containing the square roots of all entries
 	 */
-	public Matrix sqrt(Ret returnType) ;
+	public Matrix sqrt(Ret returnType);
 
 	/**
 	 * Calculates this matrix to the power of the given matrix (entrywise).
@@ -112,7 +112,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	 * @return matrix with all entries to the power of the second matrix's
 	 *         entry.
 	 */
-	public Matrix power(Ret returnType, Matrix power) ;
+	public Matrix power(Ret returnType, Matrix power);
 
 	/**
 	 * Calculates this matrix to the power of the given value (entrywise).
@@ -124,6 +124,6 @@ public interface BasicEntrywiseDoubleCalculations {
 	 *            power factor
 	 * @return Matrix with all entries to the power of factor.
 	 */
-	public Matrix power(Ret returnType, double power) ;
+	public Matrix power(Ret returnType, double power);
 
 }

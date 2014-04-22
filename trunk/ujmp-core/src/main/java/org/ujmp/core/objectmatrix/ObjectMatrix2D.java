@@ -25,9 +25,8 @@ package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrix2DFactory;
-import org.ujmp.core.objectmatrix.factory.ObjectMatrix2DFactory;
 
-public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
+public interface ObjectMatrix2D extends BaseObjectMatrix, GenericMatrix2D<Object> {
 
 	public static DefaultDenseObjectMatrix2DFactory Factory = new DefaultDenseObjectMatrix2DFactory();
 
@@ -39,5 +38,4 @@ public interface ObjectMatrix2D extends ObjectMatrix, GenericMatrix2D<Object> {
 
 	public void setObject(Object value, int row, int column);
 
-	public ObjectMatrix2DFactory<? extends ObjectMatrix2D> getFactory();
 }

@@ -64,7 +64,6 @@ public abstract class AbstractGUIObject implements GUIObject {
 		setDescription(description);
 	}
 
-	
 	public abstract String toString();
 
 	public void fireValueChanged() {
@@ -80,8 +79,7 @@ public abstract class AbstractGUIObject implements GUIObject {
 		s.append("<html>");
 		s.append("<table>");
 		s.append("<tr>");
-		s.append("<td colspan=2><h3>" + getClass().getSimpleName()
-				+ "</h3></td>");
+		s.append("<td colspan=2><h3>" + getClass().getSimpleName() + "</h3></td>");
 		s.append("</tr>");
 		s.append("<tr>");
 		s.append("<td><b>Label:</b></td>");

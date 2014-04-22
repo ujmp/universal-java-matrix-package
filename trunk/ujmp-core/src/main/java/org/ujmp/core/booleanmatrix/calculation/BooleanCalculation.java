@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface BooleanCalculation extends Calculation {
 
-	public boolean getBoolean(long... coordinates) ;
+	public boolean getBoolean(long... coordinates);
 
-	public void setBoolean(boolean value, long... coordinates) ;
+	public void setBoolean(boolean value, long... coordinates);
 
 }

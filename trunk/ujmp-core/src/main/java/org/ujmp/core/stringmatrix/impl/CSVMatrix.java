@@ -28,7 +28,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -57,6 +59,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public CSVMatrix(File file, Object... parameters) throws IOException {
+		super(0, 0);
 		if (parameters.length != 0 && parameters[0] instanceof String) {
 			this.fieldDelimiter = (String) parameters[0];
 		} else {
@@ -92,7 +95,7 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 		return new long[] { sli.getLineCount(), columnCount };
 	}
 
-	public String getString(long row, long column)  {
+	public String getString(long row, long column) {
 		try {
 			String fields[] = null;
 			fields = rows.get(row);
@@ -127,5 +130,9 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public void setString(String value, long row, long column) {
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 }

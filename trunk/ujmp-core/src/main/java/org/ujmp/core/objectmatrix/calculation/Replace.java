@@ -38,8 +38,7 @@ public class Replace extends AbstractObjectCalculation {
 		this.replace = replace;
 	}
 
-	
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		Object src = getSource().getAsObject(coordinates);
 
 		if (search == null) {

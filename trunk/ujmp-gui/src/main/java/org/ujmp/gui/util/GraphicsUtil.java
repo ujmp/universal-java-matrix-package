@@ -55,8 +55,8 @@ public abstract class GraphicsUtil {
 			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth() / 2.0)), (float) (yPos + (g2d
 					.getFont().getSize2D() / 2.0)));
 		} else if ((xAlign == ALIGNCENTER) && (yAlign == ALIGNTOP)) {
-			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth() / 2.0)), (float) (yPos + (g2d
-					.getFont().getSize2D())));
+			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth() / 2.0)),
+					(float) (yPos + (g2d.getFont().getSize2D())));
 		} else if ((xAlign == ALIGNCENTER) && (yAlign == ALIGNBOTTOM)) {
 			g2d.drawString(s, (float) (xPos), (float) (yPos));
 		} else if ((xAlign == ALIGNLEFT) && (yAlign == ALIGNCENTER)) {
@@ -69,8 +69,8 @@ public abstract class GraphicsUtil {
 			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth())), (float) (yPos + (g2d.getFont()
 					.getSize2D() / 2.0)));
 		} else if ((xAlign == ALIGNRIGHT) && (yAlign == ALIGNTOP)) {
-			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth())), (float) (yPos + (g2d.getFont()
-					.getSize2D())));
+			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth())),
+					(float) (yPos + (g2d.getFont().getSize2D())));
 		} else if ((xAlign == ALIGNRIGHT) && (yAlign == ALIGNBOTTOM)) {
 			g2d.drawString(s, (float) (xPos - (fm.getStringBounds(s, g2d).getWidth())), (float) (yPos));
 		} else {

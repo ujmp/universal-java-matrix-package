@@ -36,6 +36,7 @@ import javax.swing.JSeparator;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.util.JMathLib;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MemoryUsageMatrix;
 import org.ujmp.core.util.matrices.RandomSeedMatrix;
 import org.ujmp.core.util.matrices.RunningThreadsMatrix;
@@ -52,28 +53,19 @@ public class UJMPToolsMenu extends JMenu {
 	public UJMPToolsMenu(JComponent component) {
 		super("Tools");
 		setMnemonic(KeyEvent.VK_T);
-		add(new JMenuItem(new ShowInFrameAction(component, "UJMP Plugins",
-				UJMPPluginsMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "UJMP Plugins", UJMPPluginsMatrix.class)));
+		add(new MatrixLibrariesAction());
 		add(new JSeparator());
-		add(new JMenuItem(new ShowInFrameAction(component,
-				"Supported File Formats", FileFormat.class)));
-		add(new JMenuItem(new ShowInFrameAction(component, "System Properties",
-				SystemPropertiesMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				"System Environment", SystemEnvironmentMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component, "UI Defaults",
-				MatrixUIDefaults.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Supported File Formats", FileFormat.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "System Properties", SystemPropertiesMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "System Environment", SystemEnvironmentMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "UI Defaults", MatrixUIDefaults.class)));
 		add(new JSeparator());
-		add(new JMenuItem(new ShowInFrameAction(component, "Memory Usage",
-				MemoryUsageMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component, "Running Threads",
-				RunningThreadsMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component, "System Time",
-				SystemTimeMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component, "Random Seed",
-				RandomSeedMatrix.class)));
-		add(new JMenuItem(new ShowInFrameAction(component,
-				"Available Processors", AvailableProcessorsMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Memory Usage", MemoryUsageMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Running Threads", RunningThreadsMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "System Time", SystemTimeMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Random Seed", RandomSeedMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Available Processors", AvailableProcessorsMatrix.class)));
 
 		if (JMathLib.isAvailable()) {
 			add(new JSeparator());
@@ -92,6 +84,18 @@ public class UJMPToolsMenu extends JMenu {
 		public void actionPerformed(ActionEvent e) {
 			JMathLib.showGUI();
 		}
+	}
 
+	class MatrixLibrariesAction extends AbstractAction {
+		private static final long serialVersionUID = 5469558464204854759L;
+
+		public MatrixLibrariesAction() {
+			putValue(Action.NAME, "Matrix Libraries");
+			putValue(Action.SHORT_DESCRIPTION, "Show overview of matrix libraries in a new window");
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			new MatrixLibraries().showGUI();
+		}
 	}
 }

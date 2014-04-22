@@ -39,48 +39,41 @@ public class ImportMatrixFromDatabaseAction extends AbstractObjectAction {
 	public ImportMatrixFromDatabaseAction(JComponent c, GUIObject m) {
 		super(c, m);
 		putValue(Action.NAME, "from Database...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"import a matrix from a JDBC database");
+		putValue(Action.SHORT_DESCRIPTION, "import a matrix from a JDBC database");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 	}
 
 	public Object call() {
 		try {
-			DBType type = DBType.values()[JOptionPane.showOptionDialog(getComponent(),
-					"Select database type", "Import Matrix",
-					JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-					DBType.values(), DBType.MySQL)];
+			DBType type = DBType.values()[JOptionPane.showOptionDialog(getComponent(), "Select database type",
+					"Import Matrix", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, DBType.values(),
+					DBType.MySQL)];
 
 			String host = null;
 			while (host == null) {
-				host = JOptionPane.showInputDialog("Enter host name:",
-						"localhost");
+				host = JOptionPane.showInputDialog("Enter host name:", "localhost");
 			}
 			int port = 0;
 			while (port <= 0) {
 				try {
-					port = Integer.parseInt(JOptionPane.showInputDialog(
-							"Enter port:", "3306"));
+					port = Integer.parseInt(JOptionPane.showInputDialog("Enter port:", "3306"));
 				} catch (Exception e) {
 				}
 			}
 			String database = null;
 			while (database == null) {
-				database = JOptionPane.showInputDialog("Enter database name:",
-						null);
+				database = JOptionPane.showInputDialog("Enter database name:", null);
 			}
 			String sql = null;
 			while (sql == null) {
-				sql = JOptionPane.showInputDialog("Enter SQL statement:",
-						"SELECT * FROM ");
+				sql = JOptionPane.showInputDialog("Enter SQL statement:", "SELECT * FROM ");
 			}
 			String username = null;
 			username = JOptionPane.showInputDialog("Enter user name:", "root");
 			String password = null;
 			password = JOptionPane.showInputDialog("Enter password:", null);
 
-			Matrix m = Matrix.Factory.importFromJDBC(type, host, port,
-					database, sql, username, password);
+			Matrix m = Matrix.Factory.importFromJDBC(type, host, port, database, sql, username, password);
 			m.showGUI();
 			return m;
 		} catch (Exception e) {

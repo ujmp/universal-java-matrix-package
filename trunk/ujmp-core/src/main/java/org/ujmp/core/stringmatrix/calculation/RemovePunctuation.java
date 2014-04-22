@@ -49,7 +49,7 @@ public class RemovePunctuation extends AbstractStringCalculation {
 		super(m);
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates);
 		s = StringUtil.retainChars(s, allowedChars, ' ');
 		s = s.replaceAll("\\s+", " ");

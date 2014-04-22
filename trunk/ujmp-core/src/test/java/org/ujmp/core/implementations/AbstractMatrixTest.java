@@ -263,7 +263,6 @@ public abstract class AbstractMatrixTest {
 	public void testConstructorWithAnnotation() throws Exception {
 		Matrix m = createMatrixWithAnnotation(3, 3);
 		Matrix m2 = createMatrix(m);
-		System.out.println(m.minus(m2));
 		assertTrue(getLabel(), m.equalsContent(m2));
 		assertTrue(getLabel(), m.equalsAnnotation(m2));
 		assertEquals(getLabel(), m, m2);
@@ -356,30 +355,44 @@ public abstract class AbstractMatrixTest {
 	@Test
 	public void testContains() throws Exception {
 		Matrix m = getTestMatrix();
+
 		assertTrue(m.contains(0, 0));
-		if (m.isSparse())
+
+		if (m.isSparse()) {
 			assertFalse(m.contains(0, 1));
-		else
+		} else {
 			assertTrue(m.contains(0, 1));
-		if (m.isSparse())
+		}
+
+		if (m.isSparse()) {
 			assertFalse(m.contains(0, 2));
-		else
+		} else {
 			assertTrue(m.contains(0, 2));
+		}
+
 		assertTrue(m.contains(1, 0));
 		assertTrue(m.contains(1, 1));
-		if (m.isSparse())
+
+		if (m.isSparse()) {
 			assertFalse(m.contains(0, 1));
-		else
+		} else {
 			assertTrue(m.contains(1, 2));
-		if (m.isSparse())
+		}
+
+		if (m.isSparse()) {
 			assertFalse(m.contains(0, 1));
-		else
+		} else {
 			assertTrue(m.contains(2, 0));
+		}
+
 		assertTrue(m.contains(2, 1));
-		if (m.isSparse())
+
+		if (m.isSparse()) {
 			assertFalse(m.contains(0, 1));
-		else
+		} else {
 			assertTrue(m.contains(2, 2));
+		}
+
 		assertFalse(m.contains(7, 7));
 
 		if (m instanceof Erasable) {
@@ -1473,7 +1486,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getRowCount(), m1.getColumnCount());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1498,7 +1511,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.invSPD();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getRowCount(), m1.getColumnCount());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1528,7 +1541,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.inv();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getRowCount(), m1.getColumnCount());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -1556,7 +1569,7 @@ public abstract class AbstractMatrixTest {
 
 		Matrix m2 = m1.invSPD();
 		Matrix m3 = m1.mtimes(m2);
-		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getSize());
+		Matrix eye = DenseDoubleMatrix2D.Factory.eye(m1.getRowCount(), m1.getColumnCount());
 		assertEquals(getLabel(), 0.0, eye.minus(m3).getEuklideanValue(), TOLERANCE);
 
 		if (m1 instanceof Erasable) {
@@ -2251,7 +2264,6 @@ public abstract class AbstractMatrixTest {
 			for (Size size : sizes) {
 				for (EntryGenerator generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
-					System.out.println(label);
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
@@ -2316,9 +2328,6 @@ public abstract class AbstractMatrixTest {
 			packageName = "org.ujmp.core";
 		}
 		long col = LIBRARIES.getColumnForPackage(packageName);
-		if (col < 0) {
-			System.out.println(col);
-		}
 		String supported = LIBRARIES.getAsString(feature, col);
 
 		if (MatrixLayout.FAT.equals(layout)) {
@@ -2376,7 +2385,6 @@ public abstract class AbstractMatrixTest {
 			for (Size size : sizes) {
 				for (EntryGenerator generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
-					System.out.println(label);
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
@@ -2452,7 +2460,6 @@ public abstract class AbstractMatrixTest {
 			for (Size size : sizes) {
 				for (EntryGenerator generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
-					System.out.println(label);
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {

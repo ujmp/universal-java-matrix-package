@@ -27,7 +27,7 @@ import org.ujmp.core.export.format.MatrixCSVExportFormat;
 import org.ujmp.core.export.format.MatrixMatlabScriptExportFormat;
 import org.ujmp.core.export.format.MatrixSQLExportFormat;
 
-public interface MatrixClipboardExportDestination extends MatrixCSVExportFormat, MatrixSQLExportFormat,
-		MatrixMatlabScriptExportFormat, MatrixExportDestination {
+public interface MatrixClipboardExportDestination extends MatrixCSVExportFormat,
+		MatrixSQLExportFormat, MatrixMatlabScriptExportFormat, MatrixExportDestination {
 
 }

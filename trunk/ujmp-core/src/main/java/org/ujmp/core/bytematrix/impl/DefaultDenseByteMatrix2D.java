@@ -23,27 +23,27 @@
 
 package org.ujmp.core.bytematrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorByteArray1D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements
 		HasColumnMajorByteArray1D {
 	private static final long serialVersionUID = -7637602510970244322L;
 
-	private byte[] values = null;
+	private final byte[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseByteMatrix2D(Matrix m)  {
-		super(m);
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
+	public DefaultDenseByteMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
+		this.rows = MathUtil.longToInt(m.getRowCount());
+		this.cols = MathUtil.longToInt(m.getColumnCount());
 		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseByteMatrix2D) {
 			byte[] v = ((DefaultDenseByteMatrix2D) m).values;
@@ -57,15 +57,16 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		}
 	}
 
-	public DefaultDenseByteMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
+	public DefaultDenseByteMatrix2D(int rows, int cols) {
+		super(rows, cols);
+		this.rows = rows;
+		this.cols = cols;
 		this.size = new long[] { rows, cols };
 		this.values = new byte[rows * cols];
 	}
 
 	public DefaultDenseByteMatrix2D(byte[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -132,7 +133,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		byte[] result = new byte[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseByteMatrix2D(result, rows, cols);
@@ -154,6 +155,10 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 
 	public byte[] getColumnMajorByteArray1D() {
 		return values;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -29,8 +29,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface BigIntegerCalculation extends Calculation {
 
-	public BigInteger getBigInteger(long... coordinates) ;
+	public BigInteger getBigInteger(long... coordinates);
 
-	public void setBigInteger(BigInteger value, long... coordinates) ;
+	public void setBigInteger(BigInteger value, long... coordinates);
 
 }

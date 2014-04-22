@@ -33,8 +33,7 @@ public class IndexOfMin extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double min = Double.MAX_VALUE;
 		long index = -1;
 		switch (getDimension()) {
@@ -60,7 +59,6 @@ public class IndexOfMin extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

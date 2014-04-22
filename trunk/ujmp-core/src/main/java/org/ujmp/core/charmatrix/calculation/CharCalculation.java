@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface CharCalculation extends Calculation {
 
-	public char getChar(long... coordinates) ;
+	public char getChar(long... coordinates);
 
-	public void setChar(char value, long... coordinates) ;
+	public void setChar(char value, long... coordinates);
 
 }

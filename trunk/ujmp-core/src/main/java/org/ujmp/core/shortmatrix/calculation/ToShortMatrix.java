@@ -32,12 +32,11 @@ public class ToShortMatrix extends AbstractShortCalculation {
 		super(matrix);
 	}
 
-	
-	public short getShort(long... coordinates)  {
+	public short getShort(long... coordinates) {
 		return getSource().getAsShort(coordinates);
 	}
 
-	public void setShort(short value, long coordinates)  {
+	public void setShort(short value, long coordinates) {
 		getSource().setAsShort(value, coordinates);
 	}
 

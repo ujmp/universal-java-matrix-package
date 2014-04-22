@@ -82,12 +82,8 @@ public abstract class PFor {
 		}
 
 		public final Void call() throws Exception {
-			try {
-				for (int i = first; i < last; i++) {
-					step(i);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			for (int i = first; i < last; i++) {
+				step(i);
 			}
 			return null;
 		}

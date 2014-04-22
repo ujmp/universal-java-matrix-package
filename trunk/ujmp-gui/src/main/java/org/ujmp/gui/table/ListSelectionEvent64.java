@@ -46,8 +46,8 @@ public class ListSelectionEvent64 extends ListSelectionEvent {
 	}
 
 	public String toString() {
-		String properties = " source=" + getSource() + " firstIndex= " + firstIndex + " lastIndex= " + lastIndex + " isAdjusting= "
-				+ this.getValueIsAdjusting() + " ";
+		String properties = " source=" + getSource() + " firstIndex= " + firstIndex + " lastIndex= " + lastIndex
+				+ " isAdjusting= " + this.getValueIsAdjusting() + " ";
 		return getClass().getName() + "[" + properties + "]";
 	}
 }

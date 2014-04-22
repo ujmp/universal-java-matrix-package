@@ -24,15 +24,13 @@
 package org.ujmp.core.bytearraymatrix.stub;
 
 import org.ujmp.core.bytearraymatrix.SparseByteArrayMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public abstract class AbstractSparseByteArrayMatrix extends AbstractByteArrayMatrix implements
 		SparseByteArrayMatrix {
 	private static final long serialVersionUID = -4924651670091888822L;
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		return SparseObjectMatrix2D.factory;
+	public AbstractSparseByteArrayMatrix(long[] size) {
+		super(size);
 	}
+
 }

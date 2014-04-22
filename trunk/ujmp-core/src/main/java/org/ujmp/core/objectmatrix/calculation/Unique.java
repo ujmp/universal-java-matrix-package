@@ -36,8 +36,7 @@ public class Unique extends AbstractObjectCalculation {
 		super(m);
 	}
 
-	
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		createUniqueObjects();
 		return uniqueObjects.getAsObject(coordinates);
 	}
@@ -51,7 +50,6 @@ public class Unique extends AbstractObjectCalculation {
 		}
 	}
 
-	
 	public long[] getSize() {
 		createUniqueObjects();
 		return uniqueObjects.getSize();

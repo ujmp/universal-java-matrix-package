@@ -28,9 +28,7 @@ import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
-public class Inv
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
+public class Inv implements org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
 
 	public static Inv INSTANCE = new Inv();
 

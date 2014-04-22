@@ -39,17 +39,14 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("ujmp-core");
 	}
 
-	
 	public String getDescription() {
 		return "basic visualization module for matrices";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

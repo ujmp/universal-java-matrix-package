@@ -33,9 +33,9 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
 	private static final BenchmarkConfig config = new BenchmarkConfig();
 
-	public abstract DoubleMatrix2D createMatrix(long... size) ;
+	public abstract DoubleMatrix2D createMatrix(long... size);
 
-	public abstract DoubleMatrix2D createMatrix(Matrix source) ;
+	public abstract DoubleMatrix2D createMatrix(Matrix source);
 
 	private static long benchmarkSeed = 3345454363676l;
 

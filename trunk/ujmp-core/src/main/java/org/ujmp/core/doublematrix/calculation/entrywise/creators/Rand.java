@@ -51,11 +51,11 @@ public class Rand extends AbstractDoubleCalculation {
 		return MathUtil.nextDouble(min, max);
 	}
 
-	public static Matrix calc(long... size)  {
+	public static Matrix calc(long... size) {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(Matrix source, double min, double max)  {
+	public static Matrix calc(Matrix source, double min, double max) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextDouble(min, max), c);
@@ -63,7 +63,7 @@ public class Rand extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(ValueType valueType, long... size)  {
+	public static Matrix calc(ValueType valueType, long... size) {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextDouble(), c);
@@ -71,7 +71,7 @@ public class Rand extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public Matrix calcOrig()  {
+	public Matrix calcOrig() {
 		if (getSource() instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D source = (DenseDoubleMatrix2D) getSource();
 

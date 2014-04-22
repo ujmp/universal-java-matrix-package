@@ -25,20 +25,20 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = 4312852021159459897L;
 
-	private Object[] values = null;
+	private final Object[] values;
+	private final long[] size;
+	private final int length;
 
-	private long[] size = null;
-
-	private int length = 0;
-
-	public DefaultDenseObjectMatrixMultiD(Matrix m)  {
-		super(m);
+	public DefaultDenseObjectMatrixMultiD(Matrix m) {
+		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
 		this.length = (int) Coordinates.product(size);
 		this.values = new Object[length];
@@ -60,6 +60,7 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	}
 
 	public DefaultDenseObjectMatrixMultiD(Object[] v, long... size) {
+		super(size);
 		this.size = Coordinates.copyOf(size);
 		this.length = (int) Coordinates.product(size);
 		this.values = v;
@@ -75,6 +76,10 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 
 	public final void setObject(Object value, long... pos) {
 		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
+	}
+
+	public DenseObjectMatrixFactory<DenseObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

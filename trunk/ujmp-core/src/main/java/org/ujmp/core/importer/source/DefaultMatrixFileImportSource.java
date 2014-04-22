@@ -27,16 +27,16 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.importer.DefaultMatrixFileJPGImporter;
+import org.ujmp.core.importer.DefaultMatrixFileImageImporter;
 
 public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSource {
 
-	public DefaultMatrixFileImportSource(File file) {
-		super(file);
+	public DefaultMatrixFileImportSource(Matrix matrix, File file) {
+		super(matrix, file);
 	}
 
-	public DefaultMatrixFileImportSource(String file) {
-		super(file);
+	public DefaultMatrixFileImportSource(Matrix matrix, String file) {
+		super(matrix, file);
 	}
 
 	public Matrix asPDF() {
@@ -44,7 +44,7 @@ public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSourc
 	}
 
 	public Matrix asJPG() throws IOException {
-		return new DefaultMatrixFileJPGImporter(getFile()).asJPG();
+		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asJPG();
 	}
 
 	public Matrix asCSV() {

@@ -44,7 +44,7 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 		super(dimension, sources);
 	}
 
-	public final BigIntegerMatrix calcNew()  {
+	public final BigIntegerMatrix calcNew() {
 		BigIntegerMatrix result = (BigIntegerMatrix) Matrix.Factory.zeros(ValueType.BIGINTEGER,
 				getSize());
 		for (long[] c : result.allCoordinates()) {
@@ -56,11 +56,11 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 		return result;
 	}
 
-	public final BigIntegerMatrix calcLink()  {
+	public final BigIntegerMatrix calcLink() {
 		return new BigIntegerCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -74,7 +74,7 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setBigInteger(BigInteger value, long... coordinates)  {
+	public void setBigInteger(BigInteger value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

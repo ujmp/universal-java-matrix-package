@@ -40,8 +40,7 @@ public class ImportMatrixFromURLAction extends AbstractObjectAction {
 	public ImportMatrixFromURLAction(JComponent c, GUIObject m) {
 		super(c, m);
 		putValue(Action.NAME, "from URL...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"import a matrix from a location on the web");
+		putValue(Action.SHORT_DESCRIPTION, "import a matrix from a location on the web");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_U);
 	}
 
@@ -52,11 +51,9 @@ public class ImportMatrixFromURLAction extends AbstractObjectAction {
 				String s = JOptionPane.showInputDialog("Enter URL:", "http://");
 				url = new URL(s);
 			}
-			FileFormat fileFormat = FileFormat.values()[JOptionPane
-					.showOptionDialog(getComponent(), "Select format",
-							"Import Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null,
-							FileFormat.values(), FileFormat.CSV)];
+			FileFormat fileFormat = FileFormat.values()[JOptionPane.showOptionDialog(getComponent(), "Select format",
+					"Import Matrix", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, FileFormat.values(),
+					FileFormat.CSV)];
 
 			Matrix m = Matrix.Factory.importFromURL(fileFormat, url);
 			m.showGUI();

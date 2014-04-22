@@ -23,9 +23,9 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.matrix.factory.DenseMatrixFactory;
+import org.ujmp.core.genericmatrix.factory.DenseGenericMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 
 public interface DenseObjectMatrixFactory<T extends DenseObjectMatrix> extends
-		DenseMatrixFactory<T>, ObjectMatrixFactory<T> {
+		BaseObjectMatrixFactory<T>, DenseGenericMatrixFactory<T> {
 }

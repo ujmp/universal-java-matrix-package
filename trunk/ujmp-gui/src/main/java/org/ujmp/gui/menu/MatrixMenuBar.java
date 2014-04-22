@@ -32,8 +32,7 @@ import org.ujmp.gui.MatrixGUIObject;
 public class MatrixMenuBar extends JMenuBar {
 	private static final long serialVersionUID = 3773901616547266478L;
 
-	public MatrixMenuBar(JComponent component, MatrixGUIObject o,
-			GUIObject owner) {
+	public MatrixMenuBar(JComponent component, MatrixGUIObject o, GUIObject owner) {
 		add(new UJMPFileMenu(component, o));
 		add(new MatrixMenu(component, o, owner));
 		add(new UJMPToolsMenu(component));

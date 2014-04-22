@@ -43,7 +43,7 @@ public class RemoveWords extends AbstractStringCalculation {
 		}
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates);
 		if (s != null) {
 			StringBuilder result = new StringBuilder(s.length());

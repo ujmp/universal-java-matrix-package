@@ -39,13 +39,11 @@ public class CeilAction extends AbstractMatrixAction {
 	public CeilAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Ceil");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replace cells with the next higher integer");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_UP,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "replace cells with the next higher integer");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().ceil(getRet());
 		m.showGUI();
 		return m;

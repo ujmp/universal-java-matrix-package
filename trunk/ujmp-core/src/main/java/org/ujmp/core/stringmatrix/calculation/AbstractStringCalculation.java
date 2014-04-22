@@ -42,11 +42,11 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public final StringMatrix calcLink()  {
+	public final StringMatrix calcLink() {
 		return new StringCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -58,7 +58,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 		return getSource();
 	}
 
-	public final StringMatrix calcNew()  {
+	public final StringMatrix calcNew() {
 		StringMatrix result = (StringMatrix) Matrix.Factory.zeros(ValueType.STRING, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsString(getString(c), c);
@@ -71,7 +71,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setString(String value, long... coordinates)  {
+	public void setString(String value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

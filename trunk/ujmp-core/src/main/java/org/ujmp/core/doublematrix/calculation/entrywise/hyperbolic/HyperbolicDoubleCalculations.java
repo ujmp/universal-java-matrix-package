@@ -39,7 +39,7 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic sinus values
 	 */
-	public Matrix sinh(Ret returnType) ;
+	public Matrix sinh(Ret returnType);
 
 	/**
 	 * Calculates the hyperbolic cosinus of all entries in the matrix.
@@ -49,7 +49,7 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic cosinus values
 	 */
-	public Matrix cosh(Ret returnType) ;
+	public Matrix cosh(Ret returnType);
 
 	/**
 	 * Calculates the hyperbolic tangens of all entries in the matrix.
@@ -59,6 +59,6 @@ public interface HyperbolicDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with hyperbolic tangens values
 	 */
-	public Matrix tanh(Ret returnType) ;
+	public Matrix tanh(Ret returnType);
 
 }

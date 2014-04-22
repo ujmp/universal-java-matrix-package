@@ -25,6 +25,7 @@ package org.ujmp.core.bytearraymatrix;
 
 import org.ujmp.core.DenseMatrix2D;
 
-public interface DenseByteArrayMatrix2D extends ByteArrayMatrix2D, DenseByteArrayMatrix, DenseMatrix2D {
+public interface DenseByteArrayMatrix2D extends ByteArrayMatrix2D, DenseByteArrayMatrix,
+		DenseMatrix2D {
 
 }

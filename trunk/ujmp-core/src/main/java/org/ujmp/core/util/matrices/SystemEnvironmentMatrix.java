@@ -27,6 +27,8 @@ import java.util.Map;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public class SystemEnvironmentMatrix extends AbstractMapMatrix<String, String> {
 	private static final long serialVersionUID = -8952532238520266448L;
@@ -45,5 +47,9 @@ public class SystemEnvironmentMatrix extends AbstractMapMatrix<String, String> {
 
 	public boolean isReadOnly() {
 		return true;
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 }

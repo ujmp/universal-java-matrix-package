@@ -58,7 +58,8 @@ public class RunningAveragePlot {
 
 					double xs = plotSettings.getXStepSize();
 
-					double sum = plotSettings.getMatrixGUIObject().getMatrix().getAsDouble((long) plotSettings.getMinXValue(), column);
+					double sum = plotSettings.getMatrixGUIObject().getMatrix()
+							.getAsDouble((long) plotSettings.getMinXValue(), column);
 					double average = sum;
 					double oldAverage = average;
 					double firstPoint = plotSettings.getMinXValue();
@@ -88,7 +89,8 @@ public class RunningAveragePlot {
 						int x2 = (int) (xr * xf);
 						x2 = (x2 == x1) ? x2++ : x2;
 
-						int y1 = (int) (plotSettings.getHeight() - 1 - oldAverage * yf + plotSettings.getMinYValue() * yf);
+						int y1 = (int) (plotSettings.getHeight() - 1 - oldAverage * yf + plotSettings.getMinYValue()
+								* yf);
 						int y2 = (int) (plotSettings.getHeight() - 1 - average * yf + plotSettings.getMinYValue() * yf);
 
 						g2d.drawLine(x1, y1, x2, y2);

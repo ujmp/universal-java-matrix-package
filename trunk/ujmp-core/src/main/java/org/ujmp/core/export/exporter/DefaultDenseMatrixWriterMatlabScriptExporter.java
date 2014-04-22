@@ -29,8 +29,8 @@ import java.io.Writer;
 import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.export.format.MatrixMatlabScriptExportFormat;
 
-public class DefaultDenseMatrixWriterMatlabScriptExporter extends
-		AbstractDenseMatrixWriterExporter implements MatrixMatlabScriptExportFormat {
+public class DefaultDenseMatrixWriterMatlabScriptExporter extends AbstractDenseMatrixWriterExporter
+		implements MatrixMatlabScriptExportFormat {
 
 	public DefaultDenseMatrixWriterMatlabScriptExporter(DenseMatrix matrix, Writer writer) {
 		super(matrix, writer);

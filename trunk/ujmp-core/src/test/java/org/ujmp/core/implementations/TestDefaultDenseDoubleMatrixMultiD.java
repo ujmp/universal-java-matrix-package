@@ -28,16 +28,24 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 
 public class TestDefaultDenseDoubleMatrixMultiD extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
+	public Matrix createMatrix(long... size) {
 		return new DefaultDenseDoubleMatrixMultiD(size);
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new DefaultDenseDoubleMatrixMultiD(source);
 	}
 
 	public boolean isTestLarge() {
 		return false;
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
 	}
 
 }

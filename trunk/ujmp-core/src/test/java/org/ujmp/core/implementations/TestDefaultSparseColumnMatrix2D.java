@@ -28,11 +28,11 @@ import org.ujmp.core.objectmatrix.impl.DefaultSparseColumnObjectMatrix2D;
 
 public class TestDefaultSparseColumnMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new DefaultSparseColumnObjectMatrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new DefaultSparseColumnObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new DefaultSparseColumnObjectMatrix2D(source);
 	}
 
@@ -40,4 +40,11 @@ public class TestDefaultSparseColumnMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
 }

@@ -49,9 +49,9 @@ public class Concatenation extends AbstractObjectCalculation {
 		for (int i = 0; i < matrices.length - 1; i++) {
 			Matrix m0 = matrices[i];
 			Matrix m1 = matrices[i + 1];
-			VerifyUtil.assertNotNull(m0, "matrix is null");
-			VerifyUtil.assertNotNull(m1, "matrix is null");
-			VerifyUtil.assertEquals(m0.getDimensionCount(), m1.getDimensionCount(),
+			VerifyUtil.verifyNotNull(m0, "matrix is null");
+			VerifyUtil.verifyNotNull(m1, "matrix is null");
+			VerifyUtil.verifyEquals(m0.getDimensionCount(), m1.getDimensionCount(),
 					"matrices have different dimensionality");
 		}
 
@@ -77,7 +77,7 @@ public class Concatenation extends AbstractObjectCalculation {
 			long[] s1 = Coordinates.copyOf(m1.getSize());
 			if (!Coordinates.allEquals(s0, 0) && !Coordinates.allEquals(s1, 0)) {
 				s1[dimension] = s0[dimension];
-				VerifyUtil.assertEquals(s0, s1, "matrices have different sizes");
+				VerifyUtil.verifyEquals(s0, s1, "matrices have different sizes");
 			}
 		}
 
@@ -129,7 +129,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		this(dimension, matrices.toArray(new Matrix[matrices.size()]));
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		int i = 0;
 		for (; i < positions.length; i++) {
 			if (positions[i] > coordinates[getDimension()]) {
@@ -147,7 +147,7 @@ public class Concatenation extends AbstractObjectCalculation {
 		return size;
 	}
 
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

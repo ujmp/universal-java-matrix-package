@@ -73,7 +73,6 @@ public class RingBufferOutputStream extends OutputStream {
 		return end < start ? values.length : end - start + 1;
 	}
 
-	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < size(); i++) {
@@ -105,7 +104,6 @@ public class RingBufferOutputStream extends OutputStream {
 		return size() == 0;
 	}
 
-	
 	public void write(int b) throws IOException {
 		add((byte) b);
 	}

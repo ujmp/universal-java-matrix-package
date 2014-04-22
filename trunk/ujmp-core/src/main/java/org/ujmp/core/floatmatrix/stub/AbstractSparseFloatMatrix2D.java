@@ -28,8 +28,11 @@ import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMatrix implements
 		SparseFloatMatrix2D {
-
 	private static final long serialVersionUID = 6828460129067551021L;
+
+	public AbstractSparseFloatMatrix2D(long[] size) {
+		super(size);
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -43,22 +46,18 @@ public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMat
 		setChar(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	
 	public final Float getObject(long row, long column) {
 		return getFloat(row, column);
 	}
 
-	
 	public final Float getObject(int row, int column) {
 		return getFloat(row, column);
 	}
 
-	
 	public final void setObject(Float value, long row, long column) {
 		setFloat(value, row, column);
 	}
 
-	
 	public final void setObject(Float value, int row, int column) {
 		setFloat(value, row, column);
 	}

@@ -32,6 +32,8 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -43,25 +45,28 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 
 	private Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
-	public DefaultSparseRowObjectMatrix2D(long... size) {
-		super(size);
-		setSize(size);
+	public DefaultSparseRowObjectMatrix2D(long rows, long columns) {
+		super(rows, columns);
+		setSize(new long[] { rows, columns });
 	}
 
 	public DefaultSparseRowObjectMatrix2D(Matrix m) {
-		super(m);
+		super(m.getRowCount(), m.getColumnCount());
 		setSize(m.getSize());
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public Object getObject(long row, long column)  {
+	public Object getObject(long row, long column) {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
 
-	public Object getObject(int row, int column)  {
+	public Object getObject(int row, int column) {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
 	}
@@ -86,15 +91,15 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
-	public double getAsDouble(long... coordinates)  {
+	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates)  {
+	public void setAsDouble(double value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 
-	public void setObject(Object o, long row, long column)  {
+	public void setObject(Object o, long row, long column) {
 		Matrix m = rows.get(row);
 		if (m == null) {
 			// TODO: there should be a faster implementation than this:
@@ -104,7 +109,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		m.setAsObject(o, 0, column);
 	}
 
-	public void setObject(Object o, int row, int column)  {
+	public void setObject(Object o, int row, int column) {
 		setObject(o, (long) row, (long) column);
 	}
 
@@ -125,7 +130,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return rows.get(row);
 	}
 
-	public Matrix max(Ret returnType, int dimension)  {
+	public Matrix max(Ret returnType, int dimension) {
 		if (returnType == Ret.NEW) {
 
 			if (dimension == ROW) {
@@ -152,7 +157,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		throw new RuntimeException("not supported");
 	}
 
-	public Matrix selectRows(Ret returnType, long... rows)  {
+	public Matrix selectRows(Ret returnType, long... rows) {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
 		}
@@ -165,6 +170,19 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.rows = object;
+	}
+
+	public SparseObjectMatrix2DFactory<? extends SparseObjectMatrix2D> getFactory() {
+		return new SparseObjectMatrix2DFactory<SparseObjectMatrix2D>() {
+
+			public SparseObjectMatrix2D zeros(long... size) {
+				return new DefaultSparseRowObjectMatrix2D(size[ROW], size[COLUMN]);
+			}
+
+			public SparseObjectMatrix2D zeros(long rows, long cols) {
+				return new DefaultSparseRowObjectMatrix2D(rows, cols);
+			}
+		};
 	}
 
 }

@@ -23,13 +23,15 @@
 
 package org.ujmp.core.importer.format;
 
+import java.io.IOException;
+
 import org.ujmp.core.Matrix;
 
 public interface MatrixCSVImportFormat extends MatrixImportFormat {
 
-	public Matrix asCSV();
+	public Matrix asCSV() throws IOException;
 
-	public Matrix asCSV(String columnSeparator);
+	public Matrix asCSV(String columnSeparator) throws IOException;
 
-	public Matrix asCSV(String columnSeparator, String lineSeparator);
+	public Matrix asCSV(String columnSeparator, String lineSeparator) throws IOException;
 }

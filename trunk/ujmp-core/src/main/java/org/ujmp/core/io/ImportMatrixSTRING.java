@@ -27,7 +27,7 @@ public abstract class ImportMatrixSTRING extends ImportMatrixCSV {
 
 	// public static final Matrix fromString(String string, Object...
 	// parameters)
-	//  {
+	// {
 	// StringReader sr = new StringReader(string);
 	// IntelligentFileReader r = new IntelligentFileReader(sr);
 	// Matrix m = fromReader(r);
@@ -56,7 +56,7 @@ public abstract class ImportMatrixSTRING extends ImportMatrixCSV {
 	//
 	// public static final Matrix fromReader(Reader reader, Object...
 	// parameters)
-	//  {
+	// {
 	// StringBuilder s = new StringBuilder();
 	//
 	// try {

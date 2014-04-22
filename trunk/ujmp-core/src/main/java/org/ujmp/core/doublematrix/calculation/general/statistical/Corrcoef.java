@@ -42,7 +42,7 @@ public class Corrcoef extends AbstractDoubleCalculation {
 		this.besselsCorrection = besselsCorrection;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double sumSqX = 0.0;
 		double sumSqY = 0.0;
 		double sumProd = 0.0;

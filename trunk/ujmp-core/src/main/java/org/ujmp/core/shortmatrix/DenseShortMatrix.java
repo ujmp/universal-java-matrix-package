@@ -23,8 +23,8 @@
 
 package org.ujmp.core.shortmatrix;
 
-import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix;
 
-public interface DenseShortMatrix extends ShortMatrix, DenseMatrix {
+public interface DenseShortMatrix extends ShortMatrix, DenseGenericMatrix<Short> {
 
 }

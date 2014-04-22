@@ -27,6 +27,6 @@ import org.ujmp.core.Matrix;
 
 public interface DiscretizeCalculations {
 
-	public Matrix discretizeToColumns(long column) ;
+	public Matrix discretizeToColumns(long column);
 
 }

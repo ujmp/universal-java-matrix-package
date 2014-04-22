@@ -23,14 +23,7 @@
 
 package org.ujmp.core.intmatrix.factory;
 
-import org.ujmp.core.intmatrix.IntMatrix2D;
-
 public abstract class AbstractIntMatrix2DFactory implements IntMatrix2DFactory {
 	private static final long serialVersionUID = -5395956090810693224L;
-
-	
-	public IntMatrix2D zeros(long rows, long columns)  {
-		return dense(rows, columns);
-	}
 
 }

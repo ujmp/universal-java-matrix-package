@@ -36,11 +36,10 @@ public class TanhAction extends AbstractMatrixAction {
 	public TanhAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Tanh");
-		putValue(Action.SHORT_DESCRIPTION,
-				"tangens hyperbolicus of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "tangens hyperbolicus of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().tanh(getRet());
 		m.showGUI();
 		return m;

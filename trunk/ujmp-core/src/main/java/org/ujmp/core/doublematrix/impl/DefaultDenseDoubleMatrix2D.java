@@ -26,21 +26,20 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasColumnMajorDoubleArray1D {
 	private static final long serialVersionUID = -3605416349143850650L;
 
 	private final double[] values;
-
 	private final long[] size;
-
 	private final int rows;
-
 	private final int cols;
 
-	public DefaultDenseDoubleMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseDoubleMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -54,24 +53,21 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public DefaultDenseDoubleMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
-		this.values = new double[rows * cols];
-	}
-
-	public DefaultDenseDoubleMatrix2D(long rows, long cols) {
-		this.rows = (int) rows;
-		this.cols = (int) cols;
-		this.size = new long[] { rows, cols };
-		this.values = new double[this.rows * this.cols];
+	public DefaultDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
+		this.size = new long[] { rows, columns };
+		this.values = new double[rows * columns];
 	}
 
 	public DefaultDenseDoubleMatrix2D(double[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -122,7 +118,7 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseDoubleMatrix2D(result, rows, cols);
@@ -134,6 +130,21 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public final double[] getColumnMajorDoubleArray1D() {
 		return values;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return new BaseMatrixFactory<DefaultDenseDoubleMatrix2D>() {
+
+			public Matrix zeros(long rows, long columns) {
+				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(rows),
+						MathUtil.longToInt(columns));
+			}
+
+			public Matrix zeros(long... size) {
+				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
+			}
+		};
 	}
 
 }

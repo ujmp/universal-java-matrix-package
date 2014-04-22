@@ -33,11 +33,11 @@ public class Sinh extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return Math.sinh(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.sinh(source.getAsDouble(c)), c);

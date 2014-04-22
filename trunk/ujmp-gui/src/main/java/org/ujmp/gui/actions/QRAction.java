@@ -36,11 +36,10 @@ public class QRAction extends AbstractMatrixAction {
 	public QRAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "QR");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a QR decomposition of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a QR decomposition of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix[] result = getMatrixObject().getMatrix().qr();
 		result[0].showGUI();
 		result[1].showGUI();

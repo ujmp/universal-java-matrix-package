@@ -30,7 +30,7 @@ import org.ujmp.core.enums.ValueType;
 public class Convert {
 	public static final long serialVersionUID = 6393277198816850597L;
 
-	public static Matrix calcNew(ValueType valueType, Matrix source)  {
+	public static Matrix calcNew(ValueType valueType, Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(valueType, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsObject(source.getAsObject(c), c);
@@ -42,7 +42,7 @@ public class Convert {
 		return ret;
 	}
 
-	public static Matrix calcNew(Matrix matrix)  {
+	public static Matrix calcNew(Matrix matrix) {
 		return calcNew(matrix.getValueType(), matrix);
 	}
 

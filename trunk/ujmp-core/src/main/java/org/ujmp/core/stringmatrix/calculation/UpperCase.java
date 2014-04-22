@@ -32,8 +32,7 @@ public class UpperCase extends AbstractStringCalculation {
 		super(m);
 	}
 
-	
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates);
 		if (s == null) {
 			return null;

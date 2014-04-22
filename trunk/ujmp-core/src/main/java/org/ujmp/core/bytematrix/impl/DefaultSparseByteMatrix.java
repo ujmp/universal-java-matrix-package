@@ -32,11 +32,11 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 765072872179964518L;
 
-	public DefaultSparseByteMatrix(Matrix m)  {
+	public DefaultSparseByteMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseByteMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseByteMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -52,11 +52,11 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> im
 		return ValueType.BYTE;
 	}
 
-	public byte getByte(long... coordinates)  {
+	public byte getByte(long... coordinates) {
 		return MathUtil.getByte(getObject(coordinates));
 	}
 
-	public void setByte(byte value, long... coordinates)  {
+	public void setByte(byte value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

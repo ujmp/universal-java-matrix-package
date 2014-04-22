@@ -32,6 +32,8 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
+import org.ujmp.core.objectmatrix.DenseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
 public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
@@ -48,6 +50,7 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 	private SocketAddress destination = null;
 
 	public RemoteObjectMatrixUDP(String server, int port) {
+		super(new long[] { 1, 1 });
 		try {
 			socket = new DatagramSocket();
 			socket.setSoTimeout(TIMEOUT);
@@ -71,8 +74,8 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
-					.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+					receivedPacket.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDIMENSIONCOUNT) {
 				throw new RuntimeException("could not set value");
@@ -96,8 +99,8 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
-					.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+					receivedPacket.getData()));
 			int command = ois.readInt();
 			if (command != ServerObjectMatrixUDP.GETDOUBLEVALUE) {
 				throw new RuntimeException("could not get value");
@@ -123,8 +126,8 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 					destination);
 			socket.send(sentPacket);
 			socket.receive(receivedPacket);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(receivedPacket
-					.getData()));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+					receivedPacket.getData()));
 			int command = ois.readInt();
 			ois.close();
 			if (command != ServerObjectMatrixUDP.SETDOUBLEVALUE) {
@@ -136,13 +139,15 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 	}
 
 	public Object getObject(long... coordinates) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public void setObject(Object o, long... coordinates) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("not implemented");
+	}
 
+	public DenseObjectMatrixFactory<? extends DenseObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -41,11 +41,10 @@ public class RoundAction extends AbstractMatrixAction {
 		putValue(Action.NAME, "Round");
 		putValue(Action.SHORT_DESCRIPTION, "round cells to the closest integer");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_PERIOD, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().round(getRet());
 		m.showGUI();
 		return m;

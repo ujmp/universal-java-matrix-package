@@ -33,10 +33,9 @@ public interface FloatMatrix extends GenericMatrix<Float> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a float representation of the entry
-	 * @
+	 * @return a float representation of the entry @
 	 */
-	public float getFloat(long... coordinates) ;
+	public float getFloat(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a float value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface FloatMatrix extends GenericMatrix<Float> {
 	 * @param value
 	 *            float value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setFloat(float value, long... coordinates) ;
+	public void setFloat(float value, long... coordinates);
 
 }

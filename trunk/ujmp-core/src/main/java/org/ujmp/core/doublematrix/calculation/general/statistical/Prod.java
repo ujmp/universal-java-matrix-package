@@ -50,7 +50,7 @@ public class Prod extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double prod = 1;
 
 		if (ignoreNaN) {

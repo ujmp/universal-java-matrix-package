@@ -36,11 +36,10 @@ public class InvAction extends AbstractMatrixAction {
 	public InvAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Inverse");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the inverse of a matrix if possible");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the inverse of a matrix if possible");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().inv();
 		result.showGUI();
 		return result;

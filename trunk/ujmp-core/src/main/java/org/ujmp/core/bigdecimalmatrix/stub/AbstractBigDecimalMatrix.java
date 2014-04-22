@@ -25,40 +25,31 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 
 import java.math.BigDecimal;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.numbermatrix.stub.AbstractNumberMatrix;
 
-public abstract class AbstractBigDecimalMatrix extends AbstractGenericMatrix<BigDecimal> implements
+public abstract class AbstractBigDecimalMatrix extends AbstractNumberMatrix<BigDecimal> implements
 		BigDecimalMatrix {
 	private static final long serialVersionUID = 499221768058489393L;
 
-	public AbstractBigDecimalMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractBigDecimalMatrix() {
-		super();
-	}
-
-	public AbstractBigDecimalMatrix(long... size) {
+	public AbstractBigDecimalMatrix(long[] size) {
 		super(size);
 	}
 
-	public final BigDecimal getObject(long... coordinates)  {
+	public final BigDecimal getObject(long... coordinates) {
 		return getBigDecimal(coordinates);
 	}
 
-	public final void setObject(BigDecimal o, long... coordinates)  {
+	public final void setObject(BigDecimal o, long... coordinates) {
 		setBigDecimal(o, coordinates);
 	}
 
-	public final BigDecimal getAsBigDecimal(long... coordinates)  {
+	public final BigDecimal getAsBigDecimal(long... coordinates) {
 		return getBigDecimal(coordinates);
 	}
 
-	public final void setAsBigDecimal(BigDecimal value, long... coordinates)  {
+	public final void setAsBigDecimal(BigDecimal value, long... coordinates) {
 		setBigDecimal(value, coordinates);
 	}
 

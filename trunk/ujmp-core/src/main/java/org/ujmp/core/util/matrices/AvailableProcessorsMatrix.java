@@ -23,12 +23,15 @@
 
 package org.ujmp.core.util.matrices;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class AvailableProcessorsMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3768846722489359117L;
 
 	public AvailableProcessorsMatrix() {
+		super(new long[] { 1, 1 });
 		setLabel("Available Processors");
 	}
 
@@ -50,9 +53,12 @@ public class AvailableProcessorsMatrix extends AbstractDenseIntMatrix2D {
 	public void setInt(int value, int row, int column) {
 	}
 
-	
 	public boolean isReadOnly() {
 		return true;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

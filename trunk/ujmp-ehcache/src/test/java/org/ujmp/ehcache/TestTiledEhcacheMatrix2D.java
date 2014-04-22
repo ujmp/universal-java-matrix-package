@@ -30,7 +30,7 @@ import org.ujmp.core.Matrix;
 public class TestTiledEhcacheMatrix2D { // extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws Exception {
-		return new EhcacheTiledObjectMatrix2D(size);
+		return new EhcacheTiledObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
 	public Matrix createMatrix(Matrix source) throws Exception {
@@ -44,5 +44,5 @@ public class TestTiledEhcacheMatrix2D { // extends AbstractMatrixTest {
 	@Test
 	public void test() {
 	}
-	
+
 }

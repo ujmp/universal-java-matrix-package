@@ -39,7 +39,7 @@ public abstract class ImportMatrixTXT extends ImportMatrixCSV {
 	//
 	// public static final Matrix fromReader(Reader reader, Object...
 	// parameters)
-	//  {
+	// {
 	// return MatrixFactory.linkToValue(IntelligentFileReader.load(reader));
 	// }
 

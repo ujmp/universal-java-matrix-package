@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface FloatCalculation extends Calculation {
 
-	public float getFloat(long... coordinates) ;
+	public float getFloat(long... coordinates);
 
-	public void setFloat(float value, long... coordinates) ;
+	public void setFloat(float value, long... coordinates);
 
 }

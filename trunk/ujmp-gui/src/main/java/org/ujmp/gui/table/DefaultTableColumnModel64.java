@@ -13,7 +13,7 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultTableColumnModel64 extends DefaultTableColumnModel implements TableColumnModel64 {
 	private static final long serialVersionUID = 6012896374236252508L;
 
-	public static final int COLUMNWIDTH = 50;
+	public static final int COLUMNWIDTH = 80;
 
 	private final TableModel64 tableModel64;
 

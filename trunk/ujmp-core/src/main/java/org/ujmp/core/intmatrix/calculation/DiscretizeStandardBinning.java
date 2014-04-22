@@ -40,7 +40,7 @@ public class DiscretizeStandardBinning extends AbstractIntCalculation {
 		this.numberOfBins = numberOfBins;
 	}
 
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		if (min == null || max == null) {
 			calculate();
 		}

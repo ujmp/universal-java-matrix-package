@@ -24,23 +24,12 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.DenseCharMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
 public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix implements DenseCharMatrix {
 	private static final long serialVersionUID = 2417103022320228350L;
 
-	public AbstractDenseCharMatrix() {
-		super();
-	}
-
-	public AbstractDenseCharMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseCharMatrix(long... size) {
+	public AbstractDenseCharMatrix(long[] size) {
 		super(size);
 	}
 
@@ -48,7 +37,4 @@ public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix impleme
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
-	}
 }

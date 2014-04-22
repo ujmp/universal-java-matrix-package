@@ -23,14 +23,7 @@
 
 package org.ujmp.core.booleanmatrix.factory;
 
-import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
-
 public abstract class AbstractBooleanMatrix2DFactory implements BooleanMatrix2DFactory {
 	private static final long serialVersionUID = -9208052531077534453L;
-
-	
-	public BooleanMatrix2D zeros(long rows, long columns)  {
-		return dense(rows, columns);
-	}
 
 }

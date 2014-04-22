@@ -27,21 +27,19 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorCharArray1D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implements
 		HasColumnMajorCharArray1D {
 	private static final long serialVersionUID = 5579846181111172177L;
 
-	private char[] values = null;
+	private final char[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseCharMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseCharMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -57,15 +55,16 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		}
 	}
 
-	public DefaultDenseCharMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
+	public DefaultDenseCharMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
 		this.size = new long[] { rows, cols };
 		this.values = new char[rows * cols];
 	}
 
 	public DefaultDenseCharMatrix2D(char[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -132,7 +131,7 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		char[] result = new char[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseCharMatrix2D(result, rows, cols);
@@ -154,6 +153,10 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 
 	public char[] getColumnMajorCharArray1D() {
 		return values;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

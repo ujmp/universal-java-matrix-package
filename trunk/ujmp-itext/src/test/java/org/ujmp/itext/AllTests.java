@@ -27,6 +27,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { org.ujmp.itext.TestExportPDF.class })
-public class AllTests {
+@Suite.SuiteClasses({ org.ujmp.itext.TestExportPDF.class })
+public abstract class AllTests {
 }

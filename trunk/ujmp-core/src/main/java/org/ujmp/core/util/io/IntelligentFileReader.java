@@ -197,9 +197,9 @@ public class IntelligentFileReader extends Reader {
 
 	public static byte[] readBytes(File file) {
 		try {
-			VerifyUtil.assertNotNull(file, "file is null");
-			VerifyUtil.assertFalse(file.isDirectory(), "file is a directory");
-			VerifyUtil.assertTrue(file.canRead(), "cannot read from file");
+			VerifyUtil.verifyNotNull(file, "file is null");
+			VerifyUtil.verifyFalse(file.isDirectory(), "file is a directory");
+			VerifyUtil.verifyTrue(file.canRead(), "cannot read from file");
 			byte[] data = new byte[(int) file.length()];
 			FileInputStream fi = new FileInputStream(file);
 			BufferedInputStream bi = new BufferedInputStream(fi);

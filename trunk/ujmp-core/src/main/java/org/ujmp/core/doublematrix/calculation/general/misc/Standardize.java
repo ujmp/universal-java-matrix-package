@@ -38,7 +38,7 @@ public class Standardize extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (center == null) {
 			center = new Center(true, getDimension(), getSource()).calcNew();
 		}

@@ -37,14 +37,11 @@ public class MeanAction extends AbstractMatrixAction {
 	public MeanAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Mean");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the mean of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the mean of the entries in this matrix");
 	}
 
-	
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().mean(Ret.NEW,
-				getDimension(), getIgnoreMissing());
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().mean(Ret.NEW, getDimension(), getIgnoreMissing());
 		result.showGUI();
 		return result;
 	}

@@ -25,14 +25,15 @@ package org.ujmp.core.floatmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	private static final long serialVersionUID = 6599658021180126741L;
 
-	private float[][] values = null;
+	private final float[][] values;
 
-	public ArrayDenseFloatMatrix2D(Matrix m)  {
-		super(m);
+	public ArrayDenseFloatMatrix2D(Matrix m) {
+		super(m.getSize());
 		if (m instanceof ArrayDenseFloatMatrix2D) {
 			float[][] v = ((ArrayDenseFloatMatrix2D) m).values;
 			this.values = new float[v.length][v[0].length];
@@ -50,6 +51,7 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	}
 
 	public ArrayDenseFloatMatrix2D(float[]... v) {
+		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
@@ -59,6 +61,7 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	}
 
 	public ArrayDenseFloatMatrix2D(float[] v) {
+		super(new long[] { v.length, 1 });
 		this.values = new float[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
@@ -101,6 +104,10 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 			}
 		}
 		return new ArrayDenseFloatMatrix2D(result);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

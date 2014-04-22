@@ -26,6 +26,7 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasRowMajorDoubleArray2D {
@@ -33,8 +34,8 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	private final double[][] values;
 
-	public ArrayDenseDoubleMatrix2D(Matrix m)  {
-		super(m);
+	public ArrayDenseDoubleMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		if (m instanceof ArrayDenseDoubleMatrix2D) {
 			double[][] v = ((ArrayDenseDoubleMatrix2D) m).values;
 			this.values = new double[v.length][v[0].length];
@@ -49,22 +50,23 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setAsDouble(m.getAsDouble(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
 	public ArrayDenseDoubleMatrix2D(double[]... v) {
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseDoubleMatrix2D(long... size) {
-		super(size);
-		values = new double[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
 	public ArrayDenseDoubleMatrix2D(long rows, long cols) {
+		super(rows, cols);
 		values = new double[(int) rows][(int) cols];
 	}
 
 	public ArrayDenseDoubleMatrix2D(double[] v) {
+		super(v.length, 1);
 		this.values = new double[v.length][1];
 		for (int r = v.length; --r != -1;) {
 			values[r][0] = v[r];
@@ -99,7 +101,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		values[row][column] = value;
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		double[][] result = new double[values.length][values[0].length];
 		for (int r = result.length; --r != -1;) {
 			for (int c = result[0].length; --c != -1;) {
@@ -128,4 +130,7 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return values;
 	}
 
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

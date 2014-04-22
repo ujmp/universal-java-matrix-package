@@ -23,14 +23,10 @@
 
 package org.ujmp.core.booleanmatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 
-public interface BooleanMatrix2DFactory extends Serializable {
-
-	public BooleanMatrix2D dense(long rows, long columns) ;
-
-	public BooleanMatrix2D zeros(long rows, long columns) ;
+public interface BooleanMatrix2DFactory<T extends BooleanMatrix2D> extends
+		GenericMatrix2DFactory<T>, BooleanMatrixFactory<T> {
 
 }

@@ -34,12 +34,11 @@ public class ToBigDecimalMatrix extends AbstractBigDecimalCalculation {
 		super(matrix);
 	}
 
-	
-	public BigDecimal getBigDecimal(long... coordinates)  {
+	public BigDecimal getBigDecimal(long... coordinates) {
 		return getSource().getAsBigDecimal(coordinates);
 	}
 
-	public void setBigDecimal(BigDecimal value, long coordinates)  {
+	public void setBigDecimal(BigDecimal value, long coordinates) {
 		getSource().setAsBigDecimal(value, coordinates);
 	}
 

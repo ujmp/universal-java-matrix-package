@@ -34,7 +34,7 @@ import org.ujmp.core.stringmatrix.calculation.ReplaceRegex;
 
 public class TestReplaceRegex {
 
-	private static Matrix getTestMatrix()  {
+	private static Matrix getTestMatrix() {
 		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("aabbcabd", 0, 0);
 		m.setAsString(null, 0, 1);
@@ -43,7 +43,7 @@ public class TestReplaceRegex {
 		return m;
 	}
 
-	private static Matrix getResultMatrix()  {
+	private static Matrix getResultMatrix() {
 		Matrix m = Matrix.Factory.zeros(ValueType.STRING, 2, 2);
 		m.setAsString("afgrbcfgrd", 0, 0);
 		m.setAsString(null, 0, 1);
@@ -53,7 +53,7 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testConstructor1()  {
+	public void testConstructor1() {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, "ab", "fgr");
 		Matrix resultMatrix = ra.calc(Ret.NEW);
@@ -61,7 +61,7 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testConstructor2()  {
+	public void testConstructor2() {
 		Matrix matrix = getTestMatrix();
 		ReplaceRegex ra = new ReplaceRegex(matrix, Pattern.compile("ab"), "fgr");
 		Matrix resultMatrix = ra.calc(Ret.NEW);
@@ -69,14 +69,14 @@ public class TestReplaceRegex {
 	}
 
 	@Test
-	public void testCalc1()  {
+	public void testCalc1() {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, "ab", "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);
 	}
 
 	@Test
-	public void testCalc2()  {
+	public void testCalc2() {
 		Matrix matrix = getTestMatrix();
 		Matrix resultMatrix = ReplaceRegex.calc(matrix, Pattern.compile("ab"), "fgr");
 		Assert.assertEquals(getResultMatrix(), resultMatrix);

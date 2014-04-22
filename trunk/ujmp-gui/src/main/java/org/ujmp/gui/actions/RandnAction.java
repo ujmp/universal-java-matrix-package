@@ -38,14 +38,12 @@ public class RandnAction extends AbstractMatrixAction {
 	public RandnAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Randn");
-		putValue(Action.SHORT_DESCRIPTION,
-				"set entries to gaussian values with mean 0.0 and variance 1.0");
+		putValue(Action.SHORT_DESCRIPTION, "set entries to gaussian values with mean 0.0 and variance 1.0");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_G);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		m.getMatrix().randn(getRet());
 		return m;

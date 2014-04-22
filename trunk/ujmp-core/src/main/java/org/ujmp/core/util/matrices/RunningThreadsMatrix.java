@@ -35,6 +35,8 @@ import java.util.TimerTask;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.GlobalTimer;
 
 public class RunningThreadsMatrix extends AbstractMapMatrix<Object, Object> {
@@ -61,6 +63,10 @@ public class RunningThreadsMatrix extends AbstractMapMatrix<Object, Object> {
 
 	public MapMatrix<Object, Object> clone() {
 		return new RunningThreadsMatrix();
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

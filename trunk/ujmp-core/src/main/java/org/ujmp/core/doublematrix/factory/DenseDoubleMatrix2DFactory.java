@@ -24,8 +24,8 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+import org.ujmp.core.numbermatrix.factory.DenseNumberMatrix2DFactory;
 
 public interface DenseDoubleMatrix2DFactory<T extends DenseDoubleMatrix2D> extends
-		DenseMatrix2DFactory<T>, DenseDoubleMatrixFactory<T>, DoubleMatrix2DFactory<T> {
+		DenseNumberMatrix2DFactory<T>, DenseDoubleMatrixFactory<T>, DoubleMatrix2DFactory<T> {
 }

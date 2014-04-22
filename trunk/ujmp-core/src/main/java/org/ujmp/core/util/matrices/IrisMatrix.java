@@ -23,12 +23,15 @@
 
 package org.ujmp.core.util.matrices;
 
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 
 public class IrisMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = -5331566135586871374L;
 
-	private final String[][] data = new String[][] { { "5.1", "3.5", "1.4", "0.2", "Iris-setosa" },
+	private static final String[][] data = new String[][] {
+			{ "5.1", "3.5", "1.4", "0.2", "Iris-setosa" },
 			{ "4.9", "3.0", "1.4", "0.2", "Iris-setosa" },
 			{ "4.7", "3.2", "1.3", "0.2", "Iris-setosa" },
 			{ "4.6", "3.1", "1.5", "0.2", "Iris-setosa" },
@@ -180,6 +183,7 @@ public class IrisMatrix extends AbstractDenseStringMatrix2D {
 			{ "5.9", "3.0", "5.1", "1.8", "Iris-virginica" } };
 
 	public IrisMatrix() {
+		super(data.length, data[0].length);
 		setLabel("Iris flower data set");
 		setColumnLabel(0, "Sepal Length");
 		setColumnLabel(1, "Sepal Width");
@@ -199,4 +203,7 @@ public class IrisMatrix extends AbstractDenseStringMatrix2D {
 		return new long[] { data.length, data[0].length };
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

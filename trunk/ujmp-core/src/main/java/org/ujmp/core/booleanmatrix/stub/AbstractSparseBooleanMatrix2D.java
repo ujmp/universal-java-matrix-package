@@ -24,14 +24,15 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.SparseBooleanMatrix2D;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBooleanMatrix implements
 		SparseBooleanMatrix2D {
-
 	private static final long serialVersionUID = -1162771712274772327L;
+
+	public AbstractSparseBooleanMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -45,24 +46,20 @@ public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBoolea
 		setBoolean(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final Boolean getObject(long row, long column)  {
+	public final Boolean getObject(long row, long column) {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, long row, long column)  {
+	public final void setObject(Boolean o, long row, long column) {
 		setBoolean(o, row, column);
 	}
 
-	public final Boolean getObject(int row, int column)  {
+	public final Boolean getObject(int row, int column) {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, int row, int column)  {
+	public final void setObject(Boolean o, int row, int column) {
 		setBoolean(o, row, column);
-	}
-
-	public SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
 	}
 
 }

@@ -23,12 +23,7 @@
 
 package org.ujmp.core.genericmatrix;
 
-import org.ujmp.core.Matrix;
-
-public interface GenericMatrix<A> extends Matrix {
-
-	public A getObject(long... coordinates) ;
-
-	public void setObject(A value, long... coordinates);
+public interface GenericMatrix<T> extends DenseGenericMatrix2D<T>, DenseGenericMatrixMultiD<T>,
+		SparseGenericMatrix2D<T>, SparseGenericMatrixMultiD<T> {
 
 }

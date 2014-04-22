@@ -33,11 +33,11 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 		IntMatrix {
 	private static final long serialVersionUID = 7865221689702604727L;
 
-	public DefaultSparseIntMatrix(Matrix m)  {
+	public DefaultSparseIntMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseIntMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseIntMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -49,18 +49,15 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}
 
-	
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		return MathUtil.getInt(getObject(coordinates));
 	}
 
-	
-	public void setInt(int value, long... coordinates)  {
+	public void setInt(int value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

@@ -28,11 +28,11 @@ import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 
 public class TestDefaultSparseDoubleMatrix extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
+	public Matrix createMatrix(long... size) {
 		return new DefaultSparseDoubleMatrix(size);
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new DefaultSparseDoubleMatrix(source);
 	}
 
@@ -40,4 +40,11 @@ public class TestDefaultSparseDoubleMatrix extends AbstractMatrixTest {
 		return false;
 	}
 
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
 }

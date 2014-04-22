@@ -36,7 +36,7 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix round(Ret returnType) ;
+	public Matrix round(Ret returnType);
 
 	/**
 	 * Returns a matrix with all entries rounded down to the next integer. The
@@ -47,7 +47,7 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix floor(Ret returnType) ;
+	public Matrix floor(Ret returnType);
 
 	/**
 	 * Returns a matrix with all entries rounded up to the next integer. The
@@ -58,6 +58,6 @@ public interface RoundingDoubleCalculations {
 	 *            operation is performed on the original Matrix
 	 * @return Matrix with rounded values
 	 */
-	public Matrix ceil(Ret returnType) ;
+	public Matrix ceil(Ret returnType);
 
 }

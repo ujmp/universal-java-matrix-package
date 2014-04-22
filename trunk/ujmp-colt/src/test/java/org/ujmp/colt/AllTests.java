@@ -28,5 +28,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ TestColtDenseDoubleMatrix2D.class, TestColtSparseDoubleMatrix2D.class })
-public class AllTests {
+public abstract class AllTests {
 }

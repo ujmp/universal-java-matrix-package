@@ -37,12 +37,10 @@ public class PairedTTestAction extends AbstractMatrixAction {
 	public PairedTTestAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Paired T-Test");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a paired t-test for this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a paired t-test for this matrix");
 	}
 
-	
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().pairedTTest(Ret.NEW);
 		result.showGUI();
 		return result;

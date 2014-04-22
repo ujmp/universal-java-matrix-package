@@ -32,12 +32,11 @@ public class ToCharMatrix extends AbstractCharCalculation {
 		super(matrix);
 	}
 
-	
-	public char getChar(long... coordinates)  {
+	public char getChar(long... coordinates) {
 		return getSource().getAsChar(coordinates);
 	}
 
-	public void setChar(char value, long coordinates)  {
+	public void setChar(char value, long coordinates) {
 		getSource().setAsChar(value, coordinates);
 	}
 

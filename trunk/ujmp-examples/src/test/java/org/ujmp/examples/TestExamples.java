@@ -45,11 +45,6 @@ public class TestExamples {
 	}
 
 	@Test
-	public void testHugeFileMatrixOnDisk() throws Exception {
-		BigDenseMatrixOnDiskExample.main(args);
-	}
-
-	@Test
 	public void testHugeSparseMatrix() throws Exception {
 		BigSparseMatrixExample.main(args);
 	}
@@ -66,7 +61,7 @@ public class TestExamples {
 
 	@Test
 	public void testSimilarityMatrix() throws Exception {
-		SimilarityMatrixExample.main(args);
+		CosineSimilarityMatrixExample.main(args);
 	}
 
 	@Test

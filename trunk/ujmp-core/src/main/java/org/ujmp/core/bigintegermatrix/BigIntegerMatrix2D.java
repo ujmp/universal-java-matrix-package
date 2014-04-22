@@ -25,13 +25,9 @@ package org.ujmp.core.bigintegermatrix;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.bigintegermatrix.factory.BigIntegerMatrix2DFactory;
-import org.ujmp.core.bigintegermatrix.factory.DefaultBigIntegerMatrix2DFactory;
-import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.numbermatrix.NumberMatrix2D;
 
-public interface BigIntegerMatrix2D extends BigIntegerMatrix, GenericMatrix2D<BigInteger> {
-
-	public static BigIntegerMatrix2DFactory factory = new DefaultBigIntegerMatrix2DFactory();
+public interface BigIntegerMatrix2D extends BaseBigIntegerMatrix, NumberMatrix2D<BigInteger> {
 
 	public BigInteger getBigInteger(long row, long column);
 

@@ -37,16 +37,16 @@ public class Power extends AbstractDoubleCalculation {
 		}
 	}
 
-	public Power(Matrix m1, double v2)  {
+	public Power(Matrix m1, double v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return Math.pow(getSource().getAsDouble(coordinates),
 				getSources()[1].getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source, Matrix power)  {
+	public static Matrix calc(Matrix source, Matrix power) {
 		if (power.isScalar() && !Coordinates.equals(source.getSize(), power.getSize())) {
 			power = Matrix.Factory.fill(power.getAsDouble(0, 0), source.getSize());
 		}
@@ -57,7 +57,7 @@ public class Power extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Matrix source, double power)  {
+	public static Matrix calc(Matrix source, double power) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.pow(source.getAsDouble(c), power), c);

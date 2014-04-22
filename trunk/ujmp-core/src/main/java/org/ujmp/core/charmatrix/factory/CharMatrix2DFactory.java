@@ -23,14 +23,10 @@
 
 package org.ujmp.core.charmatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.charmatrix.CharMatrix2D;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 
-public interface CharMatrix2DFactory extends Serializable {
-
-	public CharMatrix2D dense(long rows, long columns) ;
-
-	public CharMatrix2D zeros(long rows, long columns) ;
+public interface CharMatrix2DFactory<T extends CharMatrix2D> extends GenericMatrix2DFactory<T>,
+		CharMatrixFactory<T> {
 
 }

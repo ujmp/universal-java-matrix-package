@@ -44,7 +44,7 @@ public class Mtimes extends AbstractDoubleCalculation {
 		super();
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		final Matrix m1 = getSources()[0];
 		final Matrix m2 = getSources()[1];
 

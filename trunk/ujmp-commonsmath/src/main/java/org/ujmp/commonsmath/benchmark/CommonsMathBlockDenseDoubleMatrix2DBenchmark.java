@@ -31,11 +31,11 @@ import org.ujmp.core.doublematrix.DoubleMatrix2D;
 
 public class CommonsMathBlockDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size)  {
+	public DoubleMatrix2D createMatrix(long... size) {
 		return new CommonsMathBlockDenseDoubleMatrix2D(size);
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return new CommonsMathBlockDenseDoubleMatrix2D(source);
 	}
 

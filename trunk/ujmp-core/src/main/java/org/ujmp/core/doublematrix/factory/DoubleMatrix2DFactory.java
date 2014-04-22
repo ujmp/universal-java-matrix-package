@@ -24,10 +24,10 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.matrix.factory.Matrix2DFactory;
+import org.ujmp.core.numbermatrix.factory.NumberMatrix2DFactory;
 
-public interface DoubleMatrix2DFactory<T extends DoubleMatrix2D> extends Matrix2DFactory<T>,
-		DoubleMatrixFactory<T> {
+public interface DoubleMatrix2DFactory<T extends DoubleMatrix2D> extends NumberMatrix2DFactory<T>,
+		BaseDoubleMatrixFactory<T> {
 
 	public T ones(final long rows, final long cols);
 

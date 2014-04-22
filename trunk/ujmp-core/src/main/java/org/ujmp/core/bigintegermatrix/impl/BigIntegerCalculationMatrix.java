@@ -25,15 +25,18 @@ package org.ujmp.core.bigintegermatrix.impl;
 
 import java.math.BigInteger;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.calculation.BigIntegerCalculation;
 import org.ujmp.core.bigintegermatrix.stub.AbstractBigIntegerMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 	private static final long serialVersionUID = 311922117437271156L;
 
-	private BigIntegerCalculation calculation = null;
+	private final BigIntegerCalculation calculation;
 
 	public BigIntegerCalculationMatrix(BigIntegerCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -57,12 +60,20 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 		}
 	}
 
-	public BigInteger getBigInteger(long... coordinates)  {
+	public BigInteger getBigInteger(long... coordinates) {
 		return calculation.getBigInteger(coordinates);
 	}
 
-	public void setBigInteger(BigInteger value, long... coordinates)  {
+	public void setBigInteger(BigInteger value, long... coordinates) {
 		calculation.setBigInteger(value, coordinates);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+	
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

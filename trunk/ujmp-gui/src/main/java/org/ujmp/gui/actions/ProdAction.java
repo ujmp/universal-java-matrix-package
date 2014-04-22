@@ -36,13 +36,11 @@ public class ProdAction extends AbstractMatrixAction {
 	public ProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Prod");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the product between each two rows in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "calculates the product between each two rows in this matrix");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(),
-				getDimension(), getIgnoreMissing());
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(), getDimension(), getIgnoreMissing());
 		m.showGUI();
 		return m;
 	}

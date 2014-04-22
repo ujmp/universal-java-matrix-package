@@ -43,7 +43,6 @@ public class ExitAction extends AbstractObjectAction {
 		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_DOWN_MASK));
 	}
 
-	
 	public Object call() {
 		System.exit(0);
 		return null;

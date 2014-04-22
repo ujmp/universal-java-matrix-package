@@ -25,6 +25,8 @@ package org.ujmp.core.collections;
 
 import java.util.Set;
 
+import org.ujmp.core.collections.composite.SortedListSet;
+
 public class TestSortedListSet extends AbstractStringSetTest {
 
 	public Set<String> createSet() throws Exception {

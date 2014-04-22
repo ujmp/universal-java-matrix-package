@@ -34,8 +34,7 @@ public class FadeOut extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double factor = 0.0;
 		switch (getDimension()) {
 		case Matrix.COLUMN:

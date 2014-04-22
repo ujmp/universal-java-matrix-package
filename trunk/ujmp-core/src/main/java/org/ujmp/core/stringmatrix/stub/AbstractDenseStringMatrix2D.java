@@ -23,12 +23,10 @@
 
 package org.ujmp.core.stringmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
 import org.ujmp.core.stringmatrix.factory.StringMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMatrix implements
 		DenseStringMatrix2D {
@@ -36,17 +34,8 @@ public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMat
 
 	public static StringMatrix2DFactory factory = new DefaultStringMatrix2DFactory();
 
-	public AbstractDenseStringMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseStringMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseStringMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseStringMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
 	public Iterable<long[]> allCoordinates() {

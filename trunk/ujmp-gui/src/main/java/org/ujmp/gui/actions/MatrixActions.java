@@ -37,8 +37,10 @@ public class MatrixActions extends ArrayList<JComponent> {
 	private static final long serialVersionUID = -8960033736161810590L;
 
 	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
-		add(new JMenuItem(new NewMatrixAction(c, m)));
-		add(new JMenuItem(new SaveMatrixAction(c, m)));
+		add(new JMenuItem(new CutToClipboardAction(c, m, v)));
+		add(new JMenuItem(new CopyToClipboardAction(c, m, v)));
+		add(new JSeparator());
+		add(new JMenuItem(new ExportMatrixAction(c, m)));
 		add(new JSeparator());
 		add(new JMenuItem(new DuplicateAction(c, m, v)));
 		add(new JMenuItem(new ConvertAction(c, m, v)));

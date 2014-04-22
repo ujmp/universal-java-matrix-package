@@ -29,11 +29,11 @@ import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 
 public class ArrayDenseDoubleMatrix2DBenchmark extends AbstractMatrix2DBenchmark {
 
-	public DoubleMatrix2D createMatrix(long... size)  {
-		return new ArrayDenseDoubleMatrix2D(size);
+	public DoubleMatrix2D createMatrix(long... size) {
+		return new ArrayDenseDoubleMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
-	public DoubleMatrix2D createMatrix(Matrix source)  {
+	public DoubleMatrix2D createMatrix(Matrix source) {
 		return new ArrayDenseDoubleMatrix2D(source);
 	}
 

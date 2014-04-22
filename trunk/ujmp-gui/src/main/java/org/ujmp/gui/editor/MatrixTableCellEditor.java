@@ -38,7 +38,6 @@ public class MatrixTableCellEditor extends DefaultCellEditor {
 		delegate = new EditorDelegate() {
 			private static final long serialVersionUID = 3595116301664542217L;
 
-			
 			public void setValue(Object value) {
 				String text = "";
 				if (value != null) {
@@ -47,13 +46,11 @@ public class MatrixTableCellEditor extends DefaultCellEditor {
 				((JTextField) editorComponent).setText(text);
 			}
 
-			
 			public Object getCellEditorValue() {
 				String text = ((JTextField) editorComponent).getText();
 				return text;
 			}
 
-			
 			public boolean shouldSelectCell(EventObject anEvent) {
 				((JTextField) editorComponent).selectAll();
 				return super.shouldSelectCell(anEvent);
@@ -61,7 +58,6 @@ public class MatrixTableCellEditor extends DefaultCellEditor {
 		};
 	}
 
-	
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		delegate.setValue(value);
 		((JTextField) editorComponent).selectAll();

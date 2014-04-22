@@ -28,9 +28,7 @@ import org.ejml.ops.CovarianceOps;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
-public class InvSPD
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
+public class InvSPD implements org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
 
 	public static InvSPD INSTANCE = new InvSPD();
 

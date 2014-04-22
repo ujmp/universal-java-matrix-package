@@ -55,7 +55,7 @@ public class SubMatrix extends AbstractObjectCalculation {
 		tmpCoordinates = new long[maxTmpCoordinates][size.length];
 	}
 
-	public Object getObject(final long... coordinates)  {
+	public Object getObject(final long... coordinates) {
 		runningId = ++runningId >= maxTmpCoordinates ? 0 : runningId;
 		return getSource().getAsObject(
 				Coordinates.plus(tmpCoordinates[runningId], coordinates, min));
@@ -65,7 +65,7 @@ public class SubMatrix extends AbstractObjectCalculation {
 		return size;
 	}
 
-	public void setObject(final Object value, final long... coordinates)  {
+	public void setObject(final Object value, final long... coordinates) {
 		runningId = ++runningId >= maxTmpCoordinates ? 0 : runningId;
 		getSource().setAsObject(value,
 				Coordinates.plus(tmpCoordinates[runningId], coordinates, min));

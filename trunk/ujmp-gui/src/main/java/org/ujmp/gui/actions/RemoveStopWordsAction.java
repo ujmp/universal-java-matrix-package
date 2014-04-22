@@ -36,11 +36,9 @@ import org.ujmp.gui.MatrixGUIObject;
 public class RemoveStopWordsAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -8691068224220738712L;
 
-	public static final String[] ENGLISH_STOP_WORDS = { "a", "an", "and",
-			"are", "as", "at", "be", "but", "by", "for", "if", "in", "into",
-			"is", "it", "no", "not", "of", "on", "or", "such", "that", "the",
-			"their", "then", "there", "these", "they", "this", "to", "was",
-			"will", "with" };
+	public static final String[] ENGLISH_STOP_WORDS = { "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
+			"if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then",
+			"there", "these", "they", "this", "to", "was", "will", "with" };
 
 	public RemoveStopWordsAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
@@ -48,7 +46,7 @@ public class RemoveStopWordsAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "remove stop words from strings");
 	}
 
-	public Object call()  {
+	public Object call() {
 		List<String> list = new ArrayList<String>();
 		for (String s : ENGLISH_STOP_WORDS) {
 			list.add(s);

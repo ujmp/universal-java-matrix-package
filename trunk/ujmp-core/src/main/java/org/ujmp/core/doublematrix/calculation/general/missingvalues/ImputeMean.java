@@ -37,7 +37,7 @@ public class ImputeMean extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (mean == null) {
 			mean = new Mean(getDimension(), true, getSource()).calcNew();
 		}

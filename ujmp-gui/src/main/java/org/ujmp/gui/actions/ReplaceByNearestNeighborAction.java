@@ -35,18 +35,15 @@ import org.ujmp.gui.util.GUIUtil;
 public class ReplaceByNearestNeighborAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -2401692333851059830L;
 
-	public ReplaceByNearestNeighborAction(JComponent c, MatrixGUIObject m,
-			GUIObject v) {
+	public ReplaceByNearestNeighborAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Replace by nearest neighbor");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Replaces all missing values with the nearest neighbor");
+		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the nearest neighbor");
 	}
 
-	
-	public Object call()  {
-		Matrix m = new ImputeKNN(getMatrixObject().getMatrix(), GUIUtil.getInt(
-				"Number of neighbors", 1, 100)).calc(getOrigOrNew());
+	public Object call() {
+		Matrix m = new ImputeKNN(getMatrixObject().getMatrix(), GUIUtil.getInt("Number of neighbors", 1, 100))
+				.calc(getOrigOrNew());
 		m.showGUI();
 		return m;
 	}

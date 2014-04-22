@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.util.MathUtil;
 
@@ -48,9 +48,10 @@ public class AddMissing extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (missingValues == null) {
-			missingValues = SparseMatrix.factory.zeros(getSource().getSize());
+			missingValues = SparseDoubleMatrix2D.Factory.zeros(getSource().getRowCount(),
+					getSource().getColumnCount());
 
 			switch (getDimension()) {
 			case ALL:

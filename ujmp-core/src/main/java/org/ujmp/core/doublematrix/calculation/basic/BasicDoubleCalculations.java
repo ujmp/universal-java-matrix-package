@@ -35,7 +35,7 @@ public interface BasicDoubleCalculations {
 	 *            the value to add
 	 * @return Matrix with the entries plus the value
 	 */
-	public Matrix plus(double value) ;
+	public Matrix plus(double value);
 
 	/**
 	 * Calculates the sum of the entries in both matrices
@@ -44,7 +44,7 @@ public interface BasicDoubleCalculations {
 	 *            The matrix to add
 	 * @return matrix with sum values
 	 */
-	public Matrix plus(Matrix matrix) ;
+	public Matrix plus(Matrix matrix);
 
 	/**
 	 * Subtracts a specified value from all entries in the matrix.
@@ -53,7 +53,7 @@ public interface BasicDoubleCalculations {
 	 *            the value to subtract
 	 * @return Matrix with the entries minus the value
 	 */
-	public Matrix minus(double value) ;
+	public Matrix minus(double value);
 
 	/**
 	 * Subtracts a specified value from all entries in the matrix.
@@ -66,7 +66,7 @@ public interface BasicDoubleCalculations {
 	 *            the value to subtract
 	 * @return Matrix with the entries minus the value
 	 */
-	public Matrix minus(Ret returnType, boolean ignoreNaN, double value) ;
+	public Matrix minus(Ret returnType, boolean ignoreNaN, double value);
 
 	/**
 	 * Calculates the difference of the entries in both matrices
@@ -79,7 +79,7 @@ public interface BasicDoubleCalculations {
 	 *            The matrix to subtract
 	 * @return matrix with difference values
 	 */
-	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix matrix) ;
+	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix matrix);
 
 	/**
 	 * Adds a specified value from all entries in the matrix.
@@ -92,7 +92,7 @@ public interface BasicDoubleCalculations {
 	 *            the value to subtract
 	 * @return Matrix with the entries plus the value
 	 */
-	public Matrix plus(Ret returnType, boolean ignoreNaN, double value) ;
+	public Matrix plus(Ret returnType, boolean ignoreNaN, double value);
 
 	/**
 	 * Calculates the sum of the entries in both matrices
@@ -105,7 +105,7 @@ public interface BasicDoubleCalculations {
 	 *            The matrix to subtract
 	 * @return matrix with sum values
 	 */
-	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix matrix) ;
+	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix matrix);
 
 	/**
 	 * Calculates the difference of the entries in both matrices
@@ -114,7 +114,7 @@ public interface BasicDoubleCalculations {
 	 *            The matrix to subtract
 	 * @return matrix with difference values
 	 */
-	public Matrix minus(Matrix matrix) ;
+	public Matrix minus(Matrix matrix);
 
 	/**
 	 * Calculates the entrywise product of the two matrices.
@@ -123,7 +123,7 @@ public interface BasicDoubleCalculations {
 	 *            the second matrix
 	 * @return matrix with product of all entries
 	 */
-	public Matrix times(Matrix matrix) ;
+	public Matrix times(Matrix matrix);
 
 	/**
 	 * Multiplies every entry in the matrix with a scalar.
@@ -132,7 +132,7 @@ public interface BasicDoubleCalculations {
 	 *            factor to multiply with
 	 * @return Matrix with all entries multiplied by a factor.
 	 */
-	public Matrix times(double value) ;
+	public Matrix times(double value);
 
 	/**
 	 * Multiplies every entry in the matrix with a scalar.
@@ -145,7 +145,7 @@ public interface BasicDoubleCalculations {
 	 *            factor to multiply with
 	 * @return Matrix with all entries multiplied by a factor.
 	 */
-	public Matrix times(Ret returnType, boolean ignoreNaN, double value) ;
+	public Matrix times(Ret returnType, boolean ignoreNaN, double value);
 
 	/**
 	 * Multiplies every entry in the matrix with the entries of another Matrix.
@@ -158,7 +158,7 @@ public interface BasicDoubleCalculations {
 	 *            factor to multiply with
 	 * @return Matrix with all entries multiplied by a factor.
 	 */
-	public Matrix times(Ret returnType, boolean ignoreNaN, Matrix value) ;
+	public Matrix times(Ret returnType, boolean ignoreNaN, Matrix value);
 
 	/**
 	 * Calculates an entrywise division of the two matrices.
@@ -167,7 +167,7 @@ public interface BasicDoubleCalculations {
 	 *            the second matrix
 	 * @return matrix with all entries divided by the second matrix's entry.
 	 */
-	public Matrix divide(Matrix matrix) ;
+	public Matrix divide(Matrix matrix);
 
 	/**
 	 * Divides every entry in the matrix by a scalar.
@@ -176,7 +176,7 @@ public interface BasicDoubleCalculations {
 	 *            factor by which to divide
 	 * @return Matrix with all entries divided by a factor.
 	 */
-	public Matrix divide(double value) ;
+	public Matrix divide(double value);
 
 	/**
 	 * Divides every entry in the matrix by a scalar.
@@ -190,7 +190,7 @@ public interface BasicDoubleCalculations {
 	 * 
 	 * @return Matrix with all entries divided by a factor.
 	 */
-	public Matrix divide(Ret returnType, boolean ignoreNaN, double value) ;
+	public Matrix divide(Ret returnType, boolean ignoreNaN, double value);
 
 	/**
 	 * Divides every entry in the matrix by the entries of another matrix.
@@ -204,7 +204,7 @@ public interface BasicDoubleCalculations {
 	 * 
 	 * @return Matrix with all entries divided by a factor.
 	 */
-	public Matrix divide(Ret returnType, boolean ignoreNaN, Matrix value) ;
+	public Matrix divide(Ret returnType, boolean ignoreNaN, Matrix value);
 
 	/**
 	 * Performs a matrix multiplication on the two matrices. The matrices must
@@ -214,7 +214,7 @@ public interface BasicDoubleCalculations {
 	 *            the second matrix
 	 * @return Matrix product
 	 */
-	public Matrix mtimes(Matrix matrix) ;
+	public Matrix mtimes(Matrix matrix);
 
 	/**
 	 * Performs a matrix multiplication on the two matrices. The matrices must
@@ -228,7 +228,7 @@ public interface BasicDoubleCalculations {
 	 *            the second matrix
 	 * @return Matrix product
 	 */
-	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) ;
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix);
 
 	/**
 	 * Equal to times()
@@ -237,7 +237,7 @@ public interface BasicDoubleCalculations {
 	 *            the value
 	 * @return Matrix product
 	 */
-	public Matrix mtimes(double value) ;
+	public Matrix mtimes(double value);
 
 	/**
 	 * Equal to times()
@@ -250,7 +250,7 @@ public interface BasicDoubleCalculations {
 	 *            the value to multiply
 	 * @return Matrix product
 	 */
-	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value) ;
+	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value);
 
 	/**
 	 * Performs an averaging matrix multiplication on the two matrices. The
@@ -264,6 +264,6 @@ public interface BasicDoubleCalculations {
 	 *            the second matrix
 	 * @return Matrix product
 	 */
-	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix) ;
+	public Matrix atimes(Ret returnType, boolean ignoreNaN, Matrix matrix);
 
 }

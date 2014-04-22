@@ -40,15 +40,12 @@ public class MinAction extends AbstractMatrixAction {
 	public MinAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Min");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the min of the entries in this matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_PAGE_DOWN, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the min of the entries in this matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().min(Ret.NEW,
-				getDimension());
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().min(Ret.NEW, getDimension());
 		result.showGUI();
 		return result;
 	}

@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.impl.DefaultTiledObjectMatrix2D;
 public class TestDefaultTiledObjectMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) throws Exception {
-		return new DefaultTiledObjectMatrix2D(size);
+		return new DefaultTiledObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
 	public Matrix createMatrix(Matrix source) throws Exception {
@@ -38,5 +38,13 @@ public class TestDefaultTiledObjectMatrix2D extends AbstractMatrixTest {
 
 	public boolean isTestLarge() {
 		return false;
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
 	}
 }

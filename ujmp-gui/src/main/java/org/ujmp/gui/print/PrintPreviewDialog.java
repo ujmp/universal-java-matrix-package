@@ -29,7 +29,6 @@ import java.awt.Frame;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 
-
 public class PrintPreviewDialog extends JDialog {
 	private static final long serialVersionUID = -6511289081075236107L;
 

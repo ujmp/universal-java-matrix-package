@@ -32,12 +32,11 @@ public class ToLongMatrix extends AbstractLongCalculation {
 		super(matrix);
 	}
 
-	
-	public long getLong(long... coordinates)  {
+	public long getLong(long... coordinates) {
 		return getSource().getAsLong(coordinates);
 	}
 
-	public void setLong(long value, long coordinates)  {
+	public void setLong(long value, long coordinates) {
 		getSource().setAsLong(value, coordinates);
 	}
 

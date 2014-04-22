@@ -41,16 +41,12 @@ public class PlusAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Plus");
 		putValue(Action.SHORT_DESCRIPTION, "add a value to all cells");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_PLUS, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().plus(
-				getRet(),
-				getIgnoreMissing(),
-				GUIUtil.getDouble("Value to add", -Double.MAX_VALUE,
-						Double.MAX_VALUE));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().plus(getRet(), getIgnoreMissing(),
+				GUIUtil.getDouble("Value to add", -Double.MAX_VALUE, Double.MAX_VALUE));
 		m.showGUI();
 		return m;
 	}

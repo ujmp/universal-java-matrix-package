@@ -31,6 +31,7 @@ import java.util.TreeSet;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements Flushable {
@@ -57,7 +58,7 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	private static final EmptyObject EMPTYOBJECT = new EmptyObject();
 
 	public BufferedObjectMatrix(Matrix original) {
-		super(original);
+		super(original.getSize());
 		this.original = original;
 		inputBuffer = new DefaultSparseObjectMatrix(original.getSize());
 		setInputBufferSize(0);
@@ -69,14 +70,14 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	}
 
 	public BufferedObjectMatrix(Matrix original, int outputBufferSize) {
-		super(original);
+		super(original.getSize());
 		this.original = original;
 		setInputBufferSize(0);
 		setOutputBufferSize(outputBufferSize);
 	}
 
 	public BufferedObjectMatrix(Matrix original, int outputBufferSize, int inputBufferSize) {
-		super(original);
+		super(original.getSize());
 		this.original = original;
 		setInputBufferSize(inputBufferSize);
 		setOutputBufferSize(outputBufferSize);
@@ -86,7 +87,7 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		return inputBuffer.getSize();
 	}
 
-	public synchronized Object getObject(long... coordinates)  {
+	public synchronized Object getObject(long... coordinates) {
 		Object o = null;
 		o = inputBuffer.getAsObject(coordinates);
 		if (o == null) {
@@ -113,7 +114,7 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		return original.getValueCount();
 	}
 
-	public synchronized void setObject(Object value, long... coordinates)  {
+	public synchronized void setObject(Object value, long... coordinates) {
 		inputBuffer.setAsObject(value, coordinates);
 		outputToDoBuffer.add(Coordinates.wrap(coordinates).clone());
 	}
@@ -207,6 +208,10 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 
 	public boolean isReadOnly() {
 		return original.isReadOnly();
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

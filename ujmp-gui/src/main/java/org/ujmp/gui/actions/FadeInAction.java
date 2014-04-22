@@ -38,14 +38,12 @@ public class FadeInAction extends AbstractMatrixAction {
 	public FadeInAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Fade In");
-		putValue(Action.SHORT_DESCRIPTION,
-				"multiplies all entries with an increasing factor");
+		putValue(Action.SHORT_DESCRIPTION, "multiplies all entries with an increasing factor");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_I);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		getMatrixObject().getMatrix().fadeIn(getRet(), getDimension());
 		return getMatrixObject();
 	}

@@ -144,9 +144,11 @@ public class RowHeaderTableModel64 implements TableModel64, TableModelListener64
 	public final void fireValueChanged(final long row, final long column, final Object value) {
 		for (final Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener64) {
-				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column, TableModelEvent64.UPDATE));
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column,
+						TableModelEvent64.UPDATE));
 			} else if (o instanceof TableModelListener) {
-				((TableModelListener) o).tableChanged(new TableModelEvent(this, (int) row, (int) row, (int) column, TableModelEvent.UPDATE));
+				((TableModelListener) o).tableChanged(new TableModelEvent(this, (int) row, (int) row, (int) column,
+						TableModelEvent.UPDATE));
 			}
 		}
 	}

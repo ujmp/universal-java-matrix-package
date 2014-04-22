@@ -42,11 +42,11 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 		super(dimension, sources);
 	}
 
-	public final LongMatrix calcLink()  {
+	public final LongMatrix calcLink() {
 		return new LongCalculationMatrix(this);
 	}
 
-	public final LongMatrix calcNew()  {
+	public final LongMatrix calcNew() {
 		LongMatrix result = (LongMatrix) Matrix.Factory.zeros(ValueType.LONG, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsLong(getLong(c), c);
@@ -57,7 +57,7 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 		return result;
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setLong(long value, long... coordinates)  {
+	public void setLong(long value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

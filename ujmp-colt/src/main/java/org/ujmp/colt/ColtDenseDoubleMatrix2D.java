@@ -44,15 +44,17 @@ import cern.jet.math.Functions;
 public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
-	private static ColtDenseDoubleMatrix2DFactory factory = new ColtDenseDoubleMatrix2DFactory();
+	public static final ColtDenseDoubleMatrix2DFactory Factory = new ColtDenseDoubleMatrix2DFactory();
 
 	private final DenseDoubleMatrix2D matrix;
 
-	public ColtDenseDoubleMatrix2D(final long... size) {
-		this.matrix = new DenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN]));
+	public ColtDenseDoubleMatrix2D(final int rows, final int columns) {
+		super(rows, columns);
+		this.matrix = new DenseDoubleMatrix2D(rows, columns);
 	}
 
 	public ColtDenseDoubleMatrix2D(DoubleMatrix2D m) {
+		super(m.rows(), m.columns());
 		if (m instanceof DenseDoubleMatrix2D) {
 			this.matrix = (DenseDoubleMatrix2D) m;
 		} else {
@@ -60,15 +62,19 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		}
 	}
 
-	public ColtDenseDoubleMatrix2D(DenseDoubleMatrix2D m) {
-		this.matrix = m;
+	public ColtDenseDoubleMatrix2D(DenseDoubleMatrix2D matrix) {
+		super(matrix.rows(), matrix.columns());
+		this.matrix = matrix;
 	}
 
 	public ColtDenseDoubleMatrix2D(Matrix source) {
-		super(source);
+		super(source.getRowCount(), source.getColumnCount());
 		this.matrix = new DenseDoubleMatrix2D((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -276,7 +282,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	}
 
 	public ColtDenseDoubleMatrix2DFactory getFactory() {
-		return factory;
+		return Factory;
 	}
 
 }

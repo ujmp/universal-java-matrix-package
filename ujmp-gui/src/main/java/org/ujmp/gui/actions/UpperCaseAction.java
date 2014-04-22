@@ -36,11 +36,10 @@ public class UpperCaseAction extends AbstractMatrixAction {
 	public UpperCaseAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "UpperCase");
-		putValue(Action.SHORT_DESCRIPTION,
-				"converts all strings to uppercase characters");
+		putValue(Action.SHORT_DESCRIPTION, "converts all strings to uppercase characters");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().upperCase(getRet());
 		m.showGUI();
 		return m;

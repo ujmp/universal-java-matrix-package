@@ -23,15 +23,20 @@
 
 package org.ujmp.core.shortmatrix.factory;
 
+import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix2D;
 import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
 
 public class DefaultShortMatrix2DFactory extends AbstractShortMatrix2DFactory {
 	private static final long serialVersionUID = 5813129367595413668L;
 
-	
-	public ShortMatrix2D dense(long rows, long columns)  {
+	public ShortMatrix2D zeros(long rows, long columns) {
 		return new DefaultDenseShortMatrix2D(rows, columns);
+	}
+
+	public ShortMatrix zeros(long... size) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

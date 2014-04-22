@@ -28,15 +28,24 @@ import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 
 public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new ArrayDenseDoubleMatrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new ArrayDenseDoubleMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new ArrayDenseDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return true;
 	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
+
 }

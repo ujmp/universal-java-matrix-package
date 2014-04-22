@@ -75,8 +75,7 @@ public class OctavePanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Octave.getInstance().plot(
-						matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Octave.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1));
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -93,8 +92,7 @@ public class OctavePanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Octave.getInstance().plot(
-						matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Octave.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1), "x");
 			} catch (Exception e1) {
 				e1.printStackTrace();

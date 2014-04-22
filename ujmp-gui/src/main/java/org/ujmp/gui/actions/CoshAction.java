@@ -36,11 +36,10 @@ public class CoshAction extends AbstractMatrixAction {
 	public CoshAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Cosh");
-		putValue(Action.SHORT_DESCRIPTION,
-				"cosinus hyperbolicus of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "cosinus hyperbolicus of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cosh(getRet());
 		m.showGUI();
 		return m;

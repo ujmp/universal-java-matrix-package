@@ -23,26 +23,26 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasStringArray;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D implements
 		HasStringArray {
 	private static final long serialVersionUID = 1643931435178952984L;
 
-	private String[] values = null;
+	private final String[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseStringMatrix2D(Matrix m)  {
-		super(m);
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
+	public DefaultDenseStringMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
+		this.rows = MathUtil.longToInt(m.getRowCount());
+		this.cols = MathUtil.longToInt(m.getColumnCount());
 		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseStringMatrix2D) {
 			String[] v = ((DefaultDenseStringMatrix2D) m).values;
@@ -54,17 +54,21 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 				setString(m.getAsString(c), c);
 			}
 		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
+		}
 	}
 
-	public DefaultDenseStringMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
-		this.values = new String[rows * cols];
+	public DefaultDenseStringMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
+		this.size = new long[] { rows, columns };
+		this.values = new String[rows * columns];
 	}
 
 	public DefaultDenseStringMatrix2D(String[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -99,7 +103,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		values[column * rows + row] = value;
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		String[] result = new String[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseStringMatrix2D(result, rows, cols);
@@ -121,6 +125,21 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 
 	public String[] getStringArray() {
 		return values;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		return new DenseMatrix2DFactory<DenseMatrix2D>() {
+
+			public DenseMatrix2D zeros(long rows, long cols) {
+				return new DefaultDenseStringMatrix2D(MathUtil.longToInt(rows),
+						MathUtil.longToInt(cols));
+			}
+
+			public DenseMatrix2D zeros(long... size) {
+				return new DefaultDenseStringMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
+			}
+		};
 	}
 
 }

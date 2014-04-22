@@ -24,16 +24,19 @@
 package org.ujmp.core.intmatrix.impl;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3331102463077119410L;
 
 	private int[][] values = null;
 
-	public SimpleDenseIntMatrix2D(Matrix m)  {
+	public SimpleDenseIntMatrix2D(Matrix m) {
+		super(m.getSize());
 		if (m instanceof SimpleDenseIntMatrix2D) {
 			int[][] v = ((SimpleDenseIntMatrix2D) m).values;
 			this.values = new int[v.length][v[0].length];
@@ -51,14 +54,17 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 	}
 
 	public SimpleDenseIntMatrix2D(int[]... v) {
+		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
 	public SimpleDenseIntMatrix2D(long... size) {
+		super(size);
 		values = new int[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public SimpleDenseIntMatrix2D(int[] v) {
+		super(new long[] { v.length, 1 });
 		this.values = new int[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
@@ -69,12 +75,10 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
 	}
 
-	
 	public long getRowCount() {
 		return values.length;
 	}
 
-	
 	public long getColumnCount() {
 		return values.length == 0 ? 0 : values[0].length;
 	}
@@ -95,7 +99,6 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		values[row][column] = value;
 	}
 
-	
 	public final IntMatrix transpose() {
 		int[][] result = new int[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {
@@ -106,7 +109,6 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	
 	public final IntMatrix plus(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -118,7 +120,6 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	
 	public final IntMatrix minus(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -130,7 +131,6 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	
 	public final IntMatrix times(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -142,7 +142,6 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	
 	public final IntMatrix divide(double v) {
 		int vInt = (int) v;
 		int[][] result = new int[values.length][values[0].length];
@@ -154,7 +153,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix plus(IntMatrix m2)  {
+	public final IntMatrix plus(IntMatrix m2) {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -164,7 +163,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix minus(IntMatrix m2)  {
+	public final IntMatrix minus(IntMatrix m2) {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -174,7 +173,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix times(IntMatrix m2)  {
+	public final IntMatrix times(IntMatrix m2) {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -184,7 +183,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public final IntMatrix divide(IntMatrix m2)  {
+	public final IntMatrix divide(IntMatrix m2) {
 		int[][] result = new int[values.length][values[0].length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
@@ -194,7 +193,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return new SimpleDenseIntMatrix2D(result);
 	}
 
-	public IntMatrix mtimes(IntMatrix matrix)  {
+	public IntMatrix mtimes(IntMatrix matrix) {
 		if (values[0].length != matrix.getRowCount()) {
 			throw new RuntimeException("matrices have wrong size: "
 					+ Coordinates.toString(getSize()) + " and "
@@ -229,4 +228,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return false;
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

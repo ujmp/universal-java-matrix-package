@@ -36,11 +36,10 @@ public class SqueezeAction extends AbstractMatrixAction {
 	public SqueezeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Squeeze");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Removes all singleton dimensions of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Removes all singleton dimensions of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrix().squeeze(getNewOrLink());
 		m.showGUI();
 		return m;

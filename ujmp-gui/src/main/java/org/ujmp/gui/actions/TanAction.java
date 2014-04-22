@@ -36,11 +36,10 @@ public class TanAction extends AbstractMatrixAction {
 	public TanAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Tan");
-		putValue(Action.SHORT_DESCRIPTION,
-				"tangens of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "tangens of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().tan(getRet());
 		m.showGUI();
 		return m;

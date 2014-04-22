@@ -36,11 +36,10 @@ public class WelcomeMatrixAction extends AbstractMatrixAction {
 	public WelcomeMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Welcome Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a matrix with a welcome message");
+		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with a welcome message");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = Matrix.Factory.welcomeMatrix();
 		m.showGUI();
 		return m;

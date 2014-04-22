@@ -33,7 +33,7 @@ public class Abs extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return Math.abs(getSource().getAsDouble(coordinates));
 	}
 

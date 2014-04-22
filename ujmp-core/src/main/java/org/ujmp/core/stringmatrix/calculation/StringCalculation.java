@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface StringCalculation extends Calculation {
 
-	public String getString(long... coordinates) ;
+	public String getString(long... coordinates);
 
-	public void setString(String value, long... coordinates) ;
+	public void setString(String value, long... coordinates);
 
 }

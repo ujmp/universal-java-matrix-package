@@ -39,7 +39,7 @@ public class RemovePunctuationAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "remove punctuations from strings");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().removePunctuation(getRet());
 		m.showGUI();
 		return m;

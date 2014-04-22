@@ -23,24 +23,23 @@
 
 package org.ujmp.core.shortmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasShortArray;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
 
 public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implements HasShortArray {
 	private static final long serialVersionUID = 3387495964006716189L;
 
-	private short[] values = null;
+	private final short[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseShortMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseShortMatrix2D(Matrix m) {
+		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -65,6 +64,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 	}
 
 	public DefaultDenseShortMatrix2D(short[] v, int rows, int cols) {
+		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -131,7 +131,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		short[] result = new short[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseShortMatrix2D(result, rows, cols);
@@ -153,6 +153,10 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 
 	public short[] getShortArray() {
 		return values;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

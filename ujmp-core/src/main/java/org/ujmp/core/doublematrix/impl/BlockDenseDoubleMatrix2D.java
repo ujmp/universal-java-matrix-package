@@ -22,7 +22,7 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
 import java.util.Arrays;
 
@@ -35,6 +35,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PFor;
@@ -94,7 +95,6 @@ import org.ujmp.core.util.concurrent.PFor;
  */
 public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasBlockDoubleArray2D {
-
 	private static final long serialVersionUID = -5131649082019624021L;
 
 	private static int deriveDefaultBlockStripeSize(int rows, int cols) {
@@ -154,10 +154,11 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 */
 	public BlockDenseDoubleMatrix2D(final int rows, final int cols, final int blockStripeSize,
 			final BlockOrder blockOrder) {
-		assertTrue(rows > 0, "rows<=0");
-		assertTrue(cols > 0, "cols<=0");
-		assertTrue(blockStripeSize > 0, "blockStripeSize<=0");
-		assertTrue(blockOrder != null, "blockOrder == null");
+		super(rows, cols);
+		verifyTrue(rows > 0, "rows<=0");
+		verifyTrue(cols > 0, "cols<=0");
+		verifyTrue(blockStripeSize > 0, "blockStripeSize<=0");
+		verifyTrue(blockOrder != null, "blockOrder == null");
 
 		this.size = new long[] { rows, cols };
 
@@ -172,9 +173,8 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * 
 	 * @see #BlockMatrix(int, int)
 	 */
-	public BlockDenseDoubleMatrix2D(final long rows, final long cols, final BlockOrder blockOrder) {
-		this((int) rows, (int) cols, deriveDefaultBlockStripeSize((int) rows, (int) cols),
-				blockOrder);
+	public BlockDenseDoubleMatrix2D(final int rows, final int cols, final BlockOrder blockOrder) {
+		this(rows, cols, deriveDefaultBlockStripeSize(rows, cols), blockOrder);
 	}
 
 	/**
@@ -190,14 +190,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 */
 	public BlockDenseDoubleMatrix2D(final int rows, final int cols) {
 		this(rows, cols, deriveDefaultBlockStripeSize(rows, cols), BlockOrder.ROWMAJOR);
-	}
-
-	/**
-	 * Create a new matrix with the given size (rows, cols) and default block
-	 * layout.
-	 */
-	public BlockDenseDoubleMatrix2D(final long... size) {
-		this(size[ROW], size[COLUMN], BlockOrder.ROWMAJOR);
 	}
 
 	/**
@@ -318,11 +310,11 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		final int rows = data.length;
 		final int cols = data[0].length;
 
-		assertTrue(startRow < rows && startRow < getRowCount(), "illegal startRow: %s", startRow);
-		assertTrue(startCol < cols && startCol < getColumnCount(), "illegal startCol: %s", startCol);
-		assertTrue(rows <= getRowCount(), "too many rows in input: %s: max allowed = %s", rows,
+		verifyTrue(startRow < rows && startRow < getRowCount(), "illegal startRow: %s", startRow);
+		verifyTrue(startCol < cols && startCol < getColumnCount(), "illegal startCol: %s", startCol);
+		verifyTrue(rows <= getRowCount(), "too many rows in input: %s: max allowed = %s", rows,
 				getRowCount());
-		assertTrue(cols <= getColumnCount(), "too many columns in input: %s: max allowed = %s",
+		verifyTrue(cols <= getColumnCount(), "too many columns in input: %s: max allowed = %s",
 				cols, getColumnCount());
 
 		for (int i = startRow; i < rows; i++) {
@@ -410,7 +402,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * @return transpose of this matrix.
 	 */
 	@Override
-	public Matrix transpose()  {
+	public Matrix transpose() {
 		return transpose(Ret.NEW);
 	}
 
@@ -454,16 +446,16 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			this.data = transMat.data;
 			System.arraycopy(transMat.size, 0, this.size, 0, transMat.size.length);
 			if (getAnnotation() != null) {
-				setAnnotation(Transpose.transposeAnnotation(getAnnotation(), Coordinates
-						.transpose(getSize())));
+				setAnnotation(Transpose.transposeAnnotation(getAnnotation(),
+						Coordinates.transpose(getSize())));
 			}
 			return this;
 		} else if (returnType == Ret.LINK) {
 			return super.transpose(Ret.LINK);
 		} else {
 			if (getAnnotation() != null) {
-				transMat.setAnnotation(Transpose.transposeAnnotation(getAnnotation(), Coordinates
-						.transpose(getSize())));
+				transMat.setAnnotation(Transpose.transposeAnnotation(getAnnotation(),
+						Coordinates.transpose(getSize())));
 			}
 			return transMat;
 		}
@@ -787,7 +779,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	 * @return old BlockOrder.
 	 */
 	public BlockOrder setBlockOrder(BlockOrder order) {
-		assertTrue(order != null, "block order cannot be null");
+		verifyTrue(order != null, "block order cannot be null");
 
 		if (order == layout.blockOrder) {
 			return order; // quick exit, already same
@@ -816,6 +808,10 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		this.layout = newLayout;
 		return oldLayout;
 
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 };

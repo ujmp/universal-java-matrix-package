@@ -49,7 +49,7 @@ public class Discretize extends AbstractIntCalculation {
 		}
 	}
 
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		return discretized.getAsInt(coordinates);
 	}
 

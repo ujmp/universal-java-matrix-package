@@ -36,7 +36,7 @@ public class MatrixFrame extends AbstractFrame {
 		setJMenuBar(new MatrixMenuBar(null, m, null));
 	}
 
-	public MatrixFrame(Matrix m)  {
+	public MatrixFrame(Matrix m) {
 		this((MatrixGUIObject) m.getGUIObject());
 	}
 

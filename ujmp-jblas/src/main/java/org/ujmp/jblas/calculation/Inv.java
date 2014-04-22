@@ -27,11 +27,10 @@ import org.jblas.DoubleMatrix;
 import org.jblas.Solve;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class Inv
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
+public class Inv implements org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
 
 	public static final Inv INSTANCE = new Inv();
 
@@ -40,9 +39,9 @@ public class Inv
 		if (source instanceof JBlasDenseDoubleMatrix2D) {
 			m1 = ((JBlasDenseDoubleMatrix2D) source).getWrappedObject();
 		} else if (source instanceof HasColumnMajorDoubleArray1D) {
-			m1 = new JBlasDenseDoubleMatrix2D(source.getRowCount(), source
-					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source)
-					.getColumnMajorDoubleArray1D()).getWrappedObject();
+			m1 = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source
+					.getColumnCount()), ((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D())
+					.getWrappedObject();
 		} else {
 			m1 = new JBlasDenseDoubleMatrix2D(source).getWrappedObject();
 		}

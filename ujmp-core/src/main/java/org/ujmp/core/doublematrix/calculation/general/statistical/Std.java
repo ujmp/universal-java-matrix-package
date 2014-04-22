@@ -54,7 +54,7 @@ public class Std extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (variance == null) {
 			variance = new Var(getDimension(), ignoreNaN, getSource(), besselsCorrection).calcNew();
 		}

@@ -28,12 +28,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix2D;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMatrix2D<E> implements
 		GraphMatrix<N, E> {
+
+	public AbstractGraphMatrix() {
+		super(0, 0);
+	}
+
 	private static final long serialVersionUID = -4939918585100574441L;
 
 	public boolean contains(long... coordinates) {
@@ -212,10 +215,6 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 
 	public final long getIndexOfNode(N o) {
 		return getNodeList().indexOf(o);
-	}
-
-	public final SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
 	}
 
 }

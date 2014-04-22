@@ -25,6 +25,8 @@ package org.ujmp.core.util.matrices;
 
 import java.io.File;
 
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.io.FileUtil;
 
@@ -38,6 +40,7 @@ public class TextContentMatrix extends AbstractDenseStringMatrix2D {
 	private String content = null;
 
 	public TextContentMatrix(File file) {
+		super(1, 1);
 		this.file = file;
 	}
 
@@ -59,4 +62,7 @@ public class TextContentMatrix extends AbstractDenseStringMatrix2D {
 		return size;
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

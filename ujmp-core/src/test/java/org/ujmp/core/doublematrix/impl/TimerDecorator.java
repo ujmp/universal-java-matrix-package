@@ -50,8 +50,9 @@ public final class TimerDecorator<M> implements Callable<M> {
 
 		float durationMillis = (System.nanoTime() - start) / 1E6f;
 
-		out.format("\nDuration [%s]= %s\n\t: %s x %s x %s; MFLOPS = %s; %s", Runtime.getRuntime().availableProcessors(),
-				durationMillis, i, j, k, (2L * i * j * k / 1E6) / durationMillis * 1000, c.getClass().getSimpleName());
+		out.format("\nDuration [%s]= %s\n\t: %s x %s x %s; MFLOPS = %s; %s", Runtime.getRuntime()
+				.availableProcessors(), durationMillis, i, j, k, (2L * i * j * k / 1E6)
+				/ durationMillis * 1000, c.getClass().getSimpleName());
 		return c;
 	}
 }

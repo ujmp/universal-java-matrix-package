@@ -23,16 +23,18 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	private static final long serialVersionUID = -4456493053286654056L;
 
-	private Matrix matrix = null;
+	private final Matrix matrix;
 
 	public SynchronizedGenericMatrix(Matrix source) {
-		super(source);
+		super(source.getSize());
 		this.matrix = source;
 		setAnnotation(source.getAnnotation());
 	}
@@ -41,7 +43,7 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		return matrix.getSize();
 	}
 
-	public synchronized double getAsDouble(long... coordinates)  {
+	public synchronized double getAsDouble(long... coordinates) {
 		return matrix.getAsDouble(coordinates);
 	}
 
@@ -49,16 +51,16 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		return matrix.getValueCount();
 	}
 
-	public synchronized void setAsDouble(double value, long... coordinates)  {
+	public synchronized void setAsDouble(double value, long... coordinates) {
 		matrix.setAsDouble(value, coordinates);
 	}
 
 	@SuppressWarnings("unchecked")
-	public synchronized T getObject(long... c)  {
+	public synchronized T getObject(long... c) {
 		return (T) matrix.getAsObject(c);
 	}
 
-	public synchronized void setObject(T value, long... c)  {
+	public synchronized void setObject(T value, long... c) {
 		matrix.setAsObject(value, c);
 	}
 
@@ -70,4 +72,11 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		return matrix.isReadOnly();
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public final boolean isSparse() {
+		return matrix.isSparse();
+	}
 }

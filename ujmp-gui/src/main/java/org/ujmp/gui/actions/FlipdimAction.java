@@ -36,13 +36,11 @@ public class FlipdimAction extends AbstractMatrixAction {
 	public FlipdimAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Flipdim");
-		putValue(Action.SHORT_DESCRIPTION,
-				"swaps the coordinates in one dimension");
+		putValue(Action.SHORT_DESCRIPTION, "swaps the coordinates in one dimension");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().flipdim(getNewOrLink(),
-				getDimension());
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().flipdim(getNewOrLink(), getDimension());
 		m.showGUI();
 		return m;
 	}

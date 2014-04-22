@@ -40,7 +40,7 @@ public interface MiscGeneralDoubleCalculations {
 	 *            should missing values be ignored
 	 * @return Matrix with zero mean.
 	 */
-	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN) ;
+	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN);
 
 	/**
 	 * Subtracts the mean from the matrix and divides by the standard deviation.
@@ -52,20 +52,20 @@ public interface MiscGeneralDoubleCalculations {
 	 *            The axis along which to calculate
 	 * @return Matrix with zero mean and unit variance.
 	 */
-	public Matrix standardize(Ret returnType, int dimension) ;
+	public Matrix standardize(Ret returnType, int dimension);
 
-	public Matrix normalize(Ret returnType, int dimension) ;
+	public Matrix normalize(Ret returnType, int dimension);
 
-	public Matrix replaceMissingBy(Matrix matrix) ;
+	public Matrix replaceMissingBy(Matrix matrix);
 
-	public Matrix fadeIn(Ret ret, int dimension) ;
+	public Matrix fadeIn(Ret ret, int dimension);
 
-	public Matrix fadeOut(Ret ret, int dimensions) ;
+	public Matrix fadeOut(Ret ret, int dimensions);
 
-	public Matrix appendHorizontally(Ret returnType, Matrix... matrices) ;
+	public Matrix appendHorizontally(Ret returnType, Matrix... matrices);
 
-	public Matrix appendVertically(Ret returnType, Matrix... matrices) ;
+	public Matrix appendVertically(Ret returnType, Matrix... matrices);
 
-	public Matrix append(Ret returnType, int dimension, Matrix... matrices) ;
+	public Matrix append(Ret returnType, int dimension, Matrix... matrices);
 
 }

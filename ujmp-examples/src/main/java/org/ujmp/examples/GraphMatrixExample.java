@@ -29,7 +29,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.Matrix2D;
 import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.SparseMatrix2D;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix2D;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix2D;
@@ -126,7 +126,7 @@ public class GraphMatrixExample {
 
 		// collect all matrix interfaces from UJMP
 		Class<?>[] classArray = new Class[] { DenseMatrix.class, DenseMatrix2D.class, Matrix.class, Matrix2D.class,
-				SparseMatrix.class, SparseMatrix2D.class, BigDecimalMatrix.class, BigDecimalMatrix2D.class,
+				SparseMatrix.class, SparseMatrix2D.class, BaseBigDecimalMatrix.class, BigDecimalMatrix2D.class,
 				DenseBigDecimalMatrix.class, DenseBigDecimalMatrix2D.class, SparseBigDecimalMatrix.class,
 				SparseBigDecimalMatrix2D.class, BigIntegerMatrix.class, BigIntegerMatrix2D.class,
 				DenseBigIntegerMatrix.class, DenseBigIntegerMatrix2D.class, SparseBigIntegerMatrix.class,

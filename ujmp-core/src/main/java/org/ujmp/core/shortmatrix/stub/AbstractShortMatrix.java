@@ -23,52 +23,51 @@
 
 package org.ujmp.core.shortmatrix.stub;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
+import org.ujmp.core.numbermatrix.stub.AbstractNumberMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractShortMatrix extends AbstractGenericMatrix<Short> implements
+public abstract class AbstractShortMatrix extends AbstractNumberMatrix<Short> implements
 		ShortMatrix {
 	private static final long serialVersionUID = 34811716349836913L;
 
-	public AbstractShortMatrix() {
-		super();
-	}
-
-	public AbstractShortMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractShortMatrix(long... size) {
+	public AbstractShortMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Short getObject(long... coordinates)  {
+	public Short getNumber(long... coordinates) {
 		return getShort(coordinates);
 	}
 
-	public final void setObject(Short o, long... coordinates)  {
-		setShort(o, coordinates);
-	}
-
-	public final short getAsShort(long... coordinates)  {
-		return getShort(coordinates);
-	}
-
-	public final void setAsShort(short value, long... coordinates)  {
+	public void setNumber(Short value, long... coordinates) {
 		setShort(value, coordinates);
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final Short getObject(long... coordinates) {
 		return getShort(coordinates);
 	}
 
-	public final void setAsDouble(double value, long... coordinates)  {
-		assertTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
+	public final void setObject(Short o, long... coordinates) {
+		setShort(o, coordinates);
+	}
+
+	public final short getAsShort(long... coordinates) {
+		return getShort(coordinates);
+	}
+
+	public final void setAsShort(short value, long... coordinates) {
+		setShort(value, coordinates);
+	}
+
+	public final double getAsDouble(long... coordinates) {
+		return getShort(coordinates);
+	}
+
+	public final void setAsDouble(double value, long... coordinates) {
+		verifyTrue(!MathUtil.isNaNOrInfinite(value), "Nan, Inf and -Inf not allowed in this matrix");
 		setShort((short) value, coordinates);
 	}
 

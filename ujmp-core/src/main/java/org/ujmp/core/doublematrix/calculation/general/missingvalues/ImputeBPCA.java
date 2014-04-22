@@ -47,7 +47,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 		return true;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (imp == null) {
 			try {
 

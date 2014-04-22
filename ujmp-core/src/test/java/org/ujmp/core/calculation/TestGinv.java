@@ -363,8 +363,8 @@ public class TestGinv {
 	public void testRandomInverses() {
 		Random rand = new Random(System.currentTimeMillis());
 		for (int count = 0; count < 10000; ++count) {
-			Matrix a = Matrix.Factory.zeros(1 + Math.abs(rand.nextInt()) % 6, 1 + Math.abs(rand
-					.nextInt()) % 6);
+			Matrix a = Matrix.Factory.zeros(1 + Math.abs(rand.nextInt()) % 6,
+					1 + Math.abs(rand.nextInt()) % 6);
 			for (int row = 0; row < a.getRowCount(); ++row) {
 				for (int col = 0; col < a.getColumnCount(); ++col) {
 					a.setAsDouble(rand.nextDouble(), row, col);

@@ -54,7 +54,7 @@ public class Sum extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double sum = 0;
 
 		if (ignoreNaN) {

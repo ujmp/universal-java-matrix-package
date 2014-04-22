@@ -47,11 +47,11 @@ public class Times extends AbstractDoubleCalculation {
 		this(true, m1, m2);
 	}
 
-	public Times(Matrix m1, double v2)  {
+	public Times(Matrix m1, double v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Times(boolean ignoreNaN, Matrix m1, double v2)  {
+	public Times(boolean ignoreNaN, Matrix m1, double v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
@@ -59,7 +59,7 @@ public class Times extends AbstractDoubleCalculation {
 		super();
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				* MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
 				.getAsDouble(coordinates) * getSources()[1].getAsDouble(coordinates);

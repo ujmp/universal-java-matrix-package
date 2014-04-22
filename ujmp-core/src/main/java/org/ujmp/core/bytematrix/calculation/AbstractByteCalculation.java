@@ -42,7 +42,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		super(dimension, sources);
 	}
 
-	public final ByteMatrix calcNew()  {
+	public final ByteMatrix calcNew() {
 		ByteMatrix result = (ByteMatrix) Matrix.Factory.zeros(ValueType.BYTE, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setByte(getByte(c), c);
@@ -53,11 +53,11 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		return result;
 	}
 
-	public final ByteMatrix calcLink()  {
+	public final ByteMatrix calcLink() {
 		return new ByteCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setByte(byte value, long... coordinates)  {
+	public void setByte(byte value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

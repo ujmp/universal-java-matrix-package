@@ -41,8 +41,7 @@ public class ImportMatrixFromFileAction extends AbstractObjectAction {
 	public ImportMatrixFromFileAction(JComponent c, GUIObject m) {
 		super(c, m);
 		putValue(Action.NAME, "from File...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"import a matrix from a location on disk");
+		putValue(Action.SHORT_DESCRIPTION, "import a matrix from a location on disk");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_F);
 	}
 

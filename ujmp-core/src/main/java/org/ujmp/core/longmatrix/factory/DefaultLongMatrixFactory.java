@@ -33,4 +33,9 @@ public class DefaultLongMatrixFactory extends AbstractLongMatrixFactory<LongMatr
 		return null;
 	}
 
+	public LongMatrix zeros(long rows, long cols) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

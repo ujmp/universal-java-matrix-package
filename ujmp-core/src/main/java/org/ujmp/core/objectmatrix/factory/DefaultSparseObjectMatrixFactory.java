@@ -23,6 +23,7 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
@@ -31,11 +32,11 @@ public class DefaultSparseObjectMatrixFactory extends AbstractMatrixFactory<Spar
 		implements SparseObjectMatrixFactory<SparseObjectMatrix> {
 	private static final long serialVersionUID = -6541311028759572913L;
 
-	public SparseObjectMatrix zeros(long rows, long columns)  {
+	public SparseObjectMatrix zeros(long rows, long columns) {
 		return new DefaultSparseRowObjectMatrix2D(rows, columns);
 	}
 
-	public SparseObjectMatrix zeros(long... size)  {
-		return new DefaultSparseRowObjectMatrix2D(size);
+	public SparseObjectMatrix zeros(long... size) {
+		return new DefaultSparseRowObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 }

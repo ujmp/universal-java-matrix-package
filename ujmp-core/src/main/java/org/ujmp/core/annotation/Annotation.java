@@ -28,8 +28,11 @@ import java.util.Map;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasLabel;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public interface Annotation extends Serializable, Cloneable, HasLabel {
+
+	public static final String LABEL = "Label";
 
 	public Matrix getDimensionMatrix(int dimension);
 
@@ -56,5 +59,11 @@ public interface Annotation extends Serializable, Cloneable, HasLabel {
 	public void clear();
 
 	public long[] getPositionForLabel(int dimension, Object label);
+
+	public void setObject(Object key, Object value);
+
+	public Object getObject(Object key);
+
+	public MapMatrix<Object, Object> getMetaData();
 
 }

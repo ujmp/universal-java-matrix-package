@@ -33,7 +33,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix inv() ;
+	public Matrix inv();
 
 	/**
 	 * Calculates the inverse of the Matrix using either LUDecomposition (for
@@ -41,7 +41,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix invSymm() ;
+	public Matrix invSymm();
 
 	/**
 	 * Calculates the inverse of a symmetric positive definite Matrix using
@@ -49,7 +49,7 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Inverse of the matrix
 	 */
-	public Matrix invSPD() ;
+	public Matrix invSPD();
 
 	/**
 	 * Solve A*X = B
@@ -58,7 +58,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solve(Matrix b) ;
+	public Matrix solve(Matrix b);
 
 	/**
 	 * Solve A*X = B
@@ -67,7 +67,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solveSymm(Matrix b) ;
+	public Matrix solveSymm(Matrix b);
 
 	/**
 	 * Solve A*X = B
@@ -76,7 +76,7 @@ public interface DecompositionDoubleCalculations {
 	 *            right hand side
 	 * @return solution for X if A is square, least squares solution otherwise
 	 */
-	public Matrix solveSPD(Matrix b) ;
+	public Matrix solveSPD(Matrix b);
 
 	/**
 	 * Calculates the pseudo inverse of the Matrix using Singular Value
@@ -84,62 +84,62 @@ public interface DecompositionDoubleCalculations {
 	 * 
 	 * @return Pseudo inverse of the Matrix
 	 */
-	public Matrix pinv() ;
+	public Matrix pinv();
 
 	/**
 	 * Calculates a generalized inverse of the Matrix
 	 * 
 	 * @return Pseudo inverse of the Matrix
 	 */
-	public Matrix ginv() ;
+	public Matrix ginv();
 
 	/**
 	 * Projects the matrix into the space of the principal components.
 	 * 
 	 * @return Matrix projected on principal components.
 	 */
-	public Matrix princomp() ;
+	public Matrix princomp();
 
 	/**
 	 * Calculates the singular value decomposition of the matrix: A = U*S*V'
 	 * 
 	 * @return Singular value decomposition of the matrix.
 	 */
-	public Matrix[] svd() ;
+	public Matrix[] svd();
 
 	/**
 	 * Calculates the Eigen decomposition of the matrix.
 	 * 
 	 * @return Eigen decomposition of the matrix.
 	 */
-	public Matrix[] eig() ;
+	public Matrix[] eig();
 
 	/**
 	 * Calculates the Eigen decomposition of a symmetric matrix.
 	 * 
 	 * @return Eigen decomposition of the matrix.
 	 */
-	public Matrix[] eigSymm() ;
+	public Matrix[] eigSymm();
 
 	/**
 	 * Calculates a QR decomposition of the matrix.
 	 * 
 	 * @return QR decomposition of the matrix.
 	 */
-	public Matrix[] qr() ;
+	public Matrix[] qr();
 
 	/**
 	 * Calculates a LU decomposition of the matrix.
 	 * 
 	 * @return LU decomposition of the matrix.
 	 */
-	public Matrix[] lu() ;
+	public Matrix[] lu();
 
 	/**
 	 * Calculates a Cholesky decomposition of the matrix.
 	 * 
 	 * @return Cholesky decomposition of the matrix.
 	 */
-	public Matrix chol() ;
+	public Matrix chol();
 
 }

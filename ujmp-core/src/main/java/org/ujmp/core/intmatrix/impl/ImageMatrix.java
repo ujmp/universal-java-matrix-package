@@ -30,7 +30,9 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
@@ -41,8 +43,9 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(BufferedImage image) throws IOException {
-		bufferedImage = image;
+	public ImageMatrix(BufferedImage bufferedImage) throws IOException {
+		super(new long[] { bufferedImage.getHeight(), bufferedImage.getWidth() });
+		this.bufferedImage = bufferedImage;
 	}
 
 	public ImageMatrix(File file) throws IOException {
@@ -61,16 +64,20 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		setInt(value, (int) row, (int) column);
 	}
 
-	public int getInt(int row, int column)  {
+	public int getInt(int row, int column) {
 		return bufferedImage.getRGB(column, row);
 	}
 
-	public void setInt(int value, int row, int column)  {
+	public void setInt(int value, int row, int column) {
 		bufferedImage.setRGB(column, row, value);
 	}
 
 	public long[] getSize() {
 		return new long[] { bufferedImage.getHeight(), bufferedImage.getWidth() };
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

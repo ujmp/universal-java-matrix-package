@@ -24,24 +24,13 @@
 package org.ujmp.core.bytearraymatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bytearraymatrix.DenseByteArrayMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseByteArrayMatrix extends AbstractByteArrayMatrix implements
 		DenseByteArrayMatrix {
 	private static final long serialVersionUID = -3701288367177324324L;
 
-	public AbstractDenseByteArrayMatrix() {
-		super();
-	}
-
-	public AbstractDenseByteArrayMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseByteArrayMatrix(long... size) {
+	public AbstractDenseByteArrayMatrix(long[] size) {
 		super(size);
 	}
 
@@ -49,7 +38,4 @@ public abstract class AbstractDenseByteArrayMatrix extends AbstractByteArrayMatr
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public DenseObjectMatrixFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
-	}
 }

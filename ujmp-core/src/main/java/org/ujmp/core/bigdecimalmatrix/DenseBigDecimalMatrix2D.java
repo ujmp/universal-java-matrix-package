@@ -23,9 +23,11 @@
 
 package org.ujmp.core.bigdecimalmatrix;
 
-import org.ujmp.core.DenseMatrix2D;
+import java.math.BigDecimal;
+
+import org.ujmp.core.numbermatrix.DenseNumberMatrix2D;
 
 public interface DenseBigDecimalMatrix2D extends BigDecimalMatrix2D, DenseBigDecimalMatrix,
-		DenseMatrix2D {
+		DenseNumberMatrix2D<BigDecimal> {
 
 }

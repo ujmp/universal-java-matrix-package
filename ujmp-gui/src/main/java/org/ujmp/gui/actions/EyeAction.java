@@ -35,11 +35,10 @@ public class EyeAction extends AbstractMatrixAction {
 	public EyeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Eye");
-		putValue(Action.SHORT_DESCRIPTION,
-				"set entries to 1 on the diagonal and 0 otherwise");
+		putValue(Action.SHORT_DESCRIPTION, "set entries to 1 on the diagonal and 0 otherwise");
 	}
 
-	public Object call()  {
+	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		m.getMatrix().eye(getRet());
 		return m;

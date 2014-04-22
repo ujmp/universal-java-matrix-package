@@ -24,7 +24,21 @@
 package org.ujmp.core.matrix.factory;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 
-public abstract class AbstractMatrixFactory<T extends Matrix> implements MatrixFactory<T> {
+public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMatrixFactory<T> {
 	private static final long serialVersionUID = -3618488741326819828L;
+
+	public static final Ret LINK = Matrix.LINK;
+	public static final Ret ORIG = Matrix.ORIG;
+	public static final Ret NEW = Matrix.NEW;
+
+	public static final int Y = Matrix.Y;
+	public static final int X = Matrix.X;
+	public static final int Z = Matrix.Z;
+
+	public static final int ROW = Matrix.ROW;
+	public static final int COLUMN = Matrix.COLUMN;
+	public static final int ALL = Matrix.ALL;
+	public static final int NONE = Matrix.NONE;
 }

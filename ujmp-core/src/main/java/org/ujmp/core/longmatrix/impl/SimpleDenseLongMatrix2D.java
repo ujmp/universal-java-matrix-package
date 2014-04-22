@@ -23,16 +23,18 @@
 
 package org.ujmp.core.longmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 2888746188860361425L;
 
 	private long[][] values = null;
 
-	public SimpleDenseLongMatrix2D(Matrix m)  {
-		super(m);
+	public SimpleDenseLongMatrix2D(Matrix m) {
+		super(m.getSize());
 		if (m instanceof SimpleDenseLongMatrix2D) {
 			long[][] v = ((SimpleDenseLongMatrix2D) m).values;
 			this.values = new long[v.length][v[0].length];
@@ -50,6 +52,7 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	}
 
 	public SimpleDenseLongMatrix2D(long[]... v) {
+		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
@@ -94,6 +97,10 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 			}
 		}
 		return new SimpleDenseLongMatrix2D(result);
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

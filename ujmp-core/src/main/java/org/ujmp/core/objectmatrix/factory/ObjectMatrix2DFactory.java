@@ -23,9 +23,9 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.matrix.factory.Matrix2DFactory;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 
-public interface ObjectMatrix2DFactory<T extends ObjectMatrix2D> extends Matrix2DFactory<T>,
-		ObjectMatrixFactory<T> {
+public interface ObjectMatrix2DFactory<T extends ObjectMatrix2D> extends
+		BaseObjectMatrixFactory<T>, GenericMatrix2DFactory<T> {
 }

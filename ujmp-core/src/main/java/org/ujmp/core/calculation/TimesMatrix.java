@@ -62,7 +62,7 @@ class TimesMatrixMatrix implements TimesMatrixCalculation<Matrix, Matrix, Matrix
 			TimesMatrix.SPARSEMATRIX.calc((SparseMatrix) source1, (SparseMatrix) source2,
 					(SparseMatrix) target);
 		} else {
-			VerifyUtil.assertSameSize(source1, source2, target);
+			VerifyUtil.verifySameSize(source1, source2, target);
 			for (long[] c : source1.allCoordinates()) {
 				BigDecimal v1 = source1.getAsBigDecimal(c);
 				BigDecimal v2 = source2.getAsBigDecimal(c);
@@ -89,7 +89,7 @@ class TimesMatrixDenseMatrix implements
 			TimesMatrix.DENSEMATRIX2D.calc((DenseMatrix2D) source1, (DenseMatrix2D) source2,
 					(DenseMatrix2D) target);
 		} else {
-			VerifyUtil.assertSameSize(source1, source2, target);
+			VerifyUtil.verifySameSize(source1, source2, target);
 			for (long[] c : source1.allCoordinates()) {
 				BigDecimal v1 = source1.getAsBigDecimal(c);
 				BigDecimal v2 = source2.getAsBigDecimal(c);
@@ -111,7 +111,7 @@ class TimesMatrixSparseMatrix implements
 
 	public void calc(final SparseMatrix source1, final SparseMatrix source2,
 			final SparseMatrix target) {
-		VerifyUtil.assertSameSize(source1, source2, target);
+		VerifyUtil.verifySameSize(source1, source2, target);
 		// copy all elements in source1 to target
 		for (long[] c : source1.availableCoordinates()) {
 			BigDecimal v1 = source1.getAsBigDecimal(c);
@@ -138,7 +138,7 @@ class TimesMatrixDenseMatrix2D implements
 			TimesMatrix.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
 					(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
 		} else {
-			VerifyUtil.assertSameSize(source1, source2, target);
+			VerifyUtil.verifySameSize(source1, source2, target);
 			for (int r = (int) source1.getRowCount(); --r != -1;) {
 				for (int c = (int) source1.getColumnCount(); --c != -1;) {
 					BigDecimal v1 = source1.getAsBigDecimal(r, c);
@@ -175,7 +175,7 @@ class TimesMatrixDenseDoubleMatrix2D implements
 					((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
-			VerifyUtil.assertSameSize(source1, source2, target);
+			VerifyUtil.verifySameSize(source1, source2, target);
 			for (int r = (int) source1.getRowCount(); --r != -1;) {
 				for (int c = (int) source1.getColumnCount(); --c != -1;) {
 					target.setDouble(source1.getDouble(r, c) * source2.getDouble(r, c), r, c);
@@ -192,7 +192,7 @@ class TimesMatrixDenseDoubleMatrix2D implements
 
 	private final void calc(final double[][] source1, final double[][] source2,
 			final double[][] target) {
-		VerifyUtil.assertSameSize(source1, source2, target);
+		VerifyUtil.verifySameSize(source1, source2, target);
 		if (UJMPSettings.getNumberOfThreads() > 1 && source1.length >= 100
 				&& source1[0].length >= 100) {
 			new PForEquidistant(0, source1.length - 1) {
@@ -221,7 +221,7 @@ class TimesMatrixDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[] source1, final double[] source2, final double[] target) {
-		VerifyUtil.assertSameSize(source1, source2, target);
+		VerifyUtil.verifySameSize(source1, source2, target);
 		final int length = source1.length;
 		for (int i = 0; i < length; i++) {
 			target[i] = source1[i] * source2[i];

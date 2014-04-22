@@ -39,14 +39,12 @@ public class AbsAction extends AbstractMatrixAction {
 	public AbsAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Abs");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replace cells with their absolute values");
+		putValue(Action.SHORT_DESCRIPTION, "replace cells with their absolute values");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_HOME, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().abs(getRet());
 		m.showGUI();
 		return m;

@@ -25,14 +25,15 @@ package org.ujmp.core.charmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 	private static final long serialVersionUID = -172129670809500830L;
 
-	private char[][] values = null;
+	private final char[][] values;
 
-	public ArrayDenseCharMatrix2D(Matrix m)  {
-		super(m);
+	public ArrayDenseCharMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		if (m instanceof ArrayDenseCharMatrix2D) {
 			char[][] v = ((ArrayDenseCharMatrix2D) m).values;
 			this.values = new char[v.length][v[0].length];
@@ -50,15 +51,17 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 	}
 
 	public ArrayDenseCharMatrix2D(char[]... v) {
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseCharMatrix2D(long... size) {
-		super(size);
-		values = new char[(int) size[ROW]][(int) size[COLUMN]];
+	public ArrayDenseCharMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new char[rows][columns];
 	}
 
 	public ArrayDenseCharMatrix2D(char[] v) {
+		super(v.length, 1);
 		this.values = new char[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
@@ -101,6 +104,10 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 			}
 		}
 		return new ArrayDenseCharMatrix2D(result);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

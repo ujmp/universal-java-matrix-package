@@ -33,14 +33,17 @@ import java.io.OptionalDataException;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToTiledMatrix2DWrapper;
 
-public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper implements Erasable, Flushable, Closeable {
+public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrapper implements Erasable, Flushable,
+		Closeable {
 	private static final long serialVersionUID = 4324063544046176423L;
 
-	public EhcacheTiledObjectMatrix2D(long... size) throws IOException {
-		super(new EhcacheMap<Coordinates, ObjectMatrix2D>(), size);
+	public EhcacheTiledObjectMatrix2D(long rows, long columns) throws IOException {
+		super(new EhcacheMap<Coordinates, ObjectMatrix2D>(), rows, columns);
 	}
 
 	public EhcacheTiledObjectMatrix2D(Matrix source) throws IOException {
@@ -78,6 +81,11 @@ public class EhcacheTiledObjectMatrix2D extends AbstractMapToTiledMatrix2DWrappe
 
 	public void close() throws IOException {
 		((Closeable) getMap()).close();
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

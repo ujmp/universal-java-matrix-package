@@ -24,33 +24,22 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix implements
 		DenseBooleanMatrix {
 	private static final long serialVersionUID = 1884839957291665282L;
 
-	public AbstractDenseBooleanMatrix() {
-		super();
-	}
-
-	public AbstractDenseBooleanMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseBooleanMatrix(long... size) {
+	public AbstractDenseBooleanMatrix(long[] size) {
 		super(size);
 	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
-
-	public DenseObjectMatrixFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
+	
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

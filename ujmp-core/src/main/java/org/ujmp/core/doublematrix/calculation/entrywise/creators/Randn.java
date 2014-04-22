@@ -51,15 +51,15 @@ public class Randn extends AbstractDoubleCalculation {
 		return MathUtil.nextGaussian(mean, sigma);
 	}
 
-	public static Matrix calc(long... size)  {
+	public static Matrix calc(long... size) {
 		return calc(ValueType.DOUBLE, size);
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		return calc(source, 0.0, 1.0);
 	}
 
-	public static Matrix calc(Matrix source, double mean, double sigma)  {
+	public static Matrix calc(Matrix source, double mean, double sigma) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(mean, sigma), c);
@@ -67,7 +67,7 @@ public class Randn extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(ValueType valueType, long... size)  {
+	public static Matrix calc(ValueType valueType, long... size) {
 		Matrix ret = Matrix.Factory.zeros(valueType, size);
 		for (long[] c : ret.allCoordinates()) {
 			ret.setAsDouble(MathUtil.nextGaussian(), c);
@@ -75,7 +75,7 @@ public class Randn extends AbstractDoubleCalculation {
 		return ret;
 	}
 
-	public Matrix calcOrig()  {
+	public Matrix calcOrig() {
 		if (getSource() instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D source = (DenseDoubleMatrix2D) getSource();
 

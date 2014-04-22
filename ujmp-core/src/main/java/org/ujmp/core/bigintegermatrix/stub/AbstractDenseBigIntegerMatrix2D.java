@@ -27,26 +27,18 @@ import java.math.BigInteger;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix
 		implements DenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = -4540890616031025558L;
 
-	public AbstractDenseBigIntegerMatrix2D() {
-		super();
-	}
-
 	public AbstractDenseBigIntegerMatrix2D(Matrix m) {
 		super(m);
 	}
 
-	public AbstractDenseBigIntegerMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseBigIntegerMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
 	public final Iterable<long[]> allCoordinates() {
@@ -61,24 +53,20 @@ public abstract class AbstractDenseBigIntegerMatrix2D extends AbstractDenseBigIn
 		setBigInteger(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final BigInteger getObject(long row, long column)  {
+	public final BigInteger getObject(long row, long column) {
 		return getBigInteger(row, column);
 	}
 
-	public final void setObject(BigInteger o, long row, long column)  {
+	public final void setObject(BigInteger o, long row, long column) {
 		setBigInteger(o, row, column);
 	}
 
-	public final BigInteger getObject(int row, int column)  {
+	public final BigInteger getObject(int row, int column) {
 		return getBigInteger(row, column);
 	}
 
-	public final void setObject(BigInteger o, int row, int column)  {
+	public final void setObject(BigInteger o, int row, int column) {
 		setBigInteger(o, row, column);
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
 	}
 
 	public final int getDimensionCount() {

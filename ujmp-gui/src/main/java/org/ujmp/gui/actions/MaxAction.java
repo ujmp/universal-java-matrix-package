@@ -40,15 +40,12 @@ public class MaxAction extends AbstractMatrixAction {
 	public MaxAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Max");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the max of the entries in this matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_PAGE_UP, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the max of the entries in this matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW,
-				getDimension());
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW, getDimension());
 		result.showGUI();
 		return result;
 	}

@@ -23,9 +23,9 @@
 
 package org.ujmp.core.shortmatrix;
 
-import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.numbermatrix.NumberMatrix;
 
-public interface ShortMatrix extends GenericMatrix<Short> {
+public interface ShortMatrix extends NumberMatrix<Short> {
 
 	/**
 	 * Returns a short representation of an entry in the matrix. The stored
@@ -33,10 +33,9 @@ public interface ShortMatrix extends GenericMatrix<Short> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a short representation of the entry
-	 * @
+	 * @return a short representation of the entry @
 	 */
-	public short getShort(long... coordinates) ;
+	public short getShort(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a short value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface ShortMatrix extends GenericMatrix<Short> {
 	 * @param value
 	 *            short value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setShort(short value, long... coordinates) ;
+	public void setShort(short value, long... coordinates);
 
 }

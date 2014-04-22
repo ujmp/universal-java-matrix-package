@@ -23,17 +23,18 @@
 
 package org.ujmp.core.doublematrix.impl;
 
-import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
-import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 	private static final long serialVersionUID = 4906742566162718886L;
 
-	private DoubleCalculation calculation = null;
+	private final DoubleCalculation calculation;
 
 	public DoubleCalculationMatrix(DoubleCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -57,17 +58,52 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return calculation.getDouble(coordinates);
 	}
 
-	public void setDouble(double value, long... coordinates)  {
+	public void setDouble(double value, long... coordinates) {
 		calculation.setDouble(value, coordinates);
 	}
 
-	@Override
-	public DoubleMatrixFactory<? extends DoubleMatrix> getFactory() {
-		return null;
+	public double getDouble(long row, long column) {
+		return calculation.getDouble(row, column);
+	}
+
+	public double getDouble(int row, int column) {
+		return calculation.getDouble(row, column);
+	}
+
+	public void setDouble(double value, long row, long column) {
+		calculation.setDouble(value, row, column);
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public void setDouble(double value, int row, int column) {
+		calculation.setDouble(value, row, column);
+	}
+
+	public Double getObject(long row, long column) {
+		return calculation.getDouble(row, column);
+	}
+
+	public void setObject(Double value, long row, long column) {
+		calculation.setDouble(value, row, column);
+	}
+
+	public Double getObject(int row, int column) {
+		return calculation.getDouble(row, column);
+	}
+
+	public void setObject(Double value, int row, int column) {
+		calculation.setDouble(value, row, column);
+	}
+
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

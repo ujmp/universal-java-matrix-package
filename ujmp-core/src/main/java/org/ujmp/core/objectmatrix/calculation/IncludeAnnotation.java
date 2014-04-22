@@ -41,7 +41,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		getAnnotation().setLabelObject(m.getLabelObject());
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		coordinates = Coordinates.copyOf(coordinates);
 		if (coordinates[getDimension()] == 0) {
 			if (getDimension() == ROW) {

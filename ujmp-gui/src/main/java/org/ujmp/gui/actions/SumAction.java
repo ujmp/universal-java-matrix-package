@@ -38,14 +38,11 @@ public class SumAction extends AbstractMatrixAction {
 	public SumAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sum");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the sum of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the sum of the entries in this matrix");
 	}
 
-	
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW,
-				getDimension(), getIgnoreMissing());
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW, getDimension(), getIgnoreMissing());
 		result.showGUI();
 		return result;
 	}

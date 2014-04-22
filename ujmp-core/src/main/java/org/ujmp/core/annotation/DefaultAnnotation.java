@@ -29,12 +29,15 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
 public class DefaultAnnotation extends AbstractAnnotation {
 	private static final long serialVersionUID = -7988756144808776868L;
 
-	private Object label = null;
+	// TODO: Annotation should extend MapMatrix<Object, Object>
+	private final MapMatrix<Object, Object> metaData = new DefaultMapMatrix<Object, Object>();
 
 	private Map<Integer, Matrix> dimensionMatrices = null;
 
@@ -47,10 +50,14 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		if (m == null) {
 			long[] t = new long[getDimensionCount()];
 			Arrays.fill(t, 1);
-			m = Matrix.Factory.sparse(ValueType.OBJECT, t);
+			m = new DefaultSparseObjectMatrix(t);
 			getDimensionMatrices().put(dimension, m);
 		}
 		return m;
+	}
+
+	public MapMatrix<Object, Object> getMetaData() {
+		return metaData;
 	}
 
 	public Map<Integer, Matrix> getDimensionMatrices() {
@@ -61,11 +68,19 @@ public class DefaultAnnotation extends AbstractAnnotation {
 	}
 
 	public Object getLabelObject() {
-		return label;
+		return metaData.get(LABEL);
 	}
 
 	public void setLabelObject(Object label) {
-		this.label = label;
+		metaData.put(LABEL, label);
+	}
+
+	public Object getObject(Object key) {
+		return metaData.get(key);
+	}
+
+	public void setObject(Object key, Object label) {
+		metaData.put(key, label);
 	}
 
 	public Annotation clone() {
@@ -78,7 +93,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 	}
 
 	public void clear() {
-		label = null;
+		metaData.clear();
 		dimensionMatrices = null;
 	}
 

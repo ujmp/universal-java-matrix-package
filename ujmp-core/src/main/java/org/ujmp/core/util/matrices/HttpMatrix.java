@@ -23,25 +23,27 @@
 
 package org.ujmp.core.util.matrices;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.AbstractMap;
-import org.ujmp.core.listmatrix.DefaultListMatrix;
-import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 
-public class HttpMatrix extends AbstractMapMatrix<String, Matrix> {
+public class HttpMatrix extends AbstractMapMatrix<String, String> {
 	private static final long serialVersionUID = -8091708294752801016L;
 
-	private final Map<String, Matrix> map;
+	public static final String USERAGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0";
+
+	private final Map<String, String> map;
 
 	public HttpMatrix() {
 		this("http://");
@@ -52,18 +54,22 @@ public class HttpMatrix extends AbstractMapMatrix<String, Matrix> {
 	}
 
 	@Override
-	public Map<String, Matrix> getMap() {
+	public Map<String, String> getMap() {
 		return map;
 	}
 
 	@Override
-	public MapMatrix<String, Matrix> clone() {
+	public MapMatrix<String, String> clone() {
 		return null;
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }
 
-class HttpMap extends AbstractMap<String, Matrix> {
+class HttpMap extends AbstractMap<String, String> {
 	private static final long serialVersionUID = 3144851365925667008L;
 
 	private final String defaultProtocol;
@@ -80,24 +86,38 @@ class HttpMap extends AbstractMap<String, Matrix> {
 	}
 
 	@Override
-	public Matrix get(Object key) {
+	public String get(Object key) {
 		try {
 			String urlString = String.valueOf(key);
 			if (!urlString.startsWith("https://") && !urlString.startsWith("http://")) {
 				urlString = defaultProtocol + urlString;
 			}
 			URL url = new URL(urlString);
-			InputStream is = url.openStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String line = null;
-			ListMatrix<String> matrix = new DefaultListMatrix<String>();
-			while ((line = br.readLine()) != null) {
-				matrix.add(line);
+			URLConnection connection = url.openConnection();
+			connection.setRequestProperty("User-Agent", HttpMatrix.USERAGENT);
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setConnectTimeout(3000);
+			InputStream input = connection.getInputStream();
+			byte[] buffer = new byte[8192];
+			int n = -1;
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			while ((n = input.read(buffer)) != -1) {
+				if (n > 0) {
+					output.write(buffer, 0, n);
+				}
 			}
-			return matrix;
+			output.close();
+			input.close();
+			return new String(output.toByteArray());
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			if (e instanceof IOException && e.getMessage().contains("code: 403")) {
+				return null;
+			} else {
+				e.printStackTrace();
+				return null;
+			}
 		}
 	}
 
@@ -107,12 +127,12 @@ class HttpMap extends AbstractMap<String, Matrix> {
 	}
 
 	@Override
-	public Matrix put(String key, Matrix value) {
+	public String put(String key, String value) {
 		return null;
 	}
 
 	@Override
-	public Matrix remove(Object key) {
+	public String remove(Object key) {
 		return null;
 	}
 

@@ -80,7 +80,8 @@ public abstract class BenchmarkUtil {
 
 	public static void randPositiveDefinite(long benchmarkSeed, int run, int id, Matrix matrix) {
 		Random random = new Random(benchmarkSeed + (run + 2) * 31 * 31 + (id + 1) * 31);
-		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(matrix.getSize());
+		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(matrix
+				.getRowCount()), MathUtil.longToInt(matrix.getColumnCount()));
 		int rows = (int) temp.getRowCount();
 		int cols = (int) temp.getColumnCount();
 		for (int r = 0; r < rows; r++) {

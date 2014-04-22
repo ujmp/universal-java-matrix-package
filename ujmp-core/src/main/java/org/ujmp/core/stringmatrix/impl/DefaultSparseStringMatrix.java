@@ -33,11 +33,11 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		StringMatrix {
 	private static final long serialVersionUID = -356455543850218966L;
 
-	public DefaultSparseStringMatrix(Matrix m)  {
+	public DefaultSparseStringMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseStringMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseStringMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,19 +53,19 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		return ValueType.STRING;
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	public void setString(String string, long... coordinates)  {
+	public void setString(String string, long... coordinates) {
 		setObject(string, coordinates);
 	}
 
-	public String getAsString(long... coordinates)  {
+	public String getAsString(long... coordinates) {
 		return StringUtil.convert(getObject(coordinates));
 	}
 
-	public void setAsString(String string, long... coordinates)  {
+	public void setAsString(String string, long... coordinates) {
 		setObject(string, coordinates);
 	}
 

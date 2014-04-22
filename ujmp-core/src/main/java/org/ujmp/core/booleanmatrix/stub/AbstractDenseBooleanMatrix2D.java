@@ -23,28 +23,15 @@
 
 package org.ujmp.core.booleanmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix implements
 		DenseBooleanMatrix2D {
 	private static final long serialVersionUID = 1382622388004356999L;
 
-	public AbstractDenseBooleanMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseBooleanMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseBooleanMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseBooleanMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
 	public final Iterable<long[]> allCoordinates() {
@@ -59,24 +46,20 @@ public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanM
 		setBoolean(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final Boolean getObject(long row, long column)  {
+	public final Boolean getObject(long row, long column) {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, long row, long column)  {
+	public final void setObject(Boolean o, long row, long column) {
 		setBoolean(o, row, column);
 	}
 
-	public final Boolean getObject(int row, int column)  {
+	public final Boolean getObject(int row, int column) {
 		return getBoolean(row, column);
 	}
 
-	public final void setObject(Boolean o, int row, int column)  {
+	public final void setObject(Boolean o, int row, int column) {
 		setBoolean(o, row, column);
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
 	}
 
 	public final int getDimensionCount() {

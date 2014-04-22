@@ -39,15 +39,15 @@ public class Eq extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Eq(Matrix m1, Object v2)  {
+	public Eq(Matrix m1, Object v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Eq(Object v1, Matrix m2)  {
+	public Eq(Object v1, Matrix m2) {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		Object o1 = getSource().getAsObject(coordinates);
 		Object o2 = getSources()[1].getAsObject(coordinates);
 		return MathUtil.equals(o1, o2);

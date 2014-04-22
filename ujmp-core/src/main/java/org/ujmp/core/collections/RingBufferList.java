@@ -77,7 +77,6 @@ public class RingBufferList<A> implements List<A>, Serializable {
 		return end < start ? values.length : end - start + 1;
 	}
 
-	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < size(); i++) {

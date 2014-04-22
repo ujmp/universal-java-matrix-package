@@ -1162,17 +1162,17 @@ public abstract class MathUtil {
 	}
 
 	public static final long totalCorrect(Matrix confusionMatrix) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		return (long) confusionMatrix.trace();
 	}
 
 	public static final double accuracy(Matrix confusionMatrix) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		return totalCorrect(confusionMatrix) / confusionMatrix.getValueSum();
 	}
 
 	public static double precisionMacro(Matrix confusionMatrix) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		double sum = 0;
 		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
 			sum += precision(confusionMatrix, catIndex);
@@ -1181,7 +1181,7 @@ public abstract class MathUtil {
 	}
 
 	public static double recallMacro(Matrix confusionMatrix) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		double sum = 0;
 		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
 			sum += recall(confusionMatrix, catIndex);
@@ -1190,7 +1190,7 @@ public abstract class MathUtil {
 	}
 
 	public static double f1MeasureMacro(Matrix confusionMatrix) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		double sum = 0;
 		for (int catIndex = 0; catIndex < confusionMatrix.getRowCount(); catIndex++) {
 			sum += f1Measure(confusionMatrix, catIndex);
@@ -1199,7 +1199,7 @@ public abstract class MathUtil {
 	}
 
 	public static double precision(Matrix confusionMatrix, long catIndex) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		double tp = confusionMatrix.getAsDouble(catIndex, catIndex);
 		double fp = 0;
 		for (int c = 0; c < confusionMatrix.getRowCount(); c++) {
@@ -1212,7 +1212,7 @@ public abstract class MathUtil {
 	}
 
 	public static double recall(Matrix confusionMatrix, long catIndex) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		double tp = confusionMatrix.getAsDouble(catIndex, catIndex);
 		double fn = 0;
 		for (int r = 0; r < confusionMatrix.getRowCount(); r++) {
@@ -1225,7 +1225,7 @@ public abstract class MathUtil {
 	}
 
 	public static double f1Measure(Matrix confusionMatrix, long catIndex) {
-		VerifyUtil.assertSquare(confusionMatrix);
+		VerifyUtil.verifySquare(confusionMatrix);
 		return f1Measure(precision(confusionMatrix, catIndex), recall(confusionMatrix, catIndex));
 	}
 

@@ -36,11 +36,10 @@ public class LogAction extends AbstractMatrixAction {
 	public LogAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Log");
-		putValue(Action.SHORT_DESCRIPTION,
-				"natural logarithm of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "natural logarithm of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().log(getRet());
 		m.showGUI();
 		return m;

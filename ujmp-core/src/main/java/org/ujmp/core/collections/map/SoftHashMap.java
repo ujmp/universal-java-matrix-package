@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 public class SoftHashMap<K, V> extends AbstractMap<K, V> {
 	private static final long serialVersionUID = 6784629567536455622L;
 

@@ -32,6 +32,8 @@ import java.net.DatagramSocket;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
@@ -54,7 +56,7 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 	private ServerThread thread = null;
 
 	public ServerObjectMatrixUDP(Matrix matrix, int port) {
-		super(matrix);
+		super(matrix.getSize());
 		this.matrix = matrix;
 
 		try {
@@ -71,11 +73,11 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.getSize();
 	}
 
-	public double getAsDouble(long... coordinates)  {
+	public double getAsDouble(long... coordinates) {
 		return matrix.getAsDouble(coordinates);
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return matrix.getAsObject(coordinates);
 	}
 
@@ -83,11 +85,11 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.getValueCount();
 	}
 
-	public void setAsDouble(double value, long... coordinates)  {
+	public void setAsDouble(double value, long... coordinates) {
 		matrix.setAsDouble(value, coordinates);
 	}
 
-	public void setObject(Object o, long... coordinates)  {
+	public void setObject(Object o, long... coordinates) {
 		matrix.setAsObject(o, coordinates);
 	}
 
@@ -156,4 +158,7 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.isReadOnly();
 	}
 
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

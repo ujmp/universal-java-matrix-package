@@ -37,8 +37,7 @@ public class Pinv extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (pinv == null) {
 
 			Matrix[] ms = getSource().svd();
@@ -59,7 +58,6 @@ public class Pinv extends AbstractDoubleCalculation {
 		return pinv.getAsDouble(coordinates);
 	}
 
-	
 	public long[] getSize() {
 		return Coordinates.transpose(getSource().getSize());
 	}

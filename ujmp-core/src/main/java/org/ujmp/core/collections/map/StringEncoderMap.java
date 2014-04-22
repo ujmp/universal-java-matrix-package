@@ -27,8 +27,6 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Set;
 
-
-
 public class StringEncoderMap extends AbstractMap<String, String> {
 	private static final long serialVersionUID = 1948316336092537067L;
 

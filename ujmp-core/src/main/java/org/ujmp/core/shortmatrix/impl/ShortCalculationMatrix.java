@@ -23,6 +23,8 @@
 
 package org.ujmp.core.shortmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.shortmatrix.calculation.ShortCalculation;
 import org.ujmp.core.shortmatrix.stub.AbstractShortMatrix;
 
@@ -32,6 +34,7 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 	private ShortCalculation calculation = null;
 
 	public ShortCalculationMatrix(ShortCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -55,12 +58,20 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 		}
 	}
 
-	public short getShort(long... coordinates)  {
+	public short getShort(long... coordinates) {
 		return calculation.getShort(coordinates);
 	}
 
-	public void setShort(short value, long... coordinates)  {
+	public void setShort(short value, long... coordinates) {
 		calculation.setShort(value, coordinates);
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

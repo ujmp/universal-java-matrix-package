@@ -23,8 +23,11 @@
 
 package org.ujmp.core.bigintegermatrix;
 
-import org.ujmp.core.SparseMatrix;
+import java.math.BigInteger;
 
-public interface SparseBigIntegerMatrix extends BigIntegerMatrix, SparseMatrix {
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
+
+public interface SparseBigIntegerMatrix extends BaseBigIntegerMatrix,
+		SparseGenericMatrix<BigInteger> {
 
 }

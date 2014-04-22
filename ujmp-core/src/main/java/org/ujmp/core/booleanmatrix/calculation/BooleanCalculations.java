@@ -28,42 +28,42 @@ import org.ujmp.core.calculation.Calculation.Ret;
 
 public interface BooleanCalculations {
 
-	public Matrix le(Ret returnType, Matrix matrix) ;
+	public Matrix le(Ret returnType, Matrix matrix);
 
-	public Matrix ge(Ret returnType, Matrix matrix) ;
+	public Matrix ge(Ret returnType, Matrix matrix);
 
-	public Matrix gt(Ret returnType, Matrix matrix) ;
+	public Matrix gt(Ret returnType, Matrix matrix);
 
-	public Matrix lt(Ret returnType, Matrix matrix) ;
+	public Matrix lt(Ret returnType, Matrix matrix);
 
-	public Matrix eq(Ret returnType, Matrix matrix) ;
+	public Matrix eq(Ret returnType, Matrix matrix);
 
-	public Matrix ne(Ret returnType, Matrix matrix) ;
+	public Matrix ne(Ret returnType, Matrix matrix);
 
-	public Matrix and(Ret returnType, Matrix matrix) ;
+	public Matrix and(Ret returnType, Matrix matrix);
 
-	public Matrix or(Ret returnType, Matrix matrix) ;
+	public Matrix or(Ret returnType, Matrix matrix);
 
-	public Matrix xor(Ret returnType, Matrix matrix) ;
+	public Matrix xor(Ret returnType, Matrix matrix);
 
-	public Matrix not(Ret returnType) ;
+	public Matrix not(Ret returnType);
 
-	public Matrix le(Ret returnType, double value) ;
+	public Matrix le(Ret returnType, double value);
 
-	public Matrix ge(Ret returnType, double value) ;
+	public Matrix ge(Ret returnType, double value);
 
-	public Matrix gt(Ret returnType, double value) ;
+	public Matrix gt(Ret returnType, double value);
 
-	public Matrix lt(Ret returnType, double value) ;
+	public Matrix lt(Ret returnType, double value);
 
-	public Matrix eq(Ret returnType, Object value) ;
+	public Matrix eq(Ret returnType, Object value);
 
-	public Matrix ne(Ret returnType, Object value) ;
+	public Matrix ne(Ret returnType, Object value);
 
-	public Matrix and(Ret returnType, boolean value) ;
+	public Matrix and(Ret returnType, boolean value);
 
-	public Matrix or(Ret returnType, boolean value) ;
+	public Matrix or(Ret returnType, boolean value);
 
-	public Matrix xor(Ret returnType, boolean value) ;
+	public Matrix xor(Ret returnType, boolean value);
 
 }

@@ -24,15 +24,13 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.SparseBooleanMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 
 public abstract class AbstractSparseBooleanMatrix extends AbstractBooleanMatrix implements
 		SparseBooleanMatrix {
 	private static final long serialVersionUID = 921125319412028934L;
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		return SparseObjectMatrix2D.factory;
+	public AbstractSparseBooleanMatrix(long[] size) {
+		super(size);
 	}
+
 }

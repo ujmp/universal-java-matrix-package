@@ -33,7 +33,7 @@ public class Exp extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return Math.exp(getSource().getAsDouble(coordinates));
 	}
 

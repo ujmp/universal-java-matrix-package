@@ -25,12 +25,13 @@ package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrix2DFactory extends
 		AbstractDenseDoubleMatrix2DFactory<DenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3755160039410460427L;
 
 	public DenseDoubleMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseDoubleMatrix2D(rows, columns);
+		return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 }

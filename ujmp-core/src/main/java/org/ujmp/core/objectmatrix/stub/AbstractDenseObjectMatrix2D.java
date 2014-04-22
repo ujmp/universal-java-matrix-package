@@ -23,30 +23,15 @@
 
 package org.ujmp.core.objectmatrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrix2DFactory;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMatrix implements
 		DenseObjectMatrix2D {
 	private static final long serialVersionUID = -4318215251761676880L;
 
-	public static DefaultDenseObjectMatrix2DFactory factory = new DefaultDenseObjectMatrix2DFactory();
-
-	public AbstractDenseObjectMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseObjectMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseObjectMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseObjectMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
 	public Iterable<long[]> allCoordinates() {
@@ -59,10 +44,6 @@ public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMat
 
 	public final void setObject(Object value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return factory;
 	}
 
 	public final int getDimensionCount() {

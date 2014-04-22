@@ -25,7 +25,6 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 
 import java.math.BigDecimal;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.SparseBigDecimalMatrix2D;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.VerifyUtil;
@@ -34,17 +33,9 @@ public abstract class AbstractSparseBigDecimalMatrix2D extends AbstractSparseBig
 		implements SparseBigDecimalMatrix2D {
 	private static final long serialVersionUID = 1272704420975497158L;
 
-	public AbstractSparseBigDecimalMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractSparseBigDecimalMatrix2D() {
-		super();
-	}
-
-	public AbstractSparseBigDecimalMatrix2D(long... size) {
+	public AbstractSparseBigDecimalMatrix2D(long[] size) {
 		super(size);
-		VerifyUtil.assert2D(size);
+		VerifyUtil.verify2D(size);
 	}
 
 	public final Iterable<long[]> allCoordinates() {
@@ -59,19 +50,19 @@ public abstract class AbstractSparseBigDecimalMatrix2D extends AbstractSparseBig
 		setBigDecimal(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final BigDecimal getObject(long row, long column)  {
+	public final BigDecimal getObject(long row, long column) {
 		return getBigDecimal(row, column);
 	}
 
-	public final void setObject(BigDecimal o, long row, long column)  {
+	public final void setObject(BigDecimal o, long row, long column) {
 		setBigDecimal(o, row, column);
 	}
 
-	public final BigDecimal getObject(int row, int column)  {
+	public final BigDecimal getObject(int row, int column) {
 		return getBigDecimal(row, column);
 	}
 
-	public final void setObject(BigDecimal o, int row, int column)  {
+	public final void setObject(BigDecimal o, int row, int column) {
 		setBigDecimal(o, row, column);
 	}
 

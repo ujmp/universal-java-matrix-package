@@ -39,7 +39,7 @@ public class Cumsum extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (cumsum == null) {
 			createMatrix();
 		}

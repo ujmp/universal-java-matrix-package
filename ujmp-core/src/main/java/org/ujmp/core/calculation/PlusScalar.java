@@ -58,7 +58,7 @@ class PlusScalarMatrix implements PlusScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			PlusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
 		} else {
-			VerifyUtil.assertSameSize(source, target);
+			VerifyUtil.verifySameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal svalue = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.plus(svalue, value);
@@ -91,7 +91,7 @@ class PlusScalarDenseMatrix implements PlusScalarCalculation<DenseMatrix, DenseM
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			PlusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value, (DenseMatrix2D) target);
 		} else {
-			VerifyUtil.assertSameSize(source, target);
+			VerifyUtil.verifySameSize(source, target);
 			for (long[] c : source.allCoordinates()) {
 				BigDecimal svalue = source.getAsBigDecimal(c);
 				BigDecimal result = MathUtil.plus(svalue, value);
@@ -119,7 +119,7 @@ class PlusScalarSparseMatrix implements PlusScalarCalculation<SparseMatrix, Spar
 
 	public final void calc(final SparseMatrix source, final BigDecimal value,
 			final SparseMatrix target) {
-		VerifyUtil.assertSameSize(source, target);
+		VerifyUtil.verifySameSize(source, target);
 		for (long[] c : source.availableCoordinates()) {
 			BigDecimal svalue = source.getAsBigDecimal(c);
 			BigDecimal result = MathUtil.plus(svalue, value);
@@ -146,7 +146,7 @@ class PlusScalarDenseMatrix2D implements PlusScalarCalculation<DenseMatrix2D, De
 			PlusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
 					(DenseDoubleMatrix2D) target);
 		} else {
-			VerifyUtil.assertSameSize(source, target);
+			VerifyUtil.verifySameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					BigDecimal svalue = source.getAsBigDecimal(r, c);
@@ -193,7 +193,7 @@ class PlusScalarDenseDoubleMatrix2D implements
 			calc(((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D(), value,
 					((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 		} else {
-			VerifyUtil.assertSameSize(source, target);
+			VerifyUtil.verifySameSize(source, target);
 			for (int r = (int) source.getRowCount(); --r != -1;) {
 				for (int c = (int) source.getColumnCount(); --c != -1;) {
 					target.setDouble(source.getDouble(r, c) + value, r, c);
@@ -209,7 +209,7 @@ class PlusScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[][] source, final double value, final double[][] target) {
-		VerifyUtil.assertSameSize(source, target);
+		VerifyUtil.verifySameSize(source, target);
 		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
 				&& source[0].length >= 100) {
 			new PForEquidistant(0, source.length - 1) {
@@ -235,7 +235,7 @@ class PlusScalarDenseDoubleMatrix2D implements
 	}
 
 	private final void calc(final double[] source, final double value, final double[] target) {
-		VerifyUtil.assertSameSize(source, target);
+		VerifyUtil.verifySameSize(source, target);
 		final int length = source.length;
 		for (int i = 0; i < length; i++) {
 			target[i] = source[i] + value;

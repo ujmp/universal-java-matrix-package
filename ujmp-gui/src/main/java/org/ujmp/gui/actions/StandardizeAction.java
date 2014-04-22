@@ -36,13 +36,11 @@ public class StandardizeAction extends AbstractMatrixAction {
 	public StandardizeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standardize");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Rescales all entries to mean 0 and standard deviation 1");
+		putValue(Action.SHORT_DESCRIPTION, "Rescales all entries to mean 0 and standard deviation 1");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(),
-				getDimension());
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().standardize(getOrigOrNew(), getDimension());
 		m.showGUI();
 		return m;
 	}

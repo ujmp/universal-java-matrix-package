@@ -23,12 +23,15 @@
 
 package org.ujmp.core.importer.source;
 
+import org.ujmp.core.Matrix;
+
 public abstract class AbstractMatrixByteArrayImportSource extends AbstractMatrixImportSource
 		implements MatrixByteArrayImportSource {
 
 	private final byte[] byteArray;
 
-	public AbstractMatrixByteArrayImportSource(byte[] byteArray) {
+	public AbstractMatrixByteArrayImportSource(Matrix matrix, byte[] byteArray) {
+		super(matrix);
 		this.byteArray = byteArray;
 	}
 

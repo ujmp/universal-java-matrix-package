@@ -37,7 +37,7 @@ public class ConvertEncoding extends AbstractStringCalculation {
 		this.encoding = encoding;
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates);
 		if (s == null) {
 			return null;

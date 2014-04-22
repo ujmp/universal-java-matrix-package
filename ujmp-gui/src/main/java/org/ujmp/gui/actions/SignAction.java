@@ -36,11 +36,10 @@ public class SignAction extends AbstractMatrixAction {
 	public SignAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sign");
-		putValue(Action.SHORT_DESCRIPTION,
-				"returns 1 for positive and -1 for negative values");
+		putValue(Action.SHORT_DESCRIPTION, "returns 1 for positive and -1 for negative values");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sign(getRet());
 		m.showGUI();
 		return m;

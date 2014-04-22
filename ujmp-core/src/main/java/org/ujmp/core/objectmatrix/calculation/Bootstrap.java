@@ -45,7 +45,7 @@ public class Bootstrap extends AbstractObjectCalculation {
 		this.count = count;
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (selection == null) {
 			List<Integer> rows = new ArrayList<Integer>();
 			for (int i = 0; i < count; i++) {

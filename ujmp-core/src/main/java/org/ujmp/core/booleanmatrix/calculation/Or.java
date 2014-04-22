@@ -38,15 +38,15 @@ public class Or extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Or(Matrix m1, boolean v2)  {
+	public Or(Matrix m1, boolean v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Or(boolean v1, Matrix m2)  {
+	public Or(boolean v1, Matrix m2) {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return getSource().getAsBoolean(coordinates) || getSources()[1].getAsBoolean(coordinates);
 	}
 }

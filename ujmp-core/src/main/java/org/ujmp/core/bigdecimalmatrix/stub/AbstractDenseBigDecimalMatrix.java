@@ -24,32 +24,22 @@
 package org.ujmp.core.bigdecimalmatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 
 public abstract class AbstractDenseBigDecimalMatrix extends AbstractBigDecimalMatrix implements
 		DenseBigDecimalMatrix {
 	private static final long serialVersionUID = -6973048827282789030L;
 
-	public AbstractDenseBigDecimalMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseBigDecimalMatrix() {
-		super();
-	}
-
-	public AbstractDenseBigDecimalMatrix(long... size) {
+	public AbstractDenseBigDecimalMatrix(long[] size) {
 		super(size);
 	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
-
-	public DenseObjectMatrixFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
+	
+	public final boolean isSparse() {
+		return false;
 	}
+
 }

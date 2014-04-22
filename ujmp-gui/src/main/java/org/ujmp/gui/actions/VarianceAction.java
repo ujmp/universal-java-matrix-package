@@ -37,13 +37,11 @@ public class VarianceAction extends AbstractMatrixAction {
 	public VarianceAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Variance");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the variance of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the variance of the entries in this matrix");
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().var(Ret.NEW,
-				getDimension(), getIgnoreMissing(), true);
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().var(Ret.NEW, getDimension(), getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

@@ -30,6 +30,7 @@ import java.io.Reader;
 import java.net.URL;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.importer.source.DefaultMatrixClipboardImportSource;
 import org.ujmp.core.importer.source.DefaultMatrixFileImportSource;
 import org.ujmp.core.importer.source.MatrixClipboardImportSource;
 import org.ujmp.core.importer.source.MatrixFileImportSource;
@@ -48,15 +49,15 @@ public class DefaultMatrixImportSourceSelector extends AbstractMatrixImportSourc
 	}
 
 	public MatrixClipboardImportSource fromClipboard() {
-		return null;
+		return new DefaultMatrixClipboardImportSource(getTargetMatrix());
 	}
 
 	public MatrixFileImportSource fromFile(File file) throws IOException {
-		return new DefaultMatrixFileImportSource(file);
+		return new DefaultMatrixFileImportSource(getTargetMatrix(), file);
 	}
 
 	public MatrixFileImportSource fromFile(String file) throws IOException {
-		return new DefaultMatrixFileImportSource(file);
+		return new DefaultMatrixFileImportSource(getTargetMatrix(), file);
 	}
 
 	public MatrixReaderImportSource fromReader(Reader reader) throws IOException {

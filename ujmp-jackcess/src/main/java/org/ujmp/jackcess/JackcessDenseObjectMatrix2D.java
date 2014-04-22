@@ -32,6 +32,8 @@ import java.util.List;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -59,10 +61,11 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 	private Integer curPos = null;
 
 	public JackcessDenseObjectMatrix2D(File file, String tablename) throws IOException {
+		super(0, 0);
 		database = DatabaseBuilder.open(file);
-		VerifyUtil.assertNotNull(database, "database could not be opened");
+		VerifyUtil.verifyNotNull(database, "database could not be opened");
 		table = database.getTable(tablename);
-		VerifyUtil.assertNotNull(table, "table not found in database");
+		VerifyUtil.verifyNotNull(table, "table not found in database");
 		columns = table.getColumns();
 		cursor = CursorBuilder.createCursor(table);
 
@@ -78,7 +81,7 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 
 	public JackcessDenseObjectMatrix2D(File file, String tablename, Matrix matrix)
 			throws IOException {
-		super(matrix);
+		super(matrix.getRowCount(), matrix.getColumnCount());
 		try {
 			database = DatabaseBuilder.create(FileFormat.V2010, file);
 
@@ -158,5 +161,9 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 
 	public void close() throws IOException {
 		database.close();
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		return null;
 	}
 }

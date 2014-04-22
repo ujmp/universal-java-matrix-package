@@ -32,12 +32,11 @@ public class ToFloatMatrix extends AbstractFloatCalculation {
 		super(matrix);
 	}
 
-	
-	public float getFloat(long... coordinates)  {
+	public float getFloat(long... coordinates) {
 		return getSource().getAsFloat(coordinates);
 	}
 
-	public void setFloat(float value, long coordinates)  {
+	public void setFloat(float value, long coordinates) {
 		getSource().setAsFloat(value, coordinates);
 	}
 

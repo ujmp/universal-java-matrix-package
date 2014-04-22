@@ -23,18 +23,21 @@
 
 package org.ujmp.core.stringmatrix.factory;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.stringmatrix.StringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultStringMatrix2DFactory extends AbstractStringMatrix2DFactory {
 	private static final long serialVersionUID = 9070985885433278717L;
 
-	public StringMatrix2D dense(long rows, long columns)  {
-		return new DefaultDenseStringMatrix2D(rows, columns);
+	public StringMatrix2D zeros(long rows, long columns) {
+		return new DefaultDenseStringMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
-	public StringMatrix2D dense(long... size)  {
-		return new DefaultDenseStringMatrix2D(size);
+	public StringMatrix2D zeros(long... size) {
+		return new DefaultDenseStringMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 }

@@ -51,7 +51,7 @@ public class TestBlockMultiply extends TestCase {
 
 			UJMPSettings.setUseBlockMatrixMultiply(false);
 			Matrix f = multiplyDenseDouble2DMatrix(d, e);
-			
+
 			UJMPSettings.setUseBlockMatrixMultiply(true);
 			Matrix c = multiplyBlockMatrix(a, b);
 
@@ -66,7 +66,7 @@ public class TestBlockMultiply extends TestCase {
 	}
 
 	private static Matrix multiplyDenseDouble2DMatrix(Matrix d, Matrix e) throws Exception {
-		
+
 		Matrix f = Fixture.createBlockMultiplier(d, e).call();
 
 		assertTrue("f==null", f != null);

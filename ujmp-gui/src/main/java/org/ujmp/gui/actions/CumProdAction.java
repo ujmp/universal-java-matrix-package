@@ -36,11 +36,10 @@ public class CumProdAction extends AbstractMatrixAction {
 	public CumProdAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Cumulative Product");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the cumulative product of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "calculates the cumulative product of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cumprod(getIgnoreMissing());
 		m.showGUI();
 		return m;

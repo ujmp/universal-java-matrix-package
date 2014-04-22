@@ -23,14 +23,10 @@
 
 package org.ujmp.core.shortmatrix.factory;
 
-import java.io.Serializable;
-
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 import org.ujmp.core.shortmatrix.ShortMatrix2D;
 
-public interface ShortMatrix2DFactory extends Serializable {
-
-	public ShortMatrix2D dense(long rows, long columns) ;
-
-	public ShortMatrix2D zeros(long rows, long columns) ;
+public interface ShortMatrix2DFactory<T extends ShortMatrix2D> extends GenericMatrix2DFactory<T>,
+		ShortMatrixFactory<T> {
 
 }

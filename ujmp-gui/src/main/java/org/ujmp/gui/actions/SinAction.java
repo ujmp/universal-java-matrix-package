@@ -36,11 +36,10 @@ public class SinAction extends AbstractMatrixAction {
 	public SinAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sin");
-		putValue(Action.SHORT_DESCRIPTION,
-				"sinus of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "sinus of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sin(getRet());
 		m.showGUI();
 		return m;

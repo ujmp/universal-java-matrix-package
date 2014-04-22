@@ -23,6 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,91 +53,90 @@ public class Sortrows extends AbstractObjectCalculation {
 		createSortIndex();
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void createSortIndex() {
 		Matrix m = getSource();
 		long rowCount = m.getRowCount();
-		List<Sortable> rows = new ArrayList<Sortable>();
+		List<Sortable<?, ?>> rows = new ArrayList<Sortable<?, ?>>();
 
 		switch (m.getValueType()) {
 		case BIGDECIMAL:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsBigDecimal(r, column);
-				Sortable s = new Sortable(c, r, true);
+				BigDecimal c = m.getAsBigDecimal(r, column);
+				Sortable<?, ?> s = new Sortable<BigDecimal, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BIGINTEGER:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsBigInteger(r, column);
-				Sortable s = new Sortable(c, r, true);
+				BigInteger c = m.getAsBigInteger(r, column);
+				Sortable<?, ?> s = new Sortable<BigInteger, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case DOUBLE:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsDouble(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Double c = m.getAsDouble(r, column);
+				Sortable<?, ?> s = new Sortable<Double, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case INT:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsInt(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Integer c = m.getAsInt(r, column);
+				Sortable<?, ?> s = new Sortable<Integer, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case FLOAT:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsFloat(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Float c = m.getAsFloat(r, column);
+				Sortable<?, ?> s = new Sortable<Float, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case CHAR:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsChar(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Character c = m.getAsChar(r, column);
+				Sortable<?, ?> s = new Sortable<Character, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BYTE:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsByte(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Byte c = m.getAsByte(r, column);
+				Sortable<?, ?> s = new Sortable<Byte, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case BOOLEAN:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsBoolean(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Boolean c = m.getAsBoolean(r, column);
+				Sortable<?, ?> s = new Sortable<Boolean, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case LONG:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsLong(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Long c = m.getAsLong(r, column);
+				Sortable<?, ?> s = new Sortable<Long, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		case SHORT:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsShort(r, column);
-				Sortable s = new Sortable(c, r, true);
+				Short c = m.getAsShort(r, column);
+				Sortable<?, ?> s = new Sortable<Short, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;
 		default:
 			for (long r = 0; r < rowCount; r++) {
-				Comparable<?> c = (Comparable<?>) m.getAsString(r, column);
-				Sortable s = new Sortable(c, r, true);
+				String c = m.getAsString(r, column);
+				Sortable<?, ?> s = new Sortable<String, Long>(c, r, true);
 				rows.add(s);
 			}
 			break;

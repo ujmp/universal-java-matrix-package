@@ -27,8 +27,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { org.ujmp.core.calculation.string.AllTests.class,
+@Suite.SuiteClasses({ org.ujmp.core.calculation.string.AllTests.class,
 		TestMissingValueImputation.class, TestSortrows.class, TestGinv.class,
 		TestConcatenation.class, TestMtimes.class })
-public class AllTests {
+public abstract class AllTests {
 }

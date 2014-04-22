@@ -26,7 +26,6 @@ package org.ujmp.core.matrix.factory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.Arrays;
@@ -34,23 +33,27 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
-import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
+import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
+import org.ujmp.core.bigdecimalmatrix.impl.DefaultSparseBigDecimalMatrix;
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
 import org.ujmp.core.bigintegermatrix.calculation.Fibonacci;
-import org.ujmp.core.booleanmatrix.BooleanMatrix;
+import org.ujmp.core.bigintegermatrix.impl.DefaultDenseBigIntegerMatrix2D;
+import org.ujmp.core.bigintegermatrix.impl.DefaultSparseBigIntegerMatrix;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
-import org.ujmp.core.bytematrix.ByteMatrix;
+import org.ujmp.core.booleanmatrix.impl.DefaultSparseBooleanMatrix;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
 import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.impl.DefaultDenseByteMatrix2D;
+import org.ujmp.core.bytematrix.impl.DefaultSparseByteMatrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
 import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.impl.DefaultDenseCharMatrix2D;
+import org.ujmp.core.charmatrix.impl.DefaultSparseCharMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrix;
+import org.ujmp.core.doublematrix.DoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Pascal;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
@@ -58,19 +61,23 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
+import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.enums.DBType;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
-import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.impl.DefaultDenseFloatMatrix2D;
+import org.ujmp.core.floatmatrix.impl.DefaultSparseFloatMatrix;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.importer.sourceselector.DefaultMatrixImportSourceSelector;
 import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
 import org.ujmp.core.intmatrix.DenseIntMatrix2D;
-import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Magic;
+import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
+import org.ujmp.core.intmatrix.impl.DefaultSparseIntMatrix;
 import org.ujmp.core.intmatrix.impl.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
@@ -78,12 +85,11 @@ import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
-import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
+import org.ujmp.core.longmatrix.impl.DefaultSparseLongMatrix;
 import org.ujmp.core.longmatrix.impl.SimpleDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.mapper.MatrixMapper;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
@@ -92,14 +98,17 @@ import org.ujmp.core.objectmatrix.calculation.Convert;
 import org.ujmp.core.objectmatrix.calculation.Fill;
 import org.ujmp.core.objectmatrix.calculation.Repmat;
 import org.ujmp.core.objectmatrix.calculation.WelcomeMatrix;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
 import org.ujmp.core.objectmatrix.impl.SimpleDenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.SynchronizedGenericMatrix;
 import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
-import org.ujmp.core.shortmatrix.ShortMatrix;
+import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
+import org.ujmp.core.shortmatrix.impl.DefaultSparseShortMatrix;
 import org.ujmp.core.shortmatrix.impl.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.StringMatrix;
+import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.impl.DefaultSparseStringMatrix;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 import org.ujmp.core.stringmatrix.impl.SimpleDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -118,13 +127,11 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();
 
-	private static MatrixMapper matrixMapper = MatrixMapper.getInstance();
-
 	public final Matrix zeros(long... size) {
 		if (size.length == 2) {
 			return DenseDoubleMatrix2D.Factory.zeros(size[ROW], size[COLUMN]);
 		} else if (size.length > 2) {
-			return DoubleMatrix.Factory.zeros(size);
+			return DoubleMatrixMultiD.Factory.zeros(size);
 		} else {
 			throw new RuntimeException("Size must be at least 2-dimensional");
 		}
@@ -139,29 +146,39 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		default:
 			switch (valueType) {
 			case BIGDECIMAL:
-				return BigDecimalMatrix.Factory.zeros(size);
+				return new DefaultDenseBigDecimalMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case BIGINTEGER:
-				return BigIntegerMatrix.Factory.zeros(size);
+				return new DefaultDenseBigIntegerMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case BOOLEAN:
-				return BooleanMatrix.Factory.zeros(size);
+				return new DefaultDenseBooleanMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case BYTE:
-				return ByteMatrix.Factory.zeros(size);
+				return new DefaultDenseByteMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case CHAR:
-				return CharMatrix.Factory.zeros(size);
+				return new DefaultDenseCharMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case DOUBLE:
-				return DoubleMatrix.Factory.zeros(size);
+				return new DefaultDenseDoubleMatrixMultiD(size);
 			case FLOAT:
-				return FloatMatrix.Factory.zeros(size);
+				return new DefaultDenseFloatMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case INT:
-				return IntMatrix.Factory.zeros(size);
+				return new DefaultDenseIntMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case LONG:
-				return LongMatrix.Factory.zeros(size);
+				return new DefaultDenseLongMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case OBJECT:
 				return ObjectMatrix.Factory.zeros(size);
 			case SHORT:
-				return ShortMatrix.Factory.zeros(size);
+				return new DefaultDenseShortMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			case STRING:
-				return StringMatrix.Factory.dense(size);
+				return new DefaultDenseStringMatrix2D(MathUtil.longToInt(size[ROW]),
+						MathUtil.longToInt(size[COLUMN]));
 			default:
 				throw new RuntimeException("unknown value type: " + valueType);
 			}
@@ -592,7 +609,8 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final Matrix pascal(long... size) {
-		return new Pascal(DenseBigIntegerMatrix2D.Factory.zeros(size)).calcOrig();
+		return new Pascal(DenseBigIntegerMatrix2D.Factory.zeros(size[ROW], size[COLUMN]))
+				.calcOrig();
 	}
 
 	public final Matrix fibonacci(int count) {
@@ -637,103 +655,40 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final Matrix sparse(ValueType valueType, long... size) {
-		try {
-			Constructor<?> con = null;
-
-			switch (size.length) {
-			case 0:
-				throw new RuntimeException("Size not defined");
-			case 1:
-				throw new RuntimeException("Size must be at least 2-dimensional");
-			case 2:
-				switch (valueType) {
-				case BOOLEAN:
-					con = matrixMapper.getSparseBooleanMatrix2DConstructor();
-					break;
-				case BYTE:
-					con = matrixMapper.getSparseByteMatrix2DConstructor();
-					break;
-				case CHAR:
-					con = matrixMapper.getSparseCharMatrix2DConstructor();
-					break;
-				case DOUBLE:
-					con = matrixMapper.getSparseDoubleMatrix2DConstructor();
-					break;
-				case FLOAT:
-					con = matrixMapper.getSparseFloatMatrix2DConstructor();
-					break;
-				case INT:
-					con = matrixMapper.getSparseIntMatrix2DConstructor();
-					break;
-				case LONG:
-					con = matrixMapper.getSparseLongMatrix2DConstructor();
-					break;
-				case OBJECT:
-					con = matrixMapper.getSparseObjectMatrix2DConstructor();
-					break;
-				case SHORT:
-					con = matrixMapper.getSparseShortMatrix2DConstructor();
-					break;
-				case STRING:
-					con = matrixMapper.getSparseStringMatrix2DConstructor();
-					break;
-				case BIGINTEGER:
-					con = matrixMapper.getSparseBigIntegerMatrix2DConstructor();
-					break;
-				case BIGDECIMAL:
-					con = matrixMapper.getSparseBigDecimalMatrix2DConstructor();
-					break;
-				default:
-					throw new RuntimeException("entry type not supported: " + valueType);
-				}
-				break;
+		switch (size.length) {
+		case 0:
+			throw new RuntimeException("Size not defined");
+		case 1:
+			throw new RuntimeException("Size must be at least 2-dimensional");
+		default:
+			switch (valueType) {
+			case BIGDECIMAL:
+				return new DefaultSparseBigDecimalMatrix(size);
+			case BIGINTEGER:
+				return new DefaultSparseBigIntegerMatrix(size);
+			case BOOLEAN:
+				return new DefaultSparseBooleanMatrix(size);
+			case BYTE:
+				return new DefaultSparseByteMatrix(size);
+			case CHAR:
+				return new DefaultSparseCharMatrix(size);
+			case DOUBLE:
+				return new DefaultSparseDoubleMatrix(size);
+			case FLOAT:
+				return new DefaultSparseFloatMatrix(size);
+			case INT:
+				return new DefaultSparseIntMatrix(size);
+			case LONG:
+				return new DefaultSparseLongMatrix(size);
+			case OBJECT:
+				return new DefaultSparseObjectMatrix(size);
+			case SHORT:
+				return new DefaultSparseShortMatrix(size);
+			case STRING:
+				return new DefaultSparseStringMatrix(size);
 			default:
-				switch (valueType) {
-				case BOOLEAN:
-					con = matrixMapper.getSparseBooleanMatrixMultiDConstructor();
-					break;
-				case BYTE:
-					con = matrixMapper.getSparseByteMatrixMultiDConstructor();
-					break;
-				case CHAR:
-					con = matrixMapper.getSparseCharMatrixMultiDConstructor();
-					break;
-				case DOUBLE:
-					con = matrixMapper.getSparseDoubleMatrixMultiDConstructor();
-					break;
-				case FLOAT:
-					con = matrixMapper.getSparseFloatMatrixMultiDConstructor();
-					break;
-				case INT:
-					con = matrixMapper.getSparseIntMatrixMultiDConstructor();
-					break;
-				case LONG:
-					con = matrixMapper.getSparseLongMatrixMultiDConstructor();
-					break;
-				case OBJECT:
-					con = matrixMapper.getSparseObjectMatrixMultiDConstructor();
-					break;
-				case SHORT:
-					con = matrixMapper.getSparseShortMatrixMultiDConstructor();
-					break;
-				case STRING:
-					con = matrixMapper.getSparseStringMatrixMultiDConstructor();
-					break;
-				case BIGINTEGER:
-					con = matrixMapper.getSparseBigIntegerMatrixMultiDConstructor();
-					break;
-				case BIGDECIMAL:
-					con = matrixMapper.getSparseBigDecimalMatrixMultiDConstructor();
-					break;
-				default:
-					throw new RuntimeException("entry type not  supported: " + valueType);
-				}
+				throw new RuntimeException("unknown value type: " + valueType);
 			}
-
-			return (Matrix) con.newInstance(size);
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -767,6 +722,10 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	public final LocalhostMatrix localhostMatrix() {
 		return new LocalhostMatrix();
+	}
+
+	public Matrix zeros(long rows, long columns) {
+		return zeros(new long[] { rows, columns });
 	}
 
 }

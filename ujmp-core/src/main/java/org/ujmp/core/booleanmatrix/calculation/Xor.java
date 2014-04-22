@@ -39,15 +39,15 @@ public class Xor extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Xor(Matrix m1, boolean v2)  {
+	public Xor(Matrix m1, boolean v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Xor(boolean v1, Matrix m2)  {
+	public Xor(boolean v1, Matrix m2) {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return MathUtil.xor(getSource().getAsBoolean(coordinates),
 				getSources()[1].getAsBoolean(coordinates));
 	}

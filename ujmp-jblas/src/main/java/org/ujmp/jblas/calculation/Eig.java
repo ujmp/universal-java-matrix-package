@@ -27,11 +27,10 @@ import org.jblas.DoubleMatrix;
 import org.jblas.Eigen;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
 
-public class Eig
-		implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
+public class Eig implements org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
 
 	public static Eig INSTANCE = new Eig();
 
@@ -40,9 +39,9 @@ public class Eig
 		if (source instanceof JBlasDenseDoubleMatrix2D) {
 			matrix = ((JBlasDenseDoubleMatrix2D) source).getWrappedObject();
 		} else if (source instanceof HasColumnMajorDoubleArray1D) {
-			matrix = new JBlasDenseDoubleMatrix2D(source.getRowCount(), source
-					.getColumnCount(), ((HasColumnMajorDoubleArray1D) source)
-					.getColumnMajorDoubleArray1D()).getWrappedObject();
+			matrix = new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source
+					.getColumnCount()), ((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D())
+					.getWrappedObject();
 		} else {
 			matrix = new JBlasDenseDoubleMatrix2D(source).getWrappedObject();
 		}

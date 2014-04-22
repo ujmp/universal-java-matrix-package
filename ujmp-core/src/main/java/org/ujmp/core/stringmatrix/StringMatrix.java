@@ -36,10 +36,9 @@ public interface StringMatrix extends GenericMatrix<String> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a String representation of the entry
-	 * @
+	 * @return a String representation of the entry @
 	 */
-	public String getString(long... coordinates) ;
+	public String getString(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a String value. If the matrix cannot store
@@ -48,9 +47,8 @@ public interface StringMatrix extends GenericMatrix<String> {
 	 * @param value
 	 *            String value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setString(String string, long... coordinates) ;
+	public void setString(String string, long... coordinates);
 
 }

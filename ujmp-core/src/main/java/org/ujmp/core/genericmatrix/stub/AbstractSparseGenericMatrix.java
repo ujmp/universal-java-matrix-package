@@ -23,29 +23,17 @@
 
 package org.ujmp.core.genericmatrix.stub;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.genericmatrix.SparseGenericMatrix;
-import org.ujmp.core.matrix.factory.SparseMatrixFactory;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
 
 public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
 		SparseGenericMatrix<A> {
 	private static final long serialVersionUID = 805145571160206604L;
 
-	public AbstractSparseGenericMatrix() {
-		super();
-	}
-
-	public AbstractSparseGenericMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractSparseGenericMatrix(long... size) {
+	public AbstractSparseGenericMatrix(long[] size) {
 		super(size);
 	}
 
-	public SparseMatrixFactory<? extends SparseMatrix> getFactory() {
-		return SparseObjectMatrix2D.factory;
+	public final boolean isSparse() {
+		return true;
 	}
 }

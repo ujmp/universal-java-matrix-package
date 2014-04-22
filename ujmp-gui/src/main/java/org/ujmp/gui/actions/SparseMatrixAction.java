@@ -46,16 +46,12 @@ public class SparseMatrixAction extends AbstractObjectAction {
 
 	public Object call() {
 		try {
-			ValueType valueType = ValueType.values()[JOptionPane
-					.showOptionDialog(getComponent(),
-							"Select the value type for the new matrix",
-							"Sparse Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null,
-							ValueType.values(), ValueType.DOUBLE)];
+			ValueType valueType = ValueType.values()[JOptionPane.showOptionDialog(getComponent(),
+					"Select the value type for the new matrix", "Sparse Matrix", JOptionPane.OK_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, ValueType.values(), ValueType.DOUBLE)];
 			long[] size = null;
 			while (size == null || size.length < 2) {
-				String s = JOptionPane.showInputDialog(getComponent(),
-						"Enter the size of the new matrix, e.g. 3x5x6",
+				String s = JOptionPane.showInputDialog(getComponent(), "Enter the size of the new matrix, e.g. 3x5x6",
 						"Sparse Matrix", JOptionPane.QUESTION_MESSAGE);
 				try {
 					size = Coordinates.parseString(s);

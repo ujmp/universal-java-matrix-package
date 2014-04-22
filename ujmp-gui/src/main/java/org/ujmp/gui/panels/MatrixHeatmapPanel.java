@@ -63,8 +63,8 @@ import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.TooltipUtil;
 
-public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener, MouseMotionListener, CanBeRepainted,
-		HasToolTip, ListSelectionListener {
+public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
+		MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
 	private static final long serialVersionUID = 843653796010276950L;
 
 	private final MatrixGUIObject matrixGUIObject;

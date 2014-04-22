@@ -41,11 +41,10 @@ public class TransposeAction extends AbstractMatrixAction {
 		putValue(Action.NAME, "Transpose");
 		putValue(Action.SHORT_DESCRIPTION, "transposes this matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T,
-				KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().transpose(getNewOrLink());
 		m.showGUI();
 		return m;

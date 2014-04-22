@@ -41,11 +41,11 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 		super(dimension, sources);
 	}
 
-	public final IntMatrix calcLink()  {
+	public final IntMatrix calcLink() {
 		return new IntCalculationMatrix(this);
 	}
 
-	public final IntMatrix calcNew()  {
+	public final IntMatrix calcNew() {
 		IntMatrix result = (IntMatrix) Matrix.Factory.zeros(ValueType.INT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsInt(getInt(c), c);
@@ -56,7 +56,7 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 		return result;
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -70,7 +70,7 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setInt(int value, long... coordinates)  {
+	public void setInt(int value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

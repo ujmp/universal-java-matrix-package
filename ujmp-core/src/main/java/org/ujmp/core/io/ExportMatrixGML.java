@@ -40,7 +40,8 @@ public class ExportMatrixGML {
 		w.close();
 	}
 
-	public static final void toStream(OutputStream out, Matrix m, Object... parameters) throws IOException {
+	public static final void toStream(OutputStream out, Matrix m, Object... parameters)
+			throws IOException {
 		OutputStreamWriter w = new OutputStreamWriter(out);
 		toWriter(w, m, parameters);
 		w.close();
@@ -51,10 +52,8 @@ public class ExportMatrixGML {
 		w.write("<graphml>\n");
 		w.write("<key id=\"k0\" for=\"node\" attr.name=\"variableName\" attr.type=\"string\"></key>\n");
 		w.write("<key id=\"k1\" for=\"node\" attr.name=\"description\" attr.type=\"string\"></key>\n");
-		w
-				.write("<key id=\"k2\" for=\"edge\" attr.name=\"confidence\" attr.type=\"double\"><default>0.0</default></key>\n");
-		w
-				.write("<key id=\"k3\" for=\"edge\" attr.name=\"directed\" attr.type=\"boolean\"><default>false</default></key>\n");
+		w.write("<key id=\"k2\" for=\"edge\" attr.name=\"confidence\" attr.type=\"double\"><default>0.0</default></key>\n");
+		w.write("<key id=\"k3\" for=\"edge\" attr.name=\"directed\" attr.type=\"boolean\"><default>false</default></key>\n");
 		w.write("<key id=\"k5\" for=\"node\" attr.name=\"xPos\" attr.type=\"string\"></key>\n");
 		w.write("<key id=\"k6\" for=\"node\" attr.name=\"yPos\" attr.type=\"string\"></key>\n");
 

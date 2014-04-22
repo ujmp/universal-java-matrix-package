@@ -52,7 +52,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		this.firstGuess = firstGuess;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (imputed == null) {
 			createMatrix();
 		}
@@ -118,8 +118,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 
 	}
 
-	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column)
-			 {
+	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column) {
 
 		Matrix x = firstGuess.deleteColumns(Ret.NEW, column);
 		Matrix y = original.selectColumns(Ret.NEW, column);

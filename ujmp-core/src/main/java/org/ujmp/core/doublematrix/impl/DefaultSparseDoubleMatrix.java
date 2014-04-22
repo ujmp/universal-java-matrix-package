@@ -25,23 +25,20 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
-import org.ujmp.core.doublematrix.factory.DefaultSparseDoubleMatrixFactory;
-import org.ujmp.core.doublematrix.factory.SparseDoubleMatrixFactory;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> implements
 		SparseDoubleMatrix {
 	private static final long serialVersionUID = -1168427818140098524L;
 
-	public static DefaultSparseDoubleMatrixFactory factory = new DefaultSparseDoubleMatrixFactory();
-
-	public DefaultSparseDoubleMatrix(Matrix m)  {
+	public DefaultSparseDoubleMatrix(Matrix m) {
 		super(m);
 	}
 
-	public DefaultSparseDoubleMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseDoubleMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -57,16 +54,25 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		return ValueType.DOUBLE;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setDouble(double value, long... coordinates)  {
+	public void setDouble(double value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 
-	public SparseDoubleMatrixFactory<? extends SparseDoubleMatrix> getFactory() {
-		return factory;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return new BaseMatrixFactory<Matrix>() {
+
+			public Matrix zeros(long rows, long columns) {
+				return new DefaultSparseDoubleMatrix(rows, columns);
+			}
+
+			public Matrix zeros(long... size) {
+				return new DefaultSparseDoubleMatrix(size);
+			}
+		};
 	}
 
 }

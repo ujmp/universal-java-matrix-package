@@ -39,15 +39,15 @@ public class Ne extends AbstractBooleanCalculation {
 		}
 	}
 
-	public Ne(Matrix m1, Object v2)  {
+	public Ne(Matrix m1, Object v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
-	public Ne(Object v1, Matrix m2)  {
+	public Ne(Object v1, Matrix m2) {
 		this(Matrix.Factory.fill(v1, m2.getSize()), m2);
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		Object o1 = getSource().getAsObject(coordinates);
 		Object o2 = getSources()[1].getAsObject(coordinates);
 		return !MathUtil.equals(o1, o2);

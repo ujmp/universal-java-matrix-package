@@ -35,8 +35,7 @@ public class Stem extends AbstractStringCalculation {
 		super(m);
 	}
 
-	
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String s = getSource().getAsString(coordinates).toLowerCase();
 		StringBuilder result = new StringBuilder(s.length());
 		String[] words = s.split("\\s+");

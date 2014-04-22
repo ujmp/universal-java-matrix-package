@@ -35,7 +35,7 @@ public class UniqueValueCount extends AbstractObjectCalculation {
 		super(dimension, m);
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		Set<Object> set = new HashSet<Object>();
 		switch (getDimension()) {
 		case ROW:

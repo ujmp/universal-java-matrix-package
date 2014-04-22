@@ -45,14 +45,13 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		this.replaceString = replaceString;
 	}
 
-	public String getString(long... coordinates)  {
+	public String getString(long... coordinates) {
 		String src = getSource().getAsString(coordinates);
 
 		return (src == null) ? null : searchPattern.matcher(src).replaceAll(replaceString);
 	}
 
-	public static Matrix calc(Matrix source, Pattern search, String replacement)
-			 {
+	public static Matrix calc(Matrix source, Pattern search, String replacement) {
 		Matrix ret = Matrix.Factory.zeros(ValueType.STRING, source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			String src = source.getAsString(c);
@@ -61,8 +60,7 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Matrix source, String searchString, String replacement)
-			 {
+	public static Matrix calc(Matrix source, String searchString, String replacement) {
 		return calc(source, Pattern.compile(searchString), replacement);
 	}
 

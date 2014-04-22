@@ -60,7 +60,7 @@ public abstract class ImportMatrixCSV {
 
 	public static final Matrix fromStream(InputStream stream, Object... parameters)
 			throws IOException {
-		VerifyUtil.assertNotNull(stream, "InputStream is null");
+		VerifyUtil.verifyNotNull(stream, "InputStream is null");
 		InputStreamReader r = new InputStreamReader(stream);
 		Matrix m = fromReader(r, parameters);
 		r.close();

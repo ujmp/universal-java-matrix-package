@@ -42,11 +42,11 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		super(dimension, sources);
 	}
 
-	public final FloatMatrix calcLink()  {
+	public final FloatMatrix calcLink() {
 		return new FloatCalculationMatrix(this);
 	}
 
-	public final FloatMatrix calcNew()  {
+	public final FloatMatrix calcNew() {
 		FloatMatrix result = (FloatMatrix) Matrix.Factory.zeros(ValueType.FLOAT, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsFloat(getFloat(c), c);
@@ -57,7 +57,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		return result;
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setFloat(float value, long... coordinates)  {
+	public void setFloat(float value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

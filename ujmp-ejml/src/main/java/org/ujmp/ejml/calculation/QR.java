@@ -31,14 +31,13 @@ import org.ejml.factory.QRDecomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
-public class QR implements
-		org.ujmp.core.doublematrix.calculation.general.decomposition.QR<Matrix> {
+public class QR implements org.ujmp.core.doublematrix.calculation.general.decomposition.QR<Matrix> {
 
 	public static QR INSTANCE = new QR();
 
 	public Matrix[] calc(Matrix source) {
-		QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr(
-				(int) source.getRowCount(), (int) source.getColumnCount());
+		QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr((int) source.getRowCount(),
+				(int) source.getColumnCount());
 		DenseMatrix64F matrix = null;
 		if (source instanceof EJMLDenseDoubleMatrix2D) {
 			matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();

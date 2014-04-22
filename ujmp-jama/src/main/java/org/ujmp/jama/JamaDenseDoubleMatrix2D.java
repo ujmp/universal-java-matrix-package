@@ -34,26 +34,31 @@ import Jama.LUDecomposition;
 import Jama.QRDecomposition;
 import Jama.SingularValueDecomposition;
 
-public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<Jama.Matrix> {
+public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Jama.Matrix> {
 	private static final long serialVersionUID = -6065454603299978242L;
 
-	private Jama.Matrix matrix = null;
+	public static final JamaDenseDoubleMatrix2DFactory Factory = new JamaDenseDoubleMatrix2DFactory();
 
-	public JamaDenseDoubleMatrix2D(long... size) {
-		this.matrix = new Jama.Matrix((int) size[ROW], (int) size[COLUMN]);
+	private final Jama.Matrix matrix;
+
+	public JamaDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new Jama.Matrix(rows, columns);
 	}
 
 	public JamaDenseDoubleMatrix2D(Jama.Matrix matrix) {
+		super(matrix.getRowDimension(), matrix.getColumnDimension());
 		this.matrix = matrix;
 	}
 
-	public JamaDenseDoubleMatrix2D(Matrix source)  {
-		super(source);
-		this.matrix = new Jama.Matrix((int) source.getRowCount(), (int) source
-				.getColumnCount());
+	public JamaDenseDoubleMatrix2D(Matrix source) {
+		super(source.getRowCount(), source.getColumnCount());
+		this.matrix = new Jama.Matrix((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -68,27 +73,25 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return A;
 	}
 
-	public Matrix inv()  {
+	public Matrix inv() {
 		return new JamaDenseDoubleMatrix2D(matrix.inverse());
 	}
 
-	public Matrix invSPD()  {
+	public Matrix invSPD() {
 		CholeskyDecomposition chol = new CholeskyDecomposition(matrix);
-		return new JamaDenseDoubleMatrix2D(chol.solve(Jama.Matrix.identity(
-				matrix.getRowDimension(), matrix.getRowDimension())));
+		return new JamaDenseDoubleMatrix2D(chol.solve(Jama.Matrix.identity(matrix.getRowDimension(),
+				matrix.getRowDimension())));
 	}
 
-	public Matrix[] svd()  {
+	public Matrix[] svd() {
 		if (getColumnCount() > getRowCount()) {
-			SingularValueDecomposition svd = new SingularValueDecomposition(
-					matrix.transpose());
+			SingularValueDecomposition svd = new SingularValueDecomposition(matrix.transpose());
 			Matrix u = new JamaDenseDoubleMatrix2D(svd.getV());
 			Matrix s = new JamaDenseDoubleMatrix2D(svd.getS().transpose());
 			Matrix v = new JamaDenseDoubleMatrix2D(svd.getU());
 			return new Matrix[] { u, s, v };
 		} else {
-			SingularValueDecomposition svd = new SingularValueDecomposition(
-					matrix);
+			SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
 			Matrix u = new JamaDenseDoubleMatrix2D(svd.getU());
 			Matrix s = new JamaDenseDoubleMatrix2D(svd.getS());
 			Matrix v = new JamaDenseDoubleMatrix2D(svd.getV());
@@ -105,8 +108,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public long[] getSize() {
-		return new long[] { matrix.getRowDimension(),
-				matrix.getColumnDimension() };
+		return new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
 	}
 
 	public void setDouble(double value, long row, long column) {
@@ -121,11 +123,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(Jama.Matrix object) {
-		this.matrix = object;
-	}
-
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
@@ -144,8 +142,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			Matrix r = new JamaDenseDoubleMatrix2D(qr.getR());
 			return new Matrix[] { q, r };
 		} else {
-			throw new RuntimeException(
-					"QR decomposition only works for matrices m>=n");
+			throw new RuntimeException("QR decomposition only works for matrices m>=n");
 		}
 	}
 
@@ -177,8 +174,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
-			return new JamaDenseDoubleMatrix2D(matrix
-					.times(((JamaDenseDoubleMatrix2D) m).matrix));
+			return new JamaDenseDoubleMatrix2D(matrix.times(((JamaDenseDoubleMatrix2D) m).matrix));
 		} else {
 			return super.mtimes(m);
 		}
@@ -208,8 +204,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
-			Matrix result = new JamaDenseDoubleMatrix2D(matrix
-					.plus(((JamaDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new JamaDenseDoubleMatrix2D(matrix.plus(((JamaDenseDoubleMatrix2D) m).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -222,8 +217,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
-			Matrix result = new JamaDenseDoubleMatrix2D(matrix
-					.minus(((JamaDenseDoubleMatrix2D) m).matrix));
+			Matrix result = new JamaDenseDoubleMatrix2D(matrix.minus(((JamaDenseDoubleMatrix2D) m).matrix));
 			Annotation a = getAnnotation();
 			if (a != null) {
 				result.setAnnotation(a.clone());
@@ -252,6 +246,10 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		} else {
 			return super.solve(b);
 		}
+	}
+
+	public JamaDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

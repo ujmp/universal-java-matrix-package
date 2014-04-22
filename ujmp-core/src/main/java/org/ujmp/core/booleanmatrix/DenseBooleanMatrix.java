@@ -23,8 +23,8 @@
 
 package org.ujmp.core.booleanmatrix;
 
-import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix;
 
-public interface DenseBooleanMatrix extends BooleanMatrix, DenseMatrix {
+public interface DenseBooleanMatrix extends BooleanMatrix, DenseGenericMatrix<Boolean> {
 
 }

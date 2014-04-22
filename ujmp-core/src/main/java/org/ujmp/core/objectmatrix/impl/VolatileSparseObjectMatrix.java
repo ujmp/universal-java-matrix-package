@@ -28,6 +28,8 @@ import java.util.Map;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
@@ -38,8 +40,8 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 
 	private long[] size = null;
 
-	public VolatileSparseObjectMatrix(Matrix m)  {
-		super(m);
+	public VolatileSparseObjectMatrix(Matrix m) {
+		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
@@ -51,6 +53,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	}
 
 	public VolatileSparseObjectMatrix(long... size) {
+		super(size);
 		this.size = Coordinates.copyOf(size);
 	}
 
@@ -76,6 +79,10 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 
 	public boolean contains(long... coordinates) {
 		return values.containsKey(Coordinates.wrap(coordinates));
+	}
+
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -23,8 +23,10 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.matrix.factory.MatrixFactory;
+import org.ujmp.core.genericmatrix.factory.GenericMatrixFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 
-public interface ObjectMatrixFactory<T extends ObjectMatrix> extends MatrixFactory<T> {
+public interface ObjectMatrixFactory<T extends ObjectMatrix> extends DenseObjectMatrix2DFactory<T>,
+		DenseObjectMatrixMultiDFactory<T>, SparseObjectMatrix2DFactory<T>,
+		SparseObjectMatrixMultiDFactory<T>, GenericMatrixFactory<T> {
 }

@@ -55,7 +55,7 @@ public class Mean extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (sum == null) {
 			sum = new Sum(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
@@ -109,7 +109,7 @@ public class Mean extends AbstractDoubleCalculation {
 		return null;
 	}
 
-	public static double calc(Matrix m)  {
+	public static double calc(Matrix m) {
 		double sum = 0.0;
 		for (long[] c : m.availableCoordinates()) {
 			sum += m.getAsDouble(c);

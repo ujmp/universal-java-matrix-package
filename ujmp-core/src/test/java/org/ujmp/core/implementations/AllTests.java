@@ -25,13 +25,14 @@ package org.ujmp.core.implementations;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.ujmp.core.stringmatrix.impl.TestDefaultDenseStringMatrix2D;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestDenseFileMatrix.class, TestArrayDenseDoubleMatrix2D.class,
+@Suite.SuiteClasses({ TestDenseFileMatrix.class, TestArrayDenseDoubleMatrix2D.class,
 		TestDefaultDenseDoubleMatrix2D.class, TestDefaultDenseObjectMatrix2D.class,
 		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnMatrix2D.class,
 		TestDefaultSparseRowMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
 		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class,
 		TestDefaultSparseDoubleMatrix.class })
-public class AllTests {
+public abstract class AllTests {
 }

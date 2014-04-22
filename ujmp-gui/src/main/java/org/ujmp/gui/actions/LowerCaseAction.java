@@ -36,11 +36,10 @@ public class LowerCaseAction extends AbstractMatrixAction {
 	public LowerCaseAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "LowerCase");
-		putValue(Action.SHORT_DESCRIPTION,
-				"converts all strings to lowercase characters");
+		putValue(Action.SHORT_DESCRIPTION, "converts all strings to lowercase characters");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().lowerCase(getRet());
 		m.showGUI();
 		return m;

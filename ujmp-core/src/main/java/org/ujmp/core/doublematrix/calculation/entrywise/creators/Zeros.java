@@ -37,7 +37,7 @@ public class Zeros extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		return ret;
 	}

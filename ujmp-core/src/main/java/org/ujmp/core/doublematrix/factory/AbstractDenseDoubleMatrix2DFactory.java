@@ -23,10 +23,39 @@
 
 package org.ujmp.core.doublematrix.factory;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 
-public abstract class AbstractDenseDoubleMatrix2DFactory<T extends DenseDoubleMatrix2D> extends
-		AbstractDoubleMatrix2DFactory<T> implements DenseDoubleMatrix2DFactory<T> {
-	private static final long serialVersionUID = -2262202653249931934L;
+public abstract class AbstractDenseDoubleMatrix2DFactory<T extends DenseDoubleMatrix2D> implements
+		DenseDoubleMatrix2DFactory<T> {
+	private static final long serialVersionUID = -6233062915937231952L;
 
+	public Matrix zeros(long... size) {
+		return zeros(size[Matrix.ROW], size[Matrix.COLUMN]);
+	}
+
+	public final T rand(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.rand(Ret.ORIG);
+		return m;
+	}
+
+	public final T randn(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.randn(Ret.ORIG);
+		return m;
+	}
+
+	public final T ones(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.ones(Ret.ORIG);
+		return m;
+	}
+
+	public final T eye(final long rows, final long cols) {
+		final T m = zeros(rows, cols);
+		m.eye(Ret.ORIG);
+		return m;
+	}
 }

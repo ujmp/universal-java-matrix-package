@@ -37,13 +37,11 @@ public class ReplaceRegexAction extends AbstractMatrixAction {
 	public ReplaceRegexAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Replace Regex");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a regular expression with a specified text");
+		putValue(Action.SHORT_DESCRIPTION, "replaces a regular expression with a specified text");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().replaceRegex(getRet(),
-				GUIUtil.getString("Regular Expression"),
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().replaceRegex(getRet(), GUIUtil.getString("Regular Expression"),
 				GUIUtil.getString("Replacement"));
 		m.showGUI();
 		return m;

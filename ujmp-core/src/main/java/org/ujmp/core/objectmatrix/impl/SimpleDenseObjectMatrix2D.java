@@ -24,6 +24,8 @@
 package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
@@ -32,16 +34,17 @@ public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 	private Object[][] values = null;
 
 	public SimpleDenseObjectMatrix2D(Object[]... values) {
+		super(values.length, values[0].length);
 		this.values = values;
 	}
 
-	public SimpleDenseObjectMatrix2D(long... size) {
-		super(size);
-		values = new Object[(int) size[ROW]][(int) size[COLUMN]];
+	public SimpleDenseObjectMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new Object[rows][columns];
 	}
 
-	public SimpleDenseObjectMatrix2D(Matrix m)  {
-		super(m);
+	public SimpleDenseObjectMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		if (m instanceof SimpleDenseObjectMatrix2D) {
 			Object[][] v = ((SimpleDenseObjectMatrix2D) m).values;
 			this.values = new Object[v.length][v[0].length];
@@ -84,6 +87,10 @@ public class SimpleDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 
 	public void setObject(Object value, int row, int column) {
 		values[row][column] = value;
+	}
+
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

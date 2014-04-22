@@ -26,22 +26,22 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = -5227328974882402868L;
 
-	private BigDecimal[] values = null;
+	private final BigDecimal[] values;
 
-	private long[] size = null;
-
+	private final long[] size;
 	private int rows = 0;
-
 	private int cols = 0;
 
-	public DefaultDenseBigDecimalMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseBigDecimalMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -57,16 +57,17 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 		}
 	}
 
-	public DefaultDenseBigDecimalMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
-		this.values = new BigDecimal[rows * cols];
+	public DefaultDenseBigDecimalMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.rows = rows;
+		this.cols = columns;
+		this.size = new long[] { rows, columns };
+		this.values = new BigDecimal[rows * columns];
 		Arrays.fill(values, BigDecimal.ZERO);
 	}
 
 	public DefaultDenseBigDecimalMatrix2D(BigDecimal[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -99,6 +100,10 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 
 	public void setBigDecimal(BigDecimal value, int row, int column) {
 		values[column * rows + row] = value;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

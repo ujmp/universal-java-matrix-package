@@ -23,9 +23,6 @@
 
 package org.ujmp.core;
 
-import org.ujmp.core.matrix.factory.Matrix2DFactory;
-
 public interface Matrix2D extends Matrix {
 
-	public Matrix2DFactory<? extends Matrix2D> getFactory();
 }

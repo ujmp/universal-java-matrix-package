@@ -36,11 +36,10 @@ public class CumSumAction extends AbstractMatrixAction {
 	public CumSumAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Cumulative Sum");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the cumulative sum of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "calculates the cumulative sum of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cumsum(getIgnoreMissing());
 		m.showGUI();
 		return m;

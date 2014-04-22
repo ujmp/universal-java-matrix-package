@@ -55,8 +55,8 @@ public enum FileFormat {
 	ImapFolders("Imap Folders", "imap"), //
 	JAVA("Java Files", "java"), //
 	JAR("Java JAR Files", "jar"), //
-	JPG("JPG Image Files", "jpg", "jpeg"), //	
-	LOG("Log Files", "log"), //	
+	JPG("JPG Image Files", "jpg", "jpeg"), //
+	LOG("Log Files", "log"), //
 	M("Matlab Script Files", "m"), //
 	MAT("Matlab Data Files", "mat"), //
 	MDB("Microsoft Access Files", "mdb"), //
@@ -70,18 +70,18 @@ public enum FileFormat {
 	PNG("PNG Images Files", "png"), //
 	PS("PostScript Files", "ps"), //
 	R("Matlab R Files", "r"), //
-	RAR("RAR Files", "rar"), //	
+	RAR("RAR Files", "rar"), //
 	RSS("RSS Feed", "rss", "rdf", "xml"), //
 	SER("Serialized Data Files", "ser", "obj", "dat"), //
 	SPARSECSV("Sparse CSV Files", "csv"), //
-	SQL("SQL Files", "sql"), //	
+	SQL("SQL Files", "sql"), //
 	TEX("Latex Files", "tex"), //
 	TIFF("TIFF Image Files", "tif"), //
 	TMP("TMP Files", "tmp", "temp"), //
 	TXT("Text Files", "txt"), //
 	WAV("Wave Audio Files", "wav"), //
 	XLS("Microsoft Excel Files", "xls"), //
-	XML("XML Files", "xml"), //	
+	XML("XML Files", "xml"), //
 	ZIP("ZIP Files", "zip"); //
 
 	private String[] extensions = null;

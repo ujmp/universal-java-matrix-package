@@ -62,7 +62,7 @@ public class ImputeEM extends AbstractDoubleCalculation {
 		this.delta = delta;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (imputed == null) {
 			createMatrix();
 		}
@@ -159,8 +159,7 @@ public class ImputeEM extends AbstractDoubleCalculation {
 
 	}
 
-	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column)
-			 {
+	private static Matrix replaceInColumn(Matrix original, Matrix firstGuess, long column) {
 
 		Matrix x = firstGuess.deleteColumns(Ret.NEW, column);
 		Matrix y = original.selectColumns(Ret.NEW, column);
@@ -178,13 +177,13 @@ public class ImputeEM extends AbstractDoubleCalculation {
 		}
 
 		Matrix xdel = x.deleteRows(Ret.NEW, missingRows);
-		Matrix bias1 = DenseDoubleMatrix2D.Factory.ones(xdel.getRowCount(), 1);
+		DenseDoubleMatrix2D bias1 = DenseDoubleMatrix2D.Factory.ones(xdel.getRowCount(), 1);
 		Matrix xtrain = Matrix.Factory.horCat(xdel, bias1);
 		Matrix ytrain = y.deleteRows(Ret.NEW, missingRows);
 
 		Matrix xinv = xtrain.pinv();
 		Matrix b = xinv.mtimes(ytrain);
-		Matrix bias2 = DenseDoubleMatrix2D.Factory.ones(x.getRowCount(), 1);
+		DenseDoubleMatrix2D bias2 = DenseDoubleMatrix2D.Factory.ones(x.getRowCount(), 1);
 		Matrix yPredicted = Matrix.Factory.horCat(x, bias2).mtimes(b);
 
 		// set non-missing values back to original values

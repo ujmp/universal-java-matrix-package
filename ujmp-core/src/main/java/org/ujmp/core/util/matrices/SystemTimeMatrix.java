@@ -25,8 +25,10 @@ package org.ujmp.core.util.matrices;
 
 import java.util.TimerTask;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.util.GlobalTimer;
 
 public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
@@ -35,6 +37,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 	private final Matrix matrix;
 
 	public SystemTimeMatrix() {
+		super(new long[] { 1, 1 });
 		setLabel("System Time");
 		setColumnLabel(0, "System.currentTimeMillis()");
 		matrix = this;
@@ -71,4 +74,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 		return true;
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

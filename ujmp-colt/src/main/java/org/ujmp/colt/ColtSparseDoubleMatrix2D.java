@@ -50,21 +50,28 @@ import cern.jet.math.Functions;
 public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements Wrapper<SparseDoubleMatrix2D> {
 	private static final long serialVersionUID = -3223474248020842822L;
 
+	public static final ColtSparseDoubleMatrix2DFactory Factory = new ColtSparseDoubleMatrix2DFactory();
+
 	private final SparseDoubleMatrix2D matrix;
 
-	public ColtSparseDoubleMatrix2D(long... size) {
-		this.matrix = new SparseDoubleMatrix2D(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN]));
+	public ColtSparseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new SparseDoubleMatrix2D(rows, columns);
 	}
 
 	public ColtSparseDoubleMatrix2D(SparseDoubleMatrix2D m) {
+		super(m.rows(), m.columns());
 		this.matrix = m;
 	}
 
 	public ColtSparseDoubleMatrix2D(Matrix source) {
-		super(source);
+		super(source.getRowCount(), source.getColumnCount());
 		this.matrix = new SparseDoubleMatrix2D((int) source.getRowCount(), (int) source.getColumnCount());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
+		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
 		}
 	}
 
@@ -80,11 +87,13 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		return new long[] { matrix.rows(), matrix.columns() };
 	}
 
-	public void setDouble(double value, long row, long column) {
+	// must be synchronized for sparse matrix implementation
+	public synchronized void setDouble(double value, long row, long column) {
 		matrix.setQuick(MathUtil.longToInt(row), MathUtil.longToInt(column), value);
 	}
 
-	public void setDouble(double value, int row, int column) {
+	// must be synchronized for sparse matrix implementation
+	public synchronized void setDouble(double value, int row, int column) {
 		matrix.setQuick(row, column, value);
 	}
 
@@ -192,7 +201,8 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 	}
 
 	public Matrix minus(double value) {
-		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.minus(value)));
+		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy()
+				.assign(Functions.minus(value)));
 		Annotation a = getAnnotation();
 		if (a != null) {
 			result.setAnnotation(a.clone());
@@ -261,6 +271,10 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 			p.setAsDouble(1, i, piv[i]);
 		}
 		return new Matrix[] { l, u, p };
+	}
+
+	public ColtSparseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

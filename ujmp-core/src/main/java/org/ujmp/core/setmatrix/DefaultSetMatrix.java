@@ -27,10 +27,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+
 public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 	private static final long serialVersionUID = -5487932797086214329L;
 
-	private Set<A> set = null;
+	private final Set<A> set;
 
 	public DefaultSetMatrix(Collection<A> list) {
 		if (list instanceof Set) {
@@ -51,9 +54,12 @@ public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 		}
 	}
 
-	
 	public Set<A> getSet() {
 		return set;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

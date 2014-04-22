@@ -40,7 +40,7 @@ public class TestSparseEhcacheMatrix { // extends AbstractMatrixTest {
 	public boolean isTestLarge() {
 		return false;
 	}
-	
+
 	@Test
 	public void test() {
 	}

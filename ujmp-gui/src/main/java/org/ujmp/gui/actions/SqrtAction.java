@@ -36,11 +36,10 @@ public class SqrtAction extends AbstractMatrixAction {
 	public SqrtAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sqrt");
-		putValue(Action.SHORT_DESCRIPTION,
-				"square root of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "square root of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sqrt(getRet());
 		m.showGUI();
 		return m;

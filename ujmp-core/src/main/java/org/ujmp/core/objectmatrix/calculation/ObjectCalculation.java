@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface ObjectCalculation extends Calculation {
 
-	public Object getObject(long... coordinates) ;
+	public Object getObject(long... coordinates);
 
-	public void setObject(Object value, long... coordinates) ;
+	public void setObject(Object value, long... coordinates);
 
 }

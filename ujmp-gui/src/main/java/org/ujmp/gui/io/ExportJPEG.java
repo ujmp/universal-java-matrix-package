@@ -42,8 +42,7 @@ import org.ujmp.core.util.io.FileSelector;
 
 public abstract class ExportJPEG {
 
-	private static final Logger logger = Logger.getLogger(ExportJPEG.class
-			.getName());
+	private static final Logger logger = Logger.getLogger(ExportJPEG.class.getName());
 
 	public static final File selectFile() {
 		return selectFile(null);
@@ -75,21 +74,18 @@ public abstract class ExportJPEG {
 			return;
 		}
 		double factor = width / c.getWidth();
-		BufferedImage myImage = new BufferedImage(
-				(int) (c.getWidth() * factor), (int) (c.getHeight() * factor),
+		BufferedImage myImage = new BufferedImage((int) (c.getWidth() * factor), (int) (c.getHeight() * factor),
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = myImage.createGraphics();
 		g2.scale(factor, factor);
 		c.paint(g2);
 		try {
-			ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg")
-					.next();
+			ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
 
 			ImageOutputStream ios = ImageIO.createImageOutputStream(file);
 			writer.setOutput(ios);
 
-			ImageWriteParam iwparam = new JPEGImageWriteParam(Locale
-					.getDefault());
+			ImageWriteParam iwparam = new JPEGImageWriteParam(Locale.getDefault());
 			iwparam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			iwparam.setCompressionQuality(1.0f);
 

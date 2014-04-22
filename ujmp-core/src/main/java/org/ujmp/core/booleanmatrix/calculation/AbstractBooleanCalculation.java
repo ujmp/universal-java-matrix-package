@@ -42,7 +42,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		super(dimension, sources);
 	}
 
-	public final BooleanMatrix calcNew()  {
+	public final BooleanMatrix calcNew() {
 		BooleanMatrix result = (BooleanMatrix) Matrix.Factory.zeros(ValueType.BOOLEAN, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBoolean(getBoolean(c), c);
@@ -53,11 +53,11 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		return result;
 	}
 
-	public final BooleanMatrix calcLink()  {
+	public final BooleanMatrix calcLink() {
 		return new BooleanCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setBoolean(boolean value, long... coordinates)  {
+	public void setBoolean(boolean value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

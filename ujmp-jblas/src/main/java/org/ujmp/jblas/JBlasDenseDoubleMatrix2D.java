@@ -39,34 +39,33 @@ import org.ujmp.jblas.calculation.LU;
 import org.ujmp.jblas.calculation.SVD;
 import org.ujmp.jblas.calculation.Solve;
 
-public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
-		implements Wrapper<DoubleMatrix> {
+public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<DoubleMatrix> {
 	private static final long serialVersionUID = 4929284378405884509L;
 
-	private DoubleMatrix matrix;
+	public static final JBlasDenseDoubleMatrix2DFactory Factory = new JBlasDenseDoubleMatrix2DFactory();
 
-	public JBlasDenseDoubleMatrix2D(long... size) {
-		this.matrix = new DoubleMatrix((int) size[ROW], (int) size[COLUMN]);
+	private final DoubleMatrix matrix;
+
+	public JBlasDenseDoubleMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		this.matrix = new DoubleMatrix(rows, columns);
 	}
 
 	public JBlasDenseDoubleMatrix2D(DoubleMatrix matrix) {
+		super(matrix.getRows(), matrix.getColumns());
 		this.matrix = matrix;
 	}
 
-	public JBlasDenseDoubleMatrix2D(Matrix source)  {
-		super(source);
+	public JBlasDenseDoubleMatrix2D(Matrix source) {
+		super(source.getRowCount(), source.getColumnCount());
 		if (source instanceof HasColumnMajorDoubleArray1D) {
-			final double[] data = ((HasColumnMajorDoubleArray1D) source)
-					.getColumnMajorDoubleArray1D();
-			this.matrix = new DoubleMatrix((int) source.getRowCount(),
-					(int) source.getColumnCount(), data);
+			final double[] data = ((HasColumnMajorDoubleArray1D) source).getColumnMajorDoubleArray1D();
+			this.matrix = new DoubleMatrix((int) source.getRowCount(), (int) source.getColumnCount(), data);
 		} else if (source instanceof HasRowMajorDoubleArray2D) {
-			final double[][] data = ((HasRowMajorDoubleArray2D) source)
-					.getRowMajorDoubleArray2D();
+			final double[][] data = ((HasRowMajorDoubleArray2D) source).getRowMajorDoubleArray2D();
 			this.matrix = new DoubleMatrix(data);
 		} else if (source instanceof DenseDoubleMatrix2D) {
-			this.matrix = new DoubleMatrix((int) source.getRowCount(),
-					(int) source.getColumnCount());
+			this.matrix = new DoubleMatrix((int) source.getRowCount(), (int) source.getColumnCount());
 			final DenseDoubleMatrix2D m2 = (DenseDoubleMatrix2D) source;
 			for (int r = (int) source.getRowCount(); --r >= 0;) {
 				for (int c = (int) source.getColumnCount(); --c >= 0;) {
@@ -74,25 +73,26 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 				}
 			}
 		} else {
-			this.matrix = new DoubleMatrix((int) source.getRowCount(),
-					(int) source.getColumnCount());
+			this.matrix = new DoubleMatrix((int) source.getRowCount(), (int) source.getColumnCount());
 			for (long[] c : source.availableCoordinates()) {
 				setDouble(source.getAsDouble(c), c);
 			}
 		}
+		if (source.getAnnotation() != null) {
+			setAnnotation(source.getAnnotation().clone());
+		}
 	}
 
-	public JBlasDenseDoubleMatrix2D(long rowCount, long columnCount,
-			double[] doubleArray) {
-		this.matrix = new DoubleMatrix((int) rowCount, (int) columnCount,
-				doubleArray);
+	public JBlasDenseDoubleMatrix2D(int rowCount, int columnCount, double[] doubleArray) {
+		super(rowCount, columnCount);
+		this.matrix = new DoubleMatrix(rowCount, columnCount, doubleArray);
 	}
 
-	public Matrix inv()  {
+	public Matrix inv() {
 		return Inv.INSTANCE.calc(this);
 	}
 
-	public Matrix invSPD()  {
+	public Matrix invSPD() {
 		return InvSPD.INSTANCE.calc(this);
 	}
 
@@ -120,11 +120,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix;
 	}
 
-	public void setWrappedObject(DoubleMatrix object) {
-		this.matrix = object;
-	}
-
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		Matrix m = new JBlasDenseDoubleMatrix2D(matrix.dup());
 		if (getAnnotation() != null) {
 			m.setAnnotation(getAnnotation().clone());
@@ -154,8 +150,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix mtimes(Matrix m) {
 		if (m instanceof JBlasDenseDoubleMatrix2D) {
-			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) m
-					.getColumnCount());
+			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) m.getColumnCount());
 			matrix.mmuli(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			return new JBlasDenseDoubleMatrix2D(r);
 		} else {
@@ -165,8 +160,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix plus(Matrix m) {
 		if (m instanceof JBlasDenseDoubleMatrix2D) {
-			DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-					(int) getColumnCount());
+			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.addi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
 			Annotation a = getAnnotation();
@@ -181,8 +175,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix minus(Matrix m) {
 		if (m instanceof JBlasDenseDoubleMatrix2D) {
-			DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-					(int) getColumnCount());
+			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.subi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
 			Annotation a = getAnnotation();
@@ -196,8 +189,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix times(double value) {
-		DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-				(int) getColumnCount());
+		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.muli(value, r));
 		Annotation a = getAnnotation();
 		if (a != null) {
@@ -207,8 +199,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix divide(double value) {
-		DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-				(int) getColumnCount());
+		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.divi(value, r));
 		Annotation a = getAnnotation();
 		if (a != null) {
@@ -218,8 +209,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix plus(double value) {
-		DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-				(int) getColumnCount());
+		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.addi(value, r));
 		Annotation a = getAnnotation();
 		if (a != null) {
@@ -229,8 +219,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	}
 
 	public Matrix minus(double value) {
-		DoubleMatrix r = new DoubleMatrix((int) getRowCount(),
-				(int) getColumnCount());
+		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.subi(value, r));
 		Annotation a = getAnnotation();
 		if (a != null) {
@@ -241,6 +230,10 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 
 	public Matrix solve(Matrix b) {
 		return Solve.INSTANCE.calc(this, b);
+	}
+
+	public JBlasDenseDoubleMatrix2DFactory getFactory() {
+		return Factory;
 	}
 
 }

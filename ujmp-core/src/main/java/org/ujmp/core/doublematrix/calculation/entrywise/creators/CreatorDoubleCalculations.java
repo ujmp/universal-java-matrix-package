@@ -33,14 +33,14 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with zeros.
 	 */
-	public Matrix zeros(Ret ret) ;
+	public Matrix zeros(Ret ret);
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to 1.0.
 	 * 
 	 * @return Matrix with ones.
 	 */
-	public Matrix ones(Ret ret) ;
+	public Matrix ones(Ret ret);
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to uniform
@@ -48,7 +48,7 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with uniformly distributed values.
 	 */
-	public Matrix rand(Ret ret) ;
+	public Matrix rand(Ret ret);
 
 	/**
 	 * Returns a matrix with equal size, where all entries are set to random
@@ -57,13 +57,13 @@ public interface CreatorDoubleCalculations {
 	 * 
 	 * @return Matrix with normally distributed values.
 	 */
-	public Matrix randn(Ret ret) ;
+	public Matrix randn(Ret ret);
 
 	/**
 	 * Returns a matrix with ones at the diagonal.
 	 * 
 	 * @return Eye matrix with ones at the diagonal
 	 */
-	public Matrix eye(Ret ret) ;
+	public Matrix eye(Ret ret);
 
 }

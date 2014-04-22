@@ -54,14 +54,15 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
+import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
 import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.matrix.factory.DefaultMatrixFactory;
-import org.ujmp.core.matrix.factory.MatrixFactory;
 
 /**
  * <code>Matrix</code> is the main class for storing any type of data. You have
@@ -86,26 +87,19 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 	 */
 	public static final DefaultMatrixFactory Factory = new DefaultMatrixFactory();
 
-	public MatrixFactory<? extends Matrix> getFactory();
+	public BaseMatrixFactory<? extends Matrix> getFactory();
 
 	public static final Ret LINK = Ret.LINK;
-
 	public static final Ret ORIG = Ret.ORIG;
-
 	public static final Ret NEW = Ret.NEW;
 
 	public static final int Y = 0;
-
 	public static final int X = 1;
-
 	public static final int Z = 2;
 
 	public static final int ROW = 0;
-
 	public static final int COLUMN = 1;
-
 	public static final int ALL = 0x7fffffff;
-
 	public static final int NONE = -1;
 
 	public static TransposeCalculation<Matrix, Matrix> transpose = Transpose.MATRIX;
@@ -145,5 +139,7 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 	public Matrix clone();
 
 	public MatrixExportDestinationSelector export();
+
+	public MatrixImportSourceSelector importFrom();
 
 }

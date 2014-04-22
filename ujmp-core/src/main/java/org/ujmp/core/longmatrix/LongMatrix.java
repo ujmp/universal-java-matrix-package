@@ -33,10 +33,9 @@ public interface LongMatrix extends GenericMatrix<Long> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a long representation of the entry
-	 * @
+	 * @return a long representation of the entry @
 	 */
-	public long getLong(long... coordinates) ;
+	public long getLong(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a long value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface LongMatrix extends GenericMatrix<Long> {
 	 * @param value
 	 *            long value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setLong(long value, long... coordinates) ;
+	public void setLong(long value, long... coordinates);
 
 }

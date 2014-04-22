@@ -39,7 +39,7 @@ public class Magic extends AbstractIntCalculation {
 		this.magic = magic(size);
 	}
 
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		return magic.getAsInt(coordinates);
 	}
 

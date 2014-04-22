@@ -28,15 +28,14 @@ import org.ujmp.core.genericmatrix.GenericMatrix;
 public interface ByteArrayMatrix extends GenericMatrix<byte[]> {
 
 	/**
-	 * Returns a byte array representation of an entry in the matrix. The stored value
-	 * will be converted to a byte as good as possible.
+	 * Returns a byte array representation of an entry in the matrix. The stored
+	 * value will be converted to a byte as good as possible.
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a byte array representation of the entry
-	 * @
+	 * @return a byte array representation of the entry @
 	 */
-	public byte[] getByteArray(long... coordinates) ;
+	public byte[] getByteArray(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a byte value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface ByteArrayMatrix extends GenericMatrix<byte[]> {
 	 * @param value
 	 *            byte array value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setByteArray(byte[] value, long... coordinates) ;
+	public void setByteArray(byte[] value, long... coordinates);
 
 }

@@ -45,7 +45,7 @@ public class Join extends AbstractObjectCalculation {
 		this.column2 = column2;
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (result == null) {
 			createMatrix();
 		}

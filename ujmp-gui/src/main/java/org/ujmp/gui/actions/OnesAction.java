@@ -38,7 +38,7 @@ public class OnesAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "set all entries to 1");
 	}
 
-	public Object call()  {
+	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		m.getMatrix().ones(getRet());
 		return m;

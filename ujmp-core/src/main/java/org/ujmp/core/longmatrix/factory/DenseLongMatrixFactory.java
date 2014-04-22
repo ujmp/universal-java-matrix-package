@@ -23,10 +23,10 @@
 
 package org.ujmp.core.longmatrix.factory;
 
+import org.ujmp.core.genericmatrix.factory.DenseGenericMatrixFactory;
 import org.ujmp.core.longmatrix.DenseLongMatrix;
-import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 
-public interface DenseLongMatrixFactory<T extends DenseLongMatrix> extends DenseMatrixFactory<T>,
-		LongMatrixFactory<T> {
+public interface DenseLongMatrixFactory<T extends DenseLongMatrix> extends
+		DenseGenericMatrixFactory<T>, LongMatrixFactory<T> {
 
 }

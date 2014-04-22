@@ -33,11 +33,11 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		BooleanMatrix {
 	private static final long serialVersionUID = 8467706530550022243L;
 
-	public DefaultSparseBooleanMatrix(Matrix m)  {
+	public DefaultSparseBooleanMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseBooleanMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseBooleanMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,11 +53,11 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		return ValueType.BOOLEAN;
 	}
 
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return MathUtil.getBoolean(getObject(coordinates));
 	}
 
-	public void setBoolean(boolean value, long... coordinates)  {
+	public void setBoolean(boolean value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

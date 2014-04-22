@@ -33,8 +33,7 @@ import javax.swing.event.TableModelListener;
 
 import org.ujmp.gui.MatrixGUIObject;
 
-public class MatrixStatisticsBar extends JLabel implements TableModelListener,
-		ListSelectionListener {
+public class MatrixStatisticsBar extends JLabel implements TableModelListener, ListSelectionListener {
 	private static final long serialVersionUID = 3434122072016632576L;
 
 	private MatrixGUIObject matrixGUIObject = null;

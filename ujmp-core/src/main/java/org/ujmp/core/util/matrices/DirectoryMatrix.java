@@ -27,6 +27,8 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ujmp.core.DenseMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.setmatrix.AbstractSetMatrix;
 
 public class DirectoryMatrix extends AbstractSetMatrix<FileOrDirectoryMatrix> implements
@@ -73,4 +75,7 @@ public class DirectoryMatrix extends AbstractSetMatrix<FileOrDirectoryMatrix> im
 		return fileSet;
 	}
 
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
 }

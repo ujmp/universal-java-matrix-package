@@ -44,7 +44,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 	private final long[] size;
 
 	public AbstractMapToSparseMatrixWrapper(Map<Coordinates, Object> map, Matrix m) {
-		super(m);
+		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
 		this.values = map;
 		for (long[] c : m.allCoordinates()) {
@@ -74,7 +74,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		throw new RuntimeException("not allowed");
 	}
 
-	public final Object getObject(long... coordinates)  {
+	public final Object getObject(long... coordinates) {
 		Object v = getMap().get(Coordinates.wrap(coordinates));
 		return v == null ? defaultValue : v;
 	}
@@ -83,15 +83,15 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		return getMap().containsKey(Coordinates.wrap(coordinates));
 	}
 
-	public final double getAsDouble(long... coordinates)  {
+	public final double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public final void setAsDouble(double v, long... coordinates)  {
+	public final void setAsDouble(double v, long... coordinates) {
 		setObject(v, coordinates);
 	}
 
-	public final void setObject(Object o, long... coordinates)  {
+	public final void setObject(Object o, long... coordinates) {
 		while (maximumNumberOfEntries > 0 && getMap().size() > maximumNumberOfEntries) {
 			getMap().remove(getMap().keySet().iterator().next());
 		}

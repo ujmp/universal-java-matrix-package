@@ -28,5 +28,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ TestCommonsMathArrayDenseDoubleMatrix2D.class, TestCommonsMathBlockDenseDoubleMatrix2D.class })
-public class AllTests {
+public abstract class AllTests {
 }

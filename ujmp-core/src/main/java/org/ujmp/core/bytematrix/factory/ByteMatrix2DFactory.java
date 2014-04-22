@@ -23,14 +23,10 @@
 
 package org.ujmp.core.bytematrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.bytematrix.ByteMatrix2D;
+import org.ujmp.core.genericmatrix.factory.GenericMatrix2DFactory;
 
-public interface ByteMatrix2DFactory extends Serializable {
-
-	public ByteMatrix2D dense(long rows, long columns) ;
-
-	public ByteMatrix2D zeros(long rows, long columns) ;
+public interface ByteMatrix2DFactory<T extends ByteMatrix2D> extends GenericMatrix2DFactory<T>,
+		ByteMatrixFactory<T> {
 
 }

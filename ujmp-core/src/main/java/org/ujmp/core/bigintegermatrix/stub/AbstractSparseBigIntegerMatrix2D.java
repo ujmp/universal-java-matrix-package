@@ -26,13 +26,15 @@ package org.ujmp.core.bigintegermatrix.stub;
 import java.math.BigInteger;
 
 import org.ujmp.core.bigintegermatrix.SparseBigIntegerMatrix2D;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBigIntegerMatrix2D extends AbstractSparseBigIntegerMatrix
 		implements SparseBigIntegerMatrix2D {
 	private static final long serialVersionUID = -8819678476717826630L;
+
+	public AbstractSparseBigIntegerMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
+	}
 
 	public final Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator2D(getSize());
@@ -46,24 +48,20 @@ public abstract class AbstractSparseBigIntegerMatrix2D extends AbstractSparseBig
 		setBigInteger(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
-	public final BigInteger getObject(long row, long column)  {
+	public final BigInteger getObject(long row, long column) {
 		return getBigInteger(row, column);
 	}
 
-	public final void setObject(BigInteger o, long row, long column)  {
+	public final void setObject(BigInteger o, long row, long column) {
 		setBigInteger(o, row, column);
 	}
 
-	public final BigInteger getObject(int row, int column)  {
+	public final BigInteger getObject(int row, int column) {
 		return getBigInteger(row, column);
 	}
 
-	public final void setObject(BigInteger o, int row, int column)  {
+	public final void setObject(BigInteger o, int row, int column) {
 		setBigInteger(o, row, column);
-	}
-
-	public SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
 	}
 
 }

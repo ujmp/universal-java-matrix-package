@@ -23,8 +23,10 @@
 
 package org.ujmp.core.floatmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.floatmatrix.calculation.FloatCalculation;
 import org.ujmp.core.floatmatrix.stub.AbstractFloatMatrix;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class FloatCalculationMatrix extends AbstractFloatMatrix {
 	private static final long serialVersionUID = 1908338654416069952L;
@@ -32,6 +34,7 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 	private FloatCalculation calculation = null;
 
 	public FloatCalculationMatrix(FloatCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -55,12 +58,20 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		}
 	}
 
-	public float getFloat(long... coordinates)  {
+	public float getFloat(long... coordinates) {
 		return calculation.getFloat(coordinates);
 	}
 
-	public void setFloat(float value, long... coordinates)  {
+	public void setFloat(float value, long... coordinates) {
 		calculation.setFloat(value, coordinates);
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
+	}
+
+	public final boolean isSparse() {
+		return false;
 	}
 
 }

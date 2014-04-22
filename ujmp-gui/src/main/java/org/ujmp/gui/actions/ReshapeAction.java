@@ -36,11 +36,10 @@ public class ReshapeAction extends AbstractMatrixAction {
 	public ReshapeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Reshape");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Rearranges the cells of a matrix in a another way");
+		putValue(Action.SHORT_DESCRIPTION, "Rearranges the cells of a matrix in a another way");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrix().reshape(getNewOrLink(), getSize());
 		m.showGUI();
 		return m;

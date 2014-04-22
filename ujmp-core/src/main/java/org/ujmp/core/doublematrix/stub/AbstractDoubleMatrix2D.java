@@ -23,26 +23,15 @@
 
 package org.ujmp.core.doublematrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDoubleMatrix2D extends AbstractDoubleMatrix implements DoubleMatrix2D {
 	private static final long serialVersionUID = -4189202907633610643L;
 
-	public AbstractDoubleMatrix2D() {
-		super();
+	public AbstractDoubleMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
-	public AbstractDoubleMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDoubleMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
-	}
-	
 	public final double getDouble(long... coordinates) {
 		return getDouble(coordinates[ROW], coordinates[COLUMN]);
 	}

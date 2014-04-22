@@ -23,14 +23,10 @@
 
 package org.ujmp.core.bigdecimalmatrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix2D;
+import org.ujmp.core.numbermatrix.factory.NumberMatrix2DFactory;
 
-public interface BigDecimalMatrix2DFactory extends Serializable {
-
-	public BigDecimalMatrix2D dense(long rows, long columns) ;
-
-	public BigDecimalMatrix2D zeros(long rows, long columns) ;
+public interface BigDecimalMatrix2DFactory<T extends BigDecimalMatrix2D> extends
+		NumberMatrix2DFactory<T>, BaseBigDecimalMatrixFactory<T> {
 
 }

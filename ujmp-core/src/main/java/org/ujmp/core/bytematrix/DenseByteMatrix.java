@@ -23,8 +23,8 @@
 
 package org.ujmp.core.bytematrix;
 
-import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix;
 
-public interface DenseByteMatrix extends ByteMatrix, DenseMatrix {
+public interface DenseByteMatrix extends ByteMatrix, DenseGenericMatrix<Byte> {
 
 }

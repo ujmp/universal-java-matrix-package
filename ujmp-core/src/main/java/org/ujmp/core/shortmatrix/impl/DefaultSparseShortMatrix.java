@@ -33,11 +33,11 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		ShortMatrix {
 	private static final long serialVersionUID = -8927932400907638460L;
 
-	public DefaultSparseShortMatrix(Matrix m)  {
+	public DefaultSparseShortMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseShortMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseShortMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,12 +53,20 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		return ValueType.SHORT;
 	}
 
-	public short getShort(long... coordinates)  {
+	public short getShort(long... coordinates) {
 		return MathUtil.getShort(getObject(coordinates));
 	}
 
-	public void setShort(short value, long... coordinates)  {
+	public void setShort(short value, long... coordinates) {
 		setObject(value, coordinates);
+	}
+
+	public Short getNumber(long... coordinates) {
+		return getShort(coordinates);
+	}
+
+	public void setNumber(Short value, long... coordinates) {
+		setShort(value, coordinates);
 	}
 
 }

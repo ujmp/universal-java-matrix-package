@@ -148,9 +148,9 @@ public class Fixture {
 		return createDenseMatrix(createArrayMatrixWithRandomData(i, j, SEED));
 	}
 
-	public static Matrix createDenseMatrix(double[][] data) {
-		long rows = (long) data.length;
-		long cols = (long) data[0].length;
+	public static Matrix createDenseMatrix(final double[][] data) {
+		final int rows = data.length;
+		final int cols = data[0].length;
 		DefaultDenseDoubleMatrix2D mat = new DefaultDenseDoubleMatrix2D(rows, cols);
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {

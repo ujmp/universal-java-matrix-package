@@ -32,12 +32,11 @@ public class ToBooleanMatrix extends AbstractBooleanCalculation {
 		super(matrix);
 	}
 
-	
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return getSource().getAsBoolean(coordinates);
 	}
 
-	public void setBoolean(boolean value, long coordinates)  {
+	public void setBoolean(boolean value, long coordinates) {
 		getSource().setAsBoolean(value, coordinates);
 	}
 

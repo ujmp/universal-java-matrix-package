@@ -32,11 +32,11 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -7047230020224347032L;
 
-	public DefaultSparseLongMatrix(Matrix m)  {
+	public DefaultSparseLongMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseLongMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseLongMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -52,11 +52,11 @@ public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> im
 		return ValueType.LONG;
 	}
 
-	public long getLong(long... coordinates)  {
+	public long getLong(long... coordinates) {
 		return MathUtil.getLong(getObject(coordinates));
 	}
 
-	public void setLong(long value, long... coordinates)  {
+	public void setLong(long value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

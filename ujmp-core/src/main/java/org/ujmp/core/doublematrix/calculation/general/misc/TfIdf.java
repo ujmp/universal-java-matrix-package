@@ -56,8 +56,7 @@ public class TfIdf extends AbstractDoubleCalculation {
 		}
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (docTerm == null) {
 			calculate();
 		}
@@ -89,7 +88,6 @@ public class TfIdf extends AbstractDoubleCalculation {
 		}
 	}
 
-	
 	public long[] getSize() {
 		if (docTerm == null) {
 			calculate();

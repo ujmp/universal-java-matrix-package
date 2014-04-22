@@ -41,21 +41,14 @@ public class DiscretizeAction extends AbstractMatrixAction {
 	public DiscretizeAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Discretize");
-		putValue(Action.SHORT_DESCRIPTION,
-				"discretize all cells to integer values");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_COLON, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "discretize all cells to integer values");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_COLON, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix()
-				.discretize(
-						getRet(),
-						getDimension(),
-						(DiscretizationMethod) GUIUtil.getObject(
-								"Discretization method", DiscretizationMethod
-										.values()),
-						GUIUtil.getInt("How many bins", 1, 100));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().discretize(getRet(), getDimension(),
+				(DiscretizationMethod) GUIUtil.getObject("Discretization method", DiscretizationMethod.values()),
+				GUIUtil.getInt("How many bins", 1, 100));
 
 		m.showGUI();
 		return m;

@@ -71,7 +71,7 @@ public class Transpose extends AbstractObjectCalculation {
 		return null;
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return getSource().getAsObject(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 

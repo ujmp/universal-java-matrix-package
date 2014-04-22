@@ -33,15 +33,14 @@ public class Flipdim extends AbstractObjectCalculation {
 		super(dimension, m);
 	}
 
-	
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		coordinates = Coordinates.copyOf(coordinates);
 		long newValue = getSize()[getDimension()] - coordinates[getDimension()] - 1;
 		coordinates[getDimension()] = newValue;
 		return getSource().getAsObject(coordinates);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		long size = getSize()[getDimension()];
 		long max = size / 2;
 		Matrix m = getSource();

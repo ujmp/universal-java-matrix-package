@@ -36,11 +36,10 @@ public class EigAction extends AbstractMatrixAction {
 	public EigAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Eig");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates an Eigen decomposition of this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates an Eigen decomposition of this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix[] result = getMatrixObject().getMatrix().eig();
 		result[0].showGUI();
 		result[1].showGUI();

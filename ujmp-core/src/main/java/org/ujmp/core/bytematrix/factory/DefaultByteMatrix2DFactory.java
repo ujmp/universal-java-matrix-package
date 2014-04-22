@@ -23,15 +23,21 @@
 
 package org.ujmp.core.bytematrix.factory;
 
+import org.ujmp.core.bytematrix.ByteMatrix;
 import org.ujmp.core.bytematrix.ByteMatrix2D;
 import org.ujmp.core.bytematrix.impl.ArrayDenseByteMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultByteMatrix2DFactory extends AbstractByteMatrix2DFactory {
 	private static final long serialVersionUID = 3562619700375387209L;
 
-	
-	public ByteMatrix2D dense(long rows, long columns)  {
-		return new ArrayDenseByteMatrix2D(rows, columns);
+	public ByteMatrix2D zeros(long rows, long columns) {
+		return new ArrayDenseByteMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
+	}
+
+	public ByteMatrix zeros(long... size) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

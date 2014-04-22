@@ -23,9 +23,11 @@
 
 package org.ujmp.core.bigdecimalmatrix;
 
-import org.ujmp.core.SparseMatrix2D;
+import java.math.BigDecimal;
+
+import org.ujmp.core.numbermatrix.SparseNumberMatrix2D;
 
 public interface SparseBigDecimalMatrix2D extends BigDecimalMatrix2D, SparseBigDecimalMatrix,
-		SparseMatrix2D {
+		SparseNumberMatrix2D<BigDecimal> {
 
 }

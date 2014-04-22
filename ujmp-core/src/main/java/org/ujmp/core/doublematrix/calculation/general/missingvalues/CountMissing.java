@@ -34,18 +34,19 @@ public class CountMissing extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double sum = 0;
 		switch (getDimension()) {
 		case ROW:
 			for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
-				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, coordinates[COLUMN])) ? 1 : 0;
+				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, coordinates[COLUMN])) ? 1
+						: 0;
 			}
 			return sum;
 		case COLUMN:
 			for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
-				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(coordinates[ROW], c)) ? 1 : 0;
+				sum += MathUtil.isNaNOrInfinite(getSource().getAsDouble(coordinates[ROW], c)) ? 1
+						: 0;
 			}
 			return sum;
 		case ALL:
@@ -59,7 +60,6 @@ public class CountMissing extends AbstractDoubleCalculation {
 		return 0.0;
 	}
 
-	
 	public long[] getSize() {
 		switch (getDimension()) {
 		case ROW:

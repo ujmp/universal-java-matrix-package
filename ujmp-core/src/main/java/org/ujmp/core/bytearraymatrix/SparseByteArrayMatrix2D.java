@@ -25,6 +25,7 @@ package org.ujmp.core.bytearraymatrix;
 
 import org.ujmp.core.SparseMatrix2D;
 
-public interface SparseByteArrayMatrix2D extends ByteArrayMatrix2D, SparseByteArrayMatrix, SparseMatrix2D {
+public interface SparseByteArrayMatrix2D extends ByteArrayMatrix2D, SparseByteArrayMatrix,
+		SparseMatrix2D {
 
 }

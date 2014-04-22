@@ -35,4 +35,9 @@ public class DefaultSparseLongMatrixFactory extends
 		return null;
 	}
 
+	public SparseLongMatrix zeros(long rows, long columns) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

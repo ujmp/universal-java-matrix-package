@@ -25,11 +25,13 @@ package org.ujmp.colt;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.MathUtil;
 
 public class TestColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new ColtSparseDoubleMatrix2D(size);
+		return new ColtSparseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 	public Matrix createMatrix(Matrix source) {

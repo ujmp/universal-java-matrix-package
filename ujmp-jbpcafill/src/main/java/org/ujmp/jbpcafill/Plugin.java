@@ -41,17 +41,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("JBPCAfill");
 	}
 
-	
 	public String getDescription() {
 		return "library for imputing missing values";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

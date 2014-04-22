@@ -25,12 +25,15 @@ package org.ujmp.core.importer.source;
 
 import java.io.InputStream;
 
+import org.ujmp.core.Matrix;
+
 public abstract class AbstractMatrixStreamImportSource extends AbstractMatrixImportSource implements
 		MatrixStreamImportSource {
 
 	private final InputStream stream;
 
-	public AbstractMatrixStreamImportSource(InputStream stream) {
+	public AbstractMatrixStreamImportSource(Matrix matrix, InputStream stream) {
+		super(matrix);
 		this.stream = stream;
 	}
 

@@ -42,7 +42,7 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 		super(dimension, sources);
 	}
 
-	public final CharMatrix calcNew()  {
+	public final CharMatrix calcNew() {
 		CharMatrix result = (CharMatrix) Matrix.Factory.zeros(ValueType.CHAR, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsChar(getChar(c), c);
@@ -53,11 +53,11 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 		return result;
 	}
 
-	public final CharMatrix calcLink()  {
+	public final CharMatrix calcLink() {
 		return new CharCalculationMatrix(this);
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -71,7 +71,7 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setChar(char value, long... coordinates)  {
+	public void setChar(char value, long... coordinates) {
 	}
 
 	public final ValueType getValueType() {

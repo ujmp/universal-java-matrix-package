@@ -38,8 +38,7 @@ public class Swap extends AbstractObjectCalculation {
 		this.pos2 = pos2;
 	}
 
-	
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (pos1 == pos2) {
 			return getSource().getAsObject(coordinates);
 		} else if (coordinates[getDimension()] == pos1) {
@@ -55,7 +54,7 @@ public class Swap extends AbstractObjectCalculation {
 		}
 	}
 
-	public final Matrix calcOrig()  {
+	public final Matrix calcOrig() {
 		Matrix m = getSource();
 		if (m.getDimensionCount() > 2) {
 			throw new RuntimeException("ORIG works only for 2d matrices, use LINK or COPY instead");

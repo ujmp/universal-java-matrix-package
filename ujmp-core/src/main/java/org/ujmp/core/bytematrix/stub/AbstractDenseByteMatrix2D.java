@@ -23,28 +23,15 @@
 
 package org.ujmp.core.bytematrix.stub;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.DenseByteMatrix2D;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix implements
 		DenseByteMatrix2D {
 	private static final long serialVersionUID = -9072937987755366928L;
 
-	public AbstractDenseByteMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseByteMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseByteMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseByteMatrix2D(long rows, long columns) {
+		super(new long[] { rows, columns });
 	}
 
 	public final Iterable<long[]> allCoordinates() {
@@ -73,10 +60,6 @@ public abstract class AbstractDenseByteMatrix2D extends AbstractDenseByteMatrix 
 
 	public final void setObject(Byte value, int row, int column) {
 		setByte(value, row, column);
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return DenseObjectMatrix2D.Factory;
 	}
 
 	public final int getDimensionCount() {

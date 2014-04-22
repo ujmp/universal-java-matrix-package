@@ -42,11 +42,11 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
-	public final ObjectMatrix calcLink()  {
+	public final ObjectMatrix calcLink() {
 		return new ObjectCalculationMatrix(this);
 	}
 
-	public final Matrix calcNew()  {
+	public final Matrix calcNew() {
 		// Matrix result = MatrixFactory.zeros(getSource().getValueType(),
 		// getSize());
 		Matrix result = Matrix.Factory.zeros(getValueType(), getSize());
@@ -59,7 +59,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		return result;
 	}
 
-	public Matrix calcOrig()  {
+	public Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
 					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
@@ -73,7 +73,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 	}
 
 	public ValueType getValueType() {

@@ -46,23 +46,18 @@ public class NewMatrixAction extends AbstractObjectAction {
 		putValue(Action.NAME, "New Matrix...");
 		putValue(Action.SHORT_DESCRIPTION, "Creates a new empty matrix");
 		putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
-		putValue(Action.ACCELERATOR_KEY,
-				KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public Object call() {
 		try {
 			boolean isDense = GUIUtil.getBoolean("Should the matrix be dense?");
-			ValueType valueType = ValueType.values()[JOptionPane
-					.showOptionDialog(getComponent(),
-							"Select the value type for the new matrix",
-							"Sparse Matrix", JOptionPane.OK_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null,
-							ValueType.values(), ValueType.DOUBLE)];
+			ValueType valueType = ValueType.values()[JOptionPane.showOptionDialog(getComponent(),
+					"Select the value type for the new matrix", "Sparse Matrix", JOptionPane.OK_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, ValueType.values(), ValueType.DOUBLE)];
 			long[] size = null;
 			while (size == null || size.length < 2) {
-				String s = JOptionPane.showInputDialog(getComponent(),
-						"Enter the size of the new matrix, e.g. 3x5x6",
+				String s = JOptionPane.showInputDialog(getComponent(), "Enter the size of the new matrix, e.g. 3x5x6",
 						"Dense Matrix", JOptionPane.QUESTION_MESSAGE);
 				try {
 					size = Coordinates.parseString(s);

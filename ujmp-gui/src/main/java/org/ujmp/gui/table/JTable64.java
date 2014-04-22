@@ -38,8 +38,8 @@ import javax.swing.event.RowSorterListener;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableColumnModel;
 
-public class JTable64 extends JTable implements TableModelListener64, Scrollable, TableColumnModelListener64, ListSelectionListener64,
-		CellEditorListener, Accessible, RowSorterListener {
+public class JTable64 extends JTable implements TableModelListener64, Scrollable, TableColumnModelListener64,
+		ListSelectionListener64, CellEditorListener, Accessible, RowSorterListener {
 	private static final long serialVersionUID = -4778128053560013569L;
 
 	private SizeSequence rowModel = null;

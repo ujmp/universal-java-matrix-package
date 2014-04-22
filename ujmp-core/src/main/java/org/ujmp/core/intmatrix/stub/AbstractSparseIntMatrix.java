@@ -24,15 +24,12 @@
 package org.ujmp.core.intmatrix.stub;
 
 import org.ujmp.core.intmatrix.SparseIntMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseIntMatrix extends AbstractIntMatrix implements SparseIntMatrix {
-
 	private static final long serialVersionUID = 5391576722782755001L;
 
-	public SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
+	public AbstractSparseIntMatrix(long[] size) {
+		super(size);
 	}
 
 }

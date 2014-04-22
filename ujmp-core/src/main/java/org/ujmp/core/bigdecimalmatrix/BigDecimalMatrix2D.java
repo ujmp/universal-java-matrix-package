@@ -25,13 +25,9 @@ package org.ujmp.core.bigdecimalmatrix;
 
 import java.math.BigDecimal;
 
-import org.ujmp.core.bigdecimalmatrix.factory.BigDecimalMatrix2DFactory;
-import org.ujmp.core.bigdecimalmatrix.factory.DefaultBigDecimalMatrix2DFactory;
-import org.ujmp.core.genericmatrix.GenericMatrix2D;
+import org.ujmp.core.numbermatrix.NumberMatrix2D;
 
-public interface BigDecimalMatrix2D extends BigDecimalMatrix, GenericMatrix2D<BigDecimal> {
-
-	public static BigDecimalMatrix2DFactory factory = new DefaultBigDecimalMatrix2DFactory();
+public interface BigDecimalMatrix2D extends BaseBigDecimalMatrix, NumberMatrix2D<BigDecimal> {
 
 	public BigDecimal getBigDecimal(long row, long column);
 

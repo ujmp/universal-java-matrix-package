@@ -26,21 +26,20 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 import java.math.BigDecimal;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<BigDecimal> implements
-		BigDecimalMatrix {
+		BaseBigDecimalMatrix {
 	private static final long serialVersionUID = 7206154432953094472L;
 
-	public DefaultSparseBigDecimalMatrix(Matrix m)  {
+	public DefaultSparseBigDecimalMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseBigDecimalMatrix(Matrix m, int maximumNumberOfEntries)
-			 {
+	public DefaultSparseBigDecimalMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -52,18 +51,15 @@ public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<Bi
 		super(maximumNumberOfEntries, size);
 	}
 
-	
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}
 
-	
-	public BigDecimal getBigDecimal(long... coordinates)  {
+	public BigDecimal getBigDecimal(long... coordinates) {
 		return MathUtil.getBigDecimal(getObject(coordinates));
 	}
 
-	
-	public void setBigDecimal(BigDecimal value, long... coordinates)  {
+	public void setBigDecimal(BigDecimal value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

@@ -43,8 +43,7 @@ public interface StringCalculations {
 	 *            Replacement String
 	 * @return matrix with modified entries
 	 */
-	public Matrix replaceRegex(Ret returnType, String search, String replacement)
-			;
+	public Matrix replaceRegex(Ret returnType, String search, String replacement);
 
 	/**
 	 * Replaces matching text in every entry of the matrix.
@@ -58,24 +57,22 @@ public interface StringCalculations {
 	 *            Replacement String
 	 * @return matrix with modified entries
 	 */
-	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement)
-			;
+	public Matrix replaceRegex(Ret returnType, Pattern search, String replacement);
 
-	public Matrix lowerCase(Ret returnType) ;
+	public Matrix lowerCase(Ret returnType);
 
-	public Matrix upperCase(Ret returnType) ;
+	public Matrix upperCase(Ret returnType);
 
 	public Matrix translate(Ret returnType, String sourceLanguage, String targetLanguage);
 
-	public Matrix convertEncoding(Ret returnType, String encoding) ;
+	public Matrix convertEncoding(Ret returnType, String encoding);
 
-	public Matrix tfIdf(boolean calculateTf, boolean calculateIdf, boolean normalize)
-			;
+	public Matrix tfIdf(boolean calculateTf, boolean calculateIdf, boolean normalize);
 
-	public Matrix removePunctuation(Ret ret) ;
+	public Matrix removePunctuation(Ret ret);
 
-	public Matrix stem(Ret ret) ;
+	public Matrix stem(Ret ret);
 
-	public Matrix removeWords(Ret ret, Collection<String> words) ;
+	public Matrix removeWords(Ret ret, Collection<String> words);
 
 }

@@ -36,6 +36,10 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		ListMatrix<A> {
 	private static final long serialVersionUID = -6776628601679785451L;
 
+	public AbstractListMatrix() {
+		super(0, 1);
+	}
+
 	public abstract List<A> getList();
 
 	public final long[] getSize() {
@@ -171,11 +175,11 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().toArray(a);
 	}
 
-	public double getAsDouble(long... coordinates)  {
+	public double getAsDouble(long... coordinates) {
 		return MathUtil.getDouble(getObject(coordinates));
 	}
 
-	public void setAsDouble(double value, long... coordinates)  {
+	public void setAsDouble(double value, long... coordinates) {
 		setAsObject(value, coordinates);
 	}
 

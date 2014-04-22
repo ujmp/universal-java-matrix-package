@@ -23,8 +23,11 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
 public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
@@ -33,6 +36,7 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	private String[][] values = null;
 
 	public SimpleDenseStringMatrix2D(String string) {
+		super(0, 0);
 		string = string.replaceAll(StringUtil.BRACKETS, "");
 		String[] rows = string.split(StringUtil.SEMICOLONORNEWLINE);
 		String[] cols = rows[0].split(StringUtil.COLONORSPACES);
@@ -45,19 +49,20 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 		}
 	}
 
-	public SimpleDenseStringMatrix2D(Matrix source)  {
-		this(source.getSize());
+	public SimpleDenseStringMatrix2D(Matrix source) {
+		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setAsString(source.getAsString(c), c);
 		}
 	}
 
-	public SimpleDenseStringMatrix2D(long... size) {
-		super(size);
-		values = new String[(int) size[ROW]][(int) size[COLUMN]];
+	public SimpleDenseStringMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new String[rows][columns];
 	}
 
 	public SimpleDenseStringMatrix2D(String[]... values) {
+		super(values.length, values[0].length);
 		this.values = values;
 	}
 
@@ -79,6 +84,10 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 	public void setString(String value, long row, long column) {
 		values[(int) row][(int) column] = value;
+	}
+
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

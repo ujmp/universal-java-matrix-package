@@ -30,20 +30,21 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 
-public class CommonsMathDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<CommonsMathArrayDenseDoubleMatrix2D> {
+public class CommonsMathDenseDoubleMatrix2DFactory extends
+		AbstractDenseDoubleMatrix2DFactory<CommonsMathArrayDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = -4938756141859017575L;
 
 	public static final CommonsMathDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathDenseDoubleMatrix2DFactory();
 
-	public CommonsMathArrayDenseDoubleMatrix2D zeros(long rows, long columns)  {
+	public CommonsMathArrayDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new CommonsMathArrayDenseDoubleMatrix2D(rows, columns);
 	}
 
-	public DenseDoubleMatrix2D dense(Array2DRowRealMatrix matrix)  {
+	public DenseDoubleMatrix2D dense(Array2DRowRealMatrix matrix) {
 		return new CommonsMathArrayDenseDoubleMatrix2D(matrix);
 	}
 
-	public DenseDoubleMatrix2D dense(BlockRealMatrix matrix)  {
+	public DenseDoubleMatrix2D dense(BlockRealMatrix matrix) {
 		return new CommonsMathBlockDenseDoubleMatrix2D(matrix);
 	}
 

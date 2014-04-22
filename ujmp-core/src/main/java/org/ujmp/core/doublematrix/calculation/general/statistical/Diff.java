@@ -37,8 +37,7 @@ public class Diff extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double v1 = 0.0;
 		double v2 = 0.0;
 		switch (getDimension()) {

@@ -32,12 +32,11 @@ public class ToDoubleMatrix extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return getSource().getAsDouble(coordinates);
 	}
 
-	public void setDouble(double value, long coordinates)  {
+	public void setDouble(double value, long coordinates) {
 		getSource().setAsDouble(value, coordinates);
 	}
 

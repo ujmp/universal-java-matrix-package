@@ -24,14 +24,13 @@
 package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.longmatrix.SparseLongMatrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 
 public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix implements
 		SparseLongMatrix {
 	private static final long serialVersionUID = 5682519172871817291L;
 
-	public SparseObjectMatrix2DFactory getFactory() {
-		return SparseObjectMatrix2D.factory;
+	public AbstractSparseLongMatrix(long[] size) {
+		super(size);
 	}
+
 }

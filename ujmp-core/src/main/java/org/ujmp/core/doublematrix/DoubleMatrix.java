@@ -23,37 +23,12 @@
 
 package org.ujmp.core.doublematrix;
 
-import org.ujmp.core.doublematrix.factory.DefaultDoubleMatrixFactory;
-import org.ujmp.core.doublematrix.factory.DoubleMatrixFactory;
-import org.ujmp.core.genericmatrix.GenericMatrix;
+import org.ujmp.core.doublematrix.factory.DefaultDenseDoubleMatrix2DFactory;
+import org.ujmp.core.numbermatrix.NumberMatrix;
 
-public interface DoubleMatrix extends GenericMatrix<Double> {
+public interface DoubleMatrix extends DenseDoubleMatrix2D, DenseDoubleMatrixMultiD,
+		SparseDoubleMatrix2D, SparseDoubleMatrixMultiD, NumberMatrix<Double> {
 
-	public static DoubleMatrixFactory<? extends DoubleMatrix> Factory = new DefaultDoubleMatrixFactory();
-
-	public DoubleMatrixFactory<? extends DoubleMatrix> getFactory();
-
-	/**
-	 * Returns a double representation of an entry in the matrix. The stored
-	 * value will be converted to a double as good as possible.
-	 * 
-	 * @param coordinates
-	 *            location of the entry
-	 * @return a double representation of the entry
-	 * @
-	 */
-	public double getDouble(long... coordinates) ;
-
-	/**
-	 * Sets an entry in the matrix to a double value. If the matrix cannot store
-	 * double values, the value will be represented as good as possible.
-	 * 
-	 * @param value
-	 *            double value
-	 * @param coordinates
-	 *            location of the entry
-	 * @
-	 */
-	public void setDouble(double value, long... coordinates) ;
+	public static DefaultDenseDoubleMatrix2DFactory Factory = new DefaultDenseDoubleMatrix2DFactory();
 
 }

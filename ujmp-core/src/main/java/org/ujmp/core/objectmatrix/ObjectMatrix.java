@@ -25,11 +25,10 @@ package org.ujmp.core.objectmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.objectmatrix.factory.DefaultDenseObjectMatrixFactory;
-import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 
-public interface ObjectMatrix extends GenericMatrix<Object> {
+public interface ObjectMatrix extends DenseObjectMatrix2D, DenseObjectMatrixMultiD,
+		SparseObjectMatrix2D, SparseObjectMatrixMultiD, GenericMatrix<Object> {
 
 	public static DefaultDenseObjectMatrixFactory Factory = new DefaultDenseObjectMatrixFactory();
 
-	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory();
 }

@@ -39,13 +39,11 @@ public class PinvAction extends AbstractMatrixAction {
 	public PinvAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Pseudo Inverse");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the Moore Penrose pseudo inverse of a matrix");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_BACK_SLASH, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the Moore Penrose pseudo inverse of a matrix");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SLASH, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().pinv();
 		result.showGUI();
 		return result;

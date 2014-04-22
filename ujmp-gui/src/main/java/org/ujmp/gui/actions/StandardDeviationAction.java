@@ -37,13 +37,11 @@ public class StandardDeviationAction extends AbstractMatrixAction {
 	public StandardDeviationAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Standard Deviation");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates the standard deviation of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates the standard deviation of the entries in this matrix");
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW,
-				getDimension(), getIgnoreMissing(), true);
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW, getDimension(), getIgnoreMissing(), true);
 		result.showGUI();
 		return result;
 	}

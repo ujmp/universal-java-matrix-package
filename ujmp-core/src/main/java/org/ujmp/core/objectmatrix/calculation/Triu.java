@@ -35,7 +35,7 @@ public class Triu extends AbstractObjectCalculation {
 		this.k = k;
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (coordinates[ROW] <= coordinates[COLUMN] - k) {
 			return getSource().getAsObject(coordinates);
 		} else {

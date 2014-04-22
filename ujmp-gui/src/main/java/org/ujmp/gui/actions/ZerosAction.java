@@ -38,7 +38,7 @@ public class ZerosAction extends AbstractMatrixAction {
 		putValue(Action.SHORT_DESCRIPTION, "set all entries to 0");
 	}
 
-	public Object call()  {
+	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		m.getMatrix().zeros(getRet());
 		return m;

@@ -30,9 +30,12 @@ import java.io.IOException;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.objectmatrix.SparseObjectMatrix;
+import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
-public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements Flushable, Closeable, Erasable {
+public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements Flushable, Closeable,
+		Erasable {
 	private static final long serialVersionUID = -7743149828558906127L;
 
 	public EhcacheSparseObjectMatrix(Matrix m) throws IOException {
@@ -53,6 +56,11 @@ public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper 
 
 	public void close() throws IOException {
 		((Closeable) getMap()).close();
+	}
+
+	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

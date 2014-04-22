@@ -28,13 +28,14 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = 3110279640095711135L;
 
-	private BigInteger[][] values = null;
+	private final BigInteger[][] values;
 
-	public ArrayDenseBigIntegerMatrix2D(Matrix m)  {
+	public ArrayDenseBigIntegerMatrix2D(Matrix m) {
 		super(m);
 		if (m instanceof ArrayDenseBigIntegerMatrix2D) {
 			BigInteger[][] v = ((ArrayDenseBigIntegerMatrix2D) m).values;
@@ -53,18 +54,20 @@ public class ArrayDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2
 	}
 
 	public ArrayDenseBigIntegerMatrix2D(BigInteger[]... v) {
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseBigIntegerMatrix2D(long... size) {
-		super(size);
-		values = new BigInteger[(int) size[ROW]][(int) size[COLUMN]];
+	public ArrayDenseBigIntegerMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new BigInteger[rows][columns];
 		for (int r = values.length; --r != -1;) {
 			Arrays.fill(values[r], BigInteger.ZERO);
 		}
 	}
 
 	public ArrayDenseBigIntegerMatrix2D(BigInteger... v) {
+		super(v.length, 1);
 		this.values = new BigInteger[v.length][1];
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
@@ -97,6 +100,10 @@ public class ArrayDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2
 
 	public void setBigInteger(BigInteger value, int row, int column) {
 		values[row][column] = value;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

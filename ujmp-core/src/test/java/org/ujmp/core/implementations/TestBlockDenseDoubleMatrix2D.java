@@ -25,18 +25,28 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
 
-	public Matrix createMatrix(long... size)  {
-		return new BlockDenseDoubleMatrix2D(size);
+	public Matrix createMatrix(long... size) {
+		return new BlockDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
-	public Matrix createMatrix(Matrix source)  {
+	public Matrix createMatrix(Matrix source) {
 		return new BlockDenseDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
 		return true;
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
 	}
 }

@@ -36,11 +36,10 @@ public class Log2Action extends AbstractMatrixAction {
 	public Log2Action(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Log2");
-		putValue(Action.SHORT_DESCRIPTION,
-				"logarithm with basis 2 of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "logarithm with basis 2 of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().log2(getRet());
 		m.showGUI();
 		return m;

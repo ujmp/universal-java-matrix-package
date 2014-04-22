@@ -23,7 +23,7 @@
 
 package org.ujmp.core.calculation;
 
-import static org.ujmp.core.util.VerifyUtil.assertTrue;
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -112,16 +112,16 @@ class MtimesMatrix implements MtimesCalculation<Matrix, Matrix, Matrix> {
 	}
 
 	private final void gemm(final Matrix A, final Matrix B, final Matrix C) {
-		VerifyUtil.assert2D(A);
-		VerifyUtil.assert2D(B);
-		VerifyUtil.assert2D(C);
+		VerifyUtil.verify2D(A);
+		VerifyUtil.verify2D(B);
+		VerifyUtil.verify2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
-		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
-		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -177,16 +177,16 @@ class MtimesDenseMatrix implements MtimesCalculation<DenseMatrix, DenseMatrix, D
 	}
 
 	private final void gemm(final DenseMatrix A, final DenseMatrix B, final DenseMatrix C) {
-		VerifyUtil.assert2D(A);
-		VerifyUtil.assert2D(B);
-		VerifyUtil.assert2D(C);
+		VerifyUtil.verify2D(A);
+		VerifyUtil.verify2D(B);
+		VerifyUtil.verify2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
-		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
-		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m1ColumnCount, m2RowCount, "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m1RowCount, C.getRowCount(), "matrices have wrong sizes");
+		VerifyUtil.verifyEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong sizes");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -231,14 +231,14 @@ class MtimesDenseMatrix implements MtimesCalculation<DenseMatrix, DenseMatrix, D
 class MtimesSparseMatrix1 implements MtimesCalculation<SparseMatrix, Matrix, Matrix> {
 
 	public final void calc(final SparseMatrix source1, final Matrix source2, final Matrix target) {
-		VerifyUtil.assert2D(source1);
-		VerifyUtil.assert2D(source2);
-		VerifyUtil.assert2D(target);
-		VerifyUtil.assertEquals(source1.getColumnCount(), source2.getRowCount(),
+		VerifyUtil.verify2D(source1);
+		VerifyUtil.verify2D(source2);
+		VerifyUtil.verify2D(target);
+		VerifyUtil.verifyEquals(source1.getColumnCount(), source2.getRowCount(),
 				"matrices have wrong sizes");
-		VerifyUtil.assertEquals(target.getRowCount(), source1.getRowCount(),
+		VerifyUtil.verifyEquals(target.getRowCount(), source1.getRowCount(),
 				"matrices have wrong sizes");
-		VerifyUtil.assertEquals(target.getColumnCount(), source2.getColumnCount(),
+		VerifyUtil.verifyEquals(target.getColumnCount(), source2.getColumnCount(),
 				"matrices have wrong sizes");
 		target.clear();
 		for (long[] c1 : source1.availableCoordinates()) {
@@ -260,14 +260,14 @@ class MtimesSparseMatrix1 implements MtimesCalculation<SparseMatrix, Matrix, Mat
 class MtimesSparseMatrix2 implements MtimesCalculation<Matrix, SparseMatrix, Matrix> {
 
 	public final void calc(final Matrix source1, final SparseMatrix source2, final Matrix target) {
-		VerifyUtil.assert2D(source1);
-		VerifyUtil.assert2D(source2);
-		VerifyUtil.assert2D(target);
-		VerifyUtil.assertEquals(source1.getColumnCount(), source2.getRowCount(),
+		VerifyUtil.verify2D(source1);
+		VerifyUtil.verify2D(source2);
+		VerifyUtil.verify2D(target);
+		VerifyUtil.verifyEquals(source1.getColumnCount(), source2.getRowCount(),
 				"matrices have wrong sizes");
-		VerifyUtil.assertEquals(target.getRowCount(), source1.getRowCount(),
+		VerifyUtil.verifyEquals(target.getRowCount(), source1.getRowCount(),
 				"matrices have wrong sizes");
-		VerifyUtil.assertEquals(target.getColumnCount(), source2.getColumnCount(),
+		VerifyUtil.verifyEquals(target.getColumnCount(), source2.getColumnCount(),
 				"matrices have wrong sizes");
 		target.clear();
 		for (long[] c2 : source2.availableCoordinates()) {
@@ -300,16 +300,16 @@ class MtimesDenseMatrix2D implements MtimesCalculation<DenseMatrix2D, DenseMatri
 	}
 
 	private final void gemm(final DenseMatrix2D A, final DenseMatrix2D B, final DenseMatrix2D C) {
-		VerifyUtil.assert2D(A);
-		VerifyUtil.assert2D(B);
-		VerifyUtil.assert2D(C);
+		VerifyUtil.verify2D(A);
+		VerifyUtil.verify2D(B);
+		VerifyUtil.verify2D(C);
 		final int m1RowCount = (int) A.getRowCount();
 		final int m1ColumnCount = (int) A.getColumnCount();
 		final int m2RowCount = (int) B.getRowCount();
 		final int m2ColumnCount = (int) B.getColumnCount();
-		VerifyUtil.assertEquals(m1ColumnCount, m2RowCount, "matrices have wrong size");
-		VerifyUtil.assertEquals(m1RowCount, C.getRowCount(), "matrices have wrong size");
-		VerifyUtil.assertEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong size");
+		VerifyUtil.verifyEquals(m1ColumnCount, m2RowCount, "matrices have wrong size");
+		VerifyUtil.verifyEquals(m1RowCount, C.getRowCount(), "matrices have wrong size");
+		VerifyUtil.verifyEquals(m2ColumnCount, C.getColumnCount(), "matrices have wrong size");
 
 		if (m1RowCount >= Mtimes.THRESHOLD && m1ColumnCount >= Mtimes.THRESHOLD
 				&& m2ColumnCount >= Mtimes.THRESHOLD) {
@@ -363,12 +363,12 @@ class MtimesDenseDoubleMatrix2D implements
 
 	public final void calc(final DenseDoubleMatrix2D source1, final DenseDoubleMatrix2D source2,
 			final DenseDoubleMatrix2D target) {
-		assertTrue(source1 != null, "a == null");
-		assertTrue(source2 != null, "b == null");
-		assertTrue(target != null, "c == null");
-		assertTrue(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
-		assertTrue(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
-		assertTrue(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
+		verifyTrue(source1 != null, "a == null");
+		verifyTrue(source2 != null, "b == null");
+		verifyTrue(target != null, "c == null");
+		verifyTrue(source1.getColumnCount() == source2.getRowCount(), "a.cols!=b.rows");
+		verifyTrue(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
+		verifyTrue(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
 		if (source1.getRowCount() >= Mtimes.THRESHOLD
 				&& source1.getColumnCount() >= Mtimes.THRESHOLD
 				&& source2.getColumnCount() >= Mtimes.THRESHOLD) {
@@ -380,19 +380,19 @@ class MtimesDenseDoubleMatrix2D implements
 			} else if (source1 instanceof HasColumnMajorDoubleArray1D
 					&& source2 instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
-				calcDoubleArrayMultiThreaded(((HasColumnMajorDoubleArray1D) source1)
-						.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(), (int) source1
-						.getColumnCount(), ((HasColumnMajorDoubleArray1D) source2)
-						.getColumnMajorDoubleArray1D(), (int) source2.getRowCount(), (int) source2
-						.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
-						.getColumnMajorDoubleArray1D());
+				calcDoubleArrayMultiThreaded(
+						((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(),
+						(int) source1.getRowCount(), (int) source1.getColumnCount(),
+						((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
+						(int) source2.getRowCount(), (int) source2.getColumnCount(),
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 			} else if (source1 instanceof HasRowMajorDoubleArray2D
 					&& source2 instanceof HasRowMajorDoubleArray2D
 					&& target instanceof HasRowMajorDoubleArray2D) {
-				calcDoubleArray2DMultiThreaded(((HasRowMajorDoubleArray2D) source1)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
-						.getRowMajorDoubleArray2D());
+				calcDoubleArray2DMultiThreaded(
+						((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 			} else {
 				calcDenseDoubleMatrix2DMultiThreaded(source1, source2, target);
 			}
@@ -400,19 +400,19 @@ class MtimesDenseDoubleMatrix2D implements
 			if (source1 instanceof HasColumnMajorDoubleArray1D
 					&& source2 instanceof HasColumnMajorDoubleArray1D
 					&& target instanceof HasColumnMajorDoubleArray1D) {
-				gemmDoubleArraySingleThreaded(((HasColumnMajorDoubleArray1D) source1)
-						.getColumnMajorDoubleArray1D(), (int) source1.getRowCount(), (int) source1
-						.getColumnCount(), ((HasColumnMajorDoubleArray1D) source2)
-						.getColumnMajorDoubleArray1D(), (int) source2.getRowCount(), (int) source2
-						.getColumnCount(), ((HasColumnMajorDoubleArray1D) target)
-						.getColumnMajorDoubleArray1D());
+				gemmDoubleArraySingleThreaded(
+						((HasColumnMajorDoubleArray1D) source1).getColumnMajorDoubleArray1D(),
+						(int) source1.getRowCount(), (int) source1.getColumnCount(),
+						((HasColumnMajorDoubleArray1D) source2).getColumnMajorDoubleArray1D(),
+						(int) source2.getRowCount(), (int) source2.getColumnCount(),
+						((HasColumnMajorDoubleArray1D) target).getColumnMajorDoubleArray1D());
 			} else if (source1 instanceof HasRowMajorDoubleArray2D
 					&& source2 instanceof HasRowMajorDoubleArray2D
 					&& target instanceof HasRowMajorDoubleArray2D) {
-				calcDoubleArray2DSingleThreaded(((HasRowMajorDoubleArray2D) source1)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) source2)
-						.getRowMajorDoubleArray2D(), ((HasRowMajorDoubleArray2D) target)
-						.getRowMajorDoubleArray2D());
+				calcDoubleArray2DSingleThreaded(
+						((HasRowMajorDoubleArray2D) source1).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) source2).getRowMajorDoubleArray2D(),
+						((HasRowMajorDoubleArray2D) target).getRowMajorDoubleArray2D());
 			} else {
 				calcDenseDoubleMatrix2DSingleThreaded(source1, source2, target);
 			}
@@ -625,8 +625,8 @@ class MtimesDenseDoubleMatrix2D implements
 			final BlockDenseDoubleMatrix2D b, final BlockDenseDoubleMatrix2D c) {
 		final BlockMatrixLayout al = a.getBlockLayout();
 		final BlockMatrixLayout bl = b.getBlockLayout();
-		assertTrue(al.columns == bl.rows, "b.rows != this.columns");
-		assertTrue(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s",
+		verifyTrue(al.columns == bl.rows, "b.rows != this.columns");
+		verifyTrue(al.blockStripe == bl.blockStripe, "block sizes differ: %s != %s",
 				al.blockStripe, bl.blockStripe);
 
 		final List<Callable<Void>> tasks = new LinkedList<Callable<Void>>();

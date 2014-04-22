@@ -42,8 +42,7 @@ import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
-public abstract class AbstractObjectAction implements Action, Callable<Object>,
-		Serializable {
+public abstract class AbstractObjectAction implements Action, Callable<Object>, Serializable {
 	private static final long serialVersionUID = -118767390543995981L;
 
 	public static final int ROW = Matrix.ROW;
@@ -87,8 +86,7 @@ public abstract class AbstractObjectAction implements Action, Callable<Object>,
 	}
 
 	public final String toString() {
-		return (String) getValue(Action.NAME) + " ("
-				+ getValue(Action.SHORT_DESCRIPTION) + ")";
+		return (String) getValue(Action.NAME) + " (" + getValue(Action.SHORT_DESCRIPTION) + ")";
 	}
 
 	public final GUIObject getGUIObject() {
@@ -150,11 +148,8 @@ public abstract class AbstractObjectAction implements Action, Callable<Object>,
 		return enabled;
 	}
 
-	protected void firePropertyChange(String propertyName, Object oldValue,
-			Object newValue) {
-		if (changeSupport == null
-				|| (oldValue != null && newValue != null && oldValue
-						.equals(newValue))) {
+	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		if (changeSupport == null || (oldValue != null && newValue != null && oldValue.equals(newValue))) {
 			return;
 		}
 		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
@@ -183,16 +178,14 @@ public abstract class AbstractObjectAction implements Action, Callable<Object>,
 		firePropertyChange(key, oldValue, newValue);
 	}
 
-	public synchronized void addPropertyChangeListener(
-			PropertyChangeListener listener) {
+	public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
 		if (changeSupport == null) {
 			changeSupport = new SwingPropertyChangeSupport(this);
 		}
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
-	public synchronized void removePropertyChangeListener(
-			PropertyChangeListener listener) {
+	public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
 		if (changeSupport == null) {
 			return;
 		}

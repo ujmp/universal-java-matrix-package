@@ -44,7 +44,7 @@ public class Atimes extends AbstractDoubleCalculation {
 		super();
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		Matrix m1 = getSources()[0];
 		Matrix m2 = getSources()[1];
 

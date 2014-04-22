@@ -74,8 +74,8 @@ public class Selection extends AbstractObjectCalculation {
 				}
 			} else {
 				for (int r = 0; r < selection[ROW].length; r++) {
-					anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN,
-							selection[ROW][r], 0), r, 0);
+					anew.setAxisAnnotation(Matrix.COLUMN,
+							a.getAxisAnnotation(Matrix.COLUMN, selection[ROW][r], 0), r, 0);
 				}
 			}
 			if (selection[COLUMN] == null) {
@@ -85,15 +85,15 @@ public class Selection extends AbstractObjectCalculation {
 				}
 			} else {
 				for (int c = 0; c < selection[COLUMN].length; c++) {
-					anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0,
-							selection[COLUMN][c]), 0, c);
+					anew.setAxisAnnotation(Matrix.ROW,
+							a.getAxisAnnotation(Matrix.ROW, 0, selection[COLUMN][c]), 0, c);
 				}
 			}
 			setAnnotation(anew);
 		}
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);
@@ -120,7 +120,7 @@ public class Selection extends AbstractObjectCalculation {
 		}
 	}
 
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 		if (selection[ROW] != null && selection[COLUMN] != null) {
 			getSource().setAsObject(value, selection[ROW][(int) coordinates[ROW]],
 					selection[COLUMN][(int) coordinates[COLUMN]]);

@@ -41,12 +41,10 @@ public class Fibonacci extends AbstractBigIntegerCalculation {
 		}
 	}
 
-	
-	public BigInteger getBigInteger(long... coordinates)  {
+	public BigInteger getBigInteger(long... coordinates) {
 		return data[(int) coordinates[ROW]];
 	}
 
-	
 	public long[] getSize() {
 		return new long[] { data.length, 1 };
 	}

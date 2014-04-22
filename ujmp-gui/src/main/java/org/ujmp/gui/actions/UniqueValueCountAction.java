@@ -36,13 +36,11 @@ public class UniqueValueCountAction extends AbstractMatrixAction {
 	public UniqueValueCountAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Unique Value Count");
-		putValue(Action.SHORT_DESCRIPTION,
-				"gets counts of all unique entries of the matrix");
+		putValue(Action.SHORT_DESCRIPTION, "gets counts of all unique entries of the matrix");
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().uniqueValueCount(
-				getNewOrLink(), getDimension());
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().uniqueValueCount(getNewOrLink(), getDimension());
 		result.showGUI();
 		return result;
 	}

@@ -32,8 +32,7 @@ public class Not extends AbstractBooleanCalculation {
 		super(m);
 	}
 
-	
-	public boolean getBoolean(long... coordinates)  {
+	public boolean getBoolean(long... coordinates) {
 		return !getSource().getAsBoolean(coordinates);
 	}
 }

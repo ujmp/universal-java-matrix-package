@@ -43,8 +43,7 @@ import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.ujmp.core.collections.map.AbstractMap;
 import org.ujmp.core.interfaces.Erasable;
 
-public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,
-		Flushable, Closeable {
+public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable, Flushable, Closeable {
 	private static final long serialVersionUID = -2405059234958626645L;
 
 	private int maxElementsInMemory = 1000;
@@ -97,8 +96,7 @@ public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,
 		this(name, null, overFlowToDisk);
 	}
 
-	public EhcacheMap(String name, File path, boolean overFlowToDisk)
-			throws IOException {
+	public EhcacheMap(String name, File path, boolean overFlowToDisk) throws IOException {
 		runningId++;
 		System.setProperty("net.sf.ehcache.enableShutdownHook", "true");
 		this.diskStorePath = path;
@@ -135,10 +133,8 @@ public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,
 				diskStorePath = File.createTempFile(getName(), ".tmp");
 				diskStorePath.delete();
 				diskStorePath.mkdir();
-				new File(diskStorePath + System.getProperty("file.separator")
-						+ getName() + ".data").deleteOnExit();
-				new File(diskStorePath + System.getProperty("file.separator")
-						+ getName() + ".index").deleteOnExit();
+				new File(diskStorePath + System.getProperty("file.separator") + getName() + ".data").deleteOnExit();
+				new File(diskStorePath + System.getProperty("file.separator") + getName() + ".index").deleteOnExit();
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
@@ -150,22 +146,18 @@ public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,
 	private CacheManager getCacheManager() {
 		if (manager == null) {
 			Configuration config = new Configuration();
-			CacheConfiguration cacheconfig = new CacheConfiguration(getName(),
-					maxElementsInMemory);
-			cacheconfig
-					.setDiskExpiryThreadIntervalSeconds(diskExpiryThreadIntervalSeconds);
+			CacheConfiguration cacheconfig = new CacheConfiguration(getName(), maxElementsInMemory);
+			cacheconfig.setDiskExpiryThreadIntervalSeconds(diskExpiryThreadIntervalSeconds);
 			cacheconfig.setDiskPersistent(diskPersistent);
 			cacheconfig.setEternal(eternal);
 			cacheconfig.setMaxElementsOnDisk(maxElementsOnDisk);
-			cacheconfig
-					.setMemoryStoreEvictionPolicyFromObject(memoryStoreEvictionPolicy);
+			cacheconfig.setMemoryStoreEvictionPolicyFromObject(memoryStoreEvictionPolicy);
 			cacheconfig.setOverflowToDisk(overflowToDisk);
 			cacheconfig.setTimeToIdleSeconds(timeToIdleSeconds);
 			cacheconfig.setTimeToLiveSeconds(timeToLiveSeconds);
 
 			DiskStoreConfiguration diskStoreConfigurationParameter = new DiskStoreConfiguration();
-			diskStoreConfigurationParameter
-					.setPath(getPath().getAbsolutePath());
+			diskStoreConfigurationParameter.setPath(getPath().getAbsolutePath());
 			config.addDiskStore(diskStoreConfigurationParameter);
 			config.setDefaultCacheConfiguration(cacheconfig);
 			manager = new CacheManager(config);
@@ -175,12 +167,9 @@ public class EhcacheMap<K, V> extends AbstractMap<K, V> implements Erasable,
 
 	private Cache getCache() {
 		if (cache == null) {
-			Cache c = new Cache(getName(), maxElementsInMemory,
-					memoryStoreEvictionPolicy, overflowToDisk, getPath()
-							.getAbsolutePath(), eternal, timeToLiveSeconds,
-					timeToIdleSeconds, diskPersistent,
-					diskExpiryThreadIntervalSeconds, registeredEventListeners,
-					bootstrapCacheLoader, maxElementsOnDisk,
+			Cache c = new Cache(getName(), maxElementsInMemory, memoryStoreEvictionPolicy, overflowToDisk, getPath()
+					.getAbsolutePath(), eternal, timeToLiveSeconds, timeToIdleSeconds, diskPersistent,
+					diskExpiryThreadIntervalSeconds, registeredEventListeners, bootstrapCacheLoader, maxElementsOnDisk,
 					diskSpoolBufferSizeMB);
 			getCacheManager().addCache(c);
 			cache = getCacheManager().getCache(getName());

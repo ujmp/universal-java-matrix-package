@@ -31,6 +31,12 @@ public interface HasAnnotation extends HasLabel {
 
 	public void setAnnotation(Annotation annotation);
 
+	public void setAnnotationObject(Object key, Object value);
+
+	public Object getAnnotationObject(Object key);
+
+	public String getAnnotationString(Object key);
+
 	public Object getAxisAnnotation(int dimension, long... position);
 
 	public String getAxisLabel(int dimension);

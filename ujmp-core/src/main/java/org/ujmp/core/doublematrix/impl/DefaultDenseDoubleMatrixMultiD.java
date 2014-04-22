@@ -25,22 +25,19 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
-public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
+public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMultiD {
 	private static final long serialVersionUID = 2875235320924485070L;
 
-	private double[] values = null;
+	private final double[] values;
+	private final long[] size;
+	private final int length;
 
-	private long[] size = null;
-
-	private int length = 0;
-
-	public DefaultDenseDoubleMatrixMultiD(Matrix m)  {
-		super(m);
+	public DefaultDenseDoubleMatrixMultiD(Matrix m) {
+		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
 		this.length = (int) Coordinates.product(size);
 		this.values = new double[length];
@@ -51,6 +48,9 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 			for (long[] c : m.allCoordinates()) {
 				setDouble(m.getAsDouble(c), c);
 			}
+		}
+		if (m.getAnnotation() != null) {
+			setAnnotation(m.getAnnotation().clone());
 		}
 	}
 
@@ -80,10 +80,17 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrix {
 		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
 	}
 
-	@Override
-	public DenseDoubleMatrixFactory<? extends DenseDoubleMatrix> getFactory() {
-		// TODO Auto-generated method stub
-		return null;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return new BaseMatrixFactory<DefaultDenseDoubleMatrixMultiD>() {
+
+			public Matrix zeros(long rows, long columns) {
+				return new DefaultDenseDoubleMatrixMultiD(rows, columns);
+			}
+
+			public Matrix zeros(long... size) {
+				return new DefaultDenseDoubleMatrixMultiD(size);
+			}
+		};
 	}
 
 }

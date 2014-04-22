@@ -31,11 +31,11 @@ public class Diag extends AbstractObjectCalculation {
 
 	public Diag(Matrix m) {
 		super(m);
-		VerifyUtil.assert2D(m);
-		VerifyUtil.assertTrue(m.getColumnCount() == 1, "must be a vector");
+		VerifyUtil.verify2D(m);
+		VerifyUtil.verifyTrue(m.getColumnCount() == 1, "must be a vector");
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		if (coordinates[ROW] == coordinates[COLUMN]) {
 			return getSource().getAsObject(coordinates[ROW], 0);
 		} else {

@@ -125,8 +125,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void mouseClicked(MouseEvent e) {
 		if (panel.getMouseListeners() != null && panel.getMouseListeners().length != 0) {
-			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(),
-					e.getClickCount(), e.isPopupTrigger(), e.getButton());
+			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(),
+					e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e.getButton());
 			for (MouseListener m : panel.getMouseListeners()) {
 				m.mouseClicked(e2);
 			}
@@ -135,8 +135,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void mousePressed(MouseEvent e) {
 		if (panel.getMouseListeners() != null && panel.getMouseListeners().length != 0) {
-			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(),
-					e.getClickCount(), e.isPopupTrigger(), e.getButton());
+			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(),
+					e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e.getButton());
 			for (MouseListener m : panel.getMouseListeners()) {
 				m.mousePressed(e2);
 			}
@@ -145,8 +145,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void mouseReleased(MouseEvent e) {
 		if (panel.getMouseListeners() != null && panel.getMouseListeners().length != 0) {
-			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(),
-					e.getClickCount(), e.isPopupTrigger(), e.getButton());
+			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(),
+					e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e.getButton());
 			for (MouseListener m : panel.getMouseListeners()) {
 				m.mouseReleased(e2);
 			}
@@ -155,8 +155,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void mouseEntered(MouseEvent e) {
 		if (panel.getMouseListeners() != null && panel.getMouseListeners().length != 0) {
-			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(),
-					e.getClickCount(), e.isPopupTrigger(), e.getButton());
+			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(),
+					e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e.getButton());
 			for (MouseListener m : panel.getMouseListeners()) {
 				m.mouseEntered(e2);
 			}
@@ -165,8 +165,8 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void mouseExited(MouseEvent e) {
 		if (panel.getMouseListeners() != null && panel.getMouseListeners().length != 0) {
-			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(),
-					e.getClickCount(), e.isPopupTrigger(), e.getButton());
+			MouseEvent e2 = new MouseEvent(panel, e.getID(), e.getWhen(), e.getModifiers(), e.getX(), e.getY(),
+					e.getXOnScreen(), e.getYOnScreen(), e.getClickCount(), e.isPopupTrigger(), e.getButton());
 			for (MouseListener m : panel.getMouseListeners()) {
 				m.mouseExited(e2);
 			}

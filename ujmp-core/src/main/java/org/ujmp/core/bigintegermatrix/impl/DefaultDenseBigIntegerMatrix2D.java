@@ -26,21 +26,20 @@ package org.ujmp.core.bigintegermatrix.impl;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = 443424906231157395L;
 
-	private BigInteger[] values = null;
+	private final BigInteger[] values;
+	private final long[] size;
+	private final int rows;
+	private final int cols;
 
-	private long[] size = null;
-
-	private int rows = 0;
-
-	private int cols = 0;
-
-	public DefaultDenseBigIntegerMatrix2D(Matrix m)  {
+	public DefaultDenseBigIntegerMatrix2D(Matrix m) {
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
@@ -57,16 +56,17 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 		}
 	}
 
-	public DefaultDenseBigIntegerMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
+	public DefaultDenseBigIntegerMatrix2D(int rows, int cols) {
+		super(rows, cols);
+		this.rows = rows;
+		this.cols = cols;
 		this.size = new long[] { rows, cols };
 		this.values = new BigInteger[rows * cols];
 		Arrays.fill(values, BigInteger.ZERO);
 	}
 
 	public DefaultDenseBigIntegerMatrix2D(BigInteger[] v, int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -99,6 +99,10 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 
 	public void setBigInteger(BigInteger value, int row, int column) {
 		values[column * rows + row] = value;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

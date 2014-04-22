@@ -37,15 +37,13 @@ public class DeleteAction extends AbstractMatrixAction {
 	public DeleteAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Delete...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Delete rows or columns in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Delete rows or columns in this matrix");
 	}
 
 	public Object call() {
 		try {
 			String s = JOptionPane.showInputDialog(getComponent(),
-					"Enter the rows and columns to delete, e.g. 1,3-5;4-5,7",
-					"Delete", JOptionPane.QUESTION_MESSAGE);
+					"Enter the rows and columns to delete, e.g. 1,3-5;4-5,7", "Delete", JOptionPane.QUESTION_MESSAGE);
 
 			Matrix m = getMatrixObject().getMatrix().delete(getNewOrLink(), s);
 			m.showGUI();

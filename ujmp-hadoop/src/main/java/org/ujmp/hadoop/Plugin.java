@@ -43,17 +43,14 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.apache.commons.logging.Log");
 	}
 
-	
 	public String getDescription() {
 		return "library for parallel computing in a Hadoop cluster";
 	}
 
-	
 	public Collection<Object> getDependencies() {
 		return dependencies;
 	}
 
-	
 	public Collection<String> getNeededClasses() {
 		return neededClasses;
 	}

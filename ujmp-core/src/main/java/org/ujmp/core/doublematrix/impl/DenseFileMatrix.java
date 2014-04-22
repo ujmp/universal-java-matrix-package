@@ -36,14 +36,13 @@ import java.nio.ByteOrder;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrixFactory;
-import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix;
+import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
-public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasable, Closeable {
+public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements Erasable, Closeable {
 	private static final long serialVersionUID = 1754729146021609978L;
 
 	private transient BufferedRandomAccessFile randomAccessFile = null;
@@ -51,29 +50,17 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 	private int bufferSize = 65536;
 
 	public static final int BYTE = 0;
-
 	public static final int CHAR = 1;
-
 	public static final int DOUBLE = 2;
-
 	public static final int FLOAT = 3;
-
 	public static final int INT = 4;
-
 	public static final int LONG = 5;
-
 	public static final int SHORT = 6;
-
 	public static final int UNSIGNEDBYTE = 7;
-
 	public static final int UNSIGNEDSHORT = 8;
-
 	public static final int SHORTLITTLEENDIAN = 9;
-
 	public static final int INTLITTLEENDIAN = 10;
-
 	public static final int LONGLITTLEENDIAN = 11;
-
 	public static final int BOOLEAN = 12;
 
 	private int dataType = DOUBLE;
@@ -517,12 +504,31 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrix implements Erasab
 		if (randomAccessFile != null) {
 			randomAccessFile.close();
 		}
-
 	}
 
-	@Override
-	public DenseDoubleMatrixFactory<? extends DenseDoubleMatrix> getFactory() {
-		return null;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return new BaseMatrixFactory<Matrix>() {
+
+			public Matrix zeros(long rows, long columns) {
+				try {
+					return new DenseFileMatrix(new long[] { rows, columns });
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+
+			public Matrix zeros(long... size) {
+				try {
+					return new DenseFileMatrix(size);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		};
 	}
 
 }

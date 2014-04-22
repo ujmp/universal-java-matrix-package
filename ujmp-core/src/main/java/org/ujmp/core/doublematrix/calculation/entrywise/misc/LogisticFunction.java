@@ -33,8 +33,7 @@ public class LogisticFunction extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return 1.0 / (Math.exp(-getSource().getAsDouble(coordinates)) + 1);
 	}
 

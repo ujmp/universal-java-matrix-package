@@ -25,6 +25,8 @@ package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
 import org.ujmp.core.calculation.MinusScalar;
@@ -35,25 +37,14 @@ import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D implements
 		DenseDoubleMatrix2D {
 	private static final long serialVersionUID = 4518790844453035022L;
 
-	public AbstractDenseDoubleMatrix2D() {
-		super();
-	}
-
-	public AbstractDenseDoubleMatrix2D(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseDoubleMatrix2D(long... size) {
-		super(size);
-		VerifyUtil.assert2D(size);
+	public AbstractDenseDoubleMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final Iterable<long[]> allCoordinates() {
@@ -92,12 +83,16 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 		setDouble(value, row, column);
 	}
 
+	public final boolean isSparse() {
+		return false;
+	}
+
 	public Matrix mtimes(Matrix m2) {
 		if (m2 instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					m2.getColumnCount());
 			Mtimes.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
-			return result;
+			return (Matrix) result;
 		} else {
 			return super.mtimes(m2);
 		}
@@ -108,7 +103,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			TimesMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
-			return result;
+			return (Matrix) result;
 		} else {
 			return super.times(m2);
 		}
@@ -118,8 +113,8 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 		if (m2 instanceof DenseDoubleMatrix2D) {
 			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
-			DenseDoubleMatrix2D.divideMatrix.calc(this, (DenseDoubleMatrix2D) m2, result);
-			return result;
+			DivideMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
+			return (Matrix) result;
 		} else {
 			return super.divide(m2);
 		}
@@ -130,7 +125,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			PlusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
-			return result;
+			return (Matrix) result;
 		} else {
 			return super.plus(m2);
 		}
@@ -141,7 +136,7 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 			final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 					getColumnCount());
 			MinusMatrix.DENSEDOUBLEMATRIX2D.calc(this, (DenseDoubleMatrix2D) m2, result);
-			return result;
+			return (Matrix) result;
 		} else {
 			return super.minus(m2);
 		}
@@ -151,35 +146,35 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		MinusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
-		return result;
+		return (Matrix) result;
 	}
 
 	public Matrix plus(double v) {
 		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		PlusScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
-		return result;
+		return (Matrix) result;
 	}
 
 	public Matrix times(double v) {
 		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		TimesScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
-		return result;
+		return (Matrix) result;
 	}
 
 	public Matrix divide(double v) {
 		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getRowCount(),
 				getColumnCount());
 		DivideScalar.DENSEDOUBLEMATRIX2D.calc(this, v, result);
-		return result;
+		return (Matrix) result;
 	}
 
 	public Matrix transpose() {
 		final DenseDoubleMatrix2D result = DenseDoubleMatrix2D.Factory.zeros(getColumnCount(),
 				getRowCount());
 		Transpose.DENSEDOUBLEMATRIX2D.calc(this, result);
-		return result;
+		return (Matrix) result;
 	}
 
 	public final int getDimensionCount() {
@@ -190,7 +185,4 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory() {
-		return DenseDoubleMatrix2D.Factory;
-	}
 }

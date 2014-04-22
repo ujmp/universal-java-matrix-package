@@ -46,7 +46,7 @@ public class Min extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double min = Double.MAX_VALUE;
 		switch (getDimension()) {
 		case ROW:
@@ -95,7 +95,7 @@ public class Min extends AbstractDoubleCalculation {
 		}
 	}
 
-	public static double calc(Matrix m)  {
+	public static double calc(Matrix m) {
 		double min = Double.MAX_VALUE;
 		double v = 0.0;
 		for (long[] c : m.availableCoordinates()) {

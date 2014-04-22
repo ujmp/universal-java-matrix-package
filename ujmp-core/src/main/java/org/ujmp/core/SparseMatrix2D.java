@@ -23,9 +23,6 @@
 
 package org.ujmp.core;
 
-import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
-
 public interface SparseMatrix2D extends SparseMatrix, Matrix2D {
 
-	public SparseMatrix2DFactory<? extends SparseMatrix2D> getFactory();
 }

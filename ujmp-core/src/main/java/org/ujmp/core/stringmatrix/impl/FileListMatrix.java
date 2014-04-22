@@ -28,9 +28,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.list.AbstractMapMatrixList;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.impl.FileMatrix;
 
 public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
@@ -63,6 +65,10 @@ public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
 			list = new PrivateFileListMatrix(path);
 		}
 		return list;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 	class PrivateFileListMatrix extends AbstractListMatrix<MapMatrix<String, Object>> {
@@ -104,6 +110,9 @@ public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
 			return list;
 		}
 
+		public BaseMatrixFactory<? extends Matrix> getFactory() {
+			throw new RuntimeException("not implemented");
+		}
 	}
 
 }

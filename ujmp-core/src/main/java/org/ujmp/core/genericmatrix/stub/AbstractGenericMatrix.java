@@ -24,28 +24,39 @@
 package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.AbstractMatrix;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.GenericMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements GenericMatrix<A> {
+public abstract class AbstractGenericMatrix<T> extends AbstractMatrix implements GenericMatrix<T> {
 	private static final long serialVersionUID = -7498575238134186845L;
 
-	public AbstractGenericMatrix() {
-		super();
-	}
-
-	public AbstractGenericMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractGenericMatrix(long... size) {
+	protected AbstractGenericMatrix(long[] size) {
 		super(size);
 	}
 
-	public final Object getAsObject(long... coordinates) {
+	public final T getAsObject(long... coordinates) {
 		return getObject(coordinates);
+	}
+
+	public T getObject(long row, long column) {
+		return getAsObject(new long[] { row, column });
+	}
+
+	public void setObject(T value, long row, long column) {
+		setAsObject(value, new long[] { row, column });
+	}
+
+	public T getObject(int row, int column) {
+		return getAsObject(new long[] { row, column });
+	}
+
+	public void setObject(T value, int row, int column) {
+		setAsObject(value, new long[] { row, column });
+	}
+
+	public void setObject(T value, long... coordinates) {
+		setAsObject(value, coordinates);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,7 +90,7 @@ public abstract class AbstractGenericMatrix<A> extends AbstractMatrix implements
 			setAsLong(MathUtil.getLong(o), coordinates);
 			break;
 		case OBJECT:
-			setObject((A) o, coordinates);
+			setObject((T) o, coordinates);
 			break;
 		case SHORT:
 			setAsShort(MathUtil.getShort(o), coordinates);

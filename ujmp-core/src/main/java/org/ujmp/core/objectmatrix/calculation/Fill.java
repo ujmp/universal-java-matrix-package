@@ -40,7 +40,7 @@ public class Fill extends AbstractObjectCalculation {
 		return fill;
 	}
 
-	public static Matrix calc(Matrix source, Object fill)  {
+	public static Matrix calc(Matrix source, Object fill) {
 		Matrix ret = Matrix.Factory.zeros(source.getValueType(), source.getSize());
 		for (long[] c : source.allCoordinates()) {
 			ret.setAsObject(fill, c);
@@ -48,7 +48,7 @@ public class Fill extends AbstractObjectCalculation {
 		return ret;
 	}
 
-	public static Matrix calc(Object fill, long... size)  {
+	public static Matrix calc(Object fill, long... size) {
 		Matrix ret = null;
 		if (fill instanceof Number) {
 			ret = Matrix.Factory.zeros(ValueType.DOUBLE, size);

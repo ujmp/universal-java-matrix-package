@@ -36,11 +36,10 @@ public class Log10Action extends AbstractMatrixAction {
 	public Log10Action(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Log10");
-		putValue(Action.SHORT_DESCRIPTION,
-				"decimal logarithm of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "decimal logarithm of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().log10(getRet());
 		m.showGUI();
 		return m;

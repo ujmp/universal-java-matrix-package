@@ -23,6 +23,8 @@
 
 package org.ujmp.core;
 
+import static org.ujmp.core.util.VerifyUtil.verifyTrue;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -39,7 +41,7 @@ import javax.swing.JFrame;
 
 import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.annotation.DefaultAnnotation;
-import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix;
+import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.calculation.ToBigDecimalMatrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.bigintegermatrix.calculation.ToBigIntegerMatrix;
@@ -153,7 +155,6 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.matrix.factory.MatrixFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
@@ -167,6 +168,7 @@ import org.ujmp.core.objectmatrix.calculation.IncludeAnnotation;
 import org.ujmp.core.objectmatrix.calculation.Replace;
 import org.ujmp.core.objectmatrix.calculation.Reshape;
 import org.ujmp.core.objectmatrix.calculation.Selection;
+import org.ujmp.core.objectmatrix.calculation.SetContent;
 import org.ujmp.core.objectmatrix.calculation.Shuffle;
 import org.ujmp.core.objectmatrix.calculation.Sortrows;
 import org.ujmp.core.objectmatrix.calculation.Squeeze;
@@ -198,31 +200,17 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
 
 	private static long runningId = 0;
 
-	public MatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
-	}
+	private transient GUIObject guiObject = null;
 
-	public AbstractMatrix(long... size) {
-		this();
-		VerifyUtil.assertNotNull(size, "size cannot be null");
-		VerifyUtil.assertTrue(size.length > 1, "matrix must be at least 2d");
-	}
+	private final long id;
 
-	public AbstractMatrix(Matrix m) {
-		this();
-		VerifyUtil.assertNotNull(m, "matrix is null");
-		Annotation a = m.getAnnotation();
-		if (a != null) {
-			setAnnotation(a.clone());
-		}
-	}
+	private Annotation annotation = null;
 
 	static {
 		try {
@@ -248,13 +236,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	private transient GUIObject guiObject = null;
-
-	private final long id;
-
-	private Annotation annotation = null;
-
-	public AbstractMatrix() {
+	protected AbstractMatrix(final long[] size) {
+		verifyTrue(size.length > 1, "matrix must be at least 2d");
+		for (int i = size.length - 1; i != -1; i--) {
+			verifyTrue(size[i] >= 0, "coordinates must be positive");
+		}
 		id = runningId++;
 	}
 
@@ -1254,6 +1240,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Log(this).calc(returnType);
 	}
 
+	public final Matrix setContent(Ret returnType, Matrix newContent, long... position) {
+		return new SetContent(this, newContent, position).calc(returnType);
+	}
+
 	public final Matrix exp(Ret returnType) {
 		return new Exp(this).calc(returnType);
 	}
@@ -1925,6 +1915,21 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		this.annotation = annotation;
 	}
 
+	public final void setAnnotationObject(Object key, Object value) {
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		this.annotation.setObject(key, value);
+	}
+
+	public final Object getAnnotationObject(Object key) {
+		return annotation == null ? null : this.annotation.getObject(key);
+	}
+
+	public final String getAnnotationString(Object key) {
+		return annotation == null ? null : StringUtil.convert(this.annotation.getObject(key));
+	}
+
 	public final boolean equalsAnnotation(Object o) {
 		if (this == o) {
 			return true;
@@ -2048,7 +2053,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new ToLongMatrix(this).calcLink();
 	}
 
-	public final BigDecimalMatrix toBigDecimalMatrix() {
+	public final BaseBigDecimalMatrix toBigDecimalMatrix() {
 		return new ToBigDecimalMatrix(this).calcLink();
 	}
 
@@ -2157,10 +2162,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 			return map;
 		}
-	}
-
-	public final boolean isSparse() {
-		return (this instanceof SparseMatrix);
 	}
 
 	public boolean containsBigInteger(BigInteger v) {
@@ -2309,7 +2310,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public MatrixImportSourceSelector importFrom() {
-		return new DefaultMatrixImportSourceSelector(this);
+		if (this instanceof DenseMatrix) {
+			return new DefaultMatrixImportSourceSelector(this);
+		} else {
+			throw new RuntimeException("import only works for dense matrices");
+		}
 	}
 
 }

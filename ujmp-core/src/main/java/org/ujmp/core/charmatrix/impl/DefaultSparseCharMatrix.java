@@ -33,11 +33,11 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		CharMatrix {
 	private static final long serialVersionUID = -5517642834164442745L;
 
-	public DefaultSparseCharMatrix(Matrix m)  {
+	public DefaultSparseCharMatrix(Matrix m) {
 		super(m, -1);
 	}
 
-	public DefaultSparseCharMatrix(Matrix m, int maximumNumberOfEntries)  {
+	public DefaultSparseCharMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m, maximumNumberOfEntries);
 	}
 
@@ -53,11 +53,11 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		return ValueType.CHAR;
 	}
 
-	public char getChar(long... coordinates)  {
+	public char getChar(long... coordinates) {
 		return MathUtil.getChar(getObject(coordinates));
 	}
 
-	public void setChar(char value, long... coordinates)  {
+	public void setChar(char value, long... coordinates) {
 		setObject(value, coordinates);
 	}
 

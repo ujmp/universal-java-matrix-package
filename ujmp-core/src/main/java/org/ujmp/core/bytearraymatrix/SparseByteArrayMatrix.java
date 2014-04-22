@@ -23,8 +23,8 @@
 
 package org.ujmp.core.bytearraymatrix;
 
-import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
-public interface SparseByteArrayMatrix extends ByteArrayMatrix, SparseMatrix {
+public interface SparseByteArrayMatrix extends ByteArrayMatrix, SparseGenericMatrix<byte[]> {
 
 }

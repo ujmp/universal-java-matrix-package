@@ -23,13 +23,7 @@
 
 package org.ujmp.core.stringmatrix.factory;
 
-import org.ujmp.core.stringmatrix.StringMatrix2D;
-
 public abstract class AbstractStringMatrix2DFactory implements StringMatrix2DFactory {
 	private static final long serialVersionUID = 1205582021793204788L;
-
-	public StringMatrix2D dense(long rows, long columns)  {
-		return dense(rows, columns);
-	}
 
 }

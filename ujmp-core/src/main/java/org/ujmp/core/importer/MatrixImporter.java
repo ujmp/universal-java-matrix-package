@@ -23,6 +23,10 @@
 
 package org.ujmp.core.importer;
 
+import org.ujmp.core.Matrix;
+
 public interface MatrixImporter {
+
+	public Matrix getTargetMatrix();
 
 }

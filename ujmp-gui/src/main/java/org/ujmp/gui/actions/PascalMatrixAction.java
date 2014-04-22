@@ -37,11 +37,10 @@ public class PascalMatrixAction extends AbstractMatrixAction {
 	public PascalMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Pascal Matrix");
-		putValue(Action.SHORT_DESCRIPTION,
-				"creates a Pascal matrix with binomial coefficients");
+		putValue(Action.SHORT_DESCRIPTION, "creates a Pascal matrix with binomial coefficients");
 	}
 
-	public Object call()  {
+	public Object call() {
 		int size = GUIUtil.getInt("Number of rows/columns", 1, 100);
 		Matrix m = Matrix.Factory.pascal(size, size);
 		m.showGUI();

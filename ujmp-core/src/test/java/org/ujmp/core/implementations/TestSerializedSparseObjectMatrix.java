@@ -39,4 +39,12 @@ public class TestSerializedSparseObjectMatrix extends AbstractMatrixTest {
 	public boolean isTestLarge() {
 		return false;
 	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
 }

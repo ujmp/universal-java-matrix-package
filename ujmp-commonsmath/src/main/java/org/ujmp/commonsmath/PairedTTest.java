@@ -34,7 +34,7 @@ public class PairedTTest extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		try {
 			long var1 = coordinates[ROW];
 			long var2 = coordinates[COLUMN];

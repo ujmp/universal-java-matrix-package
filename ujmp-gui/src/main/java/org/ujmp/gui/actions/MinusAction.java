@@ -41,16 +41,12 @@ public class MinusAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Minus");
 		putValue(Action.SHORT_DESCRIPTION, "subtract a value from all cells");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_MINUS, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().minus(
-				getRet(),
-				getIgnoreMissing(),
-				GUIUtil.getDouble("Value to subtract", -Double.MAX_VALUE,
-						Double.MAX_VALUE));
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().minus(getRet(), getIgnoreMissing(),
+				GUIUtil.getDouble("Value to subtract", -Double.MAX_VALUE, Double.MAX_VALUE));
 		m.showGUI();
 		return m;
 	}

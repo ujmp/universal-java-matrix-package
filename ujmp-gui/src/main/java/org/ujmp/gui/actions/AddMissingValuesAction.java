@@ -40,15 +40,12 @@ public class AddMissingValuesAction extends AbstractMatrixAction {
 	public AddMissingValuesAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Add missing values...");
-		putValue(Action.SHORT_DESCRIPTION,
-				"replaces a chosen percentage of the values with NaN");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-				KeyEvent.VK_NUMBER_SIGN, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.SHORT_DESCRIPTION, "replaces a chosen percentage of the values with NaN");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_NUMBER_SIGN, KeyEvent.CTRL_DOWN_MASK));
 	}
 
-	public Object call()  {
-		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(),
-				getDimension(),
+	public Object call() {
+		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(), getDimension(),
 				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
 		result.showGUI();
 		return result;

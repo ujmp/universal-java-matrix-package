@@ -36,13 +36,11 @@ public class DiffAction extends AbstractMatrixAction {
 	public DiffAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Diff");
-		putValue(Action.SHORT_DESCRIPTION,
-				"calculates the difference between each two rows in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "calculates the difference between each two rows in this matrix");
 	}
 
-	public Object call()  {
-		Matrix m = getMatrixObject().getMatrix().diff(getNewOrLink(),
-				getDimension(), getIgnoreMissing());
+	public Object call() {
+		Matrix m = getMatrixObject().getMatrix().diff(getNewOrLink(), getDimension(), getIgnoreMissing());
 		m.showGUI();
 		return m;
 	}

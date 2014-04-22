@@ -27,8 +27,8 @@ import org.ujmp.core.calculation.Calculation;
 
 public interface ShortCalculation extends Calculation {
 
-	public short getShort(long... coordinates) ;
+	public short getShort(long... coordinates);
 
-	public void setShort(short value, long... coordinates) ;
+	public void setShort(short value, long... coordinates);
 
 }

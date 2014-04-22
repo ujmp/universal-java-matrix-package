@@ -66,8 +66,7 @@ public class MatlabPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Matlab.getInstance().plot(
-						matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Matlab.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1), "x");
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -100,8 +99,7 @@ public class MatlabPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Matlab.getInstance().plot(
-						matrix.getMatrix().selectColumns(Ret.NEW, 0),
+				Matlab.getInstance().plot(matrix.getMatrix().selectColumns(Ret.NEW, 0),
 						matrix.getMatrix().selectColumns(Ret.NEW, 1));
 			} catch (Exception e1) {
 				e1.printStackTrace();

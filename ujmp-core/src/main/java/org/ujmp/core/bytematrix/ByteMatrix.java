@@ -33,10 +33,9 @@ public interface ByteMatrix extends GenericMatrix<Byte> {
 	 * 
 	 * @param coordinates
 	 *            location of the entry
-	 * @return a byte representation of the entry
-	 * @
+	 * @return a byte representation of the entry @
 	 */
-	public byte getByte(long... coordinates) ;
+	public byte getByte(long... coordinates);
 
 	/**
 	 * Sets an entry in the matrix to a byte value. If the matrix cannot store
@@ -45,9 +44,8 @@ public interface ByteMatrix extends GenericMatrix<Byte> {
 	 * @param value
 	 *            byte value
 	 * @param coordinates
-	 *            location of the entry
-	 * @
+	 *            location of the entry @
 	 */
-	public void setByte(byte value, long... coordinates) ;
+	public void setByte(byte value, long... coordinates);
 
 }

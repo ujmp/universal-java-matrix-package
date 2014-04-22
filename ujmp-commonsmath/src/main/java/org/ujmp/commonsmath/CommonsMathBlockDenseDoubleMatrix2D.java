@@ -37,7 +37,7 @@ public class CommonsMathBlockDenseDoubleMatrix2D extends AbstractCommonsMathDens
 		super(new BlockRealMatrix(MathUtil.longToInt(size[ROW]), MathUtil.longToInt(size[COLUMN])));
 	}
 
-	public CommonsMathBlockDenseDoubleMatrix2D(org.ujmp.core.Matrix source)  {
+	public CommonsMathBlockDenseDoubleMatrix2D(org.ujmp.core.Matrix source) {
 		this(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);

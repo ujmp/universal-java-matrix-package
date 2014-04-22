@@ -23,8 +23,8 @@
 
 package org.ujmp.core.floatmatrix;
 
-import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.genericmatrix.DenseGenericMatrix;
 
-public interface DenseFloatMatrix extends FloatMatrix, DenseMatrix {
+public interface DenseFloatMatrix extends FloatMatrix, DenseGenericMatrix<Float> {
 
 }

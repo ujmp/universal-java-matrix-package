@@ -23,15 +23,20 @@
 
 package org.ujmp.core.intmatrix.factory;
 
+import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 
 public class DefaultIntMatrix2DFactory extends AbstractIntMatrix2DFactory {
 	private static final long serialVersionUID = -5861384991023886955L;
 
-	
-	public IntMatrix2D dense(long rows, long columns)  {
+	public IntMatrix2D zeros(long rows, long columns) {
 		return new DefaultDenseIntMatrix2D(rows, columns);
+	}
+
+	public IntMatrix zeros(long... size) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

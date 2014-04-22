@@ -36,12 +36,10 @@ public class GinvAction extends AbstractMatrixAction {
 	public GinvAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Generalized Inverse");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Calculates a generalized inverse of the matrix");
+		putValue(Action.SHORT_DESCRIPTION, "Calculates a generalized inverse of the matrix");
 	}
 
-	
-	public Object call()  {
+	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().ginv();
 		result.showGUI();
 		return result;

@@ -32,12 +32,11 @@ public class ToIntMatrix extends AbstractIntCalculation {
 		super(matrix);
 	}
 
-	
-	public int getInt(long... coordinates)  {
+	public int getInt(long... coordinates) {
 		return getSource().getAsInt(coordinates);
 	}
 
-	public void setInt(int value, long coordinates)  {
+	public void setInt(int value, long coordinates) {
 		getSource().setAsInt(value, coordinates);
 	}
 

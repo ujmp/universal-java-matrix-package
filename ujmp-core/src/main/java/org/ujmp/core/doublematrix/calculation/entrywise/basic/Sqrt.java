@@ -33,11 +33,11 @@ public class Sqrt extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return Math.sqrt(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsDouble(Math.sqrt(source.getAsDouble(c)), c);

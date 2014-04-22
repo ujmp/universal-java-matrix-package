@@ -23,19 +23,22 @@
 
 package org.ujmp.colt;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
+import org.ujmp.core.util.MathUtil;
 
-public class ColtDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> implements
-		DenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> {
+public class ColtDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D>
+		implements DenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> {
 	private static final long serialVersionUID = 1951543109603957820L;
 
 	public ColtDenseDoubleMatrix2D zeros(long rows, long columns) {
-		return new ColtDenseDoubleMatrix2D(rows, columns);
+		return new ColtDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 	public ColtDenseDoubleMatrix2D zeros(long... size) {
-		return new ColtDenseDoubleMatrix2D(size);
+		return new ColtDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
+				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
 
 }

@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { TestBlockDenseDouble2DMatrix.class, TestBlockMultiply.class,
+@Suite.SuiteClasses({ TestBlockDenseDouble2DMatrix.class, TestBlockMultiply.class,
 		TestBlockMultiply.class })
-public class AllTests {
+public abstract class AllTests {
 }

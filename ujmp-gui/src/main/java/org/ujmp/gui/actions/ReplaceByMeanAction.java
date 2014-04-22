@@ -37,14 +37,11 @@ public class ReplaceByMeanAction extends AbstractMatrixAction {
 	public ReplaceByMeanAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Replace by mean");
-		putValue(Action.SHORT_DESCRIPTION,
-				"Replaces all missing values with the mean");
+		putValue(Action.SHORT_DESCRIPTION, "Replaces all missing values with the mean");
 	}
 
-	
-	public Object call()  {
-		Matrix m = new ImputeMean(getDimension(), getMatrixObject().getMatrix())
-				.calc(getOrigOrNew());
+	public Object call() {
+		Matrix m = new ImputeMean(getDimension(), getMatrixObject().getMatrix()).calc(getOrigOrNew());
 		m.showGUI();
 		return m;
 	}

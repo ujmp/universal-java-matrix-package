@@ -39,7 +39,7 @@ public class Reshape extends AbstractObjectCalculation {
 		super(source);
 		this.newSize = newSize;
 		this.oldSize = source.getSize();
-		VerifyUtil.assertEquals(Coordinates.product(oldSize), Coordinates.product(newSize),
+		VerifyUtil.verifyEquals(Coordinates.product(oldSize), Coordinates.product(newSize),
 				"new matrix must have the same number of cells");
 	}
 
@@ -47,14 +47,14 @@ public class Reshape extends AbstractObjectCalculation {
 		return newSize;
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		long index = MathUtil.pos2IndexColumnMajor(newSize, coordinates);
 		long[] oldPos = MathUtil.index2PosColumnMajor(oldSize, index);
 		return getSource().getAsObject(oldPos);
 	}
 
 	@Override
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 		long index = MathUtil.pos2IndexColumnMajor(newSize, coordinates);
 		long[] oldPos = MathUtil.index2PosColumnMajor(oldSize, index);
 		getSource().setAsObject(value, oldPos);

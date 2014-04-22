@@ -23,8 +23,8 @@
 
 package org.ujmp.core.booleanmatrix;
 
-import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
-public interface SparseBooleanMatrix extends BooleanMatrix, SparseMatrix {
+public interface SparseBooleanMatrix extends BooleanMatrix, SparseGenericMatrix<Boolean> {
 
 }

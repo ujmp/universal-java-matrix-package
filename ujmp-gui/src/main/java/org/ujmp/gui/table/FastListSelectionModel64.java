@@ -90,9 +90,11 @@ public class FastListSelectionModel64 implements ListSelectionModel64 {
 
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == ListSelectionListener64.class) {
-				((ListSelectionListener64) listeners[i + 1]).valueChanged(new ListSelectionEvent64(this, firstIndex, lastIndex, isAdjusting));
+				((ListSelectionListener64) listeners[i + 1]).valueChanged(new ListSelectionEvent64(this, firstIndex,
+						lastIndex, isAdjusting));
 			} else if (listeners[i] == ListSelectionListener.class) {
-				((ListSelectionListener) listeners[i + 1]).valueChanged(new ListSelectionEvent(this, (int) firstIndex, (int) lastIndex, isAdjusting));
+				((ListSelectionListener) listeners[i + 1]).valueChanged(new ListSelectionEvent(this, (int) firstIndex,
+						(int) lastIndex, isAdjusting));
 			}
 		}
 	}

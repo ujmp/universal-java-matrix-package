@@ -47,7 +47,7 @@ public class Minus extends AbstractDoubleCalculation {
 		}
 	}
 
-	public Minus(boolean ignoreNaN, Matrix m1, double v2)  {
+	public Minus(boolean ignoreNaN, Matrix m1, double v2) {
 		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
 	}
 
@@ -55,7 +55,7 @@ public class Minus extends AbstractDoubleCalculation {
 		super();
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
 				- MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
 				.getAsDouble(coordinates) - getSources()[1].getAsDouble(coordinates);

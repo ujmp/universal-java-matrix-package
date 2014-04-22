@@ -89,7 +89,7 @@ public class ImputeKNN extends AbstractDoubleCalculation {
 		return neighbors;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (distanceMatrix == null) {
 			distanceMatrix = getDistanceMatrix();
 		}

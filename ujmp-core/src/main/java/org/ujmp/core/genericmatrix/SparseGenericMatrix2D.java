@@ -25,7 +25,7 @@ package org.ujmp.core.genericmatrix;
 
 import org.ujmp.core.SparseMatrix2D;
 
-public interface SparseGenericMatrix2D<A> extends GenericMatrix2D<A>, SparseGenericMatrix<A>,
+public interface SparseGenericMatrix2D<T> extends GenericMatrix2D<T>, SparseGenericMatrix<T>,
 		SparseMatrix2D {
 
 }

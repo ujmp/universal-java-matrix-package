@@ -36,11 +36,10 @@ public class SinhAction extends AbstractMatrixAction {
 	public SinhAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sinh");
-		putValue(Action.SHORT_DESCRIPTION,
-				"sinus hyperbolicus of the entries in this matrix");
+		putValue(Action.SHORT_DESCRIPTION, "sinus hyperbolicus of the entries in this matrix");
 	}
 
-	public Object call()  {
+	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sinh(getRet());
 		m.showGUI();
 		return m;

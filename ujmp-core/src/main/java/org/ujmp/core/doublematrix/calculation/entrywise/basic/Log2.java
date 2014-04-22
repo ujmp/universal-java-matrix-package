@@ -33,12 +33,12 @@ public class Log2 extends AbstractDoubleCalculation {
 		super(matrix);
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		double v = getSource().getAsDouble(coordinates);
 		return Math.log(v) / Math.log(2.0);
 	}
 
-	public static Matrix calc(Matrix source)  {
+	public static Matrix calc(Matrix source) {
 		Matrix ret = Matrix.Factory.zeros(source.getSize());
 		for (long[] c : source.availableCoordinates()) {
 			double v = source.getAsDouble(c);

@@ -45,8 +45,8 @@ public class LinkMatrixJDBC {
 		}
 	}
 
-	public static DenseObjectMatrix2D toDatabase(DBType type, String host, int port, String database,
-			String sqlStatement, String username, String password) {
+	public static DenseObjectMatrix2D toDatabase(DBType type, String host, int port,
+			String database, String sqlStatement, String username, String password) {
 		try {
 			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
 			Method method = c.getMethod("toDatabase", new Class[] { DBType.class, String.class,

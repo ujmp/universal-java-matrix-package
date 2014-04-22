@@ -59,8 +59,7 @@ public class GraphicsExecutor {
 		executors.clear();
 	}
 
-	public static synchronized final void scheduleUpdate(
-			CanBeRepainted component) {
+	public static synchronized final void scheduleUpdate(CanBeRepainted component) {
 		while (executors.size() < Runtime.getRuntime().availableProcessors()) {
 			Executor executor = new Executor();
 			executors.add(executor);
@@ -88,8 +87,7 @@ public class GraphicsExecutor {
 
 class UpdateTask implements Runnable {
 
-	private static final Logger logger = Logger.getLogger(UpdateTask.class
-			.getName());
+	private static final Logger logger = Logger.getLogger(UpdateTask.class.getName());
 
 	private CanBeRepainted component = null;
 
@@ -103,8 +101,7 @@ class UpdateTask implements Runnable {
 	public void run() {
 		try {
 			GraphicsExecutor.setFinished(component);
-			((JComponent) component).setCursor(Cursor
-					.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			((JComponent) component).setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			component.repaintUI();
 			((JComponent) component).setCursor(Cursor.getDefaultCursor());
 			((JComponent) component).repaint(1);
@@ -120,12 +117,10 @@ class Executor extends ThreadPoolExecutor {
 
 	private static final LowPriorityThreadFactory factory = new LowPriorityThreadFactory();
 
-	private final Set<CanBeRepainted> waitingTasks = Collections
-			.synchronizedSet(new HashSet<CanBeRepainted>());
+	private final Set<CanBeRepainted> waitingTasks = Collections.synchronizedSet(new HashSet<CanBeRepainted>());
 
 	public Executor() {
-		super(1, 1, 0L, TimeUnit.MILLISECONDS,
-				new LinkedBlockingQueue<Runnable>(), factory);
+		super(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), factory);
 	}
 
 	public void setFinished(CanBeRepainted component) {
@@ -153,14 +148,12 @@ class LowPriorityThreadFactory implements ThreadFactory {
 
 	public LowPriorityThreadFactory() {
 		SecurityManager s = System.getSecurityManager();
-		group = (s != null) ? s.getThreadGroup() : Thread.currentThread()
-				.getThreadGroup();
+		group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
 		namePrefix = "GraphicsExecutorPool-";
 	}
 
 	public Thread newThread(Runnable r) {
-		Thread t = new Thread(group, r, namePrefix
-				+ threadNumber.getAndIncrement(), 0);
+		Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement(), 0);
 		t.setDaemon(true);
 		t.setPriority(Thread.MIN_PRIORITY);
 		return t;

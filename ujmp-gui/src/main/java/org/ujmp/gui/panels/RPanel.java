@@ -94,8 +94,7 @@ public class RPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				R.getInstance()
-						.pairs(matrix.getMatrix(), "col=\"blue\",pch=16");
+				R.getInstance().pairs(matrix.getMatrix(), "col=\"blue\",pch=16");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -111,8 +110,7 @@ public class RPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				R.getInstance().qqnorm(matrix.getMatrix(),
-						"col=\"blue\",pch=16");
+				R.getInstance().qqnorm(matrix.getMatrix(), "col=\"blue\",pch=16");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

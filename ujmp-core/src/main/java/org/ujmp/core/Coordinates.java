@@ -319,6 +319,30 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
 		return true;
 	}
 
+	public static final boolean isSmallerOrEqual(final long[] coordinates, final long[] size) {
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			if (coordinates[i] > size[i])
+				return false;
+		}
+		return true;
+	}
+
+	public static final boolean isGreaterThan(final long[] coordinates, final long[] size) {
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			if (coordinates[i] <= size[i])
+				return false;
+		}
+		return true;
+	}
+
+	public static final boolean isGreaterOrEqual(final long[] coordinates, final long[] size) {
+		for (int i = coordinates.length - 1; i != -1; i--) {
+			if (coordinates[i] < size[i])
+				return false;
+		}
+		return true;
+	}
+
 	public static final long[] minus(final long[] coordinates, final long value) {
 		return minus(new long[coordinates.length], coordinates, value);
 	}

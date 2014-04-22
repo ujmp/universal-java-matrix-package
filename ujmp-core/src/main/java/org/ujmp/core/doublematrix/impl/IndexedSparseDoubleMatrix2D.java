@@ -23,25 +23,24 @@
 
 package org.ujmp.core.doublematrix.impl;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -8455710302874238051L;
 
-	private long[] data;
-
-	private long[] size;
-
+	private final long[] data;
+	private final long[] size;
 	private int entryCount = 0;
 
 	public IndexedSparseDoubleMatrix2D(Matrix m) {
-		this(m.getSize());
+		this(m.getRowCount(), m.getColumnCount());
 	}
 
-	public IndexedSparseDoubleMatrix2D(long... size) {
-		this.size = Coordinates.copyOf(size);
+	public IndexedSparseDoubleMatrix2D(long rows, long columns) {
+		super(rows, columns);
+		this.size = new long[] { rows, columns };
 		this.data = new long[300];
 	}
 
@@ -140,12 +139,16 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 		setDouble(value, (long) row, (long) column);
 	}
 
-	public boolean contains(long... coordinates)  {
+	public boolean contains(long... coordinates) {
 		return getDouble(coordinates) == 0.0;
 	}
 
 	public long[] getSize() {
 		return size;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

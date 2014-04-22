@@ -23,14 +23,7 @@
 
 package org.ujmp.core.charmatrix.factory;
 
-import org.ujmp.core.charmatrix.CharMatrix2D;
-
 public abstract class AbstractCharMatrix2DFactory implements CharMatrix2DFactory {
 	private static final long serialVersionUID = -8247193970156242595L;
-
-	
-	public CharMatrix2D zeros(long rows, long columns)  {
-		return dense(rows, columns);
-	}
 
 }

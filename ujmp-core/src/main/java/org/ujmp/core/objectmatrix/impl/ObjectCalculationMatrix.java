@@ -23,7 +23,9 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
+import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.ObjectCalculation;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
 public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
@@ -32,6 +34,7 @@ public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 	private ObjectCalculation calculation = null;
 
 	public ObjectCalculationMatrix(ObjectCalculation calculation) {
+		super(calculation.getSize());
 		this.calculation = calculation;
 		setAnnotation(calculation.getAnnotation());
 	}
@@ -51,12 +54,16 @@ public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 		}
 	}
 
-	public Object getObject(long... coordinates)  {
+	public Object getObject(long... coordinates) {
 		return calculation.getObject(coordinates);
 	}
 
-	public void setObject(Object value, long... coordinates)  {
+	public void setObject(Object value, long... coordinates) {
 		calculation.setObject(value, coordinates);
+	}
+
+	public DenseObjectMatrixFactory<? extends DenseObjectMatrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

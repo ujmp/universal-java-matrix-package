@@ -46,8 +46,7 @@ public class Traces {
 			double xf = plotSettings.getXFactor();
 			double yf = plotSettings.getYFactor();
 
-			for (int t = 0; t < Math.min(10, plotSettings.getMatrixGUIObject()
-					.getColumnCount()); t++) {
+			for (int t = 0; t < Math.min(10, plotSettings.getMatrixGUIObject().getColumnCount()); t++) {
 
 				if (plotSettings.isShowTrace(t)) {
 
@@ -59,15 +58,13 @@ public class Traces {
 					double xs = plotSettings.getXStepSize();
 
 					long dots = 0;
-					for (double xr = plotSettings.getMinXValue() + xs; xr <= plotSettings
-							.getMaxXValue(); xr += xs) {
+					for (double xr = plotSettings.getMinXValue() + xs; xr <= plotSettings.getMaxXValue(); xr += xs) {
 						dots++;
 						long row1 = (long) (xr - xs);
 						long row2 = (long) xr;
 
 						double yv1 = 0;
-						Object o1 = plotSettings.getMatrixGUIObject()
-								.getValueAt((int) row1, (int) column);
+						Object o1 = plotSettings.getMatrixGUIObject().getValueAt((int) row1, (int) column);
 						if (o1 instanceof Matrix) {
 							yv1 = Double.NaN;
 						} else {
@@ -75,8 +72,7 @@ public class Traces {
 						}
 
 						double yv2 = 0;
-						Object o2 = plotSettings.getMatrixGUIObject()
-								.getValueAt((int) row2, (int) column);
+						Object o2 = plotSettings.getMatrixGUIObject().getValueAt((int) row2, (int) column);
 						if (o2 instanceof Matrix) {
 							yv2 = Double.NaN;
 						} else {
@@ -87,12 +83,8 @@ public class Traces {
 						int x2 = (int) (xr * xf);
 						x2 = (x2 == x1) ? x2++ : x2;
 
-						int y1 = (int) (plotSettings.getHeight() - 1 - yv1 * yf + plotSettings
-								.getMinYValue()
-								* yf);
-						int y2 = (int) (plotSettings.getHeight() - 1 - yv2 * yf + plotSettings
-								.getMinYValue()
-								* yf);
+						int y1 = (int) (plotSettings.getHeight() - 1 - yv1 * yf + plotSettings.getMinYValue() * yf);
+						int y2 = (int) (plotSettings.getHeight() - 1 - yv2 * yf + plotSettings.getMinYValue() * yf);
 
 						g2d.drawLine(x1, y1, x2, y2);
 					}

@@ -39,7 +39,7 @@ public class Cumprod extends AbstractDoubleCalculation {
 		this.ignoreNaN = ignoreNaN;
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (cumprod == null) {
 			createMatrix();
 		}

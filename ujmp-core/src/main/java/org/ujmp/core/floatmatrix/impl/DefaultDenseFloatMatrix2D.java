@@ -23,10 +23,12 @@
 
 package org.ujmp.core.floatmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
 import org.ujmp.core.interfaces.HasFloatArray;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implements HasFloatArray {
 	private static final long serialVersionUID = -5449462775185759895L;
@@ -39,8 +41,8 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 
 	private int cols = 0;
 
-	public DefaultDenseFloatMatrix2D(Matrix m)  {
-		super(m);
+	public DefaultDenseFloatMatrix2D(Matrix m) {
+		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
 		this.size = new long[] { rows, cols };
@@ -65,6 +67,7 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 	}
 
 	public DefaultDenseFloatMatrix2D(float[] v, int rows, int cols) {
+		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
@@ -131,7 +134,7 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 		return new DefaultDenseDoubleMatrix2D(result, rows, cols);
 	}
 
-	public final Matrix copy()  {
+	public final Matrix copy() {
 		float[] result = new float[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseFloatMatrix2D(result, rows, cols);
@@ -153,6 +156,10 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 
 	public float[] getFloatArray() {
 		return values;
+	}
+
+	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

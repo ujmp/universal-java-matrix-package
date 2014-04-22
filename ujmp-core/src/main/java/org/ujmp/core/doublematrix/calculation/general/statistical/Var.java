@@ -55,7 +55,7 @@ public class Var extends AbstractDoubleCalculation {
 		}
 	}
 
-	public double getDouble(long... coordinates)  {
+	public double getDouble(long... coordinates) {
 		if (mean == null) {
 			mean = new Mean(getDimension(), ignoreNaN, getSource()).calcNew();
 		}
@@ -112,8 +112,9 @@ public class Var extends AbstractDoubleCalculation {
 			switch (getDimension()) {
 			case ROW:
 				for (long r = getSource().getSize()[ROW] - 1; r != -1; r--) {
-					sum += Math.pow((getSource().getAsDouble(r, coordinates[COLUMN]))
-							- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
+					sum += Math.pow(
+							(getSource().getAsDouble(r, coordinates[COLUMN]))
+									- mean.getAsDouble(0, coordinates[COLUMN]), 2.0);
 					count++;
 				}
 				count = besselsCorrection ? count - 1 : count;
@@ -121,8 +122,9 @@ public class Var extends AbstractDoubleCalculation {
 				return sum / count;
 			case COLUMN:
 				for (long c = getSource().getSize()[COLUMN] - 1; c != -1; c--) {
-					sum += Math.pow((getSource().getAsDouble(coordinates[ROW], c))
-							- mean.getAsDouble(coordinates[ROW], 0), 2.0);
+					sum += Math.pow(
+							(getSource().getAsDouble(coordinates[ROW], c))
+									- mean.getAsDouble(coordinates[ROW], 0), 2.0);
 					count++;
 				}
 				count = besselsCorrection ? count - 1 : count;

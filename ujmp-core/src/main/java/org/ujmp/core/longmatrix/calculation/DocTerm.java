@@ -39,7 +39,7 @@ public class DocTerm extends AbstractLongCalculation {
 		super(m);
 	}
 
-	public long getLong(long... coordinates)  {
+	public long getLong(long... coordinates) {
 		if (result == null) {
 			result = calculate();
 		}

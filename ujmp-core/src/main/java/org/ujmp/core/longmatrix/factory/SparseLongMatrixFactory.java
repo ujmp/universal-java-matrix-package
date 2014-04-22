@@ -23,9 +23,9 @@
 
 package org.ujmp.core.longmatrix.factory;
 
+import org.ujmp.core.genericmatrix.factory.SparseGenericMatrixFactory;
 import org.ujmp.core.longmatrix.SparseLongMatrix;
-import org.ujmp.core.matrix.factory.SparseMatrixFactory;
 
 public interface SparseLongMatrixFactory<T extends SparseLongMatrix> extends
-		SparseMatrixFactory<T>, LongMatrixFactory<T> {
+		SparseGenericMatrixFactory<T>, LongMatrixFactory<T> {
 }

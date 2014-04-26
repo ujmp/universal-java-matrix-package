@@ -30,32 +30,32 @@ import java.util.List;
 
 import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
-public class DefaultListMatrix<A> extends AbstractListMatrix<A> {
+public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 	private static final long serialVersionUID = -6381864884046078055L;
 
-	private List<A> list;
+	private List<T> list;
 
-	public DefaultListMatrix(Collection<A> list) {
+	public DefaultListMatrix(Collection<T> list) {
 		if (list instanceof List) {
-			this.list = (List<A>) list;
+			this.list = (List<T>) list;
 		} else {
-			this.list = new ArrayList<A>(list);
+			this.list = new ArrayList<T>(list);
 		}
 	}
 
 	public DefaultListMatrix() {
-		this.list = new ArrayList<A>();
+		this.list = new ArrayList<T>();
 	}
 
-	public DefaultListMatrix(A... objects) {
+	public DefaultListMatrix(T... objects) {
 		this.list = Arrays.asList(objects);
 	}
 
-	public List<A> getList() {
+	public List<T> getList() {
 		return list;
 	}
 
-	public DenseMatrix2DFactory<DefaultListMatrix<A>> getFactory() {
+	public DenseMatrix2DFactory<DefaultListMatrix<T>> getFactory() {
 		throw new RuntimeException("not implemented");
 	}
 

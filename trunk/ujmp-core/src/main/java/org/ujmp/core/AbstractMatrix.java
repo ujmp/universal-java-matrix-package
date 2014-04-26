@@ -206,7 +206,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	private static long runningId = 0;
 
-	private transient GUIObject guiObject = null;
+	protected transient GUIObject guiObject = null;
 
 	private final long id;
 
@@ -307,7 +307,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		annotation.setAxisLabel(axis, label);
 	}
 
-	public final GUIObject getGUIObject() {
+	public GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
 				Class<?> c = Class.forName("org.ujmp.gui.MatrixGUIObject");

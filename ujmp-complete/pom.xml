@@ -88,7 +88,7 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
@@ -148,6 +148,13 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatrices</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jsch</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -221,7 +228,7 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -350,7 +357,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jblas</artifactId>
@@ -418,6 +425,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatrices</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-jsch</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -502,7 +517,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-parallelcolt</artifactId>
@@ -566,6 +581,7 @@
 		<module>../ujmp-jmathplot</module>
 		<module>../ujmp-jmatio</module>
 		<module>../ujmp-jmatrices</module>
+		<module>../ujmp-jsch</module>
 		<module>../ujmp-jsci</module>
 		<module>../ujmp-jscience</module>
 		<module>../ujmp-jung</module>

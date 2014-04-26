@@ -27,8 +27,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Closeable;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 import org.ujmp.core.interfaces.Erasable;
@@ -55,12 +57,20 @@ public abstract class AbstractStringMapTest {
 		assertEquals(getLabel(), "test2", m.get("a"));
 		assertEquals(getLabel(), "test1", m.get("b"));
 
+		m.put("a", "test3");
+		m.put("b", "test4");
+		assertEquals(getLabel(), "test3", m.get("a"));
+		assertEquals(getLabel(), "test4", m.get("b"));
+
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
+
+		if (m instanceof Closeable) {
+			((Closeable) m).close();
+		}
 	}
 
-	// TODO
 	@Test
 	public void testClear() throws Exception {
 		Map<String, String> m = createMap();
@@ -76,12 +86,20 @@ public abstract class AbstractStringMapTest {
 		assertEquals(getLabel(), 0, m.size());
 		assertTrue(getLabel(), m.isEmpty());
 
+		assertFalse(getLabel(), m.containsKey("a"));
+		assertFalse(getLabel(), m.containsKey("b"));
+		assertFalse(getLabel(), m.containsValue("test1"));
+		assertFalse(getLabel(), m.containsValue("test2"));
+
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
+
+		if (m instanceof Closeable) {
+			((Closeable) m).close();
+		}
 	}
 
-	// TODO
 	@Test
 	public void testContainsKey() throws Exception {
 		Map<String, String> m = createMap();
@@ -103,9 +121,31 @@ public abstract class AbstractStringMapTest {
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
+
+		if (m instanceof Closeable) {
+			((Closeable) m).close();
+		}
 	}
 
-	// TODO
+	@Test
+	public void testKeySet() throws Exception {
+		Map<String, String> m = createMap();
+		m.put("a", "test1");
+		m.put("b", "test2");
+		m.put("c", "test3");
+		Set<String> keys = m.keySet();
+		assertEquals(getLabel(), keys.size(), 3);
+		assertTrue(getLabel(), keys.contains("a"));
+		assertTrue(getLabel(), keys.contains("b"));
+		assertTrue(getLabel(), keys.contains("c"));
+		int count = 0;
+		for (String key : keys) {
+			assertTrue(getLabel(), key.equals("a") || key.equals("b") || key.equals("c"));
+			count++;
+		}
+		assertEquals(getLabel(), count, 3);
+	}
+
 	@Test
 	public void testContainsValue() throws Exception {
 		Map<String, String> m = createMap();
@@ -127,9 +167,12 @@ public abstract class AbstractStringMapTest {
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
 		}
+
+		if (m instanceof Closeable) {
+			((Closeable) m).close();
+		}
 	}
 
-	// TODO
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSerialize() throws Exception {
@@ -144,6 +187,10 @@ public abstract class AbstractStringMapTest {
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();
+		}
+
+		if (m instanceof Closeable) {
+			((Closeable) m).close();
 		}
 	}
 

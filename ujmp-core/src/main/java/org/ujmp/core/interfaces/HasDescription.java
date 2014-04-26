@@ -24,6 +24,7 @@
 package org.ujmp.core.interfaces;
 
 public interface HasDescription {
+	public static final String DESCRIPTION = "Description";
 
 	public String getDescription();
 

@@ -24,6 +24,7 @@
 package org.ujmp.gui.util;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.util.MathUtil;
@@ -69,6 +70,13 @@ public abstract class GUIUtil {
 
 	public static String getString(String message) {
 		return JOptionPane.showInputDialog(message);
+	}
+
+	public static String getPassword(String message) {
+		JPasswordField passwordField = new JPasswordField();
+		JOptionPane.showConfirmDialog(null, passwordField, message, JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		return new String(passwordField.getPassword());
 	}
 
 	public static boolean getBoolean(String message) {

@@ -23,13 +23,17 @@
 
 package org.ujmp.core.collections.map;
 
+import java.io.Closeable;
+import java.io.Flushable;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.ujmp.core.interfaces.Wrapper;
 
-public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K, V>> {
+public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K, V>>, Flushable,
+		Closeable {
 	private static final long serialVersionUID = 1383398694858918398L;
 
 	private transient Map<K, V> source = null;
@@ -122,6 +126,24 @@ public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K,
 			cache = new SoftHashMap<K, V>();
 		}
 		return cache;
+	}
+
+	public void close() throws IOException {
+		if (source instanceof Closeable) {
+			((Closeable) source).close();
+		}
+		if (cache instanceof Closeable) {
+			((Closeable) cache).close();
+		}
+	}
+
+	public void flush() throws IOException {
+		if (source instanceof Flushable) {
+			((Flushable) source).flush();
+		}
+		if (cache instanceof Flushable) {
+			((Flushable) cache).flush();
+		}
 	}
 
 }

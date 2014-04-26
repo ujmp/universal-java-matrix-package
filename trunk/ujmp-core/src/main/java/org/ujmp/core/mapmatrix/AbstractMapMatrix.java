@@ -24,6 +24,7 @@
 package org.ujmp.core.mapmatrix;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements
 		MapMatrix<K, V> {
 	private static final long serialVersionUID = 5571429371462164416L;
+
+	private final Map<Integer, K> indexMap = new HashMap<Integer, K>();
 
 	public abstract Map<K, V> getMap();
 
@@ -84,11 +87,26 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 			return ((List<K>) getMap()).get(index);
 		}
 		synchronized (this) {
-			Iterator<K> it = keySet().iterator();
-			for (int i = 0; it.hasNext() && i < index; i++) {
-				it.next();
+			if (size() < 10000000) {
+				if (indexMap.isEmpty()) {
+					buildIndex();
+				}
+				K k = indexMap.get(index);
+				return k;
+			} else {
+				Iterator<K> it = keySet().iterator();
+				for (int i = 0; it.hasNext() && i < index; i++) {
+					it.next();
+				}
+				return it.hasNext() ? it.next() : null;
 			}
-			return it.hasNext() ? it.next() : null;
+		}
+	}
+
+	private void buildIndex() {
+		Iterator<K> it = keySet().iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			indexMap.put(i, it.next());
 		}
 	}
 
@@ -117,17 +135,20 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final V put(K key, V value) {
+		indexMap.clear();
 		V v = getMap().put(key, value);
 		notifyGUIObject();
 		return v;
 	}
 
 	public final void putAll(Map<? extends K, ? extends V> m) {
+		indexMap.clear();
 		getMap().putAll(m);
 		notifyGUIObject();
 	}
 
 	public final V remove(Object key) {
+		indexMap.clear();
 		V v = getMap().remove(key);
 		notifyGUIObject();
 		return v;
@@ -142,6 +163,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final void clear() {
+		indexMap.clear();
 		getMap().clear();
 	}
 

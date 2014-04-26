@@ -27,12 +27,15 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.HasDescription;
+import org.ujmp.core.interfaces.HasId;
 import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.mapmatrix.MapMatrix;
 
-public interface Annotation extends Serializable, Cloneable, HasLabel {
-
+public interface Annotation extends Serializable, Cloneable, HasLabel, HasId, HasDescription {
+	public static final String ID = "Id";
 	public static final String LABEL = "Label";
+	public static final String DESCRIPTION = "Description";
 
 	public Matrix getDimensionMatrix(int dimension);
 

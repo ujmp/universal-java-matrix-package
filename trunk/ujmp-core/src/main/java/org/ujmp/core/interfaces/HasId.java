@@ -24,6 +24,7 @@
 package org.ujmp.core.interfaces;
 
 public interface HasId {
+	public static final String ID = "Id";
 
 	/**
 	 * Returns the String id of an object.

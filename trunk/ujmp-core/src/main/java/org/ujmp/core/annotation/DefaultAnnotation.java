@@ -32,6 +32,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
+import org.ujmp.core.util.StringUtil;
 
 public class DefaultAnnotation extends AbstractAnnotation {
 	private static final long serialVersionUID = -7988756144808776868L;
@@ -73,6 +74,22 @@ public class DefaultAnnotation extends AbstractAnnotation {
 
 	public void setLabelObject(Object label) {
 		metaData.put(LABEL, label);
+	}
+
+	public void setDescription(String description) {
+		metaData.put(DESCRIPTION, description);
+	}
+
+	public void setId(String id) {
+		metaData.put(ID, id);
+	}
+
+	public String getDescription() {
+		return StringUtil.getString(getObject(DESCRIPTION));
+	}
+
+	public String getId() {
+		return StringUtil.getString(getObject(ID));
 	}
 
 	public Object getObject(Object key) {

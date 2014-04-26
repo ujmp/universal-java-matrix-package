@@ -2317,4 +2317,26 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
+	public final String getId() {
+		return annotation == null ? null : annotation.getId();
+	}
+
+	public final void setId(String id) {
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		annotation.setId(id);
+	}
+
+	public final String getDescription() {
+		return annotation == null ? null : annotation.getDescription();
+	}
+
+	public final void setDescription(String description) {
+		if (annotation == null) {
+			annotation = new DefaultAnnotation(getDimensionCount());
+		}
+		annotation.setDescription(description);
+	}
+
 }

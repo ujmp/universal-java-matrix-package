@@ -24,6 +24,7 @@
 package org.ujmp.core.interfaces;
 
 public interface HasLabel {
+	public static final String LABEL = "Label";
 
 	/**
 	 * Returns the String label of an object.

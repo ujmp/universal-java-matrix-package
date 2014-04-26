@@ -21,15 +21,35 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.interfaces;
+package org.ujmp.core.util;
 
-import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
-public interface CoreObject extends Serializable, Clearable, Cloneable, HasGUIObject, HasId,
-		HasLabel, HasDescription {
+public abstract class NetworkUtil {
 
-	public long getCoreObjectId();
-
-	public CoreObject clone();
+	public static final List<String> getIPAddresses() throws SocketException {
+		List<String> ips = new ArrayList<String>();
+		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+		while (interfaces.hasMoreElements()) {
+			NetworkInterface current = interfaces.nextElement();
+			if (!current.isUp() || current.isLoopback() || current.isVirtual()) {
+				continue;
+			}
+			Enumeration<InetAddress> addresses = current.getInetAddresses();
+			while (addresses.hasMoreElements()) {
+				InetAddress currentAddress = addresses.nextElement();
+				if (currentAddress.isLoopbackAddress()) {
+					continue;
+				}
+				ips.add(currentAddress.getHostAddress());
+			}
+		}
+		return ips;
+	}
 
 }

@@ -63,12 +63,11 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 	}
 
 	public Collection<V> values() {
+		final AbstractMap<K, V> map = this;
 		return new AbstractCollection<V>() {
-
 			@Override
 			public Iterator<V> iterator() {
 				return new Iterator<V>() {
-
 					Iterator<K> it = keySet().iterator();
 
 					public boolean hasNext() {
@@ -87,12 +86,13 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 
 			@Override
 			public int size() {
-				return size();
+				return map.size();
 			}
 		};
 	}
 
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
+		final AbstractMap<K, V> map = this;
 		return new AbstractSet<Entry<K, V>>() {
 
 			@Override
@@ -132,7 +132,7 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 
 			@Override
 			public int size() {
-				return size();
+				return map.size();
 			}
 		};
 	}
@@ -140,12 +140,18 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 	@SuppressWarnings("unchecked")
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
+		beforeReadObject(s);
 		int size = s.readInt();
 		for (int i = 0; i < size; i++) {
 			try {
 				K k = (K) s.readObject();
 				V v = (V) s.readObject();
-				put(k, v);
+				try {
+					put(k, v);
+				} catch (Exception e) {
+					remove(k);
+					put(k, v);
+				}
 			} catch (OptionalDataException e) {
 				return;
 			}
@@ -154,6 +160,7 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 
 	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
+		beforeWriteObject(s);
 		s.writeInt(size());
 		for (Object k : keySet()) {
 			Object v = get(k);
@@ -204,4 +211,10 @@ public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> impl
 
 	public abstract int size();
 
+	protected void beforeWriteObject(ObjectOutputStream s) throws IOException {
+	}
+
+	protected void beforeReadObject(ObjectInputStream is) throws IOException,
+			ClassNotFoundException {
+	}
 }

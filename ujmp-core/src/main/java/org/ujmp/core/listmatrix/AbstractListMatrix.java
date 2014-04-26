@@ -85,6 +85,14 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 		return getList().get(index);
 	}
 
+	public A getLast() {
+		if (isEmpty()) {
+			return null;
+		} else {
+			return getList().get(size() - 1);
+		}
+	}
+
 	public int indexOf(Object o) {
 		return getList().indexOf(o);
 	}

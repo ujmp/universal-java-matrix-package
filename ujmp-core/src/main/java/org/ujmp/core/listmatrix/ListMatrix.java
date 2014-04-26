@@ -29,4 +29,6 @@ import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface ListMatrix<T> extends GenericMatrix2D<T>, List<T> {
 
+	public T getLast();
+
 }

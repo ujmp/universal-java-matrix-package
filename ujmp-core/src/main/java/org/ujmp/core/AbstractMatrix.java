@@ -277,10 +277,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return MathUtil.getPreferredObject(getAsObject(coordinates));
 	}
 
-	public final Object getLabelObject() {
-		return annotation == null ? null : annotation.getLabelObject();
-	}
-
 	public ValueType getValueType() {
 		return ValueType.OBJECT;
 	}
@@ -290,7 +286,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getAxisLabel(int axis) {
-		return annotation == null ? null : annotation.getAxisLabel(axis);
+		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(
+				"AxisLabel" + axis));
 	}
 
 	public final void setAxisAnnotation(int axis, Object label, long... position) {
@@ -1517,18 +1514,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
-	public final void setLabel(String label) {
+	public final void setLabel(Object label) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation(getDimensionCount());
 		}
-		annotation.setLabel(label);
-	}
-
-	public final void setLabelObject(Object label) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
-		}
-		annotation.setLabelObject(label);
+		annotation.getMetaData().put(LABEL, label);
 	}
 
 	public final String getLabel() {
@@ -1923,11 +1913,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Object getAnnotationObject(Object key) {
-		return annotation == null ? null : this.annotation.getObject(key);
+		return annotation == null ? null : this.annotation.getMetaData().get(key);
 	}
 
 	public final String getAnnotationString(Object key) {
-		return annotation == null ? null : StringUtil.convert(this.annotation.getObject(key));
+		return annotation == null ? null : StringUtil.convert(this.annotation.getMetaData()
+				.get(key));
 	}
 
 	public final boolean equalsAnnotation(Object o) {
@@ -2318,25 +2309,30 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getId() {
-		return annotation == null ? null : annotation.getId();
+		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(ID));
 	}
 
 	public final void setId(String id) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation(getDimensionCount());
 		}
-		annotation.setId(id);
+		annotation.getMetaData().put(ID, id);
 	}
 
 	public final String getDescription() {
-		return annotation == null ? null : annotation.getDescription();
+		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(
+				DESCRIPTION));
+	}
+
+	public final Object getLabelObject() {
+		return annotation == null ? null : annotation.getMetaData().get(LABEL);
 	}
 
 	public final void setDescription(String description) {
 		if (annotation == null) {
 			annotation = new DefaultAnnotation(getDimensionCount());
 		}
-		annotation.setDescription(description);
+		annotation.getMetaData().put(DESCRIPTION, description);
 	}
 
 }

@@ -34,10 +34,14 @@ public class MatrixEditorPanel extends JPanel {
 
 	MatrixTableEditorPanel editor = null;
 
-	public MatrixEditorPanel(MatrixGUIObject m) {
+	public MatrixEditorPanel(String title, MatrixGUIObject m) {
 		setLayout(new BorderLayout());
-		editor = new MatrixTableEditorPanel(m);
+		editor = new MatrixTableEditorPanel(title, m);
 		add(editor, BorderLayout.CENTER);
+	}
+
+	public MatrixEditorPanel(MatrixGUIObject m) {
+		this(null, m);
 	}
 
 }

@@ -38,7 +38,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
 		setAnnotation(new DefaultAnnotation(getSize().length));
-		getAnnotation().setLabelObject(m.getLabelObject());
+		getAnnotation().getMetaData().put(Matrix.LABEL, m.getLabelObject());
 	}
 
 	public Object getObject(long... coordinates) {

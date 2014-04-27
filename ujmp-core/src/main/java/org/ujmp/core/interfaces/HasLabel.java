@@ -39,7 +39,7 @@ public interface HasLabel {
 	 * @param label
 	 *            the new label.
 	 */
-	public void setLabel(String label);
+	public void setLabel(Object label);
 
 	/**
 	 * Returns the label of an object.
@@ -47,13 +47,5 @@ public interface HasLabel {
 	 * @return the label
 	 */
 	public Object getLabelObject();
-
-	/**
-	 * Sets the label of an object
-	 * 
-	 * @param label
-	 *            the new label.
-	 */
-	public void setLabelObject(Object label);
 
 }

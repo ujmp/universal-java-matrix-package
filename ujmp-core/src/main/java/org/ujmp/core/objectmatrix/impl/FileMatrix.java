@@ -72,7 +72,7 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 		this.fileFormat = fileFormat;
 		this.file = file;
 		this.parameters = parameters;
-		setLabelObject(file);
+		setLabel(file);
 	}
 
 	public Map<String, Object> getMap() {

@@ -70,10 +70,10 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 
 	private boolean scroll = true;
 
-	public MatrixTableEditorPanel(MatrixGUIObject m) {
+	public MatrixTableEditorPanel(String title, MatrixGUIObject m) {
 		dataModel = m;
 
-		setBorder(BorderFactory.createTitledBorder("Matrix Editor"));
+		setBorder(BorderFactory.createTitledBorder(title == null ? "Matrix Editor" : title));
 		setLayout(new BorderLayout());
 
 		jTable = new MatrixTable64(m);

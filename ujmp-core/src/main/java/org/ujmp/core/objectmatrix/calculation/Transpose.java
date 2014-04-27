@@ -54,7 +54,7 @@ public class Transpose extends AbstractObjectCalculation {
 			int swap2) {
 		if (aorig != null) {
 			Annotation a = new DefaultAnnotation(newSize.length);
-			a.setLabelObject(aorig.getLabelObject());
+			a.getMetaData().put(Matrix.LABEL, aorig.getMetaData().get(Matrix.LABEL));
 			for (int i = 0; i < newSize.length; i++) {
 				Matrix am = aorig.getDimensionMatrix(i);
 				am = am.transpose(Ret.NEW, swap1, swap2);

@@ -162,7 +162,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return getMap().values();
 	}
 
-	public final void clear() {
+	public void clear() {
 		indexMap.clear();
 		getMap().clear();
 	}

@@ -41,7 +41,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.SampleList;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.menu.MatrixPopupMenu;
 import org.ujmp.gui.table.ColumnTableHeaderRenderer64;
@@ -130,8 +129,6 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 			Object o = dataModel.getMatrix().getAsObject(row, col);
 			if (o instanceof Matrix) {
 				((Matrix) o).showGUI();
-			} else if (dataModel.getMatrix() instanceof SampleList) {
-				((SampleList) dataModel.getMatrix()).getSample(row).showGUI();
 			}
 		}
 	}

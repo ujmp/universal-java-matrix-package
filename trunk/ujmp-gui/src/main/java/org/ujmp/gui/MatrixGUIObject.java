@@ -80,16 +80,12 @@ public class MatrixGUIObject extends AbstractGUIObject implements TableModel64 {
 		return matrix.getLabel();
 	}
 
-	public final void setLabel(final String label) {
+	public final void setLabel(final Object label) {
 		matrix.setLabel(label);
 	}
 
 	public final Object getLabelObject() {
 		return matrix.getLabelObject();
-	}
-
-	public final void setLabelObject(final Object label) {
-		matrix.setLabelObject(label);
 	}
 
 	public final void addTableModelListener(final TableModelListener64 l) {

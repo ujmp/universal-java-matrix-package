@@ -52,17 +52,18 @@ public class MatrixPanel extends AbstractPanel {
 
 		JSplitPane splitPane1 = new JSplitPane();
 		JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setMinimumSize(new Dimension(10, 10));
 
-		tabbedPane.add("Heatmap", new MatrixHeatmapPanel(m, false));
-
 		Annotation metaData = m.getMatrix().getAnnotation();
 		if (metaData != null) {
-			tabbedPane.add("Metadata", new MatrixEditorPanel((MatrixGUIObject) m.getMatrix().getAnnotation()
-					.getMetaData().getGUIObject()));
+			splitPane2.setTopComponent(new MatrixEditorPanel("Meta Data", (MatrixGUIObject) m.getMatrix()
+					.getAnnotation().getMetaData().getGUIObject()));
 		}
+
+		tabbedPane.add("Heatmap", new MatrixHeatmapPanel(m, false));
+
+		tabbedPane.add("Plot", new BufferedPanel(new MatrixPlot(m, true)));
 
 		if (m.getMatrix() instanceof GraphMatrix && m.getColumnCount() < 1000) {
 			tabbedPane.add("Graph", new GraphPanel(m));
@@ -225,7 +226,6 @@ public class MatrixPanel extends AbstractPanel {
 		// MatrixGUIObject.class).newInstance(m);
 		// splitPane2.setTopComponent(new BufferedPanel(panel));
 		// } catch (Throwable t) {
-		splitPane2.setTopComponent(new BufferedPanel(new MatrixPlot(m, true)));
 		// }
 
 		splitPane2.setBottomComponent(tabbedPane);

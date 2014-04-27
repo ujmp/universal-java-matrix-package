@@ -53,9 +53,9 @@ public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
 	public FileListMatrix(File path, Object... parameters) {
 		this.path = path;
 		if (path == null) {
-			setLabelObject("/");
+			setLabel("/");
 		} else {
-			setLabelObject(path);
+			setLabel(path);
 		}
 	}
 
@@ -81,9 +81,9 @@ public class FileListMatrix extends AbstractMapMatrixList<String, Object> {
 		public PrivateFileListMatrix(File path) {
 			this.path = path;
 			if (path == null) {
-				setLabelObject("/");
+				setLabel("/");
 			} else {
-				setLabelObject(path);
+				setLabel(path);
 			}
 		}
 

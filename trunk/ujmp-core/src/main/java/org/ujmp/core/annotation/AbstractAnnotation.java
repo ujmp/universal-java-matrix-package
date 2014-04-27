@@ -24,19 +24,14 @@
 package org.ujmp.core.annotation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.util.StringUtil;
 
 public abstract class AbstractAnnotation implements Annotation {
 	private static final long serialVersionUID = 2939231340832922069L;
 
-	private final int dimensionCount;
+	protected final int dimensionCount;
 
 	public AbstractAnnotation(int dimensionCount) {
 		this.dimensionCount = dimensionCount;
-	}
-
-	public final int getDimensionCount() {
-		return dimensionCount;
 	}
 
 	public final Object getAxisLabelObject(int axis) {
@@ -44,84 +39,13 @@ public abstract class AbstractAnnotation implements Annotation {
 		return m.getLabelObject();
 	}
 
-	public final String getAxisLabel(int axis) {
-		Matrix m = getDimensionMatrix(axis);
-		return m.getLabel();
-	}
-
 	public final void setAxisLabelObject(int axis, Object value) {
 		Matrix m = getDimensionMatrix(axis);
-		m.setLabelObject(value);
-	}
-
-	public final String toString() {
-		StringBuilder s = new StringBuilder();
-		String EOL = System.getProperty("line.separator");
-		s.append("Label: " + getLabelObject() + EOL);
-		for (int i = 0; i < getDimensionCount(); i++) {
-			s.append("Dimension " + i + ":" + EOL);
-			s.append(getDimensionMatrix(i));
-			s.append(EOL);
-		}
-		return s.toString();
-	}
-
-	@Override
-	public final int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getLabelObject() == null) ? 0 : getLabelObject().hashCode());
-		for (int i = 0; i < getDimensionCount(); i++) {
-			result = prime * result
-					+ ((getDimensionMatrix(i) == null) ? 0 : getDimensionMatrix(i).hashCode());
-		}
-		return result;
-	}
-
-	@Override
-	public final boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		DefaultAnnotation other = (DefaultAnnotation) obj;
-		if (getDimensionCount() != other.getDimensionCount()) {
-			return false;
-		}
-		if (getLabelObject() == null) {
-			if (other.getLabelObject() != null) {
-				return false;
-			}
-		} else if (!getLabelObject().equals(other.getLabelObject())) {
-			return false;
-		}
-		for (int i = 0; i < getDimensionCount(); i++) {
-			if (getDimensionMatrix(i) == null) {
-				if (other.getDimensionMatrix(i) != null) {
-					return false;
-				}
-			} else if (!getDimensionMatrix(i).equals(other.getDimensionMatrix(i))) {
-				return false;
-			}
-		}
-		return true;
+		m.setLabel(value);
 	}
 
 	public void setAxisLabel(int dimension, String label) {
 		setAxisLabelObject(dimension, label);
-	}
-
-	public String getLabel() {
-		return StringUtil.getString(getLabelObject());
-	}
-
-	public void setLabel(String label) {
-		setLabelObject(label);
 	}
 
 	public abstract Annotation clone();

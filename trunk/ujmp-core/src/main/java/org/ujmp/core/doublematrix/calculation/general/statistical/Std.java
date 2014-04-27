@@ -44,7 +44,7 @@ public class Std extends AbstractDoubleCalculation {
 		Annotation aold = matrix.getAnnotation();
 		if (aold != null) {
 			Annotation a = new DefaultAnnotation(getSize().length);
-			a.setLabelObject(aold.getLabelObject());
+			a.getMetaData().put(Matrix.LABEL, aold.getMetaData().get(Matrix.LABEL));
 			if (dimension == ROW) {
 				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
 			} else if (dimension == COLUMN) {

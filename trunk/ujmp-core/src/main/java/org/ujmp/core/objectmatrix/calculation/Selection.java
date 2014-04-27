@@ -65,7 +65,7 @@ public class Selection extends AbstractObjectCalculation {
 		Annotation a = getSource().getAnnotation();
 		if (a != null) {
 			Annotation anew = new DefaultAnnotation(getSize().length);
-			anew.setLabelObject(a.getLabelObject());
+			anew.getMetaData().put(Matrix.LABEL, a.getMetaData().get(Matrix.LABEL));
 			if (selection[ROW] == null) {
 				long rowCount = getSource().getRowCount();
 				for (int r = 0; r < rowCount; r++) {

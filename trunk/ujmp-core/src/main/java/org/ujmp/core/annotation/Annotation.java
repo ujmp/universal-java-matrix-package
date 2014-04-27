@@ -24,30 +24,19 @@
 package org.ujmp.core.annotation;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.interfaces.HasDescription;
-import org.ujmp.core.interfaces.HasId;
-import org.ujmp.core.interfaces.HasLabel;
 import org.ujmp.core.mapmatrix.MapMatrix;
 
-public interface Annotation extends Serializable, Cloneable, HasLabel, HasId, HasDescription {
-	public static final String ID = "Id";
-	public static final String LABEL = "Label";
-	public static final String DESCRIPTION = "Description";
+public interface Annotation extends Serializable, Cloneable {
 
 	public Matrix getDimensionMatrix(int dimension);
-
-	public Map<Integer, Matrix> getDimensionMatrices();
 
 	public void setDimensionMatrix(int dimension, Matrix matrix);
 
 	public void setAxisAnnotation(int dimension, Object label, long... position);
 
 	public Object getAxisAnnotation(int dimension, long... position);
-
-	public String getAxisLabel(int dimension);
 
 	public Object getAxisLabelObject(int dimension);
 
@@ -64,8 +53,6 @@ public interface Annotation extends Serializable, Cloneable, HasLabel, HasId, Ha
 	public long[] getPositionForLabel(int dimension, Object label);
 
 	public void setObject(Object key, Object value);
-
-	public Object getObject(Object key);
 
 	public MapMatrix<Object, Object> getMetaData();
 

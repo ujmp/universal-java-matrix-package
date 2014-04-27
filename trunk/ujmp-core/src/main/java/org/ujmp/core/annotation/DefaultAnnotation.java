@@ -24,35 +24,29 @@
 package org.ujmp.core.annotation;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
-import org.ujmp.core.util.StringUtil;
 
 public class DefaultAnnotation extends AbstractAnnotation {
 	private static final long serialVersionUID = -7988756144808776868L;
 
-	// TODO: Annotation should extend MapMatrix<Object, Object>
 	private final MapMatrix<Object, Object> metaData = new DefaultMapMatrix<Object, Object>();
-
-	private Map<Integer, Matrix> dimensionMatrices = null;
 
 	public DefaultAnnotation(int dimensionCount) {
 		super(dimensionCount);
 	}
 
 	public Matrix getDimensionMatrix(int dimension) {
-		Matrix m = getDimensionMatrices().get(dimension);
+		Matrix m = (Matrix) getMetaData().get("AxisLabels" + dimension);
 		if (m == null) {
-			long[] t = new long[getDimensionCount()];
+			long[] t = new long[dimensionCount];
 			Arrays.fill(t, 1);
 			m = new DefaultSparseObjectMatrix(t);
-			getDimensionMatrices().put(dimension, m);
+			getMetaData().put("AxisLabels" + dimension, m);
 		}
 		return m;
 	}
@@ -61,57 +55,20 @@ public class DefaultAnnotation extends AbstractAnnotation {
 		return metaData;
 	}
 
-	public Map<Integer, Matrix> getDimensionMatrices() {
-		if (dimensionMatrices == null) {
-			dimensionMatrices = new HashMap<Integer, Matrix>(2);
-		}
-		return dimensionMatrices;
-	}
-
-	public Object getLabelObject() {
-		return metaData.get(LABEL);
-	}
-
-	public void setLabelObject(Object label) {
-		metaData.put(LABEL, label);
-	}
-
-	public void setDescription(String description) {
-		metaData.put(DESCRIPTION, description);
-	}
-
-	public void setId(String id) {
-		metaData.put(ID, id);
-	}
-
-	public String getDescription() {
-		return StringUtil.getString(getObject(DESCRIPTION));
-	}
-
-	public String getId() {
-		return StringUtil.getString(getObject(ID));
-	}
-
-	public Object getObject(Object key) {
-		return metaData.get(key);
-	}
-
 	public void setObject(Object key, Object label) {
 		metaData.put(key, label);
 	}
 
 	public Annotation clone() {
-		Annotation a = new DefaultAnnotation(getDimensionCount());
-		a.setLabelObject(getLabelObject());
-		for (int i = 0; i < getDimensionCount(); i++) {
-			a.setDimensionMatrix(i, getDimensionMatrix(i).clone());
+		Annotation a = new DefaultAnnotation(dimensionCount);
+		for (Object key : metaData.keySet()) {
+			a.getMetaData().put(key, metaData.get(key));
 		}
 		return a;
 	}
 
 	public void clear() {
 		metaData.clear();
-		dimensionMatrices = null;
 	}
 
 	public Object getAxisAnnotation(int dimension, long... position) {
@@ -137,7 +94,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 				return c;
 			}
 		}
-		long[] t = new long[getDimensionCount()];
+		long[] t = new long[dimensionCount];
 		Arrays.fill(t, -1);
 		return t;
 	}
@@ -155,7 +112,7 @@ public class DefaultAnnotation extends AbstractAnnotation {
 	}
 
 	public void setDimensionMatrix(int dimension, Matrix matrix) {
-		getDimensionMatrices().put(dimension, matrix);
+		getMetaData().put("AxisLabels" + dimension, matrix);
 	}
 
 }

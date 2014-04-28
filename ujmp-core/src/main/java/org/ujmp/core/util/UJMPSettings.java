@@ -31,6 +31,8 @@ import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 public class UJMPSettings extends DefaultMapMatrix<String, Object> {
 	private static final long serialVersionUID = -4677534766141735270L;
 
+	private static final Object lock = new Object();
+
 	public static final String USEBLOCKMATRIXMULTIPLY = "UseBlockMatrixMultiply";
 	public static final String USEMULTITHREADEDRANDOM = "UseMultThreadedRandom";
 	public static final String DEFAULTBLOCKSIZE = "DefaultBlockSize";
@@ -83,7 +85,7 @@ public class UJMPSettings extends DefaultMapMatrix<String, Object> {
 
 	public static final UJMPSettings getInstance() {
 		if (instance == null) {
-			synchronized (instance) {
+			synchronized (lock) {
 				if (instance == null) {
 					instance = new UJMPSettings();
 				}

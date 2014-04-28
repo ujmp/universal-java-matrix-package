@@ -37,9 +37,9 @@ public class TestBlockMultiply extends TestCase {
 
 	public static void multiplyCompare(int m, int n, int k) throws Exception {
 
-		boolean useJblas = UJMPSettings.isUseJBlas();
-		UJMPSettings.setUseJBlas(false);
-		boolean useBlockMultiply = UJMPSettings.isUseBlockMatrixMultiply();
+		boolean useJblas = UJMPSettings.getInstance().isUseJBlas();
+		UJMPSettings.getInstance().setUseJBlas(false);
+		boolean useBlockMultiply = UJMPSettings.getInstance().isUseBlockMatrixMultiply();
 
 		try {
 			BlockDenseDoubleMatrix2D a = Fixture.createBlockRowLayoutWithGeneratedData(m, n,
@@ -49,17 +49,17 @@ public class TestBlockMultiply extends TestCase {
 			Matrix d = Fixture.createDenseMatrixWithGeneratedData(m, n);
 			Matrix e = Fixture.createDenseMatrixWithGeneratedData(n, k);
 
-			UJMPSettings.setUseBlockMatrixMultiply(false);
+			UJMPSettings.getInstance().setUseBlockMatrixMultiply(false);
 			Matrix f = multiplyDenseDouble2DMatrix(d, e);
 
-			UJMPSettings.setUseBlockMatrixMultiply(true);
+			UJMPSettings.getInstance().setUseBlockMatrixMultiply(true);
 			Matrix c = multiplyBlockMatrix(a, b);
 
 			Fixture.compare(f, c);
 		} finally {
 			// reset
-			UJMPSettings.setUseBlockMatrixMultiply(useBlockMultiply);
-			UJMPSettings.setUseJBlas(useJblas);
+			UJMPSettings.getInstance().setUseBlockMatrixMultiply(useBlockMultiply);
+			UJMPSettings.getInstance().setUseJBlas(useJblas);
 		}
 
 		System.gc();

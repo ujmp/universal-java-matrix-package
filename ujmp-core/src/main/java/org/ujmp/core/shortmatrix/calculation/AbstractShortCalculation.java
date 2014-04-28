@@ -51,8 +51,8 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 		for (long[] c : result.allCoordinates()) {
 			result.setAsShort(getShort(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

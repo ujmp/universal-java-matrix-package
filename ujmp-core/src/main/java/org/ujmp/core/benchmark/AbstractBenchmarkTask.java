@@ -165,12 +165,9 @@ public abstract class AbstractBenchmarkTask {
 			}
 		}
 
-		Matrix temp = Matrix.Factory.vertCat(
-				resultTime.getAnnotation().getDimensionMatrix(Matrix.ROW), resultTime);
-		Matrix diff = Matrix.Factory.vertCat(
-				resultDiff.getAnnotation().getDimensionMatrix(Matrix.ROW), resultDiff);
-		Matrix mem = Matrix.Factory.vertCat(resultMem.getAnnotation()
-				.getDimensionMatrix(Matrix.ROW), resultMem);
+		Matrix temp = Matrix.Factory.vertCat(resultTime.getMetaDataDimensionMatrix(Matrix.ROW), resultTime);
+		Matrix diff = Matrix.Factory.vertCat(resultDiff.getMetaDataDimensionMatrix(Matrix.ROW), resultDiff);
+		Matrix mem = Matrix.Factory.vertCat(resultMem.getMetaDataDimensionMatrix(Matrix.ROW), resultMem);
 		try {
 			temp.export().toFile(timeFile).asCSV();
 			mem.export().toFile(memFile).asCSV();

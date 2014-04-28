@@ -24,30 +24,21 @@
 package org.ujmp.core.util.matrices;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.util.UJMPSettings;
 
 public class LocalhostMatrix extends RemoteHostMatrix {
 	private static final long serialVersionUID = 5276053410827939716L;
 
-	private final Matrix processors = Matrix.Factory.availableProcessors();
-	private final Matrix memory = Matrix.Factory.memoryUsage();
-	private final Matrix threads = Matrix.Factory.runningThreads();
-	private final Matrix systemEnvironment = Matrix.Factory.systemEnvironment();
-	private final Matrix systemProperties = Matrix.Factory.systemProperties();
-	private final Matrix systemTime = Matrix.Factory.systemTime();
-	private final Matrix fileSystem = new FileSystemMatrix();
-
 	public LocalhostMatrix() {
 		super("localhost");
-		setLabel("Localhost");
-		setColumnLabel(0, "Key");
-		setColumnLabel(1, "Value");
-		getMap().put("Available Processors", processors);
-		getMap().put("Memory Usage", memory);
-		getMap().put("Running Threads", threads);
-		getMap().put("System Environment", systemEnvironment);
-		getMap().put("System Properties", systemProperties);
-		getMap().put("System Time", systemTime);
-		getMap().put("File System", fileSystem);
+		put("Available Processors", Matrix.Factory.availableProcessors());
+		put("Memory Usage", Matrix.Factory.memoryUsage());
+		put("Running Threads", Matrix.Factory.runningThreads());
+		put("System Environment", Matrix.Factory.systemEnvironment());
+		put("System Properties", Matrix.Factory.systemProperties());
+		put("System Time", Matrix.Factory.systemTime());
+		put("UJMP Settings", UJMPSettings.getInstance());
+		put("File System", new FileSystemMatrix());
 	}
 
 }

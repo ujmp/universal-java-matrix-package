@@ -63,7 +63,7 @@ public class MatrixChartPanel extends AbstractChartPanel {
 		// dataset = new CategoryDatasetWrapper(getMatrix());
 
 		String title = getMatrix().getLabel();
-		String xLabel = StringUtil.format(getMatrix().getMatrix().getAxisLabel(Matrix.ROW));
+		String xLabel = StringUtil.format(getMatrix().getMatrix().getDimensionLabel(Matrix.ROW));
 		String yLabel = null;
 
 		// setChart(ChartFactory.createLineChart(title, xLabel, yLabel,

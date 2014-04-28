@@ -36,7 +36,7 @@ public interface SolveSPD<T> extends Solve<T> {
 	public static final SolveSPD<Matrix> MATRIX = new SolveSPD<Matrix>() {
 
 		public final Matrix calc(Matrix a, Matrix b) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (a.getRowCount() >= SQUARETHRESHOLD && a.getColumnCount() >= SQUARETHRESHOLD) {
 					return MATRIXSQUARELARGESINGLETHREADED.calc(a, b);
 				} else {
@@ -66,16 +66,16 @@ public interface SolveSPD<T> extends Solve<T> {
 	public static final SolveSPD<Matrix> MATRIXSQUARELARGESINGLETHREADED = new SolveSPD<Matrix>() {
 		public final Matrix calc(Matrix a, Matrix b) {
 			SolveSPD<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVESPD_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVESPD_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVESPD_EJML;
 			}
-			if (solve == null && UJMPSettings.isUseMTJ()) {
+			if (solve == null && UJMPSettings.getInstance().isUseMTJ()) {
 				solve = DecompositionOps.SOLVESPD_MTJ;
 			}
 			if (solve == null) {
@@ -88,13 +88,13 @@ public interface SolveSPD<T> extends Solve<T> {
 	public static final SolveSPD<Matrix> MATRIXSQUARELARGEMULTITHREADED = new SolveSPD<Matrix>() {
 		public Matrix calc(Matrix a, Matrix b) {
 			SolveSPD<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVESPD_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVESPD_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVESPD_EJML;
 			}
 			if (solve == null) {

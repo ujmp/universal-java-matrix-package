@@ -28,13 +28,13 @@ import java.util.Arrays;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.Mtimes;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasBlockDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.calculation.Transpose;
 import org.ujmp.core.util.UJMPSettings;
@@ -99,8 +99,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	private static int deriveDefaultBlockStripeSize(int rows, int cols) {
 		// TODO pick a suitable size
-		return (rows < UJMPSettings.getDefaultBlockSize() && cols < UJMPSettings
-				.getDefaultBlockSize()) ? 50 : UJMPSettings.getDefaultBlockSize();
+		return (rows < UJMPSettings.getInstance().getDefaultBlockSize() && cols < UJMPSettings
+				.getInstance().getDefaultBlockSize()) ? 50 : UJMPSettings.getInstance()
+				.getDefaultBlockSize();
 	}
 
 	/** Matrix data by block number. */
@@ -218,9 +219,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				System.arraycopy(block, 0, this.data[i], 0, block.length);
 			}
 		}
-		Annotation a = m.getAnnotation();
+		MapMatrix<Object, Object> a = m.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 
@@ -264,9 +265,9 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
-		Annotation a = m.getAnnotation();
+		MapMatrix<Object, Object> a = m.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 
@@ -445,16 +446,16 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			this.layout = transMat.layout;
 			this.data = transMat.data;
 			System.arraycopy(transMat.size, 0, this.size, 0, transMat.size.length);
-			if (getAnnotation() != null) {
-				setAnnotation(Transpose.transposeAnnotation(getAnnotation(),
+			if (getMetaData() != null) {
+				setMetaData(Transpose.transposeAnnotation(getMetaData(),
 						Coordinates.transpose(getSize())));
 			}
 			return this;
 		} else if (returnType == Ret.LINK) {
 			return super.transpose(Ret.LINK);
 		} else {
-			if (getAnnotation() != null) {
-				transMat.setAnnotation(Transpose.transposeAnnotation(getAnnotation(),
+			if (getMetaData() != null) {
+				transMat.setMetaData(Transpose.transposeAnnotation(getMetaData(),
 						Coordinates.transpose(getSize())));
 			}
 			return transMat;

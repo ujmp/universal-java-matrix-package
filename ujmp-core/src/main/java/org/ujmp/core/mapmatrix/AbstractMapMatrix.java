@@ -23,10 +23,11 @@
 
 package org.ujmp.core.mapmatrix;
 
+import java.util.AbstractCollection;
+import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,8 +38,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	private static final long serialVersionUID = 5571429371462164416L;
 
 	private final Map<Integer, K> indexMap = new HashMap<Integer, K>();
-
-	public abstract Map<K, V> getMap();
 
 	public AbstractMapMatrix() {
 		super(0, 2);
@@ -57,7 +56,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		if (column == 0) {
 			return mapKey;
 		} else if (column == 1) {
-			return (mapKey == null ? null : getMap().get(mapKey));
+			return (mapKey == null ? null : get(mapKey));
 		} else {
 			return null;
 		}
@@ -80,12 +79,17 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		setObject(value, (int) row, (int) column);
 	}
 
-	public abstract MapMatrix<K, V> clone();
+	public MapMatrix<K, V> clone() {
+		MapMatrix<K, V> clone = new DefaultMapMatrix<K, V>();
+		clone.putAll(this);
+		for (K key : keySet()) {
+			V value = get(key);
+			clone.put(key, value);
+		}
+		return clone;
+	}
 
 	private final K getKey(int index) {
-		if (getMap() instanceof List) {
-			return ((List<K>) getMap()).get(index);
-		}
 		synchronized (this) {
 			if (size() < 10000000) {
 				if (indexMap.isEmpty()) {
@@ -110,61 +114,126 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		}
 	}
 
-	public final boolean containsKey(Object key) {
-		return getMap().containsKey(key);
+	public boolean containsKey(Object key) {
+		return keySet().contains(key);
 	}
 
-	public final boolean containsValue(Object value) {
-		return getMap().containsValue(value);
+	public boolean containsValue(Object value) {
+		for (K key : keySet()) {
+			if (value.equals(get(key))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public final Set<java.util.Map.Entry<K, V>> entrySet() {
-		return getMap().entrySet();
+	public Set<java.util.Map.Entry<K, V>> entrySet() {
+		final AbstractMapMatrix<K, V> map = this;
+		return new AbstractSet<Entry<K, V>>() {
+
+			@Override
+			public Iterator<java.util.Map.Entry<K, V>> iterator() {
+				return new Iterator<Entry<K, V>>() {
+
+					Iterator<K> it = keySet().iterator();
+
+					public boolean hasNext() {
+						return it.hasNext();
+					}
+
+					public java.util.Map.Entry<K, V> next() {
+						final K k = it.next();
+						final V v = get(k);
+						return new java.util.Map.Entry<K, V>() {
+
+							public K getKey() {
+								return k;
+							}
+
+							public V getValue() {
+								return v;
+							}
+
+							public V setValue(V value) {
+								throw new UnsupportedOperationException();
+							}
+						};
+					}
+
+					public void remove() {
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+				return map.size();
+			}
+		};
 	}
 
-	public final V get(Object key) {
-		return getMap().get(key);
-	}
-
-	public final boolean isEmpty() {
-		return getMap().isEmpty();
-	}
-
-	public final Set<K> keySet() {
-		return getMap().keySet();
+	public boolean isEmpty() {
+		return size() == 0;
 	}
 
 	public final V put(K key, V value) {
 		indexMap.clear();
-		V v = getMap().put(key, value);
+		V v = putIntoMap(key, value);
 		notifyGUIObject();
 		return v;
 	}
 
-	public final void putAll(Map<? extends K, ? extends V> m) {
-		indexMap.clear();
-		getMap().putAll(m);
-		notifyGUIObject();
+	public final void putAll(Map<? extends K, ? extends V> map) {
+		for (K k : map.keySet()) {
+			put(k, map.get(k));
+		}
 	}
 
 	public final V remove(Object key) {
 		indexMap.clear();
-		V v = getMap().remove(key);
+		V v = removeFromMap(key);
 		notifyGUIObject();
 		return v;
 	}
 
-	public final int size() {
-		return getMap().size();
-	}
-
 	public final Collection<V> values() {
-		return getMap().values();
+		final AbstractMapMatrix<K, V> map = this;
+		return new AbstractCollection<V>() {
+			@Override
+			public Iterator<V> iterator() {
+				return new Iterator<V>() {
+					Iterator<K> it = keySet().iterator();
+
+					public boolean hasNext() {
+						return it.hasNext();
+					}
+
+					public V next() {
+						return get(it.next());
+					}
+
+					public void remove() {
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+				return map.size();
+			}
+		};
 	}
 
-	public void clear() {
+	public final void clear() {
 		indexMap.clear();
-		getMap().clear();
+		clearMap();
 	}
 
+	protected abstract void clearMap();
+
+	protected abstract V removeFromMap(Object key);
+
+	protected abstract V putIntoMap(K key, V value);
 }

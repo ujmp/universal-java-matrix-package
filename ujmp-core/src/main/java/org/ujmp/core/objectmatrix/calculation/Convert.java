@@ -24,8 +24,8 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class Convert {
 	public static final long serialVersionUID = 6393277198816850597L;
@@ -35,9 +35,9 @@ public class Convert {
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsObject(source.getAsObject(c), c);
 		}
-		Annotation a = source.getAnnotation();
+		MapMatrix<Object, Object> a = source.getMetaData();
 		if (a != null) {
-			ret.setAnnotation(a.clone());
+			ret.setMetaData(a.clone());
 		}
 		return ret;
 	}

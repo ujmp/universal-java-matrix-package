@@ -32,12 +32,12 @@ import org.ejml.factory.EigenDecomposition;
 import org.ejml.factory.LUDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.calculation.Inv;
 import org.ujmp.ejml.calculation.InvSPD;
@@ -82,8 +82,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 				setDouble(source.getAsDouble(c), c);
 			}
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -137,9 +137,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, value, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -149,9 +149,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.add(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -164,9 +164,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.sub(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -178,9 +178,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, -value, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -189,9 +189,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(value, matrix, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -200,9 +200,9 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(1.0 / value, matrix, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -285,8 +285,8 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix copy() {
 		Matrix m = new EJMLDenseDoubleMatrix2D(matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

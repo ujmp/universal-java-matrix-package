@@ -24,9 +24,9 @@
 package org.ujmp.jama;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 import Jama.CholeskyDecomposition;
 import Jama.EigenvalueDecomposition;
@@ -57,8 +57,8 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -125,8 +125,8 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public final Matrix copy() {
 		Matrix m = new JamaDenseDoubleMatrix2D(matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}
@@ -182,18 +182,18 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix times(double value) {
 		Matrix result = new JamaDenseDoubleMatrix2D(matrix.times(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double value) {
 		Matrix result = new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -205,9 +205,9 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public Matrix plus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			Matrix result = new JamaDenseDoubleMatrix2D(matrix.plus(((JamaDenseDoubleMatrix2D) m).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -218,9 +218,9 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public Matrix minus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			Matrix result = new JamaDenseDoubleMatrix2D(matrix.minus(((JamaDenseDoubleMatrix2D) m).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {

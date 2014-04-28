@@ -135,8 +135,8 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		short[] result = new short[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseShortMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

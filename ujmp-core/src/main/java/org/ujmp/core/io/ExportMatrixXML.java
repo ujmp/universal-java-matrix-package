@@ -35,7 +35,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.EmptyMatrix;
-import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class ExportMatrixXML {
@@ -61,7 +60,7 @@ public class ExportMatrixXML {
 
 	public static void toWriter(Writer writer, MapMatrix<?, ?> map, Object... parameters)
 			throws IOException {
-		final String EOL = UJMPSettings.getLineEnd();
+		final String EOL = System.getProperty("line.separator");
 		writer.write("<map>");
 		writer.write(EOL);
 		for (Map.Entry<?, ?> e : map.entrySet()) {
@@ -78,7 +77,7 @@ public class ExportMatrixXML {
 
 	public static void toWriter(Writer writer, Matrix matrix, Object... parameters)
 			throws IOException {
-		final String EOL = UJMPSettings.getLineEnd();
+		final String EOL = System.getProperty("line.separator");
 
 		if (parameters != null && parameters.length > 0) {
 			if (parameters[0] instanceof Boolean) {
@@ -184,5 +183,4 @@ public class ExportMatrixXML {
 			writer.write(EOL);
 		}
 	}
-
 }

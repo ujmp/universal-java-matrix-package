@@ -38,9 +38,9 @@ import org.jscience.mathematics.vector.LUDecomposition;
 import org.jscience.mathematics.vector.SparseMatrix;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.ReflectionUtil;
 
 public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<Float64Matrix> {
@@ -77,8 +77,8 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public JScienceDenseDoubleMatrix2D(Matrix matrix) {
 		super(matrix.getRowCount(), matrix.getColumnCount());
 		this.matrix = Float64Matrix.valueOf(matrix.toDoubleArray());
-		if (matrix.getAnnotation() != null) {
-			setAnnotation(matrix.getAnnotation().clone());
+		if (matrix.getMetaData() != null) {
+			setMetaData(matrix.getMetaData().clone());
 		}
 	}
 
@@ -155,9 +155,9 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public Matrix plus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -168,9 +168,9 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public Matrix minus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -180,18 +180,18 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public Matrix times(double value) {
 		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double value) {
 		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(1.0 / value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

@@ -359,8 +359,8 @@ public abstract class StringUtil {
 
 	public static String toString(Matrix m, Object... parameters) {
 		int width = 10;
-		long maxRows = UJMPSettings.getMaxRowsToPrint();
-		long maxColumns = UJMPSettings.getMaxColumnsToPrint();
+		long maxRows = UJMPSettings.getInstance().getMaxRowsToPrint();
+		long maxColumns = UJMPSettings.getInstance().getMaxColumnsToPrint();
 
 		StringBuilder s = new StringBuilder();
 
@@ -380,8 +380,8 @@ public abstract class StringUtil {
 
 		if (rowCount == 0 || columnCount == 0) {
 			s.append("[" + rowCount + "x" + columnCount + "]" + EOL);
-		} else if (rowCount > UJMPSettings.getMaxRowsToPrint()
-				|| columnCount > UJMPSettings.getMaxColumnsToPrint()) {
+		} else if (rowCount > UJMPSettings.getInstance().getMaxRowsToPrint()
+				|| columnCount > UJMPSettings.getInstance().getMaxColumnsToPrint()) {
 			s.append("[...]");
 		}
 

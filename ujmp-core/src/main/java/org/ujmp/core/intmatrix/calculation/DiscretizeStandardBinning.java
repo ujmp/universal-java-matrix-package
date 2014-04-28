@@ -51,15 +51,15 @@ public class DiscretizeStandardBinning extends AbstractIntCalculation {
 		switch (getDimension()) {
 		case Matrix.ROW:
 			mi = min.getAsDouble(0, coordinates[COLUMN]);
-			ma = max.getAsDouble(0, coordinates[COLUMN]) + UJMPSettings.getTolerance();
+			ma = max.getAsDouble(0, coordinates[COLUMN]) + UJMPSettings.getInstance().getTolerance();
 			break;
 		case Matrix.COLUMN:
 			mi = min.getAsDouble(coordinates[ROW], 0);
-			ma = max.getAsDouble(coordinates[ROW], 0) + UJMPSettings.getTolerance();
+			ma = max.getAsDouble(coordinates[ROW], 0) + UJMPSettings.getInstance().getTolerance();
 			break;
 		default:
 			mi = min.getAsDouble(0, 0);
-			ma = max.getAsDouble(0, 0) + UJMPSettings.getTolerance();
+			ma = max.getAsDouble(0, 0) + UJMPSettings.getInstance().getTolerance();
 			break;
 		}
 

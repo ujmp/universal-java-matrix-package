@@ -27,8 +27,8 @@ import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.util.CoordinateIterator2D;
@@ -57,9 +57,9 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		for (long[] c : source.availableCoordinates()) {
 			setObject(source.getAsObject(c), c);
 		}
-		Annotation a = source.getAnnotation();
+		MapMatrix<Object, Object> a = source.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 

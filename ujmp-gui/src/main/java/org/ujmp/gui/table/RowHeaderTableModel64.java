@@ -108,7 +108,7 @@ public class RowHeaderTableModel64 implements TableModel64, TableModelListener64
 	}
 
 	public Object getValueAt(long rowIndex, long columnIndex) {
-		return model.getMatrix().getRowLabelObject(rowIndex);
+		return model.getMatrix().getRowLabel(rowIndex);
 	}
 
 	public void setValueAt(Object aValue, long rowIndex, long columnIndex) {

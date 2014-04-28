@@ -36,11 +36,11 @@ import org.ojalgo.matrix.store.OjalgoUtil;
 import org.ojalgo.matrix.store.PhysicalStore;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.ojalgo.calculation.Chol;
 import org.ujmp.ojalgo.calculation.Eig;
 import org.ujmp.ojalgo.calculation.Inv;
@@ -83,8 +83,8 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 				this.setDouble(m.getAsDouble(c), c);
 			}
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 
@@ -106,9 +106,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -125,9 +125,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 
@@ -201,9 +201,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.SUBTRACT, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 
@@ -232,9 +232,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.ADD, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -251,9 +251,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.ADD, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 
@@ -302,9 +302,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -321,9 +321,9 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 

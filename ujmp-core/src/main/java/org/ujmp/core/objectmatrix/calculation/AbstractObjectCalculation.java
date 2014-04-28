@@ -53,8 +53,8 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		for (long[] c : result.allCoordinates()) {
 			result.setAsObject(getObject(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

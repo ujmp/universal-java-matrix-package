@@ -53,7 +53,7 @@ public interface SVD<T> {
 	public static final SVD<Matrix> MATRIX = new SVD<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -85,10 +85,10 @@ public interface SVD<T> {
 
 		public final Matrix[] calc(Matrix source) {
 			SVD<Matrix> svd = null;
-			if (UJMPSettings.isUseMTJ()) {
+			if (UJMPSettings.getInstance().isUseMTJ()) {
 				svd = DecompositionOps.SVD_MTJ;
 			}
-			if (svd == null && UJMPSettings.isUseOjalgo()) {
+			if (svd == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				svd = DecompositionOps.SVD_OJALGO;
 			}
 			if (svd == null) {
@@ -104,10 +104,10 @@ public interface SVD<T> {
 
 		public final Matrix[] calc(Matrix source) {
 			SVD<Matrix> svd = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				svd = DecompositionOps.SVD_OJALGO;
 			}
-			if (svd == null && UJMPSettings.isUseMTJ()) {
+			if (svd == null && UJMPSettings.getInstance().isUseMTJ()) {
 				svd = DecompositionOps.SVD_MTJ;
 			}
 			if (svd == null) {

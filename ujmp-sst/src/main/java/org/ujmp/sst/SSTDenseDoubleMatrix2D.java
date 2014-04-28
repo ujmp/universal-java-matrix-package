@@ -28,9 +28,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 import shared.array.RealArray;
@@ -58,8 +58,8 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -131,9 +131,9 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public Matrix plus(double v) {
 		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uAdd(v));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -142,9 +142,9 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		if (m instanceof SSTDenseDoubleMatrix2D) {
 			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eAdd(
 					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -156,9 +156,9 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		if (m instanceof SSTDenseDoubleMatrix2D) {
 			Matrix result = new SSTDenseDoubleMatrix2D(data.clone().eSub(
 					((SSTDenseDoubleMatrix2D) m).getWrappedObject()));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -168,27 +168,27 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public Matrix minus(double v) {
 		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uAdd(-v));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix times(double v) {
 		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uMul(v));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double v) {
 		Matrix result = new SSTDenseDoubleMatrix2D(data.clone().uMul(1 / v));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

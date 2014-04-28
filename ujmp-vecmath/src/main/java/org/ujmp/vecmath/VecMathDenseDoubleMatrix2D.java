@@ -27,11 +27,11 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements Wrapper<GMatrix> {
@@ -62,8 +62,8 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -102,9 +102,9 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = (GMatrix) matrix.clone();
 			result.add(((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				ret.setAnnotation(a.clone());
+				ret.setMetaData(a.clone());
 			}
 			return ret;
 		} else {
@@ -117,9 +117,9 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = (GMatrix) matrix.clone();
 			result.sub(((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				ret.setAnnotation(a.clone());
+				ret.setMetaData(a.clone());
 			}
 			return ret;
 		} else {
@@ -132,9 +132,9 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = new GMatrix(matrix.getNumRow(), (int) m.getColumnCount());
 			result.mul(matrix, ((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				ret.setAnnotation(a.clone());
+				ret.setMetaData(a.clone());
 			}
 			return ret;
 		} else {

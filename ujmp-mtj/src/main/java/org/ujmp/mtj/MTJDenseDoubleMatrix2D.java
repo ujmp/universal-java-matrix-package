@@ -35,10 +35,10 @@ import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.QR;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.mtj.calculation.Inv;
 import org.ujmp.mtj.calculation.SVD;
 
@@ -66,8 +66,8 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		} else {
 			this.matrix = new DenseMatrix(m.toDoubleArray());
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 
@@ -210,9 +210,9 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 			DenseMatrix ret = matrix.copy();
 			ret.add(((MTJDenseDoubleMatrix2D) m2).getWrappedObject());
 			Matrix result = new MTJDenseDoubleMatrix2D(ret);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -224,9 +224,9 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		DenseMatrix ret = matrix.copy();
 		ret.scale(f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -235,17 +235,17 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		DenseMatrix ret = matrix.copy();
 		ret.scale(1.0 / f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix copy() {
 		Matrix m = new MTJDenseDoubleMatrix2D(matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

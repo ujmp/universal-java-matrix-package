@@ -25,7 +25,7 @@ package org.ujmp.core.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.CoordinateIterator;
 
 public abstract class AbstractCalculation implements Calculation {
@@ -36,20 +36,20 @@ public abstract class AbstractCalculation implements Calculation {
 
 	private int dimension = NONE;
 
-	private Annotation annotation = null;
+	private MapMatrix<Object, Object> annotation = null;
 
 	public AbstractCalculation(Matrix... sources) {
 		this.sources = sources;
-		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
+		this.annotation = sources.length == 0 ? null : sources[0].getMetaData();
 	}
 
 	public AbstractCalculation(int dimension, Matrix... sources) {
 		this.sources = sources;
-		this.annotation = sources.length == 0 ? null : sources[0].getAnnotation();
+		this.annotation = sources.length == 0 ? null : sources[0].getMetaData();
 		this.dimension = dimension;
 	}
 
-	public void setAnnotation(Annotation annotation) {
+	public void setMetaData(MapMatrix<Object, Object> annotation) {
 		this.annotation = annotation;
 	}
 
@@ -61,7 +61,7 @@ public abstract class AbstractCalculation implements Calculation {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public Annotation getAnnotation() {
+	public MapMatrix<Object, Object> getMetaData() {
 		return annotation;
 	}
 

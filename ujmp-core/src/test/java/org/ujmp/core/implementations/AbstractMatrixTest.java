@@ -110,28 +110,28 @@ public abstract class AbstractMatrixTest {
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		Matrix m3 = m2.includeAnnotation(Ret.NEW, Matrix.ROW);
-		m3.setAnnotation(null);
+		m3.setMetaData(null);
 		assertEquals(getLabel(), m1, m3);
 
 		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.ROW);
-		m3.setAnnotation(null);
+		m3.setMetaData(null);
 		assertEquals(getLabel(), m1, m3);
 
 		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.NEW, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.NEW, Matrix.COLUMN);
-		m3.setAnnotation(null);
+		m3.setMetaData(null);
 		assertEquals(getLabel(), m1, m3);
 
 		m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		m2 = m1.extractAnnotation(Ret.LINK, Matrix.COLUMN);
 		assertEquals(getLabel(), 4, m2.getColumnCount());
 		m3 = m2.includeAnnotation(Ret.LINK, Matrix.COLUMN);
-		m3.setAnnotation(null);
+		m3.setMetaData(null);
 		assertEquals(getLabel(), m1, m3);
 	}
 
@@ -2979,8 +2979,8 @@ public abstract class AbstractMatrixTest {
 
 	public static void setAnnotation(Matrix m) {
 		m.setLabel("label");
-		m.setAxisLabel(Matrix.ROW, "rows");
-		m.setAxisLabel(Matrix.COLUMN, "columns");
+		m.setDimensionLabel(Matrix.ROW, "rows");
+		m.setDimensionLabel(Matrix.COLUMN, "columns");
 
 		for (int r = 0; r < m.getRowCount(); r++) {
 			if (r == 0) {

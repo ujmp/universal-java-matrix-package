@@ -41,7 +41,7 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 	public BenchmarkConfig() {
 		put("name", null);
 
-		put("numberOfThreads", UJMPSettings.getNumberOfThreads());
+		put("numberOfThreads", UJMPSettings.getInstance().getNumberOfThreads());
 		put("reverse", false);
 		put("shuffle", true);
 		put("gcMemory", true);

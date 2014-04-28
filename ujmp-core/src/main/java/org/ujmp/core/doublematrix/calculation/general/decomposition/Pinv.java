@@ -47,7 +47,7 @@ public class Pinv extends AbstractDoubleCalculation {
 
 			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 				double d = s.getAsDouble(i, i);
-				if (Math.abs(d) > UJMPSettings.getTolerance()) {
+				if (Math.abs(d) > UJMPSettings.getInstance().getTolerance()) {
 					s.setAsDouble(1.0 / d, i, i);
 				}
 			}

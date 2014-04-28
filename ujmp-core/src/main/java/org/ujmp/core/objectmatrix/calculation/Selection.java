@@ -26,8 +26,8 @@ package org.ujmp.core.objectmatrix.calculation;
 import java.util.Collection;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
@@ -62,34 +62,38 @@ public class Selection extends AbstractObjectCalculation {
 		if (getSource().getDimensionCount() != 2) {
 			throw new RuntimeException("only supported for 2d matrices");
 		}
-		Annotation a = getSource().getAnnotation();
+		MapMatrix<Object, Object> a = getSource().getMetaData();
 		if (a != null) {
-			Annotation anew = new DefaultAnnotation(getSize().length);
-			anew.getMetaData().put(Matrix.LABEL, a.getMetaData().get(Matrix.LABEL));
+			MapMatrix<Object, Object> anew = new DefaultMapMatrix<Object, Object>();
+			anew.put(Matrix.LABEL, a.get(Matrix.LABEL));
 			if (selection[ROW] == null) {
 				long rowCount = getSource().getRowCount();
 				for (int r = 0; r < rowCount; r++) {
-					anew.setAxisAnnotation(Matrix.COLUMN, a.getAxisAnnotation(Matrix.COLUMN, r, 0),
-							r, 0);
+					// anew.setAxisAnnotation(Matrix.COLUMN,
+					// a.getAxisAnnotation(Matrix.COLUMN, r, 0),
+					// r, 0);
 				}
 			} else {
 				for (int r = 0; r < selection[ROW].length; r++) {
-					anew.setAxisAnnotation(Matrix.COLUMN,
-							a.getAxisAnnotation(Matrix.COLUMN, selection[ROW][r], 0), r, 0);
+					// anew.setAxisAnnotation(Matrix.COLUMN,
+					// a.getAxisAnnotation(Matrix.COLUMN, selection[ROW][r], 0),
+					// r, 0);
 				}
 			}
 			if (selection[COLUMN] == null) {
 				long colCount = getSource().getColumnCount();
 				for (int c = 0; c < colCount; c++) {
-					anew.setAxisAnnotation(Matrix.ROW, a.getAxisAnnotation(Matrix.ROW, 0, c), 0, c);
+					// anew.setAxisAnnotation(Matrix.ROW,
+					// a.getAxisAnnotation(Matrix.ROW, 0, c), 0, c);
 				}
 			} else {
 				for (int c = 0; c < selection[COLUMN].length; c++) {
-					anew.setAxisAnnotation(Matrix.ROW,
-							a.getAxisAnnotation(Matrix.ROW, 0, selection[COLUMN][c]), 0, c);
+					// anew.setAxisAnnotation(Matrix.ROW,
+					// a.getAxisAnnotation(Matrix.ROW, 0, selection[COLUMN][c]),
+					// 0, c);
 				}
 			}
-			setAnnotation(anew);
+			setMetaData(anew);
 		}
 	}
 

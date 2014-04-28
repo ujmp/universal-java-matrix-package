@@ -36,7 +36,7 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 	public CharCalculationMatrix(CharCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

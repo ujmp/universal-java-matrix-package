@@ -23,7 +23,7 @@
 
 package org.ujmp.core;
 
-import org.ujmp.core.annotation.HasAnnotation;
+import org.ujmp.core.annotation.HasMetaData;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.calculation.DivideMatrix;
@@ -70,17 +70,11 @@ import org.ujmp.core.matrix.factory.DefaultMatrixFactory;
  * <code>DefaultDenseDoubleMatrix2D</code> to store double values or
  * DefaultGenericMatrix if you want to specify the object type.
  * 
- * 
  * @author Holger Arndt
- * @version $Revision$
- * @date $Date$
- * 
- * @log $Log$
- * 
  */
 public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSetters,
 		BasicMatrixProperties, CanPerformCalculations, DistanceMeasures, Comparable<Matrix>,
-		HasAnnotation, Conversions {
+		HasMetaData, Conversions {
 
 	/**
 	 * A factory for creating matrices.

@@ -135,8 +135,8 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		char[] result = new char[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseCharMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

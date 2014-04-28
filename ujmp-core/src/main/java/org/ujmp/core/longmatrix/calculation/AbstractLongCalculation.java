@@ -51,8 +51,8 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 		for (long[] c : result.allCoordinates()) {
 			result.setAsLong(getLong(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

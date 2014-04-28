@@ -138,8 +138,8 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 		float[] result = new float[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseFloatMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

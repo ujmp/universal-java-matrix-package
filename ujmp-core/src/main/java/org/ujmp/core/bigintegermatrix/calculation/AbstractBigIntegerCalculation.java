@@ -50,8 +50,8 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigInteger(getBigInteger(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

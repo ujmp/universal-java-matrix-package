@@ -35,9 +35,9 @@ import java.nio.ByteOrder;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
@@ -188,9 +188,9 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements 
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
 		}
-		Annotation a = m.getAnnotation();
+		MapMatrix<Object, Object> a = m.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 

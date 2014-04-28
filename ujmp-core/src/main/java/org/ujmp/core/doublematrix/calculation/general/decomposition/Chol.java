@@ -50,7 +50,7 @@ public interface Chol<T> {
 	public static final Chol<Matrix> MATRIX = new Chol<Matrix>() {
 
 		public final Matrix calc(Matrix source) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -66,7 +66,7 @@ public interface Chol<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
 				} else {
@@ -104,7 +104,7 @@ public interface Chol<T> {
 	public static final Chol<Matrix> MATRIXLARGESINGLETHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Chol<Matrix> chol = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				chol = DecompositionOps.CHOL_JBLAS;
 			}
 			if (chol == null) {
@@ -115,7 +115,7 @@ public interface Chol<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			Chol<Matrix> chol = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				chol = DecompositionOps.CHOL_JBLAS;
 			}
 			if (chol == null) {
@@ -128,10 +128,10 @@ public interface Chol<T> {
 	public static final Chol<Matrix> MATRIXLARGEMULTITHREADED = new Chol<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Chol<Matrix> chol = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				chol = DecompositionOps.CHOL_JBLAS;
 			}
-			if (chol == null && UJMPSettings.isUseOjalgo()) {
+			if (chol == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				chol = DecompositionOps.CHOL_OJALGO;
 			}
 			if (chol == null) {
@@ -142,10 +142,10 @@ public interface Chol<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			Chol<Matrix> chol = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				chol = DecompositionOps.CHOL_JBLAS;
 			}
-			if (chol == null && UJMPSettings.isUseOjalgo()) {
+			if (chol == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				chol = DecompositionOps.CHOL_OJALGO;
 			}
 			if (chol == null) {

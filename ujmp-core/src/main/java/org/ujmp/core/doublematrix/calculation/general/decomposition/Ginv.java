@@ -333,7 +333,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return a generalized matrix inverse (possibly not unique)
 	 */
 	public static DenseDoubleMatrix2D inverse(Matrix matrix) {
-		double epsilon = UJMPSettings.getTolerance();
+		double epsilon = UJMPSettings.getInstance().getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
 		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.Factory.zeros(cols, cols);
@@ -398,7 +398,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return generalized matrix inverse
 	 */
 	public static DenseDoubleMatrix2D inverse(DenseDoubleMatrix2D matrix) {
-		double epsilon = UJMPSettings.getTolerance();
+		double epsilon = UJMPSettings.getInstance().getTolerance();
 		long rows = matrix.getRowCount();
 		long cols = matrix.getColumnCount();
 		DenseDoubleMatrix2D s = DenseDoubleMatrix2D.Factory.zeros(cols, cols);
@@ -462,7 +462,7 @@ public class Ginv extends AbstractDoubleCalculation {
 	 * @return generalized matrix inverse
 	 */
 	public static DenseDoubleMatrix2D inverse(final double[][] matrix) {
-		double epsilon = UJMPSettings.getTolerance();
+		double epsilon = UJMPSettings.getInstance().getTolerance();
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double[][] s = new double[cols][cols];

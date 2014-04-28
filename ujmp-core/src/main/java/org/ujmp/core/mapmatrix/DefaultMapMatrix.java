@@ -25,6 +25,7 @@ package org.ujmp.core.mapmatrix;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
@@ -32,7 +33,7 @@ import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 	private static final long serialVersionUID = -1764575977190231155L;
 
-	private Map<K, V> map = null;
+	private final Map<K, V> map;
 
 	public DefaultMapMatrix() {
 		this.map = new HashMap<K, V>();
@@ -42,35 +43,35 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 		this.map = map;
 	}
 
-	@SuppressWarnings("unchecked")
-	public DefaultMapMatrix(Matrix m) {
-		this();
-		if (m.getColumnCount() != 2) {
-			throw new IllegalArgumentException("matrix must have two columns: key and value");
-		}
-		for (long row = m.getRowCount(); --row != -1;) {
-			K key = (K) m.getAsObject(row, 0);
-			if (key == null) {
-				throw new IllegalArgumentException("key cell in row " + row
-						+ " must not contain null");
-			}
-			put(key, (V) m.getAsObject(row, 1));
-		}
+	public final BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
-	public Map<K, V> getMap() {
-		return map;
+	public int size() {
+		return map.size();
+	}
+
+	public V get(Object key) {
+		return map.get(key);
+	}
+
+	public Set<K> keySet() {
+		return map.keySet();
 	}
 
 	@Override
-	public MapMatrix<K, V> clone() {
-		MapMatrix<K, V> ret = new DefaultMapMatrix<K, V>();
-		ret.putAll(map);
-		return ret;
+	protected void clearMap() {
+		map.clear();
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+	@Override
+	protected V removeFromMap(Object key) {
+		return map.remove(key);
+	}
+
+	@Override
+	protected V putIntoMap(K key, V value) {
+		return map.put(key, value);
 	}
 
 }

@@ -36,7 +36,7 @@ public interface SolveSymm<T> extends Solve<T> {
 	public static final SolveSymm<Matrix> MATRIX = new SolveSymm<Matrix>() {
 
 		public final Matrix calc(Matrix a, Matrix b) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (a.getRowCount() >= SQUARETHRESHOLD && a.getColumnCount() >= SQUARETHRESHOLD) {
 					return MATRIXSQUARELARGESINGLETHREADED.calc(a, b);
 				} else {
@@ -67,16 +67,16 @@ public interface SolveSymm<T> extends Solve<T> {
 		public final Matrix calc(Matrix a, Matrix b) {
 			// no special implementation for symmetric matrices
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVE_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
-			if (solve == null && UJMPSettings.isUseMTJ()) {
+			if (solve == null && UJMPSettings.getInstance().isUseMTJ()) {
 				solve = DecompositionOps.SOLVE_MTJ;
 			}
 			if (solve == null) {
@@ -90,13 +90,13 @@ public interface SolveSymm<T> extends Solve<T> {
 		public Matrix calc(Matrix a, Matrix b) {
 			// no special implementation for symmetric matrices
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVE_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
 			if (solve == null) {

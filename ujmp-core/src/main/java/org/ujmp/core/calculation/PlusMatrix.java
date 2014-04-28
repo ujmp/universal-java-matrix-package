@@ -29,10 +29,10 @@ import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
@@ -78,9 +78,9 @@ class PlusMatrixMatrix implements PlusMatrixCalculation<Matrix, Matrix, Matrix> 
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -104,9 +104,9 @@ class PlusMatrixDenseMatrix implements PlusMatrixCalculation<DenseMatrix, DenseM
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -132,9 +132,9 @@ class PlusMatrixSparseMatrix implements
 			target.setAsBigDecimal(result, c);
 		}
 		if (source1 != target) {
-			Annotation a = source1.getAnnotation();
+			MapMatrix<Object, Object> a = source1.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
@@ -161,9 +161,9 @@ class PlusMatrixDenseMatrix2D implements
 				}
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -196,9 +196,9 @@ class PlusMatrixDenseDoubleMatrix2D implements
 			}
 		}
 		if (source1 != target) {
-			Annotation a = source1.getAnnotation();
+			MapMatrix<Object, Object> a = source1.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
@@ -208,7 +208,7 @@ class PlusMatrixDenseDoubleMatrix2D implements
 		VerifyUtil.verifySameSize(source1, source2, target);
 		final int rows = source1.length;
 		final int cols = source1[0].length;
-		if (UJMPSettings.getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
 			new PForEquidistant(0, rows - 1) {
 				public void step(int i) {
 					double[] v1 = source1[i];

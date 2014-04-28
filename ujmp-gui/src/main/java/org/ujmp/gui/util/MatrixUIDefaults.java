@@ -23,32 +23,16 @@
 
 package org.ujmp.gui.util;
 
-import java.util.Map;
-
 import javax.swing.UIManager;
 
-import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 
-public class MatrixUIDefaults extends AbstractMapMatrix<Object, Object> {
+public class MatrixUIDefaults extends DefaultMapMatrix<Object, Object> {
 	private static final long serialVersionUID = 6721967669100263805L;
 
 	public MatrixUIDefaults() {
+		super(UIManager.getDefaults());
 		setLabel("UI Defaults");
-	}
-
-	public Map<Object, Object> getMap() {
-		return UIManager.getDefaults();
-	}
-
-	public MapMatrix<Object, Object> clone() {
-		return new MatrixUIDefaults();
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return null;
 	}
 
 }

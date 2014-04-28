@@ -41,7 +41,7 @@ public interface InvSPD<T> extends Inv<T> {
 				throw new RuntimeException(
 						"inverse only possible for square matrices. use pinv or ginv instead");
 			}
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -75,16 +75,16 @@ public interface InvSPD<T> extends Inv<T> {
 	public static final InvSPD<Matrix> MATRIXLARGESINGLETHREADED = new InvSPD<Matrix>() {
 		public final Matrix calc(Matrix source) {
 			InvSPD<Matrix> inv = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				inv = DecompositionOps.INVSPD_JBLAS;
 			}
-			if (inv == null && UJMPSettings.isUseEJML()) {
+			if (inv == null && UJMPSettings.getInstance().isUseEJML()) {
 				inv = DecompositionOps.INVSPD_EJML;
 			}
-			if (inv == null && UJMPSettings.isUseOjalgo()) {
+			if (inv == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				inv = DecompositionOps.INVSPD_OJALGO;
 			}
-			if (inv == null && UJMPSettings.isUseMTJ()) {
+			if (inv == null && UJMPSettings.getInstance().isUseMTJ()) {
 				inv = DecompositionOps.INVSPD_MTJ;
 			}
 			if (inv == null) {
@@ -97,19 +97,19 @@ public interface InvSPD<T> extends Inv<T> {
 	public static final InvSPD<Matrix> MATRIXLARGEMULTITHREADED = new InvSPD<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Inv<Matrix> inv = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				inv = DecompositionOps.INVSPD_JBLAS;
 			}
-			if (inv == null && UJMPSettings.isUseOjalgo()) {
+			if (inv == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				inv = DecompositionOps.INVSPD_OJALGO;
 			}
-			if (inv == null && UJMPSettings.isUseEJML()) {
+			if (inv == null && UJMPSettings.getInstance().isUseEJML()) {
 				inv = DecompositionOps.INVSPD_EJML;
 			}
-			if (inv == null && UJMPSettings.isUseParallelColt()) {
+			if (inv == null && UJMPSettings.getInstance().isUseParallelColt()) {
 				inv = DecompositionOps.INVSPD_PARALLELCOLT;
 			}
-			if (inv == null && UJMPSettings.isUseMTJ()) {
+			if (inv == null && UJMPSettings.getInstance().isUseMTJ()) {
 				inv = DecompositionOps.INVSPD_MTJ;
 			}
 			if (inv == null) {

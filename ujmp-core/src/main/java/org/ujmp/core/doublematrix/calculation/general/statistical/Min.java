@@ -24,25 +24,26 @@
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class Min extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 2209647170194250477L;
 
 	public Min(int dimension, Matrix matrix) {
 		super(dimension, matrix);
-		Annotation aold = matrix.getAnnotation();
+		MapMatrix<Object, Object> aold = matrix.getMetaData();
 		if (aold != null) {
-			Annotation a = new DefaultAnnotation(getSize().length);
-			a.getMetaData().put(Matrix.LABEL, aold.getMetaData().get(Matrix.LABEL));
+			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			a.put(Matrix.LABEL, aold.get(Matrix.LABEL));
 			if (dimension == ROW) {
-				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
+				// a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
 			} else if (dimension == COLUMN) {
-				a.setDimensionMatrix(COLUMN, aold.getDimensionMatrix(COLUMN));
+				// a.setDimensionMatrix(COLUMN,
+				// aold.getDimensionMatrix(COLUMN));
 			}
-			setAnnotation(a);
+			setMetaData(a);
 		}
 	}
 

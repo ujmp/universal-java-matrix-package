@@ -53,7 +53,7 @@ public interface LU<T> {
 	public static final LU<Matrix> MATRIX = new LU<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -69,7 +69,7 @@ public interface LU<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
 				} else {
@@ -107,7 +107,7 @@ public interface LU<T> {
 	public static final LU<Matrix> MATRIXLARGESINGLETHREADED = new LU<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
 			LU<Matrix> lu = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				lu = DecompositionOps.LU_JBLAS;
 			}
 			if (lu == null) {
@@ -118,10 +118,10 @@ public interface LU<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			LU<Matrix> lu = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				lu = DecompositionOps.LU_JBLAS;
 			}
-			if (lu == null && UJMPSettings.isUseOjalgo()) {
+			if (lu == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {
@@ -134,10 +134,10 @@ public interface LU<T> {
 	public static final LU<Matrix> MATRIXLARGEMULTITHREADED = new LU<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
 			LU<Matrix> lu = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				lu = DecompositionOps.LU_JBLAS;
 			}
-			if (lu == null && UJMPSettings.isUseOjalgo()) {
+			if (lu == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {
@@ -148,10 +148,10 @@ public interface LU<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			LU<Matrix> lu = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				lu = DecompositionOps.LU_JBLAS;
 			}
-			if (lu == null && UJMPSettings.isUseOjalgo()) {
+			if (lu == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				lu = DecompositionOps.LU_OJALGO;
 			}
 			if (lu == null) {

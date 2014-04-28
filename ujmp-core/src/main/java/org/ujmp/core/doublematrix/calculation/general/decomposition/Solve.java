@@ -39,7 +39,7 @@ public interface Solve<T> {
 
 		public final Matrix calc(Matrix a, Matrix b) {
 			if (a.isSquare()) {
-				if (UJMPSettings.getNumberOfThreads() == 1) {
+				if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 					if (a.getRowCount() >= SQUARETHRESHOLD && a.getColumnCount() >= SQUARETHRESHOLD) {
 						return MATRIXSQUARELARGESINGLETHREADED.calc(a, b);
 					} else {
@@ -53,7 +53,7 @@ public interface Solve<T> {
 					}
 				}
 			} else {
-				if (UJMPSettings.getNumberOfThreads() == 1) {
+				if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 					if (a.getRowCount() >= TALLTHRESHOLD && a.getColumnCount() >= TALLTHRESHOLD) {
 						return MATRIXTALLLARGESINGLETHREADED.calc(a, b);
 					} else {
@@ -93,16 +93,16 @@ public interface Solve<T> {
 	public static final Solve<Matrix> MATRIXSQUARELARGESINGLETHREADED = new Solve<Matrix>() {
 		public final Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVE_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
-			if (solve == null && UJMPSettings.isUseMTJ()) {
+			if (solve == null && UJMPSettings.getInstance().isUseMTJ()) {
 				solve = DecompositionOps.SOLVE_MTJ;
 			}
 			if (solve == null) {
@@ -115,13 +115,13 @@ public interface Solve<T> {
 	public static final Solve<Matrix> MATRIXTALLLARGESINGLETHREADED = new Solve<Matrix>() {
 		public final Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
-			if (solve == null && UJMPSettings.isUseMTJ()) {
+			if (solve == null && UJMPSettings.getInstance().isUseMTJ()) {
 				solve = DecompositionOps.SOLVE_MTJ;
 			}
 			if (solve == null) {
@@ -134,13 +134,13 @@ public interface Solve<T> {
 	public static final Solve<Matrix> MATRIXSQUARELARGEMULTITHREADED = new Solve<Matrix>() {
 		public Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				solve = DecompositionOps.SOLVE_JBLAS;
 			}
-			if (solve == null && UJMPSettings.isUseOjalgo()) {
+			if (solve == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
 			if (solve == null) {
@@ -153,13 +153,13 @@ public interface Solve<T> {
 	public static final Solve<Matrix> MATRIXTALLLARGEMULTITHREADED = new Solve<Matrix>() {
 		public Matrix calc(Matrix a, Matrix b) {
 			Solve<Matrix> solve = null;
-			if (UJMPSettings.isUseParallelColt()) {
+			if (UJMPSettings.getInstance().isUseParallelColt()) {
 				solve = DecompositionOps.SOLVE_PARALLELCOLT;
 			}
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				solve = DecompositionOps.SOLVE_OJALGO;
 			}
-			if (solve == null && UJMPSettings.isUseEJML()) {
+			if (solve == null && UJMPSettings.getInstance().isUseEJML()) {
 				solve = DecompositionOps.SOLVE_EJML;
 			}
 			if (solve == null) {

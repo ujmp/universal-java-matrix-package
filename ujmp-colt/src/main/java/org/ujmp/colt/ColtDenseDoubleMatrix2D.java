@@ -24,9 +24,9 @@
 package org.ujmp.colt;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 import cern.colt.matrix.DoubleFactory2D;
@@ -73,8 +73,8 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -142,36 +142,36 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix plus(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.plus(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix minus(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.minus(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix times(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.mult(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.div(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -192,9 +192,9 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -208,9 +208,9 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -275,8 +275,8 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix copy() {
 		Matrix m = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

@@ -30,9 +30,9 @@ import java.io.ObjectOutputStream;
 import org.jlinalg.MatrixMultiplication;
 import org.jlinalg.doublewrapper.DoubleWrapper;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
@@ -62,8 +62,8 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		for (long[] c : source.availableCoordinates()) {
 			setAsDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -103,18 +103,18 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public Matrix plus(double value) {
 		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix.add(new DoubleWrapper(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix times(double value) {
 		Matrix result = new JLinAlgDenseDoubleMatrix2D(matrix.multiply(new DoubleWrapper(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -131,8 +131,8 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public Matrix copy() {
 		Matrix m = new JLinAlgDenseDoubleMatrix2D(matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

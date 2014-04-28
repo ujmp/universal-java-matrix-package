@@ -29,10 +29,10 @@ import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
@@ -70,9 +70,9 @@ class TimesMatrixMatrix implements TimesMatrixCalculation<Matrix, Matrix, Matrix
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -97,9 +97,9 @@ class TimesMatrixDenseMatrix implements
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -119,9 +119,9 @@ class TimesMatrixSparseMatrix implements
 			target.setAsBigDecimal(MathUtil.times(v1, v2), c);
 		}
 		if (source1 != target) {
-			Annotation a = source1.getAnnotation();
+			MapMatrix<Object, Object> a = source1.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
@@ -148,9 +148,9 @@ class TimesMatrixDenseMatrix2D implements
 				}
 			}
 			if (source1 != target) {
-				Annotation a = source1.getAnnotation();
+				MapMatrix<Object, Object> a = source1.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -183,9 +183,9 @@ class TimesMatrixDenseDoubleMatrix2D implements
 			}
 		}
 		if (source1 != target) {
-			Annotation a = source1.getAnnotation();
+			MapMatrix<Object, Object> a = source1.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
@@ -193,7 +193,7 @@ class TimesMatrixDenseDoubleMatrix2D implements
 	private final void calc(final double[][] source1, final double[][] source2,
 			final double[][] target) {
 		VerifyUtil.verifySameSize(source1, source2, target);
-		if (UJMPSettings.getNumberOfThreads() > 1 && source1.length >= 100
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && source1.length >= 100
 				&& source1[0].length >= 100) {
 			new PForEquidistant(0, source1.length - 1) {
 				public void step(int i) {

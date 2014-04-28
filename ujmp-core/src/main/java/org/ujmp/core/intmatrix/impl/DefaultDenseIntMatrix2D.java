@@ -134,8 +134,8 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 		int[] result = new int[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseIntMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

@@ -135,8 +135,8 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 		long[] result = new long[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseLongMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

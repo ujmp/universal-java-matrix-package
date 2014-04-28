@@ -23,29 +23,14 @@
 
 package org.ujmp.core.util.matrices;
 
-import java.util.Map;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 
-import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
-
-public class SystemPropertiesMatrix extends AbstractMapMatrix<Object, Object> {
+public class SystemPropertiesMatrix extends DefaultMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -5746939082111495919L;
 
 	public SystemPropertiesMatrix() {
+		super(System.getProperties());
 		setLabel("System Properties");
 	}
 
-	public Map<Object, Object> getMap() {
-		return System.getProperties();
-	}
-
-	public MapMatrix<Object, Object> clone() {
-		return new SystemPropertiesMatrix();
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

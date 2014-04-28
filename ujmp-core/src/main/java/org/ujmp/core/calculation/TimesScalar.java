@@ -29,10 +29,10 @@ import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
@@ -71,9 +71,9 @@ class TimesScalarMatrix implements TimesScalarCalculation<Matrix, Matrix> {
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -85,7 +85,8 @@ class TimesScalarMatrix implements TimesScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			TimesScalar.SPARSEMATRIX.calc((SparseMatrix) source, factor, (SparseMatrix) target);
 		} else {
-			calc(source, new BigDecimal(factor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(factor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -104,9 +105,9 @@ class TimesScalarDenseMatrix implements TimesScalarCalculation<DenseMatrix, Dens
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -116,7 +117,8 @@ class TimesScalarDenseMatrix implements TimesScalarCalculation<DenseMatrix, Dens
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			TimesScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, factor, (DenseMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(factor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(factor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -132,15 +134,15 @@ class TimesScalarSparseMatrix implements TimesScalarCalculation<SparseMatrix, Sp
 			target.setAsBigDecimal(result, c);
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
 
 	public final void calc(final SparseMatrix source, final double factor, final SparseMatrix target) {
-		calc(source, new BigDecimal(factor, MathUtil.getDefaultMathContext()), target);
+		calc(source, new BigDecimal(factor, UJMPSettings.getInstance().getMathContext()), target);
 	}
 };
 
@@ -161,9 +163,9 @@ class TimesScalarDenseMatrix2D implements TimesScalarCalculation<DenseMatrix2D, 
 				}
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -175,7 +177,8 @@ class TimesScalarDenseMatrix2D implements TimesScalarCalculation<DenseMatrix2D, 
 			TimesScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, factor,
 					(DenseDoubleMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(factor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(factor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -207,9 +210,9 @@ class TimesScalarDenseDoubleMatrix2D implements
 			}
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
@@ -218,7 +221,7 @@ class TimesScalarDenseDoubleMatrix2D implements
 		VerifyUtil.verifySameSize(source, target);
 		final int rows = source.length;
 		final int cols = source[0].length;
-		if (UJMPSettings.getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
 			new PForEquidistant(0, rows - 1) {
 
 				public void step(int i) {

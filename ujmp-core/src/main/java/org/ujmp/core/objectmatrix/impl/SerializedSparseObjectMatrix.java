@@ -27,9 +27,9 @@ import java.io.IOException;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.collections.map.SerializedObjectMap;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
@@ -46,9 +46,9 @@ public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapp
 		for (long[] c : source.availableCoordinates()) {
 			setAsObject(source.getAsObject(c), c);
 		}
-		Annotation a = source.getAnnotation();
+		MapMatrix<Object, Object> a = source.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 

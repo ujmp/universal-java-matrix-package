@@ -29,10 +29,10 @@ import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
@@ -65,9 +65,9 @@ class MinusScalarMatrix implements MinusScalarCalculation<Matrix, Matrix> {
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -79,7 +79,7 @@ class MinusScalarMatrix implements MinusScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			MinusScalar.SPARSEMATRIX.calc((SparseMatrix) source, value, (SparseMatrix) target);
 		} else {
-			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(value, UJMPSettings.getInstance().getMathContext()), target);
 		}
 	}
 };
@@ -98,9 +98,9 @@ class MinusScalarDenseMatrix implements MinusScalarCalculation<DenseMatrix, Dens
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -110,7 +110,7 @@ class MinusScalarDenseMatrix implements MinusScalarCalculation<DenseMatrix, Dens
 		if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			MinusScalar.DENSEMATRIX2D.calc((DenseMatrix2D) source, value, (DenseMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(value, UJMPSettings.getInstance().getMathContext()), target);
 		}
 	}
 };
@@ -126,15 +126,15 @@ class MinusScalarSparseMatrix implements MinusScalarCalculation<SparseMatrix, Sp
 			target.setAsBigDecimal(result, c);
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
 
 	public final void calc(SparseMatrix source, double value, SparseMatrix target) {
-		calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+		calc(source, new BigDecimal(value, UJMPSettings.getInstance().getMathContext()), target);
 	}
 };
 
@@ -155,9 +155,9 @@ class MinusScalarDenseMatrix2D implements MinusScalarCalculation<DenseMatrix2D, 
 				}
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -169,7 +169,7 @@ class MinusScalarDenseMatrix2D implements MinusScalarCalculation<DenseMatrix2D, 
 			MinusScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, value,
 					(DenseDoubleMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(value, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(value, UJMPSettings.getInstance().getMathContext()), target);
 		}
 	}
 };
@@ -200,16 +200,16 @@ class MinusScalarDenseDoubleMatrix2D implements
 			}
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
 
 	private final void calc(final double[][] source, final double value, final double[][] target) {
 		VerifyUtil.verifySameSize(source, target);
-		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && source.length >= 100
 				&& source[0].length >= 100) {
 			new PForEquidistant(0, source.length - 1) {
 				public void step(int i) {

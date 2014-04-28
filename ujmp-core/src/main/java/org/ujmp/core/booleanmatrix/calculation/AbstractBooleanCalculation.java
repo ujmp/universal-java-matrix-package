@@ -47,8 +47,8 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBoolean(getBoolean(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

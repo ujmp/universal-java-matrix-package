@@ -23,7 +23,6 @@
 
 package org.ujmp.parallelcolt;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.factory.AbstractSparseDoubleMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 

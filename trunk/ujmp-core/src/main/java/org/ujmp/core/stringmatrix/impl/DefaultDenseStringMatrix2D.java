@@ -54,8 +54,8 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 				setString(m.getAsString(c), c);
 			}
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 
@@ -107,8 +107,8 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		String[] result = new String[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseStringMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

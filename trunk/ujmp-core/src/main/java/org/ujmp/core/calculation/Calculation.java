@@ -26,8 +26,8 @@ package org.ujmp.core.calculation;
 import java.io.Serializable;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 /**
  * Interface for matrix calculations.
@@ -62,9 +62,9 @@ public interface Calculation extends Serializable {
 
 	public Matrix calcOrig();
 
-	public Annotation getAnnotation();
+	public MapMatrix<Object, Object> getMetaData();
 
-	public void setAnnotation(Annotation annotation);
+	public void setMetaData(MapMatrix<Object, Object> metaData);
 
 	public Iterable<long[]> availableCoordinates();
 

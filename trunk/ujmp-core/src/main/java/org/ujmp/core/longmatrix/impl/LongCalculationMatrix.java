@@ -36,7 +36,7 @@ public class LongCalculationMatrix extends AbstractLongMatrix {
 	public LongCalculationMatrix(LongCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

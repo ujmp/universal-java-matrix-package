@@ -27,8 +27,8 @@ import java.util.Iterator;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class Transpose extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2749226948849267413L;
@@ -45,25 +45,25 @@ public class Transpose extends AbstractObjectCalculation {
 		super(m);
 		this.swap1 = swap1;
 		this.swap2 = swap2;
-		if (getAnnotation() != null) {
-			setAnnotation(transposeAnnotation(m.getAnnotation(), getSize(), swap1, swap2));
+		if (getMetaData() != null) {
+			setMetaData(transposeAnnotation(m.getMetaData(), getSize(), swap1, swap2));
 		}
 	}
 
-	public static Annotation transposeAnnotation(Annotation aorig, long[] newSize, int swap1,
-			int swap2) {
+	public static MapMatrix<Object, Object> transposeAnnotation(MapMatrix<Object, Object> aorig,
+			long[] newSize, int swap1, int swap2) {
 		if (aorig != null) {
-			Annotation a = new DefaultAnnotation(newSize.length);
-			a.getMetaData().put(Matrix.LABEL, aorig.getMetaData().get(Matrix.LABEL));
+			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			a.put(Matrix.LABEL, aorig.get(Matrix.LABEL));
 			for (int i = 0; i < newSize.length; i++) {
-				Matrix am = aorig.getDimensionMatrix(i);
-				am = am.transpose(Ret.NEW, swap1, swap2);
+				// Matrix am = aorig.getDimensionMatrix(i);
+				// am = am.transpose(Ret.NEW, swap1, swap2);
 				if (i == swap1) {
-					a.setDimensionMatrix(swap2, am);
+					// a.setDimensionMatrix(swap2, am);
 				} else if (i == swap2) {
-					a.setDimensionMatrix(swap1, am);
+					// a.setDimensionMatrix(swap1, am);
 				} else {
-					a.setDimensionMatrix(i, am);
+					// a.setDimensionMatrix(i, am);
 				}
 			}
 			return a;
@@ -115,7 +115,8 @@ public class Transpose extends AbstractObjectCalculation {
 		}
 	}
 
-	public static Annotation transposeAnnotation(Annotation annotation, long[] newSize) {
+	public static MapMatrix<Object, Object> transposeAnnotation(
+			MapMatrix<Object, Object> annotation, long[] newSize) {
 		return transposeAnnotation(annotation, newSize, ROW, COLUMN);
 	}
 

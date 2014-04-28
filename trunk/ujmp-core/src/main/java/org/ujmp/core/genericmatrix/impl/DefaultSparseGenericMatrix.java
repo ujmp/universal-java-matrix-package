@@ -54,8 +54,8 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 

@@ -147,7 +147,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 	public void runAll() throws Exception {
 		List<AbstractMatrix2DBenchmark> benchmarks = getDenseBenchmarks();
 
-		UJMPSettings.setNumberOfThreads(getConfig().getNumberOfThreads());
+		UJMPSettings.getInstance().setNumberOfThreads(getConfig().getNumberOfThreads());
 		ConcurrencyUtils.setNumberOfThreads(getConfig().getNumberOfThreads());
 		System.setProperty("ATLAS_NUM_THREADS", "" + getConfig().getNumberOfThreads());
 
@@ -251,22 +251,22 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 				Matrix mean = data.mean(Ret.NEW, Matrix.ROW, true);
 				mean.setLabel(m.getLabel() + "-" + benchmarkName + "-mean");
-				mean.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				mean.setMetaDataDimensionMatrix(Matrix.ROW, columnLabels);
 				means.add(mean);
 
 				Matrix std = data.std(Ret.NEW, Matrix.ROW, true, true);
 				std.setLabel(m.getLabel() + "-" + benchmarkName + "-std");
-				std.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				std.setMetaDataDimensionMatrix(Matrix.ROW, columnLabels);
 				stds.add(std);
 
 				Matrix min = data.min(Ret.NEW, Matrix.ROW);
 				min.setLabel(m.getLabel() + "-" + benchmarkName + "-min");
-				min.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				min.setMetaDataDimensionMatrix(Matrix.ROW, columnLabels);
 				mins.add(min);
 
 				Matrix max = data.max(Ret.NEW, Matrix.ROW);
 				max.setLabel(m.getLabel() + "-" + benchmarkName + "-max");
-				max.getAnnotation().setDimensionMatrix(Matrix.ROW, columnLabels);
+				max.setMetaDataDimensionMatrix(Matrix.ROW, columnLabels);
 				maxs.add(max);
 			}
 
@@ -278,7 +278,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				for (Matrix m : means) {
 					matrixLabels.add(m.getLabel().split("-")[0]);
 				}
-				allmeans.getAnnotation().setDimensionMatrix(Matrix.COLUMN, matrixLabels);
+				allmeans.setMetaDataDimensionMatrix(Matrix.COLUMN, matrixLabels);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -333,8 +333,8 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				for (Matrix m : stds) {
 					stdLabels.add(m.getLabel().split("-")[0]);
 				}
-				allstds.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
-				stdPercent.getAnnotation().setDimensionMatrix(Matrix.COLUMN, stdLabels);
+				allstds.setMetaDataDimensionMatrix(Matrix.COLUMN, stdLabels);
+				stdPercent.setMetaDataDimensionMatrix(Matrix.COLUMN, stdLabels);
 			} catch (Exception e) {
 				System.err
 						.println("could not evaluate std results for " + benchmarkName + ": " + e);
@@ -350,7 +350,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				for (Matrix m : mins) {
 					minLabels.add(m.getLabel().split("-")[0]);
 				}
-				allmins.getAnnotation().setDimensionMatrix(Matrix.COLUMN, minLabels);
+				allmins.setMetaDataDimensionMatrix(Matrix.COLUMN, minLabels);
 			} catch (Exception e) {
 				System.err
 						.println("could not evaluate min results for " + benchmarkName + ": " + e);
@@ -365,7 +365,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				for (Matrix m : maxs) {
 					maxLabels.add(m.getLabel().split("-")[0]);
 				}
-				allmaxs.getAnnotation().setDimensionMatrix(Matrix.COLUMN, maxLabels);
+				allmaxs.setMetaDataDimensionMatrix(Matrix.COLUMN, maxLabels);
 			} catch (Exception e) {
 				System.err
 						.println("could not evaluate max results for " + benchmarkName + ": " + e);
@@ -383,9 +383,9 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			matrix.setRowLabel(r, String.valueOf(extractSize(matrix.getRowLabel(r))));
 		}
 		Matrix firstPart = Matrix.Factory.horCat(Matrix.Factory.linkToValue(matrix.getLabel()),
-				matrix.getAnnotation().getDimensionMatrix(Matrix.ROW));
-		Matrix lastPart = Matrix.Factory.horCat(
-				matrix.getAnnotation().getDimensionMatrix(Matrix.COLUMN), matrix);
+				matrix.getMetaDataDimensionMatrix(Matrix.ROW));
+		Matrix lastPart = Matrix.Factory.horCat(matrix.getMetaDataDimensionMatrix(Matrix.COLUMN),
+				matrix);
 		Matrix complete = Matrix.Factory.vertCat(firstPart, lastPart);
 		try {
 			complete.export()

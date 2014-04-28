@@ -171,8 +171,8 @@ public class UJMPFormat extends Format {
 	}
 
 	private StringBuffer formatMultiLine(Matrix m, StringBuffer toAppendTo, FieldPosition pos) {
-		long maxRows = UJMPSettings.getMaxRowsToPrint();
-		long maxColumns = UJMPSettings.getMaxColumnsToPrint();
+		long maxRows = UJMPSettings.getInstance().getMaxRowsToPrint();
+		long maxColumns = UJMPSettings.getInstance().getMaxColumnsToPrint();
 
 		final String EOL = System.getProperty("line.separator");
 
@@ -188,7 +188,7 @@ public class UJMPFormat extends Format {
 			toAppendTo.append(EOL);
 		}
 
-		if (m.getAnnotation() != null) {
+		if (m.getMetaData() != null) {
 			format(m.getLabel(), toAppendTo, pos);
 			toAppendTo.append("   ");
 			for (int col = 0; col < columnCount && col < maxColumns; col++) {
@@ -210,7 +210,7 @@ public class UJMPFormat extends Format {
 		}
 
 		for (cursor[Matrix.ROW] = 0; cursor[Matrix.ROW] < rowCount && cursor[Matrix.ROW] < maxRows; cursor[Matrix.ROW]++) {
-			if (m.getAnnotation() != null) {
+			if (m.getMetaData() != null) {
 				format(m.getRowLabel(cursor[Matrix.ROW]), toAppendTo, pos);
 				toAppendTo.append(" | ");
 			}
@@ -231,8 +231,8 @@ public class UJMPFormat extends Format {
 
 		if (rowCount == 0 || columnCount == 0) {
 			toAppendTo.append("[" + rowCount + "x" + columnCount + "]" + EOL);
-		} else if (rowCount > UJMPSettings.getMaxRowsToPrint()
-				|| columnCount > UJMPSettings.getMaxColumnsToPrint()) {
+		} else if (rowCount > UJMPSettings.getInstance().getMaxRowsToPrint()
+				|| columnCount > UJMPSettings.getInstance().getMaxColumnsToPrint()) {
 			toAppendTo.append("[...]");
 		}
 

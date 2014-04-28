@@ -23,47 +23,41 @@
 
 package org.ujmp.core.annotation;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.HasDescription;
+import org.ujmp.core.interfaces.HasId;
 import org.ujmp.core.interfaces.HasLabel;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
-public interface HasAnnotation extends HasLabel {
+public interface HasMetaData extends HasLabel, HasDescription, HasId {
 
-	public Annotation getAnnotation();
+	public MapMatrix<Object, Object> getMetaData();
 
-	public void setAnnotation(Annotation annotation);
+	public void setMetaData(MapMatrix<Object, Object> metaData);
 
-	public void setAnnotationObject(Object key, Object value);
+	public Object getMetaData(Object key);
 
-	public Object getAnnotationObject(Object key);
+	public void setMetaData(Object key, Object value);
 
-	public String getAnnotationString(Object key);
+	public void setMetaDataDimensionMatrix(int dimension, Matrix matrix);
 
-	public Object getAxisAnnotation(int dimension, long... position);
+	public Matrix getMetaDataDimensionMatrix(int dimension);
 
-	public String getAxisLabel(int dimension);
+	public Object getDimensionMetaData(int dimension, long... position);
 
-	public Object getAxisLabelObject(int dimension);
+	public String getDimensionLabel(int dimension);
 
-	public void setAxisAnnotation(int dimension, Object label, long... position);
+	public void setDimensionMetaData(int dimension, Object label, long... position);
 
-	public void setAxisLabel(int dimension, String label);
-
-	public void setAxisLabelObject(int dimension, Object label);
+	public void setDimensionLabel(int dimension, Object label);
 
 	public String getColumnLabel(long col);
 
 	public String getRowLabel(long row);
 
-	public Object getRowLabelObject(long row);
+	public void setColumnLabel(long col, Object label);
 
-	public Object getColumnLabelObject(long col);
-
-	public void setColumnLabel(long col, String label);
-
-	public void setRowLabel(long row, String label);
-
-	public void setRowLabelObject(long row, Object o);
-
-	public void setColumnLabelObject(long col, Object o);
+	public void setRowLabel(long row, Object label);
 
 	public long getRowForLabel(Object object);
 

@@ -50,8 +50,8 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigDecimal(getBigDecimal(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

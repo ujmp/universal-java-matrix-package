@@ -25,62 +25,20 @@ package org.ujmp.core.util.matrices;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.map.AbstractMap;
-import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.util.concurrent.BackgroundTask;
 
-public class RemoteHostMatrix extends AbstractMapMatrix<String, Matrix> {
+public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 	private static final long serialVersionUID = 7209155858904976010L;
 
-	private final String address;
-	private final Map<String, Matrix> map;
-
-	public RemoteHostMatrix(String address) {
-		this.address = address;
+	public RemoteHostMatrix(final String address) {
+		super(new TreeMap<String, Matrix>());
 		setLabel(address);
-		map = new RemoteMachineMap(this, address);
-	}
 
-	@Override
-	public Map<String, Matrix> getMap() {
-		return map;
-	}
-
-	@Override
-	public MapMatrix<String, Matrix> clone() {
-		return null;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
-
-}
-
-class RemoteMachineMap extends AbstractMap<String, Matrix> {
-	private static final long serialVersionUID = -2010821981402892951L;
-	private final Map<String, Matrix> map;
-	private final String address;
-	private final RemoteHostMatrix remoteMachineMatrix;
-
-	public RemoteMachineMap(RemoteHostMatrix matrix, String address) {
-		this.remoteMachineMatrix = matrix;
-		this.address = address;
-		map = new TreeMap<String, Matrix>();
-
-		new BackgroundTask(address) {
+		new BackgroundTask() {
 
 			@Override
 			public Object run() {
@@ -92,191 +50,265 @@ class RemoteMachineMap extends AbstractMap<String, Matrix> {
 				final int delay = 3000;
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 10413), delay);
+					socket.connect(new InetSocketAddress(address, 10413), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
 						// map.put("JDMP", new RemoteMatrix("http://" +
 						// getObject(0) + ":10413/"));
-						remoteMachineMatrix.notifyGUIObject();
+						put("JDMP", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 80), delay);
+					socket.connect(new InetSocketAddress(address, 80), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("HTTP", new HttpMatrix("http://" + getObject(0)));
-						remoteMachineMatrix.notifyGUIObject();
+						put("HTTP", new HttpMatrix("http://" + getObject(0)));
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 443), delay);
+					socket.connect(new InetSocketAddress(address, 443), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("HTTPS", new HttpMatrix("https://" + getObject(0)));
-						remoteMachineMatrix.notifyGUIObject();
+						put("HTTPS", new HttpMatrix("https://" + getObject(0)));
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 3306), delay);
+					socket.connect(new InetSocketAddress(address, 3306), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
 						// map.put("MySQL", new
 						// MySQLDatabaseMapMatrix(getAddress(), 3306, "root",
 						// ""));
-						remoteMachineMatrix.notifyGUIObject();
+						put("MySQL", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 22), delay);
+					socket.connect(new InetSocketAddress(address, 22), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("SSH", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("SSH", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 20), delay);
+					socket.connect(new InetSocketAddress(address, 20), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("FTP", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("FTP", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 23), delay);
+					socket.connect(new InetSocketAddress(address, 23), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("Telnet", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("Telnet", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 445), delay);
+					socket.connect(new InetSocketAddress(address, 445), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("SMB", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("SMB", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 1433), delay);
+					socket.connect(new InetSocketAddress(address, 1433), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("MSSQL", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("MSSQL", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 5432), delay);
+					socket.connect(new InetSocketAddress(address, 5432), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("PostgreSQL", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("PostgreSQL", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 11211), delay);
+					socket.connect(new InetSocketAddress(address, 11211), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("memcached", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("memcached", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 27017), delay);
+					socket.connect(new InetSocketAddress(address, 27017), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("mongoDB", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("mongoDB", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 25), delay);
+					socket.connect(new InetSocketAddress(address, 25), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("SMTP", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("SMTP", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 143), delay);
+					socket.connect(new InetSocketAddress(address, 143), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("IMAP", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("IMAP", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 993), delay);
+					socket.connect(new InetSocketAddress(address, 993), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("IMAPS", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("IMAPS", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 2049), delay);
+					socket.connect(new InetSocketAddress(address, 2049), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("NFS", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("NFS", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(getAddress(), 8080), delay);
+					socket.connect(new InetSocketAddress(address, 8080), delay);
 					portAvailable = socket.isConnected();
 					socket.close();
 					if (portAvailable) {
-						map.put("Tomcat", null);
-						remoteMachineMatrix.notifyGUIObject();
+						put("Tomcat", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 50010), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("HDFS DataNode", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 50070), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("HDFS NameNode", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 50090), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("HDFS Secondary NameNode", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 8021), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("Hadoop JobTracker", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 50030), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("Hadoop JobTracker", null);
+						notifyGUIObject();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 50060), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("Hadoop TaskTracker", null);
+						notifyGUIObject();
 					}
 				} catch (Exception e) {
 				}
@@ -284,40 +316,6 @@ class RemoteMachineMap extends AbstractMap<String, Matrix> {
 				return null;
 			}
 		};
-	}
-
-	private String getAddress() {
-		return address;
-	}
-
-	@Override
-	public void clear() {
-		map.clear();
-	}
-
-	@Override
-	public Matrix get(Object key) {
-		return map.get(key);
-	}
-
-	@Override
-	public Set<String> keySet() {
-		return map.keySet();
-	}
-
-	@Override
-	public Matrix put(String key, Matrix value) {
-		return map.put(key, value);
-	}
-
-	@Override
-	public Matrix remove(Object key) {
-		return map.remove(key);
-	}
-
-	@Override
-	public int size() {
-		return map.size();
 	}
 
 }

@@ -25,18 +25,13 @@ package org.ujmp.core.objectmatrix.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.map.LazyMap;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 
-public class FileMatrix extends AbstractMapMatrix<String, Object> {
+public class FileMatrix extends DefaultMapMatrix<String, Object> {
 	private static final long serialVersionUID = 7869997158743678080L;
 
 	public static final String FILES = "Files";
@@ -59,97 +54,42 @@ public class FileMatrix extends AbstractMapMatrix<String, Object> {
 	public static final String THUMBNAIL = "Thumbnail";
 	public static final String IMAGE = "Image";
 
-	private FileMap map = null;
-	private final FileFormat fileFormat;
-	private final File file;
-	private final Object[] parameters;
+	private final FileFormat fileformat;
 
 	public FileMatrix(File file, Object... parameters) throws IOException {
 		this(null, file, parameters);
 	}
 
 	public FileMatrix(FileFormat fileFormat, File file, Object... parameters) throws IOException {
-		this.fileFormat = fileFormat;
-		this.file = file;
-		this.parameters = parameters;
 		setLabel(file);
-	}
-
-	public Map<String, Object> getMap() {
-		if (map == null) {
-			try {
-				map = new FileMap(fileFormat, file, parameters);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+		if (fileFormat == null) {
+			this.fileformat = FileFormat.guess(file);
+		} else {
+			this.fileformat = fileFormat;
 		}
-		return map;
-	}
-
-	class FileMap extends LazyMap<String, Object> {
-		private static final long serialVersionUID = -4946966403241068247L;
-
-		private final File finalFile;
-
-		private final FileFormat fileformat;
-
-		private final Object[] parameters;
-
-		public FileMap(File file, Object... paramegters) throws IOException {
-			this(null, file, paramegters);
+		put(PATH, file.getPath());
+		put(FILENAME, file.getName());
+		put(CANREAD, file.canRead());
+		put(CANWRITE, file.canWrite());
+		put(ISHIDDEN, file.isHidden());
+		put(ISDIRECTORY, file.isDirectory());
+		put(ISFILE, file.isFile());
+		put(LASTMODIFIED, file.lastModified());
+		put(SIZE, file.length());
+		put(FILEFORMAT, this.fileformat);
+		if (file.isDirectory()) {
+			put(FILES, new FileListMatrix(file, parameters));
+		} else {
+			put(BYTES, Matrix.Factory.linkToFile(FileFormat.HEX, file));
 		}
-
-		public FileMap(FileFormat fileFormat, File file, Object... paramegters) throws IOException {
-			if (fileFormat == null) {
-				this.fileformat = FileFormat.guess(file);
-			} else {
-				this.fileformat = fileFormat;
-			}
-			this.parameters = paramegters;
-			this.finalFile = file;
-			put(PATH, file.getPath());
-			put(FILENAME, file.getName());
-			put(CANREAD, file.canRead());
-			put(CANWRITE, file.canWrite());
-			put(ISHIDDEN, file.isHidden());
-			put(ISDIRECTORY, file.isDirectory());
-			put(ISFILE, file.isFile());
-			put(LASTMODIFIED, file.lastModified());
-			put(SIZE, file.length());
-			put(FILEFORMAT, this.fileformat);
-			if (file.isDirectory()) {
-				put(FILES, new FileListMatrix(finalFile, parameters));
-			} else {
-				put(BYTES, Matrix.Factory.linkToFile(FileFormat.HEX, finalFile));
-			}
-			if (FileFormat.isImage(this.fileformat)) {
-				put(AVARAGECOLOR, Matrix.Factory.linkToFile(this.fileformat, finalFile, 1, 1));
-				put(THUMBNAIL, Matrix.Factory.linkToFile(this.fileformat, finalFile, 30, 30));
-				put(IMAGE, Matrix.Factory.linkToFile(this.fileformat, finalFile));
-			}
-			if (this.fileformat == FileFormat.UNKNOWN || FileFormat.isText(this.fileformat)) {
-				put(TEXT, Matrix.Factory.linkToFile(FileFormat.CSV, finalFile));
-			}
+		if (FileFormat.isImage(this.fileformat)) {
+			put(AVARAGECOLOR, Matrix.Factory.linkToFile(this.fileformat, file, 1, 1));
+			put(THUMBNAIL, Matrix.Factory.linkToFile(this.fileformat, file, 30, 30));
+			put(IMAGE, Matrix.Factory.linkToFile(this.fileformat, file));
 		}
-
-		public File getFinalFile() {
-			return finalFile;
+		if (this.fileformat == FileFormat.UNKNOWN || FileFormat.isText(this.fileformat)) {
+			put(TEXT, Matrix.Factory.linkToFile(FileFormat.CSV, file));
 		}
-
-	}
-
-	public MapMatrix<String, Object> clone() {
-		try {
-			MapMatrix<String, Object> ret;
-			ret = new FileMatrix(map.getFinalFile());
-			return ret;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

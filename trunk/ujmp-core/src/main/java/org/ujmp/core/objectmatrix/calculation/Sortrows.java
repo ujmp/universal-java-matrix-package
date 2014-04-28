@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.longmatrix.LongMatrix2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.Sortable;
 
 /**
@@ -149,18 +149,19 @@ public class Sortrows extends AbstractObjectCalculation {
 
 		LongMatrix2D indexMatrix = LongMatrix2D.Factory.zeros(rows.size(), 1);
 
-		Annotation annotation = m.getAnnotation();
+		MapMatrix<Object, Object> annotation = m.getMetaData();
 		if (annotation != null) {
-			annotation = m.getAnnotation().clone();
-			setAnnotation(annotation);
+			annotation = m.getMetaData().clone();
+			setMetaData(annotation);
 		}
 
 		for (int r = 0; r < rows.size(); r++) {
 			indexMatrix.setLong((Long) (rows.get(r)).getObject(), r, 0);
 			if (annotation != null) {
-				Object o = m.getAxisAnnotation(Matrix.COLUMN,
+				Object o = m.getDimensionMetaData(Matrix.COLUMN,
 						new long[] { (Long) (rows.get(r)).getObject(), 0 });
-				annotation.setAxisAnnotation(Matrix.COLUMN, o, new long[] { r, 0 });
+				// annotation.setAxisAnnotation(Matrix.COLUMN, o, new long[] {
+				// r, 0 });
 			}
 		}
 

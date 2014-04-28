@@ -36,7 +36,7 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 	public IntCalculationMatrix(IntCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

@@ -24,9 +24,9 @@
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class Var extends AbstractDoubleCalculation {
@@ -42,16 +42,17 @@ public class Var extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
 		this.besselsCorrection = besselsCorrection;
-		Annotation aold = matrix.getAnnotation();
+		MapMatrix<Object, Object> aold = matrix.getMetaData();
 		if (aold != null) {
-			Annotation a = new DefaultAnnotation(getSize().length);
-			a.getMetaData().put(Matrix.LABEL, aold.getMetaData().get(Matrix.LABEL));
+			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			a.put(Matrix.LABEL, aold.get(Matrix.LABEL));
 			if (dimension == ROW) {
-				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
+				// a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
 			} else if (dimension == COLUMN) {
-				a.setDimensionMatrix(COLUMN, aold.getDimensionMatrix(COLUMN));
+				// a.setDimensionMatrix(COLUMN,
+				// aold.getDimensionMatrix(COLUMN));
 			}
-			setAnnotation(a);
+			setMetaData(a);
 		}
 	}
 

@@ -25,12 +25,12 @@ package org.ujmp.jblas;
 
 import org.jblas.DoubleMatrix;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.jblas.calculation.Chol;
 import org.ujmp.jblas.calculation.Eig;
 import org.ujmp.jblas.calculation.Inv;
@@ -78,8 +78,8 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setDouble(source.getAsDouble(c), c);
 			}
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -122,8 +122,8 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	public final Matrix copy() {
 		Matrix m = new JBlasDenseDoubleMatrix2D(matrix.dup());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}
@@ -163,9 +163,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.addi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -178,9 +178,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.subi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -191,9 +191,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix times(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.muli(value, r));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -201,9 +201,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix divide(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.divi(value, r));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -211,9 +211,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix plus(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.addi(value, r));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -221,9 +221,9 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix minus(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.subi(value, r));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

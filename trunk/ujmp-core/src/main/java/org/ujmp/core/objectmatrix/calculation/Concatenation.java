@@ -27,9 +27,9 @@ import java.util.Collection;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -97,29 +97,30 @@ public class Concatenation extends AbstractObjectCalculation {
 
 		// Annotation
 		if (matrices[0].getLabelObject() != null) {
-			Annotation annotation = new DefaultAnnotation(size.length);
-			setAnnotation(annotation);
-			annotation.getMetaData().put(Matrix.LABEL, matrices[0].getLabelObject());
+			MapMatrix<Object, Object> annotation = new DefaultMapMatrix<Object, Object>();
+			setMetaData(annotation);
+			annotation.put(Matrix.LABEL, matrices[0].getLabelObject());
 			for (int d = 0; d < matrices[0].getDimensionCount(); d++) {
 				if (d == dimension) {
-					annotation.setDimensionMatrix(d, matrices[0].getAnnotation()
-							.getDimensionMatrix(d));
+					// annotation.setDimensionMatrix(d,
+					// matrices[0].getAnnotation()
+					// .getDimensionMatrix(d));
 				} else {
 					Matrix[] annotationMatrices = new Matrix[matrices.length];
 					for (int i = 0; i < annotationMatrices.length; i++) {
-						Annotation a = matrices[i].getAnnotation();
+						MapMatrix<Object, Object> a = matrices[i].getMetaData();
 						Matrix am = null;
 						if (a == null) {
 							long[] size = Coordinates.copyOf(matrices[i].getSize());
 							size[d] = 1;
 							am = new DefaultSparseObjectMatrix(size);
 						} else {
-							am = a.getDimensionMatrix(d);
+							// am = a.getDimensionMatrix(d);
 						}
 						annotationMatrices[i] = am;
 					}
 					Matrix m = new Concatenation(dimension, annotationMatrices).calc(Ret.NEW);
-					annotation.setDimensionMatrix(d, m);
+					// annotation.setDimensionMatrix(d, m);
 				}
 			}
 		}

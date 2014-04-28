@@ -29,9 +29,9 @@ import java.util.Set;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
 
@@ -70,8 +70,8 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -135,9 +135,9 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix plus(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.plus(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -170,17 +170,17 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix times(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.mult(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix copy() {
 		Matrix m = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy());
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}
@@ -193,9 +193,9 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix divide(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.div(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -203,9 +203,9 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 	public Matrix minus(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.minus(value)));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

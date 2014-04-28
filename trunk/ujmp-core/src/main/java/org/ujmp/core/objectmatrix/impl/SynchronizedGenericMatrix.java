@@ -36,7 +36,7 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	public SynchronizedGenericMatrix(Matrix source) {
 		super(source.getSize());
 		this.matrix = source;
-		setAnnotation(source.getAnnotation());
+		setMetaData(source.getMetaData());
 	}
 
 	public synchronized long[] getSize() {

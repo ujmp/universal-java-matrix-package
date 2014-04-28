@@ -38,7 +38,7 @@ public class BigIntegerCalculationMatrix extends AbstractBigIntegerMatrix {
 	public BigIntegerCalculationMatrix(BigIntegerCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

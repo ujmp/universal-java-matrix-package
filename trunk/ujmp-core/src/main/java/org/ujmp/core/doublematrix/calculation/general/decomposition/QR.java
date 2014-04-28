@@ -53,7 +53,7 @@ public interface QR<T> {
 	public static final QR<Matrix> MATRIX = new QR<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -69,7 +69,7 @@ public interface QR<T> {
 		}
 
 		public final Matrix solve(Matrix source, Matrix b) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.solve(source, b);
 				} else {
@@ -88,13 +88,13 @@ public interface QR<T> {
 	public static final QR<Matrix> MATRIXLARGESINGLETHREADED = new QR<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
 			QR<Matrix> qr = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				qr = DecompositionOps.QR_OJALGO;
 			}
-			if (qr == null && UJMPSettings.isUseEJML()) {
+			if (qr == null && UJMPSettings.getInstance().isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null && UJMPSettings.isUseMTJ()) {
+			if (qr == null && UJMPSettings.getInstance().isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -105,13 +105,13 @@ public interface QR<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			QR<Matrix> qr = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				qr = DecompositionOps.QR_OJALGO;
 			}
-			if (qr == null && UJMPSettings.isUseEJML()) {
+			if (qr == null && UJMPSettings.getInstance().isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null && UJMPSettings.isUseMTJ()) {
+			if (qr == null && UJMPSettings.getInstance().isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -124,13 +124,13 @@ public interface QR<T> {
 	public static final QR<Matrix> MATRIXLARGEMULTITHREADED = new QR<Matrix>() {
 		public final Matrix[] calc(Matrix source) {
 			QR<Matrix> qr = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				qr = DecompositionOps.QR_OJALGO;
 			}
-			if (qr == null && UJMPSettings.isUseEJML()) {
+			if (qr == null && UJMPSettings.getInstance().isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null && UJMPSettings.isUseMTJ()) {
+			if (qr == null && UJMPSettings.getInstance().isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {
@@ -141,13 +141,13 @@ public interface QR<T> {
 
 		public final Matrix solve(Matrix source, Matrix b) {
 			QR<Matrix> qr = null;
-			if (UJMPSettings.isUseOjalgo()) {
+			if (UJMPSettings.getInstance().isUseOjalgo()) {
 				qr = DecompositionOps.QR_OJALGO;
 			}
-			if (qr == null && UJMPSettings.isUseEJML()) {
+			if (qr == null && UJMPSettings.getInstance().isUseEJML()) {
 				qr = DecompositionOps.QR_EJML;
 			}
-			if (qr == null && UJMPSettings.isUseMTJ()) {
+			if (qr == null && UJMPSettings.getInstance().isUseMTJ()) {
 				qr = DecompositionOps.QR_MTJ;
 			}
 			if (qr == null) {

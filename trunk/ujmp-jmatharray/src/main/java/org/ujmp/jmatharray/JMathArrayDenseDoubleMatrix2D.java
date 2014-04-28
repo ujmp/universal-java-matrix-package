@@ -26,9 +26,9 @@ package org.ujmp.jmatharray;
 import org.math.array.DoubleArray;
 import org.math.array.LinearAlgebra;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 import Jama.CholeskyDecomposition;
@@ -59,8 +59,8 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D i
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -162,36 +162,36 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D i
 
 	public Matrix plus(double value) {
 		Matrix result = new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(DoubleArray.copy(matrix), value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix minus(double value) {
 		Matrix result = new JMathArrayDenseDoubleMatrix2D(DoubleArray.add(DoubleArray.copy(matrix), -value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix times(double value) {
 		Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(matrix, value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double value) {
 		Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.divide(matrix, value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -200,9 +200,9 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D i
 		if (m instanceof JMathArrayDenseDoubleMatrix2D) {
 			Matrix result = new JMathArrayDenseDoubleMatrix2D(LinearAlgebra.times(matrix,
 					((JMathArrayDenseDoubleMatrix2D) m).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -212,8 +212,8 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D i
 
 	public Matrix copy() {
 		Matrix m = new JMathArrayDenseDoubleMatrix2D(DoubleArray.copy(matrix));
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

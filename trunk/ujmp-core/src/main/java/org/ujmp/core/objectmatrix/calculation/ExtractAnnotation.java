@@ -25,8 +25,8 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class ExtractAnnotation extends AbstractObjectCalculation {
 	private static final long serialVersionUID = 1461447576658284276L;
@@ -37,25 +37,27 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]--;
-		setAnnotation(new DefaultAnnotation(size.length));
-		getAnnotation().getMetaData().put(Matrix.LABEL, m.getLabelObject());
+		setMetaData(new DefaultMapMatrix<Object, Object>());
+		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 
 		if (dim == ROW) {
-			Annotation a = m.getAnnotation();
+			MapMatrix<Object, Object> a = m.getMetaData();
 			if (a != null) {
-				Matrix ai = a.getDimensionMatrix(COLUMN);
-				ai = ai.deleteRows(Ret.NEW, 0);
-				getAnnotation().setDimensionMatrix(COLUMN, ai);
+				// Matrix ai = a.getDimensionMatrix(COLUMN);
+				// ai = ai.deleteRows(Ret.NEW, 0);
+				// getAnnotation().setDimensionMatrix(COLUMN, ai);
 			}
-			getAnnotation().setDimensionMatrix(ROW, m.selectRows(Ret.NEW, 0));
+			// getAnnotation().setDimensionMatrix(ROW, m.selectRows(Ret.NEW,
+			// 0));
 		} else if (dim == COLUMN) {
-			Annotation a = m.getAnnotation();
+			MapMatrix<Object, Object> a = m.getMetaData();
 			if (a != null) {
-				Matrix ai = a.getDimensionMatrix(ROW);
-				ai = ai.selectColumns(Ret.NEW, 0);
-				getAnnotation().setDimensionMatrix(ROW, ai);
+				// Matrix ai = a.getDimensionMatrix(ROW);
+				// ai = ai.selectColumns(Ret.NEW, 0);
+				// getAnnotation().setDimensionMatrix(ROW, ai);
 			}
-			getAnnotation().setDimensionMatrix(COLUMN, m.selectColumns(Ret.NEW, 0));
+			// getAnnotation().setDimensionMatrix(COLUMN,
+			// m.selectColumns(Ret.NEW, 0));
 		} else {
 			throw new RuntimeException("only supported for 2D matrices");
 		}

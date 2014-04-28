@@ -60,8 +60,8 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -92,7 +92,8 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public Matrix inv() {
 		if (matrix instanceof SquareMatrix) {
 			try {
-				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).getInverse(UJMPSettings.getTolerance()));
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).getInverse(UJMPSettings.getInstance()
+						.getTolerance()));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -105,7 +106,8 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 		if (matrix instanceof SquareMatrix && b instanceof MantissaDenseDoubleMatrix2D) {
 			try {
 				org.spaceroots.mantissa.linalg.Matrix b2 = ((MantissaDenseDoubleMatrix2D) b).getWrappedObject();
-				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).solve(b2, UJMPSettings.getTolerance()));
+				return new MantissaDenseDoubleMatrix2D(((SquareMatrix) matrix).solve(b2, UJMPSettings.getInstance()
+						.getTolerance()));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

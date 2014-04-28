@@ -49,8 +49,8 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMul
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 

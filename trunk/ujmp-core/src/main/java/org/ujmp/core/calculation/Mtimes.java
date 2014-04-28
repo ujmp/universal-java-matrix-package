@@ -372,10 +372,10 @@ class MtimesDenseDoubleMatrix2D implements
 		if (source1.getRowCount() >= Mtimes.THRESHOLD
 				&& source1.getColumnCount() >= Mtimes.THRESHOLD
 				&& source2.getColumnCount() >= Mtimes.THRESHOLD) {
-			if (Mtimes.MTIMES_JBLAS != null && UJMPSettings.isUseJBlas()) {
+			if (Mtimes.MTIMES_JBLAS != null && UJMPSettings.getInstance().isUseJBlas()) {
 				Mtimes.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
 						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
-			} else if (UJMPSettings.isUseBlockMatrixMultiply()) {
+			} else if (UJMPSettings.getInstance().isUseBlockMatrixMultiply()) {
 				calcBlockMatrixMultiThreaded(source1, source2, target);
 			} else if (source1 instanceof HasColumnMajorDoubleArray1D
 					&& source2 instanceof HasColumnMajorDoubleArray1D

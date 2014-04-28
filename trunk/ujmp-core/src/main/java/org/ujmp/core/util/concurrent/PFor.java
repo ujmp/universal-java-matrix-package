@@ -63,7 +63,7 @@ public abstract class PFor {
 	}
 
 	public PFor(final int first, final int last, final Object... objects) {
-		this(UJMPSettings.getNumberOfThreads(), first, last, objects);
+		this(UJMPSettings.getInstance().getNumberOfThreads(), first, last, objects);
 	}
 
 	public abstract void step(final int i);

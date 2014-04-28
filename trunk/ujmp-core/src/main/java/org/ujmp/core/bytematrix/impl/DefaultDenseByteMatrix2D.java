@@ -137,8 +137,8 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		byte[] result = new byte[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new DefaultDenseByteMatrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

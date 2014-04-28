@@ -51,8 +51,8 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		for (long[] c : result.allCoordinates()) {
 			result.setAsFloat(getFloat(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

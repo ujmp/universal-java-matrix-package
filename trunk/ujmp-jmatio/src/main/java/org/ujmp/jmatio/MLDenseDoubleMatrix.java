@@ -48,8 +48,8 @@ public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD impleme
 
 	public MLDenseDoubleMatrix(Matrix m) {
 		super(m.getSize());
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 			this.matrix = new MLDouble(m.getLabel(), MathUtil.toIntArray(m.getSize()));
 		} else {
 			this.matrix = new MLDouble("matrix" + System.nanoTime(), MathUtil.toIntArray(m

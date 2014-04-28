@@ -36,7 +36,7 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 	public BooleanCalculationMatrix(BooleanCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

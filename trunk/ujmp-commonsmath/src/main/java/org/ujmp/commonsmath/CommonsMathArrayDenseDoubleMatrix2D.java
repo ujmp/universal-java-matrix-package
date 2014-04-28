@@ -25,7 +25,7 @@ package org.ujmp.commonsmath;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class CommonsMathArrayDenseDoubleMatrix2D extends AbstractCommonsMathDenseDoubleMatrix2D {
@@ -42,9 +42,9 @@ public class CommonsMathArrayDenseDoubleMatrix2D extends AbstractCommonsMathDens
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		Annotation a = source.getAnnotation();
+		MapMatrix<Object, Object> a = source.getMetaData();
 		if (a != null) {
-			setAnnotation(a.clone());
+			setMetaData(a.clone());
 		}
 	}
 

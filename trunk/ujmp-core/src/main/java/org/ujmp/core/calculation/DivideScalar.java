@@ -29,10 +29,10 @@ import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
@@ -65,9 +65,9 @@ class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -79,7 +79,8 @@ class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
 			DivideScalar.SPARSEMATRIX.calc((SparseMatrix) source, divisor, (SparseMatrix) target);
 		} else {
-			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(divisor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -99,9 +100,9 @@ class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, De
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -112,7 +113,8 @@ class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, De
 			DivideScalar.DENSEMATRIX2D
 					.calc((DenseMatrix2D) source, divisor, (DenseMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(divisor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -128,15 +130,15 @@ class DivideScalarSparseMatrix implements DivideScalarCalculation<SparseMatrix, 
 			target.setAsBigDecimal(result, c);
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
 
 	public final void calc(SparseMatrix source, double divisor, SparseMatrix target) {
-		calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+		calc(source, new BigDecimal(divisor, UJMPSettings.getInstance().getMathContext()), target);
 	}
 };
 
@@ -157,9 +159,9 @@ class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D
 				}
 			}
 			if (source != target) {
-				Annotation a = source.getAnnotation();
+				MapMatrix<Object, Object> a = source.getMetaData();
 				if (a != null) {
-					target.setAnnotation(a.clone());
+					target.setMetaData(a.clone());
 				}
 			}
 		}
@@ -171,7 +173,8 @@ class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D
 			DivideScalar.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source, divisor,
 					(DenseDoubleMatrix2D) target);
 		} else {
-			calc(source, new BigDecimal(divisor, MathUtil.getDefaultMathContext()), target);
+			calc(source, new BigDecimal(divisor, UJMPSettings.getInstance().getMathContext()),
+					target);
 		}
 	}
 };
@@ -203,16 +206,16 @@ class DivideScalarDenseDoubleMatrix2D implements
 			}
 		}
 		if (source != target) {
-			Annotation a = source.getAnnotation();
+			MapMatrix<Object, Object> a = source.getMetaData();
 			if (a != null) {
-				target.setAnnotation(a.clone());
+				target.setMetaData(a.clone());
 			}
 		}
 	}
 
 	private final void calc(final double[][] source, final double divisor, final double[][] target) {
 		VerifyUtil.verifySameSize(source, target);
-		if (UJMPSettings.getNumberOfThreads() > 1 && source.length >= 100
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && source.length >= 100
 				&& source[0].length >= 100) {
 			new PForEquidistant(0, source.length - 1) {
 				public void step(int i) {

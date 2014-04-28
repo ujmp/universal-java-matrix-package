@@ -31,9 +31,9 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
@@ -143,9 +143,9 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
 					.add(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -157,9 +157,9 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
 					.subtract(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -169,36 +169,36 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public Matrix times(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix divide(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(1.0 / value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix plus(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix minus(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(-value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

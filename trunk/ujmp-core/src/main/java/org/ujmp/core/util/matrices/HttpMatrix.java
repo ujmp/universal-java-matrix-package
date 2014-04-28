@@ -29,63 +29,37 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.collections.map.AbstractMap;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.util.UJMPSettings;
 
 public class HttpMatrix extends AbstractMapMatrix<String, String> {
 	private static final long serialVersionUID = -8091708294752801016L;
 
-	public static final String USERAGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0";
-
-	private final Map<String, String> map;
+	private final String defaultProtocol;
 
 	public HttpMatrix() {
 		this("http://");
 	}
 
-	public HttpMatrix(String protocol) {
-		map = new HttpMap(protocol);
-	}
-
-	@Override
-	public Map<String, String> getMap() {
-		return map;
-	}
-
-	@Override
-	public MapMatrix<String, String> clone() {
-		return null;
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
-
-}
-
-class HttpMap extends AbstractMap<String, String> {
-	private static final long serialVersionUID = 3144851365925667008L;
-
-	private final String defaultProtocol;
-
-	public HttpMap(String defaultProtocol) {
+	public HttpMatrix(String defaultProtocol) {
 		if (defaultProtocol == null || !defaultProtocol.endsWith("/")) {
 			defaultProtocol += "/";
 		}
 		this.defaultProtocol = defaultProtocol;
 	}
 
-	@Override
-	public void clear() {
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
+		throw new RuntimeException("not implemented");
 	}
 
-	@Override
+	public int size() {
+		return 0;
+	}
+
 	public String get(Object key) {
 		try {
 			String urlString = String.valueOf(key);
@@ -94,7 +68,7 @@ class HttpMap extends AbstractMap<String, String> {
 			}
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
-			connection.setRequestProperty("User-Agent", HttpMatrix.USERAGENT);
+			connection.setRequestProperty("User-Agent", UJMPSettings.getInstance().getUserAgent());
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
@@ -121,23 +95,20 @@ class HttpMap extends AbstractMap<String, String> {
 		}
 	}
 
-	@Override
 	public Set<String> keySet() {
 		return Collections.emptySet();
 	}
 
-	@Override
-	public String put(String key, String value) {
-		return null;
+	protected void clearMap() {
+		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public String remove(Object key) {
-		return null;
+	protected String removeFromMap(Object key) {
+		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public int size() {
-		return 0;
+	protected String putIntoMap(String key, String value) {
+		throw new UnsupportedOperationException();
 	}
+
 }

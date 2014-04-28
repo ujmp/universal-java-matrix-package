@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -64,7 +63,7 @@ public abstract class MathUtil {
 	private static final Random random = new Random();
 
 	public static Random getRandom() {
-		if (UJMPSettings.isUseMultiThreadedRandom()) {
+		if (UJMPSettings.getInstance().isUseMultiThreadedRandom()) {
 			Random random = randoms.get();
 			if (random == null) {
 				random = new Random();
@@ -94,10 +93,6 @@ public abstract class MathUtil {
 			dateFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, Locale.GERMAN));
 		} catch (Throwable t) {
 		}
-	}
-
-	public static MathContext getDefaultMathContext() {
-		return UJMPSettings.getDefaultMathContext();
 	}
 
 	public static String md5(String text) throws NoSuchAlgorithmException {
@@ -1031,7 +1026,7 @@ public abstract class MathUtil {
 
 	public static final BigDecimal plus(BigDecimal v1, BigDecimal v2) {
 		if (v1 != null && v2 != null) {
-			return v1.add(v2, getDefaultMathContext());
+			return v1.add(v2, UJMPSettings.getInstance().getMathContext());
 		} else {
 			return null;
 		}
@@ -1039,7 +1034,7 @@ public abstract class MathUtil {
 
 	public static final BigDecimal minus(BigDecimal v1, BigDecimal v2) {
 		if (v1 != null && v2 != null) {
-			return v1.subtract(v2, getDefaultMathContext());
+			return v1.subtract(v2, UJMPSettings.getInstance().getMathContext());
 		} else {
 			return null;
 		}
@@ -1047,7 +1042,7 @@ public abstract class MathUtil {
 
 	public static final BigDecimal times(BigDecimal v1, BigDecimal v2) {
 		if (v1 != null && v2 != null) {
-			return v1.multiply(v2, getDefaultMathContext());
+			return v1.multiply(v2, UJMPSettings.getInstance().getMathContext());
 		} else {
 			return null;
 		}
@@ -1057,7 +1052,7 @@ public abstract class MathUtil {
 		if (BigDecimal.ZERO.equals(v2)) {
 			return null;
 		} else if (v1 != null && v2 != null) {
-			return v1.divide(v2, getDefaultMathContext());
+			return v1.divide(v2, UJMPSettings.getInstance().getMathContext());
 		} else {
 			return null;
 		}
@@ -1091,9 +1086,9 @@ public abstract class MathUtil {
 		boolean more = true;
 		while (more) {
 			lastGuess = guess;
-			guess = n.divide(guess, UJMPSettings.getDefaultMathContext());
+			guess = n.divide(guess, UJMPSettings.getInstance().getMathContext());
 			guess = guess.add(lastGuess);
-			guess = guess.divide(TWO, UJMPSettings.getDefaultMathContext());
+			guess = guess.divide(TWO, UJMPSettings.getInstance().getMathContext());
 			error = n.subtract(guess.multiply(guess));
 			if (++iterations >= maxIterations) {
 				more = false;

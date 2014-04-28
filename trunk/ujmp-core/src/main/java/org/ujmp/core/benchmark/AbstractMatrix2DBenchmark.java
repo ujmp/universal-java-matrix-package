@@ -97,15 +97,15 @@ public abstract class AbstractMatrix2DBenchmark implements MatrixBenchmark {
 
 			long t0 = System.currentTimeMillis();
 
-			UJMPSettings.setUseCommonsMath(config.isUseCommonsMath());
-			UJMPSettings.setUseMTJ(config.isUseMTJ());
-			UJMPSettings.setUseEJML(config.isUseEJML());
-			UJMPSettings.setUseJBlas(config.isUseJBlas());
-			UJMPSettings.setUseOjalgo(config.isUseOjalgo());
-			UJMPSettings.setUseParallelColt(config.isUseParallelColt());
-			UJMPSettings.setUseBlockMatrixMultiply(config.isUseBlockMatrixMultiply());
+			UJMPSettings.getInstance().setUseCommonsMath(config.isUseCommonsMath());
+			UJMPSettings.getInstance().setUseMTJ(config.isUseMTJ());
+			UJMPSettings.getInstance().setUseEJML(config.isUseEJML());
+			UJMPSettings.getInstance().setUseJBlas(config.isUseJBlas());
+			UJMPSettings.getInstance().setUseOjalgo(config.isUseOjalgo());
+			UJMPSettings.getInstance().setUseParallelColt(config.isUseParallelColt());
+			UJMPSettings.getInstance().setUseBlockMatrixMultiply(config.isUseBlockMatrixMultiply());
 
-			UJMPSettings.setDefaultBlockSize(config.getDefaultBlockSize());
+			UJMPSettings.getInstance().setDefaultBlockSize(config.getDefaultBlockSize());
 
 			if (config.isRunTimesScalar()) {
 				new TimesScalarBenchmarkTask(benchmarkSeed, getMatrixClass(), getConfig()).run();

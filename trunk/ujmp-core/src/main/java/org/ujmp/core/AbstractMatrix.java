@@ -39,8 +39,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
 import org.ujmp.core.bigdecimalmatrix.calculation.ToBigDecimalMatrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
@@ -180,6 +178,7 @@ import org.ujmp.core.objectmatrix.calculation.Tril;
 import org.ujmp.core.objectmatrix.calculation.Triu;
 import org.ujmp.core.objectmatrix.calculation.Unique;
 import org.ujmp.core.objectmatrix.calculation.UniqueValueCount;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 import org.ujmp.core.setmatrix.DefaultSetMatrix;
 import org.ujmp.core.setmatrix.SetMatrix;
 import org.ujmp.core.shortmatrix.ShortMatrix;
@@ -210,21 +209,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	private final long id;
 
-	private Annotation annotation = null;
+	private MapMatrix<Object, Object> metaData = null;
 
 	static {
-		try {
-			runningId = 31 * System.nanoTime() + System.currentTimeMillis();
-		} catch (Throwable t) {
-		}
-		try {
-			DecompositionOps.init();
-		} catch (Throwable t) {
-		}
-		try {
-			UJMPSettings.initialize();
-		} catch (Throwable t) {
-		}
+		runningId = System.nanoTime() + System.currentTimeMillis();
+		DecompositionOps.init();
+		UJMPSettings.getInstance();
 		try {
 			long mem = Runtime.getRuntime().maxMemory();
 			if (mem < 133234688) {
@@ -281,27 +271,66 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return ValueType.OBJECT;
 	}
 
-	public final Object getAxisAnnotation(int axis, long... position) {
-		return annotation == null ? null : annotation.getAxisAnnotation(axis, position);
-	}
-
-	public final String getAxisLabel(int axis) {
-		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(
-				"AxisLabel" + axis));
-	}
-
-	public final void setAxisAnnotation(int axis, Object label, long... position) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+	public Matrix getMetaDataDimensionMatrix(int dimension) {
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
 		}
-		annotation.setAxisAnnotation(axis, label, position);
+		Matrix m = (Matrix) metaData.get("DimensionMetaData" + dimension);
+		if (m == null) {
+			long[] t = new long[getDimensionCount()];
+			Arrays.fill(t, 1);
+			m = new DefaultSparseObjectMatrix(t);
+			metaData.put("DimensionMetaData" + dimension, m);
+		}
+		return m;
 	}
 
-	public final void setAxisLabel(int axis, String label) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+	public final Object getDimensionMetaData(int dimension, long... position) {
+		if (metaData == null) {
+			return null;
+		} else {
+			Matrix m = getMetaDataDimensionMatrix(dimension);
+			long old = position[dimension];
+			position[dimension] = 0;
+			Object o = null;
+			if (Coordinates.isSmallerThan(position, m.getSize())) {
+				o = m.getAsObject(position);
+			}
+			position[dimension] = old;
+			return o;
 		}
-		annotation.setAxisLabel(axis, label);
+	}
+
+	public void setMetaDataDimensionMatrix(int dimension, Matrix matrix) {
+		metaData.put("DimensionMetaData" + dimension, matrix);
+	}
+
+	public final String getDimensionLabel(int dimension) {
+		return metaData == null ? null : StringUtil.getString(metaData.get("DimensionMetaData"
+				+ dimension));
+	}
+
+	public final void setDimensionMetaData(int dimension, Object label, long... position) {
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
+		}
+		Matrix m = getMetaDataDimensionMatrix(dimension);
+		long old = position[dimension];
+		position[dimension] = 0;
+		if (!Coordinates.isSmallerThan(position, m.getSize())) {
+			long[] newSize = Coordinates.max(m.getSize(), Coordinates.plus(position, 1));
+			m.setSize(newSize);
+		}
+		m.setAsObject(label, position);
+		position[dimension] = old;
+	}
+
+	public final void setDimensionLabel(int dimension, Object label) {
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
+		}
+		Matrix m = getMetaDataDimensionMatrix(dimension);
+		m.setLabel(label);
 	}
 
 	public GUIObject getGUIObject() {
@@ -1172,7 +1201,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		Matrix s = usv[1];
 
 		for (int i = (int) Math.min(s.getSize(ROW), s.getSize(COLUMN)); --i >= 0;) {
-			if (Math.abs(s.getAsDouble(i, i)) > UJMPSettings.getTolerance()) {
+			if (Math.abs(s.getAsDouble(i, i)) > UJMPSettings.getInstance().getTolerance()) {
 				rank++;
 			}
 		}
@@ -1515,10 +1544,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final void setLabel(Object label) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
 		}
-		annotation.getMetaData().put(LABEL, label);
+		metaData.put(LABEL, label);
 	}
 
 	public final String getLabel() {
@@ -1583,14 +1612,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (getDimensionCount() != 2) {
 			throw new RuntimeException("This function is only supported for 2D matrices");
 		}
-		return StringUtil.convert(getAxisAnnotation(ROW, new long[] { 0, col }));
+		return StringUtil.convert(getDimensionMetaData(ROW, new long[] { 0, col }));
 	}
 
 	public final String getRowLabel(long row) {
 		if (getDimensionCount() != 2) {
 			throw new RuntimeException("This function is only supported for 2D matrices");
 		}
-		return StringUtil.convert(getAxisAnnotation(COLUMN, new long[] { row, 0 }));
+		return StringUtil.convert(getDimensionMetaData(COLUMN, new long[] { row, 0 }));
 	}
 
 	public final long getRowForLabel(Object object) {
@@ -1608,55 +1637,39 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final long[] getPositionForLabel(int dimension, Object label) {
-		if (annotation == null) {
+		if (label == null) {
+			throw new RuntimeException("label is null");
+		}
+		if (metaData == null) {
 			long[] t = Coordinates.copyOf(getSize());
 			t[dimension] = -1;
 			return t;
 		} else {
-			return annotation.getPositionForLabel(dimension, label);
+			Matrix m = getMetaDataDimensionMatrix(dimension);
+			for (long[] c : m.availableCoordinates()) {
+				Object o = m.getAsObject(c);
+				if (label.equals(o)) {
+					return c;
+				}
+			}
+			long[] t = new long[getDimensionCount()];
+			Arrays.fill(t, -1);
+			return t;
 		}
 	}
 
-	public final Object getRowLabelObject(long row) {
+	public final void setColumnLabel(long col, Object label) {
 		if (getDimensionCount() != 2) {
 			throw new RuntimeException("This function is only supported for 2D matrices");
 		}
-		return getAxisAnnotation(COLUMN, new long[] { row, 0 });
+		setDimensionMetaData(ROW, label, new long[] { 0, col });
 	}
 
-	public final Object getColumnLabelObject(long col) {
+	public final void setRowLabel(long row, Object label) {
 		if (getDimensionCount() != 2) {
 			throw new RuntimeException("This function is only supported for 2D matrices");
 		}
-		return getAxisAnnotation(ROW, new long[] { 0, col });
-	}
-
-	public final void setColumnLabel(long col, String label) {
-		if (getDimensionCount() != 2) {
-			throw new RuntimeException("This function is only supported for 2D matrices");
-		}
-		setAxisAnnotation(ROW, label, new long[] { 0, col });
-	}
-
-	public final void setRowLabel(long row, String label) {
-		if (getDimensionCount() != 2) {
-			throw new RuntimeException("This function is only supported for 2D matrices");
-		}
-		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
-	}
-
-	public final void setRowLabelObject(long row, Object label) {
-		if (getDimensionCount() != 2) {
-			throw new RuntimeException("This function is only supported for 2D matrices");
-		}
-		setAxisAnnotation(COLUMN, label, new long[] { row, 0 });
-	}
-
-	public final void setColumnLabelObject(long col, Object label) {
-		if (getDimensionCount() != 2) {
-			throw new RuntimeException("This function is only supported for 2D matrices");
-		}
-		setAxisAnnotation(ROW, label, new long[] { 0, col });
+		setDimensionMetaData(COLUMN, label, new long[] { row, 0 });
 	}
 
 	public final double getAbsoluteValueMean() {
@@ -1897,28 +1910,23 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return Math.sqrt(sum);
 	}
 
-	public final Annotation getAnnotation() {
-		return annotation;
+	public final Object getMetaData(Object key) {
+		return metaData == null ? null : metaData.get(key);
 	}
 
-	public final void setAnnotation(Annotation annotation) {
-		this.annotation = annotation;
+	public final MapMatrix<Object, Object> getMetaData() {
+		return metaData;
 	}
 
-	public final void setAnnotationObject(Object key, Object value) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+	public final void setMetaData(MapMatrix<Object, Object> metaData) {
+		this.metaData = metaData;
+	}
+
+	public final void setMetaData(Object key, Object value) {
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
 		}
-		this.annotation.setObject(key, value);
-	}
-
-	public final Object getAnnotationObject(Object key) {
-		return annotation == null ? null : this.annotation.getMetaData().get(key);
-	}
-
-	public final String getAnnotationString(Object key) {
-		return annotation == null ? null : StringUtil.convert(this.annotation.getMetaData()
-				.get(key));
+		metaData.put(key, value);
 	}
 
 	public final boolean equalsAnnotation(Object o) {
@@ -1927,8 +1935,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 		if (o instanceof Matrix) {
 			Matrix m = (Matrix) o;
-			Annotation a1 = getAnnotation();
-			Annotation a2 = m.getAnnotation();
+			MapMatrix<Object, Object> a1 = getMetaData();
+			MapMatrix<Object, Object> a2 = m.getMetaData();
 			if (a1 != null) {
 				if (!a1.equals(a2)) {
 					return false;
@@ -2281,17 +2289,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
-	public Object getAxisLabelObject(int dimension) {
-		return annotation == null ? null : annotation.getAxisLabelObject(dimension);
-	}
-
-	public void setAxisLabelObject(int dimension, Object label) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
-		}
-		annotation.setAxisLabelObject(dimension, label);
-	}
-
 	public MatrixExportDestinationSelector export() {
 		if (this instanceof DenseMatrix) {
 			return new DefaultDenseMatrixExportDestinationSelector((DenseMatrix) this);
@@ -2309,30 +2306,29 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getId() {
-		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(ID));
+		return metaData == null ? null : StringUtil.getString(metaData.get(ID));
 	}
 
 	public final void setId(String id) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
 		}
-		annotation.getMetaData().put(ID, id);
+		metaData.put(ID, id);
 	}
 
 	public final String getDescription() {
-		return annotation == null ? null : StringUtil.getString(annotation.getMetaData().get(
-				DESCRIPTION));
+		return metaData == null ? null : StringUtil.getString(metaData.get(DESCRIPTION));
 	}
 
 	public final Object getLabelObject() {
-		return annotation == null ? null : annotation.getMetaData().get(LABEL);
+		return metaData == null ? null : metaData.get(LABEL);
 	}
 
 	public final void setDescription(String description) {
-		if (annotation == null) {
-			annotation = new DefaultAnnotation(getDimensionCount());
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>();
 		}
-		annotation.getMetaData().put(DESCRIPTION, description);
+		metaData.put(DESCRIPTION, description);
 	}
 
 }

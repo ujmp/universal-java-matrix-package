@@ -27,8 +27,8 @@ import org.la4j.LinearAlgebra.DecompositorFactory;
 import org.la4j.LinearAlgebra.InverterFactory;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
@@ -54,8 +54,8 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -81,9 +81,9 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix plus(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.add(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -92,9 +92,9 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
 			Matrix result = new La4JDenseDoubleMatrix2D(
 					(Basic2DMatrix) matrix.add(((La4JDenseDoubleMatrix2D) m).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -114,9 +114,9 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix minus(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.subtract(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
@@ -125,9 +125,9 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
 			Matrix result = new La4JDenseDoubleMatrix2D(
 					(Basic2DMatrix) matrix.subtract(((La4JDenseDoubleMatrix2D) m).matrix));
-			Annotation a = getAnnotation();
+			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {
-				result.setAnnotation(a.clone());
+				result.setMetaData(a.clone());
 			}
 			return result;
 		} else {
@@ -137,18 +137,18 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix divide(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.divide(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}
 
 	public Matrix times(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.multiply(value));
-		Annotation a = getAnnotation();
+		MapMatrix<Object, Object> a = getMetaData();
 		if (a != null) {
-			result.setAnnotation(a.clone());
+			result.setMetaData(a.clone());
 		}
 		return result;
 	}

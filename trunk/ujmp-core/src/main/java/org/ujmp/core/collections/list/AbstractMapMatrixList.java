@@ -45,7 +45,7 @@ public abstract class AbstractMapMatrixList<K, V> extends AbstractDenseGenericMa
 				keys.addAll(map.keySet());
 			}
 			for (int i = 0; i < keys.size(); i++) {
-				setColumnLabelObject(i, keys.get(i));
+				setColumnLabel(i, keys.get(i));
 			}
 		}
 		return keys;

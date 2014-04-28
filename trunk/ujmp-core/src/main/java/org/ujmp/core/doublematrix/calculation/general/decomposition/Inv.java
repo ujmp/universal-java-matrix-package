@@ -41,7 +41,7 @@ public interface Inv<T> {
 				throw new RuntimeException(
 						"inverse only possible for square matrices. use pinv or ginv instead");
 			}
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -75,16 +75,16 @@ public interface Inv<T> {
 	public static final Inv<Matrix> MATRIXLARGESINGLETHREADED = new Inv<Matrix>() {
 		public final Matrix calc(Matrix source) {
 			Inv<Matrix> inv = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				inv = DecompositionOps.INV_JBLAS;
 			}
-			if (inv == null && UJMPSettings.isUseOjalgo()) {
+			if (inv == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				inv = DecompositionOps.INV_OJALGO;
 			}
-			if (inv == null && UJMPSettings.isUseEJML()) {
+			if (inv == null && UJMPSettings.getInstance().isUseEJML()) {
 				inv = DecompositionOps.INV_EJML;
 			}
-			if (inv == null && UJMPSettings.isUseMTJ()) {
+			if (inv == null && UJMPSettings.getInstance().isUseMTJ()) {
 				inv = DecompositionOps.INV_MTJ;
 			}
 			if (inv == null) {
@@ -97,16 +97,16 @@ public interface Inv<T> {
 	public static final Inv<Matrix> MATRIXLARGEMULTITHREADED = new Inv<Matrix>() {
 		public Matrix calc(Matrix source) {
 			Inv<Matrix> inv = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				inv = DecompositionOps.INV_JBLAS;
 			}
-			if (inv == null && UJMPSettings.isUseOjalgo()) {
+			if (inv == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				inv = DecompositionOps.INV_OJALGO;
 			}
-			if (inv == null && UJMPSettings.isUseEJML()) {
+			if (inv == null && UJMPSettings.getInstance().isUseEJML()) {
 				inv = DecompositionOps.INV_EJML;
 			}
-			if (inv == null && UJMPSettings.isUseMTJ()) {
+			if (inv == null && UJMPSettings.getInstance().isUseMTJ()) {
 				inv = DecompositionOps.INV_MTJ;
 			}
 			if (inv == null) {

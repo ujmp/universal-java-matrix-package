@@ -36,7 +36,7 @@ public class ShortCalculationMatrix extends AbstractShortMatrix {
 	public ShortCalculationMatrix(ShortCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

@@ -56,8 +56,8 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 

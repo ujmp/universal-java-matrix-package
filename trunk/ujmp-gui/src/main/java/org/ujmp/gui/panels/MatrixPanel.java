@@ -33,8 +33,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.tree.TreeModel;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
 import org.ujmp.core.graphmatrix.GraphMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.treematrix.TreeMatrix;
 import org.ujmp.core.util.GnuPlot;
 import org.ujmp.core.util.Matlab;
@@ -55,10 +55,10 @@ public class MatrixPanel extends AbstractPanel {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setMinimumSize(new Dimension(10, 10));
 
-		Annotation metaData = m.getMatrix().getAnnotation();
+		MapMatrix<Object, Object> metaData = m.getMatrix().getMetaData();
 		if (metaData != null) {
 			splitPane2.setTopComponent(new MatrixEditorPanel("Meta Data", (MatrixGUIObject) m.getMatrix()
-					.getAnnotation().getMetaData().getGUIObject()));
+					.getMetaData().getGUIObject()));
 		}
 
 		tabbedPane.add("Heatmap", new MatrixHeatmapPanel(m, false));

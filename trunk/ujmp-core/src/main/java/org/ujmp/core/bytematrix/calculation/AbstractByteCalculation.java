@@ -47,8 +47,8 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		for (long[] c : result.allCoordinates()) {
 			result.setByte(getByte(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

@@ -63,8 +63,8 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
-		if (m.getAnnotation() != null) {
-			setAnnotation(m.getAnnotation().clone());
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
 		}
 	}
 
@@ -134,8 +134,8 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		double[] result = new double[values.length];
 		System.arraycopy(values, 0, result, 0, values.length);
 		Matrix m = new MortonDenseDoubleMartrix2D(result, rows, cols);
-		if (getAnnotation() != null) {
-			m.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			m.setMetaData(getMetaData().clone());
 		}
 		return m;
 	}

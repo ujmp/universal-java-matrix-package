@@ -54,7 +54,7 @@ public interface Eig<T> {
 	public static final Eig<Matrix> MATRIX = new Eig<Matrix>() {
 
 		public final Matrix[] calc(Matrix source) {
-			if (UJMPSettings.getNumberOfThreads() == 1) {
+			if (UJMPSettings.getInstance().getNumberOfThreads() == 1) {
 				if (source.getRowCount() >= THRESHOLD && source.getColumnCount() >= THRESHOLD) {
 					return MATRIXLARGESINGLETHREADED.calc(source);
 				} else {
@@ -73,10 +73,10 @@ public interface Eig<T> {
 	public static final Eig<Matrix> MATRIXLARGESINGLETHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
 			Eig<Matrix> eig = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				eig = DecompositionOps.EIG_JBLAS;
 			}
-			if (eig == null && UJMPSettings.isUseEJML()) {
+			if (eig == null && UJMPSettings.getInstance().isUseEJML()) {
 				eig = DecompositionOps.EIG_EJML;
 			}
 			if (eig == null) {
@@ -89,13 +89,13 @@ public interface Eig<T> {
 	public static final Eig<Matrix> MATRIXLARGEMULTITHREADED = new Eig<Matrix>() {
 		public Matrix[] calc(Matrix source) {
 			Eig<Matrix> eig = null;
-			if (UJMPSettings.isUseJBlas()) {
+			if (UJMPSettings.getInstance().isUseJBlas()) {
 				eig = DecompositionOps.EIG_JBLAS;
 			}
-			if (eig == null && UJMPSettings.isUseOjalgo()) {
+			if (eig == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				eig = DecompositionOps.EIG_OJALGO;
 			}
-			if (eig == null && UJMPSettings.isUseEJML()) {
+			if (eig == null && UJMPSettings.getInstance().isUseEJML()) {
 				eig = DecompositionOps.EIG_EJML;
 			}
 			if (eig == null) {

@@ -36,7 +36,7 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 	public ByteCalculationMatrix(ByteCalculation calculation) {
 		super(calculation.getSize());
 		this.calculation = calculation;
-		setAnnotation(calculation.getAnnotation());
+		setMetaData(calculation.getMetaData());
 	}
 
 	public boolean contains(long... coordinates) {

@@ -53,7 +53,7 @@ public class UJMPThreadPoolExecutor extends ThreadPoolExecutor {
 	}
 
 	public static final ThreadPoolExecutor getInstance() {
-		return getInstance(UJMPSettings.getNumberOfThreads());
+		return getInstance(UJMPSettings.getInstance().getNumberOfThreads());
 	}
 
 	public static final ThreadPoolExecutor getInstance(final int maximumPoolSize) {

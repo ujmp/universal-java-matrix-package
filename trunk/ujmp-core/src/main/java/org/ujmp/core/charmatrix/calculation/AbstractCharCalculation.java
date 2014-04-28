@@ -47,8 +47,8 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 		for (long[] c : result.allCoordinates()) {
 			result.setAsChar(getChar(c), c);
 		}
-		if (getAnnotation() != null) {
-			result.setAnnotation(getAnnotation().clone());
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}

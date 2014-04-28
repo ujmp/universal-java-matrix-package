@@ -25,8 +25,8 @@ package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 
 public class IncludeAnnotation extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2165678807795583946L;
@@ -37,17 +37,17 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
-		setAnnotation(new DefaultAnnotation(getSize().length));
-		getAnnotation().getMetaData().put(Matrix.LABEL, m.getLabelObject());
+		setMetaData(new DefaultMapMatrix<Object, Object>());
+		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 	}
 
 	public Object getObject(long... coordinates) {
 		coordinates = Coordinates.copyOf(coordinates);
 		if (coordinates[getDimension()] == 0) {
 			if (getDimension() == ROW) {
-				return getSource().getAxisAnnotation(ROW, coordinates);
+				return getSource().getDimensionMetaData(ROW, coordinates);
 			} else if (getDimension() == COLUMN) {
-				return getSource().getAxisAnnotation(COLUMN, coordinates);
+				return getSource().getDimensionMetaData(COLUMN, coordinates);
 			} else {
 				throw new RuntimeException("only possible for Matrix.ROW and Matrix.COLUMN");
 			}

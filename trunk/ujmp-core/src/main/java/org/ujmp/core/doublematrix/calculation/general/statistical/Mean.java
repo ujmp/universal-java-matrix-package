@@ -25,10 +25,10 @@ package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.annotation.Annotation;
-import org.ujmp.core.annotation.DefaultAnnotation;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.CountMissing;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class Mean extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 4116408128004680574L;
@@ -42,16 +42,17 @@ public class Mean extends AbstractDoubleCalculation {
 	public Mean(int dimension, boolean ignoreNaN, Matrix matrix) {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
-		Annotation aold = matrix.getAnnotation();
+		MapMatrix<Object, Object> aold = matrix.getMetaData();
 		if (aold != null) {
-			Annotation a = new DefaultAnnotation(getSize().length);
-			a.getMetaData().put(Matrix.LABEL, aold.getMetaData().get(Matrix.LABEL));
+			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			a.put(Matrix.LABEL, aold.get(Matrix.LABEL));
 			if (dimension == ROW) {
-				a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
+				// a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));
 			} else if (dimension == COLUMN) {
-				a.setDimensionMatrix(COLUMN, aold.getDimensionMatrix(COLUMN));
+				// a.setDimensionMatrix(COLUMN,
+				// aold.getDimensionMatrix(COLUMN));
 			}
-			setAnnotation(a);
+			setMetaData(a);
 		}
 	}
 

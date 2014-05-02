@@ -24,16 +24,24 @@
 package org.ujmp.core.listmatrix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 	private static final long serialVersionUID = -6381864884046078055L;
 
-	private List<T> list;
+	private final List<T> list;
+
+	public DefaultListMatrix(List<T> list) {
+		this.list = list;
+	}
+
+	public DefaultListMatrix(Set<T> set) {
+		this.list = new ArrayList<T>(set);
+	}
 
 	public DefaultListMatrix(Collection<T> list) {
 		if (list instanceof List) {
@@ -45,10 +53,6 @@ public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 
 	public DefaultListMatrix() {
 		this.list = new ArrayList<T>();
-	}
-
-	public DefaultListMatrix(T... objects) {
-		this.list = Arrays.asList(objects);
 	}
 
 	public List<T> getList() {

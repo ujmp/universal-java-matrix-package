@@ -25,6 +25,7 @@ package org.ujmp.mail;
 
 import java.io.Closeable;
 import java.security.Security;
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.mail.Folder;
@@ -81,13 +82,13 @@ public class ImapUtil implements Closeable {
 
 	public ListMatrix<Folder> getPersonalFolders() throws Exception {
 		Folder[] folders = getStore().getPersonalNamespaces();
-		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(folders);
+		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(Arrays.asList(folders));
 		return folderMatrix;
 	}
 
 	public ListMatrix<Folder> getSubFolders(Folder folder) throws Exception {
 		Folder[] folders = folder.list();
-		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(folders);
+		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(Arrays.asList(folders));
 		return folderMatrix;
 	}
 
@@ -132,7 +133,7 @@ public class ImapUtil implements Closeable {
 
 	public ListMatrix<Folder> getSharedFolders() throws Exception {
 		Folder[] folders = getStore().getSharedNamespaces();
-		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(folders);
+		ListMatrix<Folder> folderMatrix = new DefaultListMatrix<Folder>(Arrays.asList(folders));
 		store.close();
 		return folderMatrix;
 	}

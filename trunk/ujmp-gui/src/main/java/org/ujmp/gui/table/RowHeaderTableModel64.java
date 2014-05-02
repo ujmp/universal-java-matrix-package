@@ -124,11 +124,11 @@ public class RowHeaderTableModel64 implements TableModel64, TableModelListener64
 	}
 
 	public void tableChanged(TableModelEvent e) {
-		fireValueChanged();
+		fireValueChanged(e.getFirstRow(), e.getColumn(), null);
 	}
 
 	public void tableChanged(TableModelEvent64 e) {
-		fireValueChanged();
+		fireValueChanged(e.firstRow, e.column, null);
 	}
 
 	public final void fireValueChanged() {

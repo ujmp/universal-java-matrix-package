@@ -33,9 +33,7 @@ public class TableModelEvent64 extends TableModelEvent {
 	protected long column;
 
 	public TableModelEvent64(TableModel64 source) {
-		// Use Long.MAX_VALUE instead of getRowCount() in case rows were
-		// deleted.
-		this(source, 0, Long.MAX_VALUE, ALL_COLUMNS, UPDATE);
+		this(source, 0, Integer.MAX_VALUE, ALL_COLUMNS, UPDATE);
 	}
 
 	public TableModelEvent64(TableModel64 source, long row) {

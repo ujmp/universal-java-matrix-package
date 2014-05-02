@@ -36,7 +36,8 @@ import javax.swing.filechooser.FileFilter;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.DefaultMatrixGUIObject;
 
 public class ExportMatrixAction extends AbstractObjectAction {
 	private static final long serialVersionUID = -212812956173346428L;
@@ -85,8 +86,8 @@ public class ExportMatrixAction extends AbstractObjectAction {
 
 			GUIObject o = getGUIObject();
 
-			if (o instanceof MatrixGUIObject) {
-				MatrixGUIObject m = (MatrixGUIObject) o;
+			if (o instanceof DefaultMatrixGUIObject) {
+				AbstractMatrixGUIObject m = (AbstractMatrixGUIObject) o;
 				try {
 					m.getMatrix().export().toFile(file);
 				} catch (Exception e) {

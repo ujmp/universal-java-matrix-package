@@ -68,7 +68,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	private static final long serialVersionUID = 843653796010276950L;
 
 	private final MatrixGUIObject matrixGUIObject;
-	private final Matrix matrix;
 
 	private final MatrixHeatmapRenderer renderer;
 
@@ -98,7 +97,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		setPreferredSize(new Dimension(600, 400));
 
 		this.matrixGUIObject = matrixGUIObject;
-		this.matrix = matrixGUIObject.getMatrix();
 		renderer = new MatrixHeatmapRenderer();
 
 		matrixGUIObject.addTableModelListener(this);
@@ -152,14 +150,14 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		if (e.getButton() == MouseEvent.BUTTON3) {
 			newRow = newRow < 0 ? 0 : newRow;
 			newCol = newCol < 0 ? 0 : newCol;
-			newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-			newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
+			newRow = newRow >= matrixGUIObject.getRowCount() ? matrixGUIObject.getRowCount() - 1 : newRow;
+			newCol = newCol >= matrixGUIObject.getColumnCount() ? matrixGUIObject.getColumnCount() - 1 : newCol;
 
 			JPopupMenu popup = new MatrixPopupMenu(this, matrixGUIObject, newRow, newCol);
 			popup.show(this, e.getX(), e.getY());
 		} else if (e.getButton() == MouseEvent.BUTTON1) {
 			// left click: show new window if value is a matrix
-			Object o = matrix.getAsObject(newRow, newCol);
+			Object o = matrixGUIObject.getValueAt(newRow, newCol);
 			if (o instanceof Matrix) {
 				((Matrix) o).showGUI();
 			}
@@ -178,8 +176,8 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			startCol = getColPos(e.getX());
 			startRow = startRow < 0 ? 0 : startRow;
 			startCol = startCol < 0 ? 0 : startCol;
-			startRow = startRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : startRow;
-			startCol = startCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : startCol;
+			startRow = startRow >= matrixGUIObject.getRowCount() ? matrixGUIObject.getRowCount() - 1 : startRow;
+			startCol = startCol >= matrixGUIObject.getColumnCount() ? matrixGUIObject.getColumnCount() - 1 : startCol;
 			matrixGUIObject.getRowSelectionModel().setValueIsAdjusting(true);
 			matrixGUIObject.getColumnSelectionModel().setValueIsAdjusting(true);
 			matrixGUIObject.getRowSelectionModel().setSelectionInterval(startRow, startRow);
@@ -189,11 +187,11 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	private long getRowPos(int y) {
-		return matrix.getRowCount() * y / getHeight();
+		return matrixGUIObject.getRowCount() * y / getHeight();
 	}
 
 	private long getColPos(int x) {
-		return matrix.getColumnCount() * x / getWidth();
+		return matrixGUIObject.getColumnCount() * x / getWidth();
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -202,8 +200,8 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			long newCol = getColPos(e.getX());
 			newRow = newRow < 0 ? 0 : newRow;
 			newCol = newCol < 0 ? 0 : newCol;
-			newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-			newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
+			newRow = newRow >= matrixGUIObject.getRowCount() ? matrixGUIObject.getRowCount() - 1 : newRow;
+			newCol = newCol >= matrixGUIObject.getColumnCount() ? matrixGUIObject.getColumnCount() - 1 : newCol;
 			matrixGUIObject.getRowSelectionModel().setValueIsAdjusting(false);
 			matrixGUIObject.getColumnSelectionModel().setValueIsAdjusting(false);
 			matrixGUIObject.getRowSelectionModel().setSelectionInterval(startRow, newRow);
@@ -218,15 +216,15 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 	public String getToolTipText(MouseEvent e) {
 		// only generate tool text when a matrix with size >0 is available
-		if (!matrix.isEmpty()) {
+		if (matrixGUIObject.getRowCount() > 0 && matrixGUIObject.getColumnCount() > 0) {
 			long r = getRowPos(e.getY());
 			long c = getColPos(e.getX());
 			r = r < 0 ? 0 : r;
 			c = c < 0 ? 0 : c;
-			r = r >= matrix.getRowCount() ? matrix.getRowCount() - 1 : r;
-			c = c >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : c;
+			r = r >= matrixGUIObject.getRowCount() ? matrixGUIObject.getRowCount() - 1 : r;
+			c = c >= matrixGUIObject.getColumnCount() ? matrixGUIObject.getColumnCount() - 1 : c;
 
-			String toolTip = TooltipUtil.getTooltip(matrix, r, c);
+			String toolTip = TooltipUtil.getTooltip(matrixGUIObject, r, c);
 			return toolTip;
 		} else {
 			return null;
@@ -255,8 +253,8 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 				long x2 = matrixGUIObject.getColumnSelectionModel().getMaxSelectionIndex64();
 				long y1 = matrixGUIObject.getRowSelectionModel().getMinSelectionIndex64();
 				long y2 = matrixGUIObject.getRowSelectionModel().getMaxSelectionIndex64();
-				double scaleX = (double) (getWidth() - PADDINGX - PADDINGX) / (double) matrix.getColumnCount();
-				double scaleY = (double) (getHeight() - PADDINGY - PADDINGY) / (double) matrix.getRowCount();
+				double scaleX = (double) (getWidth() - PADDINGX - PADDINGX) / (double) matrixGUIObject.getColumnCount();
+				double scaleY = (double) (getHeight() - PADDINGY - PADDINGY) / (double) matrixGUIObject.getRowCount();
 				g2d.setStroke(new BasicStroke(2.0f));
 				g2d.drawRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
@@ -276,7 +274,7 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		if (getWidth() > 0 && getHeight() > 0) {
 			BufferedImage tempBufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
 			renderer.setSize(getWidth(), getHeight());
-			renderer.setMatrix(matrix);
+			renderer.setMatrix(matrixGUIObject);
 			Graphics2D g2d = (Graphics2D) tempBufferedImage.getGraphics();
 			renderer.paintComponent(g2d);
 			g2d.dispose();
@@ -302,8 +300,8 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			long newCol = getColPos(e.getX());
 			newRow = newRow < 0 ? 0 : newRow;
 			newCol = newCol < 0 ? 0 : newCol;
-			newRow = newRow >= matrix.getRowCount() ? matrix.getRowCount() - 1 : newRow;
-			newCol = newCol >= matrix.getColumnCount() ? matrix.getColumnCount() - 1 : newCol;
+			newRow = newRow >= matrixGUIObject.getRowCount() ? matrixGUIObject.getRowCount() - 1 : newRow;
+			newCol = newCol >= matrixGUIObject.getColumnCount() ? matrixGUIObject.getColumnCount() - 1 : newCol;
 			matrixGUIObject.getRowSelectionModel().setSelectionInterval(startRow, newRow);
 			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(startCol, newCol);
 			repaint(100);

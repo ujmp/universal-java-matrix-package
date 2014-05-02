@@ -29,6 +29,7 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class PlotSettings {
@@ -108,7 +109,7 @@ public class PlotSettings {
 		this.axisColor = axisColor;
 	}
 
-	public PlotSettings(MatrixGUIObject m) {
+	public PlotSettings(AbstractMatrixGUIObject m) {
 		this();
 		this.matrixGUIObject = m;
 	}

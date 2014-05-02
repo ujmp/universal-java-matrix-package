@@ -40,7 +40,9 @@ import org.ujmp.core.util.GnuPlot;
 import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.RealTimeMatrixGUIObject;
 import org.ujmp.gui.graph.GraphPanel;
 import org.ujmp.gui.plot.MatrixPlot;
 
@@ -49,6 +51,9 @@ public class MatrixPanel extends AbstractPanel {
 
 	public MatrixPanel(MatrixGUIObject m) {
 		super(m);
+		if (!(m instanceof RealTimeMatrixGUIObject)) {
+			m = new RealTimeMatrixGUIObject(m.getMatrix());
+		}
 
 		JSplitPane splitPane1 = new JSplitPane();
 		JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -57,7 +62,7 @@ public class MatrixPanel extends AbstractPanel {
 
 		MapMatrix<Object, Object> metaData = m.getMatrix().getMetaData();
 		if (metaData != null) {
-			splitPane2.setTopComponent(new MatrixEditorPanel("Meta Data", (MatrixGUIObject) m.getMatrix()
+			splitPane2.setTopComponent(new MatrixEditorPanel("Meta Data", (AbstractMatrixGUIObject) m.getMatrix()
 					.getMetaData().getGUIObject()));
 		}
 

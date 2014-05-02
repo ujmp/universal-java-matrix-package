@@ -31,6 +31,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.DefaultMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
 public class MatrixActions extends ArrayList<JComponent> {

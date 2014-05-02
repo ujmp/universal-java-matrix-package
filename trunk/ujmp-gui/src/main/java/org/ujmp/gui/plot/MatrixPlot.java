@@ -38,6 +38,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.DefaultMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeUpdated;
 import org.ujmp.gui.util.UIDefaults;
@@ -173,10 +175,10 @@ public class MatrixPlot extends JPanel implements TableCellRenderer, CanBeUpdate
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		if (value instanceof MatrixGUIObject) {
-			plotSettings.setMatrixGUIObject((MatrixGUIObject) value);
+		if (value instanceof DefaultMatrixGUIObject) {
+			plotSettings.setMatrixGUIObject((AbstractMatrixGUIObject) value);
 		} else if (value instanceof Matrix) {
-			plotSettings.setMatrixGUIObject((MatrixGUIObject) ((Matrix) value).getGUIObject());
+			plotSettings.setMatrixGUIObject((AbstractMatrixGUIObject) ((Matrix) value).getGUIObject());
 		}
 
 		if (isSelected) {

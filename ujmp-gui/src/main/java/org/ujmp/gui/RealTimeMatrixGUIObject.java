@@ -68,8 +68,8 @@ public class RealTimeMatrixGUIObject extends AbstractMatrixGUIObject {
 
 	public synchronized Object getValueAt(final int rowIndex, final int columnIndex) {
 		Coordinates coordinates = Coordinates.wrap(rowIndex, columnIndex);
-		Object object = dataCache.get(coordinates);
-		if (object != null) {
+		if (dataCache.containsKey(coordinates)) {
+			Object object = dataCache.get(coordinates);
 			return object;
 		} else {
 			// reinsert to change priority

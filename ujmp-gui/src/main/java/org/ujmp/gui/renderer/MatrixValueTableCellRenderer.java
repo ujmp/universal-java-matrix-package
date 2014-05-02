@@ -34,9 +34,10 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.util.ColorUtil;
 import org.ujmp.gui.util.TooltipUtil;
 
@@ -52,12 +53,12 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		label.setHorizontalAlignment(JLabel.CENTER);
 
-		MatrixGUIObject m = (MatrixGUIObject) table.getModel();
+		AbstractMatrixGUIObject m = (AbstractMatrixGUIObject) table.getModel();
 
 		Color c = ColorUtil.fromObject(value);
 
 		try {
-			setToolTipText(TooltipUtil.getTooltip(m.getMatrix(), row, column));
+			setToolTipText(TooltipUtil.getTooltip(m, row, column));
 		} catch (ConcurrentModificationException e) {
 			// not too bad
 		}
@@ -69,6 +70,8 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 			String s;
 			if (value == null) {
 				s = "";
+			} else if (value == GUIObject.PRELOADER) {
+				s = "[loading]";
 			} else if (value instanceof Matrix) {
 				Matrix ma = (Matrix) value;
 				s = ma.getClass().getSimpleName();

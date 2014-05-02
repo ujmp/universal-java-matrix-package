@@ -28,12 +28,12 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 
 public class SunSpotDataMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 5736739909120149516L;
 
-	public SunSpotDataMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public SunSpotDataMatrixAction(JComponent c, AbstractMatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Sunspot DataSet Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with Wolfer's sunspot data 1700 - 1987");

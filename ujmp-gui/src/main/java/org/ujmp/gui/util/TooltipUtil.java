@@ -29,10 +29,11 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.gui.MatrixGUIObject;
 
 public abstract class TooltipUtil {
 
-	public static String getTooltip(Matrix matrix, long... coordinates) {
+	public static String getTooltip(MatrixGUIObject matrix, long... coordinates) {
 		StringBuilder toolTip = new StringBuilder(200);
 		toolTip.append("<html><b>");
 		toolTip.append(Coordinates.toString(coordinates));
@@ -40,7 +41,7 @@ public abstract class TooltipUtil {
 
 		String columnLabel = null;
 		try {
-			columnLabel = matrix.getColumnLabel(coordinates[Matrix.COLUMN]);
+			columnLabel = matrix.getColumnName(coordinates[Matrix.COLUMN]);
 		} catch (Exception e) {
 		}
 		if (columnLabel != null) {
@@ -61,7 +62,7 @@ public abstract class TooltipUtil {
 
 		Object o = null;
 		try {
-			o = matrix.getAsObject(coordinates[0], coordinates[1]);
+			o = matrix.getValueAt(coordinates[0], coordinates[1]);
 		} catch (Exception e) {
 		}
 

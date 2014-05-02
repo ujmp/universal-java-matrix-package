@@ -36,7 +36,6 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.gui.MatrixGUIObject;
@@ -47,7 +46,7 @@ import org.ujmp.gui.util.UIDefaults;
 public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 942689931503793487L;
 
-	private Matrix matrix = null;
+	private MatrixGUIObject matrixGUIObject = null;
 
 	private int width = 0;
 
@@ -64,11 +63,11 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 			int row, int column) {
 
 		if (value instanceof MatrixGUIObject) {
-			matrix = ((MatrixGUIObject) value).getMatrix();
+			matrixGUIObject = (MatrixGUIObject) value;
 		} else if (value instanceof Matrix) {
-			matrix = (Matrix) value;
+			matrixGUIObject = (MatrixGUIObject) ((Matrix) value).getGUIObject();
 		} else {
-			matrix = null;
+			matrixGUIObject = null;
 		}
 
 		width = table.getColumnModel().getColumn(column).getWidth() - 1;
@@ -119,14 +118,20 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		g2d.fillRect(0, 0, width, height);
 
 		try {
-			if (matrix != null) {
+			if (matrixGUIObject != null) {
 
 				int width = getWidth();
 				int height = getHeight();
 				width = width == 0 ? 1 : width;
 				height = height == 0 ? 1 : height;
-				long totalColumn = matrix.getColumnCount();
-				long totalRows = matrix.getRowCount();
+				long totalColumn = matrixGUIObject.getColumnCount();
+				long totalRows = matrixGUIObject.getRowCount();
+
+				if (totalColumn < 1 || totalRows < 1) {
+					// no data
+					return;
+				}
+
 				int xsize = (int) Math.min(totalColumn, width);
 				int ysize = (int) Math.min(totalRows, height);
 				xsize = xsize == 0 ? 1 : xsize;
@@ -151,17 +156,18 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 						for (int x = 0; x < xsize; x++) {
 							long mx = (long) Math.floor(x * stepsizeX);
 							long my = (long) Math.floor(y * stepsizeY);
-							Color col = ColorUtil.fromObject(matrix.getAsObject(my, mx));
+							Color col = ColorUtil.fromObject(matrixGUIObject.getValueAt(my, mx));
 							pixels[pos++] = (col.getRed() << 16) + (col.getGreen() << 8) + col.getBlue();
 						}
 					}
 				} else {
-					Iterable<long[]> cos = matrix.allCoordinates();
-					for (long[] c : cos) {
-						if (c != null) {
-							Color col = ColorUtil.fromObject(matrix.getAsObject(c[0], c[1]));
-							int pos = getPosition(totalColumn, c[Coordinates.ROW], c[Coordinates.COLUMN]);
-							pixels[pos] = (col.getRed() << 16) + (col.getGreen() << 8) + col.getBlue();
+					long rowCount = matrixGUIObject.getRowCount();
+					long colCount = matrixGUIObject.getColumnCount();
+					for (int row = 0; row < rowCount; row++) {
+						for (int col = 0; col < colCount; col++) {
+							Color color = ColorUtil.fromObject(matrixGUIObject.getValueAt(row, col));
+							int pos = getPosition(totalColumn, row, col);
+							pixels[pos] = (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
 						}
 					}
 				}
@@ -169,10 +175,10 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 				g2d.drawImage(bufferedImage, PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY
 						- PADDINGY, null);
 
-				if (width > 20 && matrix.isScalar()) {
-					Color col = ColorUtil.fromObject(matrix.getAsObject(0, 0));
+				if (width > 20 && matrixGUIObject.getRowCount() == 1 && matrixGUIObject.getColumnCount() == 1) {
+					Color col = ColorUtil.fromObject(matrixGUIObject.getValueAt(0, 0));
 					g2d.setColor(ColorUtil.contrastBW(col));
-					String s = UJMPFormat.getSingleLineInstance().format(matrix.getAsObject(0, 0));
+					String s = UJMPFormat.getSingleLineInstance().format(matrixGUIObject.getValueAt(0, 0));
 					if (s != null && s.length() > 25) {
 						s = s.substring(0, 25) + "...";
 					}
@@ -262,8 +268,8 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		}
 	}
 
-	public void setMatrix(Matrix matrix) {
-		this.matrix = matrix;
+	public void setMatrix(MatrixGUIObject matrix) {
+		this.matrixGUIObject = matrix;
 	}
 
 }

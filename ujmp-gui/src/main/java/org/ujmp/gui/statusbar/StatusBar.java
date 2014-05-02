@@ -35,7 +35,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.DefaultMatrixGUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
 public class StatusBar extends JPanel {
@@ -51,8 +52,8 @@ public class StatusBar extends JPanel {
 
 	public StatusBar(GUIObject o) {
 		this.object = o;
-		if (o instanceof MatrixGUIObject) {
-			this.objectStatus = new MatrixStatisticsBar((MatrixGUIObject) o);
+		if (o instanceof DefaultMatrixGUIObject) {
+			this.objectStatus = new MatrixStatisticsBar((AbstractMatrixGUIObject) o);
 		} else {
 			this.objectStatus = new JLabel();
 		}

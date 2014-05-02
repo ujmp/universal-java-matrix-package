@@ -28,12 +28,12 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 
 public class WelcomeMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 4416037171565562066L;
 
-	public WelcomeMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
+	public WelcomeMatrixAction(JComponent c, AbstractMatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Welcome Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with a welcome message");

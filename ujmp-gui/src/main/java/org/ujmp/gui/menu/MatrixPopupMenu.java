@@ -34,6 +34,7 @@ import javax.swing.JSeparator;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;
 
@@ -52,7 +53,7 @@ public class MatrixPopupMenu extends JPopupMenu {
 			int startY = matrix.getRowSelectionModel().getMinSelectionIndex();
 			int endY = matrix.getRowSelectionModel().getMaxSelectionIndex();
 			Matrix subMatrix = matrix.getMatrix().subMatrix(Ret.LINK, startY, startX, endY, endX);
-			actions = new MatrixActions(c, (MatrixGUIObject) subMatrix.getGUIObject(), null);
+			actions = new MatrixActions(c, (AbstractMatrixGUIObject) subMatrix.getGUIObject(), null);
 			label.setText(" Selection " + Coordinates.toString(subMatrix.getSize()).replaceAll(",", "x"));
 		} else {
 			actions = new MatrixActions(c, matrix, null);

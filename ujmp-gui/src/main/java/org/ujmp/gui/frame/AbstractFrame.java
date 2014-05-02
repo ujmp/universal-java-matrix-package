@@ -72,9 +72,8 @@ public abstract class AbstractFrame extends JFrame {
 		String label = o.getLabel() == null ? "no label" : o.getLabel();
 		if (o instanceof MatrixGUIObject) {
 			MatrixGUIObject mgui = (MatrixGUIObject) o;
-			Matrix m = mgui.getMatrix();
-			String size = Coordinates.toString("[", "x", "]", m.getSize());
-			setTitle(size + " " + m.getClass().getSimpleName() + " [" + label + "]");
+			String size = Coordinates.toString("[", "x", "]", mgui.getRowCount64(), mgui.getColumnCount64());
+			setTitle(size + " " + mgui.getMatrix().getClass().getSimpleName() + " [" + label + "]");
 		} else {
 			setTitle(o.toString());
 		}

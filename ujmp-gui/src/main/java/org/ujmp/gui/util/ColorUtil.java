@@ -26,6 +26,7 @@ package org.ujmp.gui.util;
 import java.awt.Color;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.colormap.ColorMap;
 
@@ -95,6 +96,8 @@ public abstract class ColorUtil {
 	public static Color fromObject(Object v, int alpha) {
 		if (v == null) {
 			return Color.black;
+		} else if (v == GUIObject.PRELOADER) {
+			return Color.LIGHT_GRAY;
 		} else if (v instanceof Double) {
 			return fromDouble((Double) v, alpha);
 		} else if (v instanceof Float) {

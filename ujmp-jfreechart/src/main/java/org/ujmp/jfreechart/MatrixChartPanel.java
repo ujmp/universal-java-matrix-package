@@ -36,24 +36,24 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.StringUtil;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 
 public class MatrixChartPanel extends AbstractChartPanel {
 	private static final long serialVersionUID = 3661988250162505586L;
 
 	public MatrixChartPanel(Matrix m) {
-		this((MatrixGUIObject) m.getGUIObject());
+		this((AbstractMatrixGUIObject) m.getGUIObject());
 	}
 
-	public MatrixChartPanel(MatrixGUIObject guiObject) {
+	public MatrixChartPanel(AbstractMatrixGUIObject guiObject) {
 		this(guiObject, new ChartConfiguration());
 	}
 
 	public MatrixChartPanel(Matrix m, ChartConfiguration config) {
-		this((MatrixGUIObject) m.getGUIObject(), config);
+		this((AbstractMatrixGUIObject) m.getGUIObject(), config);
 	}
 
-	public MatrixChartPanel(MatrixGUIObject matrix, ChartConfiguration config) {
+	public MatrixChartPanel(AbstractMatrixGUIObject matrix, ChartConfiguration config) {
 		super(matrix, config);
 	}
 

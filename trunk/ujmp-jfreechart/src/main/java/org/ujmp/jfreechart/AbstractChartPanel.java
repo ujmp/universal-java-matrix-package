@@ -32,7 +32,7 @@ import javax.swing.JFrame;
 
 import org.jfree.chart.ChartPanel;
 import org.ujmp.core.enums.FileFormat;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
@@ -42,9 +42,9 @@ public abstract class AbstractChartPanel extends ChartPanel implements CanRender
 
 	private ChartConfiguration config = null;
 
-	private MatrixGUIObject matrix = null;
+	private AbstractMatrixGUIObject matrix = null;
 
-	public AbstractChartPanel(MatrixGUIObject matrix, ChartConfiguration config) {
+	public AbstractChartPanel(AbstractMatrixGUIObject matrix, ChartConfiguration config) {
 		super(null, true);
 		this.matrix = matrix;
 		this.config = config;
@@ -148,11 +148,11 @@ public abstract class AbstractChartPanel extends ChartPanel implements CanRender
 		redraw();
 	}
 
-	public MatrixGUIObject getMatrix() {
+	public AbstractMatrixGUIObject getMatrix() {
 		return matrix;
 	}
 
-	public synchronized void setMatrix(MatrixGUIObject matrix) {
+	public synchronized void setMatrix(AbstractMatrixGUIObject matrix) {
 		this.matrix = matrix;
 		redraw();
 	}

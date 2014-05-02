@@ -30,7 +30,7 @@ import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
-import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.AbstractMatrixGUIObject;
 
 public class XYSeriesWrapper extends XYSeries {
 	private static final long serialVersionUID = 2493663877511719452L;
@@ -39,7 +39,7 @@ public class XYSeriesWrapper extends XYSeries {
 
 	private final Map<Integer, XYDataItem> values = new WeakHashMap<Integer, XYDataItem>();
 
-	private MatrixGUIObject matrix = null;
+	private AbstractMatrixGUIObject matrix = null;
 
 	private ValueMarker meanMarker = null;
 
@@ -53,7 +53,7 @@ public class XYSeriesWrapper extends XYSeries {
 
 	private int start = 0;
 
-	public XYSeriesWrapper(MatrixGUIObject m, int number) {
+	public XYSeriesWrapper(AbstractMatrixGUIObject m, int number) {
 		super(m.getColumnName(number), false, true);
 		this.seriesId = number;
 		this.matrix = m;

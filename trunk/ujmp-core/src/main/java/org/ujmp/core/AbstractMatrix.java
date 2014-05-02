@@ -214,7 +214,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	static {
 		runningId = System.nanoTime() + System.currentTimeMillis();
 		DecompositionOps.init();
-		UJMPSettings.getInstance();
 		try {
 			long mem = Runtime.getRuntime().maxMemory();
 			if (mem < 133234688) {

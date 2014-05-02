@@ -127,7 +127,7 @@ import org.ujmp.core.util.matrices.SystemTimeMatrix;
 public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	private static final long serialVersionUID = -6788016781517917785L;
 
-	public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();
+	//public static final EmptyMatrix EMPTYMATRIX = new EmptyMatrix();
 
 	public final Matrix zeros(long... size) {
 		if (size.length == 2) {
@@ -523,7 +523,8 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 	}
 
 	public final EmptyMatrix emptyMatrix() {
-		return EMPTYMATRIX;
+		return null;
+//		return EMPTYMATRIX;
 	}
 
 	public final Matrix repmat(Ret returnType, Matrix matrix, long... count) {

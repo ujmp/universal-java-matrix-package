@@ -23,11 +23,17 @@
 
 package org.ujmp.core.util;
 
+import java.awt.Image;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public abstract class ResourceUtil {
 
@@ -49,6 +55,36 @@ public abstract class ResourceUtil {
 
 		is.close();
 		os.close();
+	}
+
+	public static byte[] getResourceAsBytes(String url) throws IOException {
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(url);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		BufferedInputStream bis = new BufferedInputStream(is);
+
+		byte buf[] = new byte[8192];
+		int len;
+		while ((len = bis.read(buf)) > 0) {
+			os.write(buf, 0, len);
+		}
+
+		bis.close();
+		is.close();
+		os.close();
+
+		return os.toByteArray();
+	}
+
+	public static Image loadImage(String url) throws IOException {
+		InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(url);
+		Image image = ImageIO.read(stream);
+		return image;
+	}
+
+	public static ImageIcon loadImageIcon(String url) throws IOException {
+		byte[] data = getResourceAsBytes(url);
+		ImageIcon icon = new ImageIcon(data);
+		return icon;
 	}
 
 }

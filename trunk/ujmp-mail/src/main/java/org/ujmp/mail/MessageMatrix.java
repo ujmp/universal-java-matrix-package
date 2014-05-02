@@ -24,6 +24,7 @@
 package org.ujmp.mail;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 import javax.mail.Address;
@@ -51,7 +52,7 @@ public class MessageMatrix extends DefaultMapMatrix<Object, Object> {
 		put("ReceivedDate", m.getReceivedDate());
 
 		Flags flags = m.getFlags();
-		Matrix flagMatrix = new DefaultListMatrix<String>(flags.getUserFlags());
+		Matrix flagMatrix = new DefaultListMatrix<String>(Arrays.asList(flags.getUserFlags()));
 		put("Flags", flagMatrix);
 
 		Enumeration<?> headers = m.getAllHeaders();

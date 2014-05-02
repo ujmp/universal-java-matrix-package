@@ -30,7 +30,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
@@ -379,7 +381,23 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		if (list instanceof Matrix) {
 			return (Matrix) list;
 		} else {
-			return new DefaultListMatrix<Object>(list);
+			return new DefaultListMatrix(list);
+		}
+	}
+
+	public final Matrix linkToList(List<?> list) {
+		if (list instanceof Matrix) {
+			return (Matrix) list;
+		} else {
+			return new DefaultListMatrix(list);
+		}
+	}
+
+	public final Matrix linkToSet(Set<?> set) {
+		if (set instanceof Matrix) {
+			return (Matrix) set;
+		} else {
+			return new DefaultListMatrix(set);
 		}
 	}
 

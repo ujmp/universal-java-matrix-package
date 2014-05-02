@@ -394,4 +394,12 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
 		return this.coordinates;
 	}
 
+	public final long getRow() {
+		return coordinates[ROW];
+	}
+
+	public final long getColumn() {
+		return coordinates[COLUMN];
+	}
+
 }

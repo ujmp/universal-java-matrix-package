@@ -336,7 +336,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
-				Class<?> c = Class.forName("org.ujmp.gui.MatrixGUIObject");
+				Class<?> c = Class.forName("org.ujmp.gui.RealTimeMatrixGUIObject");
 				Constructor<?> con = c.getConstructor(new Class<?>[] { Matrix.class });
 				guiObject = (GUIObject) con.newInstance(new Object[] { this });
 			} catch (Exception e) {

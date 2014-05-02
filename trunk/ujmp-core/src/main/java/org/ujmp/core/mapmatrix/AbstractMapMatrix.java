@@ -37,7 +37,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		MapMatrix<K, V> {
 	private static final long serialVersionUID = 5571429371462164416L;
 
-	private final Map<Integer, K> indexMap = new HashMap<Integer, K>();
+	private final Map<Integer, K> keyIndexMap = new HashMap<Integer, K>();
 
 	public AbstractMapMatrix() {
 		super(0, 2);
@@ -92,10 +92,10 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	private final K getKey(int index) {
 		synchronized (this) {
 			if (size() < 10000000) {
-				if (indexMap.isEmpty()) {
+				if (keyIndexMap.isEmpty()) {
 					buildIndex();
 				}
-				K k = indexMap.get(index);
+				K k = keyIndexMap.get(index);
 				return k;
 			} else {
 				Iterator<K> it = keySet().iterator();
@@ -110,7 +110,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	private void buildIndex() {
 		Iterator<K> it = keySet().iterator();
 		for (int i = 0; it.hasNext(); i++) {
-			indexMap.put(i, it.next());
+			keyIndexMap.put(i, it.next());
 		}
 	}
 
@@ -178,7 +178,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final V put(K key, V value) {
-		indexMap.clear();
+		keyIndexMap.clear();
 		V v = putIntoMap(key, value);
 		notifyGUIObject();
 		return v;
@@ -191,7 +191,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final V remove(Object key) {
-		indexMap.clear();
+		keyIndexMap.clear();
 		V v = removeFromMap(key);
 		notifyGUIObject();
 		return v;
@@ -227,7 +227,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final void clear() {
-		indexMap.clear();
+		keyIndexMap.clear();
 		clearMap();
 	}
 

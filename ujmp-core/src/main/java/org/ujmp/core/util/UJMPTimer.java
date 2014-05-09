@@ -25,33 +25,16 @@ package org.ujmp.core.util;
 
 import java.util.Timer;
 
-public class GlobalTimer extends Timer {
+public class UJMPTimer extends Timer {
 
-	private static final Object lock = new Object();
+	private static int runningId = 1;
 
-	private static GlobalTimer timer = null;
-
-	public static final GlobalTimer getInstance() {
-		if (timer == null) {
-			synchronized (lock) {
-				if (timer == null) {
-					timer = new GlobalTimer();
-				}
-			}
-		}
-		return timer;
+	public static final UJMPTimer newInstance() {
+		return new UJMPTimer();
 	}
 
-	private GlobalTimer() {
-		super("UJMP Global Timer", true);
-	}
-
-	public static synchronized void shutDown() {
-		if (timer != null) {
-			timer.cancel();
-			timer = null;
-		}
-
+	private UJMPTimer() {
+		super("UJMPTimer-" + runningId++, true);
 	}
 
 }

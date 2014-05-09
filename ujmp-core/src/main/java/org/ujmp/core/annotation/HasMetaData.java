@@ -37,6 +37,8 @@ public interface HasMetaData extends HasLabel, HasDescription, HasId {
 
 	public Object getMetaData(Object key);
 
+	public String getMetaDataString(Object key);
+
 	public void setMetaData(Object key, Object value);
 
 	public void setMetaDataDimensionMatrix(int dimension, Matrix matrix);

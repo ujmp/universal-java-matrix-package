@@ -23,6 +23,13 @@
 
 package org.ujmp.core.matrix.factory;
 
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,6 +87,7 @@ import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.intmatrix.calculation.Magic;
 import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.impl.DefaultSparseIntMatrix;
+import org.ujmp.core.intmatrix.impl.ImageMatrix;
 import org.ujmp.core.intmatrix.impl.SimpleDenseIntMatrix2D;
 import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
@@ -137,6 +145,16 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		} else {
 			throw new RuntimeException("Size must be at least 2-dimensional");
 		}
+	}
+
+	public Matrix createFromScreenshot() throws HeadlessException, AWTException {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		final BufferedImage image = new Robot().createScreenCapture(new Rectangle(screenSize));
+		return linkToImage(image);
+	}
+
+	public Matrix linkToImage(BufferedImage image) {
+		return new ImageMatrix(image);
 	}
 
 	public final Matrix zeros(ValueType valueType, long... size) {

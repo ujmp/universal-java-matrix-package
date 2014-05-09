@@ -34,10 +34,12 @@ import java.util.TimerTask;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
-import org.ujmp.core.util.GlobalTimer;
+import org.ujmp.core.util.UJMPTimer;
 
 public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 	private static final long serialVersionUID = -6988423129848472319L;
+
+	private final UJMPTimer timer;
 
 	public RunningThreadsMatrix() {
 		super(ThreadMap.getInstance());
@@ -52,7 +54,8 @@ public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 				m.notifyGUIObject();
 			}
 		};
-		GlobalTimer.getInstance().schedule(task, 1000, 1000);
+		timer = UJMPTimer.newInstance();
+		timer.schedule(task, 1000, 1000);
 	}
 
 }

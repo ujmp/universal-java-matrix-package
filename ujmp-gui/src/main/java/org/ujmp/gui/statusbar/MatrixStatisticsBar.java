@@ -31,16 +31,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class MatrixStatisticsBar extends JLabel implements TableModelListener, ListSelectionListener {
 	private static final long serialVersionUID = 3434122072016632576L;
 
-	private AbstractMatrixGUIObject matrixGUIObject = null;
+	private MatrixGUIObject matrixGUIObject = null;
 
 	private UpdateThread updateThread = null;
 
-	public MatrixStatisticsBar(AbstractMatrixGUIObject m) {
+	public MatrixStatisticsBar(MatrixGUIObject m) {
 		this.matrixGUIObject = m;
 		m.addTableModelListener(this);
 		m.getRowSelectionModel().addListSelectionListener(this);
@@ -68,7 +68,7 @@ public class MatrixStatisticsBar extends JLabel implements TableModelListener, L
 
 class UpdateThread extends Thread {
 
-	private AbstractMatrixGUIObject matrixGUIObject = null;
+	private MatrixGUIObject matrixGUIObject = null;
 
 	private JLabel jLabel = null;
 
@@ -79,7 +79,7 @@ class UpdateThread extends Thread {
 		nf.setMaximumFractionDigits(2);
 	}
 
-	public UpdateThread(AbstractMatrixGUIObject matrixGUIObject, JLabel jLabel) {
+	public UpdateThread(MatrixGUIObject matrixGUIObject, JLabel jLabel) {
 		this.matrixGUIObject = matrixGUIObject;
 		this.jLabel = jLabel;
 		this.setPriority(Thread.MIN_PRIORITY);

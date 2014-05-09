@@ -33,17 +33,20 @@ import java.util.TimerTask;
 import javax.swing.BorderFactory;
 import javax.swing.JProgressBar;
 
-import org.ujmp.core.util.GlobalTimer;
+import org.ujmp.core.util.UJMPTimer;
 
 public class MemoryUsage extends JProgressBar {
 	private static final long serialVersionUID = 5692292627429288637L;
 
 	private int used = 0;
 
+	private final UJMPTimer timer;
+
 	public MemoryUsage() {
 		setBorder(BorderFactory.createEtchedBorder());
 		setMinimumSize(new Dimension(50, 30));
-		GlobalTimer.getInstance().schedule(new UpdateTask(this), 0, 1000);
+		timer = UJMPTimer.newInstance();
+		timer.schedule(new UpdateTask(this), 0, 1000);
 	}
 
 	public void paint(Graphics g) {

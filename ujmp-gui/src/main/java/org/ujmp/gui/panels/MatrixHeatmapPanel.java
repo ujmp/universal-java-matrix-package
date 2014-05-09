@@ -25,6 +25,7 @@ package org.ujmp.gui.panels;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -35,7 +36,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -55,12 +55,10 @@ import org.ujmp.core.interfaces.HasToolTip;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;
 import org.ujmp.gui.interfaces.CanBeRepainted;
-import org.ujmp.gui.io.ExportJPEG;
-import org.ujmp.gui.io.ExportPDF;
-import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.menu.MatrixPopupMenu;
 import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.util.GraphicsExecutor;
+import org.ujmp.gui.util.Preloader;
 import org.ujmp.gui.util.TooltipUtil;
 
 public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
@@ -68,20 +66,21 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	private static final long serialVersionUID = 843653796010276950L;
 
 	private final MatrixGUIObject matrixGUIObject;
+	private final MatrixHeatmapRenderer renderer = new MatrixHeatmapRenderer();
+	private final Preloader preloader = new Preloader();
 
-	private final MatrixHeatmapRenderer renderer;
+	private boolean isPreloaderVisible = true;
 
 	private BufferedImage bufferedImage = null;
 
 	private static int PADDINGX = UIManager.getInt("Table.paddingX");
-
 	private static int PADDINGY = UIManager.getInt("Table.paddingY");
 
 	private long startRow = 0;
-
 	private long startCol = 0;
 
 	public MatrixHeatmapPanel(MatrixGUIObject matrixGUIObject, boolean showBorder) {
+		this.matrixGUIObject = matrixGUIObject;
 		if (matrixGUIObject == null) {
 			throw new IllegalArgumentException("matrixGUIObject is null");
 		}
@@ -90,14 +89,14 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			setBorder(BorderFactory.createTitledBorder("Matrix Heatmap"));
 		}
 
+		setPreferredSize(new Dimension(600, 400));
+
+		setLayout(new BorderLayout());
+		add(preloader, BorderLayout.CENTER);
+
 		addComponentListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
-
-		setPreferredSize(new Dimension(600, 400));
-
-		this.matrixGUIObject = matrixGUIObject;
-		renderer = new MatrixHeatmapRenderer();
 
 		matrixGUIObject.addTableModelListener(this);
 		matrixGUIObject.getRowSelectionModel().addListSelectionListener(this);
@@ -106,8 +105,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		ToolTipManager.sharedInstance().registerComponent(this);
 
 		registerKeyboardActions();
-
-		GraphicsExecutor.scheduleUpdate(this);
 	}
 
 	private void registerKeyboardActions() {
@@ -137,6 +134,7 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	public void componentShown(ComponentEvent e) {
+		GraphicsExecutor.scheduleUpdate(this);
 	}
 
 	public void tableChanged(TableModelEvent e) {
@@ -240,10 +238,14 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-
-		if (bufferedImage != null) {
+		if (bufferedImage == null) {
+			super.paintComponent(g);
+		} else {
+			if (isPreloaderVisible) {
+				remove(preloader);
+				isPreloaderVisible = false;
+			}
+			Graphics2D g2d = (Graphics2D) g;
 			g2d.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
 
 			if (!matrixGUIObject.getRowSelectionModel().isSelectionEmpty()) {
@@ -262,16 +264,12 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 				g2d.fillRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
 			}
-		} else {
-			g2d.setColor(Color.GRAY);
-			g2d.drawLine(0, 0, getWidth(), getHeight());
-			g2d.drawLine(0, getHeight(), getWidth(), 0);
-			GraphicsExecutor.scheduleUpdate(this);
 		}
 	}
 
 	public void repaintUI() {
-		if (getWidth() > 0 && getHeight() > 0) {
+		if (getWidth() > 0 && getHeight() > 0 && matrixGUIObject.getRowCount() >= 0
+				&& matrixGUIObject.getColumnCount() >= 0) {
 			BufferedImage tempBufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
 			renderer.setSize(getWidth(), getHeight());
 			renderer.setMatrix(matrixGUIObject);
@@ -280,18 +278,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			g2d.dispose();
 			bufferedImage = tempBufferedImage;
 		}
-	}
-
-	public void exportToPDF(File file) {
-		ExportPDF.save(file, this);
-	}
-
-	public void exportToJPEG(File file) {
-		ExportJPEG.save(file, this);
-	}
-
-	public void exportToPNG(File file) {
-		ExportPNG.save(file, this);
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -309,6 +295,9 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	public void mouseMoved(MouseEvent e) {
+		final long row = getRowPos(e.getY());
+		final long col = getColPos(e.getX());
+		matrixGUIObject.setMouseOverCoordinates(row, col);
 	}
 
 	public void valueChanged(ListSelectionEvent e) {

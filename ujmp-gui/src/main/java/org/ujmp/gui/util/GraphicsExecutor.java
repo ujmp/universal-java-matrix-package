@@ -24,7 +24,6 @@
 package org.ujmp.gui.util;
 
 import java.awt.Component;
-import java.awt.Cursor;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -101,11 +100,8 @@ class UpdateTask implements Runnable {
 	public void run() {
 		try {
 			GraphicsExecutor.setFinished(component);
-			((JComponent) component).setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			component.repaintUI();
-			((JComponent) component).setCursor(Cursor.getDefaultCursor());
-			((JComponent) component).repaint(1);
-
+			((JComponent) component).repaint(500);
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not repaint ui", e);
 		}
@@ -129,7 +125,6 @@ class Executor extends ThreadPoolExecutor {
 
 	public void sheduleUpdate(CanBeRepainted component) {
 		if (!waitingTasks.contains(component)) {
-			// System.out.println("schedule update: " + component);
 			waitingTasks.add(component);
 			UpdateTask task = new UpdateTask(component);
 			submit(task);
@@ -149,7 +144,7 @@ class LowPriorityThreadFactory implements ThreadFactory {
 	public LowPriorityThreadFactory() {
 		SecurityManager s = System.getSecurityManager();
 		group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
-		namePrefix = "GraphicsExecutorPool-";
+		namePrefix = "UJMPGraphicsExecutorPool-";
 	}
 
 	public Thread newThread(Runnable r) {

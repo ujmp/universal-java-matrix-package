@@ -29,12 +29,12 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.matrices.IrisMatrix;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class IrisMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -1016922504877553L;
 
-	public IrisMatrixAction(JComponent c, AbstractMatrixGUIObject m, GUIObject v) {
+	public IrisMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Iris Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "creates a matrix with the Iris flower data set");

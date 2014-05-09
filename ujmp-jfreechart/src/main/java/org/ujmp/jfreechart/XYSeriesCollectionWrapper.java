@@ -24,16 +24,16 @@
 package org.ujmp.jfreechart;
 
 import org.jfree.data.xy.XYSeriesCollection;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class XYSeriesCollectionWrapper extends XYSeriesCollection {
 	private static final long serialVersionUID = 963347559253591538L;
 
 	private int maxSeriesCount = 10;
 
-	private AbstractMatrixGUIObject matrix = null;
+	private MatrixGUIObject matrix = null;
 
-	public XYSeriesCollectionWrapper(AbstractMatrixGUIObject m) {
+	public XYSeriesCollectionWrapper(MatrixGUIObject m) {
 		this.matrix = m;
 
 		int size = (int) Math.min(m.getColumnCount(), maxSeriesCount);

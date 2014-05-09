@@ -42,7 +42,7 @@ import javax.swing.JPanel;
 public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel, HasDescription,
 		HasToolTip {
 
-	public static final Object PRELOADER = new Object();
+	public static final String PRELOADER = "[loading]";
 
 	/**
 	 * Indicates that changed in the object have been made, that should be

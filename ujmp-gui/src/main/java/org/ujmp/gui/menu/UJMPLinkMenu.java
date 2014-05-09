@@ -27,8 +27,11 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.actions.LinkMatrixToDatabaseAction;
+import org.ujmp.gui.actions.LinkMatrixToFileAction;
 
 public class UJMPLinkMenu extends JMenu {
 	private static final long serialVersionUID = -7979875562887178063L;
@@ -36,7 +39,8 @@ public class UJMPLinkMenu extends JMenu {
 	public UJMPLinkMenu(JComponent c, GUIObject o) {
 		super("Link");
 		setMnemonic(KeyEvent.VK_L);
-		add(new LinkMatrixMenu(c, o));
+		add(new JMenuItem(new LinkMatrixToFileAction(c, o)));
+		add(new JMenuItem(new LinkMatrixToDatabaseAction(c, o)));
 	}
 
 }

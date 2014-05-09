@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -272,7 +273,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix getMetaDataDimensionMatrix(int dimension) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		Matrix m = (Matrix) metaData.get("DimensionMetaData" + dimension);
 		if (m == null) {
@@ -311,7 +312,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setDimensionMetaData(int dimension, Object label, long... position) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		Matrix m = getMetaDataDimensionMatrix(dimension);
 		long old = position[dimension];
@@ -326,7 +327,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setDimensionLabel(int dimension, Object label) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		Matrix m = getMetaDataDimensionMatrix(dimension);
 		m.setLabel(label);
@@ -335,7 +336,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public GUIObject getGUIObject() {
 		if (guiObject == null) {
 			try {
-				Class<?> c = Class.forName("org.ujmp.gui.RealTimeMatrixGUIObject");
+				Class<?> c = Class.forName("org.ujmp.gui.DefaultMatrixGUIObject");
 				Constructor<?> con = c.getConstructor(new Class<?>[] { Matrix.class });
 				guiObject = (GUIObject) con.newInstance(new Object[] { this });
 			} catch (Exception e) {
@@ -1544,7 +1545,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setLabel(Object label) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		metaData.put(LABEL, label);
 	}
@@ -1913,6 +1914,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return metaData == null ? null : metaData.get(key);
 	}
 
+	public final String getMetaDataString(Object key) {
+		return metaData == null ? null : StringUtil.getString(metaData.get(key));
+	}
+
 	public final MapMatrix<Object, Object> getMetaData() {
 		return metaData;
 	}
@@ -1923,7 +1928,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setMetaData(Object key, Object value) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		metaData.put(key, value);
 	}
@@ -2310,7 +2315,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setId(String id) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		metaData.put(ID, id);
 	}
@@ -2325,7 +2330,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final void setDescription(String description) {
 		if (metaData == null) {
-			metaData = new DefaultMapMatrix<Object, Object>();
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		metaData.put(DESCRIPTION, description);
 	}

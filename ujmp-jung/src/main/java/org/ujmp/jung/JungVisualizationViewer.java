@@ -36,7 +36,7 @@ import javax.swing.event.TableModelListener;
 
 import org.apache.commons.collections15.Transformer;
 import org.ujmp.core.graphmatrix.GraphMatrix;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.panels.AbstractPanel;
 import org.ujmp.gui.util.UIDefaults;
 
@@ -80,13 +80,13 @@ public class JungVisualizationViewer<N, E> extends AbstractPanel implements Mous
 	private final VisualizationViewer<N, EdgeWrapper<E>> vv;
 	private final Layout<N, EdgeWrapper<E>> layout;
 	private final GraphMatrix<N, E> graphMatrix;
-	private final AbstractMatrixGUIObject matrixGUIObject;
+	private final MatrixGUIObject matrixGUIObject;
 
 	public JungVisualizationViewer(GraphMatrixWrapper<N, E> graph, boolean showNodeLabels, boolean showEdgeLabels) {
 		super(graph.getGraphMatrix().getGUIObject());
 		this.graph = graph;
 		this.graphMatrix = graph.getGraphMatrix();
-		this.matrixGUIObject = (AbstractMatrixGUIObject) graphMatrix.getGUIObject();
+		this.matrixGUIObject = (MatrixGUIObject) graphMatrix.getGUIObject();
 		this.showNodeLabels = showNodeLabels;
 		this.showEdgeLabels = showEdgeLabels;
 
@@ -138,7 +138,7 @@ public class JungVisualizationViewer<N, E> extends AbstractPanel implements Mous
 		vv.addGraphMouseListener(this);
 
 		if (graph instanceof GraphMatrixWrapper) {
-			((AbstractMatrixGUIObject) ((GraphMatrixWrapper<N, E>) graph).getGraphMatrix().getGUIObject())
+			((MatrixGUIObject) ((GraphMatrixWrapper<N, E>) graph).getGraphMatrix().getGUIObject())
 					.addTableModelListener(this);
 		}
 	}

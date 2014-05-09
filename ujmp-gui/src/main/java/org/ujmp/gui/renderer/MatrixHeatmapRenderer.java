@@ -49,12 +49,10 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 	private MatrixGUIObject matrixGUIObject = null;
 
 	private int width = 0;
-
 	private int height = 0;
 
-	private static int PADDINGX = UIManager.getInt("Table.paddingX");
-
-	private static int PADDINGY = UIManager.getInt("Table.paddingY");
+	private static final int PADDINGX = UIManager.getInt("Table.paddingX");
+	private static final int PADDINGY = UIManager.getInt("Table.paddingY");
 
 	public MatrixHeatmapRenderer() {
 	}
@@ -113,7 +111,6 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-
 		g2d.setColor(getBackground());
 		g2d.fillRect(0, 0, width, height);
 
@@ -146,27 +143,26 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 					stepsizeY = 1.0;
 				}
 
-				BufferedImage bufferedImage = new BufferedImage(xsize, ysize, BufferedImage.TYPE_INT_RGB);
-
-				int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+				final BufferedImage bufferedImage = new BufferedImage(xsize, ysize, BufferedImage.TYPE_INT_RGB);
+				final int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
 				if (stepsizeX != 1.0 || stepsizeY != 1.0) {
 					int pos = 0;
 					for (int y = 0; y < ysize; y++) {
 						for (int x = 0; x < xsize; x++) {
-							long mx = (long) Math.floor(x * stepsizeX);
-							long my = (long) Math.floor(y * stepsizeY);
-							Color col = ColorUtil.fromObject(matrixGUIObject.getValueAt(my, mx));
+							final long mx = (long) Math.floor(x * stepsizeX);
+							final long my = (long) Math.floor(y * stepsizeY);
+							final Color col = matrixGUIObject.getColorAt(my, mx);
 							pixels[pos++] = (col.getRed() << 16) + (col.getGreen() << 8) + col.getBlue();
 						}
 					}
 				} else {
-					long rowCount = matrixGUIObject.getRowCount();
-					long colCount = matrixGUIObject.getColumnCount();
+					final long rowCount = matrixGUIObject.getRowCount();
+					final long colCount = matrixGUIObject.getColumnCount();
 					for (int row = 0; row < rowCount; row++) {
 						for (int col = 0; col < colCount; col++) {
-							Color color = ColorUtil.fromObject(matrixGUIObject.getValueAt(row, col));
-							int pos = getPosition(totalColumn, row, col);
+							final Color color = matrixGUIObject.getColorAt(row, col);
+							final int pos = getPosition(totalColumn, row, col);
 							pixels[pos] = (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
 						}
 					}
@@ -176,7 +172,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 						- PADDINGY, null);
 
 				if (width > 20 && matrixGUIObject.getRowCount() == 1 && matrixGUIObject.getColumnCount() == 1) {
-					Color col = ColorUtil.fromObject(matrixGUIObject.getValueAt(0, 0));
+					final Color col = matrixGUIObject.getColorAt(0, 0);
 					g2d.setColor(ColorUtil.contrastBW(col));
 					String s = UJMPFormat.getSingleLineInstance().format(matrixGUIObject.getValueAt(0, 0));
 					if (s != null && s.length() > 25) {
@@ -202,7 +198,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		return (int) (totalColumn * currentRow + currentColumn);
 	}
 
-	public static void paintMatrix(Graphics g, Matrix matrix, int width, int height) {
+	public static void paintMatrix(Graphics g, MatrixGUIObject matrix, int width, int height) {
 		if (g == null)
 			return;
 
@@ -220,7 +216,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		}
 	}
 
-	private static void paintMatrixOriginal(Graphics g, Matrix matrix, int width, int height) {
+	private static void paintMatrixOriginal(Graphics g, MatrixGUIObject matrix, int width, int height) {
 		try {
 			long cols = matrix.getColumnCount();
 			long rows = matrix.getRowCount();
@@ -248,14 +244,14 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 			for (long col = 0; col < cols; col += xStepSize) {
 				for (long row = 0; row < rows; row += yStepSize) {
-					bg.setColor(ColorUtil.fromObject(matrix.getAsDouble(row, col)));
+					bg.setColor(matrix.getColorAt(row, col));
 					bg.fillRect((int) (col / xStepSize), (int) (row / yStepSize), 1, 1);
 				}
 			}
 			g2d.drawImage(bufferedImage, 0, 0, width, height, 0, 0, bufferedImage.getWidth(),
 					bufferedImage.getHeight(), null);
-			if (width > 20 && matrix.isScalar()) {
-				String s = UJMPFormat.getSingleLineInstance().format(matrix.getAsObject(0, 0));
+			if (width > 20 && matrix.getRowCount() == 1 && matrix.getColumnCount() == 1) {
+				String s = UJMPFormat.getSingleLineInstance().format(matrix.getValueAt(0, 0));
 				if (s != null && s.length() > 25) {
 					s = s.substring(0, 25) + "...";
 				}

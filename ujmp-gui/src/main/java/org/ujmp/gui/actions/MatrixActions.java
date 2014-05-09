@@ -31,13 +31,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.DefaultMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
+import org.ujmp.gui.menu.UJMPImportMenu;
+import org.ujmp.gui.menu.UJMPLinkMenu;
+import org.ujmp.gui.menu.UJMPNewMenu;
 
 public class MatrixActions extends ArrayList<JComponent> {
 	private static final long serialVersionUID = -8960033736161810590L;
 
 	public MatrixActions(JComponent c, MatrixGUIObject m, GUIObject v) {
+		add(new UJMPNewMenu(c, m));
+		add(new UJMPImportMenu(c, m));
+		add(new UJMPLinkMenu(c, m));
+		add(new JSeparator());
 		add(new JMenuItem(new CutToClipboardAction(c, m, v)));
 		add(new JMenuItem(new CopyToClipboardAction(c, m, v)));
 		add(new JSeparator());

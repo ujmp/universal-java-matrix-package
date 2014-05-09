@@ -27,7 +27,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import org.ujmp.gui.AbstractMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.panels.AbstractPanel;
 import org.ujmp.gui.util.UIDefaults;
@@ -42,7 +41,7 @@ public class GraphPanel extends AbstractPanel {
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.addRenderingHints(UIDefaults.AALIAS);
-		AbstractMatrixGUIObject m = (AbstractMatrixGUIObject) getGUIObject();
+		MatrixGUIObject m = (MatrixGUIObject) getGUIObject();
 		final int totalCount = m.getColumnCount();
 
 		Color color = new Color(0, 0, 200, 128);

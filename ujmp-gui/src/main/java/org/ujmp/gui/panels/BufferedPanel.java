@@ -23,6 +23,7 @@
 
 package org.ujmp.gui.panels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -38,13 +39,14 @@ import javax.swing.JPanel;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.interfaces.CanBeUpdated;
 import org.ujmp.gui.util.GraphicsExecutor;
+import org.ujmp.gui.util.Preloader;
 import org.ujmp.gui.util.UIDefaults;
 import org.ujmp.gui.util.UpdateListener;
 
 public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentListener, UpdateListener, MouseListener {
 	private static final long serialVersionUID = 7495571585267828933L;
 
-	private JPanel panel = null;
+	private final JPanel panel;
 
 	private BufferedImage bufferedImage = null;
 
@@ -52,7 +54,10 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 		this.panel = panel;
 		this.addComponentListener(this);
 		this.addMouseListener(this);
-		GraphicsExecutor.scheduleUpdate(this);
+
+		panel.setLayout(new BorderLayout());
+		panel.add(new Preloader(), BorderLayout.CENTER);
+
 		if (panel instanceof CanBeUpdated) {
 			((CanBeUpdated) panel).addUpdateListener(this);
 		}
@@ -60,19 +65,21 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		if (bufferedImage != null) {
-			g2d.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
-		} else {
-			g2d.addRenderingHints(UIDefaults.AALIAS);
-			g2d.setColor(Color.gray);
-			g2d.drawLine(0, 0, getWidth(), getHeight());
-			g2d.drawLine(getWidth(), 0, 0, getHeight());
-			GraphicsExecutor.scheduleUpdate(this);
+		if (isShowing()) {
+			Graphics2D g2d = (Graphics2D) g;
+			if (bufferedImage != null) {
+				g2d.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
+			} else {
+				g2d.addRenderingHints(UIDefaults.AALIAS);
+				g2d.setColor(Color.gray);
+				g2d.drawLine(0, 0, getWidth(), getHeight());
+				g2d.drawLine(getWidth(), 0, 0, getHeight());
+				GraphicsExecutor.scheduleUpdate(this);
+			}
 		}
 	}
 
-	public void paintUsingReflection(Graphics2D g2d) throws Exception {
+	private void paintUsingReflection(Graphics2D g2d) throws Exception {
 		try {
 			if (panel != null && g2d != null) {
 				panel.paint(g2d);
@@ -88,16 +95,18 @@ public class BufferedPanel extends JPanel implements CanBeRepainted, ComponentLi
 
 	public void repaintUI() {
 		try {
-			int width = getWidth();
-			width = width < 1 ? 1 : width;
-			int height = getHeight();
-			height = height < 1 ? 1 : height;
-			BufferedImage tempBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			panel.setSize(width, height);
-			Graphics2D g2d = (Graphics2D) tempBufferedImage.getGraphics();
-			paintUsingReflection(g2d);
-			g2d.dispose();
-			bufferedImage = tempBufferedImage;
+			if (isShowing()) {
+				int width = getWidth();
+				width = width < 1 ? 1 : width;
+				int height = getHeight();
+				height = height < 1 ? 1 : height;
+				BufferedImage tempBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+				panel.setSize(width, height);
+				Graphics2D g2d = (Graphics2D) tempBufferedImage.getGraphics();
+				paintUsingReflection(g2d);
+				g2d.dispose();
+				bufferedImage = tempBufferedImage;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

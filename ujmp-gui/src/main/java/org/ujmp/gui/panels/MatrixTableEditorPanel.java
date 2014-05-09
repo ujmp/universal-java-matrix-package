@@ -30,6 +30,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -55,20 +56,21 @@ import org.ujmp.gui.table.RowTableHeaderRenderer64;
 import org.ujmp.gui.table.TableColumnModel64;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
+import org.ujmp.gui.util.Preloader;
 
-public class MatrixTableEditorPanel extends JPanel implements TableModelListener64, MouseListener, KeyListener,
-		ListSelectionListener64 {
+public class MatrixTableEditorPanel extends JPanel implements TableModelListener64, MouseListener, MouseMotionListener,
+		KeyListener, ListSelectionListener64 {
 	private static final long serialVersionUID = -1794955656888362574L;
 
 	private final MatrixGUIObject dataModel;
 
-	private JTable64 jTable = null;
-
-	private JTable64 rowHeader = null;
-
-	private JScrollPane scrollPane = null;
+	private final JTable64 jTable;
+	private final JTable64 rowHeader;
+	private final JScrollPane scrollPane;
+	private final Preloader preloader = new Preloader();
 
 	private boolean scroll = true;
+	private boolean isShowPreloader = true;
 
 	public MatrixTableEditorPanel(String title, MatrixGUIObject m) {
 		dataModel = m;
@@ -96,19 +98,40 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 		scrollPane = new JScrollPane(jTable);
 		scrollPane.setRowHeaderView(rowHeader);
 
-		this.add(scrollPane, BorderLayout.CENTER);
-
+		this.addMouseMotionListener(this);
+		jTable.addMouseMotionListener(this);
 		this.addMouseListener(this);
 		jTable.addMouseListener(this);
 		jTable.addKeyListener(this);
+		dataModel.addTableModelListener(this);
 		dataModel.getRowSelectionModel().addListSelectionListener(this);
 		dataModel.getColumnSelectionModel().addListSelectionListener(this);
+
+		if (dataModel.getRowCount() < 0 || dataModel.getColumnCount() < 0) {
+			isShowPreloader = true;
+
+			this.add(preloader, BorderLayout.CENTER);
+		} else {
+			isShowPreloader = false;
+			this.add(scrollPane, BorderLayout.CENTER);
+		}
 	}
 
 	public void tableChanged(TableModelEvent64 e) {
+		removePreloader();
+	}
+
+	private void removePreloader() {
+		if (isShowPreloader && dataModel.getRowCount() >= 0 && dataModel.getColumnCount() >= 0) {
+			isShowPreloader = false;
+			this.remove(preloader);
+			this.add(scrollPane, BorderLayout.CENTER);
+			this.revalidate();
+		}
 	}
 
 	public void tableChanged(TableModelEvent e) {
+		removePreloader();
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -190,6 +213,15 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 		super.finalize();
 		if (dataModel != null)
 			dataModel.removeTableModelListener(this);
+	}
+
+	public void mouseDragged(MouseEvent e) {
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		final int row = jTable.rowAtPoint(e.getPoint());
+		final int col = jTable.columnAtPoint(e.getPoint());
+		dataModel.setMouseOverCoordinates(row, col);
 	}
 
 }

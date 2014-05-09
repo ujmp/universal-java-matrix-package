@@ -29,19 +29,21 @@ import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
-import org.ujmp.core.util.GlobalTimer;
+import org.ujmp.core.util.UJMPTimer;
 
 public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 8552917654861598011L;
 
 	private final Matrix matrix;
+	private final UJMPTimer timer;
 
 	public SystemTimeMatrix() {
 		super(new long[] { 1, 1 });
 		setLabel("System Time");
 		setColumnLabel(0, "System.currentTimeMillis()");
 		matrix = this;
-		GlobalTimer.getInstance().schedule(task, 1000, 1000);
+		timer = UJMPTimer.newInstance();
+		timer.schedule(task, 1000, 1000);
 	}
 
 	TimerTask task = new TimerTask() {

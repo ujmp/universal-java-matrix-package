@@ -29,12 +29,12 @@ import javax.swing.JComponent;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.matrices.MandelbrotMatrix;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class MandelbrotMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = 8708344146012762782L;
 
-	public MandelbrotMatrixAction(JComponent c, AbstractMatrixGUIObject m, GUIObject v) {
+	public MandelbrotMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Mandelbrot Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "creates a matrix from the mandelbrot set");

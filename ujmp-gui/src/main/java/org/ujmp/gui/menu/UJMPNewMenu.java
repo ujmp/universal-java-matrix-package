@@ -27,8 +27,13 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.actions.CreateMatrixFromScreenshotAction;
+import org.ujmp.gui.actions.DenseMatrixAction;
+import org.ujmp.gui.actions.SparseMatrixAction;
 
 public class UJMPNewMenu extends JMenu {
 	private static final long serialVersionUID = 3682793528742288723L;
@@ -36,7 +41,10 @@ public class UJMPNewMenu extends JMenu {
 	public UJMPNewMenu(JComponent c, GUIObject o) {
 		super("New");
 		setMnemonic(KeyEvent.VK_N);
-		add(new NewMatrixMenu(c, o));
+		add(new JMenuItem(new DenseMatrixAction(c, o)));
+		add(new JMenuItem(new SparseMatrixAction(c, o)));
+		add(new JSeparator());
+		add(new JMenuItem(new CreateMatrixFromScreenshotAction(c, o)));
 	}
 
 }

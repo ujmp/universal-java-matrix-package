@@ -30,6 +30,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.util.MathUtil;
@@ -53,6 +54,8 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 	private transient JPanel panel = null;
 
 	protected final Matrix matrix;
+
+	private long[] mouseOverCoordinates = Coordinates.ZERO2D;
 
 	public AbstractMatrixGUIObject(Matrix matrix) {
 		this.matrix = matrix;
@@ -185,6 +188,14 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 
 	public final CoreObject getCoreObject() {
 		return matrix;
+	}
+
+	public void setMouseOverCoordinates(long... coordinates) {
+		this.mouseOverCoordinates = coordinates;
+	}
+
+	public long[] getMouseOverCoordinates() {
+		return mouseOverCoordinates;
 	}
 
 }

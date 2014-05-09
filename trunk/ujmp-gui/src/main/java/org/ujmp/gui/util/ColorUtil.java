@@ -31,6 +31,7 @@ import org.ujmp.core.util.StringUtil;
 import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
+
 	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow,
 			Color.cyan };
 

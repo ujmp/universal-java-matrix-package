@@ -38,8 +38,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.gui.AbstractMatrixGUIObject;
-import org.ujmp.gui.DefaultMatrixGUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeUpdated;
 import org.ujmp.gui.util.UIDefaults;
@@ -124,48 +122,50 @@ public class MatrixPlot extends JPanel implements TableCellRenderer, CanBeUpdate
 	public void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
-			MatrixGUIObject guiObject = plotSettings.getMatrixGUIObject();
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.addRenderingHints(UIDefaults.AALIAS);
+			//if (isShowing()) {
+				MatrixGUIObject guiObject = plotSettings.getMatrixGUIObject();
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.addRenderingHints(UIDefaults.AALIAS);
 
-			if (guiObject == null) {
-				return;
-			}
+				if (guiObject == null) {
+					return;
+				}
 
-			plotSettings.setHeight(getHeight());
-			plotSettings.setWidth(getWidth());
-			plotSettings.setMinXValue(0.0);
-			plotSettings.setMaxXValue(guiObject.getRowCount() - 1);
-			plotSettings.setMinYValue(-1);
-			plotSettings.setMaxYValue(100);
+				plotSettings.setHeight(getHeight());
+				plotSettings.setWidth(getWidth());
+				plotSettings.setMinXValue(0.0);
+				plotSettings.setMaxXValue(guiObject.getRowCount() - 1);
+				plotSettings.setMinYValue(-1);
+				plotSettings.setMaxYValue(100);
 
-			if (plotSettings.isShowPlotBackGround()) {
-				plotBackground.paintComponent(g);
-			}
+				if (plotSettings.isShowPlotBackGround()) {
+					plotBackground.paintComponent(g);
+				}
 
-			if (plotSettings.isShowXGrid()) {
-				xGrid.paintComponent(g);
-			}
-			if (plotSettings.isShowYGrid()) {
-				yGrid.paintComponent(g);
-			}
-			if (plotSettings.isShowXAxis()) {
-				xAxis.paintComponent(g);
-			}
-			if (plotSettings.isShowYAxis()) {
-				yAxis.paintComponent(g);
-			}
-			if (plotSettings.isShowZeroAxis()) {
-				zeroAxis.paintComponent(g);
-			}
-			if (plotSettings.isShowSelection()) {
-				selection.paintComponent(g);
-			}
-			if (plotSettings.isShowRunningAverage()) {
-				runningAveragePlot.paintComponent(g);
-			}
+				if (plotSettings.isShowXGrid()) {
+					xGrid.paintComponent(g);
+				}
+				if (plotSettings.isShowYGrid()) {
+					yGrid.paintComponent(g);
+				}
+				if (plotSettings.isShowXAxis()) {
+					xAxis.paintComponent(g);
+				}
+				if (plotSettings.isShowYAxis()) {
+					yAxis.paintComponent(g);
+				}
+				if (plotSettings.isShowZeroAxis()) {
+					zeroAxis.paintComponent(g);
+				}
+				if (plotSettings.isShowSelection()) {
+					selection.paintComponent(g);
+				}
+				if (plotSettings.isShowRunningAverage()) {
+					runningAveragePlot.paintComponent(g);
+				}
 
-			traces.paintComponent(g);
+				traces.paintComponent(g);
+			//}
 		} catch (ConcurrentModificationException e) {
 			// not too bad
 		} catch (Exception e) {
@@ -175,10 +175,10 @@ public class MatrixPlot extends JPanel implements TableCellRenderer, CanBeUpdate
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		if (value instanceof DefaultMatrixGUIObject) {
-			plotSettings.setMatrixGUIObject((AbstractMatrixGUIObject) value);
+		if (value instanceof MatrixGUIObject) {
+			plotSettings.setMatrixGUIObject((MatrixGUIObject) value);
 		} else if (value instanceof Matrix) {
-			plotSettings.setMatrixGUIObject((AbstractMatrixGUIObject) ((Matrix) value).getGUIObject());
+			plotSettings.setMatrixGUIObject((MatrixGUIObject) ((Matrix) value).getGUIObject());
 		}
 
 		if (isSelected) {

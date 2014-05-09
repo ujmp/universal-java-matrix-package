@@ -27,8 +27,13 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.actions.ImportMatrixFromClipboardAction;
+import org.ujmp.gui.actions.ImportMatrixFromDatabaseAction;
+import org.ujmp.gui.actions.ImportMatrixFromFileAction;
+import org.ujmp.gui.actions.ImportMatrixFromURLAction;
 
 public class UJMPImportMenu extends JMenu {
 	private static final long serialVersionUID = -7979875562887178063L;
@@ -36,7 +41,10 @@ public class UJMPImportMenu extends JMenu {
 	public UJMPImportMenu(JComponent c, GUIObject o) {
 		super("Import");
 		setMnemonic(KeyEvent.VK_I);
-		add(new ImportMatrixMenu(c, o));
+		add(new JMenuItem(new ImportMatrixFromFileAction(c, o)));
+		add(new JMenuItem(new ImportMatrixFromClipboardAction(c, o)));
+		add(new JMenuItem(new ImportMatrixFromURLAction(c, o)));
+		add(new JMenuItem(new ImportMatrixFromDatabaseAction(c, o)));
 	}
 
 }

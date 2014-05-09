@@ -23,11 +23,14 @@
 
 package org.ujmp.core.mapmatrix;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,21 +40,22 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		MapMatrix<K, V> {
 	private static final long serialVersionUID = 5571429371462164416L;
 
-	private final Map<Integer, K> keyIndexMap = new HashMap<Integer, K>();
+	private volatile boolean isIndexUpToDate = false;
+	private final List<K> keyIndexList = new ArrayList<K>();
 
 	public AbstractMapMatrix() {
 		super(0, 2);
 	}
 
-	public final long[] getSize() {
+	public synchronized final long[] getSize() {
 		return new long[] { size(), 2 };
 	}
 
-	public final Object getObject(long row, long column) {
+	public synchronized final Object getObject(long row, long column) {
 		return getObject((int) row, (int) column);
 	}
 
-	public final Object getObject(int row, int column) {
+	public synchronized final Object getObject(int row, int column) {
 		Object mapKey = getKey(row);
 		if (column == 0) {
 			return mapKey;
@@ -62,7 +66,8 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		}
 	}
 
-	public final void setObject(Object value, int row, int column) {
+	@SuppressWarnings("unchecked")
+	public synchronized final void setObject(Object value, int row, int column) {
 		if (column == 0) {
 			// remove old key and add new key with old value
 			K key = getKey(row);
@@ -75,51 +80,55 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		}
 	}
 
-	public final void setObject(Object value, long row, long column) {
+	public synchronized final void setObject(Object value, long row, long column) {
 		setObject(value, (int) row, (int) column);
 	}
 
-	public MapMatrix<K, V> clone() {
+	public synchronized MapMatrix<K, V> clone() {
+		buildIndexIfNecessary();
 		MapMatrix<K, V> clone = new DefaultMapMatrix<K, V>();
 		clone.putAll(this);
-		for (K key : keySet()) {
+		for (K key : keyIndexList) {
 			V value = get(key);
 			clone.put(key, value);
 		}
 		return clone;
 	}
 
-	private final K getKey(int index) {
-		synchronized (this) {
-			if (size() < 10000000) {
-				if (keyIndexMap.isEmpty()) {
-					buildIndex();
-				}
-				K k = keyIndexMap.get(index);
-				return k;
-			} else {
-				Iterator<K> it = keySet().iterator();
-				for (int i = 0; it.hasNext() && i < index; i++) {
-					it.next();
-				}
-				return it.hasNext() ? it.next() : null;
+	private synchronized final K getKey(int index) {
+		buildIndexIfNecessary();
+		K k = null;
+		if (index >= 0 && index < keyIndexList.size()) {
+			k = keyIndexList.get(index);
+		}
+		return k;
+	}
+
+	private synchronized void buildIndexIfNecessary() {
+		if (!isIndexUpToDate) {
+			Iterator<K> it = keySet().iterator();
+			while (it.hasNext()) {
+				keyIndexList.add(it.next());
 			}
+			if (it instanceof Closeable) {
+				try {
+					((Closeable) it).close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			isIndexUpToDate = true;
 		}
 	}
 
-	private void buildIndex() {
-		Iterator<K> it = keySet().iterator();
-		for (int i = 0; it.hasNext(); i++) {
-			keyIndexMap.put(i, it.next());
-		}
+	public synchronized boolean containsKey(Object key) {
+		buildIndexIfNecessary();
+		return keyIndexList.contains(key);
 	}
 
-	public boolean containsKey(Object key) {
-		return keySet().contains(key);
-	}
-
-	public boolean containsValue(Object value) {
-		for (K key : keySet()) {
+	public synchronized boolean containsValue(Object value) {
+		buildIndexIfNecessary();
+		for (K key : keyIndexList) {
 			if (value.equals(get(key))) {
 				return true;
 			}
@@ -127,7 +136,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		return false;
 	}
 
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
+	public synchronized Set<java.util.Map.Entry<K, V>> entrySet() {
 		final AbstractMapMatrix<K, V> map = this;
 		return new AbstractSet<Entry<K, V>>() {
 
@@ -173,37 +182,44 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		};
 	}
 
-	public boolean isEmpty() {
+	public synchronized int size() {
+		buildIndexIfNecessary();
+		return keyIndexList.size();
+	}
+
+	public final synchronized boolean isEmpty() {
+		buildIndexIfNecessary();
 		return size() == 0;
 	}
 
-	public final V put(K key, V value) {
-		keyIndexMap.clear();
+	public synchronized final V put(K key, V value) {
+		keyIndexList.clear();
 		V v = putIntoMap(key, value);
 		notifyGUIObject();
 		return v;
 	}
 
-	public final void putAll(Map<? extends K, ? extends V> map) {
+	public synchronized final void putAll(Map<? extends K, ? extends V> map) {
 		for (K k : map.keySet()) {
 			put(k, map.get(k));
 		}
 	}
 
-	public final V remove(Object key) {
-		keyIndexMap.clear();
+	public synchronized final V remove(Object key) {
+		keyIndexList.clear();
 		V v = removeFromMap(key);
 		notifyGUIObject();
 		return v;
 	}
 
-	public final Collection<V> values() {
+	public synchronized final Collection<V> values() {
+		buildIndexIfNecessary();
 		final AbstractMapMatrix<K, V> map = this;
 		return new AbstractCollection<V>() {
 			@Override
 			public Iterator<V> iterator() {
 				return new Iterator<V>() {
-					Iterator<K> it = keySet().iterator();
+					Iterator<K> it = keyIndexList.iterator();
 
 					public boolean hasNext() {
 						return it.hasNext();
@@ -227,7 +243,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public final void clear() {
-		keyIndexMap.clear();
+		keyIndexList.clear();
 		clearMap();
 	}
 

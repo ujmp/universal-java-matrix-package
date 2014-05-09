@@ -31,7 +31,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.util.GraphicsExecutor;
 
@@ -50,7 +50,7 @@ public abstract class AbstractJMathPlotPanel extends JPanel implements Component
 	public AbstractJMathPlotPanel(Matrix matrix) {
 		this.matrix = matrix;
 		addComponentListener(this);
-		((AbstractMatrixGUIObject) matrix.getGUIObject()).addTableModelListener(this);
+		((MatrixGUIObject) matrix.getGUIObject()).addTableModelListener(this);
 	}
 
 	public void changeState() {

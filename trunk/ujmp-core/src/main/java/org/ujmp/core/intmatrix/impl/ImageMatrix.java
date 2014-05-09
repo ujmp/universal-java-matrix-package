@@ -37,13 +37,13 @@ import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
 
-	private BufferedImage bufferedImage = null;
+	private final BufferedImage bufferedImage;
 
 	public ImageMatrix(String filename) throws IOException {
 		this(new File(filename));
 	}
 
-	public ImageMatrix(BufferedImage bufferedImage) throws IOException {
+	public ImageMatrix(BufferedImage bufferedImage) {
 		super(new long[] { bufferedImage.getHeight(), bufferedImage.getWidth() });
 		this.bufferedImage = bufferedImage;
 	}

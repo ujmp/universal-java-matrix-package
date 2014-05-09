@@ -28,13 +28,13 @@ import javax.swing.JComponent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.AbstractMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.GUIUtil;
 
 public class PascalMatrixAction extends AbstractMatrixAction {
 	private static final long serialVersionUID = -7304014036300004532L;
 
-	public PascalMatrixAction(JComponent c, AbstractMatrixGUIObject m, GUIObject v) {
+	public PascalMatrixAction(JComponent c, MatrixGUIObject m, GUIObject v) {
 		super(c, m, v);
 		putValue(Action.NAME, "Pascal Matrix");
 		putValue(Action.SHORT_DESCRIPTION, "creates a Pascal matrix with binomial coefficients");

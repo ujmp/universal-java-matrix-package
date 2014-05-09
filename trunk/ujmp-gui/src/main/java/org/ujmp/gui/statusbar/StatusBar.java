@@ -34,40 +34,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.AbstractMatrixGUIObject;
-import org.ujmp.gui.DefaultMatrixGUIObject;
+import org.ujmp.core.util.UJMPTimer;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
 public class StatusBar extends JPanel {
 	private static final long serialVersionUID = -92341245296146976L;
 
-	private final JLabel taskStatus = new JLabel();
+	private final JLabel statusLabel = new JLabel();
 
-	private JLabel objectStatus = null;
-
-	private GUIObject object = null;
+	private final GUIObject guiObject;
 
 	private final JProgressBar jProgressBar = new JProgressBar();
 
+	private final UJMPTimer timer;
+
 	public StatusBar(GUIObject o) {
-		this.object = o;
-		if (o instanceof DefaultMatrixGUIObject) {
-			this.objectStatus = new MatrixStatisticsBar((AbstractMatrixGUIObject) o);
-		} else {
-			this.objectStatus = new JLabel();
-		}
+		this.guiObject = o;
 		this.setPreferredSize(new Dimension(1000, 30));
 		this.setBorder(BorderFactory.createEtchedBorder());
 		this.setLayout(new GridBagLayout());
+		statusLabel.setPreferredSize(new Dimension(2000, 30));
+		statusLabel.setMinimumSize(new Dimension(200, 30));
 
-		taskStatus.setPreferredSize(new Dimension(200, 30));
-		taskStatus.setMinimumSize(new Dimension(200, 30));
-
-		add(objectStatus, new GridBagConstraints(0, 0, 1, 1, 0.2, 1.0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
-
-		add(taskStatus, new GridBagConstraints(2, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
+		add(statusLabel, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
 				new Insets(2, 2, 2, 2), 0, 0));
 
 		add(new MemoryUsage(), new GridBagConstraints(3, 0, 1, 1, 0.0, 1.0, GridBagConstraints.EAST,
@@ -79,35 +71,18 @@ public class StatusBar extends JPanel {
 		jProgressBar.setValue(1000);
 		jProgressBar.setVisible(false);
 
-		objectStatus.setBorder(BorderFactory.createEtchedBorder());
-		taskStatus.setBorder(BorderFactory.createEtchedBorder());
+		statusLabel.setBorder(BorderFactory.createEtchedBorder());
 		jProgressBar.setBorder(BorderFactory.createEtchedBorder());
 
 		add(jProgressBar, new GridBagConstraints(1, 0, 1, 1, 0.8, 1.0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
 
+		timer = UJMPTimer.newInstance();
+		timer.schedule(new UpdateTask(this), 200, 200);
 	}
 
-	public void start() {
-		stop();
-		// timer = new Timer("Toolbar Timer for " + object.getLabel());
-		// timer.schedule(new UpdateTask(this), 1000, // initial delay
-		// 1000); // subsequent rate
-	}
-
-	public void stop() {
-		// if (timer != null) {
-		// timer.cancel();
-		// timer = null;
-		// }
-	}
-
-	public void setTaskString(String s) {
-		taskStatus.setText(s);
-	}
-
-	public void setObjectString(String s) {
-		objectStatus.setText(s);
+	public void setStatusString(String s) {
+		statusLabel.setText(s);
 	}
 
 	public void setProgress(Double progress) {
@@ -127,7 +102,7 @@ public class StatusBar extends JPanel {
 	}
 
 	public GUIObject getObject() {
-		return object;
+		return guiObject;
 	}
 
 	class UpdateTask extends TimerTask {
@@ -139,12 +114,27 @@ public class StatusBar extends JPanel {
 		}
 
 		public void run() {
-			statusBar.setTaskString(TaskQueue.getStatus());
-			// statusBar.setToolTipText(getObject().getToolTipText());
-			statusBar.setObjectString("" + getObject());
+			StringBuilder s = new StringBuilder();
+			if (guiObject instanceof MatrixGUIObject) {
+				MatrixGUIObject matrix = ((MatrixGUIObject) guiObject);
+				long[] c = matrix.getMouseOverCoordinates();
+				s.append("Position: ");
+				s.append(Coordinates.toString(c));
+				if (!matrix.getRowSelectionModel().isSelectionEmpty()
+						|| !matrix.getColumnSelectionModel().isSelectionEmpty()) {
+					long y0 = matrix.getRowSelectionModel().getMinSelectionIndex64();
+					long y1 = matrix.getRowSelectionModel().getMaxSelectionIndex64();
+					long x0 = matrix.getColumnSelectionModel().getMinSelectionIndex64();
+					long x1 = matrix.getColumnSelectionModel().getMaxSelectionIndex64();
+					long xSize = 1 + Math.abs(x1 - x0);
+					long ySize = 1 + Math.abs(y1 - y0);
+					s.append(" Selection: [" + y0 + "," + x0 + "] - [" + y1 + "," + x1 + "] = ");
+					s.append("[" + ySize + "x" + xSize + "]");
+				}
+				setStatusString(s.toString());
+			}
 			statusBar.setProgress(TaskQueue.getProgress());
 		}
-
 	}
 
 }

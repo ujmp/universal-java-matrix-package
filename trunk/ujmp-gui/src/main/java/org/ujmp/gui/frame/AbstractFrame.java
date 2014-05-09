@@ -37,14 +37,13 @@ import javax.swing.JFrame;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.core.util.GlobalTimer;
+import org.ujmp.core.util.UJMPTimer;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.io.ExportJPEG;
 import org.ujmp.gui.io.ExportPDF;
 import org.ujmp.gui.io.ExportPNG;
 import org.ujmp.gui.statusbar.StatusBar;
 import org.ujmp.gui.util.FrameManager;
-import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
@@ -59,6 +58,8 @@ public abstract class AbstractFrame extends JFrame {
 	private static int frameCount = 0;
 
 	private TimerTask updateTask = null;
+
+	private final UJMPTimer timer;
 
 	public AbstractFrame(Matrix matrix, JComponent component) {
 		this(matrix.getGUIObject(), component);
@@ -115,7 +116,8 @@ public abstract class AbstractFrame extends JFrame {
 
 			}
 		};
-		GlobalTimer.getInstance().scheduleAtFixedRate(updateTask, 1000, 1000);
+		timer = UJMPTimer.newInstance();
+		timer.scheduleAtFixedRate(updateTask, 1000, 1000);
 	}
 
 	public final void setVisible(boolean state) {
@@ -129,15 +131,8 @@ public abstract class AbstractFrame extends JFrame {
 		super.setVisible(state);
 		if (state) {
 			frameCount++;
-			statusBar.start();
 		} else {
 			frameCount--;
-			statusBar.stop();
-		}
-
-		if (frameCount == 0) {
-			GraphicsExecutor.shutDown();
-			GlobalTimer.shutDown();
 		}
 	}
 

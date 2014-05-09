@@ -21,26 +21,31 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.DenseMatrixAction;
-import org.ujmp.gui.actions.SparseMatrixAction;
 
-public class NewMatrixMenu extends JMenu {
-	private static final long serialVersionUID = 8007649388830397309L;
+public class CreateMatrixFromScreenshotAction extends AbstractObjectAction {
+	private static final long serialVersionUID = -2242921598214010603L;
 
-	public NewMatrixMenu(JComponent c, GUIObject o) {
-		super("Matrix");
-		setMnemonic(KeyEvent.VK_M);
-		add(new JMenuItem(new DenseMatrixAction(c, o)));
-		add(new JMenuItem(new SparseMatrixAction(c, o)));
+	public CreateMatrixFromScreenshotAction(JComponent c, GUIObject m) {
+		super(c, m);
+		putValue(Action.NAME, "Screenshot");
+		putValue(Action.SHORT_DESCRIPTION, "create a matrix from screenshot");
 	}
 
+	public Object call() {
+		try {
+			Matrix m = Matrix.Factory.createFromScreenshot();
+			m.showGUI();
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

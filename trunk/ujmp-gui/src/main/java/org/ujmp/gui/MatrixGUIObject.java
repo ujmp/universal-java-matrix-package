@@ -23,6 +23,8 @@
 
 package org.ujmp.gui;
 
+import java.awt.Color;
+
 import javax.swing.event.EventListenerList;
 
 import org.ujmp.core.Matrix;
@@ -31,6 +33,8 @@ import org.ujmp.gui.table.FastListSelectionModel64;
 import org.ujmp.gui.table.TableModel64;
 
 public interface MatrixGUIObject extends GUIObject, TableModel64 {
+
+	public Color getColorAt(long rowIndex, long columnIndex);
 
 	public EventListenerList getListenerList();
 
@@ -41,5 +45,9 @@ public interface MatrixGUIObject extends GUIObject, TableModel64 {
 	public FastListSelectionModel64 getRowSelectionModel();
 
 	public FastListSelectionModel64 getColumnSelectionModel();
+
+	public void setMouseOverCoordinates(long... coordinates);
+
+	public long[] getMouseOverCoordinates();
 
 }

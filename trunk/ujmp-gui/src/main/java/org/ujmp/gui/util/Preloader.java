@@ -21,30 +21,29 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.menu;
+package org.ujmp.gui.util;
 
-import java.awt.event.KeyEvent;
+import java.io.IOException;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
-import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.gui.actions.ImportMatrixFromClipboardAction;
-import org.ujmp.gui.actions.ImportMatrixFromDatabaseAction;
-import org.ujmp.gui.actions.ImportMatrixFromFileAction;
-import org.ujmp.gui.actions.ImportMatrixFromURLAction;
+import org.ujmp.core.util.ResourceUtil;
 
-public class ImportMatrixMenu extends JMenu {
-	private static final long serialVersionUID = 7973378480153734755L;
+public class Preloader extends JLabel {
+	private static final long serialVersionUID = -4807849743952928996L;
 
-	public ImportMatrixMenu(JComponent c, GUIObject o) {
-		super("Matrix");
-		setMnemonic(KeyEvent.VK_M);
-		add(new JMenuItem(new ImportMatrixFromFileAction(c, o)));
-		add(new JMenuItem(new ImportMatrixFromClipboardAction(c, o)));
-		add(new JMenuItem(new ImportMatrixFromURLAction(c, o)));
-		add(new JMenuItem(new ImportMatrixFromDatabaseAction(c, o)));
+	public Preloader() {
+		super();
+		ImageIcon icon = null;
+		try {
+			icon = ResourceUtil.loadImageIcon("org/ujmp/gui/preloader.gif");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		setHorizontalAlignment(JLabel.CENTER);
+		setVerticalAlignment(JLabel.CENTER);
+		setIcon(icon);
 	}
 
 }

@@ -32,6 +32,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -62,7 +64,7 @@ import org.ujmp.gui.util.Preloader;
 import org.ujmp.gui.util.TooltipUtil;
 
 public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
-		MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
+		KeyListener, MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
 	private static final long serialVersionUID = 843653796010276950L;
 
 	private final MatrixGUIObject matrixGUIObject;
@@ -90,13 +92,13 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		}
 
 		setPreferredSize(new Dimension(600, 400));
-
 		setLayout(new BorderLayout());
 		add(preloader, BorderLayout.CENTER);
 
 		addComponentListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addKeyListener(this);
 
 		matrixGUIObject.addTableModelListener(this);
 		matrixGUIObject.getRowSelectionModel().addListSelectionListener(this);
@@ -170,6 +172,7 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
+			requestFocus();
 			startRow = getRowPos(e.getY());
 			startCol = getColPos(e.getX());
 			startRow = startRow < 0 ? 0 : startRow;
@@ -250,7 +253,7 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 			if (!matrixGUIObject.getRowSelectionModel().isSelectionEmpty()) {
 				g2d.setColor(Color.BLUE);
-
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3f));
 				long x1 = matrixGUIObject.getColumnSelectionModel().getMinSelectionIndex64();
 				long x2 = matrixGUIObject.getColumnSelectionModel().getMaxSelectionIndex64();
 				long y1 = matrixGUIObject.getRowSelectionModel().getMinSelectionIndex64();
@@ -260,7 +263,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 				g2d.setStroke(new BasicStroke(2.0f));
 				g2d.drawRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
-				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3f));
 				g2d.fillRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
 			}
@@ -302,5 +304,32 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 	public void valueChanged(ListSelectionEvent e) {
 		repaint(100);
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
+
+	public void keyPressed(KeyEvent e) {
+		long rows = matrixGUIObject.getRowCount64();
+		long cols = matrixGUIObject.getColumnCount64();
+		long minRow = matrixGUIObject.getRowSelectionModel().getMinSelectionIndex64();
+		long maxRow = matrixGUIObject.getRowSelectionModel().getMaxSelectionIndex64();
+		long minCol = matrixGUIObject.getColumnSelectionModel().getMinSelectionIndex64();
+		long maxCol = matrixGUIObject.getColumnSelectionModel().getMaxSelectionIndex64();
+		if ((e.getKeyCode() == KeyEvent.VK_A) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(0, cols);
+			matrixGUIObject.getRowSelectionModel().setSelectionInterval(0, rows);
+		} else if (e.getKeyCode() == KeyEvent.VK_UP && minRow > 0) {
+			matrixGUIObject.getRowSelectionModel().setSelectionInterval(minRow - 1, maxRow - 1);
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN && maxRow < rows - 1) {
+			matrixGUIObject.getRowSelectionModel().setSelectionInterval(minRow + 1, maxRow + 1);
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT && minCol > 0) {
+			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(minCol - 1, maxCol - 1);
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT && maxCol < cols - 1) {
+			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(minCol + 1, maxCol + 1);
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
 	}
 }

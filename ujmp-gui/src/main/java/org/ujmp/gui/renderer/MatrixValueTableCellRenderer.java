@@ -40,7 +40,7 @@ import org.ujmp.gui.util.ColorUtil;
 public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = -1473046176750819621L;
 
-	private static final Color SELECTCOLOR = new Color(200, 200, 255, 100);
+	private static final Color SELECTCOLOR = new Color(100, 100, 255, 76);
 
 	private final Border border = BorderFactory.createLineBorder(Color.blue, 2);
 
@@ -81,7 +81,7 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		label.setForeground(ColorUtil.contrastBW(c));
 		if (isSelected) {
 			label.setBorder(border);
-			label.setBackground(SELECTCOLOR);
+			label.setBackground(ColorUtil.add(c, SELECTCOLOR));
 		} else {
 			label.setBorder(null);
 			label.setBackground(c);

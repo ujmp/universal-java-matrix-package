@@ -23,7 +23,8 @@
 
 package org.ujmp.gui;
 
-import javax.swing.Icon;
+import java.awt.Image;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
@@ -46,11 +47,9 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 	private transient EventListenerList listenerList = null;
 
 	private transient FastListSelectionModel64 rowSelectionModel = null;
-
 	private transient FastListSelectionModel64 columnSelectionModel = null;
 
 	private transient JFrame frame = null;
-
 	private transient JPanel panel = null;
 
 	protected final Matrix matrix;
@@ -162,7 +161,7 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 		return panel;
 	}
 
-	public final Icon getIcon() {
+	public Image getIcon() {
 		return null;
 	}
 

@@ -24,8 +24,11 @@
 package org.ujmp.gui;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.Deque;
 import java.util.Map;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.swing.event.TableModelEvent;
@@ -34,25 +37,31 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.util.UJMPTimer;
+import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.util.ColorUtil;
 
 public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	private static final long serialVersionUID = -7974044446109857973L;
 
 	protected final Map<Coordinates, DataItem> dataCache = new SoftHashMap<Coordinates, DataItem>();
-
 	protected final Deque<Coordinates> todo;
 
 	protected volatile long rowCount = -1;
 	protected volatile long columnCount = -1;
 
 	private final LoadDataThread loadDataThread;
+	private final UpdateIconTimerTask updateIconTimerTask;
+
+	protected Image matrixIcon = null;
 
 	public DefaultMatrixGUIObject(Matrix matrix) {
 		super(matrix);
 		todo = new ConcurrentLinkedDeque<Coordinates>();
 		loadDataThread = new LoadDataThread(this);
 		loadDataThread.start();
+		updateIconTimerTask = new UpdateIconTimerTask(this);
+		UJMPTimer.newInstance().schedule(updateIconTimerTask, 5000, 5000);
 	}
 
 	public long getRowCount64() {
@@ -125,6 +134,10 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	public final void setValueAt(final Object aValue, final long rowIndex, final long columnIndex) {
 		matrix.setAsObject(aValue, rowIndex, columnIndex);
 		fireValueChanged(rowIndex, columnIndex, aValue);
+	}
+
+	public Image getIcon() {
+		return matrixIcon;
 	}
 
 	public final String getDescription() {
@@ -210,5 +223,20 @@ class DataItem {
 
 	public Object getObject() {
 		return object;
+	}
+}
+
+class UpdateIconTimerTask extends TimerTask {
+	private final DefaultMatrixGUIObject matrixGuiObject;
+
+	public UpdateIconTimerTask(DefaultMatrixGUIObject matrixGuiObject) {
+		this.matrixGuiObject = matrixGuiObject;
+	}
+
+	@Override
+	public void run() {
+		BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
+		MatrixHeatmapRenderer.paintMatrix(image.getGraphics(), matrixGuiObject, 16, 16, 0, 0);
+		matrixGuiObject.matrixIcon = image;
 	}
 }

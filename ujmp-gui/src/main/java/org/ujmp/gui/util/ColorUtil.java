@@ -47,6 +47,21 @@ public abstract class ColorUtil {
 		return new Color(v);
 	}
 
+	public static final Color add(Color color1, Color color2) {
+		double r1 = color1.getRed();
+		double g1 = color1.getGreen();
+		double b1 = color1.getBlue();
+		double a1 = color1.getAlpha();
+		double r2 = color2.getRed();
+		double g2 = color2.getGreen();
+		double b2 = color2.getBlue();
+		double a2 = color2.getAlpha();
+		int r = (int) ((r1 * a1 / 255 + r2 * a2 / 255) / (a1 / 255 + a2 / 255));
+		int g = (int) ((g1 * a1 / 255 + g2 * a2 / 255) / (a1 / 255 + a2 / 255));
+		int b = (int) ((b1 * a1 / 255 + b2 * a2 / 255) / (a1 / 255 + a2 / 255));
+		return new Color(r, g, b);
+	}
+
 	public static final Color fromDouble(double v) {
 		// inf = 255 255 0 yellow
 		// 1 = 0 255 0 green

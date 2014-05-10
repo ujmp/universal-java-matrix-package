@@ -48,9 +48,6 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 	private MatrixGUIObject matrixGUIObject = null;
 
-	private int width = 0;
-	private int height = 0;
-
 	private static final int PADDINGX = UIManager.getInt("Table.paddingX");
 	private static final int PADDINGY = UIManager.getInt("Table.paddingY");
 
@@ -59,7 +56,6 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-
 		if (value instanceof MatrixGUIObject) {
 			matrixGUIObject = (MatrixGUIObject) value;
 		} else if (value instanceof Matrix) {
@@ -68,8 +64,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 			matrixGUIObject = null;
 		}
 
-		width = table.getColumnModel().getColumn(column).getWidth() - 1;
-		height = table.getRowHeight(row) - 1;
+		setSize(table.getColumnModel().getColumn(column).getWidth() - 1, table.getRowHeight(row) - 1);
 
 		if (isSelected) {
 			super.setForeground(table.getSelectionForeground());
@@ -112,7 +107,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(getBackground());
-		g2d.fillRect(0, 0, width, height);
+		g2d.fillRect(0, 0, getWidth(), getHeight());
 
 		try {
 			if (matrixGUIObject != null) {
@@ -184,8 +179,8 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 			} else {
 				g2d.setColor(Color.GRAY);
-				g2d.drawLine(PADDINGX, PADDINGY, width - PADDINGX, height - PADDINGY);
-				g2d.drawLine(PADDINGX, height - PADDINGY, width - PADDINGX, 0 + PADDINGY);
+				g2d.drawLine(PADDINGX, PADDINGY, getWidth() - PADDINGX, getHeight() - PADDINGY);
+				g2d.drawLine(PADDINGX, getHeight() - PADDINGY, getWidth() - PADDINGX, 0 + PADDINGY);
 			}
 		} catch (ConcurrentModificationException e) {
 			// not too bad
@@ -198,25 +193,31 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		return (int) (totalColumn * currentRow + currentColumn);
 	}
 
-	public static void paintMatrix(Graphics g, MatrixGUIObject matrix, int width, int height) {
-		if (g == null)
+	public static void paintMatrix(Graphics g, MatrixGUIObject matrix, int width, int height, int paddingX, int paddingY) {
+		if (g == null) {
 			return;
+		}
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.addRenderingHints(UIDefaults.AALIAS);
 
 		if (matrix == null) {
 			g2d.setColor(Color.GRAY);
-			g2d.drawLine(PADDINGX, PADDINGY, width - PADDINGX, height - PADDINGY);
-			g2d.drawLine(width - PADDINGX, PADDINGY, PADDINGX, height - PADDINGY);
+			g2d.drawLine(paddingX, paddingY, width - paddingX, height - paddingY);
+			g2d.drawLine(width - paddingX, paddingY, paddingX, height - paddingY);
 		} else {
-			g2d.translate(PADDINGX, PADDINGX);
-			paintMatrixOriginal(g2d, matrix, width - PADDINGX - PADDINGX, height - PADDINGY - PADDINGY);
-			g2d.translate(-PADDINGX, -PADDINGX);
+			g2d.translate(paddingX, paddingY);
+			paintMatrixOriginal(g2d, matrix, width - paddingX - paddingX, height - paddingY - paddingY);
+			g2d.translate(-paddingX, -paddingX);
 		}
 	}
 
-	private static void paintMatrixOriginal(Graphics g, MatrixGUIObject matrix, int width, int height) {
+	public static void paintMatrix(Graphics g, MatrixGUIObject matrix, int width, int height) {
+		paintMatrix(g, matrix, width, height, PADDINGX, PADDINGY);
+	}
+
+	private static boolean paintMatrixOriginal(Graphics g, MatrixGUIObject matrix, int width, int height) {
+		boolean wasAllDataLoaded = true;
 		try {
 			long cols = matrix.getColumnCount();
 			long rows = matrix.getRowCount();
@@ -246,6 +247,9 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 				for (long row = 0; row < rows; row += yStepSize) {
 					bg.setColor(matrix.getColorAt(row, col));
 					bg.fillRect((int) (col / xStepSize), (int) (row / yStepSize), 1, 1);
+					if (wasAllDataLoaded && matrix.getValueAt(row, col) == MatrixGUIObject.PRELOADER) {
+						wasAllDataLoaded = false;
+					}
 				}
 			}
 			g2d.drawImage(bufferedImage, 0, 0, width, height, 0, 0, bufferedImage.getWidth(),
@@ -260,8 +264,10 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 						GraphicsUtil.ALIGNCENTER, s);
 			}
 		} catch (Exception e) {
+			wasAllDataLoaded = false;
 			e.printStackTrace();
 		}
+		return wasAllDataLoaded;
 	}
 
 	public void setMatrix(MatrixGUIObject matrix) {

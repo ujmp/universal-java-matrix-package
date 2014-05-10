@@ -51,14 +51,10 @@ public abstract class AbstractFrame extends JFrame {
 
 	private int modCount = -1;
 
-	private GUIObject object = null;
+	private final GUIObject guiObject;
 
-	private StatusBar statusBar = null;
-
-	private static int frameCount = 0;
-
-	private TimerTask updateTask = null;
-
+	private final StatusBar statusBar;
+	private final TimerTask updateTask;
 	private final UJMPTimer timer;
 
 	public AbstractFrame(Matrix matrix, JComponent component) {
@@ -69,15 +65,7 @@ public abstract class AbstractFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		UIDefaults.setDefaults();
 		FrameManager.registerFrame(o, this);
-		this.object = o;
-		String label = o.getLabel() == null ? "no label" : o.getLabel();
-		if (o instanceof MatrixGUIObject) {
-			MatrixGUIObject mgui = (MatrixGUIObject) o;
-			String size = Coordinates.toString("[", "x", "]", mgui.getRowCount64(), mgui.getColumnCount64());
-			setTitle(size + " " + mgui.getMatrix().getClass().getSimpleName() + " [" + label + "]");
-		} else {
-			setTitle(o.toString());
-		}
+		this.guiObject = o;
 
 		URL url = ClassLoader.getSystemResource("org/ujmp/gui/UJMP.png");
 		Image img = Toolkit.getDefaultToolkit().createImage(url);
@@ -97,27 +85,23 @@ public abstract class AbstractFrame extends JFrame {
 			setSize(new Dimension(1280, 800));
 		}
 
-		statusBar = new StatusBar(object);
+		statusBar = new StatusBar(guiObject);
 		getContentPane().add(statusBar, BorderLayout.SOUTH);
-
 		getContentPane().add(component, BorderLayout.CENTER);
 
-		// DefaultToolbar toolbar = new DefaultToolbar(component, o);
-		// getContentPane().add(toolbar, BorderLayout.NORTH);
-
-		final GUIObject go = object;
 		updateTask = new TimerTask() {
-
 			public void run() {
-				if (modCount != go.getModCount()) {
-					modCount = go.getModCount();
+				updateTitle();
+				if (modCount != guiObject.getModCount()) {
+					modCount = guiObject.getModCount();
 					repaint(1000);
 				}
-
 			}
 		};
+
+		updateTitle();
 		timer = UJMPTimer.newInstance();
-		timer.scheduleAtFixedRate(updateTask, 1000, 1000);
+		timer.scheduleAtFixedRate(updateTask, 5000, 5000);
 	}
 
 	public final void setVisible(boolean state) {
@@ -129,15 +113,24 @@ public abstract class AbstractFrame extends JFrame {
 		}
 
 		super.setVisible(state);
-		if (state) {
-			frameCount++;
+	}
+
+	private void updateTitle() {
+		String label = guiObject.getLabel() == null ? "no label" : guiObject.getLabel();
+		if (guiObject instanceof MatrixGUIObject) {
+			MatrixGUIObject mgui = (MatrixGUIObject) guiObject;
+			String size = Coordinates.toString("[", "x", "]", mgui.getRowCount64(), mgui.getColumnCount64());
+			setTitle(size + " " + mgui.getMatrix().getClass().getSimpleName() + " [" + label + "]");
 		} else {
-			frameCount--;
+			setTitle(guiObject.toString());
+		}
+		if (guiObject.getIcon() != null) {
+			setIconImage(guiObject.getIcon());
 		}
 	}
 
 	public final GUIObject getObject() {
-		return object;
+		return guiObject;
 	}
 
 	public final void exportToPDF(File file) {

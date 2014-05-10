@@ -34,18 +34,13 @@ public abstract class AbstractGUIObject implements GUIObject {
 	private static final long serialVersionUID = -2271465024665498798L;
 
 	public static final int X = Matrix.X;
-
 	public static final int Y = Matrix.Y;
-
 	public static final int Z = Matrix.Z;
-
 	public static final int ROW = Matrix.ROW;
-
 	public static final int COLUMN = Matrix.COLUMN;
-
 	public static final int ALL = Matrix.ALL;
 
-	private int modCount = 0;
+	protected int modCount = 0;
 
 	static {
 		UIDefaults.setDefaults();

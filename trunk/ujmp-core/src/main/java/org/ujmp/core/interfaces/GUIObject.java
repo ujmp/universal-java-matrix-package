@@ -23,9 +23,9 @@
 
 package org.ujmp.core.interfaces;
 
+import java.awt.Image;
 import java.io.Serializable;
 
-import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -52,7 +52,7 @@ public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel,
 
 	public JFrame showGUI();
 
-	public Icon getIcon();
+	public Image getIcon();
 
 	public int getModCount();
 

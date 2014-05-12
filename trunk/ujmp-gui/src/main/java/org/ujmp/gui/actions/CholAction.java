@@ -41,7 +41,6 @@ public class CholAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().chol();
-		result.showGUI();
 		return result;
 	}
 

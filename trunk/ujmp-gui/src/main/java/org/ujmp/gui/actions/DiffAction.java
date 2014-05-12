@@ -41,7 +41,6 @@ public class DiffAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().diff(getNewOrLink(), getDimension(), getIgnoreMissing());
-		m.showGUI();
 		return m;
 	}
 

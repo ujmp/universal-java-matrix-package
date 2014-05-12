@@ -69,7 +69,7 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		for (final long[] c : getSource().allCoordinates()) {
 			matrix.setAsDouble(getDouble(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

@@ -42,7 +42,6 @@ public class PairedTTestAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().pairedTTest(Ret.NEW);
-		result.showGUI();
 		return result;
 	}
 

@@ -25,6 +25,7 @@ package org.ujmp.gui.actions;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -36,11 +37,10 @@ public class ZerosAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Zeros");
 		putValue(Action.SHORT_DESCRIPTION, "set all entries to 0");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('0'));
 	}
 
 	public Object call() {
-		MatrixGUIObject m = getMatrixObject();
-		m.getMatrix().zeros(getRet());
-		return m;
+		return getMatrixObject().getMatrix().zeros(getRet());
 	}
 }

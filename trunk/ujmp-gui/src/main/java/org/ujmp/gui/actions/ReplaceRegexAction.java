@@ -43,7 +43,6 @@ public class ReplaceRegexAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().replaceRegex(getRet(), GUIUtil.getString("Regular Expression"),
 				GUIUtil.getString("Replacement"));
-		m.showGUI();
 		return m;
 	}
 

@@ -49,8 +49,6 @@ public class DiscretizeAction extends AbstractMatrixAction {
 		Matrix m = getMatrixObject().getMatrix().discretize(getRet(), getDimension(),
 				(DiscretizationMethod) GUIUtil.getObject("Discretization method", DiscretizationMethod.values()),
 				GUIUtil.getInt("How many bins", 1, 100));
-
-		m.showGUI();
 		return m;
 	}
 

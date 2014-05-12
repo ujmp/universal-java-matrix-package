@@ -46,7 +46,6 @@ public class TransposeAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().transpose(getNewOrLink());
-		m.showGUI();
 		return m;
 	}
 

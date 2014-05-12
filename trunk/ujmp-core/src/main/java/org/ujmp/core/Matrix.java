@@ -136,4 +136,10 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 
 	public MatrixImportSourceSelector importFrom();
 
+	public void fireValueChanged();
+
+	public void fireValueChanged(Coordinates coordinates);
+
+	public void fireValueChanged(Coordinates start, Coordinates end);
+
 }

@@ -74,7 +74,6 @@ public class ImportMatrixFromDatabaseAction extends AbstractObjectAction {
 			password = JOptionPane.showInputDialog("Enter password:", null);
 
 			Matrix m = Matrix.Factory.importFromJDBC(type, host, port, database, sql, username, password);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

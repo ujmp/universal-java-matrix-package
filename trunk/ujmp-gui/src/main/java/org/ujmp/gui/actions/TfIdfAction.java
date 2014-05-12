@@ -43,7 +43,6 @@ public class TfIdfAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().tfIdf(GUIUtil.getBoolean("Calculate term frequency"),
 				GUIUtil.getBoolean("Calculate inverse document frequency"), GUIUtil.getBoolean("Normalize"));
-		m.showGUI();
 		return m;
 	}
 

@@ -41,7 +41,6 @@ public class ProdAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().prod(getNewOrLink(), getDimension(), getIgnoreMissing());
-		m.showGUI();
 		return m;
 	}
 

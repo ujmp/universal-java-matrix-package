@@ -52,24 +52,24 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 
 	public boolean add(A e) {
 		boolean ret = getList().add(e);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public void add(int index, A element) {
 		getList().add(index, element);
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public boolean addAll(Collection<? extends A> c) {
 		boolean ret = getList().addAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public boolean addAll(int index, Collection<? extends A> c) {
 		boolean ret = getList().addAll(index, c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
@@ -119,31 +119,31 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 
 	public boolean remove(Object o) {
 		boolean ret = getList().remove(o);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public A remove(int index) {
 		A a = getList().remove(index);
-		notifyGUIObject();
+		fireValueChanged();
 		return a;
 	}
 
 	public boolean removeAll(Collection<?> c) {
 		boolean ret = getList().removeAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public boolean retainAll(Collection<?> c) {
 		boolean ret = getList().retainAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public A set(int index, A element) {
 		A a = getList().set(index, element);
-		notifyGUIObject();
+		fireValueChanged();
 		return a;
 	}
 
@@ -167,12 +167,12 @@ public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D
 
 	public void setObject(A value, long row, long column) {
 		getList().set((int) row, value);
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public void setObject(A value, int row, int column) {
 		getList().set(row, value);
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public Object[] toArray() {

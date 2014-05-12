@@ -56,7 +56,6 @@ public class ImportMatrixFromURLAction extends AbstractObjectAction {
 					FileFormat.CSV)];
 
 			Matrix m = Matrix.Factory.importFromURL(fileFormat, url);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

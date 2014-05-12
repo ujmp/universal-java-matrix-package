@@ -41,7 +41,6 @@ public class Log2Action extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().log2(getRet());
-		m.showGUI();
 		return m;
 	}
 

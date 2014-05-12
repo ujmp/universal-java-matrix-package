@@ -57,7 +57,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 						// map.put("JDMP", new RemoteMatrix("http://" +
 						// getObject(0) + ":10413/"));
 						put("JDMP", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -68,7 +68,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("HTTP", new HttpMatrix("http://" + getObject(0)));
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -79,7 +79,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("HTTPS", new HttpMatrix("https://" + getObject(0)));
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -93,7 +93,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 						// MySQLDatabaseMapMatrix(getAddress(), 3306, "root",
 						// ""));
 						put("MySQL", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -104,7 +104,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("SSH", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -115,7 +115,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("FTP", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -126,7 +126,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("Telnet", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -137,7 +137,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("SMB", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -148,7 +148,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("MSSQL", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -159,7 +159,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("PostgreSQL", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -170,7 +170,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("memcached", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -181,7 +181,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("mongoDB", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -192,7 +192,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("SMTP", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -203,7 +203,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("IMAP", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -214,7 +214,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("IMAPS", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -225,7 +225,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("NFS", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -236,7 +236,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("Tomcat", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -248,7 +248,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("HDFS DataNode", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -260,7 +260,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("HDFS NameNode", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -272,7 +272,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("HDFS Secondary NameNode", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -284,7 +284,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("Hadoop JobTracker", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -296,7 +296,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("Hadoop JobTracker", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}
@@ -308,7 +308,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 					socket.close();
 					if (portAvailable) {
 						put("Hadoop TaskTracker", null);
-						notifyGUIObject();
+						fireValueChanged();
 					}
 				} catch (Exception e) {
 				}

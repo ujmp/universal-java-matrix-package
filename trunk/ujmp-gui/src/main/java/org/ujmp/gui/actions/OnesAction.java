@@ -25,6 +25,7 @@ package org.ujmp.gui.actions;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
@@ -36,11 +37,10 @@ public class OnesAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Ones");
 		putValue(Action.SHORT_DESCRIPTION, "set all entries to 1");
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('1'));
 	}
 
 	public Object call() {
-		MatrixGUIObject m = getMatrixObject();
-		m.getMatrix().ones(getRet());
-		return m;
+		return getMatrixObject().getMatrix().ones(getRet());
 	}
 }

@@ -42,7 +42,6 @@ public class StandardDeviationAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().std(Ret.NEW, getDimension(), getIgnoreMissing(), true);
-		result.showGUI();
 		return result;
 	}
 

@@ -42,7 +42,6 @@ public class IrisMatrixAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = new IrisMatrix();
-		m.showGUI();
 		return m;
 	}
 }

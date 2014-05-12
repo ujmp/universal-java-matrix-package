@@ -43,7 +43,6 @@ public class PascalMatrixAction extends AbstractMatrixAction {
 	public Object call() {
 		int size = GUIUtil.getInt("Number of rows/columns", 1, 100);
 		Matrix m = Matrix.Factory.pascal(size, size);
-		m.showGUI();
 		return m;
 	}
 }

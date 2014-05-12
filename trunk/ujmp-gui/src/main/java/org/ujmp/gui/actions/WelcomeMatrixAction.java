@@ -41,7 +41,6 @@ public class WelcomeMatrixAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = Matrix.Factory.welcomeMatrix();
-		m.showGUI();
 		return m;
 	}
 

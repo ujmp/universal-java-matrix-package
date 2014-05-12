@@ -41,7 +41,6 @@ public class SqueezeAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrix().squeeze(getNewOrLink());
-		m.showGUI();
 		return m;
 	}
 

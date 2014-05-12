@@ -41,7 +41,6 @@ public class SinhAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sinh(getRet());
-		m.showGUI();
 		return m;
 	}
 

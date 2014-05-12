@@ -68,7 +68,7 @@ public abstract class AbstractBigIntegerCalculation extends AbstractCalculation 
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsBigInteger(getBigInteger(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

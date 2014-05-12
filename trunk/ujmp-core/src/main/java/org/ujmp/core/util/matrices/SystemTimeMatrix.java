@@ -50,7 +50,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 
 		@Override
 		public void run() {
-			matrix.notifyGUIObject();
+			matrix.fireValueChanged();
 		}
 	};
 

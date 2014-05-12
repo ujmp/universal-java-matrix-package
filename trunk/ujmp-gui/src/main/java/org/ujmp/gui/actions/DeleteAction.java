@@ -46,7 +46,6 @@ public class DeleteAction extends AbstractMatrixAction {
 					"Enter the rows and columns to delete, e.g. 1,3-5;4-5,7", "Delete", JOptionPane.QUESTION_MESSAGE);
 
 			Matrix m = getMatrixObject().getMatrix().delete(getNewOrLink(), s);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

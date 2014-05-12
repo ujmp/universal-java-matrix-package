@@ -44,9 +44,7 @@ public class SelectAction extends AbstractMatrixAction {
 		try {
 			String s = JOptionPane.showInputDialog(getComponent(),
 					"Enter the rows and columns to select, e.g. 1,3-5;4-5,7", "Select", JOptionPane.QUESTION_MESSAGE);
-
 			Matrix m = getMatrixObject().getMatrix().select(getNewOrLink(), s);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

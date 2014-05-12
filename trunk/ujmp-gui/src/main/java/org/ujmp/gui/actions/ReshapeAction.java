@@ -41,7 +41,6 @@ public class ReshapeAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrix().reshape(getNewOrLink(), getSize());
-		m.showGUI();
 		return m;
 	}
 

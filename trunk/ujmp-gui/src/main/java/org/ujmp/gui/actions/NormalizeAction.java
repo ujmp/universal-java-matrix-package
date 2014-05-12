@@ -41,7 +41,6 @@ public class NormalizeAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().normalize(getOrigOrNew(), getDimension());
-		m.showGUI();
 		return m;
 	}
 

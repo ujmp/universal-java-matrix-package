@@ -41,7 +41,6 @@ public class FlipdimAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().flipdim(getNewOrLink(), getDimension());
-		m.showGUI();
 		return m;
 	}
 

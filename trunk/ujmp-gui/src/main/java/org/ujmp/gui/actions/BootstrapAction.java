@@ -47,7 +47,6 @@ public class BootstrapAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().bootstrap(getNewOrLink(),
 				GUIUtil.getInt("Number of samples", 1, 10000000));
-		m.showGUI();
 		return m;
 	}
 

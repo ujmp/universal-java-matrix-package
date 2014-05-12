@@ -65,7 +65,7 @@ public abstract class AbstractBooleanCalculation extends AbstractCalculation imp
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsBoolean(getBoolean(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

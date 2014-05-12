@@ -23,8 +23,6 @@
 
 package org.ujmp.gui.actions;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
@@ -41,13 +39,12 @@ public class MultiplyAction extends AbstractMatrixAction {
 		super(c, m, v);
 		putValue(Action.NAME, "Multiply");
 		putValue(Action.SHORT_DESCRIPTION, "multiply all cells by a value");
-		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ASTERISK, KeyEvent.CTRL_DOWN_MASK));
+		putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('*'));
 	}
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().times(getRet(), getIgnoreMissing(),
 				GUIUtil.getDouble("Value to multiply by", -Double.MAX_VALUE, Double.MAX_VALUE));
-		m.showGUI();
 		return m;
 	}
 

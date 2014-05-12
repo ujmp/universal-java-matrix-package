@@ -45,7 +45,6 @@ public class FloorAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().floor(getRet());
-		m.showGUI();
 		return m;
 	}
 

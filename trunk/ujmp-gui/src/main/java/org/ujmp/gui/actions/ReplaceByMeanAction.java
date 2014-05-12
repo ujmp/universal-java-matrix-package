@@ -42,7 +42,6 @@ public class ReplaceByMeanAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = new ImputeMean(getDimension(), getMatrixObject().getMatrix()).calc(getOrigOrNew());
-		m.showGUI();
 		return m;
 	}
 

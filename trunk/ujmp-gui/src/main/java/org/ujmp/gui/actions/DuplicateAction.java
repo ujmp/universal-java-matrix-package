@@ -46,7 +46,6 @@ public class DuplicateAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().clone();
-		m.showGUI();
 		return m;
 	}
 

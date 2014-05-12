@@ -234,19 +234,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		id = runningId++;
 	}
 
-	// TODO: make faster
-	public final Matrix setData(Ret returnType, Matrix matrix, long... offset) {
-		switch (returnType) {
-		case ORIG:
-			for (long[] c : matrix.availableCoordinates()) {
-				setAsObject(matrix.getAsObject(c), Coordinates.plus(c, offset));
-			}
-			return this;
-		default:
-			throw new RuntimeException("not implemented yet");
-		}
-	}
-
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(getSize());
 	}
@@ -882,7 +869,19 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public void notifyGUIObject() {
+	public void fireValueChanged() {
+		if (guiObject != null) {
+			guiObject.fireValueChanged();
+		}
+	}
+
+	public void fireValueChanged(Coordinates coordinates) {
+		if (guiObject != null) {
+			guiObject.fireValueChanged();
+		}
+	}
+
+	public void fireValueChanged(Coordinates start, Coordinates end) {
 		if (guiObject != null) {
 			guiObject.fireValueChanged();
 		}
@@ -896,14 +895,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix) {
 		return new Mtimes(ignoreNaN, this, matrix).calc(returnType);
-	}
-
-	public Matrix mtimes(double value) {
-		return times(value);
-	}
-
-	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value) {
-		return times(returnType, ignoreNaN, value);
 	}
 
 	public boolean getAsBoolean(long... coordinates) {

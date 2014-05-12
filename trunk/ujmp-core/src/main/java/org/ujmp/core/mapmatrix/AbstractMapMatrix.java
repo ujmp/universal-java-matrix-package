@@ -195,7 +195,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	public synchronized final V put(K key, V value) {
 		keyIndexList.clear();
 		V v = putIntoMap(key, value);
-		notifyGUIObject();
+		fireValueChanged();
 		return v;
 	}
 
@@ -208,7 +208,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	public synchronized final V remove(Object key) {
 		keyIndexList.clear();
 		V v = removeFromMap(key);
-		notifyGUIObject();
+		fireValueChanged();
 		return v;
 	}
 

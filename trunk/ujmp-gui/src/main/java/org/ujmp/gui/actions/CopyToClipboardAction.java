@@ -51,6 +51,6 @@ public class CopyToClipboardAction extends AbstractMatrixAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return m;
+		return null;
 	}
 }

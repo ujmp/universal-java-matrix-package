@@ -64,7 +64,7 @@ public abstract class AbstractIntCalculation extends AbstractCalculation impleme
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsInt(getInt(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

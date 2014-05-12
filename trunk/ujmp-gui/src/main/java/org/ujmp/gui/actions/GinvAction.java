@@ -41,7 +41,6 @@ public class GinvAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().ginv();
-		result.showGUI();
 		return result;
 	}
 

@@ -46,7 +46,6 @@ public class AbsAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().abs(getRet());
-		m.showGUI();
 		return m;
 	}
 

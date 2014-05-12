@@ -65,7 +65,7 @@ public abstract class AbstractCharCalculation extends AbstractCalculation implem
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsChar(getChar(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

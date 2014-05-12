@@ -42,7 +42,6 @@ public class MutualinfAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().mutualInf(Ret.NEW);
-		result.showGUI();
 		return result;
 	}
 

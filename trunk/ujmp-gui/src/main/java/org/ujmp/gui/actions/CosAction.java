@@ -41,7 +41,6 @@ public class CosAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cos(getRet());
-		m.showGUI();
 		return m;
 	}
 

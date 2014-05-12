@@ -24,12 +24,14 @@
 package org.ujmp.gui.actions;
 
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.MatrixGUIObject;
 
@@ -47,11 +49,11 @@ public class PasteFromClipboardAction extends AbstractMatrixAction {
 	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		try {
-			m.getMatrix().importFrom().fromClipboard().asCSV();
-			m.getMatrix().notifyGUIObject();
-		} catch (IOException e) {
+			Matrix copy = Matrix.Factory.importFromClipboard(FileFormat.CSV);
+			m.getMatrix().setContent(Ret.ORIG, copy, 0, 0);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return m;
+		return null;
 	}
 }

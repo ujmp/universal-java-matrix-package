@@ -42,7 +42,6 @@ public class MandelbrotMatrixAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = new MandelbrotMatrix();
-		m.showGUI();
 		return m;
 	}
 

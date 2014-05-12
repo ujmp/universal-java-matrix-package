@@ -41,7 +41,6 @@ public class SqrtAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sqrt(getRet());
-		m.showGUI();
 		return m;
 	}
 

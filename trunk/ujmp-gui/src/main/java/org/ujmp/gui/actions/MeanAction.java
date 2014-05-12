@@ -42,7 +42,6 @@ public class MeanAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().mean(Ret.NEW, getDimension(), getIgnoreMissing());
-		result.showGUI();
 		return result;
 	}
 

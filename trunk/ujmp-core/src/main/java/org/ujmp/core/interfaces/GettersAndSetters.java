@@ -28,7 +28,6 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 
 /**
  * This interface declares the getters and setters for the entries in the Matrix
@@ -408,13 +407,4 @@ public interface GettersAndSetters {
 	public Matrix getAsMatrix(long... coordinates);
 
 	public void setAsMatrix(Matrix m, long... coordinates);
-
-	/**
-	 * Inserts data into the matrix at the specified position
-	 * 
-	 * @param matrix
-	 * @param position
-	 */
-	public Matrix setData(Ret returnType, Matrix matrix, long... offset);
-
 }

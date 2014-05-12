@@ -65,7 +65,7 @@ public abstract class AbstractByteCalculation extends AbstractCalculation implem
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsByte(getByte(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

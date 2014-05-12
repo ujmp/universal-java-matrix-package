@@ -41,7 +41,6 @@ public class CoshAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cosh(getRet());
-		m.showGUI();
 		return m;
 	}
 

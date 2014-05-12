@@ -46,7 +46,6 @@ public class CenterAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().center(getRet(), getDimension(), getIgnoreMissing());
-		m.showGUI();
 		return m;
 	}
 

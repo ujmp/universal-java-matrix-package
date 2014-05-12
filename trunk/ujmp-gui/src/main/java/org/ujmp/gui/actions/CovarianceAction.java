@@ -42,7 +42,6 @@ public class CovarianceAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().cov(Ret.NEW, getIgnoreMissing(), true);
-		result.showGUI();
 		return result;
 	}
 

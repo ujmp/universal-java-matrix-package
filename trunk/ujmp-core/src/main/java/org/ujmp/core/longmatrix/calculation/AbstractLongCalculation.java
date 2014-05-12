@@ -65,7 +65,7 @@ public abstract class AbstractLongCalculation extends AbstractCalculation implem
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsLong(getLong(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

@@ -42,7 +42,6 @@ public class VarianceAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().var(Ret.NEW, getDimension(), getIgnoreMissing(), true);
-		result.showGUI();
 		return result;
 	}
 

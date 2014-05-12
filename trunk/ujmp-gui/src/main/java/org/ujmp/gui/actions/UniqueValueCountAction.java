@@ -41,7 +41,6 @@ public class UniqueValueCountAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().uniqueValueCount(getNewOrLink(), getDimension());
-		result.showGUI();
 		return result;
 	}
 

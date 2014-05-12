@@ -48,7 +48,6 @@ public class ConvertAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().convert(
 				(ValueType) GUIUtil.getObject("New entry type", (Object[]) ValueType.values()));
-		m.showGUI();
 		return m;
 	}
 

@@ -87,27 +87,7 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 		getListenerList().remove(TableModelListener.class, l);
 	}
 
-	public final void fireValueChanged() {
-		for (final Object o : getListenerList().getListenerList()) {
-			if (o instanceof TableModelListener64) {
-				((TableModelListener64) o).tableChanged(new TableModelEvent64(this));
-			} else if (o instanceof TableModelListener) {
-				((TableModelListener) o).tableChanged(new TableModelEvent(this));
-			}
-		}
-	}
-
-	public final void fireValueChanged(final long row, final long column, final Object value) {
-		for (final Object o : getListenerList().getListenerList()) {
-			if (o instanceof TableModelListener64) {
-				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column,
-						TableModelEvent64.UPDATE));
-			} else if (o instanceof TableModelListener) {
-				((TableModelListener) o).tableChanged(new TableModelEvent(this, (int) row, (int) row, (int) column,
-						TableModelEvent.UPDATE));
-			}
-		}
-	}
+	
 
 	public final FastListSelectionModel64 getColumnSelectionModel() {
 		if (columnSelectionModel == null) {

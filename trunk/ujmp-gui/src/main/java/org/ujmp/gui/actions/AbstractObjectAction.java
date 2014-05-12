@@ -40,6 +40,7 @@ import javax.swing.event.SwingPropertyChangeSupport;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.interfaces.HasGUIObject;
 import org.ujmp.gui.util.TaskQueue;
 
 public abstract class AbstractObjectAction implements Action, Callable<Object>, Serializable {
@@ -109,7 +110,12 @@ public abstract class AbstractObjectAction implements Action, Callable<Object>, 
 
 	public final void actionPerformed(ActionEvent e) {
 		try {
-			call();
+			Object o = call();
+			if (o instanceof GUIObject) {
+				((GUIObject) o).showGUI();
+			} else if (o instanceof HasGUIObject) {
+				((HasGUIObject) o).showGUI();
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

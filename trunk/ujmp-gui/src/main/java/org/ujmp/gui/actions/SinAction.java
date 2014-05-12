@@ -41,7 +41,6 @@ public class SinAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sin(getRet());
-		m.showGUI();
 		return m;
 	}
 

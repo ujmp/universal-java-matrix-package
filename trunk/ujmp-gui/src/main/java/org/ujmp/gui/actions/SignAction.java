@@ -41,7 +41,6 @@ public class SignAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().sign(getRet());
-		m.showGUI();
 		return m;
 	}
 

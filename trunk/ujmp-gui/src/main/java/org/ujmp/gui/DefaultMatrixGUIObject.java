@@ -32,13 +32,17 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPTimer;
 import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
+import org.ujmp.gui.table.TableModelEvent64;
+import org.ujmp.gui.table.TableModelListener64;
 import org.ujmp.gui.util.ColorUtil;
 
 public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
@@ -70,6 +74,34 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 
 	public long getColumnCount64() {
 		return columnCount;
+	}
+
+	public final void fireValueChanged() {
+		rowCount = -1;
+		columnCount = -1;
+		dataCache.clear();
+		for (final Object o : getListenerList().getListenerList()) {
+			if (o instanceof TableModelListener64) {
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this));
+			} else if (o instanceof TableModelListener) {
+				((TableModelListener) o).tableChanged(new TableModelEvent(this));
+			}
+		}
+		super.fireValueChanged();
+	}
+
+	public final void fireValueChanged(final long row, final long column, final Object value) {
+		dataCache.put(Coordinates.wrap(row, column), new DataItem(value, ColorUtil.fromObject(value)));
+		for (final Object o : getListenerList().getListenerList()) {
+			if (o instanceof TableModelListener64) {
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column,
+						TableModelEvent64.UPDATE));
+			} else if (o instanceof TableModelListener) {
+				((TableModelListener) o).tableChanged(new TableModelEvent(this, MathUtil.longToInt(row), MathUtil
+						.longToInt(row), MathUtil.longToInt(column), TableModelEvent.UPDATE));
+			}
+		}
+		super.fireValueChanged();
 	}
 
 	public Object getValueAt(final int rowIndex, final int columnIndex) {
@@ -170,13 +202,11 @@ class LoadDataRunnable implements Runnable {
 
 	private final Deque<Coordinates> todo;
 	private final DefaultMatrixGUIObject matrixGUIObject;
-	private Map<Coordinates, DataItem> dataCache;
 	private Matrix matrix;
 
 	public LoadDataRunnable(DefaultMatrixGUIObject matrixGUIObject) {
 		this.matrixGUIObject = matrixGUIObject;
 		this.todo = matrixGUIObject.todo;
-		this.dataCache = matrixGUIObject.dataCache;
 		this.matrix = matrixGUIObject.matrix;
 	}
 
@@ -201,7 +231,6 @@ class LoadDataRunnable implements Runnable {
 			while (matrixGUIObject.rowCount != -1 && matrixGUIObject.columnCount != -1 && !todo.isEmpty()) {
 				Coordinates coordinates = todo.pollFirst();
 				Object object = matrix.getAsObject(coordinates.getLongCoordinates());
-				dataCache.put(coordinates, new DataItem(object, ColorUtil.fromObject(object)));
 				matrixGUIObject.fireValueChanged(coordinates.getRow(), coordinates.getColumn(), object);
 			}
 		}

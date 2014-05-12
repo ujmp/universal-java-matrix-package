@@ -43,7 +43,6 @@ public class SumAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().sum(Ret.NEW, getDimension(), getIgnoreMissing());
-		result.showGUI();
 		return result;
 	}
 

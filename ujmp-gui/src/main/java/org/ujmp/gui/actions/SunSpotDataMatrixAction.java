@@ -41,7 +41,6 @@ public class SunSpotDataMatrixAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = Matrix.Factory.sunSpotDataset();
-		m.showGUI();
 		return m;
 	}
 

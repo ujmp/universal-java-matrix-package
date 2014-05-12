@@ -68,7 +68,7 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsBigDecimal(getBigDecimal(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

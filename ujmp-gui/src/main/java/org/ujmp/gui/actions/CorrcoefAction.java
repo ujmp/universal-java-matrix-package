@@ -42,7 +42,6 @@ public class CorrcoefAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().corrcoef(Ret.NEW, getIgnoreMissing(), true);
-		result.showGUI();
 		return result;
 	}
 

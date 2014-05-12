@@ -48,7 +48,6 @@ public class SortrowsAction extends AbstractMatrixAction {
 		Matrix result = getMatrixObject().getMatrix().sortrows(getNewOrLink(),
 				GUIUtil.getInt("Column used for sorting", 0, (int) getMatrixObject().getColumnCount() - 1),
 				GUIUtil.getBoolean("reverse order?"));
-		result.showGUI();
 		return result;
 	}
 }

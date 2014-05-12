@@ -51,7 +51,7 @@ public interface HasGUIObject {
 	 * GUIObject?
 	 * 
 	 */
-	public void notifyGUIObject();
+	public void fireValueChanged();
 
 	/**
 	 * This method will show the object in a JFrame on the screen.

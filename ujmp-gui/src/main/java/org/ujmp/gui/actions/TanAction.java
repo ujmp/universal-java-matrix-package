@@ -41,7 +41,6 @@ public class TanAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().tan(getRet());
-		m.showGUI();
 		return m;
 	}
 

@@ -59,7 +59,6 @@ public class SparseMatrixAction extends AbstractObjectAction {
 				}
 			}
 			Matrix m = Matrix.Factory.sparse(valueType, size);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

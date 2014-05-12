@@ -69,7 +69,7 @@ public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 		if (!objects.contains(o)) {
 			objects.add(o);
 		}
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {

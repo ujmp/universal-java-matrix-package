@@ -41,7 +41,6 @@ public class UniqueAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().unique(getNewOrLink());
-		result.showGUI();
 		return result;
 	}
 

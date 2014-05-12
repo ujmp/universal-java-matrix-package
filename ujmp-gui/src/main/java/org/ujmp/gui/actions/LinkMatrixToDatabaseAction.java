@@ -74,7 +74,6 @@ public class LinkMatrixToDatabaseAction extends AbstractObjectAction {
 			password = JOptionPane.showInputDialog("Enter password:", null);
 
 			Matrix m = Matrix.Factory.linkToJDBC(type, host, port, database, sql, username, password);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

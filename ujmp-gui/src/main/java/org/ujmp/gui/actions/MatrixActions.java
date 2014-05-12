@@ -46,6 +46,7 @@ public class MatrixActions extends ArrayList<JComponent> {
 		add(new JSeparator());
 		add(new JMenuItem(new CutToClipboardAction(c, m, v)));
 		add(new JMenuItem(new CopyToClipboardAction(c, m, v)));
+		add(new JMenuItem(new PasteFromClipboardAction(c, m, v)));
 		add(new JSeparator());
 		add(new JMenuItem(new ExportMatrixAction(c, m)));
 		add(new JSeparator());

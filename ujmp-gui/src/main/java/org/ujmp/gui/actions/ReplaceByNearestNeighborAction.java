@@ -44,7 +44,6 @@ public class ReplaceByNearestNeighborAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = new ImputeKNN(getMatrixObject().getMatrix(), GUIUtil.getInt("Number of neighbors", 1, 100))
 				.calc(getOrigOrNew());
-		m.showGUI();
 		return m;
 	}
 

@@ -41,7 +41,6 @@ public class CumProdAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cumprod(getIgnoreMissing());
-		m.showGUI();
 		return m;
 	}
 

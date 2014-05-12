@@ -76,8 +76,6 @@ public class NewMatrixAction extends AbstractObjectAction {
 			default:
 				throw new RuntimeException("not implemented");
 			}
-
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -186,12 +186,12 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 						inputBuffer.setAsObject(value, c.getLongCoordinates());
 						if (System.currentTimeMillis() - t > 500) {
 							t = System.currentTimeMillis();
-							notifyGUIObject();
+							fireValueChanged();
 						}
 					}
 					if (update) {
 						update = false;
-						notifyGUIObject();
+						fireValueChanged();
 					}
 					Thread.sleep(100);
 				} catch (Exception e) {

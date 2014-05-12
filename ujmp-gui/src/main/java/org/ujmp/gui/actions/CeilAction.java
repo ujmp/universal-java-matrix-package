@@ -45,7 +45,6 @@ public class CeilAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().ceil(getRet());
-		m.showGUI();
 		return m;
 	}
 

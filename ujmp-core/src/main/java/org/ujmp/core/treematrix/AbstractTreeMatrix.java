@@ -100,7 +100,7 @@ public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D
 		}
 		getChildren(parent).add(child);
 		getParentMap().put(child, parent);
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public final void removeChild(T parent, T child) {
@@ -109,7 +109,7 @@ public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D
 		if (parent.equals(oldParent)) {
 			getParentMap().remove(child);
 		}
-		notifyGUIObject();
+		fireValueChanged();
 	}
 
 	public final void setDouble(double value, long row, long column) {

@@ -47,7 +47,6 @@ public class AddMissingValuesAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().addMissing(getRet(), getDimension(),
 				GUIUtil.getDouble("Percent missing values", 0.0, 1.0));
-		result.showGUI();
 		return result;
 	}
 }

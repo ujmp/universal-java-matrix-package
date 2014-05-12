@@ -51,10 +51,10 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		return calculation.getSize();
 	}
 
-	public void notifyGUIObject() {
-		super.notifyGUIObject();
+	public void fireValueChanged() {
+		super.fireValueChanged();
 		if (calculation.getSource() != null) {
-			calculation.getSource().notifyGUIObject();
+			calculation.getSource().fireValueChanged();
 		}
 	}
 

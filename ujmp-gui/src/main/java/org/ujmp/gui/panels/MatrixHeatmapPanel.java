@@ -50,7 +50,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasToolTip;
@@ -59,11 +58,13 @@ import org.ujmp.gui.actions.MatrixActions;
 import org.ujmp.gui.interfaces.CanBeRepainted;
 import org.ujmp.gui.menu.MatrixPopupMenu;
 import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
+import org.ujmp.gui.table.TableModelEvent64;
+import org.ujmp.gui.table.TableModelListener64;
 import org.ujmp.gui.util.GraphicsExecutor;
 import org.ujmp.gui.util.Preloader;
 import org.ujmp.gui.util.TooltipUtil;
 
-public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener, MouseListener,
+public class MatrixHeatmapPanel extends JPanel implements ComponentListener, TableModelListener64, MouseListener,
 		KeyListener, MouseMotionListener, CanBeRepainted, HasToolTip, ListSelectionListener {
 	private static final long serialVersionUID = 843653796010276950L;
 
@@ -136,6 +137,10 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	public void componentShown(ComponentEvent e) {
+		GraphicsExecutor.scheduleUpdate(this);
+	}
+
+	public void tableChanged(TableModelEvent64 e) {
 		GraphicsExecutor.scheduleUpdate(this);
 	}
 
@@ -332,4 +337,5 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 	public void keyReleased(KeyEvent e) {
 	}
+
 }

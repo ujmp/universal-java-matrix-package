@@ -54,7 +54,7 @@ public abstract class AbstractStringCalculation extends AbstractCalculation impl
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsString(getString(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

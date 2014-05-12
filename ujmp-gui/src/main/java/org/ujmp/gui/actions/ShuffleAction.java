@@ -41,7 +41,6 @@ public class ShuffleAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().shuffle(getNewOrLink());
-		result.showGUI();
 		return result;
 	}
 

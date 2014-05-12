@@ -41,7 +41,6 @@ public class InvAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().inv();
-		result.showGUI();
 		return result;
 	}
 

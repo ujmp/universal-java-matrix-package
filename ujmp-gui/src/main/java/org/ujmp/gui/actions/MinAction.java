@@ -46,7 +46,6 @@ public class MinAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().min(Ret.NEW, getDimension());
-		result.showGUI();
 		return result;
 	}
 

@@ -49,10 +49,9 @@ public class CutToClipboardAction extends AbstractMatrixAction {
 		try {
 			m.getMatrix().export().toClipboard().asCSV();
 			m.getMatrix().clear();
-			m.getMatrix().notifyGUIObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return m;
+		return null;
 	}
 }

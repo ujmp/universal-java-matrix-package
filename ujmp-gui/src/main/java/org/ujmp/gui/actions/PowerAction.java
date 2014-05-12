@@ -47,7 +47,6 @@ public class PowerAction extends AbstractMatrixAction {
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().power(getRet(),
 				GUIUtil.getDouble("All cells to the power of", -Double.MAX_VALUE, Double.MAX_VALUE));
-		m.showGUI();
 		return m;
 	}
 

@@ -75,7 +75,6 @@ public class ImportMatrixFromFileAction extends AbstractObjectAction {
 				return null;
 
 			Matrix m = Matrix.Factory.importFromFile(fileFormat, file);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

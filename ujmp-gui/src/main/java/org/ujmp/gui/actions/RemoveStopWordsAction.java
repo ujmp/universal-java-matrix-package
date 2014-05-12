@@ -52,7 +52,6 @@ public class RemoveStopWordsAction extends AbstractMatrixAction {
 			list.add(s);
 		}
 		Matrix m = getMatrixObject().getMatrix().removeWords(getRet(), list);
-		m.showGUI();
 		return m;
 	}
 

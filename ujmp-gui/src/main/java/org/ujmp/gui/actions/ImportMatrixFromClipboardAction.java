@@ -50,7 +50,6 @@ public class ImportMatrixFromClipboardAction extends AbstractObjectAction {
 					FileFormat.CSV)];
 
 			Matrix m = Matrix.Factory.importFromClipboard(fileFormat);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

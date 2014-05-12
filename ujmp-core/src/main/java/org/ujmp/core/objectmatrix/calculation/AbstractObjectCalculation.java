@@ -67,7 +67,7 @@ public abstract class AbstractObjectCalculation extends AbstractCalculation impl
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsObject(getObject(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

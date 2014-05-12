@@ -41,7 +41,6 @@ public class CreateMatrixFromScreenshotAction extends AbstractObjectAction {
 	public Object call() {
 		try {
 			Matrix m = Matrix.Factory.createFromScreenshot();
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

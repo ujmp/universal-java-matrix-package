@@ -65,7 +65,6 @@ public class ShowInFrameAction extends AbstractObjectAction {
 				e.printStackTrace();
 			}
 		}
-		getGUIObject().showGUI();
-		return null;
+		return getGUIObject();
 	}
 }

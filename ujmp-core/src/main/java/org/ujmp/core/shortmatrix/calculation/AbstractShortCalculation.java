@@ -65,7 +65,7 @@ public abstract class AbstractShortCalculation extends AbstractCalculation imple
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsShort(getShort(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

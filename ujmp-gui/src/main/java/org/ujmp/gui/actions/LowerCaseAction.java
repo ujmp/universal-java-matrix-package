@@ -41,7 +41,6 @@ public class LowerCaseAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().lowerCase(getRet());
-		m.showGUI();
 		return m;
 	}
 

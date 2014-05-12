@@ -83,7 +83,7 @@ public class Rand extends AbstractDoubleCalculation {
 				}
 			};
 
-			getSource().notifyGUIObject();
+			getSource().fireValueChanged();
 			return getSource();
 		} else {
 			return super.calcOrig();

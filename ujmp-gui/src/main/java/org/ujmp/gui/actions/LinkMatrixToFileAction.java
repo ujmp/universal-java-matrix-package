@@ -75,7 +75,6 @@ public class LinkMatrixToFileAction extends AbstractObjectAction {
 				return null;
 
 			Matrix m = Matrix.Factory.linkToFile(fileFormat, file);
-			m.showGUI();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

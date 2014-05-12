@@ -41,7 +41,6 @@ public class RemovePunctuationAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().removePunctuation(getRet());
-		m.showGUI();
 		return m;
 	}
 

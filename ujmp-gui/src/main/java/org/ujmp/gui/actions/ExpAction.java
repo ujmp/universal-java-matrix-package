@@ -41,7 +41,6 @@ public class ExpAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().exp(getRet());
-		m.showGUI();
 		return m;
 	}
 

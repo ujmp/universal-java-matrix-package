@@ -65,7 +65,7 @@ public abstract class AbstractFloatCalculation extends AbstractCalculation imple
 		for (long[] c : getSource().allCoordinates()) {
 			getSource().setAsFloat(getFloat(c), c);
 		}
-		getSource().notifyGUIObject();
+		getSource().fireValueChanged();
 		return getSource();
 	}
 

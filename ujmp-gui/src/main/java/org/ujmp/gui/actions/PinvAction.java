@@ -45,7 +45,6 @@ public class PinvAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().pinv();
-		result.showGUI();
 		return result;
 	}
 

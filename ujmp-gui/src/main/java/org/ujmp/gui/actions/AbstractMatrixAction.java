@@ -106,7 +106,7 @@ public abstract class AbstractMatrixAction extends AbstractObjectAction {
 			int endRow = m.getRowSelectionModel().getMaxSelectionIndex();
 			int startColumn = m.getColumnSelectionModel().getMinSelectionIndex();
 			int endColumn = m.getColumnSelectionModel().getMaxSelectionIndex();
-			if (startRow != -1 && startColumn != -1 && (startRow != endRow || startColumn != endColumn)) {
+			if (startRow != -1 && startColumn != -1) {
 				m = (MatrixGUIObject) m.getMatrix().subMatrix(Ret.LINK, startRow, startColumn, endRow, endColumn)
 						.getGUIObject();
 			}

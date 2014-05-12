@@ -51,7 +51,7 @@ public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				m.notifyGUIObject();
+				m.fireValueChanged();
 			}
 		};
 		timer = UJMPTimer.newInstance();

@@ -41,7 +41,6 @@ public class UpperCaseAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().upperCase(getRet());
-		m.showGUI();
 		return m;
 	}
 

@@ -41,7 +41,6 @@ public class PrincompAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().princomp();
-		result.showGUI();
 		return result;
 	}
 

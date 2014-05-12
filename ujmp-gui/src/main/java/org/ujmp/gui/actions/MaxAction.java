@@ -46,7 +46,6 @@ public class MaxAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix result = getMatrixObject().getMatrix().max(Ret.NEW, getDimension());
-		result.showGUI();
 		return result;
 	}
 

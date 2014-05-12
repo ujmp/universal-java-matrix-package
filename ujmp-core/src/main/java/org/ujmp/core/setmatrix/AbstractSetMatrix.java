@@ -47,13 +47,13 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 
 	public boolean add(A e) {
 		boolean ret = getSet().add(e);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public boolean addAll(Collection<? extends A> c) {
 		boolean ret = getSet().addAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
@@ -75,19 +75,19 @@ public abstract class AbstractSetMatrix<A> extends AbstractDenseGenericMatrix2D<
 
 	public boolean remove(Object o) {
 		boolean ret = getSet().remove(o);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public boolean removeAll(Collection<?> c) {
 		boolean ret = getSet().removeAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 
 	public boolean retainAll(Collection<?> c) {
 		boolean ret = getSet().retainAll(c);
-		notifyGUIObject();
+		fireValueChanged();
 		return ret;
 	}
 

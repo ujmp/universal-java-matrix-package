@@ -231,28 +231,6 @@ public interface BasicDoubleCalculations {
 	public Matrix mtimes(Ret returnType, boolean ignoreNaN, Matrix matrix);
 
 	/**
-	 * Equal to times()
-	 * 
-	 * @param value
-	 *            the value
-	 * @return Matrix product
-	 */
-	public Matrix mtimes(double value);
-
-	/**
-	 * Equal to times()
-	 * 
-	 * @param returnType
-	 *            Defines if a new Matrix or a link should be returned.
-	 * @param ignoreNaN
-	 *            should missing values be ignored
-	 * @param value
-	 *            the value to multiply
-	 * @return Matrix product
-	 */
-	public Matrix mtimes(Ret returnType, boolean ignoreNaN, double value);
-
-	/**
 	 * Performs an averaging matrix multiplication on the two matrices. The
 	 * matrices must be 2-dimensional and have the correct size.
 	 * 

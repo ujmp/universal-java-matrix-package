@@ -41,7 +41,6 @@ public class CumSumAction extends AbstractMatrixAction {
 
 	public Object call() {
 		Matrix m = getMatrixObject().getMatrix().cumsum(getIgnoreMissing());
-		m.showGUI();
 		return m;
 	}
 

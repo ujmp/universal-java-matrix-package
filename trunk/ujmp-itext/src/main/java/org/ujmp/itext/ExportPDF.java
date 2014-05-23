@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 import org.ujmp.core.UJMP;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 
 import com.itextpdf.awt.DefaultFontMapper;

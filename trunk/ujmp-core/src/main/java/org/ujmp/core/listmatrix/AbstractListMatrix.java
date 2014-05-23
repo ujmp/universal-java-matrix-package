@@ -23,176 +23,255 @@
 
 package org.ujmp.core.listmatrix;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
-public abstract class AbstractListMatrix<A> extends AbstractDenseGenericMatrix2D<A> implements
-		ListMatrix<A> {
+public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D<E> implements
+		ListMatrix<E> {
 	private static final long serialVersionUID = -6776628601679785451L;
 
 	public AbstractListMatrix() {
 		super(0, 1);
 	}
 
-	public abstract List<A> getList();
+	public abstract E get(int index);
+
+	public final boolean add(E t) {
+		boolean ret = addToList(t);
+		fireValueChanged();
+		return ret;
+	}
+
+	public abstract boolean addToList(E t);
+
+	public abstract void addToList(int index, E element);
+
+	public final E getObject(long row, long column) {
+		return get(MathUtil.longToInt(row));
+	}
+
+	public final void setObject(E value, long row, long column) {
+		set(MathUtil.longToInt(row), value);
+	}
+
+	public void add(int index, E element) {
+		addToList(index, element);
+		fireValueChanged();
+	}
+
+	public final E remove(int index) {
+		E e = removeFromList(index);
+		fireValueChanged();
+		return e;
+	}
+
+	public abstract E removeFromList(int index);
+
+	public final boolean remove(Object o) {
+		boolean ret = removeFromList(o);
+		fireValueChanged();
+		return ret;
+	}
+
+	public abstract boolean removeFromList(Object o);
+
+	public final E set(int index, E element) {
+		E ret = setToList(index, element);
+		fireValueChanged();
+		return ret;
+	}
+
+	public abstract E setToList(int index, E element);
+
+	public final void clear() {
+		clearList();
+		fireValueChanged();
+	}
+
+	public abstract void clearList();
+
+	public abstract int size();
 
 	public final long[] getSize() {
 		return new long[] { size(), 1 };
 	}
 
-	public final void clear() {
-		getList().clear();
+	public final boolean contains(Object o) {
+		return indexOf(o) >= 0;
 	}
 
-	public boolean add(A e) {
-		boolean ret = getList().add(e);
-		fireValueChanged();
-		return ret;
-	}
-
-	public void add(int index, A element) {
-		getList().add(index, element);
-		fireValueChanged();
-	}
-
-	public boolean addAll(Collection<? extends A> c) {
-		boolean ret = getList().addAll(c);
-		fireValueChanged();
-		return ret;
-	}
-
-	public boolean addAll(int index, Collection<? extends A> c) {
-		boolean ret = getList().addAll(index, c);
-		fireValueChanged();
-		return ret;
-	}
-
-	public boolean contains(Object o) {
-		return getList().contains(o);
-	}
-
-	public boolean containsAll(Collection<?> c) {
-		return getList().containsAll(c);
-	}
-
-	public A get(int index) {
-		return getList().get(index);
-	}
-
-	public A getLast() {
-		if (isEmpty()) {
-			return null;
-		} else {
-			return getList().get(size() - 1);
+	public final boolean containsAll(Collection<?> c) {
+		for (Object o : c) {
+			if (contains(o)) {
+				return true;
+			}
 		}
+		return false;
 	}
 
-	public int indexOf(Object o) {
-		return getList().indexOf(o);
+	public final int indexOf(Object o) {
+		ListIterator<E> it = listIterator();
+		if (o == null) {
+			while (it.hasNext())
+				if (it.next() == null)
+					return it.previousIndex();
+		} else {
+			while (it.hasNext())
+				if (o.equals(it.next()))
+					return it.previousIndex();
+		}
+		return -1;
 	}
 
-	public boolean isEmpty() {
-		return getList().isEmpty();
+	public final boolean isEmpty() {
+		return size() == 0;
 	}
 
-	public Iterator<A> iterator() {
-		return getList().iterator();
+	public final int lastIndexOf(Object o) {
+		ListIterator<E> it = listIterator(size());
+		if (o == null) {
+			while (it.hasPrevious())
+				if (it.previous() == null)
+					return it.nextIndex();
+		} else {
+			while (it.hasPrevious())
+				if (o.equals(it.previous()))
+					return it.nextIndex();
+		}
+		return -1;
 	}
 
-	public int lastIndexOf(Object o) {
-		return getList().lastIndexOf(o);
-	}
-
-	public ListIterator<A> listIterator() {
-		return getList().listIterator();
-	}
-
-	public ListIterator<A> listIterator(int index) {
-		return getList().listIterator();
-	}
-
-	public boolean remove(Object o) {
-		boolean ret = getList().remove(o);
-		fireValueChanged();
+	public final boolean removeAll(Collection<?> c) {
+		boolean ret = false;
+		for (Object o : c) {
+			if (remove(o)) {
+				ret = true;
+			}
+		}
 		return ret;
 	}
 
-	public A remove(int index) {
-		A a = getList().remove(index);
-		fireValueChanged();
-		return a;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new UnsupportedOperationException();
 	}
 
-	public boolean removeAll(Collection<?> c) {
-		boolean ret = getList().removeAll(c);
-		fireValueChanged();
+	public Iterator<E> iterator() {
+		return new Iterator<E>() {
+			int current = -1;
+
+			public boolean hasNext() {
+				return current < size() - 1;
+			}
+
+			public E next() {
+				current++;
+				return get(current);
+			}
+
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+
+	public final Object[] toArray() {
+		final Object[] objects = new Object[size()];
+		for (int i = size() - 1; i != -1; i--) {
+			objects[i] = get(i);
+		}
+		return objects;
+	}
+
+	@SuppressWarnings("unchecked")
+	public final <T> T[] toArray(T[] a) {
+		final T[] objects = (T[]) Array.newInstance(a.getClass(), size());
+		for (int i = size() - 1; i != -1; i--) {
+			objects[i] = (T) get(i);
+		}
+		return objects;
+	}
+
+	public boolean addAll(Collection<? extends E> c) {
+		boolean ret = false;
+		for (E o : c) {
+			if (add(o)) {
+				ret = true;
+			}
+		}
 		return ret;
+	}
+
+	public boolean addAll(int index, Collection<? extends E> c) {
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean retainAll(Collection<?> c) {
-		boolean ret = getList().retainAll(c);
-		fireValueChanged();
-		return ret;
+		throw new UnsupportedOperationException();
 	}
 
-	public A set(int index, A element) {
-		A a = getList().set(index, element);
-		fireValueChanged();
-		return a;
+	public ListIterator<E> listIterator() {
+		return new ListIterator<E>() {
+			int current = -1;
+
+			public boolean hasNext() {
+				return current < size() - 1;
+			}
+
+			public E next() {
+				current++;
+				return get(current);
+			}
+
+			public boolean hasPrevious() {
+				return current > 0;
+			}
+
+			public E previous() {
+				E e = get(current);
+				current--;
+				return e;
+			}
+
+			public int nextIndex() {
+				return current + 1;
+			}
+
+			public int previousIndex() {
+				return current;
+			}
+
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+
+			public void set(E e) {
+				throw new UnsupportedOperationException();
+			}
+
+			public void add(E e) {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
-	public int size() {
-		return getList().size();
+	public ListIterator<E> listIterator(int index) {
+		throw new UnsupportedOperationException();
 	}
 
-	public List<A> subList(int fromIndex, int toIndex) {
-		return getList().subList(fromIndex, toIndex);
+	public List<E> subList(int fromIndex, int toIndex) {
+		throw new UnsupportedOperationException();
 	}
 
-	public A getObject(long row, long column) {
-		A a = getList().get((int) row);
-		return a;
-	}
-
-	public A getObject(int row, int column) {
-		A a = getList().get(row);
-		return a;
-	}
-
-	public void setObject(A value, long row, long column) {
-		getList().set((int) row, value);
-		fireValueChanged();
-	}
-
-	public void setObject(A value, int row, int column) {
-		getList().set(row, value);
-		fireValueChanged();
-	}
-
-	public Object[] toArray() {
-		return getList().toArray();
-	}
-
-	public <T> T[] toArray(T[] a) {
-		return getList().toArray(a);
-	}
-
-	public double getAsDouble(long... coordinates) {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	public void setAsDouble(double value, long... coordinates) {
-		setAsObject(value, coordinates);
-	}
-
-	public ValueType getValueType() {
-		return ValueType.OBJECT;
+	public final E getLast() {
+		return get(size() - 1);
 	}
 
 }

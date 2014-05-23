@@ -67,4 +67,6 @@ public abstract class AbstractList<T> extends java.util.AbstractList<T> implemen
 
 	public abstract T set(int index, T element);
 
+	public abstract void clear();
+
 }

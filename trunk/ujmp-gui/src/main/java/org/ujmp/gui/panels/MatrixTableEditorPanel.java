@@ -45,7 +45,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.menu.MatrixPopupMenu;
 import org.ujmp.gui.table.ColumnTableHeaderRenderer64;
-import org.ujmp.gui.table.DefaultTableColumnModel64;
 import org.ujmp.gui.table.JTable64;
 import org.ujmp.gui.table.JTableHeader64;
 import org.ujmp.gui.table.ListSelectionEvent64;
@@ -85,14 +84,14 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 		rowHeader.getTableHeader().setReorderingAllowed(false);
 		rowHeader.setColumnSelectionAllowed(false);
 		rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		rowHeader.setPreferredScrollableViewportSize(new Dimension(DefaultTableColumnModel64.COLUMNWIDTH,
-				Integer.MAX_VALUE));
+		rowHeader.setPreferredScrollableViewportSize(new Dimension(
+				rowHeader.getColumnModel64().getDefaultColumnWidth(), Integer.MAX_VALUE));
 		rowHeader.setDefaultRenderer(Object.class, new RowTableHeaderRenderer64(jTable));
 
 		JTableHeader64 tableHeader = new JTableHeader64((TableColumnModel64) jTable.getColumnModel());
 		tableHeader.setReorderingAllowed(false);
 		tableHeader.setDefaultRenderer(new ColumnTableHeaderRenderer64(jTable));
-		tableHeader.setResizingAllowed(false);
+		// tableHeader.setResizingAllowed(false);
 		jTable.setTableHeader(tableHeader);
 
 		scrollPane = new JScrollPane(jTable);

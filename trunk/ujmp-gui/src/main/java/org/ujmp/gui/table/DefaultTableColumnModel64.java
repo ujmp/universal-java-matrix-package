@@ -1,6 +1,8 @@
 package org.ujmp.gui.table;
 
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
@@ -13,16 +15,43 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultTableColumnModel64 extends DefaultTableColumnModel implements TableColumnModel64 {
 	private static final long serialVersionUID = 6012896374236252508L;
 
-	public static final int COLUMNWIDTH = 80;
-
 	private final TableModel64 tableModel64;
+
+	private int defaultColumnWidth = -1;
+
+	private final Map<Long, Integer> columnWidths = new TreeMap<Long, Integer>();
 
 	public DefaultTableColumnModel64(TableModel64 m) {
 		this.tableModel64 = m;
 	}
 
+	public int getColumnWidth(long column) {
+		Integer width = columnWidths.get(column);
+		if (width == null) {
+			return getDefaultColumnWidth();
+		} else {
+			return width;
+		}
+	}
+
+	public int getDefaultColumnWidth() {
+		if (defaultColumnWidth == -1) {
+			if (tableModel64.getColumnCount() < 10) {
+				return 200;
+			} else {
+				return 80;
+			}
+		} else {
+			return defaultColumnWidth;
+		}
+	}
+
+	public void setDefaultColumnWidth(int width) {
+		this.defaultColumnWidth = width;
+	}
+
 	public TableColumn64 getColumn(int columnIndex) {
-		TableColumn64 tableColumn = new TableColumn64(columnIndex, COLUMNWIDTH);
+		TableColumn64 tableColumn = new TableColumn64(this, columnIndex);
 		return tableColumn;
 	}
 
@@ -79,7 +108,7 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 	}
 
 	public Enumeration<TableColumn> getColumns() {
-		return new ConstantTableColumnEnumeration(tableModel64, COLUMNWIDTH);
+		return new ConstantTableColumnEnumeration(this, tableModel64);
 	}
 
 	public long getColumnIndex64(Object columnIdentifier) {
@@ -117,10 +146,6 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 	public void removeColumnModelListener(TableColumnModelListener64 x) {
 		throw new UnsupportedOperationException("not implemented");
 	}
-
-	// public Enumeration<TableColumn> getColumns() {
-	// return new TableColumnEnumeration(tableModel64, COLUMNWIDTH);
-	// }
 
 	protected ListSelectionModel64 createSelectionModel() {
 		return new FastListSelectionModel64();
@@ -173,10 +198,28 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 	}
 
 	public long getColumnIndexAtX(long xPosition) {
-		if (xPosition < 0 || xPosition > COLUMNWIDTH * getColumnCount64()) {
+		if (xPosition < 0 || xPosition > getTotalColumnWidth()) {
 			return -1;
 		} else {
-			return xPosition / COLUMNWIDTH;
+			long lastColumn = 0;
+			long lastPosition = 0;
+			for (Long column : columnWidths.keySet()) {
+				long distance = (column - lastColumn) * getDefaultColumnWidth();
+				long newPosition = lastPosition + distance;
+				if (xPosition <= newPosition) {
+					return lastColumn + (xPosition - lastPosition) / getDefaultColumnWidth();
+				}
+				lastPosition = newPosition;
+
+				distance = columnWidths.get(column);
+				newPosition = lastPosition + distance;
+				if (xPosition <= newPosition) {
+					return column;
+				}
+				lastPosition = newPosition;
+				lastColumn = column + 1;
+			}
+			return lastColumn + (xPosition - lastPosition) / getDefaultColumnWidth();
 		}
 	}
 
@@ -188,7 +231,11 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 	}
 
 	protected void recalcWidthCache() {
-		totalColumnWidth = MathUtil.longToInt(getColumnCount64() * COLUMNWIDTH);
+		long width = (getColumnCount64() - columnWidths.size()) * getDefaultColumnWidth();
+		for (Long column : columnWidths.keySet()) {
+			width += columnWidths.get(column);
+		}
+		totalColumnWidth = MathUtil.longToInt(width);
 	}
 
 	public void setColumnSelectionAllowed(boolean flag) {
@@ -199,6 +246,16 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 		return columnSelectionAllowed;
 	}
 
+	private void invalidateWidthCache() {
+		totalColumnWidth = -1;
+	}
+
+	public void setColumnWidth(long index, int width) {
+		invalidateWidthCache();
+		columnWidths.put(index, width);
+		fireColumnMarginChanged();
+	}
+
 }
 
 class ConstantTableColumnEnumeration implements Enumeration<TableColumn> {
@@ -207,9 +264,9 @@ class ConstantTableColumnEnumeration implements Enumeration<TableColumn> {
 	private final TableModel64 tableModel64;
 	private long index = 0;
 
-	public ConstantTableColumnEnumeration(TableModel64 tableModel64, int columnWidth) {
+	public ConstantTableColumnEnumeration(TableColumnModel64 tableColumnModel, TableModel64 tableModel64) {
 		this.tableModel64 = tableModel64;
-		this.tableColumn64 = new TableColumn64(0, columnWidth);
+		this.tableColumn64 = new TableColumn64(tableColumnModel, 0);
 	}
 
 	public boolean hasMoreElements() {

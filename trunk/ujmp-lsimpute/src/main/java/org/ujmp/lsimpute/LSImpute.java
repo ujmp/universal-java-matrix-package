@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.util.io.IntelligentFileWriter;
 
 public class LSImpute extends AbstractDoubleCalculation {

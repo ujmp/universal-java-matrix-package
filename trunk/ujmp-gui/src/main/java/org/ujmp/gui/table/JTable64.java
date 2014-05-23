@@ -187,17 +187,17 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 			// otherwise, x = width = 0;
 			valid = false;
 		} else {
-			TableColumnModel cm = getColumnModel();
+			TableColumnModel64 cm = getColumnModel64();
 			if (getComponentOrientation().isLeftToRight()) {
 				for (int i = 0; i < column; i++) {
-					r.x += DefaultTableColumnModel64.COLUMNWIDTH;
+					r.x += cm.getColumnWidth(i);
 				}
 			} else {
 				for (int i = cm.getColumnCount() - 1; i > column; i--) {
-					r.x += DefaultTableColumnModel64.COLUMNWIDTH;
+					r.x += cm.getColumnWidth(i);
 				}
 			}
-			r.width = DefaultTableColumnModel64.COLUMNWIDTH;
+			r.width = cm.getColumnWidth(column);
 		}
 
 		if (valid && !includeSpacing) {
@@ -209,6 +209,10 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 			r.setBounds(r.x + cm / 2, r.y + rm / 2, r.width - cm, r.height - rm);
 		}
 		return r;
+	}
+
+	public TableColumnModel64 getColumnModel64() {
+		return (TableColumnModel64) getColumnModel();
 	}
 
 	public void updateUI() {

@@ -57,4 +57,12 @@ public interface TableColumnModel64 extends TableColumnModel {
 
 	public long getColumnIndexAtX(long xPosition);
 
+	public int getColumnWidth(long i);
+
+	public int getDefaultColumnWidth();
+
+	public void setDefaultColumnWidth(int width);
+
+	public void setColumnWidth(long index, int width);
+
 }

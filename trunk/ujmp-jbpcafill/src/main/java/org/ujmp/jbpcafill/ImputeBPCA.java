@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 
 public class ImputeBPCA extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -8635313044017639669L;

@@ -28,8 +28,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
-
 public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 	private static final long serialVersionUID = -6381864884046078055L;
 
@@ -55,12 +53,44 @@ public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 		this.list = new ArrayList<T>();
 	}
 
-	public List<T> getList() {
-		return list;
+	@Override
+	public T get(int index) {
+		return list.get(index);
 	}
 
-	public DenseMatrix2DFactory<DefaultListMatrix<T>> getFactory() {
-		throw new RuntimeException("not implemented");
+	@Override
+	public boolean addToList(T t) {
+		return list.add(t);
+	}
+
+	@Override
+	public void addToList(int index, T element) {
+		list.add(index, element);
+	}
+
+	@Override
+	public T removeFromList(int index) {
+		return list.remove(index);
+	}
+
+	@Override
+	public boolean removeFromList(Object o) {
+		return list.remove(o);
+	}
+
+	@Override
+	public T setToList(int index, T element) {
+		return list.set(index, element);
+	}
+
+	@Override
+	public void clearList() {
+		list.clear();
+	}
+
+	@Override
+	public int size() {
+		return list.size();
 	}
 
 }

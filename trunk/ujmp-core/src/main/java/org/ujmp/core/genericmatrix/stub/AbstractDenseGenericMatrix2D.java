@@ -46,6 +46,10 @@ public abstract class AbstractDenseGenericMatrix2D<A> extends AbstractDenseGener
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	public abstract A getObject(long row, long column);
+
+	public abstract void setObject(A value, long row, long column);
+
 	public final int getDimensionCount() {
 		return 2;
 	}

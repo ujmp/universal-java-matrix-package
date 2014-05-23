@@ -24,6 +24,7 @@
 package org.ujmp.core.util.matrices;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.filematrix.DirectoryMatrix;
 import org.ujmp.core.util.UJMPSettings;
 
 public class LocalhostMatrix extends RemoteHostMatrix {
@@ -38,7 +39,7 @@ public class LocalhostMatrix extends RemoteHostMatrix {
 		put("System Properties", Matrix.Factory.systemProperties());
 		put("System Time", Matrix.Factory.systemTime());
 		put("UJMP Settings", UJMPSettings.getInstance());
-		put("File System", new FileSystemMatrix());
+		put("File System", new DirectoryMatrix());
 	}
 
 }

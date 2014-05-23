@@ -23,11 +23,9 @@
 
 package org.ujmp.core.matrix.factory;
 
-import java.io.Serializable;
-
 import org.ujmp.core.Matrix;
 
-public interface BaseMatrixFactory<T extends Matrix> extends Serializable {
+public interface BaseMatrixFactory<T extends Matrix> {
 
 	public Matrix zeros(long rows, long columns);
 

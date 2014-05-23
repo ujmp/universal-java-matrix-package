@@ -21,18 +21,11 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.objectmatrix.impl;
+package org.ujmp.core.filematrix;
 
-import java.io.File;
-import java.io.IOException;
+import org.ujmp.core.DenseMatrix2D;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
-import org.ujmp.core.mapmatrix.DefaultMapMatrix;
-import org.ujmp.core.stringmatrix.impl.FileListMatrix;
-
-public class FileMatrix extends DefaultMapMatrix<String, Object> {
-	private static final long serialVersionUID = 7869997158743678080L;
+public interface FileOrDirectoryMatrix extends DenseMatrix2D {
 
 	public static final String FILES = "Files";
 	public static final String TEXT = "Text";
@@ -53,43 +46,5 @@ public class FileMatrix extends DefaultMapMatrix<String, Object> {
 	public static final String AVARAGECOLOR = "AvarageColor";
 	public static final String THUMBNAIL = "Thumbnail";
 	public static final String IMAGE = "Image";
-
-	private final FileFormat fileformat;
-
-	public FileMatrix(File file, Object... parameters) throws IOException {
-		this(null, file, parameters);
-	}
-
-	public FileMatrix(FileFormat fileFormat, File file, Object... parameters) throws IOException {
-		setLabel(file);
-		if (fileFormat == null) {
-			this.fileformat = FileFormat.guess(file);
-		} else {
-			this.fileformat = fileFormat;
-		}
-		put(PATH, file.getPath());
-		put(FILENAME, file.getName());
-		put(CANREAD, file.canRead());
-		put(CANWRITE, file.canWrite());
-		put(ISHIDDEN, file.isHidden());
-		put(ISDIRECTORY, file.isDirectory());
-		put(ISFILE, file.isFile());
-		put(LASTMODIFIED, file.lastModified());
-		put(SIZE, file.length());
-		put(FILEFORMAT, this.fileformat);
-		if (file.isDirectory()) {
-			put(FILES, new FileListMatrix(file, parameters));
-		} else {
-			put(BYTES, Matrix.Factory.linkToFile(FileFormat.HEX, file));
-		}
-		if (FileFormat.isImage(this.fileformat)) {
-			put(AVARAGECOLOR, Matrix.Factory.linkToFile(this.fileformat, file, 1, 1));
-			put(THUMBNAIL, Matrix.Factory.linkToFile(this.fileformat, file, 30, 30));
-			put(IMAGE, Matrix.Factory.linkToFile(this.fileformat, file));
-		}
-		if (this.fileformat == FileFormat.UNKNOWN || FileFormat.isText(this.fileformat)) {
-			put(TEXT, Matrix.Factory.linkToFile(FileFormat.CSV, file));
-		}
-	}
 
 }

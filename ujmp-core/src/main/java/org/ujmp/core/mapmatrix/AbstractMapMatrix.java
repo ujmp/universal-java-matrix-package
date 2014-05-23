@@ -34,7 +34,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements
 		MapMatrix<K, V> {
@@ -52,7 +55,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public synchronized final Object getObject(long row, long column) {
-		return getObject((int) row, (int) column);
+		return getObject(MathUtil.longToInt(row), MathUtil.longToInt(column));
 	}
 
 	public synchronized final Object getObject(int row, int column) {
@@ -64,6 +67,10 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		} else {
 			return null;
 		}
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,7 +88,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public synchronized final void setObject(Object value, long row, long column) {
-		setObject(value, (int) row, (int) column);
+		setObject(value, MathUtil.longToInt(row), MathUtil.longToInt(column));
 	}
 
 	public synchronized MapMatrix<K, V> clone() {

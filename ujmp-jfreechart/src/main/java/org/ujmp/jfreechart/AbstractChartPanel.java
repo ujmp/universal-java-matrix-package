@@ -31,7 +31,7 @@ import java.io.File;
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartPanel;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.interfaces.CanRenderGraph;
 import org.ujmp.gui.io.ExportJPEG;

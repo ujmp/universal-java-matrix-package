@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.io.UJMPFileFilter;
 import org.ujmp.gui.MatrixGUIObject;

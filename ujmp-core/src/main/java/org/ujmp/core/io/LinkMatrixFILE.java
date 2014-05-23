@@ -27,12 +27,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.impl.FileMatrix;
+import org.ujmp.core.filematrix.FileMatrix;
 
 public class LinkMatrixFILE {
 
-	public static Matrix toFile(File file, Object... parameters) throws IOException {
-		return new FileMatrix(file, parameters);
+	public static Matrix toFile(File file) throws IOException {
+		return new FileMatrix(file);
 	}
 
 }

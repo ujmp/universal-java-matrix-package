@@ -25,6 +25,7 @@ package org.ujmp.gui.table;
 
 import java.awt.Dimension;
 
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.JTableHeader;
 
@@ -40,6 +41,10 @@ public class JTableHeader64 extends JTableHeader implements TableColumnModelList
 		return (TableColumnModel64) columnModel;
 	}
 
+	public void columnMarginChanged(ChangeEvent e) {
+		resizeAndRepaint();
+	}
+
 	public void columnAdded(TableColumnModelEvent64 e) {
 		resizeAndRepaint();
 	}
@@ -53,13 +58,12 @@ public class JTableHeader64 extends JTableHeader implements TableColumnModelList
 	}
 
 	public void columnSelectionChanged(ListSelectionEvent64 e) {
-		System.out.println("col changed");
 		repaint();
 	}
 
 	// must be overridden, otherwise it will iterate over all columns
 	public Dimension getPreferredSize() {
-		return new Dimension(getColumnModel().getColumnCount() * DefaultTableColumnModel64.COLUMNWIDTH, 15);
+		return new Dimension(getColumnModel().getTotalColumnWidth(), 15);
 	}
 
 	public void valueChanged(ListSelectionEvent e) {

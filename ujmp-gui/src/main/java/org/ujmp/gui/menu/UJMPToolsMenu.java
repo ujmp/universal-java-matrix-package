@@ -33,7 +33,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.util.JMathLib;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
 import org.ujmp.core.util.matrices.MatrixLibraries;

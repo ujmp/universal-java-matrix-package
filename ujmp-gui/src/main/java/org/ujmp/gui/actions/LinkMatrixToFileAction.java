@@ -32,7 +32,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.interfaces.GUIObject;
 
 public class LinkMatrixToFileAction extends AbstractObjectAction {

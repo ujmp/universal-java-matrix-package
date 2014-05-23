@@ -34,18 +34,17 @@ public class TableColumn64 extends TableColumn {
 
 	private long modelIndex64;
 
-	public TableColumn64(long modelIndex) {
-		this(modelIndex, 50, null, null);
+	private final TableColumnModel64 tableColumnModel;
+
+	public TableColumn64(TableColumnModel64 tableColumnModel, long modelIndex) {
+		this(tableColumnModel, modelIndex, null, null);
 	}
 
-	public TableColumn64(long modelIndex, int width) {
-		this(modelIndex, width, null, null);
-	}
-
-	public TableColumn64(long modelIndex, int width, TableCellRenderer cellRenderer, TableCellEditor cellEditor) {
-		super(MathUtil.longToIntClip(modelIndex), width, cellRenderer, cellEditor);
+	public TableColumn64(TableColumnModel64 tableColumnModel, long modelIndex, TableCellRenderer cellRenderer,
+			TableCellEditor cellEditor) {
+		super(MathUtil.longToIntClip(modelIndex), tableColumnModel.getColumnWidth(modelIndex), cellRenderer, cellEditor);
+		this.tableColumnModel = tableColumnModel;
 		this.modelIndex64 = modelIndex;
-		this.width = width;
 		this.maxWidth = width;
 		this.minWidth = width;
 	}
@@ -60,6 +59,16 @@ public class TableColumn64 extends TableColumn {
 
 	public int getModelIndex() {
 		return MathUtil.longToInt(modelIndex64);
+	}
+
+	public void setWidth(int width) {
+		super.setWidth(width);
+		setPreferredWidth(width);
+		tableColumnModel.setColumnWidth(modelIndex64, width);
+	}
+
+	public int getWidth() {
+		return tableColumnModel.getColumnWidth(modelIndex64);
 	}
 
 }

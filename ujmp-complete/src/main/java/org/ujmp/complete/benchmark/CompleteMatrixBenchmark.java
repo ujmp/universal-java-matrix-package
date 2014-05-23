@@ -45,7 +45,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.CommandLineUtil;

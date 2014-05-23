@@ -59,10 +59,12 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 			if (value == null) {
 				s = "";
 			} else if (value instanceof Matrix) {
+				s = "";
 				Matrix ma = (Matrix) value;
-				s = ma.getClass().getSimpleName();
 				if (ma.getLabel() != null) {
-					s += " [" + ma.getLabel() + "]";
+					s += "[" + ma.getLabel() + "]";
+				} else {
+					s += ma.getClass().getSimpleName();
 				}
 			} else if (value instanceof Integer) {
 				s = String.valueOf(value);

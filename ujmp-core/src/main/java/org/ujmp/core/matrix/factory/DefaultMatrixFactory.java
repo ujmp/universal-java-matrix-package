@@ -74,8 +74,9 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.enums.DBType;
-import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.filematrix.FileFormat;
+import org.ujmp.core.filematrix.FileMatrix;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultDenseFloatMatrix2D;
@@ -119,7 +120,6 @@ import org.ujmp.core.shortmatrix.impl.SimpleDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.DefaultSparseStringMatrix;
-import org.ujmp.core.stringmatrix.impl.FileListMatrix;
 import org.ujmp.core.stringmatrix.impl.SimpleDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
@@ -379,12 +379,12 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 		return matrix;
 	}
 
-	public final FileListMatrix linkToDir(String dir) throws IOException {
-		return new FileListMatrix(dir);
+	public final FileMatrix linkToDir(String dir) throws IOException {
+		return new FileMatrix(dir);
 	}
 
-	public final FileListMatrix linkToDir(File dir) throws IOException {
-		return new FileListMatrix(dir);
+	public final FileMatrix linkToDir(File dir) throws IOException {
+		return new FileMatrix(dir);
 	}
 
 	public final MapMatrix<?, ?> linkToMap(Map<?, ?> map) {

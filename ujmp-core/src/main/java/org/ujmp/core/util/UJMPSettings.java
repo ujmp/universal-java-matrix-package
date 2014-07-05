@@ -60,7 +60,7 @@ public class UJMPSettings extends DefaultMapMatrix<String, Object> {
 		put(DEFAULTBLOCKSIZE, 100);
 		put(MATHCONTEXT, MathContext.DECIMAL128);
 		put(USEMULTITHREADEDRANDOM, true);
-		put(USEBLOCKMATRIXMULTIPLY, true);
+		put(USEBLOCKMATRIXMULTIPLY, false);
 		put(DEFAULTTOLERANCE, 1.0e-12);
 
 		put(USEJBLAS, true);

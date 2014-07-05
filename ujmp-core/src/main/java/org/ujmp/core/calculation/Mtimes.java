@@ -370,8 +370,7 @@ class MtimesDenseDoubleMatrix2D implements
 		verifyTrue(source1.getRowCount() == target.getRowCount(), "a.rows!=c.rows");
 		verifyTrue(source2.getColumnCount() == target.getColumnCount(), "a.cols!=c.cols");
 		if (source1.getRowCount() >= Mtimes.THRESHOLD
-				&& source1.getColumnCount() >= Mtimes.THRESHOLD
-				&& source2.getColumnCount() >= Mtimes.THRESHOLD) {
+				&& source1.getColumnCount() >= Mtimes.THRESHOLD) {
 			if (Mtimes.MTIMES_JBLAS != null && UJMPSettings.getInstance().isUseJBlas()) {
 				Mtimes.MTIMES_JBLAS.calc((DenseDoubleMatrix2D) source1,
 						(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);

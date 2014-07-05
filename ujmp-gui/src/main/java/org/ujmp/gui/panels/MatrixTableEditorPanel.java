@@ -24,7 +24,6 @@
 package org.ujmp.gui.panels;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,7 +35,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
@@ -52,7 +50,6 @@ import org.ujmp.gui.table.ListSelectionListener64;
 import org.ujmp.gui.table.MatrixTable64;
 import org.ujmp.gui.table.RowHeaderTableModel64;
 import org.ujmp.gui.table.RowTableHeaderRenderer64;
-import org.ujmp.gui.table.TableColumnModel64;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
 import org.ujmp.gui.util.Preloader;
@@ -82,16 +79,11 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 		rowHeader = new JTable64(new RowHeaderTableModel64(m), new SingleTableColumnModel(dataModel),
 				dataModel.getRowSelectionModel());
 		rowHeader.getTableHeader().setReorderingAllowed(false);
-		rowHeader.setColumnSelectionAllowed(false);
-		rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		rowHeader.setPreferredScrollableViewportSize(new Dimension(
-				rowHeader.getColumnModel64().getDefaultColumnWidth(), Integer.MAX_VALUE));
 		rowHeader.setDefaultRenderer(Object.class, new RowTableHeaderRenderer64(jTable));
 
-		JTableHeader64 tableHeader = new JTableHeader64((TableColumnModel64) jTable.getColumnModel());
+		JTableHeader64 tableHeader = new JTableHeader64(jTable.getColumnModel64());
 		tableHeader.setReorderingAllowed(false);
 		tableHeader.setDefaultRenderer(new ColumnTableHeaderRenderer64(jTable));
-		// tableHeader.setResizingAllowed(false);
 		jTable.setTableHeader(tableHeader);
 
 		scrollPane = new JScrollPane(jTable);

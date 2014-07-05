@@ -36,6 +36,8 @@ public interface DistanceMeasures {
 
 	public double chebyshevDistanceTo(Matrix m, boolean ignoreNaN);
 
+	public double cosineSimilarityTo(Matrix m, boolean ignoreNaN);
+
 	public Matrix euklideanDistance(Ret returnType, boolean ignoreNaN);
 
 	public Matrix manhattenDistance(Ret returnType, boolean ignoreNaN);

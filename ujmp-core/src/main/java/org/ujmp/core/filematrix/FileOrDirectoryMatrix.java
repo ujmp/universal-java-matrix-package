@@ -46,5 +46,6 @@ public interface FileOrDirectoryMatrix extends DenseMatrix2D {
 	public static final String AVARAGECOLOR = "AvarageColor";
 	public static final String THUMBNAIL = "Thumbnail";
 	public static final String IMAGE = "Image";
+	public static final String DATA = "Data";
 
 }

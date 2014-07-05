@@ -23,6 +23,7 @@
 
 package org.ujmp.gui.table;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.Enumeration;
 
@@ -56,6 +57,10 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	// do not set widths from preferred sizes
 	public void doLayout() {
 		layout();
+	}
+
+	public Dimension getPreferredScrollableViewportSize() {
+		return new Dimension(getColumnModel64().getTotalColumnWidth(), Integer.MAX_VALUE);
 	}
 
 	protected void initializeLocalVars() {

@@ -45,10 +45,6 @@ public class DefaultSparseCharMatrix extends DefaultSparseGenericMatrix<Characte
 		super(size);
 	}
 
-	public DefaultSparseCharMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.CHAR;
 	}

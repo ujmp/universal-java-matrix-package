@@ -44,10 +44,6 @@ public class DefaultSparseLongMatrix extends DefaultSparseGenericMatrix<Long> im
 		super(size);
 	}
 
-	public DefaultSparseLongMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.LONG;
 	}

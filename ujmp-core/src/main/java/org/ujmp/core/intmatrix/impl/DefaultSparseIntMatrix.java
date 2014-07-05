@@ -45,10 +45,6 @@ public class DefaultSparseIntMatrix extends DefaultSparseGenericMatrix<Integer> 
 		super(size);
 	}
 
-	public DefaultSparseIntMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.INT;
 	}

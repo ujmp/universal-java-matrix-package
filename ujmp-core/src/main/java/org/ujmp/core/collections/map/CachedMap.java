@@ -73,7 +73,9 @@ public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K,
 		V value = getCache().get(key);
 		if (value == null) {
 			value = getWrappedObject().get(key);
-			getCache().put((K) key, value);
+			if (value != null) {
+				getCache().put((K) key, value);
+			}
 		}
 		return value;
 	}

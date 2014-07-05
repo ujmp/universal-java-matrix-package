@@ -40,6 +40,7 @@ import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPTimer;
+import org.ujmp.gui.actions.SetLabelAction;
 import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
@@ -192,8 +193,11 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 }
 
 class LoadDataThread extends Thread {
+	private static int id = 1;
+
 	public LoadDataThread(DefaultMatrixGUIObject realTimeMatrixGUIObject) {
 		super(new LoadDataRunnable(realTimeMatrixGUIObject));
+		this.setName("UJMPLoadDataThread" + id++);
 		this.setDaemon(true);
 	}
 }

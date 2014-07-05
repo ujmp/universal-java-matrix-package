@@ -24,7 +24,9 @@
 package org.ujmp.core.filematrix;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
@@ -33,6 +35,8 @@ public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements Fil
 	private static final long serialVersionUID = -4912495890644097086L;
 
 	private final File file;
+
+	private final Map<String, Matrix> map = new TreeMap<String, Matrix>();
 
 	public FileMatrix(String filename) {
 		this(new File(filename));
@@ -58,11 +62,41 @@ public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements Fil
 	}
 
 	public Matrix get(Object key) {
-		throw new UnsupportedOperationException();
+		loadContent();
+		return map.get(key);
 	}
 
 	public Set<String> keySet() {
-		throw new UnsupportedOperationException();
+		loadContent();
+		return map.keySet();
+	}
+
+	private void loadContent() {
+		if (map.isEmpty()) {
+			try {
+				FileFormat format = FileFormat.guess(file);
+				setMetaData(FILEFORMAT, format);
+				map.put(FILEFORMAT, Matrix.Factory.linkToValue(format));
+				switch (format) {
+				case BMP:
+				case GIF:
+				case JPG:
+				case JPEG2000:
+				case PNG:
+				case TIF:
+					map.put(IMAGE, Matrix.Factory.linkToImage(file));
+					break;
+				case DB:
+					map.put(DATA, Matrix.Factory.linkToJDBC(file));
+				case ZIP:
+					map.put(DATA, Matrix.Factory.linkToZipFile(file));
+				default:
+					break;
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	@Override

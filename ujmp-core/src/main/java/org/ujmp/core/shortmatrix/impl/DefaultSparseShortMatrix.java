@@ -45,10 +45,6 @@ public class DefaultSparseShortMatrix extends DefaultSparseGenericMatrix<Short> 
 		super(size);
 	}
 
-	public DefaultSparseShortMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.SHORT;
 	}

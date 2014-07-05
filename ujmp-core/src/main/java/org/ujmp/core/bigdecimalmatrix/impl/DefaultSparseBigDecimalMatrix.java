@@ -47,10 +47,6 @@ public class DefaultSparseBigDecimalMatrix extends DefaultSparseGenericMatrix<Bi
 		super(size);
 	}
 
-	public DefaultSparseBigDecimalMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.BIGDECIMAL;
 	}

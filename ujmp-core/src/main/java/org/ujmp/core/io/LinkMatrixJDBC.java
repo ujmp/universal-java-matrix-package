@@ -23,9 +23,11 @@
 
 package org.ujmp.core.io;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.DBType;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 
@@ -66,6 +68,17 @@ public class LinkMatrixJDBC {
 					new Class[] { Connection.class, String.class });
 			DenseObjectMatrix2D matrix = (DenseObjectMatrix2D) method.invoke(null, connection,
 					sqlStatement);
+			return matrix;
+		} catch (Exception e) {
+			throw new RuntimeException("ujmp-jdbc not found in classpath", e);
+		}
+	}
+
+	public static Matrix toDatabase(File file) {
+		try {
+			Class<?> c = Class.forName("org.ujmp.jdbc.LinkMatrixJDBC");
+			Method method = c.getMethod("toDatabase", new Class[] { File.class });
+			DenseObjectMatrix2D matrix = (DenseObjectMatrix2D) method.invoke(null, file);
 			return matrix;
 		} catch (Exception e) {
 			throw new RuntimeException("ujmp-jdbc not found in classpath", e);

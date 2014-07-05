@@ -24,6 +24,9 @@
 package org.ujmp.core.util;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.ujmp.core.Matrix;
 
@@ -174,6 +177,11 @@ public abstract class VerifyUtil {
 
 	public static final void verifyNotEmpty(Object... objects) {
 		verifyTrue(objects.length > 0, "object array must not be empty");
+	}
+
+	public static final void verifyNotEmpty(Collection<?> collection) {
+		verifyNotNull(collection, "collection must not be null");
+		verifyFalse(collection.isEmpty(), "collection must not be empty");
 	}
 
 	public static final void verifyNotEmpty(String... strings) {

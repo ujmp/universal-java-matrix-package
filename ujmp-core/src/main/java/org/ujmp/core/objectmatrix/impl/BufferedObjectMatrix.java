@@ -123,7 +123,7 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		if (numElements < 1) {
 			inputBuffer = new VolatileSparseObjectMatrix(original.getSize());
 		} else {
-			inputBuffer = new DefaultSparseObjectMatrix(numElements, original.getSize());
+			inputBuffer = new DefaultSparseObjectMatrix(original.getSize());
 		}
 	}
 

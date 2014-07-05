@@ -47,10 +47,6 @@ public class DefaultSparseBigIntegerMatrix extends DefaultSparseGenericMatrix<Bi
 		super(size);
 	}
 
-	public DefaultSparseBigIntegerMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.BIGINTEGER;
 	}

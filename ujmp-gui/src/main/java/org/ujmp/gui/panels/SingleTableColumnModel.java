@@ -8,7 +8,7 @@ public class SingleTableColumnModel extends DefaultTableColumnModel64 {
 
 	public SingleTableColumnModel(TableModel64 tableModel64) {
 		super(tableModel64);
-		setDefaultColumnWidth(80);
+		setDefaultColumnWidth(50);
 	}
 
 }

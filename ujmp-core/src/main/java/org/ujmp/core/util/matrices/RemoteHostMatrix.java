@@ -313,6 +313,30 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 				} catch (Exception e) {
 				}
 
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 9200), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("Elasticsearch HTTP", null);
+						fireValueChanged();
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress(address, 9300), delay);
+					portAvailable = socket.isConnected();
+					socket.close();
+					if (portAvailable) {
+						put("Elasticsearch Transport", null);
+						fireValueChanged();
+					}
+				} catch (Exception e) {
+				}
+
 				return null;
 			}
 		};

@@ -61,4 +61,6 @@ public interface HyperbolicDoubleCalculations {
 	 */
 	public Matrix tanh(Ret returnType);
 
+	public Matrix tanh();
+
 }

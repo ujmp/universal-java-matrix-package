@@ -36,6 +36,7 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
+import org.ujmp.core.util.concurrent.PFor;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class TimesMatrix {
@@ -220,7 +221,8 @@ class TimesMatrixDenseDoubleMatrix2D implements
 		}
 	}
 
-	private final void calc(final double[] source1, final double[] source2, final double[] target) {
+	public static final void calc(final double[] source1, final double[] source2,
+			final double[] target) {
 		VerifyUtil.verifySameSize(source1, source2, target);
 		final int length = source1.length;
 		for (int i = 0; i < length; i++) {

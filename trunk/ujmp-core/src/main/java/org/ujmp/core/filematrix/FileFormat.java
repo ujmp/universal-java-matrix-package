@@ -24,8 +24,12 @@
 package org.ujmp.core.filematrix;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import org.ujmp.core.util.io.IntelligentFileReader;
+import javax.swing.filechooser.FileFilter;
+
 import org.ujmp.core.util.io.UJMPFileFilter;
 
 /**
@@ -34,7 +38,7 @@ import org.ujmp.core.util.io.UJMPFileFilter;
 public enum FileFormat {
 	UNKNOWN("unknown", ""), //
 	AES("AES Crypt File", new byte[] { 0x41, 0x45, 0x53 }, "aes"), //
-	AI("Adobe Illustrator File", new byte[] { 0x25, 0x50, 0x44, 0x46 }, "ai"), //
+	AI("Adobe Illustrator File", "ai"), //
 	AML("AML Files", "aml"), //
 	ARJ("ARJ Compressed File", new byte[] { 0x60, (byte) 0xEA }, "arj"), //
 	ARC("FreeArc Compressed File", new byte[] { 0x41, 0x72, 0x43, 0x01 }, "arc"), //
@@ -115,6 +119,7 @@ public enum FileFormat {
 	PHP("PHP File", "php"), //
 	PLT("GnuPlot File", "plt"), //
 	PNG("PNG Image File", new byte[] { (byte) 0x89, 0x50, 0x4E, 0x47 }, "png"), //
+	PPM("Portable Pixmap Image File", new byte[] { 0x50, 0x36 }, "ppm"), //
 	PPT("Microsoft PowerPoint Document", new byte[] { (byte) 0xD0, (byte) 0xCF, 0x11, (byte) 0xE0,
 			(byte) 0xA1, (byte) 0xB1, 0x1A, (byte) 0xE1 }, "ppt"), //
 	PPTX("Microsoft PowerPoint 2010 Document", new byte[] { 0x50, 0x4B, 0x03, 0x04 }, "pptx"), //
@@ -160,7 +165,7 @@ public enum FileFormat {
 	XLS("Microsoft Excel File", new byte[] { (byte) 0xD0, (byte) 0xCF, 0x11, (byte) 0xE0,
 			(byte) 0xA1, (byte) 0xB1, 0x1A, (byte) 0xE1 }, "xls"), //
 	XLSX("Microsoft Excel 2010 File", new byte[] { 0x50, 0x4B, 0x03, 0x04 }, "xlsx"), //
-	XML("XML File", "xml"), //
+	XML("XML File", new byte[] { '<', 'x', 'm', 'l' }, "xml"), //
 	Z("Compress File", new byte[] { 0x1F, (byte) 0x9D }, "z"), //
 	Z7("7-Zip File", new byte[] { 0x37, 0x7A, (byte) 0xBC, (byte) 0xAF, 0x27, 0x1C }, "7z"), //
 	ZIP("PKZip File", new byte[] { 0x50, 0x4B, 0x03, 0x04 }, "zip"), //
@@ -172,7 +177,11 @@ public enum FileFormat {
 	private final byte[] magicBytes;
 	private final int offset;
 
-	private javax.swing.filechooser.FileFilter fileFilter = null;
+	private static int maxMagicByteLength = 0;
+
+	private static final Object lock = new Object();
+
+	private FileFilter fileFilter = null;
 
 	private FileFormat(String description, byte[] magicBytes, String... extensions) {
 		this(description, 0, magicBytes, extensions);
@@ -202,44 +211,47 @@ public enum FileFormat {
 		return description;
 	}
 
-	public static FileFormat guess(File file) {
-		if (file == null || !file.isFile() || !file.canRead()) {
-			return null;
-		}
-
-		String name = file.getName().toLowerCase();
+	public static FileFormat guess(String filename) {
+		filename = filename.toLowerCase();
 		for (FileFormat f : FileFormat.values()) {
 			for (String e : f.getExtensions()) {
-				if (name.endsWith("." + e)) {
-					return f;
-				}
-			}
-		}
-
-		// try to find file format by content
-		final byte[] data = IntelligentFileReader.readBytes(file, 100);
-		for (FileFormat f : FileFormat.values()) {
-			final byte[] magic = f.getMagicBytes();
-			if (magic.length == 0) {
-				continue;
-			}
-			final int offset = f.getOffset();
-			if (offset + magic.length > data.length) {
-				continue;
-			} else {
-				int len = magic.length;
-				boolean match = true;
-				for (int i = 0; i < len; i++) {
-					if (data[offset + i] != magic[i]) {
-						match = false;
-					}
-				}
-				if (match) {
+				if (filename.endsWith("." + e)) {
 					return f;
 				}
 			}
 		}
 		return FileFormat.UNKNOWN;
+	}
+
+	public static FileFormat guess(File file) throws IOException {
+		if (file == null || !file.isFile() || !file.canRead()) {
+			return FileFormat.UNKNOWN;
+		}
+
+		FileFormat format = guess(file.getName());
+		if (format != FileFormat.UNKNOWN) {
+			return format;
+		} else {
+			final InputStream is = new FileInputStream(file);
+			format = guess(is);
+			is.close();
+			return format;
+		}
+	}
+
+	public static int getMaxMagicByteLength() {
+		if (maxMagicByteLength == 0) {
+			synchronized (lock) {
+				if (maxMagicByteLength == 0) {
+					for (FileFormat f : FileFormat.values()) {
+						if (maxMagicByteLength < f.getMagicBytes().length) {
+							maxMagicByteLength = f.getMagicBytes().length;
+						}
+					}
+				}
+			}
+		}
+		return maxMagicByteLength;
 	}
 
 	private int getOffset() {
@@ -337,6 +349,37 @@ public enum FileFormat {
 		default:
 			return false;
 		}
+	}
+
+	public static FileFormat guess(final byte[] data) {
+		for (FileFormat f : FileFormat.values()) {
+			final byte[] magic = f.getMagicBytes();
+			if (magic.length == 0) {
+				continue;
+			}
+			final int offset = f.getOffset();
+			if (offset + magic.length > data.length) {
+				continue;
+			} else {
+				int len = magic.length;
+				boolean match = true;
+				for (int i = 0; i < len; i++) {
+					if (data[offset + i] != magic[i]) {
+						match = false;
+					}
+				}
+				if (match) {
+					return f;
+				}
+			}
+		}
+		return FileFormat.UNKNOWN;
+	}
+
+	public static FileFormat guess(InputStream is) throws IOException {
+		final byte[] data = new byte[getMaxMagicByteLength()];
+		is.read(data);
+		return guess(data);
 	}
 
 }

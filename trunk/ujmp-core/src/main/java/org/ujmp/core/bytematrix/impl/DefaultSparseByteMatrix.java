@@ -44,10 +44,6 @@ public class DefaultSparseByteMatrix extends DefaultSparseGenericMatrix<Byte> im
 		super(size);
 	}
 
-	public DefaultSparseByteMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.BYTE;
 	}

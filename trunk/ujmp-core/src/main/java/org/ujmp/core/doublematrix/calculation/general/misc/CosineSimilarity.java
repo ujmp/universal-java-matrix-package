@@ -26,6 +26,7 @@ package org.ujmp.core.doublematrix.calculation.general.misc;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.VerifyUtil;
 
 public class CosineSimilarity extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 9144182368353349242L;
@@ -66,6 +67,29 @@ public class CosineSimilarity extends AbstractDoubleCalculation {
 
 	public long[] getSize() {
 		return size;
+	}
+
+	public static double getCosineSimilartiy(Matrix m1, Matrix m2, boolean ignoreNaN) {
+		VerifyUtil.verifySameSize(m1, m2);
+		double aiSum = 0;
+		double a2Sum = 0;
+		double b2Sum = 0;
+		for (long[] c : m1.allCoordinates()) {
+			double a = m1.getAsDouble(c);
+			double b = m2.getAsDouble(c);
+			if (ignoreNaN) {
+				if (!MathUtil.isNaNOrInfinite(a) && !MathUtil.isNaNOrInfinite(b)) {
+					aiSum += a * b;
+					a2Sum += a * a;
+					b2Sum += b * b;
+				}
+			} else {
+				aiSum += a * b;
+				a2Sum += a * a;
+				b2Sum += b * b;
+			}
+		}
+		return aiSum / (Math.sqrt(a2Sum) * Math.sqrt(b2Sum));
 	}
 
 }

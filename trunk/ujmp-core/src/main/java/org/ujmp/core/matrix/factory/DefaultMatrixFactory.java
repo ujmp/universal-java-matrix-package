@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
@@ -77,6 +78,7 @@ import org.ujmp.core.enums.DBType;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.filematrix.FileMatrix;
+import org.ujmp.core.filematrix.ZipFileMatrix;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.DefaultDenseFloatMatrix2D;
@@ -762,6 +764,18 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 
 	public Matrix zeros(long rows, long columns) {
 		return zeros(new long[] { rows, columns });
+	}
+
+	public Matrix linkToImage(File file) throws IOException {
+		return new ImageMatrix(file);
+	}
+
+	public Matrix linkToJDBC(File file) {
+		return LinkMatrixJDBC.toDatabase(file);
+	}
+
+	public Matrix linkToZipFile(File file) throws ZipException, IOException {
+		return new ZipFileMatrix(file);
 	}
 
 }

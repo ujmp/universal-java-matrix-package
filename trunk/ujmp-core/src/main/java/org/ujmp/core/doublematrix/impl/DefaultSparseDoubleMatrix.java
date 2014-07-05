@@ -46,10 +46,6 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 		super(size);
 	}
 
-	public DefaultSparseDoubleMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}

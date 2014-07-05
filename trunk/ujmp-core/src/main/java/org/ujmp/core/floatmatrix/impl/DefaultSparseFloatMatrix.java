@@ -45,10 +45,6 @@ public class DefaultSparseFloatMatrix extends DefaultSparseGenericMatrix<Float> 
 		super(size);
 	}
 
-	public DefaultSparseFloatMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.FLOAT;
 	}

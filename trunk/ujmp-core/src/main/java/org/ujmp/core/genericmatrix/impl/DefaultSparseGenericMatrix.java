@@ -64,12 +64,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		this.size = Coordinates.copyOf(size);
 	}
 
-	public DefaultSparseGenericMatrix(int maximumNumberOfEntries, long... size) {
-		super(size);
-		this.size = Coordinates.copyOf(size);
-		this.maximumNumberOfEntries = maximumNumberOfEntries;
-	}
-
 	public long[] getSize() {
 		return size;
 	}

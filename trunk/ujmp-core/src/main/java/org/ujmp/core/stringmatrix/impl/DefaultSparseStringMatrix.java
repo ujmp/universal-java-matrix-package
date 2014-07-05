@@ -45,10 +45,6 @@ public class DefaultSparseStringMatrix extends DefaultSparseGenericMatrix<String
 		super(size);
 	}
 
-	public DefaultSparseStringMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.STRING;
 	}

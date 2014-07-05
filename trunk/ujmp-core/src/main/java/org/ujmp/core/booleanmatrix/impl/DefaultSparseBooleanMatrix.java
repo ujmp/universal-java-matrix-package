@@ -45,10 +45,6 @@ public class DefaultSparseBooleanMatrix extends DefaultSparseGenericMatrix<Boole
 		super(size);
 	}
 
-	public DefaultSparseBooleanMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.BOOLEAN;
 	}

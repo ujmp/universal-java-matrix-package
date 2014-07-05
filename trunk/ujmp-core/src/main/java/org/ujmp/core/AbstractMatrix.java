@@ -200,6 +200,7 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
@@ -481,6 +482,28 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Matrix times(double factor) {
 		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.timesScalar.calc(this, factor, result);
+		return result;
+	}
+
+	public Matrix tanh() {
+		final int rows = MathUtil.longToInt(getRowCount());
+		final int cols = MathUtil.longToInt(getColumnCount());
+		final Matrix result = Matrix.Factory.zeros(rows, cols);
+		if (UJMPSettings.getInstance().getNumberOfThreads() > 1 && rows >= 100 && cols >= 100) {
+			new PForEquidistant(0, rows - 1) {
+				public void step(int i) {
+					for (int c = 0; c < cols; c++) {
+						result.setAsDouble(Math.tanh(getAsDouble(i, c)), i, c);
+					}
+				}
+			};
+		} else {
+			for (int r = 0; r < rows; r++) {
+				for (int c = 0; c < cols; c++) {
+					result.setAsDouble(Math.tanh(getAsDouble(r, c)), r, c);
+				}
+			}
+		}
 		return result;
 	}
 
@@ -1344,6 +1367,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new CosineSimilarity(this, ignoreNaN).calc(returnType);
 	}
 
+	public double cosineSimilarityTo(Matrix m, boolean ignoreNaN) {
+		return CosineSimilarity.getCosineSimilartiy(this, m, ignoreNaN);
+	}
+
 	public double minkowskiDistanceTo(Matrix m, double p, boolean ignoreNaN) {
 		double sum = 0.0;
 		if (ignoreNaN) {
@@ -1534,7 +1561,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return sum;
 	}
 
-	public final void setLabel(Object label) {
+	public void setLabel(Object label) {
 		if (metaData == null) {
 			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}

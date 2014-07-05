@@ -47,10 +47,6 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		super(size);
 	}
 
-	public DefaultSparseObjectMatrix(int maximumNumberOfEntries, long... size) {
-		super(maximumNumberOfEntries, size);
-	}
-
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
 	}

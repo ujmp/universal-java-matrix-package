@@ -23,8 +23,13 @@
 
 package org.ujmp.core.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -34,7 +39,7 @@ import java.io.Serializable;
 
 public abstract class SerializationUtil {
 
-	public static void serialize(Serializable obj, OutputStream outputStream) throws IOException {
+	public static void serialize(Object obj, OutputStream outputStream) throws IOException {
 		ObjectOutputStream out = null;
 		try {
 			out = new ObjectOutputStream(outputStream);
@@ -88,6 +93,31 @@ public abstract class SerializationUtil {
 
 	public static long sizeOf(Serializable o) throws IOException {
 		return serialize(o).length;
+	}
+
+	public static Object load(String filename) throws ClassNotFoundException, IOException {
+		return load(new File(filename));
+	}
+
+	public static Object load(File file) throws ClassNotFoundException, IOException {
+		FileInputStream fis = new FileInputStream(file);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		Object o = deserialize(bis);
+		bis.close();
+		fis.close();
+		return o;
+	}
+
+	public static void save(String filename, Object o) throws IOException {
+		save(new File(filename), o);
+	}
+
+	public static void save(File file, Object o) throws IOException {
+		FileOutputStream fos = new FileOutputStream(file);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		serialize(o, bos);
+		bos.close();
+		fos.close();
 	}
 
 }

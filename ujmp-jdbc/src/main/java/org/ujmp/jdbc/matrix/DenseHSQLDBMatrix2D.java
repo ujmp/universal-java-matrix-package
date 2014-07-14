@@ -26,17 +26,15 @@ package org.ujmp.jdbc.matrix;
 public class DenseHSQLDBMatrix2D extends AbstractDenseJDBCMatrix2D {
 	private static final long serialVersionUID = -3053272437622363485L;
 
-	public DenseHSQLDBMatrix2D(String url, String sqlStatement,
-			String username, String password) throws ClassNotFoundException {
+	public DenseHSQLDBMatrix2D(String url, String sqlStatement, String username, String password)
+			throws ClassNotFoundException {
 		super(url, sqlStatement, username, password);
 		Class.forName("com.mysql.jdbc.Driver");
 	}
 
-	public DenseHSQLDBMatrix2D(String host, int port, String databasename,
-			String sqlStatement, String username, String password)
-			throws ClassNotFoundException {
-		this("jdbc:hsqldb://" + host + ":" + port + "/" + databasename,
-				sqlStatement, username, password);
+	public DenseHSQLDBMatrix2D(String host, int port, String databasename, String sqlStatement, String username,
+			String password) throws ClassNotFoundException {
+		this("jdbc:hsqldb://" + host + ":" + port + "/" + databasename, sqlStatement, username, password);
 	}
 
 }

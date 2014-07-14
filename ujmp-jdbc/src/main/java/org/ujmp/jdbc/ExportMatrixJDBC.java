@@ -33,9 +33,8 @@ import org.ujmp.core.enums.DBType;
 
 public abstract class ExportMatrixJDBC {
 
-	public static void toDatabase(Matrix matrix, String url, String tablename,
-			String username, String password) throws ClassNotFoundException,
-			SQLException {
+	public static void toDatabase(Matrix matrix, String url, String tablename, String username, String password)
+			throws ClassNotFoundException, SQLException {
 		if (matrix == null) {
 			return;
 		} else if (matrix.isEmpty()) {
@@ -56,8 +55,8 @@ public abstract class ExportMatrixJDBC {
 
 		if (fields.length == 4) {
 			String[] params = fields[3].split("\\?");
-			Connection connection = DriverManager.getConnection(fields[0] + "/"
-					+ fields[1] + "/" + fields[2], username, password);
+			Connection connection = DriverManager.getConnection(fields[0] + "/" + fields[1] + "/" + fields[2],
+					username, password);
 			Statement statement = connection.createStatement();
 			String db = "CREATE DATABASE IF NOT EXISTS " + params[0];
 			statement.executeUpdate(db);
@@ -65,59 +64,58 @@ public abstract class ExportMatrixJDBC {
 			connection.close();
 		}
 
-		Connection connection = DriverManager.getConnection(url, username,
-				password);
+		Connection connection = DriverManager.getConnection(url, username, password);
 
 		Statement statement = connection.createStatement();
 
-//		String sql = "CREATE TABLE IF NOT EXISTS `" + tablename + "` (";
-//		for (int c = 0; c < matrix.getColumnCount(); c++) {
-//			sql += "`" + getColumnName(matrix, c) + "` "
-//					+ getColumnType(getDBTypeFromUrl(url), matrix, c);
-//			if (c < matrix.getColumnCount() - 1) {
-//				sql += ", ";
-//			}
-//		}
-//		sql += ");";
-//
-//		statement.executeUpdate(sql);
-//
-//		sql = "INSERT IGNORE INTO `" + tablename + "` (";
-//		for (int c = 0; c < matrix.getColumnCount(); c++) {
-//			sql += "`" + getColumnName(matrix, c) + "`";
-//			if (c < matrix.getColumnCount() - 1) {
-//				sql += ", ";
-//			}
-//		}
-//		sql += ") VALUES (";
-//		for (int c = 0; c < matrix.getColumnCount(); c++) {
-//			sql += "?";
-//			if (c < matrix.getColumnCount() - 1) {
-//				sql += ", ";
-//			}
-//		}
-//		sql += ");";
-//
-//		connection.setAutoCommit(false);
-//
-//		PreparedStatement ps = connection.prepareStatement(sql);
-//
-//		for (long r = 0; r < matrix.getRowCount(); r++) {
-//			for (int c = 0; c < matrix.getColumnCount(); c++) {
-//				ps.setObject(c + 1, matrix.getAsObject(r, c));
-//			}
-//			ps.addBatch();
-//			if (r % 1000 == 0) {
-//				System.out.print(".");
-//				// ps.executeBatch();
-//			}
-//		}
-//
-//		ps.executeBatch();
-//		ps.close();
-//
-//		connection.commit();
-//		connection.close();
+		// String sql = "CREATE TABLE IF NOT EXISTS `" + tablename + "` (";
+		// for (int c = 0; c < matrix.getColumnCount(); c++) {
+		// sql += "`" + getColumnName(matrix, c) + "` "
+		// + getColumnType(getDBTypeFromUrl(url), matrix, c);
+		// if (c < matrix.getColumnCount() - 1) {
+		// sql += ", ";
+		// }
+		// }
+		// sql += ");";
+		//
+		// statement.executeUpdate(sql);
+		//
+		// sql = "INSERT IGNORE INTO `" + tablename + "` (";
+		// for (int c = 0; c < matrix.getColumnCount(); c++) {
+		// sql += "`" + getColumnName(matrix, c) + "`";
+		// if (c < matrix.getColumnCount() - 1) {
+		// sql += ", ";
+		// }
+		// }
+		// sql += ") VALUES (";
+		// for (int c = 0; c < matrix.getColumnCount(); c++) {
+		// sql += "?";
+		// if (c < matrix.getColumnCount() - 1) {
+		// sql += ", ";
+		// }
+		// }
+		// sql += ");";
+		//
+		// connection.setAutoCommit(false);
+		//
+		// PreparedStatement ps = connection.prepareStatement(sql);
+		//
+		// for (long r = 0; r < matrix.getRowCount(); r++) {
+		// for (int c = 0; c < matrix.getColumnCount(); c++) {
+		// ps.setObject(c + 1, matrix.getAsObject(r, c));
+		// }
+		// ps.addBatch();
+		// if (r % 1000 == 0) {
+		// System.out.print(".");
+		// // ps.executeBatch();
+		// }
+		// }
+		//
+		// ps.executeBatch();
+		// ps.close();
+		//
+		// connection.commit();
+		// connection.close();
 
 		System.out.println("done");
 	}
@@ -132,13 +130,11 @@ public abstract class ExportMatrixJDBC {
 		}
 	}
 
-	public static void toDatabase(Matrix matrix, DBType type, String host,
-			int port, String databasename, String tablename, String username,
-			String password) throws ClassNotFoundException, SQLException {
+	public static void toDatabase(Matrix matrix, DBType type, String host, int port, String databasename,
+			String tablename, String username, String password) throws ClassNotFoundException, SQLException {
 		switch (type) {
 		case MySQL:
-			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/"
-					+ databasename, tablename, username, password);
+			toDatabase(matrix, "jdbc:mysql://" + host + ":" + port + "/" + databasename, tablename, username, password);
 			break;
 		default:
 			throw new RuntimeException("not supported: " + type);

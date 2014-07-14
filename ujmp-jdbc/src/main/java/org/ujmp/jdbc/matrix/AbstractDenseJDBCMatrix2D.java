@@ -33,15 +33,15 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
-import org.ujmp.jdbc.AutoCloseConnection;
+import org.ujmp.jdbc.autoclose.AutoCloseConnection;
 
 public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -9077208839474846706L;
-
-	private static final String PARAMETERS = "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull";
 
 	private int chunkSize = 1000;
 
@@ -60,6 +60,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 	private long[] size = null;
 
 	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement, String username, String password) {
+		super(1, 1);
 		this.url = url;
 		this.username = username;
 		this.password = password;
@@ -67,6 +68,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 	}
 
 	public AbstractDenseJDBCMatrix2D(Connection connection, String sqlStatement) {
+		super(1, 1);
 		this.connection = connection;
 		this.sqlStatement = sqlStatement;
 	}
@@ -144,7 +146,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 		try {
 			if (size == null) {
 				long rowCount = 0;
-				PreparedStatement ps = getConnection().prepareStatement("SELECT COUNT(1) FROM (" + sqlStatement + ") t");
+				PreparedStatement ps = getConnection()
+						.prepareStatement("SELECT COUNT(1) FROM (" + sqlStatement + ") t");
 				ResultSet rsRows = ps.executeQuery();
 				if (rsRows.next()) {
 					rowCount = rsRows.getLong(1);
@@ -187,7 +190,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	public synchronized Connection getConnection() throws SQLException {
 		if (connection == null) {
-			connection = new AutoCloseConnection(DriverManager.getConnection(getUrl() + PARAMETERS, getUsername(), getPassword()));
+			connection = new AutoCloseConnection(DriverManager.getConnection(getUrl(), getUsername(), getPassword()));
 		}
 		return connection;
 	}
@@ -202,6 +205,10 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	public String getPassword() {
 		return password;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return null;
 	}
 
 }

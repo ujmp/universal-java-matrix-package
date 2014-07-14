@@ -38,8 +38,7 @@ import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 
 public class ImportMatrixJDBC {
 
-	public static DenseObjectMatrix2D fromDatabase(String url,
-			String sqlStatement, String username, String password)
+	public static DenseObjectMatrix2D fromDatabase(String url, String sqlStatement, String username, String password)
 			throws Exception {
 		if (url.startsWith("jdbc:mysql://")) {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -49,14 +48,12 @@ public class ImportMatrixJDBC {
 			throw new RuntimeException("Database format not supported: " + url);
 		}
 
-		Connection connection = DriverManager.getConnection(url, username,
-				password);
+		Connection connection = DriverManager.getConnection(url, username, password);
 
 		return fromDatabase(connection, sqlStatement);
 	}
 
-	public static DenseObjectMatrix2D fromDatabase(Connection connection,
-			String sqlStatement) throws Exception {
+	public static DenseObjectMatrix2D fromDatabase(Connection connection, String sqlStatement) throws Exception {
 
 		System.out.print("importing...");
 
@@ -111,13 +108,12 @@ public class ImportMatrixJDBC {
 		return matrix;
 	}
 
-	public static DenseObjectMatrix2D fromDatabase(DBType type, String host,
-			int port, String databasename, String sqlStatement,
-			String username, String password) throws Exception {
+	public static DenseObjectMatrix2D fromDatabase(DBType type, String host, int port, String databasename,
+			String sqlStatement, String username, String password) throws Exception {
 		switch (type) {
 		case MySQL:
-			return fromDatabase("jdbc:mysql://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return fromDatabase("jdbc:mysql://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		default:
 			throw new RuntimeException("not supported: " + type);
 		}

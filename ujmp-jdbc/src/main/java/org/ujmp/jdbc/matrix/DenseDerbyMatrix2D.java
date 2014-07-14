@@ -26,17 +26,15 @@ package org.ujmp.jdbc.matrix;
 public class DenseDerbyMatrix2D extends AbstractDenseJDBCMatrix2D {
 	private static final long serialVersionUID = -3053272437622363485L;
 
-	public DenseDerbyMatrix2D(String url, String sqlStatement, String username,
-			String password) throws ClassNotFoundException {
+	public DenseDerbyMatrix2D(String url, String sqlStatement, String username, String password)
+			throws ClassNotFoundException {
 		super(url, sqlStatement, username, password);
 		Class.forName("com.mysql.jdbc.Driver");
 	}
 
-	public DenseDerbyMatrix2D(String host, int port, String databasename,
-			String sqlStatement, String username, String password)
-			throws ClassNotFoundException {
-		this("jdbc:derby://" + host + ":" + port + "/" + databasename,
-				sqlStatement, username, password);
+	public DenseDerbyMatrix2D(String host, int port, String databasename, String sqlStatement, String username,
+			String password) throws ClassNotFoundException {
+		this("jdbc:derby://" + host + ":" + port + "/" + databasename, sqlStatement, username, password);
 	}
 
 }

@@ -23,19 +23,23 @@
 
 package org.ujmp.jdbc.map;
 
+import java.io.File;
 import java.util.Map;
+import java.util.UUID;
 
 import org.ujmp.core.collections.AbstractStringMapTest;
 
-public class TestJDBCStringMap extends AbstractStringMapTest {
+public class TestDerbyStringMap extends AbstractStringMapTest {
 
 	@Override
 	public Map<String, String> createMap() throws Exception {
-		return JDBCStringMap.connectToHSQLDB();
+		DefaultJDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
+				+ "junit-ujmp" + UUID.randomUUID()));
+		DefaultJDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
+				+ "junit-ujmp" + UUID.randomUUID()), "test table");
+		return DefaultJDBCMapMatrix.connectToDerby();
 	}
 
 	public void testSerialize() throws Exception {
-		// not yet working
 	}
-
 }

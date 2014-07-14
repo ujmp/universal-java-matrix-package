@@ -153,16 +153,18 @@ public class JDBCTable extends AbstractTable {
 		}
 	}
 
-	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName, String username, String password,
-			String... columnsForKeys) throws SQLException {
+	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName,
+			String username, String password, String... columnsForKeys) throws SQLException {
 		return new JDBCTable("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName
-				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, username, password, columnsForKeys);
+				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, username,
+				password, columnsForKeys);
 	}
 
-	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName, String userName, String password)
-			throws SQLException {
+	public static JDBCTable connectToMySQL(String serverName, int port, String databaseName, String tableName,
+			String userName, String password) throws SQLException {
 		return new JDBCTable("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName
-				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, userName, password);
+				+ "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", tableName, userName,
+				password);
 	}
 
 	public static JDBCTable connectToHSQLDB(File filename, String tableName, String... columnForKeys) {

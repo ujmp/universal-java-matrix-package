@@ -35,6 +35,7 @@ import java.sql.Statement;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -82,6 +83,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 
 	public JDBCSparseObjectMatrix(long[] size, String url, String username, String password, String tableName,
 			String columnForValue, String... columnsForCoordinates) throws ClassNotFoundException, SQLException {
+		super(size);
 		this.url = url;
 		this.size = size;
 		this.username = username;
@@ -105,6 +107,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 
 	public JDBCSparseObjectMatrix(long[] size, Connection connection, String tableName, String columnForValue,
 			String... columnsForCoordinates) throws SQLException {
+		super(size);
 		this.size = size;
 		this.connection = connection;
 		this.username = connection.getMetaData().getUserName();
@@ -120,8 +123,8 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		for (long[] c : source.availableCoordinates()) {
 			setAsObject(source.getAsObject(c), c);
 		}
-		if (source.getAnnotation() != null) {
-			setAnnotation(source.getAnnotation().clone());
+		if (source.getMetaData() != null) {
+			setMetaData(source.getMetaData().clone());
 		}
 	}
 
@@ -328,7 +331,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		return password;
 	}
 
-	public boolean contains(long... coordinates)  {
+	public boolean contains(long... coordinates) {
 		return getObject(coordinates) != null;
 	}
 
@@ -385,6 +388,10 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 				}
 			}
 		}
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return null;
 	}
 
 }

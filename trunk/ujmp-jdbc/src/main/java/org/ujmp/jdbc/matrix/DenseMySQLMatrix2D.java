@@ -28,22 +28,19 @@ import java.sql.Connection;
 public class DenseMySQLMatrix2D extends AbstractDenseJDBCMatrix2D {
 	private static final long serialVersionUID = 6885926512790354810L;
 
-	public DenseMySQLMatrix2D(Connection connection, String sqlStatement)
-			throws ClassNotFoundException {
+	public DenseMySQLMatrix2D(Connection connection, String sqlStatement) throws ClassNotFoundException {
 		super(connection, sqlStatement);
 	}
 
-	public DenseMySQLMatrix2D(String url, String sqlStatement, String username,
-			String password) throws ClassNotFoundException {
+	public DenseMySQLMatrix2D(String url, String sqlStatement, String username, String password)
+			throws ClassNotFoundException {
 		super(url, sqlStatement, username, password);
 		Class.forName("com.mysql.jdbc.Driver");
 	}
 
-	public DenseMySQLMatrix2D(String host, int port, String databasename,
-			String sqlStatement, String username, String password)
-			throws ClassNotFoundException {
-		this("jdbc:mysql://" + host + ":" + port + "/" + databasename,
-				sqlStatement, username, password);
+	public DenseMySQLMatrix2D(String host, int port, String databasename, String sqlStatement, String username,
+			String password) throws ClassNotFoundException {
+		this("jdbc:mysql://" + host + ":" + port + "/" + databasename, sqlStatement, username, password);
 	}
 
 }

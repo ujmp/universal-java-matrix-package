@@ -34,45 +34,40 @@ import org.ujmp.jdbc.matrix.DensePostgreSQLMatrix2D;
 
 public class LinkMatrixJDBC {
 
-	public static AbstractDenseJDBCMatrix2D toDatabase(String url,
-			String sqlStatement, String username, String password)
+	public static AbstractDenseJDBCMatrix2D toDatabase(String url, String sqlStatement, String username, String password)
 			throws Exception {
 		if (url.startsWith("jdbc:mysql://")) {
 			return new DenseMySQLMatrix2D(url, sqlStatement, username, password);
 		} else if (url.startsWith("jdbc:postgresql://")) {
-			return new DensePostgreSQLMatrix2D(url, sqlStatement, username,
-					password);
+			return new DensePostgreSQLMatrix2D(url, sqlStatement, username, password);
 		} else if (url.startsWith("jdbc:derby://")) {
 			return new DenseDerbyMatrix2D(url, sqlStatement, username, password);
 		} else if (url.startsWith("jdbc:hsqldb://")) {
-			return new DenseHSQLDBMatrix2D(url, sqlStatement, username,
-					password);
+			return new DenseHSQLDBMatrix2D(url, sqlStatement, username, password);
 		} else {
 			throw new RuntimeException("Database format not supported: " + url);
 		}
 	}
 
-	public static AbstractDenseJDBCMatrix2D toDatabase(Connection connection,
-			String sqlStatement) throws Exception {
+	public static AbstractDenseJDBCMatrix2D toDatabase(Connection connection, String sqlStatement) throws Exception {
 		return new DenseMySQLMatrix2D(connection, sqlStatement);
 	}
 
-	public static AbstractDenseJDBCMatrix2D toDatabase(DBType type, String host,
-			int port, String databasename, String sqlStatement,
-			String username, String password) throws Exception {
+	public static AbstractDenseJDBCMatrix2D toDatabase(DBType type, String host, int port, String databasename,
+			String sqlStatement, String username, String password) throws Exception {
 		switch (type) {
 		case MySQL:
-			return toDatabase("jdbc:mysql://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return toDatabase("jdbc:mysql://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		case PostgreSQL:
-			return toDatabase("jdbc:postgresql://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return toDatabase("jdbc:postgresql://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		case Derby:
-			return toDatabase("jdbc:derby://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return toDatabase("jdbc:derby://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		case HSQLDB:
-			return toDatabase("jdbc:hsqldb://" + host + ":" + port + "/"
-					+ databasename, sqlStatement, username, password);
+			return toDatabase("jdbc:hsqldb://" + host + ":" + port + "/" + databasename, sqlStatement, username,
+					password);
 		default:
 			throw new RuntimeException("Database type unknown: " + type);
 		}

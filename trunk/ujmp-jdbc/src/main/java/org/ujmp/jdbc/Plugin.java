@@ -59,10 +59,6 @@ public class Plugin extends AbstractPlugin {
 		return neededClasses;
 	}
 
-	public static void main(String[] args) throws Exception {
-		System.out.println(new Plugin().getDependencies());
-	}
-
 	public Collection<Object> getDependencies() {
 		if (dependencies == null) {
 			dependencies = new TreeSet<Object>();

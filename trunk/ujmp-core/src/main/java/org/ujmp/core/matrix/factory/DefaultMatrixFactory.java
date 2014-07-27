@@ -71,6 +71,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.calculation.general.misc.Dense2Sparse;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
@@ -183,7 +184,12 @@ public class DefaultMatrixFactory extends AbstractMatrixFactory<Matrix> {
 				return new DefaultDenseCharMatrix2D(MathUtil.longToInt(size[ROW]),
 						MathUtil.longToInt(size[COLUMN]));
 			case DOUBLE:
-				return new DefaultDenseDoubleMatrixMultiD(size);
+				if (size.length == 2) {
+					return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]),
+							MathUtil.longToInt(size[COLUMN]));
+				} else {
+					return new DefaultDenseDoubleMatrixMultiD(size);
+				}
 			case FLOAT:
 				return new DefaultDenseFloatMatrix2D(MathUtil.longToInt(size[ROW]),
 						MathUtil.longToInt(size[COLUMN]));

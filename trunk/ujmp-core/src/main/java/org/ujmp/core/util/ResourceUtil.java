@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -73,6 +74,23 @@ public abstract class ResourceUtil {
 		os.close();
 
 		return os.toByteArray();
+	}
+
+	public static String getResourceAsString(String url) throws IOException {
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(url);
+		InputStreamReader ir = new InputStreamReader(is);
+		StringBuilder sb = new StringBuilder();
+
+		char buf[] = new char[8192];
+		int len;
+		while ((len = ir.read(buf)) > 0) {
+			sb.append(buf, 0, len);
+		}
+
+		ir.close();
+		is.close();
+
+		return sb.toString();
 	}
 
 	public static Image loadImage(String url) throws IOException {

@@ -23,10 +23,11 @@
 
 package org.ujmp.core.listmatrix;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import org.ujmp.core.collections.list.FastArrayList;
 
 public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 	private static final long serialVersionUID = -6381864884046078055L;
@@ -38,19 +39,19 @@ public class DefaultListMatrix<T> extends AbstractListMatrix<T> {
 	}
 
 	public DefaultListMatrix(Set<T> set) {
-		this.list = new ArrayList<T>(set);
+		this.list = new FastArrayList<T>(set);
 	}
 
 	public DefaultListMatrix(Collection<T> list) {
 		if (list instanceof List) {
 			this.list = (List<T>) list;
 		} else {
-			this.list = new ArrayList<T>(list);
+			this.list = new FastArrayList<T>(list);
 		}
 	}
 
 	public DefaultListMatrix() {
-		this.list = new ArrayList<T>();
+		this.list = new FastArrayList<T>();
 	}
 
 	@Override

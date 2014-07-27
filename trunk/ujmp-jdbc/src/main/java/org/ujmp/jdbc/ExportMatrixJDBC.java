@@ -96,7 +96,6 @@ public abstract class ExportMatrixJDBC {
 		// }
 		// sql += ");";
 		//
-		// connection.setAutoCommit(false);
 		//
 		// PreparedStatement ps = connection.prepareStatement(sql);
 		//

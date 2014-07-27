@@ -23,22 +23,32 @@
 
 package org.ujmp.elasticsearch;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.elasticsearch.action.count.CountResponse;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder.Operator;
+import org.elasticsearch.search.SearchHit;
+import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
-public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<String, Object>> {
+public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<String, Object>> implements Closeable {
 	private static final long serialVersionUID = -7047080106649021619L;
 
 	public static final String ID = "_id";
@@ -81,20 +91,37 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	public int size() {
 		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		// SearchResponse result =
-		// client.prepareSearch(index).setQuery(query).execute().actionGet();
-
 		CountResponse response = client.prepareCount(index).setQuery(query).execute().actionGet();
-
 		return MathUtil.longToInt(response.getCount());
 	}
 
 	public MapMatrix<String, Object> get(Object key) {
-		throw new UnsupportedOperationException();
+		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
+		return new ElasticsearchSample(this, getResponse.getSource());
 	}
 
 	public Set<String> keySet() {
-		throw new UnsupportedOperationException();
+		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+		List<Map<String, Object>> list = new FastArrayList<Map<String, Object>>();
+
+		SearchResponse scrollResp = client.prepareSearch(index).addFields(new String[] {})
+				.setSearchType(SearchType.SCAN).setScroll(new TimeValue(60000)).setQuery(query).setSize(1000).execute()
+				.actionGet();
+
+		int i = 0;
+		while (true) {
+			scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000))
+					.execute().actionGet();
+			for (SearchHit hit : scrollResp.getHits()) {
+				System.out.println(i++);
+			}
+
+			if (scrollResp.getHits().getHits().length == 0) {
+				break;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -104,19 +131,50 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	@Override
 	protected MapMatrix<String, Object> removeFromMap(Object key) {
-		DeleteResponse response = client.prepareDelete(index, type, String.valueOf(key)).execute().actionGet();
-		return null;
+		MapMatrix<String, Object> old = get(key);
+		client.prepareDelete(index, type, String.valueOf(key)).execute().actionGet();
+		return old;
 	}
 
 	@Override
 	protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
-		value.put(ID, key);
-		IndexResponse response = client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
-		return null;
+		MapMatrix<String, Object> old = get(key);
+		if (!value.containsKey(ID)) {
+			value.put(ID, key);
+		}
+		client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
+		return old;
 	}
 
 	public Client getClient() {
 		return client;
 	}
 
+	public List<Map<String, Object>> search(String query) {
+		List<Map<String, Object>> list = new FastArrayList<Map<String, Object>>();
+
+		QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
+		SearchResponse response = client.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
+				.setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
+
+		SearchHit[] results = response.getHits().getHits();
+
+		for (SearchHit hit : results) {
+			list.add(hit.getSource());
+		}
+
+		return list;
+	}
+
+	public int count(String string) {
+		QueryBuilder query = QueryBuilders.queryString(string).defaultOperator(Operator.AND);
+		CountResponse response = client.prepareCount(index).setQuery(query).execute().actionGet();
+		return MathUtil.longToInt(response.getCount());
+	}
+
+	public void close() throws IOException {
+		if (client != null) {
+			client.close();
+		}
+	}
 }

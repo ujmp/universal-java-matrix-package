@@ -23,7 +23,6 @@
 
 package org.ujmp.core.text;
 
-import java.text.BreakIterator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;

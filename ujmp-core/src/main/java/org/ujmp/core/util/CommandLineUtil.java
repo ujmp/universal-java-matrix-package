@@ -63,7 +63,7 @@ public abstract class CommandLineUtil {
 
 	public static final void printOptions(MapMatrix<String, Object> config) {
 		for (String s : config.keySet()) {
-			System.out.println(StringUtil.pad("--" + s, 20) + " (default: " + config.get(s) + ")");
+			System.out.println(StringUtil.padLeft("--" + s, 20) + " (default: " + config.get(s) + ")");
 		}
 	}
 }

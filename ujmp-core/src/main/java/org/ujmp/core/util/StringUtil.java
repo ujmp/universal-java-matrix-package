@@ -372,7 +372,7 @@ public abstract class StringUtil {
 			for (int col = 0; col < columnCount && col < maxColumns; col++) {
 				Object o = m.getAsObject(row, col);
 				String v = StringUtil.format(o);
-				v = StringUtil.pad(v, width);
+				v = StringUtil.padLeft(v, width);
 				s.append(v);
 			}
 			s.append(EOL);
@@ -389,13 +389,31 @@ public abstract class StringUtil {
 
 	}
 
-	public static final String pad(String s, int length) {
-		length = length - s.length();
+	public static final String padLeft(String string, int length) {
+		return padLeft(string, " ", length);
+	}
+
+	public static final String padRight(String string, int length) {
+		return padRight(string, " ", length);
+	}
+
+	public static final String padLeft(String string, String padding, int length) {
+		length = length - string.length();
 		StringBuilder r = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
-			r.append(" ");
+			r.append(padding);
 		}
-		r.append(s);
+		r.append(string);
+		return r.toString();
+	}
+
+	public static final String padRight(String string, String padding, int length) {
+		length = length - string.length();
+		StringBuilder r = new StringBuilder(length);
+		r.append(string);
+		for (int i = 0; i < length; i++) {
+			r.append(padding);
+		}
 		return r.toString();
 	}
 

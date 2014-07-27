@@ -47,7 +47,9 @@ public abstract class MathUtil {
 
 	private static List<DateFormat> dateFormats = null;
 
-	private static final double ROOT2PI = Math.sqrt(2 * Math.PI);
+	public static final double EPSILON = 1e-12;
+
+	private static final double ROOT2PI = Math.sqrt(2.0 * Math.PI);
 
 	private static final double LOG10 = Math.log(10.0);
 
@@ -211,7 +213,7 @@ public abstract class MathUtil {
 		return h ^ (h >>> 7) ^ (h >>> 4);
 	}
 
-	public static final double gauss(double mean, double sigma, double x) {
+	public static final double gauss(final double mean, final double sigma, final double x) {
 		return Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2.0)) / (sigma * ROOT2PI);
 	}
 
@@ -1323,6 +1325,14 @@ public abstract class MathUtil {
 		default:
 			return false;
 		}
+	}
+
+	public static int hexToInt(String hex) {
+		return Integer.parseInt(hex, 16);
+	}
+
+	public static String intToHex(int i) {
+		return Integer.toHexString(i);
 	}
 
 }

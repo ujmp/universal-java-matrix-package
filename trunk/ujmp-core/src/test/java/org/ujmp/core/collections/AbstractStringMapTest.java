@@ -139,7 +139,7 @@ public abstract class AbstractStringMapTest {
 		assertTrue(getLabel(), keys.contains("b"));
 		assertTrue(getLabel(), keys.contains("c"));
 		int count = 0;
-		for (String key : keys) {
+		for (String key : m.keySet()) {
 			assertTrue(getLabel(), key.equals("a") || key.equals("b") || key.equals("c"));
 			count++;
 		}

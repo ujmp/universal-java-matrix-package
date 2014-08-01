@@ -49,4 +49,8 @@ public class TestMantissaMatrix2D extends AbstractMatrixTest {
 	public void testSolveRandTallLarge() throws Exception {
 
 	}
+
+	public void testQRFatSmall() throws Exception {
+
+	}
 }

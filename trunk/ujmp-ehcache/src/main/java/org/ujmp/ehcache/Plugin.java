@@ -39,10 +39,8 @@ public class Plugin extends AbstractPlugin {
 		dependencies.add("ujmp-core");
 		dependencies.add("ehcache-core.jar");
 		dependencies.add("slf4j-api.jar");
-		dependencies.add("slf4j-jdk14.jar");
 		neededClasses.add("net.sf.ehcache.Cache");
 		neededClasses.add("org.slf4j.Logger");
-		neededClasses.add("org.slf4j.impl.StaticLoggerBinder");
 	}
 
 	public String getDescription() {

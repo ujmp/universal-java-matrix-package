@@ -21,37 +21,38 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.implementations;
+package org.ujmp.examples;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.UJMPSettings;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
+import org.ujmp.core.util.AbstractPlugin;
 
-	public TestBlockDenseDoubleMatrix2D() {
-		UJMPSettings.getInstance().setNumberOfThreads(1);
+public class Plugin extends AbstractPlugin {
+
+	private final List<Object> dependencies = new ArrayList<Object>();
+
+	private final List<String> neededClasses = new ArrayList<String>();
+
+	public Plugin() {
+		dependencies.add("ujmp-core");
+		dependencies.add("ujmp-gui");
+		dependencies.add("ujmp-jmathplot");
+		dependencies.add("ujmp-jung");
+		dependencies.add("ujmp-ojalgo");
 	}
 
-	public Matrix createMatrix(long... size) {
-		return new BlockDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
-				MathUtil.longToInt(size[Matrix.COLUMN]));
+	public String getDescription() {
+		return "interface to UJMP examples";
 	}
 
-	public Matrix createMatrix(Matrix source) {
-		return new BlockDenseDoubleMatrix2D(source);
+	public Collection<Object> getDependencies() {
+		return dependencies;
 	}
 
-	public boolean isTestLarge() {
-		return true;
+	public Collection<String> getNeededClasses() {
+		return neededClasses;
 	}
 
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
-	}
 }

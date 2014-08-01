@@ -23,7 +23,6 @@
 
 package org.ujmp.core.objectmatrix.factory;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
@@ -38,7 +37,7 @@ public class DefaultDenseObjectMatrixFactory extends AbstractMatrixFactory<Dense
 		return new DefaultDenseObjectMatrixMultiD(size);
 	}
 
-	public Matrix zeros(long rows, long columns) {
+	public DenseObjectMatrix zeros(long rows, long columns) {
 		return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 }

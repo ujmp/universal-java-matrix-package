@@ -265,6 +265,9 @@ public abstract class SQLUtil {
 					+ "` = ? LIMIT 1";
 		case DERBY:
 			return "SELECT \"" + valueColumnName + "\" FROM \"" + tableName + "\" WHERE \"" + keyColumnName + "\" = ?";
+		case H2:
+			return "SELECT \"" + valueColumnName + "\" FROM \"" + tableName + "\" WHERE \"" + keyColumnName
+					+ "\" = ? LIMIT 1";
 		default:
 			return "SELECT \"" + valueColumnName + "\" FROM \"" + tableName + "\" WHERE \"" + keyColumnName
 					+ "\" = ? LIMIT 1";
@@ -281,7 +284,8 @@ public abstract class SQLUtil {
 		case MYSQL:
 			return "SELECT EXISTS(SELECT 1 FROM `" + tableName + "` WHERE `" + columnName + "` = ? LIMIT 1)";
 		case DERBY:
-			return "SELECT COUNT(1)>0 FROM \"" + tableName + "\" WHERE \"" + columnName + "\" = ?";
+			return "SELECT COUNT(1)>0 FROM \"" + tableName + "\" WHERE CAST(\"" + columnName
+					+ "\" AS VARCHAR(128)) = CAST(? AS VARCHAR(128))";
 		case HSQLDB:
 			return "SELECT COUNT(1) FROM (SELECT 1 FROM \"" + tableName + "\" WHERE \"" + columnName
 					+ "\" = ? LIMIT 1)";
@@ -346,6 +350,13 @@ public abstract class SQLUtil {
 			sql.append(" (");
 			sql.append("\"" + keyColumnName + "\" VARCHAR(255) PRIMARY KEY, ");
 			sql.append("\"" + valueColumnName + "\" LONG VARCHAR ");
+			sql.append(") ");
+			break;
+		case H2:
+			sql.append("CREATE TABLE \"" + tableName + "\"");
+			sql.append(" (");
+			sql.append("\"" + keyColumnName + "\" VARCHAR(255) PRIMARY KEY, ");
+			sql.append("\"" + valueColumnName + "\" VARCHAR(1024) ");
 			sql.append(") ");
 			break;
 		default:

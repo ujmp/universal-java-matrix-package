@@ -37,12 +37,4 @@ public class Log extends AbstractDoubleCalculation {
 		return Math.log(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.log(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
 }

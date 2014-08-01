@@ -23,8 +23,6 @@
 
 package org.ujmp.core.longmatrix.factory;
 
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
 import org.ujmp.core.longmatrix.SparseLongMatrix;
 import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
@@ -32,27 +30,4 @@ public abstract class AbstractSparseLongMatrixFactory<T extends SparseLongMatrix
 		AbstractMatrixFactory<T> implements LongMatrixFactory<T> {
 	private static final long serialVersionUID = -7465464189385779697L;
 
-	public final T rand(final long... size) {
-		final T m = zeros(size);
-		m.rand(Ret.ORIG);
-		return m;
-	}
-
-	public final T randn(final long... size) {
-		final T m = zeros(size);
-		m.randn(Ret.ORIG);
-		return m;
-	}
-
-	public final T ones(final long... size) {
-		final T m = zeros(size);
-		m.ones(Ret.ORIG);
-		return m;
-	}
-
-	public final T eye(final long... size) {
-		final T m = zeros(size);
-		Eye.calcOrig(m);
-		return m;
-	}
 }

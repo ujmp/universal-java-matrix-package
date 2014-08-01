@@ -133,7 +133,7 @@ public abstract class BenchmarkUtil {
 					temp = MathUtil.divide(b, result);
 					temp = MathUtil.times(result.abs(), MathUtil.sqrt(MathUtil.plus(BigDecimal.ONE,
 							MathUtil.times(temp, temp))));
-				} else if (!MathUtil.isEqual(BigDecimal.ZERO, b)) {
+				} else if (!MathUtil.equals(BigDecimal.ZERO, b)) {
 					temp = MathUtil.divide(result, b);
 					temp = MathUtil.times(b.abs(), MathUtil.sqrt(MathUtil.plus(BigDecimal.ONE,
 							MathUtil.times(temp, temp))));

@@ -37,12 +37,4 @@ public class Sinh extends AbstractDoubleCalculation {
 		return Math.sinh(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.sinh(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
 }

@@ -24,7 +24,6 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
 
 public class Fill extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -3477957135967841340L;
@@ -40,26 +39,4 @@ public class Fill extends AbstractObjectCalculation {
 		return fill;
 	}
 
-	public static Matrix calc(Matrix source, Object fill) {
-		Matrix ret = Matrix.Factory.zeros(source.getValueType(), source.getSize());
-		for (long[] c : source.allCoordinates()) {
-			ret.setAsObject(fill, c);
-		}
-		return ret;
-	}
-
-	public static Matrix calc(Object fill, long... size) {
-		Matrix ret = null;
-		if (fill instanceof Number) {
-			ret = Matrix.Factory.zeros(ValueType.DOUBLE, size);
-		} else if (fill instanceof String) {
-			ret = Matrix.Factory.zeros(ValueType.STRING, size);
-		} else {
-			ret = Matrix.Factory.zeros(ValueType.OBJECT, size);
-		}
-		for (long[] c : ret.allCoordinates()) {
-			ret.setAsObject(fill, c);
-		}
-		return ret;
-	}
 }

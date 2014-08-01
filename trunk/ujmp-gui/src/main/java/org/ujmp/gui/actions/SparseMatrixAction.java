@@ -30,8 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.interfaces.GUIObject;
 
 public class SparseMatrixAction extends AbstractObjectAction {
@@ -46,9 +45,6 @@ public class SparseMatrixAction extends AbstractObjectAction {
 
 	public Object call() {
 		try {
-			ValueType valueType = ValueType.values()[JOptionPane.showOptionDialog(getComponent(),
-					"Select the value type for the new matrix", "Sparse Matrix", JOptionPane.OK_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, ValueType.values(), ValueType.DOUBLE)];
 			long[] size = null;
 			while (size == null || size.length < 2) {
 				String s = JOptionPane.showInputDialog(getComponent(), "Enter the size of the new matrix, e.g. 3x5x6",
@@ -58,7 +54,7 @@ public class SparseMatrixAction extends AbstractObjectAction {
 				} catch (Exception e) {
 				}
 			}
-			Matrix m = Matrix.Factory.sparse(valueType, size);
+			SparseMatrix m = SparseMatrix.Factory.zeros(size);
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

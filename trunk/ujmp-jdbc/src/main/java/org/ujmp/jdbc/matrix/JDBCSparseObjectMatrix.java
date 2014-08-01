@@ -391,7 +391,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return null;
+		return Matrix.Factory;
 	}
 
 }

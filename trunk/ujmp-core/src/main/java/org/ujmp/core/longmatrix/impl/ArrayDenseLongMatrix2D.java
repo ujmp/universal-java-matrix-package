@@ -21,43 +21,44 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.shortmatrix.impl;
+package org.ujmp.core.longmatrix.impl;
 
+import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
-import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
+import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
+import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
-public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
-	private static final long serialVersionUID = 4034565357457805099L;
+public class ArrayDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
+	private static final long serialVersionUID = 2888746188860361425L;
 
-	private short[][] values = null;
+	private long[][] values = null;
 
-	public SimpleDenseShortMatrix2D(Matrix m) {
+	public ArrayDenseLongMatrix2D(Matrix m) {
 		super(m.getSize());
-		if (m instanceof SimpleDenseShortMatrix2D) {
-			short[][] v = ((SimpleDenseShortMatrix2D) m).values;
-			this.values = new short[v.length][v[0].length];
+		if (m instanceof ArrayDenseLongMatrix2D) {
+			long[][] v = ((ArrayDenseLongMatrix2D) m).values;
+			this.values = new long[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
 					values[r][c] = v[r][c];
 				}
 			}
 		} else {
-			values = new short[(int) m.getRowCount()][(int) m.getColumnCount()];
+			values = new long[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsShort(m.getAsShort(c), c);
+				setAsLong(m.getAsLong(c), c);
 			}
 		}
 	}
 
-	public SimpleDenseShortMatrix2D(short[]... v) {
+	public ArrayDenseLongMatrix2D(long[]... v) {
 		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
-	public SimpleDenseShortMatrix2D(long... size) {
+	public ArrayDenseLongMatrix2D(long... size) {
 		super(size);
-		values = new short[(int) size[ROW]][(int) size[COLUMN]];
+		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public long[] getSize() {
@@ -72,25 +73,33 @@ public class SimpleDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 		return values.length == 0 ? 0 : values[0].length;
 	}
 
-	public short getShort(long row, long column) {
+	public long getLong(long row, long column) {
 		return values[(int) row][(int) column];
 	}
 
-	public void setShort(short value, long row, long column) {
+	public void setLong(long value, long row, long column) {
 		values[(int) row][(int) column] = value;
 	}
 
+	public long getLong(int row, int column) {
+		return values[row][column];
+	}
+
+	public void setLong(long value, int row, int column) {
+		values[row][column] = value;
+	}
+
 	public final Matrix transpose() {
-		short[][] result = new short[values[0].length][values.length];
+		long[][] result = new long[values[0].length][values.length];
 		for (int r = result.length; --r >= 0;) {
 			for (int c = result[0].length; --c >= 0;) {
 				result[r][c] = values[c][r];
 			}
 		}
-		return new SimpleDenseShortMatrix2D(result);
+		return new ArrayDenseLongMatrix2D(result);
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
+	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
 		throw new RuntimeException("not implemented");
 	}
 

@@ -62,7 +62,7 @@ import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
 import org.ujmp.core.interfaces.GettersAndSetters;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
-import org.ujmp.core.matrix.factory.DefaultMatrixFactory;
+import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
 
 /**
  * <code>Matrix</code> is the main class for storing any type of data. You have
@@ -79,7 +79,7 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 	/**
 	 * A factory for creating matrices.
 	 */
-	public static final DefaultMatrixFactory Factory = new DefaultMatrixFactory();
+	public static final DefaultDenseMatrixFactory Factory = new DefaultDenseMatrixFactory();
 
 	public BaseMatrixFactory<? extends Matrix> getFactory();
 

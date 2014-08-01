@@ -103,7 +103,7 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 }

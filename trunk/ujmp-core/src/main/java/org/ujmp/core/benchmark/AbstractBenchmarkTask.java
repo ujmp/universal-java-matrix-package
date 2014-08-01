@@ -30,7 +30,7 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.Matrix2D;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractBenchmarkTask {
@@ -66,12 +66,9 @@ public abstract class AbstractBenchmarkTask {
 					+ getMatrixLabel());
 			return;
 		}
-		Matrix2D resultTime = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
-				sizes.size());
-		Matrix2D resultDiff = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
-				sizes.size());
-		Matrix2D resultMem = (Matrix2D) Matrix.Factory.zeros(ValueType.STRING, config.getRuns(),
-				sizes.size());
+		Matrix2D resultTime = (Matrix2D) StringMatrix.Factory.zeros(config.getRuns(), sizes.size());
+		Matrix2D resultDiff = (Matrix2D) StringMatrix.Factory.zeros(config.getRuns(), sizes.size());
+		Matrix2D resultMem = (Matrix2D) StringMatrix.Factory.zeros(config.getRuns(), sizes.size());
 
 		resultTime.setLabel(getMatrixLabel() + "-" + getTaskName());
 		resultDiff.setLabel(getMatrixLabel() + "-" + getTaskName() + "-diff");
@@ -165,9 +162,12 @@ public abstract class AbstractBenchmarkTask {
 			}
 		}
 
-		Matrix temp = Matrix.Factory.vertCat(resultTime.getMetaDataDimensionMatrix(Matrix.ROW), resultTime);
-		Matrix diff = Matrix.Factory.vertCat(resultDiff.getMetaDataDimensionMatrix(Matrix.ROW), resultDiff);
-		Matrix mem = Matrix.Factory.vertCat(resultMem.getMetaDataDimensionMatrix(Matrix.ROW), resultMem);
+		Matrix temp = Matrix.Factory.vertCat(resultTime.getMetaDataDimensionMatrix(Matrix.ROW),
+				resultTime);
+		Matrix diff = Matrix.Factory.vertCat(resultDiff.getMetaDataDimensionMatrix(Matrix.ROW),
+				resultDiff);
+		Matrix mem = Matrix.Factory.vertCat(resultMem.getMetaDataDimensionMatrix(Matrix.ROW),
+				resultMem);
 		try {
 			temp.export().toFile(timeFile).asCSV();
 			mem.export().toFile(memFile).asCSV();

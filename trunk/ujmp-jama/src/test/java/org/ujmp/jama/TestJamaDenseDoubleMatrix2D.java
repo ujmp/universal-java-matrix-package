@@ -57,4 +57,5 @@ public class TestJamaDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public void testLUFatFixedLarge() throws Exception {
 		// some error
 	}
+
 }

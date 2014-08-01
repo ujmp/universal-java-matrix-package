@@ -23,16 +23,14 @@
 
 package org.ujmp.core.io;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.util.SerializationUtil;
 
 public class ImportMatrixSER {
 
@@ -46,42 +44,6 @@ public class ImportMatrixSER {
 
 	public static Matrix fromStream(InputStream stream, Object... parameters)
 			throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream s = new ObjectInputStream(new BufferedInputStream(stream));
-
-		ValueType valueType = (ValueType) s.readObject();
-		boolean isSparse = s.readBoolean();
-		int sizeLength = s.readInt();
-		long[] size = new long[sizeLength];
-		for (int i = 0; i < sizeLength; i++) {
-			size[i] = s.readLong();
-		}
-
-		Matrix m = null;
-		if (isSparse) {
-			m = Matrix.Factory.sparse(valueType, size);
-		} else {
-			m = Matrix.Factory.zeros(valueType, size);
-		}
-
-		long[] c = new long[sizeLength];
-		while (s.readBoolean()) {
-			for (int i = 0; i < sizeLength; i++) {
-				c[i] = s.readLong();
-			}
-			switch (valueType) {
-			case DOUBLE:
-				m.setAsDouble(s.readDouble(), c);
-				break;
-			case INT:
-				m.setAsInt(s.readInt(), c);
-				break;
-			default:
-				m.setAsObject(s.readObject(), c);
-				break;
-			}
-		}
-
-		s.close();
-		return m;
+		return (Matrix) SerializationUtil.deserialize(stream);
 	}
 }

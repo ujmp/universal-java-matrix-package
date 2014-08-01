@@ -263,12 +263,12 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		if (metaData == null) {
 			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
-		Matrix m = (Matrix) metaData.get("DimensionMetaData" + dimension);
+		Matrix m = (Matrix) metaData.get(DIMENSIONMETADATA + dimension);
 		if (m == null) {
 			long[] t = new long[getDimensionCount()];
 			Arrays.fill(t, 1);
 			m = new DefaultSparseObjectMatrix(t);
-			metaData.put("DimensionMetaData" + dimension, m);
+			metaData.put(DIMENSIONMETADATA + dimension, m);
 		}
 		return m;
 	}
@@ -290,11 +290,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public void setMetaDataDimensionMatrix(int dimension, Matrix matrix) {
-		metaData.put("DimensionMetaData" + dimension, matrix);
+		if (metaData == null) {
+			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
+		}
+		metaData.put(DIMENSIONMETADATA + dimension, matrix);
 	}
 
 	public final String getDimensionLabel(int dimension) {
-		return metaData == null ? null : StringUtil.getString(metaData.get("DimensionMetaData"
+		return metaData == null ? null : StringUtil.getString(metaData.get(DIMENSIONMETADATA
 				+ dimension));
 	}
 
@@ -2009,6 +2012,30 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 						if (o1 != null && o2 != null) {
 							if (!o1.equals(o2)) {
 								return false;
+							}
+						} else if (o1 == null && o2 == null) {
+						} else {
+							return false;
+						}
+					}
+				} else if (this instanceof MapMatrix && m instanceof MapMatrix) {
+					MapMatrix<?, ?> map1 = (MapMatrix<?, ?>) this;
+					MapMatrix<?, ?> map2 = (MapMatrix<?, ?>) m;
+					for (Object key : map1.keySet()) {
+						Object o1 = map1.get(key);
+						Object o2 = map2.get(key);
+						if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
+							return false;
+						}
+						if (o1 != null && o2 != null) {
+							if (o1.getClass().equals(o2.getClass())) {
+								if (!o1.equals(o2)) {
+									return false;
+								}
+							} else {
+								if (!MathUtil.equals(o1, o2)) {
+									return false;
+								}
 							}
 						} else if (o1 == null && o2 == null) {
 						} else {

@@ -23,8 +23,7 @@
 
 package org.ujmp.examples;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class BigSparseMatrixExample {
@@ -32,7 +31,7 @@ public class BigSparseMatrixExample {
 	public static void main(String[] args) throws Exception {
 
 		// create a very large sparse matrix
-		Matrix m = Matrix.Factory.sparse(ValueType.DOUBLE, 100000000, 100000000);
+		SparseMatrix m = SparseMatrix.Factory.zeros(100000000, 100000000);
 
 		// set some values to 1
 		for (int i = 0; i < 10000; i++) {

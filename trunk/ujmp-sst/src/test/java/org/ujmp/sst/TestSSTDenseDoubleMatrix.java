@@ -278,6 +278,10 @@ public class TestSSTDenseDoubleMatrix extends AbstractMatrixTest {
 		super.testQRFixedSquareSmall();
 	}
 
+	public void testQRFatSmall() {
+
+	}
+
 	public boolean isTestLarge() {
 		return false;
 	}

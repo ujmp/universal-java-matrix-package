@@ -30,9 +30,9 @@ import org.ujmp.core.stringmatrix.impl.TestDefaultDenseStringMatrix2D;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ TestDenseFileMatrix.class, TestArrayDenseDoubleMatrix2D.class,
 		TestDefaultDenseDoubleMatrix2D.class, TestDefaultDenseObjectMatrix2D.class,
-		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnMatrix2D.class,
-		TestDefaultSparseRowMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
+		TestMortonDenseDoubleMatrix2D.class, TestDefaultSparseColumnObjectMatrix2D.class,
+		TestDefaultSparseRowObjectMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
 		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class,
-		TestDefaultSparseDoubleMatrix.class })
+		TestDefaultSparseDoubleMatrix.class, TestDefaultSparseRowDoubleMatrix2D.class })
 public abstract class AllTests {
 }

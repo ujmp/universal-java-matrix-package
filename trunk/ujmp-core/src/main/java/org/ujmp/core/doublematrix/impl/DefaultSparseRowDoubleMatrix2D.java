@@ -32,12 +32,10 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
-public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D implements
-		Wrapper<Map<Long, Matrix>> {
+public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -5291604525500706427L;
 
 	private long[] size = new long[] { 1, 1 };
@@ -63,8 +61,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	}
 
 	public double getDouble(int row, int column) {
-		Matrix m = rows.get(row);
-		return m == null ? null : m.getAsDouble(0, column);
+		return getDouble((long) row, (long) column);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!
@@ -125,12 +122,8 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return super.selectRows(returnType, rows);
 	}
 
-	public Map<Long, Matrix> getWrappedObject() {
-		return rows;
-	}
-
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 }

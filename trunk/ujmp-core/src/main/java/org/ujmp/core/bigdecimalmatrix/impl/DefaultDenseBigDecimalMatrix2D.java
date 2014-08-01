@@ -26,10 +26,9 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = -5227328974882402868L;
@@ -102,8 +101,8 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 		values[column * rows + row] = value;
 	}
 
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return Matrix.Factory;
 	}
 
 }

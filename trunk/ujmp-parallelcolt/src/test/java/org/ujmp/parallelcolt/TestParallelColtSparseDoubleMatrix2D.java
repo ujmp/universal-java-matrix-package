@@ -41,4 +41,12 @@ public class TestParallelColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 	public boolean isTestLarge() {
 		return false;
 	}
+
+	public void testQRFatSmall() {
+
+	}
+
+	public void testQRFatLarge() {
+
+	}
 }

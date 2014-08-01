@@ -23,12 +23,8 @@
 
 package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
-import java.util.Arrays;
-
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.enums.ValueType;
 
 public class Eye extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 2547827499345834225L;
@@ -41,36 +37,4 @@ public class Eye extends AbstractDoubleCalculation {
 		return coordinates[ROW] == coordinates[COLUMN] ? 1.0 : 0.0;
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		long[] c = Coordinates.copyOf(source.getSize());
-		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
-			Arrays.fill(c, i);
-			ret.setAsDouble(1.0, c);
-		}
-		return ret;
-	}
-
-	public static Matrix calcOrig(Matrix source) {
-		long[] c = new long[source.getSize().length];
-		for (int i = 0; Coordinates.isSmallerThan(c, source.getSize()); i++) {
-			source.setAsDouble(1.0, c);
-			Arrays.fill(c, i + 1);
-		}
-		return source;
-	}
-
-	public static Matrix calc(long... size) {
-		return calc(ValueType.DOUBLE, size);
-	}
-
-	public static Matrix calc(ValueType valueType, long... size) {
-		Matrix ret = Matrix.Factory.zeros(valueType, size);
-		long[] c = new long[size.length];
-		for (int i = 0; Coordinates.isSmallerThan(c, size); i++) {
-			ret.setAsDouble(1.0, c);
-			Arrays.fill(c, i + 1);
-		}
-		return ret;
-	}
 }

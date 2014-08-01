@@ -46,23 +46,4 @@ public class Power extends AbstractDoubleCalculation {
 				getSources()[1].getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source, Matrix power) {
-		if (power.isScalar() && !Coordinates.equals(source.getSize(), power.getSize())) {
-			power = Matrix.Factory.fill(power.getAsDouble(0, 0), source.getSize());
-		}
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.pow(source.getAsDouble(c), power.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
-	public static Matrix calc(Matrix source, double power) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.pow(source.getAsDouble(c), power), c);
-		}
-		return ret;
-	}
-
 }

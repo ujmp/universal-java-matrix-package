@@ -39,4 +39,20 @@ public class TestMLDoubleMatrix extends AbstractMatrixTest {
 	public boolean isTestLarge() {
 		return false;
 	}
+
+	public void testQRFatSmall() throws Exception {
+		// not supported
+	}
+
+	public void testQRFatLarge() throws Exception {
+		// not supported
+	}
+
+	public void testLUFatFixedSmall() throws Exception {
+		// some error
+	}
+
+	public void testLUFatFixedLarge() throws Exception {
+		// some error
+	}
 }

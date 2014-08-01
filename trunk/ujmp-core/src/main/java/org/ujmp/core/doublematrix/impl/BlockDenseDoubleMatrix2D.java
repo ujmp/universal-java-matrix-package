@@ -161,6 +161,11 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		verifyTrue(blockStripeSize > 0, "blockStripeSize<=0");
 		verifyTrue(blockOrder != null, "blockOrder == null");
 
+		if (UJMPSettings.getInstance().getNumberOfThreads() != 1) {
+			System.err.println("WARNING: setting number of threads to 1 for BlockMatrix");
+			UJMPSettings.getInstance().setNumberOfThreads(1);
+		}
+
 		this.size = new long[] { rows, cols };
 
 		// layout structure for the blocks in the matrix

@@ -83,11 +83,11 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMul
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
 		return new BaseMatrixFactory<DefaultDenseDoubleMatrixMultiD>() {
 
-			public Matrix zeros(long rows, long columns) {
+			public DefaultDenseDoubleMatrixMultiD zeros(long rows, long columns) {
 				return new DefaultDenseDoubleMatrixMultiD(rows, columns);
 			}
 
-			public Matrix zeros(long... size) {
+			public DefaultDenseDoubleMatrixMultiD zeros(long... size) {
 				return new DefaultDenseDoubleMatrixMultiD(size);
 			}
 		};

@@ -79,7 +79,7 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 	public void setDouble(double value, int row, int column) {

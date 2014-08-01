@@ -24,38 +24,14 @@
 package org.ujmp.core.doublematrix.factory;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
+import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
-public abstract class AbstractSparseDoubleMatrix2DFactory<T extends SparseDoubleMatrix2D>
-		implements SparseDoubleMatrix2DFactory<T> {
-	private static final long serialVersionUID = 8897245731712863035L;
+public abstract class AbstractSparseDoubleMatrix2DFactory<T extends SparseDoubleMatrix2D> extends
+		AbstractMatrixFactory<T> implements SparseDoubleMatrix2DFactory<T> {
 
-	public Matrix zeros(long... size) {
+	public T zeros(long... size) {
 		return zeros(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
-	public final T rand(final long rows, final long cols) {
-		final T m = zeros(rows, cols);
-		m.rand(Ret.ORIG);
-		return m;
-	}
-
-	public final T randn(final long rows, final long cols) {
-		final T m = zeros(rows, cols);
-		m.randn(Ret.ORIG);
-		return m;
-	}
-
-	public final T ones(final long rows, final long cols) {
-		final T m = zeros(rows, cols);
-		m.ones(Ret.ORIG);
-		return m;
-	}
-
-	public final T eye(final long rows, final long cols) {
-		final T m = zeros(rows, cols);
-		m.eye(Ret.ORIG);
-		return m;
-	}
 }

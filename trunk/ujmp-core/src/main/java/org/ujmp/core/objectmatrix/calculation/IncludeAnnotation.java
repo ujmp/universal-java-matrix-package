@@ -23,6 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import java.util.TreeMap;
+
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
@@ -37,7 +39,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
-		setMetaData(new DefaultMapMatrix<Object, Object>());
+		setMetaData(new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>()));
 		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 	}
 

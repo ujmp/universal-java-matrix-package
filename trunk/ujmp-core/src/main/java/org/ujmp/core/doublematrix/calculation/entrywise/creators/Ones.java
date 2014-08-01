@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.enums.ValueType;
 
 public class Ones extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 2547827499345834225L;
@@ -38,23 +37,4 @@ public class Ones extends AbstractDoubleCalculation {
 		return 1.0;
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.allCoordinates()) {
-			ret.setAsDouble(1.0, c);
-		}
-		return ret;
-	}
-
-	public static Matrix calc(long... size) {
-		return calc(ValueType.DOUBLE, size);
-	}
-
-	public static Matrix calc(ValueType valueType, long... size) {
-		Matrix ret = Matrix.Factory.zeros(valueType, size);
-		for (long[] c : ret.allCoordinates()) {
-			ret.setAsDouble(1.0, c);
-		}
-		return ret;
-	}
 }

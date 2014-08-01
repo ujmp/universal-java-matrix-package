@@ -27,15 +27,15 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
-public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
+public class ArrayDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private static final long serialVersionUID = -4334380160318525360L;
 
 	private final boolean[][] values;
 
-	public DefaultDenseBooleanMatrix2D(Matrix m) {
+	public ArrayDenseBooleanMatrix2D(Matrix m) {
 		super(m.getRowCount(), m.getColumnCount());
-		if (m instanceof DefaultDenseBooleanMatrix2D) {
-			boolean[][] v = ((DefaultDenseBooleanMatrix2D) m).values;
+		if (m instanceof ArrayDenseBooleanMatrix2D) {
+			boolean[][] v = ((ArrayDenseBooleanMatrix2D) m).values;
 			this.values = new boolean[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
@@ -50,17 +50,17 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		}
 	}
 
-	public DefaultDenseBooleanMatrix2D(boolean[]... v) {
+	public ArrayDenseBooleanMatrix2D(boolean[]... v) {
 		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public DefaultDenseBooleanMatrix2D(int rows, int columns) {
+	public ArrayDenseBooleanMatrix2D(int rows, int columns) {
 		super(rows, columns);
 		values = new boolean[rows][columns];
 	}
 
-	public DefaultDenseBooleanMatrix2D(boolean... v) {
+	public ArrayDenseBooleanMatrix2D(boolean... v) {
 		super(v.length, 1);
 		this.values = new boolean[v.length][1];
 		for (int r = v.length; --r >= 0;) {
@@ -103,7 +103,7 @@ public class DefaultDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 				result[r][c] = values[c][r];
 			}
 		}
-		return new DefaultDenseBooleanMatrix2D(result);
+		return new ArrayDenseBooleanMatrix2D(result);
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {

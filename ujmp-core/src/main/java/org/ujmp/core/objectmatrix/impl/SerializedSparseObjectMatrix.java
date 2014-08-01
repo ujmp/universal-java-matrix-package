@@ -57,28 +57,7 @@ public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapp
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return new BaseMatrixFactory<SerializedSparseObjectMatrix>() {
-
-			public Matrix zeros(long rows, long columns) {
-				try {
-					return new SerializedSparseObjectMatrix(rows, columns);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return null;
-				}
-			}
-
-			public Matrix zeros(long... size) {
-				try {
-					return new SerializedSparseObjectMatrix(size);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return null;
-				}
-			}
-		};
+		return Matrix.Factory;
 	}
 
 }

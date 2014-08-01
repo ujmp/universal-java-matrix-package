@@ -24,16 +24,16 @@
 package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.impl.DefaultSparseColumnObjectMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
-public class TestDefaultSparseColumnMatrix2D extends AbstractMatrixTest {
+public class TestDefaultSparseRowObjectMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new DefaultSparseColumnObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
+		return new DefaultSparseRowObjectMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
 	public Matrix createMatrix(Matrix source) {
-		return new DefaultSparseColumnObjectMatrix2D(source);
+		return new DefaultSparseRowObjectMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {

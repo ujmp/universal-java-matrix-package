@@ -30,8 +30,7 @@ import java.io.IOException;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
 
 public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements Flushable, Closeable,
@@ -58,8 +57,8 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper i
 		((Closeable) getMap()).close();
 	}
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		return null;
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return Matrix.Factory;
 	}
 
 }

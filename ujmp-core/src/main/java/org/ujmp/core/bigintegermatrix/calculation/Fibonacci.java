@@ -25,8 +25,6 @@ package org.ujmp.core.bigintegermatrix.calculation;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.Matrix;
-
 public class Fibonacci extends AbstractBigIntegerCalculation {
 	private static final long serialVersionUID = 2890785080437683248L;
 
@@ -47,10 +45,6 @@ public class Fibonacci extends AbstractBigIntegerCalculation {
 
 	public long[] getSize() {
 		return new long[] { data.length, 1 };
-	}
-
-	public static Matrix calc(int count) {
-		return new Fibonacci(count).calcNew();
 	}
 
 }

@@ -21,37 +21,20 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.implementations;
+package org.ujmp.core.matrix.factory;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.doublematrix.impl.DefaultSparseRowDoubleMatrix2D;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
-public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
+public class DefaultSparseMatrixFactory extends AbstractMatrixFactory<SparseMatrix> {
 
-	public TestBlockDenseDoubleMatrix2D() {
-		UJMPSettings.getInstance().setNumberOfThreads(1);
+	public SparseMatrix zeros(long rows, long columns) {
+		return new DefaultSparseRowDoubleMatrix2D(rows, columns);
 	}
 
-	public Matrix createMatrix(long... size) {
-		return new BlockDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
-				MathUtil.longToInt(size[Matrix.COLUMN]));
+	public SparseMatrix zeros(long... size) {
+		return new DefaultSparseObjectMatrix(size);
 	}
 
-	public Matrix createMatrix(Matrix source) {
-		return new BlockDenseDoubleMatrix2D(source);
-	}
-
-	public boolean isTestLarge() {
-		return true;
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
-	}
 }

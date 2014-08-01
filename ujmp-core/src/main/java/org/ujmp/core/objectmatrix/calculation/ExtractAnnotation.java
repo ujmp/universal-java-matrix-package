@@ -23,6 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import java.util.TreeMap;
+
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
@@ -37,27 +39,29 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]--;
-		setMetaData(new DefaultMapMatrix<Object, Object>());
+		setMetaData(new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>()));
 		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 
 		if (dim == ROW) {
 			MapMatrix<Object, Object> a = m.getMetaData();
 			if (a != null) {
-				// Matrix ai = a.getDimensionMatrix(COLUMN);
-				// ai = ai.deleteRows(Ret.NEW, 0);
-				// getAnnotation().setDimensionMatrix(COLUMN, ai);
+				Matrix ai = (Matrix) a.get(Matrix.DIMENSIONMETADATA + COLUMN);
+				if (ai != null) {
+					ai = ai.deleteRows(Ret.NEW, 0);
+					getMetaData().put(Matrix.DIMENSIONMETADATA + COLUMN, ai);
+				}
 			}
-			// getAnnotation().setDimensionMatrix(ROW, m.selectRows(Ret.NEW,
-			// 0));
+			getMetaData().put(Matrix.DIMENSIONMETADATA + ROW, m.selectRows(Ret.NEW, 0));
 		} else if (dim == COLUMN) {
 			MapMatrix<Object, Object> a = m.getMetaData();
 			if (a != null) {
-				// Matrix ai = a.getDimensionMatrix(ROW);
-				// ai = ai.selectColumns(Ret.NEW, 0);
-				// getAnnotation().setDimensionMatrix(ROW, ai);
+				Matrix ai = (Matrix) a.get(Matrix.DIMENSIONMETADATA + ROW);
+				if (ai != null) {
+					ai = ai.selectColumns(Ret.NEW, 0);
+					getMetaData().put(Matrix.DIMENSIONMETADATA + ROW, ai);
+				}
 			}
-			// getAnnotation().setDimensionMatrix(COLUMN,
-			// m.selectColumns(Ret.NEW, 0));
+			getMetaData().put(Matrix.DIMENSIONMETADATA + COLUMN, m.selectColumns(Ret.NEW, 0));
 		} else {
 			throw new RuntimeException("only supported for 2D matrices");
 		}

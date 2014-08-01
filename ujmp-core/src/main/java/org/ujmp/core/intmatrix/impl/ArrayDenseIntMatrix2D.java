@@ -30,15 +30,15 @@ import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
-public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
+public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3331102463077119410L;
 
 	private int[][] values = null;
 
-	public SimpleDenseIntMatrix2D(Matrix m) {
+	public ArrayDenseIntMatrix2D(Matrix m) {
 		super(m.getSize());
-		if (m instanceof SimpleDenseIntMatrix2D) {
-			int[][] v = ((SimpleDenseIntMatrix2D) m).values;
+		if (m instanceof ArrayDenseIntMatrix2D) {
+			int[][] v = ((ArrayDenseIntMatrix2D) m).values;
 			this.values = new int[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
@@ -53,17 +53,17 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		}
 	}
 
-	public SimpleDenseIntMatrix2D(int[]... v) {
+	public ArrayDenseIntMatrix2D(int[]... v) {
 		super(new long[] { v.length, v[0].length });
 		this.values = v;
 	}
 
-	public SimpleDenseIntMatrix2D(long... size) {
+	public ArrayDenseIntMatrix2D(long... size) {
 		super(size);
 		values = new int[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
-	public SimpleDenseIntMatrix2D(int[] v) {
+	public ArrayDenseIntMatrix2D(int[] v) {
 		super(new long[] { v.length, 1 });
 		this.values = new int[v.length][1];
 		for (int r = v.length; --r >= 0;) {
@@ -106,7 +106,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[c][r];
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix plus(double v) {
@@ -117,7 +117,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] + vInt;
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix minus(double v) {
@@ -128,7 +128,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] - vInt;
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix times(double v) {
@@ -139,7 +139,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] * vInt;
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix divide(double v) {
@@ -150,7 +150,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] / vInt;
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix plus(IntMatrix m2) {
@@ -160,7 +160,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] + m2.getAsInt(r, c);
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix minus(IntMatrix m2) {
@@ -170,7 +170,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] - m2.getAsInt(r, c);
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix times(IntMatrix m2) {
@@ -180,7 +180,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] * m2.getAsInt(r, c);
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public final IntMatrix divide(IntMatrix m2) {
@@ -190,7 +190,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 				result[r][c] = values[r][c] / m2.getAsInt(r, c);
 			}
 		}
-		return new SimpleDenseIntMatrix2D(result);
+		return new ArrayDenseIntMatrix2D(result);
 	}
 
 	public IntMatrix mtimes(IntMatrix matrix) {
@@ -214,7 +214,7 @@ public class SimpleDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 			}
 		}
 
-		return new SimpleDenseIntMatrix2D(ret);
+		return new ArrayDenseIntMatrix2D(ret);
 	}
 
 	public boolean containsNaN() {

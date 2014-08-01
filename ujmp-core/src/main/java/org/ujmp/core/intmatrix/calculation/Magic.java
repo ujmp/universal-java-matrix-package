@@ -23,7 +23,9 @@
 
 package org.ujmp.core.intmatrix.calculation;
 
+import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 
 /**
  * Creates a magic square matrix. The sums of all rows and columns are equal.
@@ -32,7 +34,7 @@ import org.ujmp.core.Matrix;
 public class Magic extends AbstractIntCalculation {
 	private static final long serialVersionUID = -2372321035531662110L;
 
-	private final Matrix magic;
+	private final DenseIntMatrix2D magic;
 
 	public Magic(Matrix matrix, int size) {
 		super(matrix);
@@ -43,7 +45,7 @@ public class Magic extends AbstractIntCalculation {
 		return magic.getAsInt(coordinates);
 	}
 
-	public static Matrix magic(int n) {
+	public static DenseIntMatrix2D magic(int n) {
 		final int[][] M = new int[n][n];
 
 		// Odd order
@@ -106,7 +108,7 @@ public class Magic extends AbstractIntCalculation {
 			M[k][k] = M[k + p][k];
 			M[k + p][k] = t;
 		}
-		return Matrix.Factory.linkToArray(M);
+		return DenseMatrix.Factory.linkToArray(M);
 	}
 
 }

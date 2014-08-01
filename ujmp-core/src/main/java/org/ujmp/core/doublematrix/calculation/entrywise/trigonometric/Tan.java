@@ -37,12 +37,4 @@ public class Tan extends AbstractDoubleCalculation {
 		return Math.tan(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.tan(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
 }

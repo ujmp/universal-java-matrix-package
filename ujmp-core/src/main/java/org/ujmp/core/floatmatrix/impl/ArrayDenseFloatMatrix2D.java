@@ -107,7 +107,7 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 }

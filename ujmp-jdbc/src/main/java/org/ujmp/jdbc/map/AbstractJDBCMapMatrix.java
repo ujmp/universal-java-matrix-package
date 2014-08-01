@@ -63,6 +63,8 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 
 	private boolean tableExists;
 
+	private transient ResultSet resultSet = null;
+
 	private transient Connection connection;
 
 	private transient PreparedStatement truncateTableStatement = null;
@@ -192,6 +194,9 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		try {
 			if (truncateTableStatement == null || truncateTableStatement.isClosed()) {
 				truncateTableStatement = SQLUtil.getTruncateTableStatement(connection, getSQLDialect(), getTableName());
+				if (resultSet != null && !resultSet.isClosed()) {
+					resultSet.close();
+				}
 				truncateTableStatement.executeUpdate();
 				truncateTableStatement.close();
 			}
@@ -209,8 +214,11 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 				keyStatement = SQLUtil.getSelectIdsStatement(connection, getSQLDialect(), getTableName(),
 						getKeyColumnName());
 			}
-			ResultSet rs = keyStatement.executeQuery();
-			return new JDBCKeySet(this, rs);
+			if (resultSet != null && !resultSet.isClosed()) {
+				resultSet.close();
+			}
+			resultSet = keyStatement.executeQuery();
+			return new JDBCKeySet(this, resultSet);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -319,12 +327,15 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 						getKeyColumnName(), getValueColumnName());
 			}
 			setKey(selectByKeyStatement, 1, (K) key);
-			ResultSet rs = selectByKeyStatement.executeQuery();
-			V value = null;
-			if (rs.next()) {
-				value = getValue(rs, 1);
+			if (resultSet != null && !resultSet.isClosed()) {
+				resultSet.close();
 			}
-			rs.close();
+			resultSet = selectByKeyStatement.executeQuery();
+			V value = null;
+			if (resultSet.next()) {
+				value = getValue(resultSet, 1);
+			}
+			resultSet.close();
 			if (getValueClass() == null && value != null) {
 				setMetaData(VALUECLASS, value.getClass());
 			}
@@ -349,12 +360,15 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 						getKeyColumnName());
 			}
 			setKey(containsKeyStatement, 1, (K) key);
-			ResultSet rs = containsKeyStatement.executeQuery();
-			boolean containsKey = false;
-			if (rs.next()) {
-				containsKey = MathUtil.getBoolean(rs.getObject(1));
+			if (resultSet != null && !resultSet.isClosed()) {
+				resultSet.close();
 			}
-			rs.close();
+			resultSet = containsKeyStatement.executeQuery();
+			boolean containsKey = false;
+			if (resultSet.next()) {
+				containsKey = MathUtil.getBoolean(resultSet.getObject(1));
+			}
+			resultSet.close();
 			return containsKey;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -376,12 +390,15 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 						getValueColumnName());
 			}
 			setValue(containsValueStatement, 1, (V) value);
-			ResultSet rs = containsValueStatement.executeQuery();
-			boolean containsValue = false;
-			if (rs.next()) {
-				containsValue = MathUtil.getBoolean(rs.getObject(1));
+			if (resultSet != null && !resultSet.isClosed()) {
+				resultSet.close();
 			}
-			rs.close();
+			resultSet = containsValueStatement.executeQuery();
+			boolean containsValue = false;
+			if (resultSet.next()) {
+				containsValue = MathUtil.getBoolean(resultSet.getObject(1));
+			}
+			resultSet.close();
 			return containsValue;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

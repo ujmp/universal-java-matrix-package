@@ -29,7 +29,6 @@ import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultStringMatrix2DFactory extends AbstractStringMatrix2DFactory {
-	private static final long serialVersionUID = 9070985885433278717L;
 
 	public StringMatrix2D zeros(long rows, long columns) {
 		return new DefaultDenseStringMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));

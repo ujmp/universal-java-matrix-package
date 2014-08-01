@@ -105,9 +105,9 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 			Matrix p = new MTJDenseDoubleMatrix2D(m, m);
 			// pivots seem to be broken
 			// http://code.google.com/p/matrix-toolkits-java/issues/detail?id=1
-			// for (int i = 0; i < m; i++) {
-			// p.setAsDouble(1, i, piv[i]);
-			// }
+			for (int i = 0; i < m; i++) {
+				p.setAsDouble(1, i, piv[i]);
+			}
 			p.eye(Ret.ORIG);
 			return new Matrix[] { l, u, p };
 		} catch (Exception e) {
@@ -269,4 +269,5 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 	public MTJDenseDoubleMatrix2DFactory getFactory() {
 		return Factory;
 	}
+
 }

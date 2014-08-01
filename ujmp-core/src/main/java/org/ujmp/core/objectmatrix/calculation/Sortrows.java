@@ -28,10 +28,14 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.LongMatrix2D;
+import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 import org.ujmp.core.util.Sortable;
 
 /**
@@ -151,7 +155,15 @@ public class Sortrows extends AbstractObjectCalculation {
 
 		MapMatrix<Object, Object> annotation = m.getMetaData();
 		if (annotation != null) {
-			annotation = m.getMetaData().clone();
+			annotation = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
+			for (Object key : m.getMetaData().keySet()) {
+				Object o = m.getMetaData(key);
+				if (o instanceof Matrix) {
+					annotation.put(key, ((Matrix) o).clone());
+				} else {
+					annotation.put(key, o);
+				}
+			}
 			setMetaData(annotation);
 		}
 
@@ -160,8 +172,22 @@ public class Sortrows extends AbstractObjectCalculation {
 			if (annotation != null) {
 				Object o = m.getDimensionMetaData(Matrix.COLUMN,
 						new long[] { (Long) (rows.get(r)).getObject(), 0 });
+
 				// annotation.setAxisAnnotation(Matrix.COLUMN, o, new long[] {
 				// r, 0 });
+
+				Matrix ma = (Matrix) annotation.get(Matrix.DIMENSIONMETADATA + Matrix.COLUMN);
+				if (ma == null) {
+					ma = new DefaultSparseObjectMatrix(1, 1);
+					annotation.put(Matrix.DIMENSIONMETADATA + Matrix.COLUMN, ma);
+				}
+				if (!Coordinates.isSmallerThan(new long[] { r, 0 }, ma.getSize())) {
+					long[] newSize = Coordinates.max(ma.getSize(),
+							Coordinates.plus(new long[] { r, 0 }, 1));
+					ma.setSize(newSize);
+				}
+				ma.setAsObject(o, new long[] { r, 0 });
+
 			}
 		}
 

@@ -42,4 +42,20 @@ public class TestParallelColtDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
+	public void testQRFatSmall() {
+
+	}
+
+	public void testQRFatLarge() {
+
+	}
+
+	public void testLUFatFixedSmall() {
+
+	}
+
+	public void testLUFatFixedLarge() {
+
+	}
+
 }

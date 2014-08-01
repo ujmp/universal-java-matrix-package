@@ -37,11 +37,4 @@ public class Tanh extends AbstractDoubleCalculation {
 		return Math.tanh(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.tanh(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
 }

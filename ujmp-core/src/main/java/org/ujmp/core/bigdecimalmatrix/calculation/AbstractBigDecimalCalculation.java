@@ -45,8 +45,8 @@ public abstract class AbstractBigDecimalCalculation extends AbstractCalculation 
 	}
 
 	public final BaseBigDecimalMatrix calcNew() {
-		BaseBigDecimalMatrix result = (BaseBigDecimalMatrix) Matrix.Factory.zeros(ValueType.BIGDECIMAL,
-				getSize());
+		BaseBigDecimalMatrix result = (BaseBigDecimalMatrix) Matrix.Factory.zeros(
+				ValueType.BIGDECIMAL, getSize());
 		for (long[] c : result.allCoordinates()) {
 			result.setAsBigDecimal(getBigDecimal(c), c);
 		}

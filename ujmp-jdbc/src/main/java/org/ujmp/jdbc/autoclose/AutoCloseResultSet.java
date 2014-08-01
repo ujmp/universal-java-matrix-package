@@ -97,7 +97,12 @@ public class AutoCloseResultSet implements ResultSet {
 
 	public boolean isClosed() throws SQLException {
 		connection.resetTimer();
-		return resultSet.isClosed();
+		try {
+			return resultSet.isClosed();
+		} catch (AbstractMethodError e) {
+			// isClosed() is abstract in SQLite
+			return false;
+		}
 	}
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {

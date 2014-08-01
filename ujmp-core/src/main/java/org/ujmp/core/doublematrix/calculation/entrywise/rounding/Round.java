@@ -37,12 +37,4 @@ public class Round extends AbstractDoubleCalculation {
 		return Math.round(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calcNew(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.round(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
 }

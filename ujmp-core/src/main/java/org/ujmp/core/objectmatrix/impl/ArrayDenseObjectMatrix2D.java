@@ -21,44 +21,44 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.longmatrix.impl;
+package org.ujmp.core.objectmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
+import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
+import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
-public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
-	private static final long serialVersionUID = 2888746188860361425L;
+public class ArrayDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
+	private static final long serialVersionUID = -7051381548902586972L;
 
-	private long[][] values = null;
+	private Object[][] values = null;
 
-	public SimpleDenseLongMatrix2D(Matrix m) {
-		super(m.getSize());
-		if (m instanceof SimpleDenseLongMatrix2D) {
-			long[][] v = ((SimpleDenseLongMatrix2D) m).values;
-			this.values = new long[v.length][v[0].length];
+	public ArrayDenseObjectMatrix2D(Object[]... values) {
+		super(values.length, values[0].length);
+		this.values = values;
+	}
+
+	public ArrayDenseObjectMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new Object[rows][columns];
+	}
+
+	public ArrayDenseObjectMatrix2D(Matrix m) {
+		super(m.getRowCount(), m.getColumnCount());
+		if (m instanceof ArrayDenseObjectMatrix2D) {
+			Object[][] v = ((ArrayDenseObjectMatrix2D) m).values;
+			this.values = new Object[v.length][v[0].length];
 			for (int r = v.length; --r >= 0;) {
 				for (int c = v[0].length; --c >= 0;) {
 					values[r][c] = v[r][c];
 				}
 			}
 		} else {
-			values = new long[(int) m.getRowCount()][(int) m.getColumnCount()];
+			values = new Object[(int) m.getRowCount()][(int) m.getColumnCount()];
 			for (long[] c : m.allCoordinates()) {
-				setAsLong(m.getAsLong(c), c);
+				setObject(m.getAsObject(c), c);
 			}
 		}
-	}
-
-	public SimpleDenseLongMatrix2D(long[]... v) {
-		super(new long[] { v.length, v[0].length });
-		this.values = v;
-	}
-
-	public SimpleDenseLongMatrix2D(long... size) {
-		super(size);
-		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public long[] getSize() {
@@ -73,33 +73,23 @@ public class SimpleDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 		return values.length == 0 ? 0 : values[0].length;
 	}
 
-	public long getLong(long row, long column) {
+	public Object getObject(long row, long column) {
 		return values[(int) row][(int) column];
 	}
 
-	public void setLong(long value, long row, long column) {
+	public void setObject(Object value, long row, long column) {
 		values[(int) row][(int) column] = value;
 	}
 
-	public long getLong(int row, int column) {
+	public Object getObject(int row, int column) {
 		return values[row][column];
 	}
 
-	public void setLong(long value, int row, int column) {
+	public void setObject(Object value, int row, int column) {
 		values[row][column] = value;
 	}
 
-	public final Matrix transpose() {
-		long[][] result = new long[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
-			}
-		}
-		return new SimpleDenseLongMatrix2D(result);
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
+	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
 		throw new RuntimeException("not implemented");
 	}
 

@@ -119,7 +119,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 }

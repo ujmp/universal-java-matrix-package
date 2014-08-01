@@ -37,12 +37,4 @@ public class Ceil extends AbstractDoubleCalculation {
 		return Math.ceil(getSource().getAsDouble(coordinates));
 	}
 
-	public static Matrix calcNew(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			ret.setAsDouble(Math.ceil(source.getAsDouble(c)), c);
-		}
-		return ret;
-	}
-
 }

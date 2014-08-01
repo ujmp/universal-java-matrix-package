@@ -67,8 +67,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 	}
 
 	public Object getObject(int row, int column) {
-		Matrix m = rows.get(row);
-		return m == null ? null : m.getAsObject(0, column);
+		return getObject((long) row, (long) column);
 	}
 
 	// TODO: this is certainly not the optimal way to do it!

@@ -23,12 +23,11 @@
 
 package org.ujmp.core.floatmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
 import org.ujmp.core.interfaces.HasFloatArray;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implements HasFloatArray {
 	private static final long serialVersionUID = -5449462775185759895L;
@@ -158,8 +157,8 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 		return values;
 	}
 
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return Matrix.Factory;
 	}
 
 }

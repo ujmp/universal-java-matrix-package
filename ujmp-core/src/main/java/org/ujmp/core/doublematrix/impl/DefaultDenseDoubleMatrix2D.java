@@ -135,12 +135,12 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
 		return new BaseMatrixFactory<DefaultDenseDoubleMatrix2D>() {
 
-			public Matrix zeros(long rows, long columns) {
+			public DefaultDenseDoubleMatrix2D zeros(long rows, long columns) {
 				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(rows),
 						MathUtil.longToInt(columns));
 			}
 
-			public Matrix zeros(long... size) {
+			public DefaultDenseDoubleMatrix2D zeros(long... size) {
 				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]),
 						MathUtil.longToInt(size[COLUMN]));
 			}

@@ -56,4 +56,5 @@ public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public void testLUSquareSingularLarge() throws Exception {
 		// not supported
 	}
+
 }

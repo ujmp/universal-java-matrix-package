@@ -23,11 +23,9 @@
 
 package org.ujmp.jmathplot;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
-public class TestJMathPlot extends TestCase {
+public class TestJMathPlot {
 
 	@Test
 	public void noTestYet() {

@@ -30,12 +30,12 @@ import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
-public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
+public class ArrayDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = -4292004796378125964L;
 
 	private String[][] values = null;
 
-	public SimpleDenseStringMatrix2D(String string) {
+	public ArrayDenseStringMatrix2D(String string) {
 		super(0, 0);
 		string = string.replaceAll(StringUtil.BRACKETS, "");
 		String[] rows = string.split(StringUtil.SEMICOLONORNEWLINE);
@@ -49,19 +49,19 @@ public class SimpleDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 		}
 	}
 
-	public SimpleDenseStringMatrix2D(Matrix source) {
+	public ArrayDenseStringMatrix2D(Matrix source) {
 		this(MathUtil.longToInt(source.getRowCount()), MathUtil.longToInt(source.getColumnCount()));
 		for (long[] c : source.availableCoordinates()) {
 			setAsString(source.getAsString(c), c);
 		}
 	}
 
-	public SimpleDenseStringMatrix2D(int rows, int columns) {
+	public ArrayDenseStringMatrix2D(int rows, int columns) {
 		super(rows, columns);
 		values = new String[rows][columns];
 	}
 
-	public SimpleDenseStringMatrix2D(String[]... values) {
+	public ArrayDenseStringMatrix2D(String[]... values) {
 		super(values.length, values[0].length);
 		this.values = values;
 	}

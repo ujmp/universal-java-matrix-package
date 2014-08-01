@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
+import org.ujmp.core.stringmatrix.StringMatrix;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.IntelligentFileReader;
 
@@ -160,7 +160,7 @@ public abstract class ImportMatrixCSV {
 				}
 			}
 			lr.close();
-			Matrix m = Matrix.Factory.zeros(ValueType.STRING, rows, cols);
+			Matrix m = StringMatrix.Factory.zeros(rows, cols);
 
 			if (labels != null) {
 				for (int c = 0; c < labels.length; c++) {

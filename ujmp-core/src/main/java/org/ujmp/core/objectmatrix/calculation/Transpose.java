@@ -24,6 +24,7 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
@@ -52,18 +53,22 @@ public class Transpose extends AbstractObjectCalculation {
 
 	public static MapMatrix<Object, Object> transposeAnnotation(MapMatrix<Object, Object> aorig,
 			long[] newSize, int swap1, int swap2) {
+
 		if (aorig != null) {
-			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>(
+					new TreeMap<Object, Object>());
 			a.put(Matrix.LABEL, aorig.get(Matrix.LABEL));
 			for (int i = 0; i < newSize.length; i++) {
-				// Matrix am = aorig.getDimensionMatrix(i);
-				// am = am.transpose(Ret.NEW, swap1, swap2);
-				if (i == swap1) {
-					// a.setDimensionMatrix(swap2, am);
-				} else if (i == swap2) {
-					// a.setDimensionMatrix(swap1, am);
-				} else {
-					// a.setDimensionMatrix(i, am);
+				Matrix am = (Matrix) aorig.get(Matrix.DIMENSIONMETADATA + i);
+				if (am != null) {
+					am = am.transpose(Ret.NEW, swap1, swap2);
+					if (i == swap1) {
+						a.put(Matrix.DIMENSIONMETADATA + swap2, am);
+					} else if (i == swap2) {
+						a.put(Matrix.DIMENSIONMETADATA + swap1, am);
+					} else {
+						a.put(Matrix.DIMENSIONMETADATA + i, am);
+					}
 				}
 			}
 			return a;

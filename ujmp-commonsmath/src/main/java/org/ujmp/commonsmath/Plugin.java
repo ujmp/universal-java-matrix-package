@@ -38,7 +38,7 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("commons-math.jar");
-		neededClasses.add("org.apache.commons.math.MathException");
+		neededClasses.add("org.apache.commons.math3.Field");
 	}
 
 	public String getDescription() {

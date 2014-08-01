@@ -27,7 +27,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -44,7 +44,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	private static final long serialVersionUID = 5571429371462164416L;
 
 	private volatile boolean isIndexUpToDate = false;
-	private final List<K> keyIndexList = new ArrayList<K>();
+	private final List<K> keyIndexList = new FastArrayList<K>();
 
 	public AbstractMapMatrix() {
 		super(0, 2);

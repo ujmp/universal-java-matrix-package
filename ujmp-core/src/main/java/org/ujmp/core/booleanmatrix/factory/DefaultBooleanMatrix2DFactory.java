@@ -25,14 +25,14 @@ package org.ujmp.core.booleanmatrix.factory;
 
 import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
-import org.ujmp.core.booleanmatrix.impl.DefaultDenseBooleanMatrix2D;
+import org.ujmp.core.booleanmatrix.impl.ArrayDenseBooleanMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultBooleanMatrix2DFactory extends AbstractBooleanMatrix2DFactory {
 	private static final long serialVersionUID = -7554206320842397263L;
 
 	public BooleanMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseBooleanMatrix2D(MathUtil.longToInt(rows),
+		return new ArrayDenseBooleanMatrix2D(MathUtil.longToInt(rows),
 				MathUtil.longToInt(columns));
 	}
 

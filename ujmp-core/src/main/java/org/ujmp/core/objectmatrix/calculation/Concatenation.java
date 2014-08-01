@@ -24,6 +24,7 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import java.util.Collection;
+import java.util.TreeMap;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
@@ -97,14 +98,14 @@ public class Concatenation extends AbstractObjectCalculation {
 
 		// Annotation
 		if (matrices[0].getLabelObject() != null) {
-			MapMatrix<Object, Object> annotation = new DefaultMapMatrix<Object, Object>();
+			MapMatrix<Object, Object> annotation = new DefaultMapMatrix<Object, Object>(
+					new TreeMap<Object, Object>());
 			setMetaData(annotation);
 			annotation.put(Matrix.LABEL, matrices[0].getLabelObject());
 			for (int d = 0; d < matrices[0].getDimensionCount(); d++) {
 				if (d == dimension) {
-					// annotation.setDimensionMatrix(d,
-					// matrices[0].getAnnotation()
-					// .getDimensionMatrix(d));
+					annotation.put(Matrix.DIMENSIONMETADATA + d,
+							matrices[0].getMetaDataDimensionMatrix(d));
 				} else {
 					Matrix[] annotationMatrices = new Matrix[matrices.length];
 					for (int i = 0; i < annotationMatrices.length; i++) {
@@ -115,12 +116,12 @@ public class Concatenation extends AbstractObjectCalculation {
 							size[d] = 1;
 							am = new DefaultSparseObjectMatrix(size);
 						} else {
-							// am = a.getDimensionMatrix(d);
+							am = (Matrix) a.get(Matrix.DIMENSIONMETADATA + d);
 						}
 						annotationMatrices[i] = am;
 					}
 					Matrix m = new Concatenation(dimension, annotationMatrices).calc(Ret.NEW);
-					// annotation.setDimensionMatrix(d, m);
+					annotation.put(Matrix.DIMENSIONMETADATA + d, m);
 				}
 			}
 		}

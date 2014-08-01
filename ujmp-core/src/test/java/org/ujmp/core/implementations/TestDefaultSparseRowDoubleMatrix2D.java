@@ -24,27 +24,20 @@
 package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
-import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.doublematrix.impl.DefaultSparseRowDoubleMatrix2D;
 
-public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
-
-	public TestBlockDenseDoubleMatrix2D() {
-		UJMPSettings.getInstance().setNumberOfThreads(1);
-	}
+public class TestDefaultSparseRowDoubleMatrix2D extends AbstractMatrixTest {
 
 	public Matrix createMatrix(long... size) {
-		return new BlockDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
-				MathUtil.longToInt(size[Matrix.COLUMN]));
+		return new DefaultSparseRowDoubleMatrix2D(size[Matrix.ROW], size[Matrix.COLUMN]);
 	}
 
 	public Matrix createMatrix(Matrix source) {
-		return new BlockDenseDoubleMatrix2D(source);
+		return new DefaultSparseRowDoubleMatrix2D(source);
 	}
 
 	public boolean isTestLarge() {
-		return true;
+		return false;
 	}
 
 	public void testQRFatLarge() throws Exception {

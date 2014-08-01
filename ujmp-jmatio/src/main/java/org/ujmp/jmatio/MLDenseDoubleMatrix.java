@@ -125,7 +125,7 @@ public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD impleme
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
+		return Matrix.Factory;
 	}
 
 }

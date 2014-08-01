@@ -31,6 +31,8 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 
 public interface HasMetaData extends HasLabel, HasDescription, HasId {
 
+	public static final String DIMENSIONMETADATA = "DimensionMetaData";
+
 	public MapMatrix<Object, Object> getMetaData();
 
 	public void setMetaData(MapMatrix<Object, Object> metaData);

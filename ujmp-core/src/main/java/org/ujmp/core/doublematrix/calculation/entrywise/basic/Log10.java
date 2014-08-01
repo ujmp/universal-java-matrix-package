@@ -38,13 +38,4 @@ public class Log10 extends AbstractDoubleCalculation {
 		return Math.log(v) / Math.log(10.0);
 	}
 
-	public static Matrix calc(Matrix source) {
-		Matrix ret = Matrix.Factory.zeros(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			double v = source.getAsDouble(c);
-			ret.setAsDouble(Math.log(v) / Math.log(10.0), c);
-		}
-		return ret;
-	}
-
 }

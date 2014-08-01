@@ -26,7 +26,6 @@ package org.ujmp.core.stringmatrix.calculation;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.enums.ValueType;
 
 public class ReplaceRegex extends AbstractStringCalculation {
 	private static final long serialVersionUID = 8158807887609103123L;
@@ -49,19 +48,6 @@ public class ReplaceRegex extends AbstractStringCalculation {
 		String src = getSource().getAsString(coordinates);
 
 		return (src == null) ? null : searchPattern.matcher(src).replaceAll(replaceString);
-	}
-
-	public static Matrix calc(Matrix source, Pattern search, String replacement) {
-		Matrix ret = Matrix.Factory.zeros(ValueType.STRING, source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			String src = source.getAsString(c);
-			ret.setAsString((src == null) ? null : search.matcher(src).replaceAll(replacement), c);
-		}
-		return ret;
-	}
-
-	public static Matrix calc(Matrix source, String searchString, String replacement) {
-		return calc(source, Pattern.compile(searchString), replacement);
 	}
 
 }

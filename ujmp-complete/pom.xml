@@ -49,6 +49,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-elasticsearch</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-examples</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -305,6 +312,14 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-ejml</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ujmp</groupId>
+			<artifactId>ujmp-elasticsearch</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>

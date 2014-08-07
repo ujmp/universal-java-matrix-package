@@ -1344,4 +1344,8 @@ public abstract class MathUtil {
 		return Integer.toHexString(i);
 	}
 
+	public static boolean isDiscrete(double number) {
+		return (int) number == number;
+	}
+
 }

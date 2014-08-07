@@ -25,9 +25,13 @@ package org.ujmp.elasticsearch;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
+
+import javax.print.attribute.UnmodifiableSetException;
 
 import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.get.GetResponse;
@@ -44,12 +48,16 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder.Operator;
 import org.elasticsearch.search.SearchHit;
 import org.ujmp.core.collections.list.FastArrayList;
+import org.ujmp.core.collections.set.AbstractSet;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<String, Object>> implements Closeable {
 	private static final long serialVersionUID = -7047080106649021619L;
+
+	public static final int SCROLLTIMEOUT = 600000;
+	public static final int SCROLLSIZE = 1000;
 
 	public static final String ID = "_id";
 
@@ -89,9 +97,13 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		}
 	}
 
+	public String getIndex() {
+		return index;
+	}
+
 	public int size() {
 		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		CountResponse response = client.prepareCount(index).setQuery(query).execute().actionGet();
+		CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
 		return MathUtil.longToInt(response.getCount());
 	}
 
@@ -101,27 +113,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 	}
 
 	public Set<String> keySet() {
-		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		List<Map<String, Object>> list = new FastArrayList<Map<String, Object>>();
-
-		SearchResponse scrollResp = client.prepareSearch(index).addFields(new String[] {})
-				.setSearchType(SearchType.SCAN).setScroll(new TimeValue(60000)).setQuery(query).setSize(1000).execute()
-				.actionGet();
-
-		int i = 0;
-		while (true) {
-			scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000))
-					.execute().actionGet();
-			for (SearchHit hit : scrollResp.getHits()) {
-				System.out.println(i++);
-			}
-
-			if (scrollResp.getHits().getHits().length == 0) {
-				break;
-			}
-		}
-
-		return null;
+		return new KeySet(this);
 	}
 
 	@Override
@@ -154,7 +146,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		List<Map<String, Object>> list = new FastArrayList<Map<String, Object>>();
 
 		QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
-		SearchResponse response = client.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
+		SearchResponse response = client.prepareSearch(index, type).setSearchType(SearchType.QUERY_AND_FETCH)
 				.setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
 
 		SearchHit[] results = response.getHits().getHits();
@@ -168,7 +160,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	public int count(String string) {
 		QueryBuilder query = QueryBuilders.queryString(string).defaultOperator(Operator.AND);
-		CountResponse response = client.prepareCount(index).setQuery(query).execute().actionGet();
+		CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
 		return MathUtil.longToInt(response.getCount());
 	}
 
@@ -177,4 +169,99 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 			client.close();
 		}
 	}
+
+	public String getType() {
+		return type;
+	}
+}
+
+class KeySet extends AbstractSet<String> {
+	private static final long serialVersionUID = -9047566077947415546L;
+
+	private final ElasticsearchIndex index;
+
+	public KeySet(ElasticsearchIndex index) {
+		this.index = index;
+	}
+
+	@Override
+	public boolean add(String value) {
+		throw new UnmodifiableSetException();
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		throw new UnmodifiableSetException();
+	}
+
+	@Override
+	public void clear() {
+		throw new UnmodifiableSetException();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return index.containsKey(o);
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		return new KeyIterator(index);
+	}
+
+	@Override
+	public int size() {
+		return index.size();
+	}
+}
+
+class KeyIterator implements Iterator<String> {
+
+	private final ElasticsearchIndex index;
+	private Iterator<SearchHit> iterator;
+	private SearchResponse scrollResp;
+
+	public KeyIterator(ElasticsearchIndex index) {
+		this.index = index;
+		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+		scrollResp = index.getClient().prepareSearch(index.getIndex()).setTypes(index.getType())
+				.addFields(new String[] {}).setSearchType(SearchType.SCAN)
+				.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).setQuery(query)
+				.setSize(ElasticsearchIndex.SCROLLSIZE).execute().actionGet();
+		scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
+				.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
+		iterator = scrollResp.getHits().iterator();
+	}
+
+	public boolean hasNext() {
+		if (iterator != null && !iterator.hasNext()) {
+			scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
+					.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
+			if (scrollResp.getHits().getHits().length == 0) {
+				iterator = null;
+			} else {
+				iterator = scrollResp.getHits().iterator();
+			}
+		}
+		if (iterator != null && iterator.hasNext()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String next() {
+		if (iterator != null) {
+			SearchHit hit = iterator.next();
+			return hit.getId();
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
+	public void remove() {
+		throw new UnmodifiableSetException();
+
+	}
+
 }

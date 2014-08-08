@@ -25,6 +25,7 @@ package org.ujmp.commonsmath;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestCommonsMathBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -40,27 +41,8 @@ public class TestCommonsMathBlockDenseDoubleMatrix2D extends AbstractMatrixTest 
 		return true;
 	}
 
-	public void testLUFatFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUFatFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUSquareSingularSmall() throws Exception {
-		// some error
-	}
-
-	public void testLUSquareSingularLarge() throws Exception {
-		// some error
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.COMMONSMATH;
 	}
 }

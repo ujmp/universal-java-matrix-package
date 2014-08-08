@@ -25,6 +25,7 @@ package org.ujmp.lucene;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestLuceneSparseObjectMatrix extends AbstractMatrixTest {
 
@@ -40,20 +41,9 @@ public class TestLuceneSparseObjectMatrix extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testQRFatSmall() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testLUFatFixedSmall() throws Exception {
-		// some error
-	}
-
-	public void testLUFatFixedLarge() throws Exception {
-		// some error
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 
 }

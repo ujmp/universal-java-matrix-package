@@ -96,7 +96,7 @@ public class RowHeaderTableModel64 implements TableModel64, TableModelListener64
 	}
 
 	public String getColumnName(long columnIndex) {
-		return null;
+		return "RowLabel";
 	}
 
 	public Class<?> getColumnClass(long columnIndex) {

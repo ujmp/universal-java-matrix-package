@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.gui.MatrixGUIObject;
 
 public class ColumnTableHeaderRenderer64 extends JLabel implements TableCellRenderer64 {
 	private static final long serialVersionUID = -800986952766999425L;
@@ -43,20 +44,30 @@ public class ColumnTableHeaderRenderer64 extends JLabel implements TableCellRend
 		setHorizontalAlignment(CENTER);
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
-		return getTableCellRendererComponent(table, value, isSelected, hasFocus, (long) row, (long) column);
-	}
-
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+	public Component getTableCellRendererComponent(JTable64 table, Object value, boolean isSelected, boolean hasFocus,
 			long row, long column) {
 		if (table.getColumnModel().getSelectionModel().isSelectedIndex(MathUtil.longToInt(column))) {
 			setBackground(table.getSelectionBackground());
 		} else {
 			setBackground(table.getBackground());
 		}
-		setText(String.valueOf(column));
+		value = ((MatrixGUIObject) table.getModel()).getColumnName(column);
+		if (value != null) {
+			setText("[" + String.valueOf(value) + "] " + String.valueOf(column));
+		} else {
+			setText(String.valueOf(column));
+		}
 		return this;
+	}
+
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
+		if (table instanceof JTable64) {
+			return getTableCellRendererComponent((JTable64) table, value, isSelected, hasFocus, (long) row,
+					(long) column);
+		} else {
+			throw new RuntimeException("use JTable64 instead");
+		}
 	}
 
 }

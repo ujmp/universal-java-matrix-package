@@ -26,6 +26,7 @@ package org.ujmp.mantissa;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestMantissaMatrix2D extends AbstractMatrixTest {
 
@@ -42,15 +43,8 @@ public class TestMantissaMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testSolveRandTallSmall() throws Exception {
-
-	}
-
-	public void testSolveRandTallLarge() throws Exception {
-
-	}
-
-	public void testQRFatSmall() throws Exception {
-
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.MANTISSA;
 	}
 }

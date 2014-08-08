@@ -53,16 +53,15 @@ public abstract class AbstractMatrixTest {
 	private static final MatrixLibraries LIBRARIES = new MatrixLibraries();
 
 	private static final String SQUARE = LIBRARIES.square();
-
 	private static final String TALL = LIBRARIES.tall();
-
 	private static final String FAT = LIBRARIES.fat();
+	private static final String YES = LIBRARIES.yes();
 
 	public enum MatrixLayout {
 		SQUARE, FAT, TALL
 	};
 
-	public enum EntryGenerator {
+	public enum EntryType {
 		RANDN, RAND, RANDSYMM, RANDNSYMM, SINGULAR, SPD
 	};
 
@@ -78,11 +77,13 @@ public abstract class AbstractMatrixTest {
 
 	public abstract boolean isTestLarge();
 
+	public abstract int getMatrixLibraryId();
+
 	public String getLabel() {
 		return this.getClass().getSimpleName();
 	}
 
-	public Matrix getTestMatrix() throws Exception {
+	public final Matrix getTestMatrix() throws Exception {
 		Matrix m = createMatrixWithAnnotation(3, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(3.0, 1, 0);
@@ -92,20 +93,20 @@ public abstract class AbstractMatrixTest {
 		return m;
 	}
 
-	private Matrix createMatrixWithAnnotation(long... size) throws Exception {
+	private final Matrix createMatrixWithAnnotation(long... size) throws Exception {
 		Matrix m = createMatrix(size);
 		setAnnotation(m);
 		return m;
 	}
 
-	private Matrix createMatrixWithAnnotation(Matrix matrix) throws Exception {
+	private final Matrix createMatrixWithAnnotation(Matrix matrix) throws Exception {
 		Matrix m = createMatrix(matrix);
 		setAnnotation(m);
 		return m;
 	}
 
 	@Test
-	public void testExtractAnnotation() throws Exception {
+	public final void testExtractAnnotation() throws Exception {
 		Matrix m1 = DenseDoubleMatrix2D.Factory.randn(5, 5);
 		Matrix m2 = m1.extractAnnotation(Ret.NEW, Matrix.ROW);
 		assertEquals(getLabel(), 4, m2.getRowCount());
@@ -137,7 +138,7 @@ public abstract class AbstractMatrixTest {
 
 	// Test interface CoordinateFunctions
 	@Test
-	public void testCoordinateIterator2D() throws Exception {
+	public final void testCoordinateIterator2D() throws Exception {
 		Matrix m = createMatrixWithAnnotation(3, 3);
 		m.setAsDouble(1.0, 2, 2);
 		Iterator<long[]> ci = m.allCoordinates().iterator();
@@ -203,7 +204,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSelectedCoordinatesString() throws Exception {
+	public final void testSelectedCoordinatesString() throws Exception {
 		Matrix m = getTestMatrix();
 
 		Matrix mTest = createMatrixWithAnnotation(2, 3);
@@ -234,7 +235,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testRowMajorDoubleArray2DConstructor() throws Exception {
+	public final void testRowMajorDoubleArray2DConstructor() throws Exception {
 		Matrix m = new ArrayDenseDoubleMatrix2D(23, 17);
 		setAnnotation(m);
 		m.randn(Ret.ORIG);
@@ -247,7 +248,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testColumnMajorDoubleArray1DConstructor() throws Exception {
+	public final void testColumnMajorDoubleArray1DConstructor() throws Exception {
 		Matrix m = new DefaultDenseDoubleMatrix2D(23, 17);
 		setAnnotation(m);
 		m.randn(Ret.ORIG);
@@ -260,7 +261,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testConstructorWithAnnotation() throws Exception {
+	public final void testConstructorWithAnnotation() throws Exception {
 		Matrix m = createMatrixWithAnnotation(3, 3);
 		Matrix m2 = createMatrix(m);
 		assertTrue(getLabel(), m.equalsContent(m2));
@@ -269,7 +270,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testOtherConstructor() throws Exception {
+	public final void testOtherConstructor() throws Exception {
 		Matrix m = new DefaultDenseDoubleMatrixMultiD(23, 17);
 		setAnnotation(m);
 		m.randn(Ret.ORIG);
@@ -315,7 +316,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testGetCoordinatesOfMaximum() throws Exception {
+	public final void testGetCoordinatesOfMaximum() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMaximum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 1, 1 }));
@@ -334,7 +335,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testGetCoordinatesOfMininim() throws Exception {
+	public final void testGetCoordinatesOfMininim() throws Exception {
 		Matrix m = getTestMatrix();
 		long[] c = m.getCoordinatesOfMinimum();
 		assertTrue(getLabel(), Coordinates.equals(c, new long[] { 1, 2 }));
@@ -353,7 +354,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testContains() throws Exception {
+	public final void testContains() throws Exception {
 		Matrix m = getTestMatrix();
 
 		assertTrue(m.contains(0, 0));
@@ -401,7 +402,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSize() throws Exception {
+	public final void testSize() throws Exception {
 		Matrix m = createMatrixWithAnnotation(21, 12);
 		m.setAsDouble(1.0, 20, 11);
 		assertEquals(getLabel(), 21, m.getRowCount());
@@ -413,7 +414,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testZeros() throws Exception {
+	public final void testZeros() throws Exception {
 		Matrix m = createMatrixWithAnnotation(21, 12);
 
 		for (long[] c : m.allCoordinates()) {
@@ -440,7 +441,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testNaN() throws Exception {
+	public final void testNaN() throws Exception {
 		Matrix m = createMatrixWithAnnotation(21, 12);
 
 		for (long[] c : m.allCoordinates()) {
@@ -467,7 +468,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testClone() throws Exception {
+	public final void testClone() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -483,7 +484,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testAnnotation() throws Exception {
+	public final void testAnnotation() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		compareAnnotation(m);
 
@@ -493,7 +494,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testCountMissingValues() throws Exception {
+	public final void testCountMissingValues() throws Exception {
 		Matrix m = createMatrixWithAnnotation(4, 4);
 		m = m.zeros(Ret.ORIG);
 		m.setAsDouble(Double.NaN, 1, 0);
@@ -525,7 +526,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSerialize() throws Exception {
+	public final void testSerialize() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -546,7 +547,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testToDoubleArray() throws Exception {
+	public final void testToDoubleArray() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -564,7 +565,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSetAndGet() throws Exception {
+	public final void testSetAndGet() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -589,7 +590,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPlusScalarSmall() throws Exception {
+	public final void testPlusScalarSmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -616,7 +617,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPlusScalarLarge() throws Exception {
+	public final void testPlusScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -646,7 +647,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPlusMatrixSmall() throws Exception {
+	public final void testPlusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(2, 2);
 		Matrix m2 = createMatrixWithAnnotation(2, 2);
 		m1.setAsDouble(1.0, 0, 0);
@@ -686,7 +687,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPlusMatrixLarge() throws Exception {
+	public final void testPlusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -729,7 +730,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testTransposeSmall() throws Exception {
+	public final void testTransposeSmall() throws Exception {
 		// TODO: check labels
 		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
@@ -761,7 +762,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testTransposeLarge() throws Exception {
+	public final void testTransposeLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -789,7 +790,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testTransposeNewSmall() throws Exception {
+	public final void testTransposeNewSmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -819,7 +820,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testTransposeLinkSmall() throws Exception {
+	public final void testTransposeLinkSmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 3);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -849,7 +850,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testEmpty() throws Exception {
+	public final void testEmpty() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		if (m instanceof AbstractDoubleMatrix) {
 			assertEquals(getLabel(), 0.0, m.getAsDouble(0, 0), TOLERANCE);
@@ -869,7 +870,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMinusScalarSmall() throws Exception {
+	public final void testMinusScalarSmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -950,7 +951,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testTimesScalarLarge() throws Exception {
+	public final void testTimesScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -979,7 +980,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testDivideScalarSmall() throws Exception {
+	public final void testDivideScalarSmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(2, 2);
 		m.setAsDouble(1.0, 0, 0);
 		m.setAsDouble(2.0, 0, 1);
@@ -1005,7 +1006,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testDivideScalarLarge() throws Exception {
+	public final void testDivideScalarLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1034,7 +1035,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMinusMatrixSmall() throws Exception {
+	public final void testMinusMatrixSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(2, 2);
 		Matrix m2 = createMatrixWithAnnotation(2, 2);
 		m1.setAsDouble(1.0, 0, 0);
@@ -1073,7 +1074,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMinusMatrixLarge() throws Exception {
+	public final void testMinusMatrixLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1115,7 +1116,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0PlusXMatrix() throws Exception {
+	public final void test0PlusXMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
@@ -1133,7 +1134,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testXPlus0MatrixMatrix() throws Exception {
+	public final void testXPlus0MatrixMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
@@ -1151,7 +1152,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0Plus0Matrix() throws Exception {
+	public final void test0Plus0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.plus(m2);
@@ -1168,7 +1169,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0Minus0Matrix() throws Exception {
+	public final void test0Minus0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.minus(m2);
@@ -1185,7 +1186,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testToDoubleArraySmall() throws Exception {
+	public final void testToDoubleArraySmall() throws Exception {
 		Matrix m = createMatrixWithAnnotation(6, 7);
 		m.randn(Ret.ORIG);
 
@@ -1203,7 +1204,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testToDoubleArrayLarge() throws Exception {
+	public final void testToDoubleArrayLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1224,7 +1225,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testXMinus0Matrix() throws Exception {
+	public final void testXMinus0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
@@ -1243,7 +1244,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0MinusXMatrix() throws Exception {
+	public final void test0MinusXMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
@@ -1266,7 +1267,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0TimesXMatrix() throws Exception {
+	public final void test0TimesXMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
@@ -1285,7 +1286,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testXTimes0Matrix() throws Exception {
+	public final void testXTimes0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
@@ -1304,7 +1305,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0Times0Matrix() throws Exception {
+	public final void test0Times0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.times(m2);
@@ -1322,7 +1323,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0Divide0Matrix() throws Exception {
+	public final void test0Divide0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		Matrix m3 = m1.divide(m2);
@@ -1340,7 +1341,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testXDivide0Matrix() throws Exception {
+	public final void testXDivide0Matrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m1.randn(Ret.ORIG);
@@ -1359,7 +1360,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void test0DivideXMatrix() throws Exception {
+	public final void test0DivideXMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
 		m2.randn(Ret.ORIG);
@@ -1378,7 +1379,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMTimesFixedSmall() throws Exception {
+	public final void testMTimesFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(2, 2);
 
 		m1.setAsDouble(-1.0, 0, 0);
@@ -1426,7 +1427,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testMTimesFixedLarge() throws Exception {
+	public final void testMTimesFixedLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1477,7 +1478,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testInvRandSmall() throws Exception {
+	public final void testInvRandSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(10, 10);
 
 		do {
@@ -1504,7 +1505,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testInvSPDRandSmall() throws Exception {
+	public final void testInvSPDRandSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(10, 10);
 
 		BenchmarkUtil.randPositiveDefinite(System.currentTimeMillis(), 0, 0, m1);
@@ -1529,7 +1530,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testInvRandLarge() throws Exception {
+	public final void testInvRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1559,7 +1560,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testInvSPDRandLarge() throws Exception {
+	public final void testInvSPDRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1586,8 +1587,12 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public void testInvFixedSmall() throws Exception {
+	public final void testInvFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(3, 3);
+
+		if (!isSupported(m1, MatrixLibraries.INV, MatrixLayout.SQUARE, null)) {
+			return;
+		}
 
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1621,8 +1626,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testPinvFixedSmall() throws Exception {
+	public final void testPinvFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(3, 3);
+
+		if (!isSupported(m1, MatrixLibraries.SVD, MatrixLayout.SQUARE, EntryType.RANDN)) {
+			return;
+		}
 
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1656,7 +1665,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testGinvFixedSmall() throws Exception {
+	public final void testGinvFixedSmall() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(3, 3);
 		m1.setAsDouble(1.0, 0, 0);
 		m1.setAsDouble(2.0, 1, 0);
@@ -1690,8 +1699,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testEigRandSmall() throws Exception {
+	public final void testEigRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
+
+		if (!isSupported(a, MatrixLibraries.EIG, MatrixLayout.SQUARE, EntryType.RANDN)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
@@ -1706,11 +1719,15 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testEigRandLarge() throws Exception {
+	public final void testEigRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(110, 110);
+
+		if (!isSupported(a, MatrixLibraries.EIG, MatrixLayout.SQUARE, null)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] eig = a.eig();
@@ -1731,7 +1748,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testEigSymmSmall() throws Exception {
+	public final void testEigSymmSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
 
 		setRandSymmetric(a);
@@ -1754,7 +1771,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testEigSymmLarge() throws Exception {
+	public final void testEigSymmLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1780,8 +1797,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareSingularSmall() throws Exception {
+	public final void testLUSquareSingularSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(5, 5);
+
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.SINGULAR)) {
+			return;
+		}
 
 		setAscending(a);
 
@@ -1802,7 +1823,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public static void setAscending(Matrix source) {
+	public final static void setAscending(Matrix source) {
 		for (int r = 0, v = 1; r < source.getRowCount(); r++) {
 			for (int c = 0; c < source.getColumnCount(); c++) {
 				source.setAsDouble(v++, r, c);
@@ -1810,7 +1831,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public static void setRandSymmetric(Matrix a) {
+	public final static void setRandSymmetric(Matrix a) {
 		Random random = new Random();
 		int rows = (int) a.getRowCount();
 		int cols = (int) a.getColumnCount();
@@ -1823,7 +1844,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public static void setRandnSymmetric(Matrix a) {
+	public final static void setRandnSymmetric(Matrix a) {
 		Random random = new Random();
 		int rows = (int) a.getRowCount();
 		int cols = (int) a.getColumnCount();
@@ -1837,11 +1858,15 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareSingularLarge() throws Exception {
+	public final void testLUSquareSingularLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(116, 116);
+
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.SINGULAR)) {
+			return;
+		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -1862,7 +1887,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandSquareSmall() throws Exception {
+	public final void testSolveRandSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(2, 2);
 
 		a.randn(Ret.ORIG);
@@ -1890,7 +1915,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandSquareLarge() throws Exception {
+	public final void testSolveRandSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1921,7 +1946,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandSPDLarge() throws Exception {
+	public final void testSolveRandSPDLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1952,7 +1977,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandSPDSmall() throws Exception {
+	public final void testSolveRandSPDSmall() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -1983,8 +2008,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandTallSmall() throws Exception {
+	public final void testSolveRandTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 2);
+
+		if (!isSupported(a, MatrixLibraries.SOLVE, MatrixLayout.TALL, EntryType.RANDN)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(2, 4);
@@ -2011,11 +2040,15 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSolveRandTallLarge() throws Exception {
+	public final void testSolveRandTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(169, 121);
+
+		if (!isSupported(a, MatrixLibraries.SOLVE, MatrixLayout.TALL, EntryType.RANDN)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix x = createMatrixWithAnnotation(121, 143);
@@ -2042,8 +2075,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareRandSmall() throws Exception {
+	public final void testLUSquareRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
+
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.RANDN)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
@@ -2064,12 +2101,16 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUSquareRandLarge() throws Exception {
+	public final void testLUSquareRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(112, 112);
 
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.RANDN)) {
+			return;
+		}
+
 		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2089,8 +2130,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUTallFixedSmall() throws Exception {
+	public final void testLUTallFixedSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
+
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.TALL, null)) {
+			return;
+		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -2111,12 +2156,16 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUTallFixedLarge() throws Exception {
+	public final void testLUTallFixedLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(161, 142);
 
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.TALL, null)) {
+			return;
+		}
+
 		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2136,9 +2185,13 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUFatFixedSmall() throws Exception {
+	public final void testLUFatFixedSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
 
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.FAT, null)) {
+			return;
+		}
+
 		setAscending(a);
 		Matrix[] lu = a.lu();
 		Matrix prod = lu[0].mtimes(lu[1]);
@@ -2158,11 +2211,16 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLUFatFixedLarge() throws Exception {
+	public final void testLUFatFixedLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
+
 		Matrix a = createMatrixWithAnnotation(141, 162);
+
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.FAT, null)) {
+			return;
+		}
 
 		setAscending(a);
 		Matrix[] lu = a.lu();
@@ -2183,7 +2241,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRFixedSquareSmall() throws Exception {
+	public final void testQRFixedSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(5, 5);
 		setAscending(a);
 		Matrix[] qr = a.qr();
@@ -2200,7 +2258,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRFixedSquareLarge() throws Exception {
+	public final void testQRFixedSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2220,7 +2278,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRRandSquareSmall() throws Exception {
+	public final void testQRRandSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(7, 7);
 		a.randn(Ret.ORIG);
 		Matrix[] qr = a.qr();
@@ -2237,7 +2295,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQR() throws Exception {
+	public final void testQR() throws Exception {
 		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
@@ -2252,26 +2310,26 @@ public abstract class AbstractMatrixTest {
 			sizes.add(Size.LARGE);
 		}
 
-		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
-		generators.add(EntryGenerator.SINGULAR);
-		generators.add(EntryGenerator.RAND);
-		generators.add(EntryGenerator.RANDN);
-		generators.add(EntryGenerator.RANDSYMM);
-		generators.add(EntryGenerator.RANDNSYMM);
-		generators.add(EntryGenerator.SPD);
+		List<EntryType> generators = new LinkedList<EntryType>();
+		generators.add(EntryType.SINGULAR);
+		generators.add(EntryType.RAND);
+		generators.add(EntryType.RANDN);
+		generators.add(EntryType.RANDSYMM);
+		generators.add(EntryType.RANDNSYMM);
+		generators.add(EntryType.SPD);
 
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
-				for (EntryGenerator generator : generators) {
+				for (EntryType generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
-						if (EntryGenerator.RANDSYMM.equals(generator)) {
+						if (EntryType.RANDSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+						} else if (EntryType.RANDNSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.SPD.equals(generator)) {
+						} else if (EntryType.SPD.equals(generator)) {
 							continue;
 						}
 					}
@@ -2299,53 +2357,37 @@ public abstract class AbstractMatrixTest {
 							continue;
 						}
 
-						throw e;
+						throw new Exception(label, e);
 					}
 				}
 			}
 		}
 	}
 
-	private static boolean isSupported(Matrix a, long feature, MatrixLayout layout,
-			EntryGenerator generator) {
-
-		// figure out what should be supported by this library
-		String[] p = a.getClass().getPackage().getName().split("\\.");
-		String packageName = p[0] + "." + p[1] + "." + p[2];
-		if (packageName.contains("jdmp")) {
-			packageName = "org.ujmp.core";
-		}
-		if (packageName.contains("jmatio")) {
-			packageName = "org.ujmp.core";
-		}
-		if (packageName.contains("lucene")) {
-			packageName = "org.ujmp.core";
-		}
-		if (packageName.contains("ehcache")) {
-			packageName = "org.ujmp.core";
-		}
-		if (packageName.contains("jdbc")) {
-			packageName = "org.ujmp.core";
-		}
-		long col = LIBRARIES.getColumnForPackage(packageName);
+	private final boolean isSupported(Matrix a, long feature, MatrixLayout layout,
+			EntryType generator) {
+		long col = getMatrixLibraryId();
 		String supported = LIBRARIES.getAsString(feature, col);
 
 		if (MatrixLayout.FAT.equals(layout)) {
-			if (!supported.contains(FAT)) {
+			if (!supported.contains(YES) && !supported.contains(FAT)) {
 				return false;
 			}
 		}
 		if (MatrixLayout.TALL.equals(layout)) {
-			if (!supported.contains(TALL)) {
+			if (!supported.contains(YES) && !supported.contains(TALL)) {
 				return false;
 			}
 		}
 		if (MatrixLayout.SQUARE.equals(layout)) {
-			if (!supported.contains(SQUARE)) {
+			if (!supported.contains(YES) && !supported.contains(SQUARE)) {
 				return false;
-			}
-			if (EntryGenerator.SINGULAR.equals(generator)
+			} else if (EntryType.SINGULAR.equals(generator)
 					&& supported.contains(MatrixLibraries.NONSINGULARTEXT)) {
+				return false;
+			} else if (!EntryType.RANDNSYMM.equals(generator)
+					&& !EntryType.RANDSYMM.equals(generator)
+					&& supported.contains(MatrixLibraries.SYMMETRICTEXT)) {
 				return false;
 			}
 		}
@@ -2358,7 +2400,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testLU() throws Exception {
+	public final void testLU() throws Exception {
 		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
@@ -2373,26 +2415,26 @@ public abstract class AbstractMatrixTest {
 			sizes.add(Size.LARGE);
 		}
 
-		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
-		generators.add(EntryGenerator.SINGULAR);
-		generators.add(EntryGenerator.RAND);
-		generators.add(EntryGenerator.RANDN);
-		generators.add(EntryGenerator.RANDSYMM);
-		generators.add(EntryGenerator.RANDNSYMM);
-		generators.add(EntryGenerator.SPD);
+		List<EntryType> generators = new LinkedList<EntryType>();
+		generators.add(EntryType.SINGULAR);
+		generators.add(EntryType.RAND);
+		generators.add(EntryType.RANDN);
+		generators.add(EntryType.RANDSYMM);
+		generators.add(EntryType.RANDNSYMM);
+		generators.add(EntryType.SPD);
 
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
-				for (EntryGenerator generator : generators) {
+				for (EntryType generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
-						if (EntryGenerator.RANDSYMM.equals(generator)) {
+						if (EntryType.RANDSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+						} else if (EntryType.RANDNSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.SPD.equals(generator)) {
+						} else if (EntryType.SPD.equals(generator)) {
 							continue;
 						}
 					}
@@ -2425,7 +2467,7 @@ public abstract class AbstractMatrixTest {
 							continue;
 						}
 
-						throw e;
+						throw new Exception(label, e);
 					}
 				}
 			}
@@ -2433,7 +2475,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVD() throws Exception {
+	public final void testSVD() throws Exception {
 		Matrix a = createMatrixWithAnnotation(1, 1);
 
 		List<MatrixLayout> layouts = new LinkedList<MatrixLayout>();
@@ -2448,26 +2490,26 @@ public abstract class AbstractMatrixTest {
 			sizes.add(Size.LARGE);
 		}
 
-		List<EntryGenerator> generators = new LinkedList<EntryGenerator>();
-		generators.add(EntryGenerator.SINGULAR);
-		generators.add(EntryGenerator.RAND);
-		generators.add(EntryGenerator.RANDN);
-		generators.add(EntryGenerator.RANDSYMM);
-		generators.add(EntryGenerator.RANDNSYMM);
-		generators.add(EntryGenerator.SPD);
+		List<EntryType> generators = new LinkedList<EntryType>();
+		generators.add(EntryType.SINGULAR);
+		generators.add(EntryType.RAND);
+		generators.add(EntryType.RANDN);
+		generators.add(EntryType.RANDSYMM);
+		generators.add(EntryType.RANDNSYMM);
+		generators.add(EntryType.SPD);
 
 		for (MatrixLayout layout : layouts) {
 			for (Size size : sizes) {
-				for (EntryGenerator generator : generators) {
+				for (EntryType generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
-						if (EntryGenerator.RANDSYMM.equals(generator)) {
+						if (EntryType.RANDSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.RANDNSYMM.equals(generator)) {
+						} else if (EntryType.RANDNSYMM.equals(generator)) {
 							continue;
-						} else if (EntryGenerator.SPD.equals(generator)) {
+						} else if (EntryType.SPD.equals(generator)) {
 							continue;
 						}
 					}
@@ -2496,15 +2538,15 @@ public abstract class AbstractMatrixTest {
 							continue;
 						}
 
-						throw e;
+						throw new Exception(label, e);
 					}
 				}
 			}
 		}
 	}
 
-	private Matrix createMatrixWithAnnotation(MatrixLayout layout, Size size,
-			EntryGenerator generator) throws Exception {
+	private final Matrix createMatrixWithAnnotation(MatrixLayout layout, Size size,
+			EntryType generator) throws Exception {
 		int rows = 0, cols = 0;
 
 		switch (layout) {
@@ -2576,7 +2618,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRRandLarge() throws Exception {
+	public final void testQRRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2596,8 +2638,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRFatSmall() throws Exception {
+	public final void testQRFatSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
+
+		if (!isSupported(a, MatrixLibraries.QR, MatrixLayout.FAT, null)) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2618,12 +2664,16 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRFatLarge() throws Exception {
+	public final void testQRFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(140, 160);
 
+		if (!isSupported(a, MatrixLibraries.QR, MatrixLayout.FAT, null)) {
+			return;
+		}
+
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -2643,9 +2693,13 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRTallSmall() throws Exception {
+	public final void testQRTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
 
+		if (!isSupported(a, MatrixLibraries.QR, MatrixLayout.TALL, null)) {
+			return;
+		}
+
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -2665,7 +2719,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testQRTallLarge() throws Exception {
+	public final void testQRTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2690,9 +2744,13 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testCholPascalSmall() throws Exception {
+	public final void testCholPascalSmall() throws Exception {
 		Matrix pascal = Matrix.Factory.pascal(5, 5);
 		Matrix a = createMatrixWithAnnotation(pascal);
+
+		if (!isSupported(a, MatrixLibraries.CHOL, MatrixLayout.SQUARE, null)) {
+			return;
+		}
 
 		Matrix chol = a.chol();
 		Matrix cholTrans = chol.transpose();
@@ -2713,7 +2771,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testCholRandSmall() throws Exception {
+	public final void testCholRandSmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(10, 10);
 		int rows = (int) temp.getRowCount();
@@ -2725,6 +2783,10 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
+		if (!isSupported(result, MatrixLibraries.CHOL, MatrixLayout.SQUARE, null)) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -2736,7 +2798,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testCholRandVerySmall() throws Exception {
+	public final void testCholRandVerySmall() throws Exception {
 		Random random = new Random(System.nanoTime());
 		DenseDoubleMatrix2D temp = new DefaultDenseDoubleMatrix2D(2, 2);
 		int rows = (int) temp.getRowCount();
@@ -2748,6 +2810,10 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
+		if (!isSupported(result, MatrixLibraries.CHOL, MatrixLayout.SQUARE, null)) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -2759,7 +2825,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testCholRandLarge() throws Exception {
+	public final void testCholRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2774,6 +2840,10 @@ public abstract class AbstractMatrixTest {
 		}
 		Matrix result = createMatrixWithAnnotation(temp.mtimes(temp.transpose()));
 
+		if (!isSupported(result, MatrixLibraries.CHOL, MatrixLayout.SQUARE, null)) {
+			return;
+		}
+
 		Matrix chol = result.chol();
 		Matrix prod = chol.mtimes(chol.transpose());
 
@@ -2786,8 +2856,12 @@ public abstract class AbstractMatrixTest {
 
 	// test example from wikipedia
 	@Test
-	public void testSVDWikipedia() throws Exception {
+	public final void testSVDWikipedia() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 5);
+
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.FAT, null)) {
+			return;
+		}
 
 		a.setAsDouble(1, 0, 0);
 		a.setAsDouble(2, 0, 4);
@@ -2806,8 +2880,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDSquareSmall() throws Exception {
+	public final void testSVDSquareSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(5, 5);
+
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.SQUARE, null)) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2827,7 +2905,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDSquareLarge() throws Exception {
+	public final void testSVDSquareLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2851,8 +2929,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDSquareRandSmall() throws Exception {
+	public final void testSVDSquareRandSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(10, 10);
+
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.SQUARE, EntryType.RANDN)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 
@@ -2868,7 +2950,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDSquareRandLarge() throws Exception {
+	public final void testSVDSquareRandLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2888,8 +2970,12 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDFatSmall() throws Exception {
+	public final void testSVDFatSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(4, 6);
+
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.FAT, null)) {
+			return;
+		}
 
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
@@ -2909,12 +2995,16 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDFatLarge() throws Exception {
+	public final void testSVDFatLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
 		Matrix a = createMatrixWithAnnotation(123, 142);
 
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.FAT, null)) {
+			return;
+		}
+
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -2933,9 +3023,13 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDTallSmall() throws Exception {
+	public final void testSVDTallSmall() throws Exception {
 		Matrix a = createMatrixWithAnnotation(6, 4);
 
+		if (!isSupported(a, MatrixLibraries.SVD, MatrixLayout.TALL, null)) {
+			return;
+		}
+
 		for (int r = 0, v = 1; r < a.getRowCount(); r++) {
 			for (int c = 0; c < a.getColumnCount(); c++) {
 				a.setAsDouble(v++, r, c);
@@ -2954,7 +3048,7 @@ public abstract class AbstractMatrixTest {
 	}
 
 	@Test
-	public void testSVDTallLarge() throws Exception {
+	public final void testSVDTallLarge() throws Exception {
 		if (!isTestLarge()) {
 			return;
 		}
@@ -2977,7 +3071,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public static void setAnnotation(Matrix m) {
+	public final static void setAnnotation(Matrix m) {
 		m.setLabel("label");
 		m.setDimensionLabel(Matrix.ROW, "rows");
 		m.setDimensionLabel(Matrix.COLUMN, "columns");
@@ -2997,7 +3091,7 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
-	public static void compareAnnotation(Matrix m) {
+	public final static void compareAnnotation(Matrix m) {
 		for (int r = 0; r < m.getRowCount(); r++) {
 			if (r == 0) {
 				assertEquals(null, m.getRowLabel(r));

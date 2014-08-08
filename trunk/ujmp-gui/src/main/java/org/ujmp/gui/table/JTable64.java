@@ -63,6 +63,10 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 		return new Dimension(getColumnModel64().getTotalColumnWidth(), Integer.MAX_VALUE);
 	}
 
+	public TableModel64 getModel() {
+		return (TableModel64) super.getModel();
+	}
+
 	protected void initializeLocalVars() {
 		setOpaque(true);
 		createDefaultRenderers();

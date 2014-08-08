@@ -26,6 +26,7 @@ package org.ujmp.jsci;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestJSciDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,48 +43,9 @@ public class TestJSciDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testLUSquareSingularSmall() throws Exception {
-		// error for singular matrix
-	}
-
-	public void testLUSquareSingularLarge() throws Exception {
-		// error for singular matrix
-	}
-
-	public void testLUFatFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSVD() throws Exception {
-		// some error
-	}
-
-	public void testSVDTallSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSVDWikipedia() throws Exception {
-		// only square matrices
-	}
-
-	public void testSVDFatSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testQRTallSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLU() throws Exception {
-		// some error
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.JSCI;
 	}
 
 }

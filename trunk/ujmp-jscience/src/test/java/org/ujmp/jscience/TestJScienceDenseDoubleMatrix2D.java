@@ -26,6 +26,7 @@ package org.ujmp.jscience;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestJScienceDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,44 +43,9 @@ public class TestJScienceDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testLUTallFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUFatFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUFatFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUSquareSingularSmall() throws Exception {
-		// some error
-	}
-
-	public void testLU() throws Exception {
-		// some error
-	}
-
-	public void testSolveRandTallSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSolveRandTallLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// fat not supported
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// fat not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.JSCIENCE;
 	}
 
 }

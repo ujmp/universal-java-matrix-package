@@ -26,6 +26,7 @@ package org.ujmp.vecmath;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,15 +43,8 @@ public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testPinvFixedSmall() throws Exception {
-		// does not work
-	}
-
-	public void testLUSquareSingularSmall() throws Exception {
-		// not supported
-	}
-
-	public void testLUSquareSingularLarge() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.VECMATH;
 	}
 }

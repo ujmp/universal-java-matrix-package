@@ -30,6 +30,11 @@ import org.ujmp.gui.renderer.MatrixValueTableCellRenderer;
 public class MatrixTable64 extends JTable64 {
 	private static final long serialVersionUID = -4334674835582761405L;
 
+	public static final int SMALLCOLUMNWIDTH = 80;
+	public static final int LARGECOLUMNWIDTH = 200;
+	public static final int ROWHEADERCOLUMNWIDTH = 80;
+	public static final int ROWHEIGHT = 15;
+
 	public MatrixTable64(MatrixGUIObject matrix) {
 		super(matrix, new DefaultTableColumnModel64(matrix), matrix.getRowSelectionModel());
 		getColumnModel().setSelectionModel(matrix.getColumnSelectionModel());

@@ -26,6 +26,7 @@ package org.ujmp.jmatrices;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestJMatricesDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,24 +43,9 @@ public class TestJMatricesDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testSVDFatSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSVDTallSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSVDWikipedia() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUFatFixedSmall() throws Exception {
-		// fat not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// fat not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.JMATRICES;
 	}
 
 }

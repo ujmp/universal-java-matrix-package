@@ -26,6 +26,7 @@ package org.ujmp.ojalgo;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestOjalgoDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -40,5 +41,10 @@ public class TestOjalgoDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	public boolean isTestLarge() {
 		return true;
+	}
+
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.OJALGO;
 	}
 }

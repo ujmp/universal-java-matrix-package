@@ -34,5 +34,5 @@ import org.ujmp.core.stringmatrix.impl.TestDefaultDenseStringMatrix2D;
 		TestDefaultSparseRowObjectMatrix2D.class, TestDefaultDenseStringMatrix2D.class,
 		TestDefaultDenseDoubleMatrixMultiD.class, TestDefaultTiledObjectMatrix2D.class,
 		TestDefaultSparseDoubleMatrix.class, TestDefaultSparseRowDoubleMatrix2D.class })
-public abstract class AllTests {
+public class AllTests {
 }

@@ -29,5 +29,5 @@ import org.ujmp.jdbc.matrix.TestJDBCSparseObjectMatrix;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ TestJDBCSparseObjectMatrix.class })
-public abstract class AllTests {
+public class AllTests {
 }

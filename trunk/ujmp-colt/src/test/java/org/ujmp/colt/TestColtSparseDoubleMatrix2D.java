@@ -26,6 +26,7 @@ package org.ujmp.colt;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,19 +43,8 @@ public class TestColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testLUFatFixedSmall() throws Exception {
-		// not supported
-	}
-
-	public void testLUFatFixedLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.COLT;
 	}
 }

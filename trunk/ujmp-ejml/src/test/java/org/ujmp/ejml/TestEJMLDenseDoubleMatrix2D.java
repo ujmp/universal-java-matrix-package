@@ -26,6 +26,7 @@ package org.ujmp.ejml;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestEJMLDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,19 +43,8 @@ public class TestEJMLDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testCholRandLarge() throws Exception {
-		// incorrect result
-	}
-
-	public void testCholRandSmall() throws Exception {
-		// incorrect result
-	}
-
-	public void testCholPascalSmall() throws Exception {
-		// incorrect result
-	}
-
-	public void testCholRandVerySmall() throws Exception {
-		// incorrect result
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.EJML;
 	}
 }

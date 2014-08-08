@@ -60,9 +60,9 @@ public class DefaultTableColumnModel64 extends DefaultTableColumnModel implement
 	public int getDefaultColumnWidth() {
 		if (defaultColumnWidth == -1) {
 			if (tableModel64.getColumnCount() < 10) {
-				return 200;
+				return MatrixTable64.LARGECOLUMNWIDTH;
 			} else {
-				return 80;
+				return MatrixTable64.SMALLCOLUMNWIDTH;
 			}
 		} else {
 			return defaultColumnWidth;

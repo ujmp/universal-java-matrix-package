@@ -76,8 +76,8 @@ public class MatrixTableEditorPanel extends JPanel implements TableModelListener
 
 		jTable = new MatrixTable64(m);
 
-		rowHeader = new JTable64(new RowHeaderTableModel64(m), new SingleTableColumnModel(dataModel),
-				dataModel.getRowSelectionModel());
+		rowHeader = new JTable64(new RowHeaderTableModel64(m));
+		rowHeader.getColumnModel64().setDefaultColumnWidth(MatrixTable64.ROWHEADERCOLUMNWIDTH);
 		rowHeader.getTableHeader().setReorderingAllowed(false);
 		rowHeader.setDefaultRenderer(Object.class, new RowTableHeaderRenderer64(jTable));
 

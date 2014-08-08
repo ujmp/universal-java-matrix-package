@@ -104,6 +104,7 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
 import org.ujmp.core.util.matrices.IrisMatrix;
 import org.ujmp.core.util.matrices.LocalhostMatrix;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MemoryUsageMatrix;
 import org.ujmp.core.util.matrices.RandomSeedMatrix;
 import org.ujmp.core.util.matrices.RunningThreadsMatrix;
@@ -123,6 +124,10 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		final BufferedImage image = new Robot().createScreenCapture(new Rectangle(screenSize));
 		return linkToImage(image);
+	}
+
+	public MatrixLibraries matrixLibraries() {
+		return new MatrixLibraries();
 	}
 
 	public DenseMatrix linkToImage(BufferedImage image) {
@@ -668,6 +673,28 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 	public final T eye(final long rows, final long cols) {
 		final T m = zeros(rows, cols);
 		m.eye(Ret.ORIG);
+		return m;
+	}
+
+	public final DenseDoubleMatrix2D rosserMatrix() {
+		return linkToArray(new double[][] { { 611, 196, -192, 407, -8, -52, -49, 29 },
+				{ 196, 899, 113, -192, -71, -43, -8, -44 }, { -192, 113, 899, 196, 61, 49, 8, 52 },
+				{ 407, -192, 196, 611, 8, 44, 59, -23 }, { -8, -71, 61, 8, 411, -599, 208, 208 },
+				{ -52, -43, 49, 44, -599, 411, 208, 208 }, { -49, -8, 8, 59, 208, 208, 99, -911 },
+				{ 29, -44, 52, -23, 208, 208, -911, 99 } });
+	}
+
+	public final DenseMatrix wilkinsonMatrix(int size) {
+		DenseMatrix m = Matrix.Factory.zeros(size, size);
+		int j = (size - 1) / 2;
+		for (int i = 0; i < j; i++) {
+			m.setAsDouble(1, i, i + 1);
+			m.setAsDouble(1, i + 1, i);
+			m.setAsDouble(j - i, i, i);
+			m.setAsDouble(j - i, size - 1 - i, size - 1 - i);
+			m.setAsDouble(1, size - 1 - i, size - 2 - i);
+			m.setAsDouble(1, size - 2 - i, size - 1 - i);
+		}
 		return m;
 	}
 

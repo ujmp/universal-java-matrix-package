@@ -34,77 +34,74 @@ import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	private static final long serialVersionUID = -2575195318248762416L;
 
-	public static final int LABELCOLUMN = 0;
-	public static final int VERSION = 1;
-	public static final int DATE = 2;
-	public static final int LICENSE = 3;
-	public static final int JAVA14 = 4;
-	public static final int JAVA5 = 5;
-	public static final int JAVA6 = 6;
-	public static final int JAVA7 = 7;
-	public static final int JAVA8 = 8;
-	public static final int DENSESA = 9;
-	public static final int DENSEAA = 10;
-	public static final int DENSEBLOCK = 11;
-	public static final int SPARSEDOK = 12;
-	public static final int SPARSELIL = 13;
-	public static final int SPARSEYALE = 14;
-	public static final int SPARSECRS = 15;
-	public static final int SPARSECDS = 16;
-	public static final int DOUBLE = 17;
-	public static final int FLOAT = 18;
-	public static final int BIGDECIMAL = 19;
-	public static final int STRINGS = 20;
-	public static final int OBJECTS = 21;
-	public static final int GENERICS = 22;
-	public static final int COMPLEX = 23;
-	public static final int D2 = 24;
-	public static final int D3 = 25;
-	public static final int D3PLUS = 26;
-	public static final int MULTITHREADED = 27;
-	public static final int INPLACE = 28;
-	public static final int TRANSPOSE = 29;
-	public static final int SCALE = 30;
-	public static final int PLUSMINUS = 31;
-	public static final int INV = 32;
-	public static final int SOLVE = 33;
-	public static final int LU = 34;
-	public static final int QR = 35;
-	public static final int SVD = 36;
-	public static final int CHOL = 37;
-	public static final int EIG = 38;
-	public static final int ALLITERATOR = 39;
-	public static final int NONZEROITERATOR = 40;
-	public static final int CSVIO = 41;
-	public static final int JDBCIO = 42;
-	public static final int SERIALIZABLE = 43;
-	public static final int VALUESPERDIMENSION = 44;
-	public static final int MAXIMUMSIZE = 45;
+	public static final int VERSION = 0;
+	public static final int DATE = 1;
+	public static final int LICENSE = 2;
+	public static final int JAVA14 = 3;
+	public static final int JAVA5 = 4;
+	public static final int JAVA6 = 5;
+	public static final int JAVA7 = 6;
+	public static final int JAVA8 = 7;
+	public static final int DENSESA = 8;
+	public static final int DENSEAA = 9;
+	public static final int DENSEBLOCK = 10;
+	public static final int SPARSEDOK = 11;
+	public static final int SPARSELIL = 12;
+	public static final int SPARSEYALE = 13;
+	public static final int SPARSECRSCCS = 14;
+	public static final int SPARSECDS = 15;
+	public static final int DOUBLE = 16;
+	public static final int FLOAT = 17;
+	public static final int BIGDECIMAL = 18;
+	public static final int STRINGS = 19;
+	public static final int OBJECTS = 20;
+	public static final int GENERICS = 21;
+	public static final int COMPLEX = 22;
+	public static final int D2 = 23;
+	public static final int D3 = 24;
+	public static final int D3PLUS = 25;
+	public static final int MULTITHREADED = 26;
+	public static final int INPLACE = 27;
+	public static final int TRANSPOSE = 28;
+	public static final int SCALE = 29;
+	public static final int PLUSMINUS = 30;
+	public static final int INV = 31;
+	public static final int SOLVE = 32;
+	public static final int LU = 33;
+	public static final int QR = 34;
+	public static final int SVD = 35;
+	public static final int CHOL = 36;
+	public static final int EIG = 37;
+	public static final int CSVIO = 38;
+	public static final int JDBCIO = 39;
+	public static final int SERIALIZABLE = 40;
+	public static final int VALUESPERDIMENSION = 41;
+	public static final int MAXIMUMSIZE = 42;
+	public static final int HOMEPAGE = 43;
 
-	public static final int LABELROW = 0;
-	public static final int COLT = 1;
-	public static final int COMMONSMATH = 2;
-	public static final int EJML = 3;
-	public static final int JAMA = 4;
-	public static final int JAMPACK = 5;
-	public static final int JBLAS = 6;
-	public static final int JLINALG = 7;
-	public static final int JMATHARRAY = 8;
-	public static final int JMATRICES = 9;
-	public static final int JSCI = 10;
-	public static final int JSCIENCE = 11;
-	public static final int LA4J = 12;
-	public static final int MANTISSA = 13;
-	public static final int MTJ = 14;
-	public static final int OJALGO = 15;
-	public static final int PARALLELCOLT = 16;
-	public static final int SST = 17;
-	public static final int UJMP = 18;
-	public static final int VECMATH = 19;
+	public static final int COLT = 0;
+	public static final int COMMONSMATH = 1;
+	public static final int EJML = 2;
+	public static final int JAMA = 3;
+	public static final int JBLAS = 4;
+	public static final int JLINALG = 5;
+	public static final int JMATHARRAY = 6;
+	public static final int JMATRICES = 7;
+	public static final int JSCI = 8;
+	public static final int JSCIENCE = 9;
+	public static final int LA4J = 10;
+	public static final int MANTISSA = 11;
+	public static final int MTJ = 12;
+	public static final int OJALGO = 13;
+	public static final int PARALLELCOLT = 14;
+	public static final int SST = 15;
+	public static final int UJMP = 16;
+	public static final int VECMATH = 17;
 
 	public static final String NONSINGULARLETTER = "n";
 	public static final String NONSINGULARTEXT = "non-singular matrices only";
 	public static final String ERRORTEXT = "error in implementation";
+	public static final String SYMMETRICTEXT = "symmetric matrices only";
 
 	private List<String> footnotes = new ArrayList<String>();
 
@@ -119,90 +116,118 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public MatrixLibraries(MatrixLibrariesFormat format) {
-		super(46, 20);
-		int footnote = 1;
+		super(44, 18);
+		int footnoteId = 1;
 		this.format = format;
 
-		setString(link(turn("Colt"), "http://acs.lbl.gov/software/colt/"), LABELROW, COLT);
-		setString(link(turn("Commons Math"), "http://commons.apache.org/math/"), LABELROW,
-				COMMONSMATH);
-		setString(link(turn("EJML"), "https://code.google.com/p/efficient-java-matrix-library/"),
-				LABELROW, EJML);
-		setString(link(turn("JAMA"), "http://math.nist.gov/javanumerics/jama/"), LABELROW, JAMA);
-		setString(
-				link(turn("Jampack"), "ftp://math.nist.gov/pub/Jampack/Jampack/AboutJampack.html"),
-				LABELROW, JAMPACK);
-		setString(link(turn("jblas"), "http://mikiobraun.github.io/jblas/"), LABELROW, JBLAS);
-		setString(link(turn("JLinAlg"), "http://jlinalg.sourceforge.net/"), LABELROW, JLINALG);
-		setString(link(turn("JMathArray"), "https://code.google.com/p/jmatharray/"), LABELROW,
-				JMATHARRAY);
-		setString(link(turn("JMatrices"), "http://jmatrices.sourceforge.net/"), LABELROW, JMATRICES);
-		setString(link(turn("JSci"), "http://jsci.sourceforge.net/"), LABELROW, JSCI);
-		setString(link(turn("JScience"), "http://jscience.org/"), LABELROW, JSCIENCE);
-		setString(link(turn("la4j"), "http://la4j.org/"), LABELROW, LA4J);
-		setString(link(turn("Mantissa"), "http://www.spaceroots.org/software/mantissa/index.html"),
-				LABELROW, MANTISSA);
-		setString(link(turn("MTJ"), "https://github.com/fommil/matrix-toolkits-java/"), LABELROW,
-				MTJ);
-		setString(link(turn("ojAlgo"), "http://ojalgo.org/"), LABELROW, OJALGO);
-		setString(
-				link(turn("Parallel Colt"),
-						"https://sites.google.com/site/piotrwendykier/software/parallelcolt"),
-				LABELROW, PARALLELCOLT);
-		setString(link(turn("SST"), "http://freecode.com/projects/shared"), LABELROW, SST);
-		setString(link(turn("UJMP"), "http://ujmp.org/"), LABELROW, UJMP);
-		setString(link(turn("vecmath"), "https://java.net/projects/vecmath"), LABELROW, VECMATH);
+		setColumnLabel(COLT, turn("Colt"));
+		setColumnLabel(COMMONSMATH, turn("Commons Math"));
+		setColumnLabel(EJML, turn("EJML"));
+		setColumnLabel(JAMA, turn("JAMA"));
+		setColumnLabel(JBLAS, turn("jblas"));
+		setColumnLabel(JLINALG, turn("JLinAlg"));
+		setColumnLabel(JMATHARRAY, turn("JMathArray"));
+		setColumnLabel(JMATRICES, turn("JMatrices"));
+		setColumnLabel(JSCI, turn("JSci"));
+		setColumnLabel(JSCIENCE, turn("JScience"));
+		setColumnLabel(LA4J, turn("la4j"));
+		setColumnLabel(MANTISSA, turn("Mantissa"));
+		setColumnLabel(MTJ, turn("MTJ"));
+		setColumnLabel(OJALGO, turn("ojAlgo"));
+		setColumnLabel(PARALLELCOLT, turn("Parallel Colt"));
+		setColumnLabel(SST, turn("SST"));
+		setColumnLabel(UJMP, turn("UJMP"));
+		setColumnLabel(VECMATH, turn("vecmath"));
 
-		setString("Current Version", VERSION, LABELCOLUMN);
-		setString("Latest Release", DATE, LABELCOLUMN);
-		setString("License", LICENSE, LABELCOLUMN);
-		setString("Supports Java 1.4", JAVA14, LABELCOLUMN);
-		setString("Supports Java 5", JAVA5, LABELCOLUMN);
-		setString("Supports Java 6", JAVA6, LABELCOLUMN);
-		setString("Supports Java 7", JAVA7, LABELCOLUMN);
-		setString("Supports Java 8", JAVA8, LABELCOLUMN);
-		setString("Multi-Threaded Operations", MULTITHREADED, LABELCOLUMN);
-		setString("In-Place Operations", INPLACE, LABELCOLUMN);
-		setString("Dense Data in Single Array", DENSESA, LABELCOLUMN);
-		setString("Dense Data in 2D Array", DENSEAA, LABELCOLUMN);
-		setString("Dense Data in Block Storage", DENSEBLOCK, LABELCOLUMN);
+		setString(link(turn("Colt Homepage"), "http://acs.lbl.gov/software/colt/"), HOMEPAGE, COLT);
+		setString(link(turn("Commons Math Homepage"), "http://commons.apache.org/math/"), HOMEPAGE,
+				COMMONSMATH);
 		setString(
-				"Sparse Data in DOK" + footnote("" + footnote++, "dictionary of key-value pairs"),
-				SPARSEDOK, LABELCOLUMN);
-		setString("Sparse Data in LIL" + footnote("" + footnote++, "list of lists"), SPARSELIL,
-				LABELCOLUMN);
-		setString("Sparse Data in CSR" + footnote("" + footnote++, "compressed sparse row/column"),
-				SPARSECRS, LABELCOLUMN);
-		setString("Sparse Data in CDS" + footnote("" + footnote++, "compressed sparse diagonal"),
-				SPARSECDS, LABELCOLUMN);
-		setString("Sparse Data in Yale Format", SPARSEYALE, LABELCOLUMN);
-		setString("Can Store Complex Numbers", COMPLEX, LABELCOLUMN);
-		setString("Can Store Double Values", DOUBLE, LABELCOLUMN);
-		setString("Can Store Float Values", FLOAT, LABELCOLUMN);
-		setString("Can Store BigDecimal Values", BIGDECIMAL, LABELCOLUMN);
-		setString("Can Store Strings", STRINGS, LABELCOLUMN);
-		setString("Can Store Objects", OBJECTS, LABELCOLUMN);
-		setString("Can Store Generic Objects", GENERICS, LABELCOLUMN);
-		setString("Supports 2D Matrix", D2, LABELCOLUMN);
-		setString("Supports 3D Matrix", D3, LABELCOLUMN);
-		setString("Supports >3D Matrix", D3PLUS, LABELCOLUMN);
-		setString("Supports Transpose", TRANSPOSE, LABELCOLUMN);
-		setString("Supports Multiply/Divide", SCALE, LABELCOLUMN);
-		setString("Supports Plus/Minus", PLUSMINUS, LABELCOLUMN);
-		setString("Supports Inverse", INV, LABELCOLUMN);
-		setString("Supports Solve", SOLVE, LABELCOLUMN);
-		setString("Supports SVD", SVD, LABELCOLUMN);
-		setString("Supports LU Decomposition", LU, LABELCOLUMN);
-		setString("Supports QR Decomposition", QR, LABELCOLUMN);
-		setString("Supports Cholesky Decomposition", CHOL, LABELCOLUMN);
-		setString("Supports Eigen Decomposition", EIG, LABELCOLUMN);
-		setString("Iterator for all Entries", ALLITERATOR, LABELCOLUMN);
-		setString("Iterator for non-zero Entries", NONZEROITERATOR, LABELCOLUMN);
-		setString("CSV Import/Export", CSVIO, LABELCOLUMN);
-		setString("JDBC Import/Export", JDBCIO, LABELCOLUMN);
-		setString("Serializable", SERIALIZABLE, LABELCOLUMN);
-		setString("Values Per Dimension", VALUESPERDIMENSION, LABELCOLUMN);
-		setString("Maximum Size", MAXIMUMSIZE, LABELCOLUMN);
+				link(turn("EJML Homepage"),
+						"https://code.google.com/p/efficient-java-matrix-library/"), HOMEPAGE, EJML);
+		setString(link(turn("JAMA Homepage"), "http://math.nist.gov/javanumerics/jama/"), HOMEPAGE,
+				JAMA);
+		setString(link(turn("jblas Homepage"), "http://mikiobraun.github.io/jblas/"), HOMEPAGE,
+				JBLAS);
+		setString(link(turn("JLinAlg Homepage"), "http://jlinalg.sourceforge.net/"), HOMEPAGE,
+				JLINALG);
+		setString(link(turn("JMathArray Homepage"), "https://code.google.com/p/jmatharray/"),
+				HOMEPAGE, JMATHARRAY);
+		setString(link(turn("JMatrices Homepage"), "http://jmatrices.sourceforge.net/"), HOMEPAGE,
+				JMATRICES);
+		setString(link(turn("JSci Homepage"), "http://jsci.sourceforge.net/"), HOMEPAGE, JSCI);
+		setString(link(turn("JScience Homepage"), "http://jscience.org/"), HOMEPAGE, JSCIENCE);
+		setString(link(turn("la4j Homepage"), "http://la4j.org/"), HOMEPAGE, LA4J);
+		setString(
+				link(turn("Mantissa Homepage"),
+						"http://www.spaceroots.org/software/mantissa/index.html"), HOMEPAGE,
+				MANTISSA);
+		setString(link(turn("MTJ Homepage"), "https://github.com/fommil/matrix-toolkits-java/"),
+				HOMEPAGE, MTJ);
+		setString(link(turn("ojAlgo Homepage"), "http://ojalgo.org/"), HOMEPAGE, OJALGO);
+		setString(
+				link(turn("Parallel Colt Homepage"),
+						"https://sites.google.com/site/piotrwendykier/software/parallelcolt"),
+				HOMEPAGE, PARALLELCOLT);
+		setString(link(turn("SST Homepage"), "http://freecode.com/projects/shared"), HOMEPAGE, SST);
+		setString(link(turn("UJMP Homepage"), "http://ujmp.org/"), HOMEPAGE, UJMP);
+		setString(link(turn("vecmath Homepage"), "https://java.net/projects/vecmath"), HOMEPAGE,
+				VECMATH);
+
+		setRowLabel(VERSION, "Current Version");
+		setRowLabel(DATE, "Latest Release");
+		setRowLabel(LICENSE, "License");
+		setRowLabel(JAVA14, "Supports Java 1.4");
+		setRowLabel(JAVA5, "Supports Java 5");
+		setRowLabel(JAVA6, "Supports Java 6");
+		setRowLabel(JAVA7, "Supports Java 7");
+		setRowLabel(JAVA8, "Supports Java 8");
+		setRowLabel(MULTITHREADED, "Uses Multi-Threaded Operations");
+		setRowLabel(INPLACE, "Supports In-Place Operations");
+		setRowLabel(DENSESA, "Stores Dense Data in Single Array");
+		setRowLabel(DENSEAA, "Stores Dense Data in 2D Array");
+		setRowLabel(DENSEBLOCK, "Stores Dense Data in Block Storage");
+		setRowLabel(
+				SPARSEDOK,
+				"Stores Sparse Data in DOK"
+						+ footnote("" + footnoteId++, "dictionary of key-value pairs"));
+		setRowLabel(SPARSELIL,
+				"Stores Sparse Data in LIL" + footnote("" + footnoteId++, "list of lists"));
+		setRowLabel(
+				SPARSECRSCCS,
+				"Stores Sparse Data in CRS/CCS"
+						+ footnote("" + footnoteId++, "compressed sparse row/column storare"));
+		setRowLabel(
+				SPARSECDS,
+				"Stores Sparse Data in CDS"
+						+ footnote("" + footnoteId++, "compressed sparse diagonal"));
+		setRowLabel(SPARSEYALE, "Stores Sparse Data in Yale Format");
+		setRowLabel(COMPLEX, "Can Store Complex Numbers");
+		setRowLabel(DOUBLE, "Can Store Double Values");
+		setRowLabel(FLOAT, "Can Store Float Values");
+		setRowLabel(BIGDECIMAL, "Can Store BigDecimal Values");
+		setRowLabel(STRINGS, "Can Store Strings");
+		setRowLabel(OBJECTS, "Can Store Objects");
+		setRowLabel(GENERICS, "Can Store Generic Objects");
+		setRowLabel(D2, "Supports 2D Matrix");
+		setRowLabel(D3, "Supports 3D Matrix");
+		setRowLabel(D3PLUS, "Supports >3D Matrix");
+		setRowLabel(TRANSPOSE, "Supports Matrix Transpose");
+		setRowLabel(SCALE, "Supports Matrix Multiply/Divide");
+		setRowLabel(PLUSMINUS, "Supports Plus/Minus");
+		setRowLabel(INV, "Supports Matrix Inverse");
+		setRowLabel(SOLVE, "Supports Solve Linear System");
+		setRowLabel(SVD, "Supports Singular Value Decomposition");
+		setRowLabel(LU, "Supports LU Decomposition");
+		setRowLabel(QR, "Supports QR Decomposition");
+		setRowLabel(CHOL, "Supports Cholesky Decomposition");
+		setRowLabel(EIG, "Supports Eigen Decomposition");
+		setRowLabel(CSVIO, "Can Import/Export CSV");
+		setRowLabel(JDBCIO, "Can Import/Export JDBC");
+		setRowLabel(SERIALIZABLE, "Matrix is Serializable");
+		setRowLabel(VALUESPERDIMENSION, "Number of Values per Dimension");
+		setRowLabel(MAXIMUMSIZE, "Maximum Matrix Size");
+		setRowLabel(HOMEPAGE, "Homepage");
 
 		setString(org.ujmp.core.UJMP.UJMPVERSION, VERSION, UJMP);
 		setString(small("2014"), DATE, UJMP);
@@ -220,7 +245,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SPARSEDOK, UJMP);
 		setString(no(), SPARSEYALE, UJMP);
 		setString(yes(), SPARSELIL, UJMP);
-		setString(no(), SPARSECRS, UJMP);
+		setString(no(), SPARSECRSCCS, UJMP);
 		setString(no(), SPARSECDS, UJMP);
 		setString(yes(), DOUBLE, UJMP);
 		setString(yes(), FLOAT, UJMP);
@@ -242,8 +267,6 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(all(), LU, UJMP);
 		setString(squareTall(), QR, UJMP);
 		setString(all(), SVD, UJMP);
-		setString(yes(), ALLITERATOR, UJMP);
-		setString(yes(), NONZEROITERATOR, UJMP);
 		setString(yes(), CSVIO, UJMP);
 		setString(yes(), JDBCIO, UJMP);
 		setString(yes(), SERIALIZABLE, UJMP);
@@ -269,14 +292,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SPARSEDOK, COLT);
 		setString(no(), SPARSEYALE, COLT);
 		setString(no(), SPARSELIL, COLT);
-		setString(no(), SPARSECRS, COLT);
+		setString(no(), SPARSECRSCCS, COLT);
 		setString(no(), SPARSECDS, COLT);
 		setString(yes(), DOUBLE, COLT);
 		setString(no(), FLOAT, COLT);
 		setString(no(), BIGDECIMAL, COLT);
-		setString(unknown(), STRINGS, COLT);
-		setString(unknown(), OBJECTS, COLT);
-		setString(unknown(), GENERICS, COLT);
+		setString(yes(), STRINGS, COLT);
+		setString(yes(), OBJECTS, COLT);
+		setString(no(), GENERICS, COLT);
 		setString(no(), COMPLEX, COLT);
 		setString(yes(), D2, COLT);
 		setString(yes(), D3, COLT);
@@ -288,13 +311,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(squareTall(), QR, COLT);
 		setString(yes(), EIG, COLT);
 		setString(yes(), CHOL, COLT);
-		setString(unknown(), ALLITERATOR, UJMP);
-		setString(unknown(), NONZEROITERATOR, UJMP);
-		setString(no(), CSVIO, UJMP);
-		setString(no(), JDBCIO, UJMP);
-		setString(yes(), SERIALIZABLE, UJMP);
-		setString(bit64(), VALUESPERDIMENSION, UJMP);
-		setString(hdd(), MAXIMUMSIZE, UJMP);
+		setString(no(), CSVIO, COLT);
+		setString(no(), JDBCIO, COLT);
+		setString(yes(), SERIALIZABLE, COLT);
+		setString(no(), CSVIO, COLT);
+		setString(no(), JDBCIO, COLT);
+		setString(yes(), SERIALIZABLE, COLT);
+		setString(bit32(), VALUESPERDIMENSION, COLT);
+		setString(ram(), MAXIMUMSIZE, COLT);
 
 		setString(small("3.2"), VERSION, COMMONSMATH);
 		setString(small("2013"), DATE, COMMONSMATH);
@@ -315,14 +339,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SPARSEDOK, COMMONSMATH);
 		setString(no(), SPARSEYALE, COMMONSMATH);
 		setString(no(), SPARSELIL, COMMONSMATH);
-		setString(no(), SPARSECRS, COMMONSMATH);
+		setString(no(), SPARSECRSCCS, COMMONSMATH);
 		setString(no(), SPARSECDS, COMMONSMATH);
 		setString(yes(), DOUBLE, COMMONSMATH);
 		setString(no(), FLOAT, COMMONSMATH);
 		setString(yes(), BIGDECIMAL, COMMONSMATH);
-		setString(unknown(), STRINGS, COMMONSMATH);
-		setString(unknown(), OBJECTS, COMMONSMATH);
-		setString(unknown(), GENERICS, COMMONSMATH);
+		setString(yes(), STRINGS, COMMONSMATH);
+		setString(yes(), OBJECTS, COMMONSMATH);
+		setString(yes(), GENERICS, COMMONSMATH);
 		setString(yes(), COMPLEX, COMMONSMATH);
 		setString(yes(), D2, COMMONSMATH);
 		setString(no(), D3, COMMONSMATH);
@@ -332,11 +356,16 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(all(), SVD, COMMONSMATH);
 		setString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, COMMONSMATH);
 		setString(all(), QR, COMMONSMATH);
-		setString(yes() + footnote("s", "symmetric matrices only"), EIG, COMMONSMATH);
+		setString(yes() + footnote("s", SYMMETRICTEXT), EIG, COMMONSMATH);
 		setString(yes(), CHOL, COMMONSMATH);
+		setString(no(), CSVIO, COMMONSMATH);
+		setString(no(), JDBCIO, COMMONSMATH);
+		setString(yes(), SERIALIZABLE, COMMONSMATH);
+		setString(bit32(), VALUESPERDIMENSION, COMMONSMATH);
+		setString(ram(), MAXIMUMSIZE, COMMONSMATH);
 
-		setString(small("0.24"), VERSION, EJML);
-		setString(small("2013"), DATE, EJML);
+		setString(small("0.25"), VERSION, EJML);
+		setString(small("2014"), DATE, EJML);
 		setString(small("Apache"), LICENSE, EJML);
 		setString(no(), JAVA14, EJML);
 		setString(no(), JAVA5, EJML);
@@ -351,7 +380,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, EJML);
 		setString(no(), SPARSEYALE, EJML);
 		setString(no(), SPARSELIL, EJML);
-		setString(no(), SPARSECRS, EJML);
+		setString(no(), SPARSECRSCCS, EJML);
 		setString(no(), SPARSECDS, EJML);
 		setString(yes(), DOUBLE, EJML);
 		setString(no(), FLOAT, EJML);
@@ -372,7 +401,12 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(all(), LU, EJML);
 		setString(square(), QR, EJML);
 		setString(yes(), EIG, EJML);
-		setString(yes(), CHOL, EJML);
+		setString(yes() + footnote("e", ERRORTEXT), CHOL, EJML);
+		setString(no(), CSVIO, EJML);
+		setString(no(), JDBCIO, EJML);
+		setString(yes(), SERIALIZABLE, EJML);
+		setString(bit32(), VALUESPERDIMENSION, EJML);
+		setString(ram(), MAXIMUMSIZE, EJML);
 
 		setString(small("1.0.3"), VERSION, JAMA);
 		setString(small("2012"), DATE, JAMA);
@@ -390,7 +424,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, JAMA);
 		setString(no(), SPARSEYALE, JAMA);
 		setString(no(), SPARSELIL, JAMA);
-		setString(no(), SPARSECRS, JAMA);
+		setString(no(), SPARSECRSCCS, JAMA);
 		setString(no(), SPARSECDS, JAMA);
 		setString(yes(), DOUBLE, JAMA);
 		setString(no(), FLOAT, JAMA);
@@ -412,44 +446,13 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(squareTall(), QR, JAMA);
 		setString(yes(), EIG, JAMA);
 		setString(yes(), CHOL, JAMA);
+		setString(no(), CSVIO, JAMA);
+		setString(no(), JDBCIO, JAMA);
+		setString(yes(), SERIALIZABLE, JAMA);
+		setString(bit32(), VALUESPERDIMENSION, JAMA);
+		setString(ram(), MAXIMUMSIZE, JAMA);
 
-		setString("", VERSION, JAMPACK);
-		setString(small("1999"), DATE, JAMPACK);
-		setString("", LICENSE, JAMPACK);
-		setString(yes(), JAVA14, JAMPACK);
-		setString(yes(), JAVA5, JAMPACK);
-		setString(yes(), JAVA6, JAMPACK);
-		setString(yes(), JAVA7, JAMPACK);
-		setString(yes(), JAVA8, JAMPACK);
-		setString(no(), MULTITHREADED, JAMPACK);
-		setString(no(), INPLACE, JAMPACK);
-		setString(yes(), DENSEAA, JAMPACK);
-		setString(no(), DENSESA, JAMPACK);
-		setString(no(), DENSEBLOCK, JAMPACK);
-		setString(no(), SPARSEDOK, JAMPACK);
-		setString(no(), SPARSEYALE, JAMPACK);
-		setString(no(), SPARSELIL, JAMPACK);
-		setString(no(), SPARSECRS, JAMPACK);
-		setString(no(), SPARSECDS, JAMPACK);
-		setString(yes(), COMPLEX, JAMPACK);
-		setString(yes(), DOUBLE, JAMPACK);
-		setString(no(), FLOAT, JAMPACK);
-		setString(no(), BIGDECIMAL, JAMPACK);
-		setString(yes(), D2, JAMPACK);
-		setString(no(), D3, JAMPACK);
-		setString(no(), D3PLUS, JAMPACK);
-		setString(yes(), TRANSPOSE, JAMPACK);
-		setString(yes(), PLUSMINUS, JAMPACK);
-		setString(yes(), SCALE, JAMPACK);
-		setString(yes(), INV, JAMPACK);
-		setString(square(), SOLVE, JAMPACK);
-		setString(square(), SVD, JAMPACK);
-		setString(all(), LU, JAMPACK);
-		setString(all(), QR, JAMPACK);
-		setString(yes(), EIG, JAMPACK);
-		setString(yes() + footnote("e", ERRORTEXT), CHOL, JAMPACK);
-
-		setString(small("1.0.3"), VERSION, JBLAS);
+		setString(small("1.2.3"), VERSION, JBLAS);
 		setString(small("2013"), DATE, JBLAS);
 		setString(small("BSD"), LICENSE, JBLAS);
 		setString(no(), JAVA14, JBLAS);
@@ -465,12 +468,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, JBLAS);
 		setString(no(), SPARSEYALE, JBLAS);
 		setString(no(), SPARSELIL, JBLAS);
-		setString(no(), SPARSECRS, JBLAS);
+		setString(no(), SPARSECRSCCS, JBLAS);
 		setString(no(), SPARSECDS, JBLAS);
 		setString(yes(), COMPLEX, JBLAS);
 		setString(yes(), DOUBLE, JBLAS);
 		setString(yes(), FLOAT, JBLAS);
 		setString(no(), BIGDECIMAL, JBLAS);
+		setString(no(), STRINGS, JBLAS);
+		setString(no(), OBJECTS, JBLAS);
+		setString(no(), GENERICS, JBLAS);
 		setString(yes(), D2, JBLAS);
 		setString(no(), D3, JBLAS);
 		setString(no(), D3PLUS, JBLAS);
@@ -482,8 +488,13 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SVD, JBLAS);
 		setString(all(), LU, JBLAS);
 		setString(no(), QR, JBLAS);
-		setString(yes() + footnote("s", "symmetric matrices only"), EIG, JBLAS);
+		setString(yes() + footnote("s", SYMMETRICTEXT), EIG, JBLAS);
 		setString(yes(), CHOL, JBLAS);
+		setString(no(), CSVIO, JBLAS);
+		setString(no(), JDBCIO, JBLAS);
+		setString(yes(), SERIALIZABLE, JBLAS);
+		setString(bit32(), VALUESPERDIMENSION, JBLAS);
+		setString(ram(), MAXIMUMSIZE, JBLAS);
 
 		setString(small("0.6"), VERSION, JLINALG);
 		setString(small("2009"), DATE, JLINALG);
@@ -501,12 +512,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, JLINALG);
 		setString(no(), SPARSEYALE, JLINALG);
 		setString(no(), SPARSELIL, JLINALG);
-		setString(no(), SPARSECRS, JLINALG);
+		setString(no(), SPARSECRSCCS, JLINALG);
 		setString(no(), SPARSECDS, JLINALG);
 		setString(yes(), COMPLEX, JLINALG);
 		setString(yes(), DOUBLE, JLINALG);
 		setString(no(), FLOAT, JLINALG);
 		setString(yes(), BIGDECIMAL, JLINALG);
+		setString(yes(), STRINGS, JLINALG);
+		setString(yes(), OBJECTS, JLINALG);
+		setString(yes(), GENERICS, JLINALG);
 		setString(yes(), TRANSPOSE, JLINALG);
 		setString(yes(), SCALE, JLINALG);
 		setString(yes(), PLUSMINUS, JLINALG);
@@ -520,6 +534,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, JLINALG);
 		setString(no(), EIG, JLINALG);
 		setString(no(), CHOL, JLINALG);
+		setString(no(), CSVIO, JLINALG);
+		setString(no(), JDBCIO, JLINALG);
+		setString(yes(), SERIALIZABLE, JLINALG);
+		setString(bit32(), VALUESPERDIMENSION, JLINALG);
+		setString(ram(), MAXIMUMSIZE, JLINALG);
 
 		setString("", VERSION, JMATHARRAY);
 		setString(small("2008"), DATE, JMATHARRAY);
@@ -540,12 +559,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, JMATHARRAY);
 		setString(no(), SPARSEYALE, JMATHARRAY);
 		setString(no(), SPARSELIL, JMATHARRAY);
-		setString(no(), SPARSECRS, JMATHARRAY);
+		setString(no(), SPARSECRSCCS, JMATHARRAY);
 		setString(no(), SPARSECDS, JMATHARRAY);
 		setString(no(), COMPLEX, JMATHARRAY);
 		setString(yes(), DOUBLE, JMATHARRAY);
 		setString(no(), FLOAT, JMATHARRAY);
 		setString(no(), BIGDECIMAL, JMATHARRAY);
+		setString(no(), STRINGS, JMATHARRAY);
+		setString(no(), OBJECTS, JMATHARRAY);
+		setString(no(), GENERICS, JMATHARRAY);
 		setString(yes(), D2, JMATHARRAY);
 		setString(no(), D3, JMATHARRAY);
 		setString(no(), D3PLUS, JMATHARRAY);
@@ -556,6 +578,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(squareTall(), QR, JMATHARRAY);
 		setString(yes(), EIG, JMATHARRAY);
 		setString(yes(), CHOL, JMATHARRAY);
+		setString(no(), CSVIO, JMATHARRAY);
+		setString(no(), JDBCIO, JMATHARRAY);
+		setString(yes(), SERIALIZABLE, JMATHARRAY);
+		setString(bit32(), VALUESPERDIMENSION, JMATHARRAY);
+		setString(ram(), MAXIMUMSIZE, JMATHARRAY);
 
 		setString(small("0.6"), VERSION, JMATRICES);
 		setString(small("2004"), DATE, JMATRICES);
@@ -573,12 +600,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, JMATRICES);
 		setString(no(), SPARSEYALE, JMATRICES);
 		setString(no(), SPARSELIL, JMATRICES);
-		setString(no(), SPARSECRS, JMATRICES);
+		setString(no(), SPARSECRSCCS, JMATRICES);
 		setString(no(), SPARSECDS, JMATRICES);
 		setString(yes(), COMPLEX, JMATRICES);
 		setString(yes(), DOUBLE, JMATRICES);
 		setString(no(), FLOAT, JMATRICES);
 		setString(yes(), BIGDECIMAL, JMATRICES);
+		setString(no(), STRINGS, JMATRICES);
+		setString(no(), OBJECTS, JMATRICES);
+		setString(no(), GENERICS, JMATRICES);
 		setString(yes(), D2, JMATRICES);
 		setString(no(), D3, JMATRICES);
 		setString(no(), D3PLUS, JMATRICES);
@@ -592,6 +622,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(squareTall(), QR, JMATRICES);
 		setString(yes(), EIG, JMATRICES);
 		setString(yes(), CHOL, JMATRICES);
+		setString(no(), CSVIO, JMATRICES);
+		setString(no(), JDBCIO, JMATRICES);
+		setString(yes(), SERIALIZABLE, JMATRICES);
+		setString(bit32(), VALUESPERDIMENSION, JMATRICES);
+		setString(ram(), MAXIMUMSIZE, JMATRICES);
 
 		setString(small("1.5.2"), VERSION, JSCI);
 		setString(small("2009"), DATE, JSCI);
@@ -609,12 +644,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SPARSEYALE, JSCI);
 		setString(no(), SPARSEDOK, JSCI);
 		setString(no(), SPARSELIL, JSCI);
-		setString(no(), SPARSECRS, JSCI);
+		setString(no(), SPARSECRSCCS, JSCI);
 		setString(no(), SPARSECDS, JSCI);
 		setString(yes(), COMPLEX, JSCI);
 		setString(yes(), DOUBLE, JSCI);
 		setString(no(), FLOAT, JSCI);
 		setString(no(), BIGDECIMAL, JSCI);
+		setString(no(), STRINGS, JSCI);
+		setString(no(), OBJECTS, JSCI);
+		setString(no(), GENERICS, JSCI);
 		setString(yes(), D2, JSCI);
 		setString(no(), D3, JSCI);
 		setString(no(), D3PLUS, JSCI);
@@ -627,9 +665,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, JSCI);
 		setString(square(), QR, JSCI);
 		setString(
-				yes() + footnote("s", "symmetric matrices only")
+				yes() + footnote("s", SYMMETRICTEXT)
 						+ footnote("a", "results not directly accessible"), EIG, JSCI);
 		setString(yes(), CHOL, JSCI);
+		setString(no(), CSVIO, JSCI);
+		setString(no(), JDBCIO, JSCI);
+		setString(yes(), SERIALIZABLE, JSCI);
+		setString(bit32(), VALUESPERDIMENSION, JSCI);
+		setString(ram(), MAXIMUMSIZE, JSCI);
 
 		setString(small("4.3.1"), VERSION, JSCIENCE);
 		setString(small("2007"), DATE, JSCIENCE);
@@ -647,12 +690,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SPARSELIL, JSCIENCE);
 		setString(no(), SPARSEYALE, JSCIENCE);
 		setString(no(), SPARSECDS, JSCIENCE);
-		setString(no(), SPARSECRS, JSCIENCE);
+		setString(no(), SPARSECRSCCS, JSCIENCE);
 		setString(yes(), SPARSEDOK, JSCIENCE);
 		setString(yes(), COMPLEX, JSCIENCE);
 		setString(yes(), DOUBLE, JSCIENCE);
 		setString(no(), FLOAT, JSCIENCE);
 		setString(no(), BIGDECIMAL, JSCIENCE);
+		setString(yes(), STRINGS, JSCIENCE);
+		setString(yes(), OBJECTS, JSCIENCE);
+		setString(yes(), GENERICS, JSCIENCE);
 		setString(yes(), D2, JSCIENCE);
 		setString(no(), D3, JSCIENCE);
 		setString(no(), D3PLUS, JSCIENCE);
@@ -666,6 +712,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, JSCIENCE);
 		setString(no(), EIG, JSCIENCE);
 		setString(no(), CHOL, JSCIENCE);
+		setString(no(), CSVIO, JSCIENCE);
+		setString(no(), JDBCIO, JSCIENCE);
+		setString(no(), SERIALIZABLE, JSCIENCE);
+		setString(bit32(), VALUESPERDIMENSION, JSCIENCE);
+		setString(ram(), MAXIMUMSIZE, JSCIENCE);
 
 		setString(small("0.4.9"), VERSION, LA4J);
 		setString(small("2014"), DATE, LA4J);
@@ -676,32 +727,40 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), JAVA7, LA4J);
 		setString(yes(), JAVA8, LA4J);
 		setString(no(), MULTITHREADED, LA4J);
-		setString(unknown(), INPLACE, LA4J);
+		setString(yes(), INPLACE, LA4J);
 		setString(yes(), TRANSPOSE, LA4J);
 		setString(yes(), PLUSMINUS, LA4J);
 		setString(yes(), SCALE, LA4J);
-		setString(unknown(), DENSESA, LA4J);
-		setString(unknown(), DENSEAA, LA4J);
-		setString(unknown(), DENSEBLOCK, LA4J);
-		setString(unknown(), SPARSEDOK, LA4J);
-		setString(unknown(), SPARSEYALE, LA4J);
-		setString(unknown(), SPARSELIL, LA4J);
-		setString(unknown(), SPARSECRS, LA4J);
-		setString(unknown(), SPARSECDS, LA4J);
+		setString(no(), DENSESA, LA4J);
+		setString(yes(), DENSEAA, LA4J);
+		setString(no(), DENSEBLOCK, LA4J);
+		setString(no(), SPARSEDOK, LA4J);
+		setString(no(), SPARSEYALE, LA4J);
+		setString(no(), SPARSELIL, LA4J);
+		setString(yes(), SPARSECRSCCS, LA4J);
+		setString(no(), SPARSECDS, LA4J);
 		setString(no(), COMPLEX, LA4J);
 		setString(yes(), DOUBLE, LA4J);
 		setString(no(), FLOAT, LA4J);
 		setString(no(), BIGDECIMAL, LA4J);
+		setString(no(), STRINGS, LA4J);
+		setString(no(), OBJECTS, LA4J);
+		setString(no(), GENERICS, LA4J);
 		setString(yes(), D2, LA4J);
 		setString(no(), D3, LA4J);
 		setString(no(), D3PLUS, LA4J);
-		setString(unknown(), INV, LA4J);
-		setString(unknown(), SOLVE, LA4J);
-		setString(unknown(), SVD, LA4J);
-		setString(unknown(), LU, LA4J);
-		setString(unknown(), QR, LA4J);
-		setString(unknown(), EIG, LA4J);
-		setString(unknown(), CHOL, LA4J);
+		setString(yes(), INV, LA4J);
+		setString(all(), SOLVE, LA4J);
+		setString(all(), SVD, LA4J);
+		setString(all(), LU, LA4J);
+		setString(all(), QR, LA4J);
+		setString(yes(), EIG, LA4J);
+		setString(yes(), CHOL, LA4J);
+		setString(no(), CSVIO, LA4J);
+		setString(no(), JDBCIO, LA4J);
+		setString(yes(), SERIALIZABLE, LA4J);
+		setString(bit32(), VALUESPERDIMENSION, LA4J);
+		setString(ram(), MAXIMUMSIZE, LA4J);
 
 		setString(small("7.2"), VERSION, MANTISSA);
 		setString(small("2007"), DATE, MANTISSA);
@@ -722,12 +781,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, MANTISSA);
 		setString(no(), SPARSEYALE, MANTISSA);
 		setString(no(), SPARSELIL, MANTISSA);
-		setString(no(), SPARSECRS, MANTISSA);
+		setString(no(), SPARSECRSCCS, MANTISSA);
 		setString(no(), SPARSECDS, MANTISSA);
 		setString(no(), COMPLEX, MANTISSA);
 		setString(yes(), DOUBLE, MANTISSA);
 		setString(no(), FLOAT, MANTISSA);
 		setString(no(), BIGDECIMAL, MANTISSA);
+		setString(no(), STRINGS, MANTISSA);
+		setString(no(), OBJECTS, MANTISSA);
+		setString(no(), GENERICS, MANTISSA);
 		setString(yes(), D2, MANTISSA);
 		setString(no(), D3, MANTISSA);
 		setString(no(), D3PLUS, MANTISSA);
@@ -738,6 +800,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, MANTISSA);
 		setString(no(), EIG, MANTISSA);
 		setString(no(), CHOL, MANTISSA);
+		setString(no(), CSVIO, MANTISSA);
+		setString(no(), JDBCIO, MANTISSA);
+		setString(yes(), SERIALIZABLE, MANTISSA);
+		setString(bit32(), VALUESPERDIMENSION, MANTISSA);
+		setString(ram(), MAXIMUMSIZE, MANTISSA);
 
 		setString(small("1.0.1"), VERSION, MTJ);
 		setString(small("2013"), DATE, MTJ);
@@ -752,7 +819,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DENSESA, MTJ);
 		setString(no(), DENSEAA, MTJ);
 		setString(no(), DENSEBLOCK, MTJ);
-		setString(yes(), SPARSECRS, MTJ);
+		setString(yes(), SPARSECRSCCS, MTJ);
 		setString(yes(), SPARSECDS, MTJ);
 		setString(yes(), SPARSELIL, MTJ);
 		setString(no(), SPARSEDOK, MTJ);
@@ -761,6 +828,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DOUBLE, MTJ);
 		setString(no(), FLOAT, MTJ);
 		setString(no(), BIGDECIMAL, MTJ);
+		setString(no(), STRINGS, MTJ);
+		setString(no(), OBJECTS, MTJ);
+		setString(no(), GENERICS, MTJ);
 		setString(yes(), D2, MTJ);
 		setString(no(), D3, MTJ);
 		setString(no(), D3PLUS, MTJ);
@@ -772,10 +842,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(all(), SVD, MTJ);
 		setString(all() + footnote("e", ERRORTEXT), LU, MTJ);
 		setString(squareTall(), QR, MTJ);
-		setString(yes() + footnote("s", "symmetric matrices only"), EIG, MTJ);
+		setString(yes() + footnote("s", SYMMETRICTEXT), EIG, MTJ);
 		setString(yes() + footnote("e", ERRORTEXT), CHOL, MTJ);
+		setString(no(), CSVIO, MTJ);
+		setString(no(), JDBCIO, MTJ);
+		setString(yes(), SERIALIZABLE, MTJ);
+		setString(bit32(), VALUESPERDIMENSION, MTJ);
+		setString(ram(), MAXIMUMSIZE, MTJ);
 
-		setString(small("v35"), VERSION, OJALGO);
+		setString(small("35.0"), VERSION, OJALGO);
 		setString(small("2013"), DATE, OJALGO);
 		setString(small("MIT"), LICENSE, OJALGO);
 		setString(no(), JAVA14, OJALGO);
@@ -792,7 +867,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), DENSEAA, OJALGO);
 		setString(no(), DENSEBLOCK, OJALGO);
 		setString(no(), SPARSECDS, OJALGO);
-		setString(no(), SPARSECRS, OJALGO);
+		setString(no(), SPARSECRSCCS, OJALGO);
 		setString(no(), SPARSEYALE, OJALGO);
 		setString(no(), SPARSELIL, OJALGO);
 		setString(no(), SPARSEDOK, OJALGO);
@@ -800,6 +875,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DOUBLE, OJALGO);
 		setString(yes(), FLOAT, OJALGO);
 		setString(yes(), BIGDECIMAL, OJALGO);
+		setString(no(), STRINGS, OJALGO);
+		setString(no(), OBJECTS, OJALGO);
+		setString(no(), GENERICS, OJALGO);
 		setString(yes(), D2, OJALGO);
 		setString(no(), D3, OJALGO);
 		setString(no(), D3PLUS, OJALGO);
@@ -810,9 +888,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(all(), QR, OJALGO);
 		setString(yes(), EIG, OJALGO);
 		setString(yes(), CHOL, OJALGO);
+		setString(no(), CSVIO, OJALGO);
+		setString(no(), JDBCIO, OJALGO);
+		setString(yes(), SERIALIZABLE, OJALGO);
+		setString(bit32(), VALUESPERDIMENSION, OJALGO);
+		setString(ram(), MAXIMUMSIZE, OJALGO);
 
-		setString(small("0.9.4"), VERSION, PARALLELCOLT);
-		setString(small("2010"), DATE, PARALLELCOLT);
+		setString(small("0.10.1"), VERSION, PARALLELCOLT);
+		setString(small("2013"), DATE, PARALLELCOLT);
 		setString(small("BSD"), LICENSE, PARALLELCOLT);
 		setString(yes(), JAVA14, PARALLELCOLT);
 		setString(yes(), JAVA5, PARALLELCOLT);
@@ -827,7 +910,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DENSESA, PARALLELCOLT);
 		setString(yes(), DENSEAA, PARALLELCOLT);
 		setString(no(), DENSEBLOCK, PARALLELCOLT);
-		setString(yes(), SPARSECRS, PARALLELCOLT);
+		setString(yes(), SPARSECRSCCS, PARALLELCOLT);
 		setString(yes(), SPARSELIL, PARALLELCOLT);
 		setString(yes(), SPARSEDOK, PARALLELCOLT);
 		setString(no(), SPARSEYALE, PARALLELCOLT);
@@ -836,6 +919,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DOUBLE, PARALLELCOLT);
 		setString(yes(), FLOAT, PARALLELCOLT);
 		setString(no(), BIGDECIMAL, PARALLELCOLT);
+		setString(yes(), STRINGS, PARALLELCOLT);
+		setString(yes(), OBJECTS, PARALLELCOLT);
+		setString(no(), GENERICS, PARALLELCOLT);
 		setString(yes(), D2, PARALLELCOLT);
 		setString(yes(), D3, PARALLELCOLT);
 		setString(no(), D3PLUS, PARALLELCOLT);
@@ -846,6 +932,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(squareTall(), QR, PARALLELCOLT);
 		setString(yes(), EIG, PARALLELCOLT);
 		setString(yes(), CHOL, PARALLELCOLT);
+		setString(no(), CSVIO, PARALLELCOLT);
+		setString(no(), JDBCIO, PARALLELCOLT);
+		setString(yes(), SERIALIZABLE, PARALLELCOLT);
+		setString(bit32(), VALUESPERDIMENSION, PARALLELCOLT);
+		setString(ram(), MAXIMUMSIZE, PARALLELCOLT);
 
 		setString(small("1.11"), VERSION, SST);
 		setString(small("2010"), DATE, SST);
@@ -867,11 +958,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSELIL, SST);
 		setString(no(), SPARSEYALE, SST);
 		setString(no(), SPARSECDS, SST);
-		setString(no(), SPARSECRS, SST);
+		setString(no(), SPARSECRSCCS, SST);
 		setString(yes(), COMPLEX, SST);
 		setString(yes(), DOUBLE, SST);
 		setString(no(), FLOAT, SST);
 		setString(no(), BIGDECIMAL, SST);
+		setString(unknown(), STRINGS, SST);
+		setString(unknown(), OBJECTS, SST);
+		setString(unknown(), GENERICS, SST);
 		setString(yes(), D2, SST);
 		setString(yes(), D3, SST);
 		setString(yes(), D3PLUS, SST);
@@ -882,9 +976,14 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, SST);
 		setString(yes(), EIG, SST);
 		setString(no(), CHOL, SST);
+		setString(unknown(), CSVIO, SST);
+		setString(unknown(), JDBCIO, SST);
+		setString(unknown(), SERIALIZABLE, SST);
+		setString(bit32(), VALUESPERDIMENSION, SST);
+		setString(ram(), MAXIMUMSIZE, SST);
 
 		setString(small("1.5.2"), VERSION, VECMATH);
-		setString("", DATE, VECMATH);
+		setString("2001?", DATE, VECMATH);
 		setString(small("other"), LICENSE, VECMATH);
 		setString(no(), JAVA14, VECMATH);
 		setString(yes(), JAVA5, VECMATH);
@@ -902,12 +1001,15 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), SPARSEDOK, VECMATH);
 		setString(no(), SPARSELIL, VECMATH);
 		setString(no(), SPARSECDS, VECMATH);
-		setString(no(), SPARSECRS, VECMATH);
+		setString(no(), SPARSECRSCCS, VECMATH);
 		setString(no(), SPARSEYALE, VECMATH);
 		setString(no(), COMPLEX, VECMATH);
 		setString(yes(), DOUBLE, VECMATH);
 		setString(no(), FLOAT, VECMATH);
 		setString(no(), BIGDECIMAL, VECMATH);
+		setString(unknown(), STRINGS, VECMATH);
+		setString(unknown(), OBJECTS, VECMATH);
+		setString(unknown(), GENERICS, VECMATH);
 		setString(yes(), D2, VECMATH);
 		setString(no(), D3, VECMATH);
 		setString(no(), D3PLUS, VECMATH);
@@ -918,6 +1020,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, VECMATH);
 		setString(no(), EIG, VECMATH);
 		setString(no(), CHOL, VECMATH);
+		setString(unknown(), CSVIO, VECMATH);
+		setString(unknown(), JDBCIO, VECMATH);
+		setString(unknown(), SERIALIZABLE, VECMATH);
+		setString(bit32(), VALUESPERDIMENSION, VECMATH);
+		setString(ram(), MAXIMUMSIZE, VECMATH);
 
 	}
 
@@ -928,7 +1035,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		case HTMLTABLE:
 			return "<span class=\"text-success glyphicon glyphicon-ok-sign\"></span>";
 		case HTMLLIST:
-			return "<span class=\"text-success glyphicon glyphicon-ok-sign\">yes</span>";
+			return "yes";
 		default:
 			return "yes";
 		}
@@ -937,13 +1044,13 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public String hdd() {
 		switch (format) {
 		case LATEX:
-			return "~4000GB (Disk)";
+			return "~4TB (Disk)";
 		case HTMLTABLE:
-			return "~4000GB (Disk)";
+			return "~4TB (Disk)";
 		case HTMLLIST:
-			return "~4000GB (Disk)";
+			return "~4TB (Disk)";
 		default:
-			return "~4000GB (Disk)";
+			return "~4TB (Disk)";
 		}
 	}
 
@@ -1047,7 +1154,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		case HTMLTABLE:
 			return "<span class=\"text-danger glyphicon glyphicon-minus-sign\"></span>";
 		case HTMLLIST:
-			return "<span class=\"text-danger glyphicon glyphicon-minus-sign\">no</span>";
+			return "no";
 		default:
 			return "no";
 		}
@@ -1106,7 +1213,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 			if (!footnotes.contains(f)) {
 				footnotes.add(f);
 			}
-			return text;
+			return " (" + text + ")";
 		}
 	}
 
@@ -1167,58 +1274,26 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 			s.append("<h2>");
 			s.append(getString(0, c));
 			s.append("</h2>\n");
+			s.append("<p>These are the features of the <strong>" + getString(0, c)
+					+ "</strong> library:</p>");
 			s.append("<ul>\n");
 			for (int r = 1; r < getRowCount(); r++) {
-				s.append("<li>");
-				s.append(getString(r, 0));
-				s.append(": ");
-				s.append(getString(r, c));
-				s.append("</li>\n");
+				String result = getString(r, c);
+				if ("no".equals(result)) {
+				} else if ("yes".equals(result)) {
+					s.append("<li>" + getString(0, c) + " ");
+					s.append(getString(r, 0));
+					s.append("</li>\n");
+				} else if (!"no".equals(result)) {
+					s.append("<li>" + getString(0, c) + " ");
+					s.append(getString(r, 0) + ": ");
+					s.append(getString(r, c));
+					s.append("</li>\n");
+				}
 			}
 			s.append("</ul>\n\n");
 		}
 		return s.toString();
 	}
 
-	public long getColumnForPackage(String packageName) {
-		if ("org.ujmp.core".equals(packageName)) {
-			return UJMP;
-		} else if ("org.ujmp.colt".equals(packageName)) {
-			return COLT;
-		} else if ("org.ujmp.commonsmath".equals(packageName)) {
-			return COMMONSMATH;
-		} else if ("org.ujmp.ejml".equals(packageName)) {
-			return EJML;
-		} else if ("org.ujmp.jama".equals(packageName)) {
-			return JAMA;
-		} else if ("org.ujmp.jblas".equals(packageName)) {
-			return JBLAS;
-		} else if ("org.ujmp.jlinalg".equals(packageName)) {
-			return JLINALG;
-		} else if ("org.ujmp.jmatharray".equals(packageName)) {
-			return JMATHARRAY;
-		} else if ("org.ujmp.jmatrices".equals(packageName)) {
-			return JMATRICES;
-		} else if ("org.ujmp.jsci".equals(packageName)) {
-			return JSCI;
-		} else if ("org.ujmp.jscience".equals(packageName)) {
-			return JSCIENCE;
-		} else if ("org.ujmp.la4j".equals(packageName)) {
-			return LA4J;
-		} else if ("org.ujmp.mantissa".equals(packageName)) {
-			return MANTISSA;
-		} else if ("org.ujmp.mtj".equals(packageName)) {
-			return MTJ;
-		} else if ("org.ujmp.ojalgo".equals(packageName)) {
-			return OJALGO;
-		} else if ("org.ujmp.parallelcolt".equals(packageName)) {
-			return PARALLELCOLT;
-		} else if ("org.ujmp.sst".equals(packageName)) {
-			return SST;
-		} else if ("org.ujmp.vecmath".equals(packageName)) {
-			return VECMATH;
-		} else {
-			throw new RuntimeException("unknown package: " + packageName);
-		}
-	}
 }

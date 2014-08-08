@@ -35,8 +35,6 @@ import org.ujmp.core.bytematrix.impl.DefaultDenseByteMatrix2D;
 import org.ujmp.core.bytematrix.impl.DefaultSparseByteMatrix;
 import org.ujmp.core.charmatrix.impl.DefaultDenseCharMatrix2D;
 import org.ujmp.core.charmatrix.impl.DefaultSparseCharMatrix;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.DoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
@@ -59,9 +57,10 @@ public class DefaultDenseMatrixFactory extends AbstractMatrixFactory<DenseMatrix
 
 	public final DenseMatrix zeros(long... size) {
 		if (size.length == 2) {
-			return DenseDoubleMatrix2D.Factory.zeros(size[ROW], size[COLUMN]);
+			return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]),
+					MathUtil.longToInt(size[COLUMN]));
 		} else if (size.length > 2) {
-			return DoubleMatrixMultiD.Factory.zeros(size);
+			return new DefaultDenseDoubleMatrixMultiD(size);
 		} else {
 			throw new RuntimeException("Size must be at least 2-dimensional");
 		}

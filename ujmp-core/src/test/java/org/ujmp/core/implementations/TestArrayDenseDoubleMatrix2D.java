@@ -25,6 +25,7 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -40,12 +41,9 @@ public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 
 }

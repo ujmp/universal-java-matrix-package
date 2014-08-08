@@ -26,6 +26,7 @@ package org.ujmp.jblas;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestJBlasDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,27 +43,8 @@ public class TestJBlasDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testEigRandSmall() throws Exception {
-		// incorrect result
-	}
-
-	public void testEigRandLarge() throws Exception {
-		// incorrect result
-	}
-
-	public void testSolveRandTallSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testSolveRandTallLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// only tall matrices
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// only tall matrices
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.JBLAS;
 	}
 }

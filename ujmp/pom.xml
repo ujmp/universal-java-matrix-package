@@ -246,7 +246,7 @@
 			<dependency>
 				<groupId>com.googlecode.matrix-toolkits-java</groupId>
 				<artifactId>mtj</artifactId>
-				<version>1.0.2-SNAPSHOT</version>
+				<version>1.0.1</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -348,7 +348,7 @@
 			<dependency>
 				<groupId>com.googlecode.efficient-java-matrix-library</groupId>
 				<artifactId>ejml</artifactId>
-				<version>0.24</version>
+				<version>0.25</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>

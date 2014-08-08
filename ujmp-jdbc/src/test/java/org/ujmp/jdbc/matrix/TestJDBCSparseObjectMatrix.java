@@ -25,6 +25,7 @@ package org.ujmp.jdbc.matrix;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestJDBCSparseObjectMatrix extends AbstractMatrixTest {
 
@@ -45,8 +46,9 @@ public class TestJDBCSparseObjectMatrix extends AbstractMatrixTest {
 		// TODO
 	}
 
-	public void testQRFatSmall() throws Exception {
-		// only tall matrices
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 
 }

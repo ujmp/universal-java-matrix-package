@@ -43,5 +43,5 @@ import org.junit.runners.Suite;
 		org.ujmp.mantissa.AllTests.class, org.ujmp.mtj.AllTests.class,
 		org.ujmp.pdfbox.AllTests.class, org.ujmp.vecmath.AllTests.class,
 		org.ujmp.ejml.AllTests.class, org.ujmp.sst.AllTests.class })
-public abstract class AllTests {
+public class AllTests {
 }

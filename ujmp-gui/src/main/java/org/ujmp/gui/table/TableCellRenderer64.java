@@ -25,12 +25,11 @@ package org.ujmp.gui.table;
 
 import java.awt.Component;
 
-import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public interface TableCellRenderer64 extends TableCellRenderer {
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+	public Component getTableCellRendererComponent(JTable64 table, Object value, boolean isSelected, boolean hasFocus,
 			long row, long column);
 
 }

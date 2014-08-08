@@ -30,5 +30,5 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ TestArrayIndexList.class, TestTextMap.class, TestSortedListSet.class,
 		TestSoftHashMapList.class, TestSoftHashMap.class, TestSerializedObjectMap.class,
 		TestRingBufferList.class, TestLazyMap.class, TestCachedMap.class, TestHashMapList.class })
-public abstract class AllTests {
+public class AllTests {
 }

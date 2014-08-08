@@ -25,6 +25,7 @@ package org.ujmp.core.implementations;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultSparseDoubleMatrix;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestDefaultSparseDoubleMatrix extends AbstractMatrixTest {
 
@@ -40,11 +41,8 @@ public class TestDefaultSparseDoubleMatrix extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 }

@@ -25,7 +25,7 @@ package org.ujmp.ejml.calculation;
 
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.SingularValueDecomposition;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 

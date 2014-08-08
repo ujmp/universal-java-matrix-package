@@ -26,6 +26,7 @@ package org.ujmp.parallelcolt;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestParallelColtDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -42,20 +43,9 @@ public class TestParallelColtDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testQRFatSmall() {
-
-	}
-
-	public void testQRFatLarge() {
-
-	}
-
-	public void testLUFatFixedSmall() {
-
-	}
-
-	public void testLUFatFixedLarge() {
-
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.PARALLELCOLT;
 	}
 
 }

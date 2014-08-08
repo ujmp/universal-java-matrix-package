@@ -26,11 +26,12 @@ package org.ujmp.la4j;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestLa4JDenseDoubleMatrix2D extends AbstractMatrixTest {
 
 	@Override
-	public Matrix createMatrix(long... size) throws Exception {
+	public La4JDenseDoubleMatrix2D createMatrix(long... size) throws Exception {
 		return new La4JDenseDoubleMatrix2D(MathUtil.longToInt(size[Matrix.ROW]),
 				MathUtil.longToInt(size[Matrix.COLUMN]));
 	}
@@ -45,40 +46,9 @@ public class TestLa4JDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testLUFatFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUFatFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedSmall() throws Exception {
-		// only square matrices
-	}
-
-	public void testLUTallFixedLarge() throws Exception {
-		// only square matrices
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// fat not supported
-	}
-
-	public void testQRFatLarge() throws Exception {
-		// fat not supported
-	}
-
-	public void testSVDWikipedia() throws Exception {
-		// incorrect result
-	}
-
-	public void testSVD() throws Exception {
-		// incorrect result
-	}
-
-	public void testEigSymmSmall() throws Exception {
-		// incorrect result
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.LA4J;
 	}
 
 }

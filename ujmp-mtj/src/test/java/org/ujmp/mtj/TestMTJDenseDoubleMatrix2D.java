@@ -26,6 +26,7 @@ package org.ujmp.mtj;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -41,20 +42,9 @@ public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testEigRandSmall() throws Exception {
-		// only symmetric matrices
-	}
-
-	public void testEigRandLarge() throws Exception {
-		// only symmetric matrices
-	}
-
-	public void testLUSquareSingularSmall() throws Exception {
-		// not supported
-	}
-
-	public void testLUSquareSingularLarge() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.MTJ;
 	}
 
 }

@@ -30,5 +30,5 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ org.ujmp.core.calculation.string.AllTests.class,
 		TestMissingValueImputation.class, TestSortrows.class, TestGinv.class,
 		TestConcatenation.class, TestMtimes.class })
-public abstract class AllTests {
+public class AllTests {
 }

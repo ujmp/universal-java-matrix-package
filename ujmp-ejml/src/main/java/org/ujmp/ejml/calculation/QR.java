@@ -26,8 +26,8 @@ package org.ujmp.ejml.calculation;
 import org.ejml.alg.dense.linsol.qr.LinearSolverQrHouseCol;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.LinearSolver;
-import org.ejml.factory.QRDecomposition;
+import org.ejml.interfaces.decomposition.QRDecomposition;
+import org.ejml.interfaces.linsol.LinearSolver;
 import org.ujmp.core.Matrix;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 

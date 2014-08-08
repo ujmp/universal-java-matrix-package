@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestDenseFileMatrix extends AbstractMatrixTest {
 
@@ -42,11 +43,8 @@ public class TestDenseFileMatrix extends AbstractMatrixTest {
 		return false;
 	}
 
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 }

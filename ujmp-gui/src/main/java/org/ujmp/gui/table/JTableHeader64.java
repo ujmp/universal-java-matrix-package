@@ -63,7 +63,7 @@ public class JTableHeader64 extends JTableHeader implements TableColumnModelList
 
 	// must be overridden, otherwise it will iterate over all columns
 	public Dimension getPreferredSize() {
-		return new Dimension(getColumnModel().getTotalColumnWidth(), 15);
+		return new Dimension(getColumnModel().getTotalColumnWidth(), MatrixTable64.ROWHEIGHT);
 	}
 
 	public void valueChanged(ListSelectionEvent e) {

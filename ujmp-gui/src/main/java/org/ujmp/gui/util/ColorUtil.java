@@ -94,8 +94,27 @@ public abstract class ColorUtil {
 	}
 
 	public static Color fromString(String s, int alpha) {
-		if (s == null)
+		if (s == null) {
 			return Color.black;
+		} else if ("".equals(s)) {
+			return Color.darkGray;
+		}
+		String lc = s.toLowerCase();
+		if ("yes".equals(lc)) {
+			return Color.green;
+		} else if ("true".equals(lc)) {
+			return Color.green;
+		} else if ("ok".equals(lc)) {
+			return Color.green;
+		} else if ("no".equals(lc)) {
+			return Color.red;
+		} else if ("false".equals(lc)) {
+			return Color.red;
+		} else if ("n/a".equals(lc)) {
+			return Color.darkGray;
+		} else if ("error".equals(lc)) {
+			return Color.cyan;
+		}
 		int hc = Math.abs(hash(s.hashCode()));
 		int r = 192 + (hc % 256) / 4;
 		hc = hc / 256;

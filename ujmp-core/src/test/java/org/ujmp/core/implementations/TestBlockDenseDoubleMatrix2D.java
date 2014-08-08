@@ -27,6 +27,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.BlockDenseDoubleMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
 
@@ -47,11 +48,8 @@ public class TestBlockDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return true;
 	}
 
-	public void testQRFatLarge() throws Exception {
-		// not supported
-	}
-
-	public void testQRFatSmall() throws Exception {
-		// not supported
+	@Override
+	public int getMatrixLibraryId() {
+		return MatrixLibraries.UJMP;
 	}
 }

@@ -120,58 +120,60 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		int footnoteId = 1;
 		this.format = format;
 
-		setColumnLabel(COLT, turn("Colt"));
-		setColumnLabel(COMMONSMATH, turn("Commons Math"));
-		setColumnLabel(EJML, turn("EJML"));
-		setColumnLabel(JAMA, turn("JAMA"));
-		setColumnLabel(JBLAS, turn("jblas"));
-		setColumnLabel(JLINALG, turn("JLinAlg"));
-		setColumnLabel(JMATHARRAY, turn("JMathArray"));
-		setColumnLabel(JMATRICES, turn("JMatrices"));
-		setColumnLabel(JSCI, turn("JSci"));
-		setColumnLabel(JSCIENCE, turn("JScience"));
-		setColumnLabel(LA4J, turn("la4j"));
-		setColumnLabel(MANTISSA, turn("Mantissa"));
-		setColumnLabel(MTJ, turn("MTJ"));
-		setColumnLabel(OJALGO, turn("ojAlgo"));
-		setColumnLabel(PARALLELCOLT, turn("Parallel Colt"));
-		setColumnLabel(SST, turn("SST"));
-		setColumnLabel(UJMP, turn("UJMP"));
-		setColumnLabel(VECMATH, turn("vecmath"));
+		setColumnLabel(COLT, rotate("Colt"));
+		setColumnLabel(COMMONSMATH, rotate("Commons Math"));
+		setColumnLabel(EJML, rotate("EJML"));
+		setColumnLabel(JAMA, rotate("JAMA"));
+		setColumnLabel(JBLAS, rotate("jblas"));
+		setColumnLabel(JLINALG, rotate("JLinAlg"));
+		setColumnLabel(JMATHARRAY, rotate("JMathArray"));
+		setColumnLabel(JMATRICES, rotate("JMatrices"));
+		setColumnLabel(JSCI, rotate("JSci"));
+		setColumnLabel(JSCIENCE, rotate("JScience"));
+		setColumnLabel(LA4J, rotate("la4j"));
+		setColumnLabel(MANTISSA, rotate("Mantissa"));
+		setColumnLabel(MTJ, rotate("MTJ"));
+		setColumnLabel(OJALGO, rotate("ojAlgo"));
+		setColumnLabel(PARALLELCOLT, rotate("Parallel Colt"));
+		setColumnLabel(SST, rotate("SST"));
+		setColumnLabel(UJMP, rotate("UJMP"));
+		setColumnLabel(VECMATH, rotate("vecmath"));
 
-		setString(link(turn("Colt Homepage"), "http://acs.lbl.gov/software/colt/"), HOMEPAGE, COLT);
-		setString(link(turn("Commons Math Homepage"), "http://commons.apache.org/math/"), HOMEPAGE,
-				COMMONSMATH);
+		setString(link(rotate("Colt Homepage"), "http://acs.lbl.gov/software/colt/"), HOMEPAGE,
+				COLT);
+		setString(link(rotate("Commons Math Homepage"), "http://commons.apache.org/math/"),
+				HOMEPAGE, COMMONSMATH);
 		setString(
-				link(turn("EJML Homepage"),
+				link(rotate("EJML Homepage"),
 						"https://code.google.com/p/efficient-java-matrix-library/"), HOMEPAGE, EJML);
-		setString(link(turn("JAMA Homepage"), "http://math.nist.gov/javanumerics/jama/"), HOMEPAGE,
-				JAMA);
-		setString(link(turn("jblas Homepage"), "http://mikiobraun.github.io/jblas/"), HOMEPAGE,
+		setString(link(rotate("JAMA Homepage"), "http://math.nist.gov/javanumerics/jama/"),
+				HOMEPAGE, JAMA);
+		setString(link(rotate("jblas Homepage"), "http://mikiobraun.github.io/jblas/"), HOMEPAGE,
 				JBLAS);
-		setString(link(turn("JLinAlg Homepage"), "http://jlinalg.sourceforge.net/"), HOMEPAGE,
+		setString(link(rotate("JLinAlg Homepage"), "http://jlinalg.sourceforge.net/"), HOMEPAGE,
 				JLINALG);
-		setString(link(turn("JMathArray Homepage"), "https://code.google.com/p/jmatharray/"),
+		setString(link(rotate("JMathArray Homepage"), "https://code.google.com/p/jmatharray/"),
 				HOMEPAGE, JMATHARRAY);
-		setString(link(turn("JMatrices Homepage"), "http://jmatrices.sourceforge.net/"), HOMEPAGE,
-				JMATRICES);
-		setString(link(turn("JSci Homepage"), "http://jsci.sourceforge.net/"), HOMEPAGE, JSCI);
-		setString(link(turn("JScience Homepage"), "http://jscience.org/"), HOMEPAGE, JSCIENCE);
-		setString(link(turn("la4j Homepage"), "http://la4j.org/"), HOMEPAGE, LA4J);
+		setString(link(rotate("JMatrices Homepage"), "http://jmatrices.sourceforge.net/"),
+				HOMEPAGE, JMATRICES);
+		setString(link(rotate("JSci Homepage"), "http://jsci.sourceforge.net/"), HOMEPAGE, JSCI);
+		setString(link(rotate("JScience Homepage"), "http://jscience.org/"), HOMEPAGE, JSCIENCE);
+		setString(link(rotate("la4j Homepage"), "http://la4j.org/"), HOMEPAGE, LA4J);
 		setString(
-				link(turn("Mantissa Homepage"),
+				link(rotate("Mantissa Homepage"),
 						"http://www.spaceroots.org/software/mantissa/index.html"), HOMEPAGE,
 				MANTISSA);
-		setString(link(turn("MTJ Homepage"), "https://github.com/fommil/matrix-toolkits-java/"),
+		setString(link(rotate("MTJ Homepage"), "https://github.com/fommil/matrix-toolkits-java/"),
 				HOMEPAGE, MTJ);
-		setString(link(turn("ojAlgo Homepage"), "http://ojalgo.org/"), HOMEPAGE, OJALGO);
+		setString(link(rotate("ojAlgo Homepage"), "http://ojalgo.org/"), HOMEPAGE, OJALGO);
 		setString(
-				link(turn("Parallel Colt Homepage"),
+				link(rotate("Parallel Colt Homepage"),
 						"https://sites.google.com/site/piotrwendykier/software/parallelcolt"),
 				HOMEPAGE, PARALLELCOLT);
-		setString(link(turn("SST Homepage"), "http://freecode.com/projects/shared"), HOMEPAGE, SST);
-		setString(link(turn("UJMP Homepage"), "http://ujmp.org/"), HOMEPAGE, UJMP);
-		setString(link(turn("vecmath Homepage"), "https://java.net/projects/vecmath"), HOMEPAGE,
+		setString(link(rotate("SST Homepage"), "http://freecode.com/projects/shared"), HOMEPAGE,
+				SST);
+		setString(link(rotate("UJMP Homepage"), "http://ujmp.org/"), HOMEPAGE, UJMP);
+		setString(link(rotate("vecmath Homepage"), "https://java.net/projects/vecmath"), HOMEPAGE,
 				VECMATH);
 
 		setRowLabel(VERSION, "Current Version");
@@ -318,7 +320,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, COLT);
 		setString(yes(), SERIALIZABLE, COLT);
 		setString(bit32(), VALUESPERDIMENSION, COLT);
-		setString(ram(), MAXIMUMSIZE, COLT);
+		setString(singleArray(), MAXIMUMSIZE, COLT);
 
 		setString(small("3.2"), VERSION, COMMONSMATH);
 		setString(small("2013"), DATE, COMMONSMATH);
@@ -406,7 +408,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, EJML);
 		setString(yes(), SERIALIZABLE, EJML);
 		setString(bit32(), VALUESPERDIMENSION, EJML);
-		setString(ram(), MAXIMUMSIZE, EJML);
+		setString(singleArray(), MAXIMUMSIZE, EJML);
 
 		setString(small("1.0.3"), VERSION, JAMA);
 		setString(small("2012"), DATE, JAMA);
@@ -494,7 +496,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, JBLAS);
 		setString(yes(), SERIALIZABLE, JBLAS);
 		setString(bit32(), VALUESPERDIMENSION, JBLAS);
-		setString(ram(), MAXIMUMSIZE, JBLAS);
+		setString(singleArray(), MAXIMUMSIZE, JBLAS);
 
 		setString(small("0.6"), VERSION, JLINALG);
 		setString(small("2009"), DATE, JLINALG);
@@ -750,10 +752,10 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), D3, LA4J);
 		setString(no(), D3PLUS, LA4J);
 		setString(yes(), INV, LA4J);
-		setString(all(), SOLVE, LA4J);
+		setString(squareTall(), SOLVE, LA4J);
 		setString(all(), SVD, LA4J);
-		setString(all(), LU, LA4J);
-		setString(all(), QR, LA4J);
+		setString(square(), LU, LA4J);
+		setString(squareTall(), QR, LA4J);
 		setString(yes(), EIG, LA4J);
 		setString(yes(), CHOL, LA4J);
 		setString(no(), CSVIO, LA4J);
@@ -804,7 +806,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, MANTISSA);
 		setString(yes(), SERIALIZABLE, MANTISSA);
 		setString(bit32(), VALUESPERDIMENSION, MANTISSA);
-		setString(ram(), MAXIMUMSIZE, MANTISSA);
+		setString(singleArray(), MAXIMUMSIZE, MANTISSA);
 
 		setString(small("1.0.1"), VERSION, MTJ);
 		setString(small("2013"), DATE, MTJ);
@@ -848,7 +850,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, MTJ);
 		setString(yes(), SERIALIZABLE, MTJ);
 		setString(bit32(), VALUESPERDIMENSION, MTJ);
-		setString(ram(), MAXIMUMSIZE, MTJ);
+		setString(singleArray(), MAXIMUMSIZE, MTJ);
 
 		setString(small("35.0"), VERSION, OJALGO);
 		setString(small("2013"), DATE, OJALGO);
@@ -892,7 +894,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), JDBCIO, OJALGO);
 		setString(yes(), SERIALIZABLE, OJALGO);
 		setString(bit32(), VALUESPERDIMENSION, OJALGO);
-		setString(ram(), MAXIMUMSIZE, OJALGO);
+		setString(singleArray(), MAXIMUMSIZE, OJALGO);
 
 		setString(small("0.10.1"), VERSION, PARALLELCOLT);
 		setString(small("2013"), DATE, PARALLELCOLT);
@@ -963,9 +965,9 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DOUBLE, SST);
 		setString(no(), FLOAT, SST);
 		setString(no(), BIGDECIMAL, SST);
-		setString(unknown(), STRINGS, SST);
-		setString(unknown(), OBJECTS, SST);
-		setString(unknown(), GENERICS, SST);
+		setString(yes(), STRINGS, SST);
+		setString(yes(), OBJECTS, SST);
+		setString(yes(), GENERICS, SST);
 		setString(yes(), D2, SST);
 		setString(yes(), D3, SST);
 		setString(yes(), D3PLUS, SST);
@@ -976,11 +978,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), QR, SST);
 		setString(yes(), EIG, SST);
 		setString(no(), CHOL, SST);
-		setString(unknown(), CSVIO, SST);
-		setString(unknown(), JDBCIO, SST);
-		setString(unknown(), SERIALIZABLE, SST);
+		setString(no(), CSVIO, SST);
+		setString(no(), JDBCIO, SST);
+		setString(no(), SERIALIZABLE, SST);
 		setString(bit32(), VALUESPERDIMENSION, SST);
-		setString(ram(), MAXIMUMSIZE, SST);
+		setString(singleArray(), MAXIMUMSIZE, SST);
 
 		setString(small("1.5.2"), VERSION, VECMATH);
 		setString("2001?", DATE, VECMATH);
@@ -1007,22 +1009,22 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), DOUBLE, VECMATH);
 		setString(no(), FLOAT, VECMATH);
 		setString(no(), BIGDECIMAL, VECMATH);
-		setString(unknown(), STRINGS, VECMATH);
-		setString(unknown(), OBJECTS, VECMATH);
-		setString(unknown(), GENERICS, VECMATH);
+		setString(no(), STRINGS, VECMATH);
+		setString(no(), OBJECTS, VECMATH);
+		setString(no(), GENERICS, VECMATH);
 		setString(yes(), D2, VECMATH);
 		setString(no(), D3, VECMATH);
 		setString(no(), D3PLUS, VECMATH);
 		setString(yes(), INV, VECMATH);
 		setString(no(), SOLVE, VECMATH);
-		setString(circle() + footnote("e", ERRORTEXT), SVD, VECMATH);
+		setString(no() + footnote("e", ERRORTEXT), SVD, VECMATH);
 		setString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, VECMATH);
 		setString(no(), QR, VECMATH);
 		setString(no(), EIG, VECMATH);
 		setString(no(), CHOL, VECMATH);
-		setString(unknown(), CSVIO, VECMATH);
-		setString(unknown(), JDBCIO, VECMATH);
-		setString(unknown(), SERIALIZABLE, VECMATH);
+		setString(no(), CSVIO, VECMATH);
+		setString(no(), JDBCIO, VECMATH);
+		setString(yes(), SERIALIZABLE, VECMATH);
 		setString(bit32(), VALUESPERDIMENSION, VECMATH);
 		setString(ram(), MAXIMUMSIZE, VECMATH);
 
@@ -1033,7 +1035,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		case LATEX:
 			return "\\bf{$+$}";
 		case HTMLTABLE:
-			return "<span class=\"text-success glyphicon glyphicon-ok-sign\"></span>";
+			return "<span class=\"text-success fa fa-check-square\"></span>";
 		case HTMLLIST:
 			return "yes";
 		default:
@@ -1057,13 +1059,26 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public String ram() {
 		switch (format) {
 		case LATEX:
-			return "~32GB (RAM)";
+			return "~64GB (RAM)";
 		case HTMLTABLE:
-			return "~32GB (RAM)";
+			return "~64GB (RAM)";
 		case HTMLLIST:
-			return "~32GB (RAM)";
+			return "~64GB (RAM)";
 		default:
-			return "~32GB (RAM)";
+			return "~64GB (RAM)";
+		}
+	}
+
+	public String singleArray() {
+		switch (format) {
+		case LATEX:
+			return "16GB (Single Array)";
+		case HTMLTABLE:
+			return "16GB (Single Array)";
+		case HTMLLIST:
+			return "16GB (Single Array)";
+		default:
+			return "16GB (Single Array)";
 		}
 	}
 
@@ -1097,6 +1112,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		switch (format) {
 		case LATEX:
 			return "\\scalebox{0.6}[1.0]{$\\square$}\\,$\\square$\\,\\scalebox{1.0}[0.6]{$\\square$}";
+		case HTMLTABLE:
+			return "<span class=\"fa fa-arrows-v\"></span> <span class=\"fa fa-arrows\"></span> <span class=\"fa fa-arrows-h\"></span>";
 		default:
 			return "all";
 		}
@@ -1106,6 +1123,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		switch (format) {
 		case LATEX:
 			return "\\scalebox{0.6}[1.0]{$\\square$}\\,$\\square$";
+		case HTMLTABLE:
+			return "<span class=\"fa fa-arrows-v\"></span> <span class=\"fa fa-arrows\"></span>";
 		default:
 			return "square, tall";
 		}
@@ -1115,6 +1134,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		switch (format) {
 		case LATEX:
 			return "$\\square$";
+		case HTMLTABLE:
+			return "<span class=\"fa fa-arrows\"></span>";
 		default:
 			return "square";
 		}
@@ -1124,6 +1145,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		switch (format) {
 		case LATEX:
 			return "$\\tall$";
+		case HTMLTABLE:
+			return "<span class=\"fa fa-arrows-v\"></span>";
 		default:
 			return "tall";
 		}
@@ -1133,6 +1156,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		switch (format) {
 		case LATEX:
 			return "$\\fat$";
+		case HTMLTABLE:
+			return "<span class=\"fa fa-arrows-h\"></span>";
 		default:
 			return "fat";
 		}
@@ -1152,18 +1177,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		case LATEX:
 			return "\\bf{$-$}";
 		case HTMLTABLE:
-			return "<span class=\"text-danger glyphicon glyphicon-minus-sign\"></span>";
+			return "<span class=\"text-danger fa fa-minus-square\"></span>";
 		case HTMLLIST:
 			return "no";
 		default:
 			return "no";
-		}
-	}
-
-	public String unknown() {
-		switch (format) {
-		default:
-			return "?";
 		}
 	}
 
@@ -1178,7 +1196,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		}
 	}
 
-	public String turn(String text) {
+	public String rotate(String text) {
 		switch (format) {
 		case LATEX:
 			return "\\begin{turn}{90}" + text + "\\end{turn}";
@@ -1208,6 +1226,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 				footnotes.add(f);
 			}
 			return "$^{\\mathrm{" + footnote + "}}$";
+		case HTMLTABLE:
+			return "";
 		default:
 			f = footnote + " " + text;
 			if (!footnotes.contains(f)) {
@@ -1222,7 +1242,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String s = new MatrixLibraries(MatrixLibrariesFormat.HTMLLIST).getHtmlList();
+		String s = new MatrixLibraries(MatrixLibrariesFormat.HTMLTABLE).getHtmlTable();
 		System.out.println(s);
 	}
 
@@ -1268,25 +1288,57 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		System.out.println(s);
 	}
 
+	public String getHtmlTable() {
+		StringBuilder s = new StringBuilder();
+		s.append("<div class=\"table-responsive\" style=\"overflow-x: scroll;\">\n");
+		s.append("<table class=\"text-center table table-striped table-hover table-condensed\">\n");
+		s.append("<tbody>\n");
+
+		s.append("<tr>\n");
+		s.append("<th>\n");
+		s.append("</th>\n");
+		for (int c = 0; c < getColumnCount(); c++) {
+			String label = getColumnLabel(c);
+			s.append("<th class=\"text-center\">" + label + "</th>\n");
+		}
+		s.append("</tr>\n");
+
+		for (int r = 0; r < getRowCount(); r++) {
+			s.append("<tr>\n");
+			String feature = getRowLabel(r);
+			s.append("<th>" + feature + "</th>\n");
+			for (int c = 0; c < getColumnCount(); c++) {
+				String result = getString(r, c);
+				s.append("<td>" + result + "</td>\n");
+			}
+			s.append("</tr>\n");
+		}
+		s.append("</tbody>\n");
+		s.append("</table>\n");
+		s.append("</div>\n");
+		return s.toString();
+	}
+
 	public String getHtmlList() {
 		StringBuilder s = new StringBuilder();
-		for (int c = 1; c < getColumnCount(); c++) {
+		for (int c = 0; c < getColumnCount(); c++) {
+			String label = getColumnLabel(c);
 			s.append("<h2>");
-			s.append(getString(0, c));
+			s.append(label);
 			s.append("</h2>\n");
-			s.append("<p>These are the features of the <strong>" + getString(0, c)
-					+ "</strong> library:</p>");
+			s.append("<p>These are the features of the <strong>" + label + "</strong> library:</p>");
 			s.append("<ul>\n");
-			for (int r = 1; r < getRowCount(); r++) {
+			for (int r = 0; r < getRowCount(); r++) {
+				String feature = getRowLabel(r);
 				String result = getString(r, c);
 				if ("no".equals(result)) {
 				} else if ("yes".equals(result)) {
-					s.append("<li>" + getString(0, c) + " ");
-					s.append(getString(r, 0));
+					s.append("<li>" + label + " ");
+					s.append(feature);
 					s.append("</li>\n");
 				} else if (!"no".equals(result)) {
-					s.append("<li>" + getString(0, c) + " ");
-					s.append(getString(r, 0) + ": ");
+					s.append("<li>" + label + " ");
+					s.append(feature + ": ");
 					s.append(getString(r, c));
 					s.append("</li>\n");
 				}

@@ -55,7 +55,7 @@ public abstract class AbstractMatrixTest {
 	private static final String SQUARE = LIBRARIES.square();
 	private static final String TALL = LIBRARIES.tall();
 	private static final String FAT = LIBRARIES.fat();
-	private static final String YES = LIBRARIES.yes();
+	private static final String ALL = LIBRARIES.all();
 
 	public enum MatrixLayout {
 		SQUARE, FAT, TALL
@@ -2370,17 +2370,17 @@ public abstract class AbstractMatrixTest {
 		String supported = LIBRARIES.getAsString(feature, col);
 
 		if (MatrixLayout.FAT.equals(layout)) {
-			if (!supported.contains(YES) && !supported.contains(FAT)) {
+			if (!supported.startsWith(ALL) && !supported.contains(FAT)) {
 				return false;
 			}
 		}
 		if (MatrixLayout.TALL.equals(layout)) {
-			if (!supported.contains(YES) && !supported.contains(TALL)) {
+			if (!supported.startsWith(ALL) && !supported.contains(TALL)) {
 				return false;
 			}
 		}
 		if (MatrixLayout.SQUARE.equals(layout)) {
-			if (!supported.contains(YES) && !supported.contains(SQUARE)) {
+			if (!supported.startsWith(ALL) && !supported.contains(SQUARE)) {
 				return false;
 			} else if (EntryType.SINGULAR.equals(generator)
 					&& supported.contains(MatrixLibraries.NONSINGULARTEXT)) {

@@ -25,7 +25,6 @@ package org.ujmp.core.bytematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 	private static final long serialVersionUID = 1111734188254187991L;
@@ -104,10 +103,6 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 			}
 		}
 		return new ArrayDenseByteMatrix2D(result);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

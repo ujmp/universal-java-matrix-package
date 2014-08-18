@@ -46,6 +46,10 @@ public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMat
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
 	}
 
+	public abstract Object getObject(long row, long column);
+
+	public abstract void setObject(Object value, long row, long column);
+
 	public final int getDimensionCount() {
 		return 2;
 	}

@@ -51,8 +51,4 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 		return ValueType.OBJECT;
 	}
 
-	public DefaultSparseObjectMatrixFactory getFactory() {
-		return Factory;
-	}
-
 }

@@ -26,8 +26,6 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorDoubleArray1D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
-import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasColumnMajorDoubleArray1D {
@@ -130,21 +128,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 
 	public final double[] getColumnMajorDoubleArray1D() {
 		return values;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return new BaseMatrixFactory<DefaultDenseDoubleMatrix2D>() {
-
-			public DefaultDenseDoubleMatrix2D zeros(long rows, long columns) {
-				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(rows),
-						MathUtil.longToInt(columns));
-			}
-
-			public DefaultDenseDoubleMatrix2D zeros(long... size) {
-				return new DefaultDenseDoubleMatrix2D(MathUtil.longToInt(size[ROW]),
-						MathUtil.longToInt(size[COLUMN]));
-			}
-		};
 	}
 
 }

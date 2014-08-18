@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implements
 		HasRowMajorDoubleArray2D {
@@ -130,7 +129,4 @@ public class ArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return values;
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

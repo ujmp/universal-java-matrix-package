@@ -23,13 +23,12 @@
 
 package org.ujmp.core.booleanmatrix;
 
-import org.ujmp.core.booleanmatrix.factory.BooleanMatrix2DFactory;
 import org.ujmp.core.booleanmatrix.factory.DefaultBooleanMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface BooleanMatrix2D extends BooleanMatrix, GenericMatrix2D<Boolean> {
 
-	public static BooleanMatrix2DFactory factory = new DefaultBooleanMatrix2DFactory();
+	public static DefaultBooleanMatrix2DFactory Factory = new DefaultBooleanMatrix2DFactory();
 
 	public boolean getBoolean(long row, long column);
 

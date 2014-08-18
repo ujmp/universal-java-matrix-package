@@ -36,7 +36,6 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.VerifyUtil;
-import org.ujmp.core.util.concurrent.PFor;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 
 public class TimesMatrix {

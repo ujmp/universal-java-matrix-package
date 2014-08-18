@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorCharArray1D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implements
 		HasColumnMajorCharArray1D {
@@ -153,10 +152,6 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 
 	public char[] getColumnMajorCharArray1D() {
 		return values;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

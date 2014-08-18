@@ -29,9 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D<E> implements
@@ -157,10 +155,6 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 			}
 		}
 		return ret;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new UnsupportedOperationException();
 	}
 
 	public Iterator<E> iterator() {

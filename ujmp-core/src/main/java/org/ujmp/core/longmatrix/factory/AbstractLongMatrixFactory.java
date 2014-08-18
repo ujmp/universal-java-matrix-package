@@ -28,6 +28,5 @@ import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
 public abstract class AbstractLongMatrixFactory<T extends LongMatrix> extends
 		AbstractMatrixFactory<T> implements LongMatrixFactory<T> {
-	private static final long serialVersionUID = -754452775136638039L;
 
 }

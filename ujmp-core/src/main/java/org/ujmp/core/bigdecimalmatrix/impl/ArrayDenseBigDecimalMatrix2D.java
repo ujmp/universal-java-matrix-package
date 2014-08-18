@@ -28,7 +28,6 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = 5701752483223767209L;
@@ -100,10 +99,6 @@ public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2
 
 	public void setBigDecimal(BigDecimal value, int row, int column) {
 		values[row][column] = value;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

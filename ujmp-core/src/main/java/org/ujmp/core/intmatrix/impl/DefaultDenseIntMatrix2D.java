@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasIntArray;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements HasIntArray {
 	private static final long serialVersionUID = 2911903176935762073L;
@@ -152,10 +151,6 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 
 	public int[] getIntArray() {
 		return values;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

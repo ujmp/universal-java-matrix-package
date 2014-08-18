@@ -21,15 +21,14 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.longmatrix.factory;
+package org.ujmp.core.text;
 
-import org.ujmp.core.longmatrix.SparseLongMatrix2D;
+import org.ujmp.core.listmatrix.ListMatrix;
 
-public class DefaultSparseLongMatrix2DFactory extends
-		AbstractSparseLongMatrix2DFactory<SparseLongMatrix2D> {
+public interface TextBlock extends ListMatrix<TextSentence> {
 
-	public SparseLongMatrix2D zeros(long rows, long cols) {
-		throw new RuntimeException("not implemented");
-	}
+	public String toJson();
+
+	public boolean setTag(String token, String tag);
 
 }

@@ -23,10 +23,8 @@
 
 package org.ujmp.core.charmatrix.impl;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.calculation.CharCalculation;
 import org.ujmp.core.charmatrix.stub.AbstractCharMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class CharCalculationMatrix extends AbstractCharMatrix {
 	private static final long serialVersionUID = -5805683275067052860L;
@@ -64,10 +62,6 @@ public class CharCalculationMatrix extends AbstractCharMatrix {
 
 	public void setChar(char value, long... coordinates) {
 		calculation.setChar(value, coordinates);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public final boolean isSparse() {

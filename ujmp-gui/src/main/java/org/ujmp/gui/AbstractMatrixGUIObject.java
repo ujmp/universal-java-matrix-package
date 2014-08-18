@@ -28,7 +28,6 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
-import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Coordinates;
@@ -38,7 +37,6 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.gui.frame.MatrixFrame;
 import org.ujmp.gui.panels.MatrixPanel;
 import org.ujmp.gui.table.FastListSelectionModel64;
-import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
 
 public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implements MatrixGUIObject {
@@ -86,8 +84,6 @@ public abstract class AbstractMatrixGUIObject extends AbstractGUIObject implemen
 	public final void removeTableModelListener(final TableModelListener l) {
 		getListenerList().remove(TableModelListener.class, l);
 	}
-
-	
 
 	public final FastListSelectionModel64 getColumnSelectionModel() {
 		if (columnSelectionModel == null) {

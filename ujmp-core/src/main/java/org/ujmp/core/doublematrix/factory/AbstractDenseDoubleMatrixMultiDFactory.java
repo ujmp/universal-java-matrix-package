@@ -28,7 +28,6 @@ import org.ujmp.core.matrix.factory.AbstractMatrixFactory;
 
 public abstract class AbstractDenseDoubleMatrixMultiDFactory<T extends DenseDoubleMatrixMultiD>
 		extends AbstractMatrixFactory<T> implements DenseDoubleMatrixMultiDFactory<T> {
-	private static final long serialVersionUID = -5255187567566478335L;
 
 	public T zeros(long rows, long columns) {
 		return zeros(new long[] { rows, columns });

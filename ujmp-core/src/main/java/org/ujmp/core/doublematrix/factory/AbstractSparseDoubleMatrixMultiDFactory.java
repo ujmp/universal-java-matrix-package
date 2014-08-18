@@ -28,7 +28,6 @@ import org.ujmp.core.doublematrix.SparseDoubleMatrixMultiD;
 
 public abstract class AbstractSparseDoubleMatrixMultiDFactory<T extends SparseDoubleMatrixMultiD>
 		implements SparseDoubleMatrixMultiDFactory<T> {
-	private static final long serialVersionUID = 4895354326194628354L;
 
 	public final T rand(final long... size) {
 		final T m = zeros(size);

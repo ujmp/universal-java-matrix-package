@@ -31,8 +31,6 @@ import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.filematrix.FileFormat;
-import org.ujmp.core.objectmatrix.ObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.ObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.io.FileUtil;
@@ -122,10 +120,6 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 
 	public long[] getSize() {
 		return getMatrix().getSize();
-	}
-
-	public ObjectMatrixFactory<? extends ObjectMatrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -190,17 +190,20 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 			DenseMatrix a = matrix;
 			DenseMatrix b = ((MTJDenseDoubleMatrix2D) m2).getWrappedObject();
 			DenseMatrix c = new DenseMatrix(a.numRows(), b.numColumns());
-			try {
-				a.mult(b, c);
-				return new MTJDenseDoubleMatrix2D(c);
-			} catch (Exception e) {
-				// sometimes BLAS cannot be found. Don't know why. Use direct
-				// method instead.
-				double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix) c).getData();
-				org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(), c.numColumns(), a.numColumns(), 1, a.getData(), 0,
-						Math.max(1, a.numRows()), Bd, 0, Math.max(1, b.numRows()), 1, Cd, 0, Math.max(1, c.numRows()));
-				return new MTJDenseDoubleMatrix2D(c);
-			}
+			// try {
+			a.mult(b, c);
+			return new MTJDenseDoubleMatrix2D(c);
+			// } catch (Exception e) {
+			// // sometimes BLAS cannot be found. Don't know why. Use direct
+			// // method instead.
+			// double[] Bd = ((DenseMatrix) b).getData(), Cd = ((DenseMatrix)
+			// c).getData();
+			// org.netlib.blas.Dgemm.dgemm("N", "N", c.numRows(),
+			// c.numColumns(), a.numColumns(), 1, a.getData(), 0,
+			// Math.max(1, a.numRows()), Bd, 0, Math.max(1, b.numRows()), 1, Cd,
+			// 0, Math.max(1, c.numRows()));
+			// return new MTJDenseDoubleMatrix2D(c);
+			// }
 		}
 		return super.mtimes(m2);
 	}

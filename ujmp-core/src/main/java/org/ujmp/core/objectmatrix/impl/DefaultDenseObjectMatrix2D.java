@@ -25,10 +25,7 @@ package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasObjectArray;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
-import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D implements
 		HasObjectArray {
@@ -125,21 +122,6 @@ public class DefaultDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D impl
 
 	public Object[] getObjectArray() {
 		return values;
-	}
-
-	public DenseObjectMatrix2DFactory<DenseObjectMatrix2D> getFactory() {
-		return new DenseObjectMatrix2DFactory<DenseObjectMatrix2D>() {
-
-			public DenseObjectMatrix2D zeros(long... size) {
-				return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(size[ROW]),
-						MathUtil.longToInt(size[COLUMN]));
-			}
-
-			public DenseObjectMatrix2D zeros(long rows, long cols) {
-				return new DefaultDenseObjectMatrix2D(MathUtil.longToInt(rows),
-						MathUtil.longToInt(cols));
-			}
-		};
 	}
 
 }

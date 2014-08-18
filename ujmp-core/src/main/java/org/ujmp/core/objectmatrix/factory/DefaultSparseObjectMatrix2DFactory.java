@@ -30,7 +30,6 @@ import org.ujmp.core.objectmatrix.impl.DefaultSparseRowObjectMatrix2D;
 
 public class DefaultSparseObjectMatrix2DFactory extends AbstractMatrixFactory<SparseObjectMatrix2D>
 		implements SparseObjectMatrix2DFactory<SparseObjectMatrix2D> {
-	private static final long serialVersionUID = -5593278693528246537L;
 
 	public SparseObjectMatrix2D zeros(long rows, long columns) {
 		return new DefaultSparseRowObjectMatrix2D(rows, columns);

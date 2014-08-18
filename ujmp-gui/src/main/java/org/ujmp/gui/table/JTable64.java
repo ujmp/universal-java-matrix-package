@@ -55,6 +55,7 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	}
 
 	// do not set widths from preferred sizes
+	@SuppressWarnings("deprecation")
 	public void doLayout() {
 		layout();
 	}

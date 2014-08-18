@@ -31,7 +31,6 @@ import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseObjectMatrixFactory extends AbstractMatrixFactory<DenseObjectMatrix>
 		implements DenseObjectMatrixFactory<DenseObjectMatrix> {
-	private static final long serialVersionUID = 2613102688458521347L;
 
 	public DenseObjectMatrix zeros(long... size) {
 		return new DefaultDenseObjectMatrixMultiD(size);

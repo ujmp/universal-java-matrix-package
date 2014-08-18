@@ -26,9 +26,7 @@ package org.ujmp.core.util.matrices;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.AbstractPlugin;
@@ -155,10 +153,6 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 
 	public long[] getSize() {
 		return matrix.getSize();
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

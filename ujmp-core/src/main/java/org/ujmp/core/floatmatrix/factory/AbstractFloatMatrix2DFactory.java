@@ -23,7 +23,8 @@
 
 package org.ujmp.core.floatmatrix.factory;
 
-public abstract class AbstractFloatMatrix2DFactory implements FloatMatrix2DFactory {
-	private static final long serialVersionUID = 6436157519292393559L;
+import org.ujmp.core.floatmatrix.FloatMatrix2D;
+
+public abstract class AbstractFloatMatrix2DFactory implements FloatMatrix2DFactory<FloatMatrix2D> {
 
 }

@@ -27,9 +27,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.ujmp.core.DenseMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
-
 public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 	private static final long serialVersionUID = -5487932797086214329L;
 
@@ -56,10 +53,6 @@ public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 
 	public Set<A> getSet() {
 		return set;
-	}
-
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -31,7 +31,6 @@ import java.util.TreeSet;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements Flushable {
@@ -208,10 +207,6 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 
 	public boolean isReadOnly() {
 		return original.isReadOnly();
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

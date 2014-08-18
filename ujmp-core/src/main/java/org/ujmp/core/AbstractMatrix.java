@@ -154,6 +154,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 import org.ujmp.core.longmatrix.calculation.ToLongMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
+import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.ObjectMatrix;
 import org.ujmp.core.objectmatrix.calculation.Bootstrap;
 import org.ujmp.core.objectmatrix.calculation.Concatenation;
@@ -233,6 +234,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			verifyTrue(size[i] >= 0, "coordinates must be positive");
 		}
 		id = runningId++;
+	}
+
+	public BaseMatrixFactory<? extends Matrix> getFactory() {
+		return Matrix.Factory;
 	}
 
 	public Iterable<long[]> allCoordinates() {

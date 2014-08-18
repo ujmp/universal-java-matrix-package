@@ -23,13 +23,12 @@
 
 package org.ujmp.core.charmatrix;
 
-import org.ujmp.core.charmatrix.factory.CharMatrix2DFactory;
 import org.ujmp.core.charmatrix.factory.DefaultCharMatrix2DFactory;
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 
 public interface CharMatrix2D extends CharMatrix, GenericMatrix2D<Character> {
 
-	public static CharMatrix2DFactory factory = new DefaultCharMatrix2DFactory();
+	public static DefaultCharMatrix2DFactory Factory = new DefaultCharMatrix2DFactory();
 
 	public char getChar(long row, long column);
 

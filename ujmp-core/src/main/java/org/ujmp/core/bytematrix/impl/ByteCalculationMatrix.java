@@ -23,10 +23,8 @@
 
 package org.ujmp.core.bytematrix.impl;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.calculation.ByteCalculation;
 import org.ujmp.core.bytematrix.stub.AbstractByteMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ByteCalculationMatrix extends AbstractByteMatrix {
 	private static final long serialVersionUID = -3785334852900492609L;
@@ -66,10 +64,6 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		calculation.setByte(value, coordinates);
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
-	
 	public final boolean isSparse() {
 		return false;
 	}

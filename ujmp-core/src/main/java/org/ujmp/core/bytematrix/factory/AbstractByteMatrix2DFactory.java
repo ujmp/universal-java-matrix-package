@@ -23,7 +23,8 @@
 
 package org.ujmp.core.bytematrix.factory;
 
-public abstract class AbstractByteMatrix2DFactory implements ByteMatrix2DFactory {
-	private static final long serialVersionUID = 13096319761586457L;
+import org.ujmp.core.bytematrix.ByteMatrix2D;
+
+public abstract class AbstractByteMatrix2DFactory implements ByteMatrix2DFactory<ByteMatrix2D> {
 
 }

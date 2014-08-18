@@ -23,9 +23,7 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class RandomSeedMatrix extends AbstractDenseLongMatrix2D {
@@ -54,10 +52,6 @@ public class RandomSeedMatrix extends AbstractDenseLongMatrix2D {
 
 	public void setLong(long value, int row, int column) {
 		MathUtil.setSeed(value);
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

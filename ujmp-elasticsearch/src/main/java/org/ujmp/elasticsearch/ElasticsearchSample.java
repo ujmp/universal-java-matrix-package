@@ -27,9 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = -9091555583281035794L;
@@ -48,10 +46,6 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
 		this.elasticsearchIndex = elasticsearchIndex;
 		this.map = source;
-	}
-
-	public final BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public int size() {

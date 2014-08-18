@@ -33,8 +33,6 @@ import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.composite.SortedListSet;
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 
 public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
@@ -237,10 +235,6 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 		} else {
 			return timestampsListSet.last();
 		}
-	}
-
-	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

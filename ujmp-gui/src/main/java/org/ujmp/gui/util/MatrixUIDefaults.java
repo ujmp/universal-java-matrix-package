@@ -33,6 +33,8 @@ public class MatrixUIDefaults extends DefaultMapMatrix<Object, Object> {
 	public MatrixUIDefaults() {
 		super(UIManager.getDefaults());
 		setLabel("UI Defaults");
+		setColumnLabel(0, "Property");
+		setColumnLabel(1, "Value");
 	}
 
 }

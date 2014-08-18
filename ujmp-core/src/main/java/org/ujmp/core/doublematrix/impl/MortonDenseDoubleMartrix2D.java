@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
@@ -181,10 +180,6 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 			TABLE1[i] = v;
 			v = (v + ONES1P1) & ONES0;
 		}
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

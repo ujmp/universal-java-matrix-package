@@ -30,7 +30,21 @@ import org.ujmp.core.util.UJMPSettings;
 public class LocalhostMatrix extends RemoteHostMatrix {
 	private static final long serialVersionUID = 5276053410827939716L;
 
-	public LocalhostMatrix() {
+	private static final Object lock = new Object();
+	private static LocalhostMatrix instance = null;
+
+	public static final LocalhostMatrix getInstance() {
+		if (instance == null) {
+			synchronized (lock) {
+				if (instance == null) {
+					instance = new LocalhostMatrix();
+				}
+			}
+		}
+		return instance;
+	}
+
+	private LocalhostMatrix() {
 		super("localhost");
 		put("Available Processors", Matrix.Factory.availableProcessors());
 		put("Memory Usage", Matrix.Factory.memoryUsage());
@@ -40,6 +54,7 @@ public class LocalhostMatrix extends RemoteHostMatrix {
 		put("System Time", Matrix.Factory.systemTime());
 		put("UJMP Settings", UJMPSettings.getInstance());
 		put("File System", new DirectoryMatrix());
+		put("Network", NetworkMatrix.getInstance());
 	}
 
 }

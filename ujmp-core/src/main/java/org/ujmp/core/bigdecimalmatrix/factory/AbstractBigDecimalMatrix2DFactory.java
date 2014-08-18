@@ -23,7 +23,9 @@
 
 package org.ujmp.core.bigdecimalmatrix.factory;
 
-public abstract class AbstractBigDecimalMatrix2DFactory implements BigDecimalMatrix2DFactory {
-	private static final long serialVersionUID = -4698973753319211706L;
+import org.ujmp.core.bigdecimalmatrix.BigDecimalMatrix2D;
+
+public abstract class AbstractBigDecimalMatrix2DFactory implements
+		BigDecimalMatrix2DFactory<BigDecimalMatrix2D> {
 
 }

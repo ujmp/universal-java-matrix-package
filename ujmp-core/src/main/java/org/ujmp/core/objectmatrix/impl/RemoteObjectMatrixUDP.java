@@ -32,8 +32,6 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.ujmp.core.objectmatrix.DenseObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 
 public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
@@ -143,10 +141,6 @@ public class RemoteObjectMatrixUDP extends AbstractDenseObjectMatrix {
 	}
 
 	public void setObject(Object o, long... coordinates) {
-		throw new RuntimeException("not implemented");
-	}
-
-	public DenseObjectMatrixFactory<? extends DenseObjectMatrix> getFactory() {
 		throw new RuntimeException("not implemented");
 	}
 

@@ -27,16 +27,13 @@ import org.ujmp.core.longmatrix.DenseLongMatrix;
 
 public class DefaultDenseLongMatrixFactory extends AbstractDenseLongMatrixFactory<DenseLongMatrix>
 		implements DenseLongMatrixFactory<DenseLongMatrix> {
-	private static final long serialVersionUID = -4743951424488821970L;
 
 	public DenseLongMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public DenseLongMatrix zeros(long rows, long columns) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 }

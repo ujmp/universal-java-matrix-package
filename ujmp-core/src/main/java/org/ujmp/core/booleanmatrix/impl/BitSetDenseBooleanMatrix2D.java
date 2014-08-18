@@ -25,9 +25,7 @@ package org.ujmp.core.booleanmatrix.impl;
 
 import java.util.BitSet;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private static final long serialVersionUID = -6441956386757378833L;
@@ -61,10 +59,6 @@ public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 
 	public long[] getSize() {
 		return new long[] { rows, columns };
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

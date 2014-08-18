@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -2990811989700739834L;
@@ -128,10 +127,6 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 
 	public void setDouble(double value, int row, int column) {
 		setDouble(value, (long) row, (long) column);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 	public boolean contains(long... coordinates) {

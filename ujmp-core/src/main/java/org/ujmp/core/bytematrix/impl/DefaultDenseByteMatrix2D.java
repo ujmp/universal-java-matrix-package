@@ -23,12 +23,10 @@
 
 package org.ujmp.core.bytematrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bytematrix.stub.AbstractDenseByteMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasColumnMajorByteArray1D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implements
@@ -155,10 +153,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 
 	public byte[] getColumnMajorByteArray1D() {
 		return values;
-	}
-
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

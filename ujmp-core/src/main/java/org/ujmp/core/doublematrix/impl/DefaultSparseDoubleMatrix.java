@@ -27,7 +27,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.SparseDoubleMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double> implements
@@ -56,19 +55,6 @@ public class DefaultSparseDoubleMatrix extends DefaultSparseGenericMatrix<Double
 
 	public void setDouble(double value, long... coordinates) {
 		setObject(value, coordinates);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return new BaseMatrixFactory<Matrix>() {
-
-			public Matrix zeros(long rows, long columns) {
-				return new DefaultSparseDoubleMatrix(rows, columns);
-			}
-
-			public Matrix zeros(long... size) {
-				return new DefaultSparseDoubleMatrix(size);
-			}
-		};
 	}
 
 }

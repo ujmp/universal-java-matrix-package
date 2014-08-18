@@ -33,9 +33,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.util.JMathLib;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
+import org.ujmp.core.util.matrices.FileFormatMatrix;
+import org.ujmp.core.util.matrices.LocalhostMatrix;
 import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MemoryUsageMatrix;
 import org.ujmp.core.util.matrices.RandomSeedMatrix;
@@ -54,9 +55,10 @@ public class UJMPToolsMenu extends JMenu {
 		super("Tools");
 		setMnemonic(KeyEvent.VK_T);
 		add(new JMenuItem(new ShowInFrameAction(component, "UJMP Plugins", UJMPPluginsMatrix.class)));
+		add(new LocalhostAction());
 		add(new MatrixLibrariesAction());
 		add(new JSeparator());
-		add(new JMenuItem(new ShowInFrameAction(component, "Supported File Formats", FileFormat.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Supported File Formats", FileFormatMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "System Properties", SystemPropertiesMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "System Environment", SystemEnvironmentMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "UI Defaults", MatrixUIDefaults.class)));
@@ -96,6 +98,19 @@ public class UJMPToolsMenu extends JMenu {
 
 		public void actionPerformed(ActionEvent e) {
 			new MatrixLibraries().showGUI();
+		}
+	}
+
+	class LocalhostAction extends AbstractAction {
+		private static final long serialVersionUID = 1730034739534995562L;
+
+		public LocalhostAction() {
+			putValue(Action.NAME, "Localhost");
+			putValue(Action.SHORT_DESCRIPTION, "Show data on localhost");
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			LocalhostMatrix.getInstance().showGUI();
 		}
 	}
 }

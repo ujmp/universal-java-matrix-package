@@ -23,9 +23,7 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -84,10 +82,6 @@ public class ArrayDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 	public void setString(String value, long row, long column) {
 		values[(int) row][(int) column] = value;
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

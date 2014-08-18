@@ -24,8 +24,6 @@
 package org.ujmp.core.objectmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public class ArrayDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
@@ -87,10 +85,6 @@ public class ArrayDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 
 	public void setObject(Object value, int row, int column) {
 		values[row][column] = value;
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

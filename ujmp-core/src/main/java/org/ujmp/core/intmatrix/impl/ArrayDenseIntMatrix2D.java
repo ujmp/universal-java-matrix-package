@@ -24,11 +24,9 @@
 package org.ujmp.core.intmatrix.impl;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3331102463077119410L;
@@ -228,7 +226,4 @@ public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		return false;
 	}
 
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

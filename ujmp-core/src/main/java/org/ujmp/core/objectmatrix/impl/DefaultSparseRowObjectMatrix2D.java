@@ -32,8 +32,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -169,19 +167,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.rows = object;
-	}
-
-	public SparseObjectMatrix2DFactory<? extends SparseObjectMatrix2D> getFactory() {
-		return new SparseObjectMatrix2DFactory<SparseObjectMatrix2D>() {
-
-			public SparseObjectMatrix2D zeros(long... size) {
-				return new DefaultSparseRowObjectMatrix2D(size[ROW], size[COLUMN]);
-			}
-
-			public SparseObjectMatrix2D zeros(long rows, long cols) {
-				return new DefaultSparseRowObjectMatrix2D(rows, cols);
-			}
-		};
 	}
 
 }

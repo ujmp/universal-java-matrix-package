@@ -31,9 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.ujmp.core.SparseMatrix2D;
 import org.ujmp.core.collections.map.SoftHashMap;
-import org.ujmp.core.matrix.factory.SparseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractSparseStringMatrix2D;
 import org.ujmp.core.util.io.IntelligentFileReader;
 import org.ujmp.core.util.io.SeekableLineInputStream;
@@ -190,10 +188,6 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		public void remove() {
 		}
 
-	}
-
-	public SparseMatrix2DFactory<? extends SparseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

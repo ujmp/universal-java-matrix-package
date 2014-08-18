@@ -23,8 +23,20 @@
 
 package org.ujmp.core.text;
 
-public interface TextToken {
+import org.ujmp.core.mapmatrix.MapMatrix;
+
+public interface TextToken extends MapMatrix<String, Object> {
+
+	public static final String TOKEN = "Token";
+	public static final String TAG = "Tag";
+	public static final String NOTAG = "n/a";
 
 	public String toJson();
+
+	public String getText();
+
+	public String getTag();
+
+	public void setTag(String tag);
 
 }

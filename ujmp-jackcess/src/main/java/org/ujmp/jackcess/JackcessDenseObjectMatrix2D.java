@@ -32,8 +32,6 @@ import java.util.List;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -163,7 +161,4 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 		database.close();
 	}
 
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		return null;
-	}
 }

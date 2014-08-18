@@ -31,6 +31,8 @@ public class SystemPropertiesMatrix extends DefaultMapMatrix<Object, Object> {
 	public SystemPropertiesMatrix() {
 		super(System.getProperties());
 		setLabel("System Properties");
+		setColumnLabel(0, "Property");
+		setColumnLabel(1, "Value");
 	}
 
 }

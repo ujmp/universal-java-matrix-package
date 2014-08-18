@@ -23,7 +23,9 @@
 
 package org.ujmp.core.stringmatrix.factory;
 
-public abstract class AbstractStringMatrix2DFactory implements StringMatrix2DFactory {
-	private static final long serialVersionUID = 1205582021793204788L;
+import org.ujmp.core.stringmatrix.StringMatrix2D;
+
+public abstract class AbstractStringMatrix2DFactory implements
+		StringMatrix2DFactory<StringMatrix2D> {
 
 }

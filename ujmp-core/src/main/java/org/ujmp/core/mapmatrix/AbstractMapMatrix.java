@@ -33,9 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.list.FastArrayList;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -67,10 +65,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		} else {
 			return null;
 		}
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")

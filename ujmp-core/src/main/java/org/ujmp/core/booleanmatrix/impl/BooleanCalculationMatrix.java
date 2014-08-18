@@ -23,10 +23,8 @@
 
 package org.ujmp.core.booleanmatrix.impl;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.calculation.BooleanCalculation;
 import org.ujmp.core.booleanmatrix.stub.AbstractBooleanMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 	private static final long serialVersionUID = -1715191697761017770L;
@@ -66,10 +64,6 @@ public class BooleanCalculationMatrix extends AbstractBooleanMatrix {
 		calculation.setBoolean(value, coordinates);
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
-	
 	public final boolean isSparse() {
 		return false;
 	}

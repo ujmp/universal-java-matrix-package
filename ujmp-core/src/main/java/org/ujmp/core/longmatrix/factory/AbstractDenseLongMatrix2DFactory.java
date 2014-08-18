@@ -27,6 +27,5 @@ import org.ujmp.core.longmatrix.DenseLongMatrix2D;
 
 public abstract class AbstractDenseLongMatrix2DFactory<T extends DenseLongMatrix2D> extends
 		AbstractLongMatrix2DFactory<T> implements DenseLongMatrix2DFactory<T> {
-	private static final long serialVersionUID = 8651151399048101838L;
 
 }

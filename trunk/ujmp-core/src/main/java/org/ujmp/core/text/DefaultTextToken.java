@@ -25,13 +25,23 @@ package org.ujmp.core.text;
 
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 
-public class DefaultTextToken extends DefaultMapMatrix<String, Object> {
-
+public class DefaultTextToken extends DefaultMapMatrix<String, Object> implements TextToken {
 	private static final long serialVersionUID = 2168924027244676193L;
 
+	private static int tokenId = 1;
+
+	public DefaultTextToken(String id, String tokenText, String tag) {
+		put(ID, id);
+		put(TOKEN, tokenText);
+		put(TAG, tag);
+	}
+
+	public DefaultTextToken(String tokenText, String tag) {
+		this("Token" + (tokenId++), tokenText, tag);
+	}
+
 	public DefaultTextToken(String tokenText) {
-		put("Token", tokenText);
-		put("Tag", "unknown");
+		this(tokenText, NOTAG);
 	}
 
 	public String toJson() {
@@ -61,6 +71,18 @@ public class DefaultTextToken extends DefaultMapMatrix<String, Object> {
 		string = string.replace("\\", "\\\\");
 		string = string.replace("\"", "\\\"");
 		return string;
+	}
+
+	public String getText() {
+		return String.valueOf(get(TOKEN));
+	}
+
+	public String getTag() {
+		return String.valueOf(get(TAG));
+	}
+
+	public void setTag(String tag) {
+		put(TAG, tag);
 	}
 
 }

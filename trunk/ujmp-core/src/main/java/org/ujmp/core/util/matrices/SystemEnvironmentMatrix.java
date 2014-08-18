@@ -31,6 +31,8 @@ public class SystemEnvironmentMatrix extends DefaultMapMatrix<String, String> {
 	public SystemEnvironmentMatrix() {
 		super(System.getenv());
 		setLabel("System Environment");
+		setColumnLabel(0, "Property");
+		setColumnLabel(1, "Value");
 	}
 
 	public boolean isReadOnly() {

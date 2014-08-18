@@ -23,10 +23,8 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasStringArray;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
@@ -125,21 +123,6 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 
 	public String[] getStringArray() {
 		return values;
-	}
-
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		return new DenseMatrix2DFactory<DenseMatrix2D>() {
-
-			public DenseMatrix2D zeros(long rows, long cols) {
-				return new DefaultDenseStringMatrix2D(MathUtil.longToInt(rows),
-						MathUtil.longToInt(cols));
-			}
-
-			public DenseMatrix2D zeros(long... size) {
-				return new DefaultDenseStringMatrix2D(MathUtil.longToInt(size[ROW]),
-						MathUtil.longToInt(size[COLUMN]));
-			}
-		};
 	}
 
 }

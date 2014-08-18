@@ -24,12 +24,11 @@
 package org.ujmp.core.bigintegermatrix;
 
 import org.ujmp.core.DenseMatrix2D;
-import org.ujmp.core.bigintegermatrix.factory.BigIntegerMatrix2DFactory;
 import org.ujmp.core.bigintegermatrix.factory.DefaultBigIntegerMatrix2DFactory;
 
 public interface DenseBigIntegerMatrix2D extends BigIntegerMatrix2D, DenseBigIntegerMatrix,
 		DenseMatrix2D {
 
-	public static BigIntegerMatrix2DFactory Factory = new DefaultBigIntegerMatrix2DFactory();
+	public static DefaultBigIntegerMatrix2DFactory Factory = new DefaultBigIntegerMatrix2DFactory();
 
 }

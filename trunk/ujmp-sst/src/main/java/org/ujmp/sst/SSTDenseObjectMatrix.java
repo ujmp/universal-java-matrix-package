@@ -26,7 +26,6 @@ package org.ujmp.sst;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.MathUtil;
 
@@ -74,10 +73,6 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object> imp
 
 	public ObjectArray<Object> getWrappedObject() {
 		return data;
-	}
-
-	public DenseMatrixFactory<SSTDenseObjectMatrix> getFactory() {
-		return null;
 	}
 
 }

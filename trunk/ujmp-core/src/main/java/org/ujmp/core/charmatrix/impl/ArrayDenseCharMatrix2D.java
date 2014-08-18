@@ -25,7 +25,6 @@ package org.ujmp.core.charmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.charmatrix.stub.AbstractDenseCharMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 	private static final long serialVersionUID = -172129670809500830L;
@@ -104,10 +103,6 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 			}
 		}
 		return new ArrayDenseCharMatrix2D(result);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

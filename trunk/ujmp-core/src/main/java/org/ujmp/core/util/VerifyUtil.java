@@ -25,8 +25,6 @@ package org.ujmp.core.util;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 import org.ujmp.core.Matrix;
 

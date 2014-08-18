@@ -30,7 +30,6 @@ import java.io.ObjectOutputStream;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix;
-import org.ujmp.core.matrix.factory.DenseMatrixFactory;
 import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.MathUtil;
 
@@ -89,10 +88,6 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements Wrapper
 
 	public IntegerArray getWrappedObject() {
 		return data;
-	}
-
-	public DenseMatrixFactory<SSTDenseIntMatrix> getFactory() {
-		return null;
 	}
 
 }

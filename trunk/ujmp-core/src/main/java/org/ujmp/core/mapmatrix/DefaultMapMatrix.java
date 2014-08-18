@@ -27,9 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
-
 public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 	private static final long serialVersionUID = -1764575977190231155L;
 
@@ -41,10 +38,6 @@ public class DefaultMapMatrix<K, V> extends AbstractMapMatrix<K, V> {
 
 	public DefaultMapMatrix(Map<K, V> map) {
 		this.map = map;
-	}
-
-	public final BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public int size() {

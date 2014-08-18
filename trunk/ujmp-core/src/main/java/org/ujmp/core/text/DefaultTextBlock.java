@@ -23,10 +23,28 @@
 
 package org.ujmp.core.text;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 
-public class DefaultTextBlock extends DefaultListMatrix<DefaultTextSentence> {
+public class DefaultTextBlock extends DefaultListMatrix<TextSentence> implements TextBlock {
 	private static final long serialVersionUID = -8988613694606138950L;
+
+	private static int textBlockId = 1;
+
+	public DefaultTextBlock(TextSentence... textSentences) {
+		this(Arrays.asList(textSentences));
+	}
+
+	public DefaultTextBlock(Collection<TextSentence> textSentences) {
+		setMetaData(ID, "TextBlock" + (textBlockId++));
+		addAll(textSentences);
+	}
+
+	public DefaultTextBlock(String text) {
+		this(TextUtil.convertToTextBlockToSentences(text));
+	}
 
 	public String toJson() {
 		StringBuilder sb = new StringBuilder();
@@ -43,7 +61,7 @@ public class DefaultTextBlock extends DefaultListMatrix<DefaultTextSentence> {
 		sb.append("  \"Sentences\":\n");
 		sb.append("  [\n");
 		int i = 0;
-		for (DefaultTextSentence sentence : this) {
+		for (TextSentence sentence : this) {
 			sb.append(sentence.toJson());
 			if (i++ < size() - 1) {
 				sb.append(",\n");
@@ -52,6 +70,18 @@ public class DefaultTextBlock extends DefaultListMatrix<DefaultTextSentence> {
 		sb.append("\n  ]\n");
 		sb.append("}");
 		return sb.toString();
+	}
+
+	public boolean setTag(String token, String tag) {
+		boolean tokenFound = false;
+		for (TextSentence sentence : this) {
+			boolean tmp = sentence.setTag(token, tag);
+			if (tokenFound && tmp) {
+				throw new RuntimeException("multiple matching tokens found");
+			}
+			tokenFound = tmp;
+		}
+		return tokenFound;
 	}
 
 }

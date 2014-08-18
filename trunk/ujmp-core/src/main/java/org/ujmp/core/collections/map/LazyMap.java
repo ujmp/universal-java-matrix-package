@@ -49,6 +49,7 @@ public class LazyMap<K, V> extends AbstractMap<K, V> {
 		getMap().clear();
 	}
 
+	@SuppressWarnings("unchecked")
 	public V get(Object key) {
 		Callable<V> cv = getMap().get(key);
 		if (cv == null) {

@@ -23,21 +23,19 @@
 
 package org.ujmp.core.charmatrix.factory;
 
-import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.CharMatrix2D;
 import org.ujmp.core.charmatrix.impl.ArrayDenseCharMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultCharMatrix2DFactory extends AbstractCharMatrix2DFactory {
-	private static final long serialVersionUID = -1124203886604964405L;
 
 	public CharMatrix2D zeros(long rows, long columns) {
 		return new ArrayDenseCharMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
-	public CharMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+	public CharMatrix2D zeros(long... size) {
+		return new ArrayDenseCharMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

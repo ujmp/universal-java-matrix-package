@@ -31,7 +31,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
 import org.ujmp.core.interfaces.Wrapper;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 import com.jmatio.types.MLDouble;
@@ -122,10 +121,6 @@ public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD impleme
 		s.defaultWriteObject();
 		s.writeObject(matrix.name);
 		s.writeObject(this.toDoubleArray());
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

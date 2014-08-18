@@ -26,7 +26,6 @@ package org.ujmp.core.doublematrix.impl;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMultiD {
@@ -78,19 +77,6 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMul
 
 	public final void setDouble(double value, long... pos) {
 		values[(int) MathUtil.pos2IndexRowMajor(size, pos)] = value;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return new BaseMatrixFactory<DefaultDenseDoubleMatrixMultiD>() {
-
-			public DefaultDenseDoubleMatrixMultiD zeros(long rows, long columns) {
-				return new DefaultDenseDoubleMatrixMultiD(rows, columns);
-			}
-
-			public DefaultDenseDoubleMatrixMultiD zeros(long... size) {
-				return new DefaultDenseDoubleMatrixMultiD(size);
-			}
-		};
 	}
 
 }

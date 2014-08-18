@@ -56,7 +56,7 @@ public class ExportPDF {
 	public static boolean isSupported() {
 		try {
 			Class<?> c = Class.forName("org.ujmp.itext.ExportPDF");
-			return true;
+			return c != null;
 		} catch (Exception e) {
 			return false;
 		}

@@ -38,7 +38,6 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrixMultiD;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.mapmatrix.MapMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.io.BufferedRandomAccessFile;
 
@@ -504,31 +503,6 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements 
 		if (randomAccessFile != null) {
 			randomAccessFile.close();
 		}
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return new BaseMatrixFactory<Matrix>() {
-
-			public Matrix zeros(long rows, long columns) {
-				try {
-					return new DenseFileMatrix(new long[] { rows, columns });
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return null;
-				}
-			}
-
-			public Matrix zeros(long... size) {
-				try {
-					return new DenseFileMatrix(size);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return null;
-				}
-			}
-		};
 	}
 
 }

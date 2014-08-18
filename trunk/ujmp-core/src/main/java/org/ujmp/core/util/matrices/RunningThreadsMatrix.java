@@ -87,7 +87,12 @@ class ThreadMap implements Map<Object, Object> {
 	}
 
 	public Object get(Object key) {
-		return Arrays.asList(Thread.getAllStackTraces().get(key));
+		StackTraceElement[] st = Thread.getAllStackTraces().get(key);
+		if (st != null) {
+			return Arrays.asList(st);
+		} else {
+			return null;
+		}
 	}
 
 	public boolean isEmpty() {

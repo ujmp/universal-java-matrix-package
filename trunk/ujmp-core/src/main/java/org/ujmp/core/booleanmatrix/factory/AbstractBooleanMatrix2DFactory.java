@@ -23,7 +23,9 @@
 
 package org.ujmp.core.booleanmatrix.factory;
 
-public abstract class AbstractBooleanMatrix2DFactory implements BooleanMatrix2DFactory {
-	private static final long serialVersionUID = -9208052531077534453L;
+import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
+
+public abstract class AbstractBooleanMatrix2DFactory implements
+		BooleanMatrix2DFactory<BooleanMatrix2D> {
 
 }

@@ -23,10 +23,8 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	private static final long serialVersionUID = -4456493053286654056L;
@@ -70,10 +68,6 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 
 	public synchronized boolean isReadOnly() {
 		return matrix.isReadOnly();
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public final boolean isSparse() {

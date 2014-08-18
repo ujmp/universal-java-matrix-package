@@ -30,7 +30,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractSparseGenericMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
 
@@ -116,10 +115,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	public final void clear() {
 		values.clear();
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

@@ -24,25 +24,23 @@
 package org.ujmp.core.filematrix;
 
 import java.io.File;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 
-public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements FileOrDirectoryMatrix {
+public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryMatrix {
 	private static final long serialVersionUID = -4912495890644097086L;
 
 	private final File file;
 
-	private final Map<String, Matrix> map = new TreeMap<String, Matrix>();
+	private Matrix matrix = null;
 
 	public FileMatrix(String filename) {
 		this(new File(filename));
 	}
 
 	public FileMatrix(File file) {
+		super(0, 0);
 		this.file = file;
 		if (file == null) {
 			setLabel("/");
@@ -58,25 +56,15 @@ public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements Fil
 			setMetaData(ISFILE, file.isFile());
 			setMetaData(LASTMODIFIED, file.lastModified());
 			setMetaData(SIZE, file.length());
+
 		}
 	}
 
-	public Matrix get(Object key) {
-		loadContent();
-		return map.get(key);
-	}
-
-	public Set<String> keySet() {
-		loadContent();
-		return map.keySet();
-	}
-
 	private void loadContent() {
-		if (map.isEmpty()) {
+		if (matrix == null) {
 			try {
 				FileFormat format = FileFormat.guess(file);
 				setMetaData(FILEFORMAT, format);
-				map.put(FILEFORMAT, Matrix.Factory.linkToValue(format));
 				switch (format) {
 				case BMP:
 				case GIF:
@@ -84,13 +72,16 @@ public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements Fil
 				case JPEG2000:
 				case PNG:
 				case TIF:
-					map.put(IMAGE, Matrix.Factory.linkToImage(file));
+					matrix = Matrix.Factory.linkToImage(file);
 					break;
 				case DB:
-					map.put(DATA, Matrix.Factory.linkToJDBC(file));
+					matrix = Matrix.Factory.linkToJDBC(file);
+					break;
 				case ZIP:
-					map.put(DATA, Matrix.Factory.linkToZipFile(file));
+					matrix = Matrix.Factory.linkToZipFile(file);
+					break;
 				default:
+					matrix = Matrix.Factory.emptyMatrix();
 					break;
 				}
 			} catch (Exception e) {
@@ -99,19 +90,24 @@ public class FileMatrix extends AbstractMapMatrix<String, Matrix> implements Fil
 		}
 	}
 
-	@Override
-	protected void clearMap() {
-		throw new UnsupportedOperationException();
+	public boolean contains(long... coordinates) {
+		loadContent();
+		return matrix.contains(coordinates);
 	}
 
-	@Override
-	protected Matrix removeFromMap(Object key) {
-		throw new UnsupportedOperationException();
+	public boolean isSparse() {
+		loadContent();
+		return matrix.isSparse();
 	}
 
-	@Override
-	protected Matrix putIntoMap(String key, Matrix value) {
-		throw new UnsupportedOperationException();
+	public long[] getSize() {
+		loadContent();
+		return matrix.getSize();
+	}
+
+	public Object getObject(long... coordinates) {
+		loadContent();
+		return matrix.getAsObject(coordinates);
 	}
 
 }

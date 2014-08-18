@@ -23,11 +23,9 @@
 
 package org.ujmp.core.shortmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.HasShortArray;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
 
 public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implements HasShortArray {
@@ -153,10 +151,6 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 
 	public short[] getShortArray() {
 		return values;
-	}
-
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

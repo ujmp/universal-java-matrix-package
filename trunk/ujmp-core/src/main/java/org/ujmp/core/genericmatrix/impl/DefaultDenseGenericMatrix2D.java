@@ -26,7 +26,6 @@ package org.ujmp.core.genericmatrix.impl;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D<A> {
 	private static final long serialVersionUID = 3132491298449205914L;
@@ -85,7 +84,4 @@ public class DefaultDenseGenericMatrix2D<A> extends AbstractDenseGenericMatrix2D
 		return ValueType.OBJECT;
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

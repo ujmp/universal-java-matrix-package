@@ -25,10 +25,9 @@ package org.ujmp.core.stringmatrix;
 
 import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.stringmatrix.factory.DefaultStringMatrix2DFactory;
-import org.ujmp.core.stringmatrix.factory.StringMatrix2DFactory;
 
 public interface DenseStringMatrix2D extends StringMatrix2D, DenseStringMatrix, DenseMatrix2D {
 
-	public static StringMatrix2DFactory factory = new DefaultStringMatrix2DFactory();
+	public static DefaultStringMatrix2DFactory Factory = new DefaultStringMatrix2DFactory();
 
 }

@@ -32,7 +32,6 @@ import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 
 public class CommonsMathDenseDoubleMatrix2DFactory extends
 		AbstractDenseDoubleMatrix2DFactory<CommonsMathArrayDenseDoubleMatrix2D> {
-	private static final long serialVersionUID = -4938756141859017575L;
 
 	public static final CommonsMathDenseDoubleMatrix2DFactory INSTANCE = new CommonsMathDenseDoubleMatrix2DFactory();
 

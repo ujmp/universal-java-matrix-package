@@ -26,16 +26,13 @@ package org.ujmp.core.longmatrix.factory;
 import org.ujmp.core.longmatrix.LongMatrix;
 
 public class DefaultLongMatrixFactory extends AbstractLongMatrixFactory<LongMatrix> {
-	private static final long serialVersionUID = 6691081508757775658L;
 
 	public LongMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public LongMatrix zeros(long rows, long cols) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 }

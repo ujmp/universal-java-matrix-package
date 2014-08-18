@@ -26,10 +26,8 @@ package org.ujmp.core.bigintegermatrix.impl;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = 443424906231157395L;
@@ -99,10 +97,6 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 
 	public void setBigInteger(BigInteger value, int row, int column) {
 		values[column * rows + row] = value;
-	}
-
-	public DenseMatrix2DFactory<DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

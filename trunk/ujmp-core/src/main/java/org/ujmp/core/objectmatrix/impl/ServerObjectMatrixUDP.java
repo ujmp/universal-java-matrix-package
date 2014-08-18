@@ -32,8 +32,6 @@ import java.net.DatagramSocket;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.SparseObjectMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 
 public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
@@ -158,7 +156,4 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return matrix.isReadOnly();
 	}
 
-	public SparseObjectMatrixFactory<? extends SparseObjectMatrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

@@ -30,7 +30,6 @@ import org.ujmp.core.util.MathUtil;
 
 public class ColtDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D>
 		implements DenseDoubleMatrix2DFactory<ColtDenseDoubleMatrix2D> {
-	private static final long serialVersionUID = 1951543109603957820L;
 
 	public ColtDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new ColtDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));

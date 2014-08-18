@@ -25,7 +25,6 @@ package org.ujmp.core.floatmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 	private static final long serialVersionUID = 6599658021180126741L;
@@ -104,10 +103,6 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 			}
 		}
 		return new ArrayDenseFloatMatrix2D(result);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

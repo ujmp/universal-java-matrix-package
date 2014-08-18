@@ -25,7 +25,6 @@ package org.ujmp.core.booleanmatrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.booleanmatrix.stub.AbstractDenseBooleanMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class ArrayDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 	private static final long serialVersionUID = -4334380160318525360L;
@@ -104,10 +103,6 @@ public class ArrayDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 			}
 		}
 		return new ArrayDenseBooleanMatrix2D(result);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

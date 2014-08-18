@@ -33,9 +33,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.map.SoftHashMap;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.jdbc.autoclose.AutoCloseConnection;
@@ -205,10 +203,6 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	public String getPassword() {
 		return password;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return null;
 	}
 
 }

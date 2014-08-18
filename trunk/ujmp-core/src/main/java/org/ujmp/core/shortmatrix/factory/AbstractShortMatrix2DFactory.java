@@ -23,7 +23,8 @@
 
 package org.ujmp.core.shortmatrix.factory;
 
-public abstract class AbstractShortMatrix2DFactory implements ShortMatrix2DFactory {
-	private static final long serialVersionUID = -997496895339826439L;
+import org.ujmp.core.shortmatrix.ShortMatrix2D;
+
+public abstract class AbstractShortMatrix2DFactory implements ShortMatrix2DFactory<ShortMatrix2D> {
 
 }

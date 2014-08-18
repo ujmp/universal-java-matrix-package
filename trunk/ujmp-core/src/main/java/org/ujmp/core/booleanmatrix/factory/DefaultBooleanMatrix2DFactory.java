@@ -23,22 +23,19 @@
 
 package org.ujmp.core.booleanmatrix.factory;
 
-import org.ujmp.core.booleanmatrix.BooleanMatrix;
 import org.ujmp.core.booleanmatrix.BooleanMatrix2D;
 import org.ujmp.core.booleanmatrix.impl.ArrayDenseBooleanMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultBooleanMatrix2DFactory extends AbstractBooleanMatrix2DFactory {
-	private static final long serialVersionUID = -7554206320842397263L;
 
 	public BooleanMatrix2D zeros(long rows, long columns) {
-		return new ArrayDenseBooleanMatrix2D(MathUtil.longToInt(rows),
-				MathUtil.longToInt(columns));
+		return new ArrayDenseBooleanMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
-	public BooleanMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+	public BooleanMatrix2D zeros(long... size) {
+		return new ArrayDenseBooleanMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

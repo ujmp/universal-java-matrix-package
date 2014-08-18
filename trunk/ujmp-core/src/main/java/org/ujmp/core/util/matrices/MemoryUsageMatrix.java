@@ -23,9 +23,7 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = -3863745960302379726L;
@@ -33,6 +31,10 @@ public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
 	public MemoryUsageMatrix() {
 		super(new long[] { 3, 1 });
 		setLabel("Memory Usage");
+		setColumnLabel(0, "Bytes");
+		setRowLabel(0, "Free Memory");
+		setRowLabel(1, "Max Memory");
+		setRowLabel(2, "Total Memory");
 	}
 
 	public long getLong(int row, int column) {
@@ -69,10 +71,6 @@ public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
 
 	public boolean isReadOnly() {
 		return true;
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

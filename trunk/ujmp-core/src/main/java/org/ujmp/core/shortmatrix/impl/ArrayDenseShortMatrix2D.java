@@ -24,7 +24,6 @@
 package org.ujmp.core.shortmatrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
 
 public class ArrayDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
@@ -88,10 +87,6 @@ public class ArrayDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 			}
 		}
 		return new ArrayDenseShortMatrix2D(result);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

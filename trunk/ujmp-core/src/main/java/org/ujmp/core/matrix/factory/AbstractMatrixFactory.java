@@ -247,7 +247,7 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 	}
 
 	public final LocalhostMatrix localhostMatrix() {
-		return new LocalhostMatrix();
+		return LocalhostMatrix.getInstance();
 	}
 
 	public final MatrixImportSourceSelector importSelector() {

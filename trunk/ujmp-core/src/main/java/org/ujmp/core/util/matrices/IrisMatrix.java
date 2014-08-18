@@ -23,8 +23,6 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.DenseMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 
 public class IrisMatrix extends AbstractDenseStringMatrix2D {
@@ -203,7 +201,4 @@ public class IrisMatrix extends AbstractDenseStringMatrix2D {
 		return new long[] { data.length, data[0].length };
 	}
 
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

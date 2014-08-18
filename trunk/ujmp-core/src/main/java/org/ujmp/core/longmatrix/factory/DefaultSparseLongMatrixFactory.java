@@ -28,16 +28,13 @@ import org.ujmp.core.longmatrix.SparseLongMatrix;
 public class DefaultSparseLongMatrixFactory extends
 		AbstractSparseLongMatrixFactory<SparseLongMatrix> implements
 		SparseLongMatrixFactory<SparseLongMatrix> {
-	private static final long serialVersionUID = 5306973585257493697L;
 
 	public SparseLongMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 	public SparseLongMatrix zeros(long rows, long columns) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 }

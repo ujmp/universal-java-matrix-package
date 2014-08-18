@@ -28,7 +28,6 @@ import org.ujmp.core.doublematrix.impl.DefaultSparseRowDoubleMatrix2D;
 
 public class DefaultSparseDoubleMatrix2DFactory extends
 		AbstractSparseDoubleMatrix2DFactory<SparseDoubleMatrix2D> {
-	private static final long serialVersionUID = 1416876387997698948L;
 
 	public SparseDoubleMatrix2D zeros(long rows, long cols) {
 		return new DefaultSparseRowDoubleMatrix2D(rows, cols);

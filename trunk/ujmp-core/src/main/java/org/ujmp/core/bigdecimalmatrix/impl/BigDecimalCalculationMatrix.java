@@ -25,10 +25,8 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 
 import java.math.BigDecimal;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.calculation.BigDecimalCalculation;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractBigDecimalMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 	private static final long serialVersionUID = -1984605379151298934L;
@@ -66,10 +64,6 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 
 	public void setBigDecimal(BigDecimal value, long... coordinates) {
 		calculation.setBigDecimal(value, coordinates);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public BigDecimal getBigDecimal(long row, long column) {

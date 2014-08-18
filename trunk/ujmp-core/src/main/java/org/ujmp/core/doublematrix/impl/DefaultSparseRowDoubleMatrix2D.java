@@ -32,7 +32,6 @@ import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 
 public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
@@ -120,10 +119,6 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 			return getRow(rows[0]);
 		}
 		return super.selectRows(returnType, rows);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

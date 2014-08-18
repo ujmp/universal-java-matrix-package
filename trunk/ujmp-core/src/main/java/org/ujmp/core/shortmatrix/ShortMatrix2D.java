@@ -25,11 +25,10 @@ package org.ujmp.core.shortmatrix;
 
 import org.ujmp.core.genericmatrix.GenericMatrix2D;
 import org.ujmp.core.shortmatrix.factory.DefaultShortMatrix2DFactory;
-import org.ujmp.core.shortmatrix.factory.ShortMatrix2DFactory;
 
 public interface ShortMatrix2D extends ShortMatrix, GenericMatrix2D<Short> {
 
-	public static ShortMatrix2DFactory factory = new DefaultShortMatrix2DFactory();
+	public static DefaultShortMatrix2DFactory Factory = new DefaultShortMatrix2DFactory();
 
 	public short getShort(long row, long column);
 

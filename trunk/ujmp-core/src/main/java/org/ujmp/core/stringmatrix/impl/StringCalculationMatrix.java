@@ -23,8 +23,6 @@
 
 package org.ujmp.core.stringmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 import org.ujmp.core.stringmatrix.calculation.StringCalculation;
 import org.ujmp.core.stringmatrix.stub.AbstractStringMatrix;
 
@@ -64,10 +62,6 @@ public class StringCalculationMatrix extends AbstractStringMatrix {
 
 	public void setString(String value, long... coordinates) {
 		calculation.setString(value, coordinates);
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public final boolean isSparse() {

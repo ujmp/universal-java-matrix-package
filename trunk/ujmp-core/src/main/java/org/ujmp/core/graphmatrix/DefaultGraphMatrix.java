@@ -31,10 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.list.ArrayIndexList;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 
 public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
@@ -214,7 +212,4 @@ public class DefaultGraphMatrix<N, E> extends AbstractGraphMatrix<N, E> {
 		setEdge(null, nodeIndex1, nodeIndex2);
 	}
 
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
-	}
 }

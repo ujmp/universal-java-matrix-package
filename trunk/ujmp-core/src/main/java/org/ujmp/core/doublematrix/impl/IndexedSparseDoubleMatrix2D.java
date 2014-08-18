@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -8455710302874238051L;
@@ -145,10 +144,6 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 
 	public long[] getSize() {
 		return size;
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

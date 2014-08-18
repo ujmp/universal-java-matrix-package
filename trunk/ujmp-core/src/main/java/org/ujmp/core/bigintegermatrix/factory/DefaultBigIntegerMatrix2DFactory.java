@@ -23,22 +23,20 @@
 
 package org.ujmp.core.bigintegermatrix.factory;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix2D;
 import org.ujmp.core.bigintegermatrix.impl.DefaultDenseBigIntegerMatrix2D;
 import org.ujmp.core.util.MathUtil;
 
 public class DefaultBigIntegerMatrix2DFactory extends AbstractBigIntegerMatrix2DFactory {
-	private static final long serialVersionUID = -311255322148769964L;
 
 	public BigIntegerMatrix2D zeros(long rows, long columns) {
 		return new DefaultDenseBigIntegerMatrix2D(MathUtil.longToInt(rows),
 				MathUtil.longToInt(columns));
 	}
 
-	public Matrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+	public BigIntegerMatrix2D zeros(long... size) {
+		return new DefaultDenseBigIntegerMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

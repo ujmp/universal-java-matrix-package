@@ -32,8 +32,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.objectmatrix.factory.DenseObjectMatrix2DFactory;
 import org.ujmp.core.util.UJMPSettings;
 
 public class HttpMatrix extends AbstractMapMatrix<String, String> {
@@ -50,10 +48,6 @@ public class HttpMatrix extends AbstractMapMatrix<String, String> {
 			defaultProtocol += "/";
 		}
 		this.defaultProtocol = defaultProtocol;
-	}
-
-	public DenseObjectMatrix2DFactory<? extends DenseObjectMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 	public int size() {

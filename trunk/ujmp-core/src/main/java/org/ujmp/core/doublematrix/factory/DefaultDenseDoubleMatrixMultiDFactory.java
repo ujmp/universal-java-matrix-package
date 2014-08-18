@@ -27,7 +27,6 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrixMultiD;
 
 public class DefaultDenseDoubleMatrixMultiDFactory extends
 		AbstractDenseDoubleMatrixMultiDFactory<DefaultDenseDoubleMatrixMultiD> {
-	private static final long serialVersionUID = -3522250062306401611L;
 
 	public DefaultDenseDoubleMatrixMultiD zeros(long... size) {
 		return new DefaultDenseDoubleMatrixMultiD(size);

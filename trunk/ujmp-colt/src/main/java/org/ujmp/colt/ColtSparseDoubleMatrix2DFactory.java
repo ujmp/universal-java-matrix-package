@@ -30,7 +30,6 @@ import org.ujmp.core.util.MathUtil;
 
 public class ColtSparseDoubleMatrix2DFactory extends AbstractSparseDoubleMatrix2DFactory<ColtSparseDoubleMatrix2D>
 		implements SparseDoubleMatrix2DFactory<ColtSparseDoubleMatrix2D> {
-	private static final long serialVersionUID = -510437132607137332L;
 
 	public ColtSparseDoubleMatrix2D zeros(long rows, long columns) {
 		return new ColtSparseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));

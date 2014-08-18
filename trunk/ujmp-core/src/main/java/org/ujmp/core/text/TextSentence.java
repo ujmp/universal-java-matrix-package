@@ -23,13 +23,12 @@
 
 package org.ujmp.core.text;
 
-import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
+import org.ujmp.core.listmatrix.ListMatrix;
 
-public abstract class AbstractTextToken extends AbstractDenseStringMatrix2D implements TextToken {
-	private static final long serialVersionUID = -1369486846473709224L;
+public interface TextSentence extends ListMatrix<TextToken> {
 
-	public AbstractTextToken() {
-		super(0, 1);
-	}
+	public String toJson();
+
+	public boolean setTag(String token, String tag);
 
 }

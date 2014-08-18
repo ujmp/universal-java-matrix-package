@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.collections.list.ArrayIndexList;
-import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 
 public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 	private static final long serialVersionUID = -6752285310555819432L;
@@ -43,6 +41,7 @@ public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 
 	private final Map<T, T> parentMap = new HashMap<T, T>();
 
+	@SuppressWarnings("unchecked")
 	public List<T> getChildren(Object o) {
 		List<T> children = childrenMap.get(o);
 		if (children == null) {
@@ -70,10 +69,6 @@ public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 			objects.add(o);
 		}
 		fireValueChanged();
-	}
-
-	public SparseDoubleMatrix2DFactory<? extends SparseDoubleMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

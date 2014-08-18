@@ -23,20 +23,17 @@
 
 package org.ujmp.core.floatmatrix.factory;
 
-import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
 
 public class DefaultFloatMatrix2DFactory extends AbstractFloatMatrix2DFactory {
-	private static final long serialVersionUID = 4813771827445313121L;
 
 	public FloatMatrix2D zeros(long rows, long columns) {
 		return new ArrayDenseFloatMatrix2D(rows, columns);
 	}
 
-	public FloatMatrix zeros(long... size) {
-		// TODO Auto-generated method stub
-		return null;
+	public FloatMatrix2D zeros(long... size) {
+		return new ArrayDenseFloatMatrix2D(size[ROW], size[COLUMN]);
 	}
 
 }

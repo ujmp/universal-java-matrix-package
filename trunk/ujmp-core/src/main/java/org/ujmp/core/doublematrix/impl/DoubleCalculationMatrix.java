@@ -23,10 +23,8 @@
 
 package org.ujmp.core.doublematrix.impl;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.DoubleCalculation;
 import org.ujmp.core.doublematrix.stub.AbstractDoubleMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 	private static final long serialVersionUID = 4906742566162718886L;
@@ -76,10 +74,6 @@ public class DoubleCalculationMatrix extends AbstractDoubleMatrix {
 
 	public void setDouble(double value, long row, long column) {
 		calculation.setDouble(value, row, column);
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 	public void setDouble(double value, int row, int column) {

@@ -38,11 +38,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.set.AbstractSet;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.jdbc.SQLUtil;
 import org.ujmp.jdbc.SQLUtil.SQLDialect;
@@ -553,10 +551,6 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		public int size() {
 			return map.size();
 		}
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return null;
 	}
 
 	protected void setKey(PreparedStatement statement, int position, K key) throws SQLException {

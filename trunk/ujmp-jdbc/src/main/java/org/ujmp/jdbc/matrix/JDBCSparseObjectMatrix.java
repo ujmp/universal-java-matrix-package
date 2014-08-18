@@ -35,7 +35,6 @@ import java.sql.Statement;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -388,10 +387,6 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 				}
 			}
 		}
-	}
-
-	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
 	}
 
 }

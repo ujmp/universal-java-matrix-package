@@ -23,10 +23,8 @@
 
 package org.ujmp.core.longmatrix.impl;
 
-import org.ujmp.core.DenseMatrix2D;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
-import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public class ArrayDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 2888746188860361425L;
@@ -97,10 +95,6 @@ public class ArrayDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 			}
 		}
 		return new ArrayDenseLongMatrix2D(result);
-	}
-
-	public DenseMatrix2DFactory<? extends DenseMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

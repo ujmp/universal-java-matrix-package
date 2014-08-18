@@ -25,7 +25,6 @@ package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.DoubleMatrix;
 
 public interface StatisticalDoubleCalculations {
 

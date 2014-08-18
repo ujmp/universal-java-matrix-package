@@ -23,10 +23,8 @@
 
 package org.ujmp.core.setmatrix;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.ujmp.core.enums.ValueType;
@@ -36,9 +34,6 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<E> implements
 		SetMatrix<E> {
 	private static final long serialVersionUID = -3152489258987719660L;
-
-	private volatile boolean isIndexUpToDate = false;
-	private final List<E> keyIndexList = new ArrayList<E>();
 
 	public AbstractSetMatrix() {
 		super(0, 1);

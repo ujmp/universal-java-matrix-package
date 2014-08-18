@@ -29,7 +29,6 @@ import java.util.Set;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.factory.SparseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
@@ -119,7 +118,7 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 		return getAsDouble(coordinates) != 0.0;
 	}
 
-	public SparseDoubleMatrix2DFactory<ParallelColtSparseDoubleMatrix2D> getFactory() {
+	public ParallelColtSparseDoubleMatrix2DFactory getFactory() {
 		return Factory;
 	}
 }

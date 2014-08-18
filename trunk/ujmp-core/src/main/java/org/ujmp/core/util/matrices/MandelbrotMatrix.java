@@ -23,8 +23,6 @@
 
 package org.ujmp.core.util.matrices;
 
-import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.util.Complex;
 
@@ -95,10 +93,6 @@ public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 			z = z.times(z).plus(c);
 		}
 		return iterations;
-	}
-
-	public DenseDoubleMatrix2DFactory<? extends DenseDoubleMatrix2D> getFactory() {
-		throw new RuntimeException("not implemented");
 	}
 
 }

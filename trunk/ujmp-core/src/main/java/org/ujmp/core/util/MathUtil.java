@@ -239,15 +239,11 @@ public abstract class MathUtil {
 	 * @param min
 	 *            minimum value (inclusive)
 	 * @param max
-	 *            maximum value (inclusive)
+	 *            maximum value (exclusive)
 	 * @return a random value
 	 */
 	public static final int nextInteger(int min, int max) {
-		if (min == max) {
-			return min;
-		}
-		double r = getRandom().nextDouble();
-		return (int) ((r * max) + ((1.0 - r) * min) + r);
+		return min == max ? min : min + getRandom().nextInt(max - min);
 	}
 
 	public static boolean isEventHappening(double probability) {

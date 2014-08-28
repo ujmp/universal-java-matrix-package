@@ -61,8 +61,8 @@ public class AddMissing extends AbstractDoubleCalculation {
 					int r = 0;
 					int c = 0;
 					do {
-						r = MathUtil.nextInteger(0, (int) getSource().getRowCount() - 1);
-						c = MathUtil.nextInteger(0, (int) getSource().getColumnCount() - 1);
+						r = MathUtil.nextInteger(0, (int) getSource().getRowCount());
+						c = MathUtil.nextInteger(0, (int) getSource().getColumnCount());
 						v = missingValues.getAsDouble(r, c);
 					} while (MathUtil.isNaNOrInfinite(v));
 					missingValues.setAsDouble(Double.NaN, r, c);
@@ -75,7 +75,7 @@ public class AddMissing extends AbstractDoubleCalculation {
 						double v = 0.0;
 						int c = 0;
 						do {
-							c = MathUtil.nextInteger(0, (int) getSource().getColumnCount() - 1);
+							c = MathUtil.nextInteger(0, (int) getSource().getColumnCount());
 							v = missingValues.getAsDouble(r, c);
 						} while (MathUtil.isNaNOrInfinite(v));
 						missingValues.setAsDouble(Double.NaN, r, c);

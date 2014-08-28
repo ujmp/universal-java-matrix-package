@@ -322,8 +322,8 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		long minCol = matrixGUIObject.getColumnSelectionModel().getMinSelectionIndex64();
 		long maxCol = matrixGUIObject.getColumnSelectionModel().getMaxSelectionIndex64();
 		if ((e.getKeyCode() == KeyEvent.VK_A) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(0, cols);
-			matrixGUIObject.getRowSelectionModel().setSelectionInterval(0, rows);
+			matrixGUIObject.getColumnSelectionModel().setSelectionInterval(0, cols - 1);
+			matrixGUIObject.getRowSelectionModel().setSelectionInterval(0, rows - 1);
 		} else if (e.getKeyCode() == KeyEvent.VK_UP && minRow > 0) {
 			matrixGUIObject.getRowSelectionModel().setSelectionInterval(minRow - 1, maxRow - 1);
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN && maxRow < rows - 1) {

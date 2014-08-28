@@ -2552,10 +2552,10 @@ public abstract class AbstractMatrixTest {
 		switch (layout) {
 		case SQUARE:
 			if (Size.SMALL.equals(size)) {
-				rows = MathUtil.nextInteger(2, 9);
+				rows = MathUtil.nextInteger(2, 10);
 				cols = rows;
 			} else if (Size.LARGE.equals(size)) {
-				rows = MathUtil.nextInteger(102, 109);
+				rows = MathUtil.nextInteger(102, 110);
 				cols = rows;
 			} else if (Size.SINGLEENTRY.equals(size)) {
 				rows = 1;
@@ -2564,11 +2564,11 @@ public abstract class AbstractMatrixTest {
 			break;
 		case FAT:
 			if (Size.SMALL.equals(size)) {
-				rows = MathUtil.nextInteger(2, 9);
-				cols = MathUtil.nextInteger(12, 19);
+				rows = MathUtil.nextInteger(2, 10);
+				cols = MathUtil.nextInteger(12, 20);
 			} else if (Size.LARGE.equals(size)) {
-				rows = MathUtil.nextInteger(102, 109);
-				cols = MathUtil.nextInteger(122, 139);
+				rows = MathUtil.nextInteger(102, 110);
+				cols = MathUtil.nextInteger(122, 140);
 			} else if (Size.SINGLEENTRY.equals(size)) {
 				rows = 1;
 				cols = 2;
@@ -2576,11 +2576,11 @@ public abstract class AbstractMatrixTest {
 			break;
 		case TALL:
 			if (Size.SMALL.equals(size)) {
-				rows = MathUtil.nextInteger(12, 19);
-				cols = MathUtil.nextInteger(2, 9);
+				rows = MathUtil.nextInteger(12, 20);
+				cols = MathUtil.nextInteger(2, 10);
 			} else if (Size.LARGE.equals(size)) {
-				rows = MathUtil.nextInteger(122, 139);
-				cols = MathUtil.nextInteger(102, 109);
+				rows = MathUtil.nextInteger(122, 140);
+				cols = MathUtil.nextInteger(102, 110);
 			} else if (Size.SINGLEENTRY.equals(size)) {
 				rows = 2;
 				cols = 1;

@@ -49,7 +49,7 @@ public class Bootstrap extends AbstractObjectCalculation {
 		if (selection == null) {
 			List<Integer> rows = new ArrayList<Integer>();
 			for (int i = 0; i < count; i++) {
-				int s = MathUtil.nextInteger(0, (int) getSource().getRowCount() - 1);
+				int s = MathUtil.nextInteger(0, (int) getSource().getRowCount());
 				rows.add(s);
 			}
 			selection = getSource().selectRows(Ret.LINK, rows);

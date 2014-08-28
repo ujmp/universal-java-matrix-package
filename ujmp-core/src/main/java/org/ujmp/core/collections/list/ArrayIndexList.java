@@ -52,7 +52,7 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 	}
 
 	public void add(int index, M element) {
-		new Exception("not implemented").printStackTrace();
+		throw new RuntimeException("not implemented");
 	}
 
 	public boolean add(M e) {
@@ -68,8 +68,7 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 	}
 
 	public boolean addAll(int index, Collection<? extends M> c) {
-		new Exception("not implemented").printStackTrace();
-		return false;
+		throw new RuntimeException("not implemented");
 	}
 
 	public void clear() {
@@ -107,8 +106,7 @@ public class ArrayIndexList<M> extends ArrayList<M> {
 	}
 
 	public M set(int index, M element) {
-		new Exception("not implemented").printStackTrace();
-		return null;
+		throw new RuntimeException("not implemented");
 	}
 
 }

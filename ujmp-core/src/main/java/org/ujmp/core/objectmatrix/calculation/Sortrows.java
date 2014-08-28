@@ -64,84 +64,73 @@ public class Sortrows extends AbstractObjectCalculation {
 	private void createSortIndex() {
 		Matrix m = getSource();
 		long rowCount = m.getRowCount();
-		List<Sortable<?, ?>> rows = new ArrayList<Sortable<?, ?>>();
+		List<Sortable<?, Long>> rows = new ArrayList<Sortable<?, Long>>();
 
 		switch (m.getValueType()) {
 		case BIGDECIMAL:
 			for (long r = 0; r < rowCount; r++) {
 				BigDecimal c = m.getAsBigDecimal(r, column);
-				Sortable<?, ?> s = new Sortable<BigDecimal, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<BigDecimal, Long>(c, r, true));
 			}
 			break;
 		case BIGINTEGER:
 			for (long r = 0; r < rowCount; r++) {
 				BigInteger c = m.getAsBigInteger(r, column);
-				Sortable<?, ?> s = new Sortable<BigInteger, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<BigInteger, Long>(c, r, true));
 			}
 			break;
 		case DOUBLE:
 			for (long r = 0; r < rowCount; r++) {
 				Double c = m.getAsDouble(r, column);
-				Sortable<?, ?> s = new Sortable<Double, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Double, Long>(c, r, true));
 			}
 			break;
 		case INT:
 			for (long r = 0; r < rowCount; r++) {
 				Integer c = m.getAsInt(r, column);
-				Sortable<?, ?> s = new Sortable<Integer, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Integer, Long>(c, r, true));
 			}
 			break;
 		case FLOAT:
 			for (long r = 0; r < rowCount; r++) {
 				Float c = m.getAsFloat(r, column);
-				Sortable<?, ?> s = new Sortable<Float, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Float, Long>(c, r, true));
 			}
 			break;
 		case CHAR:
 			for (long r = 0; r < rowCount; r++) {
 				Character c = m.getAsChar(r, column);
-				Sortable<?, ?> s = new Sortable<Character, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Character, Long>(c, r, true));
 			}
 			break;
 		case BYTE:
 			for (long r = 0; r < rowCount; r++) {
 				Byte c = m.getAsByte(r, column);
-				Sortable<?, ?> s = new Sortable<Byte, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Byte, Long>(c, r, true));
 			}
 			break;
 		case BOOLEAN:
 			for (long r = 0; r < rowCount; r++) {
 				Boolean c = m.getAsBoolean(r, column);
-				Sortable<?, ?> s = new Sortable<Boolean, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Boolean, Long>(c, r, true));
 			}
 			break;
 		case LONG:
 			for (long r = 0; r < rowCount; r++) {
 				Long c = m.getAsLong(r, column);
-				Sortable<?, ?> s = new Sortable<Long, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Long, Long>(c, r, true));
 			}
 			break;
 		case SHORT:
 			for (long r = 0; r < rowCount; r++) {
 				Short c = m.getAsShort(r, column);
-				Sortable<?, ?> s = new Sortable<Short, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<Short, Long>(c, r, true));
 			}
 			break;
 		default:
 			for (long r = 0; r < rowCount; r++) {
 				String c = m.getAsString(r, column);
-				Sortable<?, ?> s = new Sortable<String, Long>(c, r, true);
-				rows.add(s);
+				rows.add(new Sortable<String, Long>(c, r, true));
 			}
 			break;
 		}

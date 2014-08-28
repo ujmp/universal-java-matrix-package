@@ -39,6 +39,50 @@ import org.ujmp.core.util.VerifyUtil;
 
 public abstract class TextUtil {
 
+	public static final String ALPHA_NUMERIC_REGEX = "^[A-Za-z0-9]+$";
+	public static final String HAS_DASH_REGEX = "^.+-.+$";
+	public static final String INIT_DASH_REGEX = "^-.+$";
+	public static final String END_DASH_REGEX = "^-.+$";
+	public static final String PUNCTUATION_REGEX = "^[,.:;!?]$";
+	public static final String ONE_QUESTION_MARK_REGEX = "^[?]$";
+	public static final String TWO_QUESTION_MARKS_REGEX = "^[??]$";
+	public static final String THREE_QUESTION_MARKS_REGEX = "^[???]$";
+	public static final String MULTIPLE_QUESTION_MARKS_REGEX = "^[?][?]+$";
+	public static final String ONE_EXCLAMATION_MARK_REGEX = "^[!]$";
+	public static final String TWO_EXCLAMATION_MARKS_REGEX = "^[!!]$";
+	public static final String THREE_EXCLAMATION_MARKS_REGEX = "^[!!!]$";
+	public static final String MULTIPLE_EXCLAMATION_MARKS_REGEX = "^[!][!]+$";
+	public static final String QUESTION_EXCLAMATION_MARK_REGEX = "^[?][!]$";
+	public static final String EXCLAMATION_QUESTION_MARK_REGEX = "^[!][?]$";
+	public static final String INIT_CAPS_REGEX = "^[A-Z].+$";
+	public static final String INIT_CAPS_ALPHA_REGEX = "^[A-Z][a-z]+$";
+	public static final String ONE_CAP_REGEX = "^[A-Z]$";
+	public static final String TWO_CAPS_REGEX = "^[A-Z][A-Z]$";
+	public static final String THREE_CAPS_REGEX = "^[A-Z][A-Z][A-Z]$";
+	public static final String FOUR_CAPS_REGEX = "^[A-Z][A-Z][A-Z][A-Z]$";
+	public static final String ALL_CAPS_REGEX = "^[A-Z]+$";
+	public static final String CAPS_MIX_REGEX = "^[A-Za-z]+$";
+	public static final String ONE_DIGIT_REGEX = "^[0-9]$";
+	public static final String TWO_DIGITS_REGEX = "^[0-9][0-9]$";
+	public static final String THREE_DIGITS_REGEX = "^[0-9][0-9][0-9]$";
+	public static final String FOUR_DIGITS_REGEX = "^[0-9][0-9][0-9][0-9]$";
+	public static final String HAS_DIGIT_REGEX = "^.+[0-9].+$";
+	public static final String POSITIVE_INTEGER_REGEX = "^[0-9]+$";
+	public static final String NEGATIVE_INTEGER_REGEX = "^-[0-9]+$";
+	public static final String FLOATING_POINT_NUMBER_REGEX = "^[-+]?[0-9]*\\.?[0-9]+$";
+	public static final String EXP_NUMBER_REGEX = "^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$";
+	public static final String ROMAN_NUMBER_SMALL_REGEX = "^[ivxdlcm]+$";
+	public static final String ROMAN_NUMBER_CAPITAL_REGEX = "^[IVXDLCM]+$";
+	public static final String SINGLE_INITIAL_REGEX = "^[a-zA-Z]\\.$";
+	public static final String IN_PARENTHESES_REGEX = "^(.+)$";
+	public static final String OBD_REGEX = "^[PBCU][0-9A-F][0-9A-F][0-9A-F][0-9A-F]$";
+	public static final String YEAR_REGEX = "^[12][0-9][0-9][0-9]$";
+	public static final String HEX_REGEX = "^[0-9A-Fa-f][0-9A-Fa-f]+$";
+	public static final String EMAIL_REGEX = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$";
+	public static final String IP_REGEX = "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+	public static final String HTML_REGEX = "^<([a-z]+)([^<]+)*(?:>(.*)<\\/\\1>|\\s+\\/>)$";
+	public static final String URL_REGEX = "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$";
+
 	public static final DenseDoubleMatrix2D getCharacterFrequencies(final String s,
 			char... validCharacters) {
 		final String copy = s.toLowerCase();

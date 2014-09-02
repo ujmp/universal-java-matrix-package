@@ -40,15 +40,17 @@ public class Pinv extends AbstractDoubleCalculation {
 	public double getDouble(long... coordinates) {
 		if (pinv == null) {
 
-			Matrix[] ms = getSource().svd();
-			Matrix u = ms[0];
-			Matrix s = ms[1];
-			Matrix v = ms[2];
+			Matrix[] usv = getSource().svd();
+			Matrix u = usv[0];
+			Matrix s = usv[1];
+			Matrix v = usv[2];
 
 			for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
 				double d = s.getAsDouble(i, i);
 				if (Math.abs(d) > UJMPSettings.getInstance().getTolerance()) {
 					s.setAsDouble(1.0 / d, i, i);
+				} else {
+					s.setAsDouble(0.0, i, i);
 				}
 			}
 

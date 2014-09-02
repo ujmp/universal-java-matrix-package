@@ -23,16 +23,13 @@
 
 package org.ujmp.core.util.matrices;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Set;
 
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
-import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.io.HttpUtil;
 
 public class HttpMatrix extends AbstractMapMatrix<String, String> {
 	private static final long serialVersionUID = -8091708294752801016L;
@@ -60,25 +57,8 @@ public class HttpMatrix extends AbstractMapMatrix<String, String> {
 			if (!urlString.startsWith("https://") && !urlString.startsWith("http://")) {
 				urlString = defaultProtocol + urlString;
 			}
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			connection.setRequestProperty("User-Agent", UJMPSettings.getInstance().getUserAgent());
-			connection.setUseCaches(false);
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setConnectTimeout(3000);
-			InputStream input = connection.getInputStream();
-			byte[] buffer = new byte[8192];
-			int n = -1;
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			while ((n = input.read(buffer)) != -1) {
-				if (n > 0) {
-					output.write(buffer, 0, n);
-				}
-			}
-			output.close();
-			input.close();
-			return new String(output.toByteArray());
+			String data = HttpUtil.getStringFromUrl(urlString);
+			return data;
 		} catch (Exception e) {
 			if (e instanceof IOException && e.getMessage().contains("code: 403")) {
 				return null;

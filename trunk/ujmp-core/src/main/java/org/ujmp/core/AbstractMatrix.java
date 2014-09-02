@@ -463,6 +463,24 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new Pinv(this).calcNew();
 	}
 
+	public Matrix pinv(int k) {
+		Matrix[] usv = svd(k);
+		Matrix u = usv[0];
+		Matrix s = usv[1];
+		Matrix v = usv[2];
+
+		for (int i = (int) Math.min(s.getRowCount(), s.getColumnCount()); --i >= 0;) {
+			double d = s.getAsDouble(i, i);
+			if (Math.abs(d) > UJMPSettings.getInstance().getTolerance()) {
+				s.setAsDouble(1.0 / d, i, i);
+			} else {
+				s.setAsDouble(0.0, i, i);
+			}
+		}
+
+		return v.mtimes(s.transpose()).mtimes(u.transpose());
+	}
+
 	public Matrix center(Ret returnType, int dimension, boolean ignoreNaN) {
 		return new Center(ignoreNaN, dimension, this).calc(returnType);
 	}
@@ -1812,6 +1830,37 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix[] svd() {
 		return SVD.INSTANCE.calc(this);
+	}
+
+	public final Matrix[] svd(int k) {
+
+		// how many iterations for self-multiplication, good values seem to be
+		// in the range 3 to 8
+		final int iterations = 3;
+
+		// self-multiplication
+		Matrix aSquared = this.mtimes(transpose());
+		for (int i = 0; i < iterations; i++) {
+			aSquared = aSquared.mtimes(aSquared);
+		}
+
+		// multiply with random matrix
+		Matrix o = Matrix.Factory.randn(getRowCount(), k);
+		Matrix y = aSquared.mtimes(this).mtimes(o);
+
+		// decompose
+		Matrix[] qr = y.qr();
+		Matrix q = qr[0];
+
+		// calculate low rank SVD
+		Matrix b = q.transpose().mtimes(this);
+		Matrix[] svd = b.svd();
+		Matrix uHat = svd[0];
+		Matrix s = svd[1];
+		Matrix v = svd[2];
+		Matrix u = q.mtimes(uHat);
+
+		return new Matrix[] { u, s, v };
 	}
 
 	public Matrix[] eig() {

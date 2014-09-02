@@ -87,6 +87,18 @@ public interface DecompositionDoubleCalculations {
 	public Matrix pinv();
 
 	/**
+	 * Calculates the pseudo inverse of the Matrix using a low rank
+	 * approximation of the Singular Value Decomposition. Considers only the k
+	 * largest singular values. This speeds up processing for large matrices.
+	 * 
+	 * @param k
+	 *            number of singular values to consider
+	 * 
+	 * @return Pseudo inverse of the Matrix
+	 */
+	public Matrix pinv(int k);
+
+	/**
 	 * Calculates a generalized inverse of the Matrix
 	 * 
 	 * @return Pseudo inverse of the Matrix
@@ -106,6 +118,18 @@ public interface DecompositionDoubleCalculations {
 	 * @return Singular value decomposition of the matrix.
 	 */
 	public Matrix[] svd();
+
+	/**
+	 * Calculates a low rank approximation of the singular value decomposition
+	 * of the matrix: A = U*S*V' but considers only the k largest singular
+	 * values. This speeds up processing for large matrices.
+	 * 
+	 * @param k
+	 *            number of singular values to consider
+	 * 
+	 * @return Singular value decomposition of the matrix.
+	 */
+	public Matrix[] svd(int k);
 
 	/**
 	 * Calculates the Eigen decomposition of the matrix.

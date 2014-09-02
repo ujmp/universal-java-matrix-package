@@ -34,11 +34,11 @@ public class RandomSimple extends Random {
 		this(System.nanoTime());
 	}
 
-	public RandomSimple(long seed) {
+	public RandomSimple(final long seed) {
 		x = seed;
 	}
 
-	public long nextLong() {
+	public final long nextLong() {
 		x ^= (x << 21);
 		x ^= (x >>> 35);
 		x ^= (x << 4);
@@ -46,8 +46,13 @@ public class RandomSimple extends Random {
 	}
 
 	@Override
-	protected int next(int bits) {
+	protected final int next(final int bits) {
 		return (int) (nextLong() >>> (64 - bits));
+	}
+
+	public synchronized void setSeed(long seed) {
+		this.x = seed;
+		super.setSeed(seed);
 	}
 
 }

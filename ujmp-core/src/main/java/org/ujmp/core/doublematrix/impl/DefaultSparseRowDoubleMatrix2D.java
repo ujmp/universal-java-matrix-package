@@ -52,6 +52,9 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		for (long[] c : m.availableCoordinates()) {
 			setDouble(m.getAsDouble(c), c);
 		}
+		if (m.getMetaData() != null) {
+			setMetaData(m.getMetaData().clone());
+		}
 	}
 
 	public double getDouble(long row, long column) {
@@ -76,11 +79,7 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	}
 
 	public boolean contains(long... coordinates) {
-		if (Coordinates.isSmallerThan(coordinates, size)) {
-			return getObject(coordinates) != null;
-		} else {
-			return false;
-		}
+		return getDouble(coordinates) != 0.0;
 	}
 
 	public void setDouble(double o, long row, long column) {

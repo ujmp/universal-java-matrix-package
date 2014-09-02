@@ -49,11 +49,11 @@ public abstract class MathUtil {
 
 	public static final double EPSILON = 1e-12;
 
-	private static final double ROOT2PI = Math.sqrt(2.0 * Math.PI);
+	public static final double ROOT2PI = Math.sqrt(2.0 * Math.PI);
 
-	private static final double LOG10 = Math.log(10.0);
+	public static final double LOG10 = Math.log(10.0);
 
-	private static final double LOG2 = Math.log(2.0);
+	public static final double LOG2 = Math.log(2.0);
 
 	private static final double COFGAMMALN[] = { 76.18009172947146, -86.50532032941677,
 			24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5 };
@@ -62,13 +62,13 @@ public abstract class MathUtil {
 
 	private static final ThreadLocal<Random> randoms = new ThreadLocal<Random>();
 
-	private static final Random random = new Random();
+	private static final Random random = new RandomSimple();
 
 	public static Random getRandom() {
 		if (UJMPSettings.getInstance().isUseMultiThreadedRandom()) {
 			Random random = randoms.get();
 			if (random == null) {
-				random = new Random();
+				random = new RandomSimple();
 				randoms.set(random);
 			}
 			return random;
@@ -1114,7 +1114,7 @@ public abstract class MathUtil {
 		double y = x;
 		double tmp = x + 5.5;
 		tmp -= (x + 0.5) * Math.log(tmp);
-		for (int j = 0; j < +5; j++) {
+		for (int j = 0; j < 5; j++) {
 			ser += COFGAMMALN[j] / ++y;
 		}
 		return -tmp + Math.log(ser * 2.5066282751072975 / x);

@@ -65,4 +65,14 @@ public class RandomMersenne extends Random {
 		return (int) (nextLong() >>> (64 - bits));
 	}
 
+	public synchronized void setSeed(long seed) {
+		u = seed ^ v;
+		nextLong();
+		v = u;
+		nextLong();
+		w = v;
+		nextLong();
+		super.setSeed(seed);
+	}
+
 }

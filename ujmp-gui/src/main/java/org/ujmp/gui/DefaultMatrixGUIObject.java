@@ -26,21 +26,21 @@ package org.ujmp.gui;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.Deque;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.list.ArrayIndexList;
 import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.UJMPTimer;
-import org.ujmp.gui.actions.SetLabelAction;
 import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
@@ -49,24 +49,28 @@ import org.ujmp.gui.util.ColorUtil;
 public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	private static final long serialVersionUID = -7974044446109857973L;
 
-	protected final Map<Coordinates, DataItem> dataCache = new SoftHashMap<Coordinates, DataItem>();
-	protected final Deque<Coordinates> todo;
+	protected final Map<Coordinates, DataItem> dataCache = Collections
+			.synchronizedMap(new SoftHashMap<Coordinates, DataItem>());
+	protected final List<Coordinates> todo = Collections.synchronizedList(new ArrayIndexList<Coordinates>());
 
 	protected volatile long rowCount = -1;
 	protected volatile long columnCount = -1;
 
-	private final LoadDataThread loadDataThread;
-	private final UpdateIconTimerTask updateIconTimerTask;
+	protected volatile boolean iconUpToDate = false;
+	protected volatile boolean rowCountUpToDate = false;
+	protected volatile boolean columnCountUpToDate = false;
 
-	protected Image matrixIcon = null;
+	private final UpdateIconTimerTask updateIconTimerTask;
+	private final LoadDataTask loadDataTask;
+
+	protected Image icon = null;
 
 	public DefaultMatrixGUIObject(Matrix matrix) {
 		super(matrix);
-		todo = new ConcurrentLinkedDeque<Coordinates>();
-		loadDataThread = new LoadDataThread(this);
-		loadDataThread.start();
 		updateIconTimerTask = new UpdateIconTimerTask(this);
-		UJMPTimer.newInstance().schedule(updateIconTimerTask, 5000, 5000);
+		loadDataTask = new LoadDataTask(this);
+		UJMPTimer.newInstance().schedule(loadDataTask, 50, 50);
+		UJMPTimer.newInstance().schedule(updateIconTimerTask, 300, 300);
 	}
 
 	public long getRowCount64() {
@@ -78,9 +82,7 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	}
 
 	public final void fireValueChanged() {
-		rowCount = -1;
-		columnCount = -1;
-		dataCache.clear();
+		iconUpToDate = false;
 		for (final Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener64) {
 				((TableModelListener64) o).tableChanged(new TableModelEvent64(this));
@@ -92,6 +94,7 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	}
 
 	public final void fireValueChanged(final long row, final long column, final Object value) {
+		iconUpToDate = false;
 		dataCache.put(Coordinates.wrap(row, column), new DataItem(value, ColorUtil.fromObject(value)));
 		for (final Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener64) {
@@ -105,18 +108,18 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		super.fireValueChanged();
 	}
 
-	public Object getValueAt(final int rowIndex, final int columnIndex) {
+	public synchronized Object getValueAt(final int rowIndex, final int columnIndex) {
 		return getValueAt((long) rowIndex, (long) columnIndex);
 	}
 
 	public synchronized Object getValueAt(long rowIndex, long columnIndex) {
 		Coordinates coordinates = Coordinates.wrap(rowIndex, columnIndex);
-		if (dataCache.containsKey(coordinates)) {
-			DataItem dataItem = dataCache.get(coordinates);
+		DataItem dataItem = dataCache.get(coordinates);
+		if (dataItem != null) {
 			return dataItem == null ? null : dataItem.getObject();
 		} else {
 			if (!todo.contains(coordinates)) {
-				todo.addFirst(coordinates);
+				todo.add(coordinates);
 			}
 		}
 		return GUIObject.PRELOADER;
@@ -124,18 +127,18 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 
 	public synchronized Color getColorAt(long rowIndex, long columnIndex) {
 		Coordinates coordinates = Coordinates.wrap(rowIndex, columnIndex);
-		if (dataCache.containsKey(coordinates)) {
-			DataItem dataItem = dataCache.get(coordinates);
+		DataItem dataItem = dataCache.get(coordinates);
+		if (dataItem != null) {
 			return dataItem == null ? null : dataItem.getColor();
 		} else {
 			if (!todo.contains(coordinates)) {
-				todo.addFirst(coordinates);
+				todo.add(coordinates);
 			}
 		}
 		return Color.LIGHT_GRAY;
 	}
 
-	public final void clear() {
+	public final synchronized void clear() {
 		matrix.clear();
 		fireValueChanged();
 	}
@@ -160,17 +163,17 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		return getColumnName((long) columnIndex);
 	}
 
-	public final void setValueAt(final Object aValue, final int rowIndex, final int columnIndex) {
+	public final synchronized void setValueAt(final Object aValue, final int rowIndex, final int columnIndex) {
 		setValueAt(aValue, (long) rowIndex, (long) columnIndex);
 	}
 
-	public final void setValueAt(final Object aValue, final long rowIndex, final long columnIndex) {
+	public final synchronized void setValueAt(final Object aValue, final long rowIndex, final long columnIndex) {
 		matrix.setAsObject(aValue, rowIndex, columnIndex);
 		fireValueChanged(rowIndex, columnIndex, aValue);
 	}
 
 	public Image getIcon() {
-		return matrixIcon;
+		return icon;
 	}
 
 	public final String getDescription() {
@@ -190,55 +193,6 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		}
 	}
 
-}
-
-class LoadDataThread extends Thread {
-	private static int id = 1;
-
-	public LoadDataThread(DefaultMatrixGUIObject realTimeMatrixGUIObject) {
-		super(new LoadDataRunnable(realTimeMatrixGUIObject));
-		this.setName("UJMPLoadDataThread" + id++);
-		this.setDaemon(true);
-	}
-}
-
-class LoadDataRunnable implements Runnable {
-
-	private final Deque<Coordinates> todo;
-	private final DefaultMatrixGUIObject matrixGUIObject;
-	private Matrix matrix;
-
-	public LoadDataRunnable(DefaultMatrixGUIObject matrixGUIObject) {
-		this.matrixGUIObject = matrixGUIObject;
-		this.todo = matrixGUIObject.todo;
-		this.matrix = matrixGUIObject.matrix;
-	}
-
-	public void run() {
-		while (true) {
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			if (matrixGUIObject.columnCount == -1) {
-				matrixGUIObject.columnCount = matrix.getColumnCount();
-				matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
-			}
-
-			if (matrixGUIObject.rowCount == -1) {
-				matrixGUIObject.rowCount = matrix.getRowCount();
-				matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
-			}
-
-			while (matrixGUIObject.rowCount != -1 && matrixGUIObject.columnCount != -1 && !todo.isEmpty()) {
-				Coordinates coordinates = todo.pollFirst();
-				Object object = matrix.getAsObject(coordinates.getLongCoordinates());
-				matrixGUIObject.fireValueChanged(coordinates.getRow(), coordinates.getColumn(), object);
-			}
-		}
-	}
 }
 
 class DataItem {
@@ -268,8 +222,45 @@ class UpdateIconTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
-		MatrixHeatmapRenderer.paintMatrix(image.getGraphics(), matrixGuiObject, 16, 16, 0, 0);
-		matrixGuiObject.matrixIcon = image;
+		if (!matrixGuiObject.iconUpToDate) {
+			matrixGuiObject.iconUpToDate = true;
+			BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
+			MatrixHeatmapRenderer.paintMatrix(image.getGraphics(), matrixGuiObject, 16, 16, 0, 0);
+			matrixGuiObject.icon = image;
+		}
+	}
+}
+
+class LoadDataTask extends TimerTask {
+	private final DefaultMatrixGUIObject matrixGUIObject;
+
+	public LoadDataTask(DefaultMatrixGUIObject matrixGUIObject) {
+		this.matrixGUIObject = matrixGUIObject;
+	}
+
+	@Override
+	public void run() {
+		if (!matrixGUIObject.columnCountUpToDate) {
+			matrixGUIObject.columnCount = matrixGUIObject.getMatrix().getColumnCount();
+			matrixGUIObject.columnCountUpToDate = true;
+			matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+		}
+
+		if (!matrixGUIObject.rowCountUpToDate) {
+			matrixGUIObject.rowCount = matrixGUIObject.getMatrix().getRowCount();
+			matrixGUIObject.rowCountUpToDate = true;
+			matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+		}
+
+		if (matrixGUIObject.rowCountUpToDate && matrixGUIObject.columnCountUpToDate && !matrixGUIObject.todo.isEmpty()) {
+			long t0 = System.currentTimeMillis();
+			while (matrixGUIObject.rowCountUpToDate && matrixGUIObject.columnCountUpToDate
+					&& !matrixGUIObject.todo.isEmpty() && System.currentTimeMillis() - t0 < 300) {
+				Coordinates coordinates = matrixGUIObject.todo.remove(matrixGUIObject.todo.size() - 1);
+				Object object = matrixGUIObject.getMatrix().getAsObject(coordinates.getLongCoordinates());
+				matrixGUIObject.dataCache.put(coordinates, new DataItem(object, ColorUtil.fromObject(object)));
+			}
+			matrixGUIObject.fireValueChanged();
+		}
 	}
 }

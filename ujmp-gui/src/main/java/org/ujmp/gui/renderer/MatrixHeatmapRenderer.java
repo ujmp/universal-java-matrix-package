@@ -148,7 +148,9 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 							final long mx = (long) Math.floor(x * stepsizeX);
 							final long my = (long) Math.floor(y * stepsizeY);
 							final Color col = matrixGUIObject.getColorAt(my, mx);
-							pixels[pos++] = (col.getRed() << 16) + (col.getGreen() << 8) + col.getBlue();
+							if (col != null) {
+								pixels[pos++] = (col.getRed() << 16) + (col.getGreen() << 8) + col.getBlue();
+							}
 						}
 					}
 				} else {
@@ -158,7 +160,9 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 						for (int col = 0; col < colCount; col++) {
 							final Color color = matrixGUIObject.getColorAt(row, col);
 							final int pos = getPosition(totalColumn, row, col);
-							pixels[pos] = (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
+							if (color != null) {
+								pixels[pos] = (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
+							}
 						}
 					}
 				}
@@ -233,10 +237,10 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 			long xStepSize = (long) Math.ceil((double) xSize / (double) width);
 			long yStepSize = (long) Math.ceil((double) ySize / (double) height);
 
-			int imgWidth = (int) (xSize / xStepSize);
-			int imgHeight = (int) (ySize / yStepSize);
+			int imgWidth = (int) Math.ceil(((double) xSize / (double) xStepSize));
+			int imgHeight = (int) Math.ceil(((double) ySize / (double) yStepSize));
 			imgWidth = imgWidth > 0 ? imgWidth : 1;
-			imgHeight = imgHeight > 0 ? imgWidth : 1;
+			imgHeight = imgHeight > 0 ? imgHeight : 1;
 
 			BufferedImage bufferedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2d = (Graphics2D) g;

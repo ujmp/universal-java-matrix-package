@@ -34,6 +34,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -177,6 +178,21 @@ public abstract class MathUtil {
 			probs[i] = Math.exp(logs[i]);
 			sum += probs[i];
 		}
+
+		if (sum == 0) {
+			Arrays.fill(probs, 0.0);
+			return probs;
+		}
+
+		// renormalize if necessary
+		while (sum < 1e-6) {
+			sum = 0;
+			for (int i = 0; i < probs.length; i++) {
+				probs[i] *= 10;
+				sum += probs[i];
+			}
+		}
+
 		for (int i = 0; i < probs.length; i++) {
 			probs[i] = probs[i] / sum;
 		}
@@ -244,6 +260,10 @@ public abstract class MathUtil {
 	 */
 	public static final int nextInteger(int min, int max) {
 		return min == max ? min : min + getRandom().nextInt(max - min);
+	}
+
+	public static final int nextInteger(int max) {
+		return getRandom().nextInt(max);
 	}
 
 	public static boolean isEventHappening(double probability) {

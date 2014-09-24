@@ -121,6 +121,8 @@ public class MatrixActions extends ArrayList<JComponent> {
 			add(new JMenuItem(new SqueezeAction(c, m, v)));
 			add(new JMenuItem(new FlipdimAction(c, m, v)));
 			add(new JSeparator());
+			add(new JMenuItem(new SparseFromNonZeros(c, m, v)));
+			add(new JSeparator());
 			add(new JMenuItem(new PlusAction(c, m, v)));
 			add(new JMenuItem(new MinusAction(c, m, v)));
 			add(new JMenuItem(new MultiplyAction(c, m, v)));

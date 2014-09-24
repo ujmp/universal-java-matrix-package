@@ -61,6 +61,7 @@ public class Sortrows extends AbstractObjectCalculation {
 		return getSource().getAsObject(index.getLong(coordinates[ROW], 0), coordinates[COLUMN]);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void createSortIndex() {
 		Matrix m = getSource();
 		long rowCount = m.getRowCount();
@@ -135,9 +136,10 @@ public class Sortrows extends AbstractObjectCalculation {
 			break;
 		}
 
-		Collections.sort(rows);
+		// cast to List seems to solve compile problems for some people
+		Collections.sort((List) rows);
 		if (reverse) {
-			Collections.reverse(rows);
+			Collections.reverse((List) rows);
 		}
 
 		LongMatrix2D indexMatrix = LongMatrix2D.Factory.zeros(rows.size(), 1);

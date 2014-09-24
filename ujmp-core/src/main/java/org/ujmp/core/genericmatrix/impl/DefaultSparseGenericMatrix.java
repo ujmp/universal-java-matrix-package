@@ -36,7 +36,7 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A> {
 	private static final long serialVersionUID = -7139128532871448340L;
 
-	private final Map<Coordinates, A> values = new HashMap<Coordinates, A>();
+	protected final Map<Coordinates, A> values = new HashMap<Coordinates, A>();
 
 	private long[] size;
 

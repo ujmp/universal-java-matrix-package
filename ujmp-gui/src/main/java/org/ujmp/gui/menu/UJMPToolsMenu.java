@@ -39,6 +39,7 @@ import org.ujmp.core.util.matrices.FileFormatMatrix;
 import org.ujmp.core.util.matrices.LocalhostMatrix;
 import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MemoryUsageMatrix;
+import org.ujmp.core.util.matrices.OperatingSystemMatrix;
 import org.ujmp.core.util.matrices.RandomSeedMatrix;
 import org.ujmp.core.util.matrices.RunningThreadsMatrix;
 import org.ujmp.core.util.matrices.SystemEnvironmentMatrix;
@@ -68,6 +69,7 @@ public class UJMPToolsMenu extends JMenu {
 		add(new JMenuItem(new ShowInFrameAction(component, "System Time", SystemTimeMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "Random Seed", RandomSeedMatrix.class)));
 		add(new JMenuItem(new ShowInFrameAction(component, "Available Processors", AvailableProcessorsMatrix.class)));
+		add(new JMenuItem(new ShowInFrameAction(component, "Operating System", OperatingSystemMatrix.class)));
 
 		if (JMathLib.isAvailable()) {
 			add(new JSeparator());

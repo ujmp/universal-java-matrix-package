@@ -25,8 +25,8 @@ package org.ujmp.core.util;
 
 public class Complex {
 
-	final double real;
-	final double img;
+	private final double real;
+	private final double img;
 
 	public Complex(final double real, final double img) {
 		this.real = real;

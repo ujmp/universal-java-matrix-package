@@ -76,9 +76,6 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 
 	private BufferedImage bufferedImage = null;
 
-	private static int PADDINGX = UIManager.getInt("Table.paddingX");
-	private static int PADDINGY = UIManager.getInt("Table.paddingY");
-
 	private long startRow = 0;
 	private long startCol = 0;
 
@@ -193,11 +190,11 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 	}
 
 	private long getRowPos(int y) {
-		return matrixGUIObject.getRowCount() * y / getHeight();
+		return matrixGUIObject.getRowCount64() * y / getHeight();
 	}
 
 	private long getColPos(int x) {
-		return matrixGUIObject.getColumnCount() * x / getWidth();
+		return matrixGUIObject.getColumnCount64() * x / getWidth();
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -257,18 +254,20 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 			g2d.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
 
 			if (!matrixGUIObject.getRowSelectionModel().isSelectionEmpty()) {
+				int paddingX = UIManager.getInt("Table.paddingX");
+				int paddingY = UIManager.getInt("Table.paddingY");
 				g2d.setColor(Color.BLUE);
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.3f));
 				long x1 = matrixGUIObject.getColumnSelectionModel().getMinSelectionIndex64();
 				long x2 = matrixGUIObject.getColumnSelectionModel().getMaxSelectionIndex64();
 				long y1 = matrixGUIObject.getRowSelectionModel().getMinSelectionIndex64();
 				long y2 = matrixGUIObject.getRowSelectionModel().getMaxSelectionIndex64();
-				double scaleX = (double) (getWidth() - PADDINGX - PADDINGX) / (double) matrixGUIObject.getColumnCount();
-				double scaleY = (double) (getHeight() - PADDINGY - PADDINGY) / (double) matrixGUIObject.getRowCount();
+				double scaleX = (double) (getWidth() - paddingX - paddingX) / (double) matrixGUIObject.getColumnCount();
+				double scaleY = (double) (getHeight() - paddingY - paddingY) / (double) matrixGUIObject.getRowCount();
 				g2d.setStroke(new BasicStroke(2.0f));
-				g2d.drawRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
+				g2d.drawRect((int) Math.floor(paddingX + x1 * scaleX), (int) Math.floor(paddingY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
-				g2d.fillRect((int) Math.floor(PADDINGX + x1 * scaleX), (int) Math.floor(PADDINGY + y1 * scaleY),
+				g2d.fillRect((int) Math.floor(paddingX + x1 * scaleX), (int) Math.floor(paddingY + y1 * scaleY),
 						(int) Math.ceil(scaleX + (x2 - x1) * scaleX), (int) Math.ceil(scaleY + (y2 - y1) * scaleY));
 			}
 		}

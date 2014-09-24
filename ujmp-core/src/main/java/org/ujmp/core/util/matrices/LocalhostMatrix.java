@@ -48,6 +48,7 @@ public class LocalhostMatrix extends RemoteHostMatrix {
 		super("localhost");
 		put("Available Processors", Matrix.Factory.availableProcessors());
 		put("Memory Usage", Matrix.Factory.memoryUsage());
+		put("Operating System", Matrix.Factory.operatingSystem());
 		put("Running Threads", Matrix.Factory.runningThreads());
 		put("System Environment", Matrix.Factory.systemEnvironment());
 		put("System Properties", Matrix.Factory.systemProperties());

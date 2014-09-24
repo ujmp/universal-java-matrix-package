@@ -23,17 +23,16 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.impl.DefaultSparseGenericMatrix;
 import org.ujmp.core.objectmatrix.SparseObjectMatrix;
-import org.ujmp.core.objectmatrix.factory.DefaultSparseObjectMatrixFactory;
 
 public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object> implements
 		SparseObjectMatrix {
 	private static final long serialVersionUID = -1130331544425728230L;
-
-	public static final DefaultSparseObjectMatrixFactory Factory = new DefaultSparseObjectMatrixFactory();
 
 	public DefaultSparseObjectMatrix(Matrix m) {
 		super(m, -1);
@@ -49,6 +48,27 @@ public class DefaultSparseObjectMatrix extends DefaultSparseGenericMatrix<Object
 
 	public final ValueType getValueType() {
 		return ValueType.OBJECT;
+	}
+
+	public static DefaultSparseObjectMatrix fromNonZeros(Matrix nonZeros) {
+		final Matrix max = nonZeros.max(Ret.NEW, Matrix.ROW);
+
+		final long valueCount = nonZeros.getRowCount();
+		final long rowCount = max.getAsLong(0, 0);
+		final long columnCount = max.getAsLong(0, 1);
+
+		DefaultSparseObjectMatrix m = new DefaultSparseObjectMatrix(rowCount, columnCount);
+
+		for (int r = 0; r < valueCount; r++) {
+			long[] c = new long[2];
+			c[0] = nonZeros.getAsLong(r, 0);
+			c[1] = nonZeros.getAsLong(r, 1);
+			Coordinates co = Coordinates.wrap(c);
+			Object val = nonZeros.getAsObject(r, 2);
+			m.values.put(co, val);
+		}
+
+		return m;
 	}
 
 }

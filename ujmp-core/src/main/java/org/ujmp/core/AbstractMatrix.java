@@ -62,6 +62,7 @@ import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
+import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
@@ -226,6 +227,24 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			}
 		} catch (Throwable t) {
 		}
+	}
+
+	public List<Matrix> getRowList() {
+		// not quite optimized
+		List<Matrix> list = new FastArrayList<Matrix>();
+		for (int r = 0; r < getRowCount(); r++) {
+			list.add(selectRows(Ret.LINK, r));
+		}
+		return list;
+	}
+
+	public List<Matrix> getColumnList() {
+		// not quite optimized
+		List<Matrix> list = new FastArrayList<Matrix>();
+		for (int c = 0; c < getColumnCount(); c++) {
+			list.add(selectRows(Ret.LINK, c));
+		}
+		return list;
 	}
 
 	protected AbstractMatrix(final long[] size) {

@@ -26,6 +26,7 @@ package org.ujmp.core.interfaces;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -120,6 +121,10 @@ public interface BasicMatrixProperties {
 	public double getAbsoluteValueSum();
 
 	public double getAbsoluteValueMean();
+
+	public List<Matrix> getRowList();
+
+	public List<Matrix> getColumnList();
 
 	public double getRMS();
 

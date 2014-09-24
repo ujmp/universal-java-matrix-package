@@ -383,7 +383,6 @@ public interface SVD<T> {
 			// Main iteration loop for the singular values.
 
 			final int pp = p - 1;
-			int iter = 0;
 
 			while (p > 0) {
 				int k, kase;
@@ -552,7 +551,6 @@ public interface SVD<T> {
 						}
 					}
 					e[p - 2] = f;
-					iter++;
 				}
 					break;
 
@@ -596,7 +594,6 @@ public interface SVD<T> {
 						}
 						k++;
 					}
-					iter = 0;
 					p--;
 				}
 					break;

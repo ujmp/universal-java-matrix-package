@@ -62,7 +62,7 @@ public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 	public double getDouble(long row, long column) {
 		final double x0 = xoffset - xsize / 2.0 + xsize * column / size[COLUMN];
 		final double y0 = yoffset - ysize / 2.0 + ysize * row / size[ROW];
-		Complex z0 = new Complex(x0, y0);
+		final Complex z0 = new Complex(x0, y0);
 		final double gray = iterations - calc(z0, iterations);
 		return (gray - (iterations / 2.0)) / (iterations / 2.0);
 	}
@@ -77,14 +77,13 @@ public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 
 	public void setDouble(double value, int row, int column) {
 		throw new UnsupportedOperationException();
-
 	}
 
 	public long[] getSize() {
 		return size;
 	}
 
-	public static final int calc(Complex c, int iterations) {
+	public static final int calc(final Complex c, final int iterations) {
 		Complex z = c;
 		for (int i = 0; i < iterations; i++) {
 			if (z.abs() > 2.0) {

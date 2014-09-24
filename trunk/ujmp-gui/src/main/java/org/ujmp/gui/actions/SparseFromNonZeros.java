@@ -21,25 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.matrix.factory;
+package org.ujmp.gui.actions;
 
-import org.ujmp.core.Matrix;
+import javax.swing.Action;
+import javax.swing.JComponent;
+
 import org.ujmp.core.SparseMatrix;
-import org.ujmp.core.doublematrix.impl.DefaultSparseRowDoubleMatrix2D;
-import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
+import org.ujmp.core.interfaces.GUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 
-public class DefaultSparseMatrixFactory extends AbstractMatrixFactory<SparseMatrix> {
+public class SparseFromNonZeros extends AbstractMatrixAction {
+	private static final long serialVersionUID = 1244539115578610795L;
 
-	public SparseMatrix zeros(long rows, long columns) {
-		return new DefaultSparseRowDoubleMatrix2D(rows, columns);
+	public SparseFromNonZeros(JComponent c, MatrixGUIObject matrix, GUIObject v) {
+		super(c, matrix, v);
+		putValue(Action.NAME, "Sparse from Non-Zeros...");
+		putValue(Action.SHORT_DESCRIPTION, "Creates a sparse matrix from non-zero entries");
 	}
 
-	public SparseMatrix zeros(long... size) {
-		return new DefaultSparseObjectMatrix(size);
-	}
-
-	public SparseMatrix sparse(Matrix nonZeros) {
-		return DefaultSparseObjectMatrix.fromNonZeros(nonZeros);
+	public Object call() {
+		try {
+			SparseMatrix m = SparseMatrix.Factory.sparse(getMatrix());
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

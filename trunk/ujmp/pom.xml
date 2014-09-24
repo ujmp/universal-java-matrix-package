@@ -7,8 +7,8 @@
 	<artifactId>ujmp</artifactId>
 	<version>0.3.0</version>
 	<packaging>pom</packaging>
-	<url>http://www.ujmp.org/</url>
 	<name>Universal Java Matrix Package</name>
+	<url>http://www.ujmp.org/</url>
 	<description>The Universal Java Matrix Package (UJMP) is an open source Java library which provides sparse and dense matrix classes, as well as a large number of calculations for linear algebra such as matrix multiplication or matrix inverse. Operations such as mean, correlation, standard deviation, replacement of missing values or the calculation of mutual information are supported, too. The Universal Java Matrix Package provides various visualization methods, import and export filters for a large number of file formats, and even the possibility to link to JDBC databases. Multi-dimensional matrices as well as generic matrices with a specified object type are supported and very large matrices can be handled even when they do not fit into memory.</description>
 
 	<parent>
@@ -24,8 +24,7 @@
 			<email>mail@holger-arndt.com</email>
 			<url>http://www.holger-arndt.com/</url>
 			<roles>
-				<role>architect</role>
-				<role>developer</role>
+				<role>administrator</role>
 			</roles>
 		</developer>
 	</developers>
@@ -34,7 +33,6 @@
 		<name>arndt.ai</name>
 		<url>http://arndt.ai</url>
 	</organization>
-
 
 	<licenses>
 		<license>

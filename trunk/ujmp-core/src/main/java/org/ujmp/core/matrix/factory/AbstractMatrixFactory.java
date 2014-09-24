@@ -106,6 +106,7 @@ import org.ujmp.core.util.matrices.IrisMatrix;
 import org.ujmp.core.util.matrices.LocalhostMatrix;
 import org.ujmp.core.util.matrices.MatrixLibraries;
 import org.ujmp.core.util.matrices.MemoryUsageMatrix;
+import org.ujmp.core.util.matrices.OperatingSystemMatrix;
 import org.ujmp.core.util.matrices.RandomSeedMatrix;
 import org.ujmp.core.util.matrices.RunningThreadsMatrix;
 import org.ujmp.core.util.matrices.SystemEnvironmentMatrix;
@@ -591,6 +592,10 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 
 	public final AvailableProcessorsMatrix availableProcessors() {
 		return new AvailableProcessorsMatrix();
+	}
+
+	public final OperatingSystemMatrix operatingSystem() {
+		return new OperatingSystemMatrix();
 	}
 
 	public final MemoryUsageMatrix memoryUsage() {

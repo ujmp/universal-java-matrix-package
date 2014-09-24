@@ -117,6 +117,11 @@ public class Concatenation extends AbstractObjectCalculation {
 							am = new DefaultSparseObjectMatrix(size);
 						} else {
 							am = (Matrix) a.get(Matrix.DIMENSIONMETADATA + d);
+							if (am == null) {
+								long[] size = Coordinates.copyOf(matrices[i].getSize());
+								size[d] = 1;
+								am = new DefaultSparseObjectMatrix(size);
+							}
 						}
 						annotationMatrices[i] = am;
 					}

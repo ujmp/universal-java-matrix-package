@@ -35,6 +35,7 @@ import javax.swing.SizeSequence;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.CellEditorListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.RowSorterListener;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableColumnModel;
@@ -137,7 +138,7 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	}
 
 	public void valueChanged(ListSelectionEvent64 e) {
-		throw new UnsupportedOperationException("not implemented");
+		valueChanged((ListSelectionEvent) e);
 	}
 
 	public void columnAdded(TableColumnModelEvent64 e) {

@@ -101,7 +101,7 @@ public abstract class AbstractFrame extends JFrame {
 
 		updateTitle();
 		timer = UJMPTimer.newInstance();
-		timer.scheduleAtFixedRate(updateTask, 5000, 5000);
+		timer.scheduleAtFixedRate(updateTask, 500, 500);
 	}
 
 	public final void setVisible(boolean state) {

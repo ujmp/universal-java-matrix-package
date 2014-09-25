@@ -32,16 +32,6 @@
 			<artifactId>ujmp-jung</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-ojalgo</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmathplot</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 	</dependencies>
 </project>

@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-	 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.ujmp</groupId>
@@ -42,9 +41,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://svn.code.sf.net/p/ujmp/code</url>
-		<connection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</connection>
-		<developerConnection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</developerConnection>
+		<url>https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/code</url>
+		<connection>scm:svn:https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/trunk</connection>
+		<developerConnection>scm:svn:https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/trunk</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -52,6 +51,38 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<modules>
+		<module>../ujmp-core</module>
+		<module>../ujmp-gui</module>
+		<module>../ujmp-colt</module>
+		<module>../ujmp-commonsmath</module>
+		<module>../ujmp-ehcache</module>
+		<module>../ujmp-ejml</module>
+		<module>../ujmp-elasticsearch</module>
+		<module>../ujmp-examples</module>
+		<module>../ujmp-hadoop</module>
+		<module>../ujmp-itext</module>
+		<module>../ujmp-jackcess</module>
+		<module>../ujmp-jama</module>
+		<module>../ujmp-jblas</module>
+		<module>../ujmp-jdbc</module>
+		<module>../ujmp-jfreechart</module>
+		<module>../ujmp-jmatio</module>
+		<module>../ujmp-jsch</module>
+		<module>../ujmp-jsci</module>
+		<module>../ujmp-jscience</module>
+		<module>../ujmp-jung</module>
+		<module>../ujmp-la4j</module>
+		<module>../ujmp-lucene</module>
+		<module>../ujmp-mail</module>
+		<module>../ujmp-mtj</module>
+		<module>../ujmp-ojalgo</module>
+		<module>../ujmp-parallelcolt</module>
+		<module>../ujmp-pdfbox</module>
+		<module>../ujmp-poi</module>
+		<module>../ujmp-vecmath</module>
+		<module>../ujmp-complete</module>
+	</modules>
 
 	<distributionManagement>
 		<snapshotRepository>
@@ -116,6 +147,16 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<noindex>true</noindex>
+					<notree>true</notree>
+					<additionalJOptions>
+						<additionalJOption>-J-Xss512M</additionalJOption>
+						<additionalJOption>-J-XX:MaxPermSize=512M</additionalJOption>
+					</additionalJOptions>
+					<maxmemory>1G</maxmemory>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -245,12 +286,6 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>jmatharray</groupId>
-				<artifactId>jmatharray</artifactId>
-				<version>2009-07-25</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
 				<groupId>com.healthmarketscience.jackcess</groupId>
 				<artifactId>jackcess</artifactId>
 				<version>2.0.2</version>
@@ -325,12 +360,6 @@
 				<groupId>net.sourceforge.jmatio</groupId>
 				<artifactId>jmatio</artifactId>
 				<version>1.0</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>jmathplot</groupId>
-				<artifactId>jmathplot</artifactId>
-				<version>20081031</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
@@ -491,51 +520,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<repositories>
-		<repository>
-			<id>java-matrix</id>
-			<name>java-matrix maven repository</name>
-			<url>http://java-matrix.org/maven2/</url>
-		</repository>
-	</repositories>
-
-	<modules>
-		<module>../ujmp-core</module>
-		<module>../ujmp-gui</module>
-		<module>../ujmp-colt</module>
-		<module>../ujmp-commonsmath</module>
-		<module>../ujmp-ehcache</module>
-		<module>../ujmp-ejml</module>
-		<module>../ujmp-hadoop</module>
-		<module>../ujmp-itext</module>
-		<module>../ujmp-jackcess</module>
-		<module>../ujmp-jama</module>
-		<module>../ujmp-jblas</module>
-		<module>../ujmp-jbpcafill</module>
-		<module>../ujmp-jdbc</module>
-		<module>../ujmp-jfreechart</module>
-		<module>../ujmp-jlinalg</module>
-		<module>../ujmp-jmatharray</module>
-		<module>../ujmp-jmathplot</module>
-		<module>../ujmp-jmatio</module>
-		<module>../ujmp-jmatrices</module>
-		<module>../ujmp-jsch</module>
-		<module>../ujmp-jsci</module>
-		<module>../ujmp-jscience</module>
-		<module>../ujmp-jung</module>
-		<module>../ujmp-la4j</module>
-		<module>../ujmp-lsimpute</module>
-		<module>../ujmp-lucene</module>
-		<module>../ujmp-mail</module>
-		<module>../ujmp-mantissa</module>
-		<module>../ujmp-mtj</module>
-		<module>../ujmp-ojalgo</module>
-		<module>../ujmp-parallelcolt</module>
-		<module>../ujmp-pdfbox</module>
-		<module>../ujmp-poi</module>
-		<module>../ujmp-sst</module>
-		<module>../ujmp-vecmath</module>
-	</modules>
 
 </project>

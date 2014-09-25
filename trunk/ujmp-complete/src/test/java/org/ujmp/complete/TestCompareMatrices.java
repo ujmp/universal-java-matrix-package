@@ -31,16 +31,12 @@ import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.jblas.JBlasDenseDoubleMatrix2D;
-import org.ujmp.jlinalg.JLinAlgDenseDoubleMatrix2D;
-import org.ujmp.jmatrices.JMatricesDenseDoubleMatrix2D;
 import org.ujmp.jsci.JSciDenseDoubleMatrix2D;
 import org.ujmp.jscience.JScienceDenseDoubleMatrix2D;
-import org.ujmp.mantissa.MantissaDenseDoubleMatrix2D;
 import org.ujmp.mtj.MTJDenseDoubleMatrix2D;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtDenseDoubleMatrix2D;
 import org.ujmp.parallelcolt.ParallelColtSparseDoubleMatrix2D;
-import org.ujmp.sst.SSTDenseDoubleMatrix2D;
 import org.ujmp.vecmath.VecMathDenseDoubleMatrix2D;
 
 public class TestCompareMatrices {
@@ -69,24 +65,15 @@ public class TestCompareMatrices {
 		ALLFLOATMATRIXCLASSES.add(CommonsMathArrayDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(CommonsMathBlockDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JamaDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(JLinAlgDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JBlasDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(JMatricesDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JSciDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(JScienceDenseDoubleMatrix2D.class);
-		ALLFLOATMATRIXCLASSES.add(MantissaDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(MTJDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(OjalgoDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtDenseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(ParallelColtSparseDoubleMatrix2D.class);
 		ALLFLOATMATRIXCLASSES.add(VecMathDenseDoubleMatrix2D.class);
-
-		// some libraries do not support Java 5
-		if (!"1.5".equals(System.getProperty("java.specification.version"))) {
-			ALLFLOATMATRIXCLASSES.add(SSTDenseDoubleMatrix2D.class);
-			ALLFLOATMATRIXCLASSES.add(EJMLDenseDoubleMatrix2D.class);
-		}
-
+		ALLFLOATMATRIXCLASSES.add(EJMLDenseDoubleMatrix2D.class);
 	}
 
 	private Matrix getMatrix(Class<? extends Matrix> mclass, Matrix m) {

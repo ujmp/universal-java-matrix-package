@@ -27,7 +27,6 @@ import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class JamaDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<JamaDenseDoubleMatrix2D> {
-	private static final long serialVersionUID = 4390694808314618187L;
 
 	public JamaDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new JamaDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));

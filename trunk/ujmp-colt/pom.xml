@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.3.0</version>
+		<version>0.3.0-SNAPSHOT</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>colt</groupId>
 			<artifactId>colt</artifactId>
-		</dependency>		
+		</dependency>
 
 		<dependency>
 			<groupId>org.ujmp</groupId>

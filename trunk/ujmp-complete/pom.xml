@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.ujmp</groupId>
 		<artifactId>ujmp</artifactId>
-		<version>0.3.0</version>
+		<version>0.3.0-SNAPSHOT</version>
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
@@ -589,7 +589,6 @@
 		<module>../ujmp-jblas</module>
 		<module>../ujmp-jbpcafill</module>
 		<module>../ujmp-jdbc</module>
-		<module>../ujmp-jexcelapi</module>
 		<module>../ujmp-jfreechart</module>
 		<module>../ujmp-jlinalg</module>
 		<module>../ujmp-jmatharray</module>

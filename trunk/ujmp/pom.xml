@@ -5,10 +5,10 @@
 
 	<groupId>org.ujmp</groupId>
 	<artifactId>ujmp</artifactId>
-	<version>0.3.0</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Universal Java Matrix Package</name>
-	<url>http://www.ujmp.org/</url>
+	<url>http://ujmp.org/</url>
 	<description>The Universal Java Matrix Package (UJMP) is an open source Java library which provides sparse and dense matrix classes, as well as a large number of calculations for linear algebra such as matrix multiplication or matrix inverse. Operations such as mean, correlation, standard deviation, replacement of missing values or the calculation of mutual information are supported, too. The Universal Java Matrix Package provides various visualization methods, import and export filters for a large number of file formats, and even the possibility to link to JDBC databases. Multi-dimensional matrices as well as generic matrices with a specified object type are supported and very large matrices can be handled even when they do not fit into memory.</description>
 
 	<parent>
@@ -22,7 +22,7 @@
 			<id>arndt</id>
 			<name>Holger Arndt</name>
 			<email>mail@holger-arndt.com</email>
-			<url>http://www.holger-arndt.com/</url>
+			<url>http://holger-arndt.com/</url>
 			<roles>
 				<role>administrator</role>
 			</roles>
@@ -31,7 +31,7 @@
 
 	<organization>
 		<name>arndt.ai</name>
-		<url>http://arndt.ai</url>
+		<url>http://arndt.ai/</url>
 	</organization>
 
 	<licenses>
@@ -53,6 +53,17 @@
 	</properties>
 
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<resources>
 			<resource>
@@ -66,6 +77,7 @@
 		</resources>
 
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -78,6 +90,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -98,6 +111,48 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -122,6 +177,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -135,10 +191,13 @@
 						<descriptor>src/assemble/libs.xml</descriptor>
 					</descriptors>
 					<archive>
-						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+						<manifest>
+							<mainClass>org.ujmp.gui.UJMP</mainClass>
+						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
+
 		</plugins>
 
 		<pluginManagement>

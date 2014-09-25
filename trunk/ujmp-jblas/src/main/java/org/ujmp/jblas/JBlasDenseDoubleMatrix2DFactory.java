@@ -27,7 +27,6 @@ import org.ujmp.core.doublematrix.factory.AbstractDenseDoubleMatrix2DFactory;
 import org.ujmp.core.util.MathUtil;
 
 public class JBlasDenseDoubleMatrix2DFactory extends AbstractDenseDoubleMatrix2DFactory<JBlasDenseDoubleMatrix2D> {
-	private static final long serialVersionUID = -9135903625272489384L;
 
 	public JBlasDenseDoubleMatrix2D zeros(long rows, long columns) {
 		return new JBlasDenseDoubleMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));

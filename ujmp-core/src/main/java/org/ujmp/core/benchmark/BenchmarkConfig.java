@@ -80,7 +80,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runJScienceDenseDoubleMatrix2D", false);
 		put("runJSciDenseDoubleMatrix2D", false);
 		put("runJMathArrayDenseDoubleMatrix2D", false);
-		put("runJLinAlgDenseDoubleMatrix2D", false);
 		put("runParallelColtDenseDoubleMatrix2D", true);
 		put("runColtDenseDoubleMatrix2D", true);
 		put("runSSTDenseDoubleMatrix2D", false);
@@ -419,22 +418,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 		put("runJSciDenseDoubleMatrix2D", runJSciDenseDoubleMatrix2D);
 	}
 
-	public boolean isRunJMathArrayDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runJMathArrayDenseDoubleMatrix2D"));
-	}
-
-	public void setRunJMathArrayDenseDoubleMatrix2D(boolean runJMathArrayDenseDoubleMatrix2D) {
-		put("runJMathArrayDenseDoubleMatrix2D", runJMathArrayDenseDoubleMatrix2D);
-	}
-
-	public boolean isRunJLinAlgDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runJLinAlgDenseDoubleMatrix2D"));
-	}
-
-	public void setRunJLinAlgDenseDoubleMatrix2D(boolean runJLinAlgDenseDoubleMatrix2D) {
-		put("runJLinAlgDenseDoubleMatrix2D", runJLinAlgDenseDoubleMatrix2D);
-	}
-
 	public boolean isRunParallelColtDenseDoubleMatrix2D() {
 		return MathUtil.getBoolean(get("runParallelColtDenseDoubleMatrix2D"));
 	}
@@ -449,14 +432,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public void setRunColtDenseDoubleMatrix2D(boolean runColtDenseDoubleMatrix2D) {
 		put("runColtDenseDoubleMatrix2D", runColtDenseDoubleMatrix2D);
-	}
-
-	public boolean isRunSSTDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runSSTDenseDoubleMatrix2D"));
-	}
-
-	public void setRunSSTDenseDoubleMatrix2D(boolean runSSTDenseDoubleMatrix2D) {
-		put("runSSTDenseDoubleMatrix2D", runSSTDenseDoubleMatrix2D);
 	}
 
 	public boolean isRunCommonsMathArrayDenseDoubleMatrix2D() {
@@ -499,22 +474,6 @@ public class BenchmarkConfig extends DefaultMapMatrix<String, Object> {
 
 	public void setRunJampackDenseDoubleMatrix2D(boolean runJampackDenseDoubleMatrix2D) {
 		put("runJampackDenseDoubleMatrix2D", runJampackDenseDoubleMatrix2D);
-	}
-
-	public boolean isRunJMatricesDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runJMatricesDenseDoubleMatrix2D"));
-	}
-
-	public void setRunJMatricesDenseDoubleMatrix2D(boolean runJMatricesDenseDoubleMatrix2D) {
-		put("runJMatricesDenseDoubleMatrix2D", runJMatricesDenseDoubleMatrix2D);
-	}
-
-	public boolean isRunMantissaDenseDoubleMatrix2D() {
-		return MathUtil.getBoolean(get("runMantissaDenseDoubleMatrix2D"));
-	}
-
-	public void setRunMantissaDenseDoubleMatrix2D(boolean runMantissaDenseDoubleMatrix2D) {
-		put("runMantissaDenseDoubleMatrix2D", runMantissaDenseDoubleMatrix2D);
 	}
 
 	public boolean isRunVecMathDenseDoubleMatrix2D() {

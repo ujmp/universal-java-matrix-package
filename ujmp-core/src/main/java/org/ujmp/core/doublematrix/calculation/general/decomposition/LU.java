@@ -195,7 +195,6 @@ public interface LU<T> {
 		 * 
 		 * @param A
 		 *            Rectangular matrix
-		 * @return Structure to access L, U and piv.
 		 */
 		public LUMatrix(Matrix A) {
 

@@ -218,8 +218,6 @@ public interface QR<T> {
 		 * 
 		 * @param A
 		 *            Rectangular matrix
-		 * @return Structure to access R and the Householder vectors and compute
-		 *         Q.
 		 */
 
 		public QRMatrix(Matrix A) {

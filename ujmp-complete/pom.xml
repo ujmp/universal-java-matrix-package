@@ -105,13 +105,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jbpcafill</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -126,35 +119,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jlinalg</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatharray</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmathplot</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatio</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatrices</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -196,13 +161,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-lsimpute</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-lucene</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -211,13 +169,6 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-mail</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-mantissa</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -253,13 +204,6 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-poi</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-sst</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
@@ -383,14 +327,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jbpcafill</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jdbc</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -407,39 +343,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jlinalg</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatharray</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmathplot</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-jmatio</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-jmatrices</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -487,14 +391,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-lsimpute</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-lucene</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -504,14 +400,6 @@
 		<dependency>
 			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-mail</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-mantissa</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -559,14 +447,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-sst</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
 			<artifactId>ujmp-vecmath</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
@@ -575,41 +455,4 @@
 		</dependency>
 	</dependencies>
 
-	<modules>
-		<module>../ujmp-core</module>
-		<module>../ujmp-gui</module>
-		<module>../ujmp-colt</module>
-		<module>../ujmp-commonsmath</module>
-		<module>../ujmp-ehcache</module>
-		<module>../ujmp-ejml</module>
-		<module>../ujmp-hadoop</module>
-		<module>../ujmp-itext</module>
-		<module>../ujmp-jackcess</module>
-		<module>../ujmp-jama</module>
-		<module>../ujmp-jblas</module>
-		<module>../ujmp-jbpcafill</module>
-		<module>../ujmp-jdbc</module>
-		<module>../ujmp-jfreechart</module>
-		<module>../ujmp-jlinalg</module>
-		<module>../ujmp-jmatharray</module>
-		<module>../ujmp-jmathplot</module>
-		<module>../ujmp-jmatio</module>
-		<module>../ujmp-jmatrices</module>
-		<module>../ujmp-jsch</module>
-		<module>../ujmp-jsci</module>
-		<module>../ujmp-jscience</module>
-		<module>../ujmp-jung</module>
-		<module>../ujmp-la4j</module>
-		<module>../ujmp-lsimpute</module>
-		<module>../ujmp-lucene</module>
-		<module>../ujmp-mail</module>
-		<module>../ujmp-mantissa</module>
-		<module>../ujmp-mtj</module>
-		<module>../ujmp-ojalgo</module>
-		<module>../ujmp-parallelcolt</module>
-		<module>../ujmp-pdfbox</module>
-		<module>../ujmp-poi</module>
-		<module>../ujmp-sst</module>
-		<module>../ujmp-vecmath</module>
-	</modules>
 </project>

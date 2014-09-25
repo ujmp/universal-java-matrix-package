@@ -162,7 +162,6 @@ public interface SVD<T> {
 		 * 
 		 * @param Arg
 		 *            Rectangular matrix
-		 * @return Structure to access U, S and V.
 		 */
 
 		public SVDMatrix(Matrix Arg) {
@@ -184,7 +183,6 @@ public interface SVD<T> {
 		 *            If true generate the U matrix
 		 * @param wantv
 		 *            If true generate the V matrix
-		 * @return Structure to access U, S and V.
 		 */
 
 		public SVDMatrix(Matrix Arg, boolean thin, boolean wantu, boolean wantv) {

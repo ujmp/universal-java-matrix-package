@@ -84,16 +84,39 @@
 		<module>../ujmp-complete</module>
 	</modules>
 
-	<distributionManagement>
-		<snapshotRepository>
+	<profiles>
+		<profile>
 			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>sourceforge</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>sourceforge</id>
+					<name>SourceForge</name>
+					<url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>sourceforge</id>
+					<name>SourceForge</name>
+					<url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/releases</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 
 	<build>
 		<resources>
@@ -151,6 +174,7 @@
 					<failOnError>false</failOnError>
 					<noindex>true</noindex>
 					<notree>true</notree>
+					<skip>true</skip>
 					<additionalJOptions>
 						<additionalJOption>-J-Xss512M</additionalJOption>
 						<additionalJOption>-J-XX:MaxPermSize=512M</additionalJOption>
@@ -224,13 +248,29 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4.1</version>
 				<configuration>
-					<descriptors>
-						<descriptor>src/assemble/complete.xml</descriptor>
-						<descriptor>src/assemble/sources.xml</descriptor>
-						<descriptor>src/assemble/with-deps.xml</descriptor>
-						<descriptor>src/assemble/deps.xml</descriptor>
-						<descriptor>src/assemble/libs.xml</descriptor>
-					</descriptors>
+					<configuration>
+						<outputDirectory>${basedir}/target/classes</outputDirectory>
+						<includeEmptyDirs>true</includeEmptyDirs>
+						<resources>
+							<resource>
+								<directory>${basedir}/src/main/resources</directory>
+								<filtering>false</filtering>
+							</resource>
+						</resources>
+					</configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<manifestEntries>
+						<SCM-Revision>${buildNumber}</SCM-Revision>
+						<Project-Version>${project.version}</Project-Version>
+						<Build-Date>${maven.build.timestamp}</Build-Date>
+						<Project-Name>${project.artifactId}-${project.version}</Project-Name>
+					</manifestEntries>
+					<!-- <descriptors> <descriptor>src/assemble/complete.xml</descriptor> 
+						<descriptor>src/assemble/sources.xml</descriptor> <descriptor>src/assemble/with-deps.xml</descriptor> 
+						<descriptor>src/assemble/deps.xml</descriptor> <descriptor>src/assemble/libs.xml</descriptor> 
+						</descriptors> -->
 					<archive>
 						<manifest>
 							<mainClass>org.ujmp.gui.UJMP</mainClass>

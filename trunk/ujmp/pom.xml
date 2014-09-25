@@ -500,4 +500,42 @@
 		</repository>
 	</repositories>
 
+	<modules>
+		<module>../ujmp-core</module>
+		<module>../ujmp-gui</module>
+		<module>../ujmp-colt</module>
+		<module>../ujmp-commonsmath</module>
+		<module>../ujmp-ehcache</module>
+		<module>../ujmp-ejml</module>
+		<module>../ujmp-hadoop</module>
+		<module>../ujmp-itext</module>
+		<module>../ujmp-jackcess</module>
+		<module>../ujmp-jama</module>
+		<module>../ujmp-jblas</module>
+		<module>../ujmp-jbpcafill</module>
+		<module>../ujmp-jdbc</module>
+		<module>../ujmp-jfreechart</module>
+		<module>../ujmp-jlinalg</module>
+		<module>../ujmp-jmatharray</module>
+		<module>../ujmp-jmathplot</module>
+		<module>../ujmp-jmatio</module>
+		<module>../ujmp-jmatrices</module>
+		<module>../ujmp-jsch</module>
+		<module>../ujmp-jsci</module>
+		<module>../ujmp-jscience</module>
+		<module>../ujmp-jung</module>
+		<module>../ujmp-la4j</module>
+		<module>../ujmp-lsimpute</module>
+		<module>../ujmp-lucene</module>
+		<module>../ujmp-mail</module>
+		<module>../ujmp-mantissa</module>
+		<module>../ujmp-mtj</module>
+		<module>../ujmp-ojalgo</module>
+		<module>../ujmp-parallelcolt</module>
+		<module>../ujmp-pdfbox</module>
+		<module>../ujmp-poi</module>
+		<module>../ujmp-sst</module>
+		<module>../ujmp-vecmath</module>
+	</modules>
+
 </project>

@@ -41,9 +41,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/code</url>
-		<connection>scm:svn:https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/trunk</connection>
-		<developerConnection>scm:svn:https://svn.code.sf.net/p/ujmp/code/tags/ujmp-0.3.0/trunk</developerConnection>
+		<url>https://svn.code.sf.net/p/ujmp/code</url>
+		<connection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</connection>
+		<developerConnection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 

@@ -49,7 +49,15 @@ public class ImportMatrixFromClipboardAction extends AbstractObjectAction {
 					"Import Matrix", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, FileFormat.values(),
 					FileFormat.CSV)];
 
-			Matrix m = Matrix.Factory.importFromClipboard(fileFormat);
+			Matrix m = null;
+			switch (fileFormat) {
+			case CSV:
+				m = Matrix.Factory.importFrom().clipboard().asCSV();
+				break;
+			default:
+				throw new RuntimeException("fileformat not yet supported: " + fileFormat);
+			}
+
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

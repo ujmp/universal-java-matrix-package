@@ -344,10 +344,6 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return ImportMatrix.fromFile(format, file, parameters);
 	}
 
-	public final Matrix importFromClipboard(FileFormat format, Object... parameters) {
-		return ImportMatrix.fromClipboard(format, parameters);
-	}
-
 	public final DenseDoubleMatrix2D createVectorForClass(int classID, int classCount) {
 		DenseDoubleMatrix2D matrix = DenseDoubleMatrix2D.Factory.zeros(classCount, 1);
 		matrix.setAsDouble(1.0, classID, 0);

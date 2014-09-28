@@ -47,7 +47,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public static final MTJDenseDoubleMatrix2DFactory Factory = new MTJDenseDoubleMatrix2DFactory();
 
-	private transient DenseMatrix matrix = null;
+	private transient DenseMatrix matrix;
 
 	public MTJDenseDoubleMatrix2D(DenseMatrix m) {
 		super(m.numRows(), m.numColumns());
@@ -147,10 +147,6 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public double getDouble(int row, int column) {
 		return matrix.getData()[(row + column * matrix.numRows())];
-	}
-
-	public long[] getSize() {
-		return new long[] { matrix.numRows(), matrix.numColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {

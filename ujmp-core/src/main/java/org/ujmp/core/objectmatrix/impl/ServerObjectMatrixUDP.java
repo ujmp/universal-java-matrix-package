@@ -68,7 +68,8 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 	}
 
 	public long[] getSize() {
-		return matrix.getSize();
+		size = matrix.getSize();
+		return size;
 	}
 
 	public double getAsDouble(long... coordinates) {

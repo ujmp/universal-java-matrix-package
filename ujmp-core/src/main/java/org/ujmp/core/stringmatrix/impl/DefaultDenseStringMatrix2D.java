@@ -33,7 +33,6 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 	private static final long serialVersionUID = 1643931435178952984L;
 
 	private final String[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -41,7 +40,6 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		super(m.getRowCount(), m.getColumnCount());
 		this.rows = MathUtil.longToInt(m.getRowCount());
 		this.cols = MathUtil.longToInt(m.getColumnCount());
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseStringMatrix2D) {
 			String[] v = ((DefaultDenseStringMatrix2D) m).values;
 			this.values = new String[v.length];
@@ -61,7 +59,6 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		super(rows, columns);
 		this.rows = rows;
 		this.cols = columns;
-		this.size = new long[] { rows, columns };
 		this.values = new String[rows * columns];
 	}
 
@@ -69,20 +66,7 @@ public class DefaultDenseStringMatrix2D extends AbstractDenseStringMatrix2D impl
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public String getString(long row, long column) {

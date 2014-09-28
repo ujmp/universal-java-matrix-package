@@ -23,7 +23,6 @@
 
 package org.ujmp.jsci;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
@@ -72,10 +71,6 @@ public class JSciDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public double getDouble(int row, int column) {
 		return matrix.getElement(row, column);
-	}
-
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.rows(), matrix.columns() };
 	}
 
 	public void setDouble(double value, long row, long column) {

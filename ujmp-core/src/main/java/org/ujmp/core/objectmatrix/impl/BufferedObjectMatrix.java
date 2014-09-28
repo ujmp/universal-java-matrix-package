@@ -83,7 +83,8 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 	}
 
 	public synchronized long[] getSize() {
-		return inputBuffer.getSize();
+		size = inputBuffer.getSize();
+		return size;
 	}
 
 	public synchronized Object getObject(long... coordinates) {

@@ -258,19 +258,19 @@
 							</resource>
 						</resources>
 					</configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
 					<manifestEntries>
 						<SCM-Revision>${buildNumber}</SCM-Revision>
 						<Project-Version>${project.version}</Project-Version>
 						<Build-Date>${maven.build.timestamp}</Build-Date>
 						<Project-Name>${project.artifactId}-${project.version}</Project-Name>
 					</manifestEntries>
-					<!-- <descriptors> <descriptor>src/assemble/complete.xml</descriptor> 
-						<descriptor>src/assemble/sources.xml</descriptor> <descriptor>src/assemble/with-deps.xml</descriptor> 
-						<descriptor>src/assemble/deps.xml</descriptor> <descriptor>src/assemble/libs.xml</descriptor> 
-						</descriptors> -->
+					<descriptors>
+						<descriptor>src/assemble/complete.xml</descriptor>
+						<descriptor>src/assemble/sources.xml</descriptor>
+						<descriptor>src/assemble/with-deps.xml</descriptor>
+						<descriptor>src/assemble/deps.xml</descriptor>
+						<descriptor>src/assemble/libs.xml</descriptor>
+					</descriptors>
 					<archive>
 						<manifest>
 							<mainClass>org.ujmp.gui.UJMP</mainClass>

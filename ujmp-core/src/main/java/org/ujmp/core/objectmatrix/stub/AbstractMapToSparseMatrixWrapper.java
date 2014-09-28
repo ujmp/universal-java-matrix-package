@@ -41,8 +41,6 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 
 	private int maximumNumberOfEntries = -1;
 
-	private final long[] size;
-
 	public AbstractMapToSparseMatrixWrapper(Map<Coordinates, Object> map, Matrix m) {
 		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
@@ -60,10 +58,6 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 
 	public final Map<Coordinates, Object> getMap() {
 		return values;
-	}
-
-	public final long[] getSize() {
-		return size;
 	}
 
 	public final Map<Coordinates, Object> getWrappedObject() {

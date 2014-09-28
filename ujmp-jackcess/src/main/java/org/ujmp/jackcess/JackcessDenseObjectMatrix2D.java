@@ -48,9 +48,9 @@ import com.healthmarketscience.jackcess.TableBuilder;
 public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D implements Closeable {
 	private static final long serialVersionUID = -6342663672866315180L;
 
-	private Database database = null;
+	private final Database database;
 
-	private Table table = null;
+	private final Table table;
 
 	private List<? extends Column> columns = null;
 
@@ -150,11 +150,9 @@ public class JackcessDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D imp
 	}
 
 	public long[] getSize() {
-		if (table == null) {
-			return Coordinates.ZERO2D;
-		} else {
-			return new long[] { table.getRowCount(), table.getColumnCount() };
-		}
+		size[ROW] = table.getRowCount();
+		size[COLUMN] = table.getColumnCount();
+		return size;
 	}
 
 	public void close() throws IOException {

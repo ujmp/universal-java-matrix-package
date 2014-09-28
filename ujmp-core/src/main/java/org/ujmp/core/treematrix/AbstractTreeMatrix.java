@@ -83,7 +83,9 @@ public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D
 	}
 
 	public final long[] getSize() {
-		return new long[] { getObjectList().size(), getObjectList().size() };
+		size[ROW] = getObjectList().size();
+		size[COLUMN] = getObjectList().size();
+		return size;
 	}
 
 	public final double getDouble(int row, int column) {

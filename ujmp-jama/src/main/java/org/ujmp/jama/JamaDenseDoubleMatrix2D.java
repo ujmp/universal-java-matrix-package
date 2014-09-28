@@ -107,10 +107,6 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		return matrix.get(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.set((int) row, (int) column, value);
 	}

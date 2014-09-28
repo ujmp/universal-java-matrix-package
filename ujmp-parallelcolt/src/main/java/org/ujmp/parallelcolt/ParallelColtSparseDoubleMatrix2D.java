@@ -74,10 +74,6 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 		return matrix.getQuick(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.rows(), matrix.columns() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.setQuick((int) row, (int) column, value);
 	}

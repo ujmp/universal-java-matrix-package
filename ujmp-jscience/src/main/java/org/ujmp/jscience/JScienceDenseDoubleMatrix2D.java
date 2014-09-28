@@ -36,7 +36,6 @@ import org.jscience.mathematics.vector.Float64Matrix;
 import org.jscience.mathematics.vector.Float64Vector;
 import org.jscience.mathematics.vector.LUDecomposition;
 import org.jscience.mathematics.vector.SparseMatrix;
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
@@ -48,7 +47,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public static final JScienceDenseDoubleMatrix2DFactory Factory = new JScienceDenseDoubleMatrix2DFactory();
 
-	private transient Float64Matrix matrix = null;
+	private transient Float64Matrix matrix;
 
 	private Boolean transposed = false;
 
@@ -98,11 +97,6 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public double getDouble(int row, int column) {
 		return matrix.get(row, column).doubleValue();
-	}
-
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D
-				: new long[] { matrix.getNumberOfRows(), matrix.getNumberOfColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {

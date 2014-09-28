@@ -59,18 +59,6 @@ public class ArrayDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
-	}
-
 	public long getLong(long row, long column) {
 		return values[(int) row][(int) column];
 	}

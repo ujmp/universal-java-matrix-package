@@ -66,8 +66,6 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements 
 
 	private File file = null;
 
-	private long[] size;
-
 	private long offset = 0;
 
 	private int bitsPerValue = 1;
@@ -455,10 +453,6 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements 
 			} catch (Throwable e) {
 			}
 		}
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public boolean isReadOnly() {

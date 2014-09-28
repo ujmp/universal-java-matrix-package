@@ -72,10 +72,6 @@ public class JMathArrayDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D i
 		return matrix[row][column];
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.length, matrix.length == 0 ? 0 : matrix[0].length };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix[(int) row][(int) column] = value;
 	}

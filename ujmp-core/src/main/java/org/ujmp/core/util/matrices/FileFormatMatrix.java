@@ -61,8 +61,4 @@ public class FileFormatMatrix extends AbstractDenseObjectMatrix2D {
 	public void setObject(Object value, int row, int column) {
 	}
 
-	public long[] getSize() {
-		return new long[] { FileFormat.values().length, 3 };
-	}
-
 }

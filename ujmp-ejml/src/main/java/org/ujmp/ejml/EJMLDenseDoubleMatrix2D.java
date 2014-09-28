@@ -95,10 +95,6 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		return matrix.get(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.numRows, matrix.numCols };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.set(MathUtil.longToInt(row), MathUtil.longToInt(column), value);
 	}

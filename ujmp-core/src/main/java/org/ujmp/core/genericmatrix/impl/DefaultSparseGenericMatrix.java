@@ -38,8 +38,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	protected final Map<Coordinates, A> values = new HashMap<Coordinates, A>();
 
-	private long[] size;
-
 	private int maximumNumberOfEntries = -1;
 
 	public DefaultSparseGenericMatrix(Matrix m) {
@@ -48,7 +46,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	public DefaultSparseGenericMatrix(Matrix m, int maximumNumberOfEntries) {
 		super(m.getSize());
-		this.size = Coordinates.copyOf(m.getSize());
 		this.maximumNumberOfEntries = maximumNumberOfEntries;
 		for (long[] c : m.availableCoordinates()) {
 			setObject(m.getAsObject(c), c);
@@ -61,10 +58,6 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 	public DefaultSparseGenericMatrix(long... size) {
 		super(size);
 		this.size = Coordinates.copyOf(size);
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public void setSize(long... size) {

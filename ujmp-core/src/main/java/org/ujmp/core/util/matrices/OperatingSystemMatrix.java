@@ -62,10 +62,6 @@ public class OperatingSystemMatrix extends AbstractDenseObjectMatrix2D {
 		}
 	};
 
-	public long[] getSize() {
-		return new long[] { 6, 1 };
-	}
-
 	public boolean isReadOnly() {
 		return true;
 	}

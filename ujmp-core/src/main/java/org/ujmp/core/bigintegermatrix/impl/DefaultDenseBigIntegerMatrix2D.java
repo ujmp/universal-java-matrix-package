@@ -33,7 +33,6 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 	private static final long serialVersionUID = 443424906231157395L;
 
 	private final BigInteger[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -41,7 +40,6 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 		super(m);
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseBigIntegerMatrix2D) {
 			BigInteger[] v = ((DefaultDenseBigIntegerMatrix2D) m).values;
 			this.values = new BigInteger[v.length];
@@ -58,7 +56,6 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = new BigInteger[rows * cols];
 		Arrays.fill(values, BigInteger.ZERO);
 	}
@@ -67,20 +64,7 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public BigInteger getBigInteger(long row, long column) {

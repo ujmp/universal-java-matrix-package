@@ -41,15 +41,12 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	private final int[] tileSize = new int[] { 50, 50 };
 
-	private long[] size = null;
-
 	private final Map<Coordinates, ObjectMatrix2D> values;
 
 	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, long rows,
 			long columns) {
 		super(rows, columns);
 		this.values = map;
-		this.size = new long[] { rows, columns };
 	}
 
 	public AbstractMapToTiledMatrix2DWrapper(Map<Coordinates, ObjectMatrix2D> map, Matrix source) {
@@ -113,10 +110,6 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 			getMap().put(c, m);
 		}
 		m.setObject(o, row % tileSize[ROW], column % tileSize[COLUMN]);
-	}
-
-	public final long[] getSize() {
-		return size;
 	}
 
 	public final int[] getTileSize() {

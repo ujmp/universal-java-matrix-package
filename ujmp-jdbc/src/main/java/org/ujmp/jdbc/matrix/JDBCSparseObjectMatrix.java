@@ -65,8 +65,6 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 
 	private final String columnForValue;
 
-	private final long[] size;
-
 	public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException, IOException, SQLException {
 		this(size, "jdbc:hsqldb:" + File.createTempFile("hsqldbtemp", "").getAbsolutePath() + ";shutdown=true", "SA",
 				"", "matrixTable", "valueColumn", createColumnNames(size));
@@ -285,10 +283,6 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public synchronized long[] getSize() {
-		return size;
 	}
 
 	public synchronized void close() throws IOException {

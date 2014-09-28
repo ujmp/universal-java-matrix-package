@@ -54,7 +54,9 @@ public abstract class AbstractMapMatrixList<K, V> extends AbstractDenseGenericMa
 	public abstract List<MapMatrix<K, V>> getList();
 
 	public long[] getSize() {
-		return new long[] { getList().size(), getKeys().size() };
+		size[ROW] = getList().size();
+		size[COLUMN] = getKeys().size();
+		return size;
 	}
 
 	public V getObject(long row, long column) {

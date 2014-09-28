@@ -39,8 +39,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		Wrapper<Map<Long, Matrix>> {
 	private static final long serialVersionUID = -5291604525500706427L;
 
-	private long[] size = new long[] { 1, 1 };
-
 	private Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
 	public DefaultSparseRowObjectMatrix2D(long rows, long columns) {
@@ -108,10 +106,6 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 
 	public void setObject(Object o, int row, int column) {
 		setObject(o, (long) row, (long) column);
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public void setSize(long... size) {

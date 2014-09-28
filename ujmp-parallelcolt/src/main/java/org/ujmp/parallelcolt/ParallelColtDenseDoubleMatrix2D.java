@@ -112,10 +112,6 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 		return matrix.getQuick(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.rows(), matrix.columns() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.setQuick((int) row, (int) column, value);
 	}

@@ -31,8 +31,6 @@ import org.ujmp.core.util.io.FileUtil;
 public class TextContentMatrix extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = 8281354495947325089L;
 
-	private final long[] size = new long[] { 1, 1 };
-
 	private final File file;
 
 	private String content = null;
@@ -54,10 +52,6 @@ public class TextContentMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public void setString(String value, long row, long column) {
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 }

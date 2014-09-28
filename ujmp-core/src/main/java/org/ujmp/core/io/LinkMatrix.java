@@ -119,7 +119,8 @@ class DelayedContentMatrix extends AbstractObjectMatrix {
 	}
 
 	public long[] getSize() {
-		return getMatrix().getSize();
+		size = getMatrix().getSize();
+		return size;
 	}
 
 }

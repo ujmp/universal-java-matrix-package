@@ -67,10 +67,6 @@ public class SSTDenseIntMatrix extends AbstractDenseIntMatrix implements Wrapper
 
 	}
 
-	public long[] getSize() {
-		return MathUtil.toLongArray(data.dims());
-	}
-
 	public Iterable<long[]> allCoordinates() {
 		return new CoordinateIterator(this.getSize());
 	}

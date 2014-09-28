@@ -30,7 +30,6 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -8455710302874238051L;
 
 	private final long[] data;
-	private final long[] size;
 	private int entryCount = 0;
 
 	public IndexedSparseDoubleMatrix2D(Matrix m) {
@@ -39,7 +38,6 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 
 	public IndexedSparseDoubleMatrix2D(long rows, long columns) {
 		super(rows, columns);
-		this.size = new long[] { rows, columns };
 		this.data = new long[300];
 	}
 
@@ -140,10 +138,6 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 
 	public boolean contains(long... coordinates) {
 		return getDouble(coordinates) == 0.0;
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 }

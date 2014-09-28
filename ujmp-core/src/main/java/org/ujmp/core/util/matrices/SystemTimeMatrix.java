@@ -52,10 +52,6 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 		}
 	};
 
-	public long[] getSize() {
-		return new long[] { 1, 1 };
-	}
-
 	public long getLong(long row, long column) {
 		return System.currentTimeMillis();
 	}

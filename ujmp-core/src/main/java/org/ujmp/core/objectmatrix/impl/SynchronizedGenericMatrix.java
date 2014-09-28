@@ -38,7 +38,8 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 	}
 
 	public synchronized long[] getSize() {
-		return matrix.getSize();
+		size = matrix.getSize();
+		return size;
 	}
 
 	public synchronized double getAsDouble(long... coordinates) {

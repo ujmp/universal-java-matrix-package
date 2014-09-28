@@ -32,7 +32,6 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = 4312852021159459897L;
 
 	private final Object[] values;
-	private final long[] size;
 	private final int length;
 
 	public DefaultDenseObjectMatrixMultiD(Matrix m) {
@@ -62,10 +61,6 @@ public class DefaultDenseObjectMatrixMultiD extends AbstractDenseObjectMatrix {
 		this.size = Coordinates.copyOf(size);
 		this.length = (int) Coordinates.product(size);
 		this.values = v;
-	}
-
-	public final long[] getSize() {
-		return size;
 	}
 
 	public final Object getObject(long... pos) {

@@ -55,10 +55,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	private Connection connection = null;
 
-	private long[] size = null;
-
 	public AbstractDenseJDBCMatrix2D(String url, String sqlStatement, String username, String password) {
-		super(1, 1);
+		super(0, 0);
 		this.url = url;
 		this.username = username;
 		this.password = password;
@@ -66,7 +64,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 	}
 
 	public AbstractDenseJDBCMatrix2D(Connection connection, String sqlStatement) {
-		super(1, 1);
+		super(0, 0);
 		this.connection = connection;
 		this.sqlStatement = sqlStatement;
 	}
@@ -142,7 +140,7 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 
 	public synchronized long[] getSize() {
 		try {
-			if (size == null) {
+			if (getRowCount() == 0) {
 				long rowCount = 0;
 				PreparedStatement ps = getConnection()
 						.prepareStatement("SELECT COUNT(1) FROM (" + sqlStatement + ") t");
@@ -168,7 +166,8 @@ public abstract class AbstractDenseJDBCMatrix2D extends AbstractDenseObjectMatri
 				}
 				rsCols.close();
 				ps.close();
-				size = new long[] { rowCount, columnCount };
+				size[ROW] = rowCount;
+				size[COLUMN] = columnCount;
 			}
 			return size;
 		} catch (SQLException e) {

@@ -73,10 +73,6 @@ public class JMatricesDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D im
 		return matrix.get(row + 1, column + 1);
 	}
 
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.rows(), matrix.cols() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.set((int) row + 1, (int) column + 1, value);
 	}

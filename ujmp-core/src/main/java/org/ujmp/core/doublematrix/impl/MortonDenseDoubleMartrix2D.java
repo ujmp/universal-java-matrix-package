@@ -37,10 +37,9 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 	public static final int[] TABLE0 = new int[32767];
 	public static final int[] TABLE1 = new int[32767];
 
-	private double[] values = null;
-	private long[] size = null;
-	private int rows = 0;
-	private int cols = 0;
+	private double[] values;
+	private int rows;
+	private int cols;
 
 	static {
 		init();
@@ -50,7 +49,6 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		super(m.getRowCount(), m.getColumnCount());
 		this.rows = MathUtil.longToInt(m.getRowCount());
 		this.cols = MathUtil.longToInt(m.getColumnCount());
-		this.size = new long[] { rows, cols };
 		int length = (int) Math.pow(Math.pow(2, Math.ceil(MathUtil.log2(Math.max(rows, cols)))), 2);
 		if (m instanceof MortonDenseDoubleMartrix2D) {
 			double[] v = ((MortonDenseDoubleMartrix2D) m).values;
@@ -83,18 +81,6 @@ public class MortonDenseDoubleMartrix2D extends AbstractDenseDoubleMatrix2D {
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public final long[] getSize() {
-		return size;
-	}
-
-	public final long getRowCount() {
-		return rows;
-	}
-
-	public final long getColumnCount() {
-		return cols;
 	}
 
 	public final double getDouble(long row, long column) {

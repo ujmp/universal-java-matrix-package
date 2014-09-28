@@ -31,7 +31,7 @@ import org.ujmp.core.util.StringUtil;
 public class ArrayDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = -4292004796378125964L;
 
-	private String[][] values = null;
+	private final String[][] values;
 
 	public ArrayDenseStringMatrix2D(String string) {
 		super(0, 0);
@@ -62,18 +62,6 @@ public class ArrayDenseStringMatrix2D extends AbstractDenseStringMatrix2D {
 	public ArrayDenseStringMatrix2D(String[]... values) {
 		super(values.length, values[0].length);
 		this.values = values;
-	}
-
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public String getString(long row, long column) {

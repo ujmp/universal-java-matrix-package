@@ -186,7 +186,9 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 	}
 
 	public final long[] getSize() {
-		return new long[] { getNodeCount(), getNodeCount() };
+		size[ROW] = getNodeCount();
+		size[COLUMN] = getNodeCount();
+		return size;
 	}
 
 	public final E getObject(long row, long column) {

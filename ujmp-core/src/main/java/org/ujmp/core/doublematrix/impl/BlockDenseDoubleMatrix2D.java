@@ -109,9 +109,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	/** Layout of matrix and blocks. */
 	protected BlockMatrixLayout layout;
 
-	/** Dimensions of the matrix. */
-	private final long[] size;
-
 	public BlockDenseDoubleMatrix2D(final double[][] values) {
 		this(values.length, values[0].length, BlockOrder.ROWMAJOR);
 		fill(values);
@@ -372,10 +369,6 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 
 	public double getDouble(long row, long column) {
 		return this.getDouble((int) row, (int) column);
-	}
-
-	public long[] getSize() {
-		return this.size;
 	}
 
 	/**

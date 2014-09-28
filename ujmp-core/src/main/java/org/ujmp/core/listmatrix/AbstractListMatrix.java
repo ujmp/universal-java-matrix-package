@@ -99,7 +99,8 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 	public abstract int size();
 
 	public final long[] getSize() {
-		return new long[] { size(), 1 };
+		size[ROW] = size();
+		return size;
 	}
 
 	public final boolean contains(Object o) {

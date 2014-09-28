@@ -24,6 +24,7 @@
 package org.ujmp.core.objectmatrix.calculation;
 
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
+import org.ujmp.core.util.matrices.LocalhostMatrix;
 
 public class WelcomeMatrix extends DefaultDenseObjectMatrix2D {
 	private static final long serialVersionUID = -4570303224080406364L;
@@ -33,7 +34,7 @@ public class WelcomeMatrix extends DefaultDenseObjectMatrix2D {
 		setLabel("Welcome to UJMP");
 
 		setAsString("Please visit", 2, 3);
-		setAsString("http://www.ujmp.org/", 2, 4);
+		setAsString("http://ujmp.org/", 2, 4);
 		setAsString("for more info", 2, 5);
 
 		setAsString("Welcome", 3, 1);
@@ -44,10 +45,10 @@ public class WelcomeMatrix extends DefaultDenseObjectMatrix2D {
 		setAsString("Package", 3, 6);
 		setAsString("UJMP", 3, 7);
 
-		setAsDouble(100, 5, 2);
-		setAsDouble(100, 5, 6);
+		setAsObject("Click on the nose...", 5, 2);
+		setAsObject("...to find out what UJMP can do", 5, 6);
 
-		setAsDouble(1, 7, 4);
+		setAsObject(LocalhostMatrix.getInstance(), 7, 4);
 
 		setAsDouble(-1, 9, 2);
 		setAsDouble(-1, 9, 6);

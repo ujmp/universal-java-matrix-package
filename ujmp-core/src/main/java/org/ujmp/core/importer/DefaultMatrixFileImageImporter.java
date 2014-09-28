@@ -34,7 +34,7 @@ import org.ujmp.core.importer.format.MatrixGIFImportFormat;
 import org.ujmp.core.importer.format.MatrixJPGImportFormat;
 import org.ujmp.core.importer.format.MatrixPNGImportFormat;
 import org.ujmp.core.intmatrix.impl.ImageMatrix;
-import org.ujmp.core.stringmatrix.impl.CSVMatrix;
+import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter implements
 		MatrixJPGImportFormat, MatrixPNGImportFormat, MatrixBMPImportFormat, MatrixGIFImportFormat,
@@ -93,7 +93,7 @@ public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter i
 	}
 
 	public Matrix asCSV(String columnSeparator, String lineSeparator) throws IOException {
-		Matrix tmp = new CSVMatrix(getFile());
+		Matrix tmp = new DenseCSVStringMatrix2D(getFile());
 		if (getTargetMatrix() == null) {
 			return tmp;
 		} else {

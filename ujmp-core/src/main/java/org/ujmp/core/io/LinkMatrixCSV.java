@@ -27,12 +27,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.stringmatrix.impl.CSVMatrix;
+import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class LinkMatrixCSV {
 
 	public static Matrix toFile(File file, Object... parameters) throws IOException {
-		return new CSVMatrix(file, parameters);
+		return new DenseCSVStringMatrix2D(file);
 	}
 
 }

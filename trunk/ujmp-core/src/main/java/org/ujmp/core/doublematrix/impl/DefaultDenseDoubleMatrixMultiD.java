@@ -32,7 +32,6 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMul
 	private static final long serialVersionUID = 2875235320924485070L;
 
 	private final double[] values;
-	private final long[] size;
 	private final int length;
 
 	public DefaultDenseDoubleMatrixMultiD(Matrix m) {
@@ -65,10 +64,6 @@ public class DefaultDenseDoubleMatrixMultiD extends AbstractDenseDoubleMatrixMul
 		this.size = Coordinates.copyOf(size);
 		this.length = (int) Coordinates.product(size);
 		this.values = v;
-	}
-
-	public final long[] getSize() {
-		return size;
 	}
 
 	public final double getDouble(long... pos) {

@@ -36,8 +36,6 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 
 	private final Map<Coordinates, Object> values = new SoftHashMap<Coordinates, Object>();
 
-	private long[] size = null;
-
 	public VolatileSparseObjectMatrix(Matrix m) {
 		super(m.getSize());
 		this.size = Coordinates.copyOf(m.getSize());
@@ -53,10 +51,6 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 	public VolatileSparseObjectMatrix(long... size) {
 		super(size);
 		this.size = Coordinates.copyOf(size);
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public Object getObject(long... coordinates) {

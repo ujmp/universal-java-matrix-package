@@ -152,7 +152,8 @@ public class UJMPPluginsMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public long[] getSize() {
-		return matrix.getSize();
+		size = matrix.getSize();
+		return size;
 	}
 
 }

@@ -70,8 +70,4 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		bufferedImage.setRGB(column, row, value);
 	}
 
-	public long[] getSize() {
-		return new long[] { bufferedImage.getHeight(), bufferedImage.getWidth() };
-	}
-
 }

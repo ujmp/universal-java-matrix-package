@@ -40,7 +40,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 
 	public static final SSTDenseDoubleMatrix2DFactory Factory = new SSTDenseDoubleMatrix2DFactory();
 
-	private transient RealArray data = null;
+	private transient RealArray data;
 
 	public SSTDenseDoubleMatrix2D(RealArray data) {
 		super(data.dims()[0], data.dims()[1]);
@@ -79,9 +79,7 @@ public class SSTDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		data.set(value, rows, columns);
 	}
 
-	public long[] getSize() {
-		return MathUtil.toLongArray(data.dims());
-	}
+
 
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();

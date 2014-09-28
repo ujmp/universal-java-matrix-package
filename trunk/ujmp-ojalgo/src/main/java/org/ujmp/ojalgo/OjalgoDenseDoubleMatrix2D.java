@@ -150,10 +150,6 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		return matrix.doubleValue((int) row, (int) column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.getRowDim(), matrix.getColDim() };
-	}
-
 	public PrimitiveDenseStore getWrappedObject() {
 		return matrix;
 	}

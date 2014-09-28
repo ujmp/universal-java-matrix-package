@@ -104,10 +104,6 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 		return matrix.get(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.getRows(), matrix.getColumns() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.put((int) row, (int) column, value);
 	}

@@ -34,7 +34,7 @@ import shared.array.ObjectArray;
 public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object> implements Wrapper<ObjectArray<Object>> {
 	private static final long serialVersionUID = 2319673263310965476L;
 
-	private transient ObjectArray<Object> data = null;
+	private transient ObjectArray<Object> data;
 
 	public SSTDenseObjectMatrix(ObjectArray<Object> data) {
 		super(MathUtil.toLongArray(data.dims()));
@@ -61,10 +61,6 @@ public class SSTDenseObjectMatrix extends AbstractDenseGenericMatrix<Object> imp
 	public void setObject(Object value, long... coordinates) {
 		data.set(value, MathUtil.toIntArray(coordinates));
 
-	}
-
-	public long[] getSize() {
-		return MathUtil.toLongArray(data.dims());
 	}
 
 	public Iterable<long[]> allCoordinates() {

@@ -31,19 +31,16 @@ import org.ujmp.core.interfaces.HasFloatArray;
 public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implements HasFloatArray {
 	private static final long serialVersionUID = -5449462775185759895L;
 
-	private float[] values = null;
+	private float[] values;
 
-	private long[] size = null;
+	private int rows;
 
-	private int rows = 0;
-
-	private int cols = 0;
+	private int cols;
 
 	public DefaultDenseFloatMatrix2D(Matrix m) {
 		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseFloatMatrix2D) {
 			float[] v = ((DefaultDenseFloatMatrix2D) m).values;
 			this.values = new float[v.length];
@@ -60,7 +57,6 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 		super(size);
 		this.rows = (int) size[ROW];
 		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
 		this.values = new float[rows * cols];
 	}
 
@@ -68,20 +64,7 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public float getFloat(long row, long column) {

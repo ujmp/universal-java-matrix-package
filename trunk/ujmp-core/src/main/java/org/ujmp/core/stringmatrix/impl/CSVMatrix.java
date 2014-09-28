@@ -90,7 +90,9 @@ public class CSVMatrix extends AbstractDenseStringMatrix2D {
 	}
 
 	public long[] getSize() {
-		return new long[] { sli.getLineCount(), columnCount };
+		size[ROW] = sli.getLineCount();
+		size[COLUMN] = columnCount;
+		return size;
 	}
 
 	public String getString(long row, long column) {

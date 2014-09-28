@@ -50,8 +50,6 @@ public class TimeSeriesMatrix extends AbstractDenseDoubleMatrix2D {
 
 	private final SortedListSet<Long> timestampsListSet = new SortedListSet<Long>();
 
-	private long[] size = new long[2];
-
 	public TimeSeriesMatrix() {
 		super(1, 1);
 	}

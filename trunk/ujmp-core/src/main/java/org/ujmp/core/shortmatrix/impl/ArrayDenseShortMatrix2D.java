@@ -29,7 +29,7 @@ import org.ujmp.core.shortmatrix.stub.AbstractDenseShortMatrix2D;
 public class ArrayDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 	private static final long serialVersionUID = 4034565357457805099L;
 
-	private short[][] values = null;
+	private final short[][] values;
 
 	public ArrayDenseShortMatrix2D(Matrix m) {
 		super(m.getSize());
@@ -57,18 +57,6 @@ public class ArrayDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 	public ArrayDenseShortMatrix2D(long... size) {
 		super(size);
 		values = new short[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public short getShort(long row, long column) {

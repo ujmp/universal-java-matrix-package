@@ -59,10 +59,6 @@ public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
 		}
 	}
 
-	public long[] getSize() {
-		return new long[] { 3, 1 };
-	}
-
 	public void setLong(long value, long row, long column) {
 	}
 

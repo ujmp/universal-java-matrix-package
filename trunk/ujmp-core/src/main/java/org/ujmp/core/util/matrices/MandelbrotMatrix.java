@@ -29,7 +29,6 @@ import org.ujmp.core.util.Complex;
 public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 	private static final long serialVersionUID = -1420083425681944756L;
 
-	private final long[] size;
 	private final double xoffset;
 	private final double yoffset;
 	private final double xsize;
@@ -51,7 +50,6 @@ public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 	public MandelbrotMatrix(int rows, int columns, int iterations, double xoffset, double yoffset,
 			double xsize, double ysize) {
 		super(rows, columns);
-		this.size = new long[] { rows, columns };
 		this.iterations = iterations;
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
@@ -77,10 +75,6 @@ public class MandelbrotMatrix extends AbstractDenseDoubleMatrix2D {
 
 	public void setDouble(double value, int row, int column) {
 		throw new UnsupportedOperationException();
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public static final int calc(final Complex c, final int iterations) {

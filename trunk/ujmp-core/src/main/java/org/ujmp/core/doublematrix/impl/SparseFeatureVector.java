@@ -74,7 +74,8 @@ public class SparseFeatureVector extends AbstractSparseDoubleMatrix2D {
 	}
 
 	public long[] getSize() {
-		return new long[] { dictionary.size(), 1 };
+		size[ROW] = dictionary.size();
+		return size;
 	}
 
 	public double getFeatureValue(String featureName) {

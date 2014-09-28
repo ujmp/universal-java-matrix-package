@@ -75,10 +75,6 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return matrix.getElement(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.getNumRow(), matrix.getNumCol() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.setElement((int) row, (int) column, value);
 	}

@@ -33,10 +33,6 @@ public class AvailableProcessorsMatrix extends AbstractDenseIntMatrix2D {
 		setLabel("Available Processors");
 	}
 
-	public long[] getSize() {
-		return new long[] { 1, 1 };
-	}
-
 	public int getInt(long row, long column) {
 		return Runtime.getRuntime().availableProcessors();
 	}

@@ -83,10 +83,6 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		return matrix.getQuick(row, column);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.rows(), matrix.columns() };
-	}
-
 	// must be synchronized for sparse matrix implementation
 	public synchronized void setDouble(double value, long row, long column) {
 		matrix.setQuick(MathUtil.longToInt(row), MathUtil.longToInt(column), value);

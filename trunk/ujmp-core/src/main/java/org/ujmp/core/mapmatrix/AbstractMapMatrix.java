@@ -49,7 +49,8 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 	}
 
 	public synchronized final long[] getSize() {
-		return new long[] { size(), 2 };
+		size[ROW] = size();
+		return size;
 	}
 
 	public synchronized final Object getObject(long row, long column) {

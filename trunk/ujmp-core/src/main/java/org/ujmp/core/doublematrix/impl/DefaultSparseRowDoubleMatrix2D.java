@@ -37,8 +37,6 @@ import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
 public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -5291604525500706427L;
 
-	private long[] size = new long[] { 1, 1 };
-
 	private final Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
 
 	public DefaultSparseRowDoubleMatrix2D(long rows, long columns) {
@@ -94,10 +92,6 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 
 	public void setDouble(double o, int row, int column) {
 		setDouble(o, (long) row, (long) column);
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public void setSize(long... size) {

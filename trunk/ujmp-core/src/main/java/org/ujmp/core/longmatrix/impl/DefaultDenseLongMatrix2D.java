@@ -32,7 +32,6 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 	private static final long serialVersionUID = 3453563407578179206L;
 
 	private final long[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -40,7 +39,6 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseLongMatrix2D) {
 			long[] v = ((DefaultDenseLongMatrix2D) m).values;
 			this.values = new long[v.length];
@@ -57,7 +55,6 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 		super(size);
 		this.rows = (int) size[ROW];
 		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
 		this.values = new long[rows * cols];
 	}
 
@@ -65,20 +62,7 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public long getLong(long row, long column) {

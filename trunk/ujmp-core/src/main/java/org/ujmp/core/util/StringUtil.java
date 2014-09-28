@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.list.FastArrayList;
 
 public abstract class StringUtil {
 
@@ -656,5 +657,53 @@ public abstract class StringUtil {
 		string = string.replaceFirst("^z", "Z");
 
 		return string;
+	}
+
+	public static List<String> split(final String string) {
+		return split(string, '\t');
+	}
+
+	public static List<String> split(final String string, final char columnSeparator) {
+		return split(string, columnSeparator, '\0');
+	}
+
+	public static List<String> split(final String string, final char columnSeparator,
+			final char enclosingCharacter) {
+		FastArrayList<String> strings = new FastArrayList<String>();
+		boolean active = true;
+		int startPos = 0;
+		for (int i = 0; i < string.length(); i++) {
+			char c = string.charAt(i);
+			if (c == enclosingCharacter) {
+				active = !active;
+			} else if (active) {
+				if (c == '\\') {
+					i++;
+				} else if (c == columnSeparator) {
+					if (i - startPos > 1 && string.charAt(startPos) == enclosingCharacter
+							&& string.charAt(i - 1) == enclosingCharacter) {
+						strings.add(string.substring(startPos + 1, i - 1));
+					} else {
+						strings.add(string.substring(startPos, i));
+					}
+					startPos = i + 1;
+				}
+			}
+		}
+		int endPos = string.length();
+
+		if (string.charAt(endPos - 1) == '\n' && string.charAt(endPos - 2) == '\r') {
+			endPos -= 2;
+		} else if (string.charAt(endPos - 1) == '\n') {
+			endPos--;
+		}
+
+		if (endPos - startPos > 1 && string.charAt(startPos) == enclosingCharacter
+				&& string.charAt(endPos - 1) == enclosingCharacter) {
+			strings.add(string.substring(startPos + 1, endPos - 1));
+		} else {
+			strings.add(string.substring(startPos, endPos));
+		}
+		return strings;
 	}
 }

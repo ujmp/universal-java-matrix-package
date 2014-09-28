@@ -33,7 +33,6 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 	private static final long serialVersionUID = 5579846181111172177L;
 
 	private final char[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -41,7 +40,6 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		super(m.getRowCount(), m.getColumnCount());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseCharMatrix2D) {
 			char[] v = ((DefaultDenseCharMatrix2D) m).values;
 			this.values = new char[v.length];
@@ -58,7 +56,6 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		super(rows, columns);
 		this.rows = rows;
 		this.cols = columns;
-		this.size = new long[] { rows, cols };
 		this.values = new char[rows * cols];
 	}
 
@@ -66,20 +63,7 @@ public class DefaultDenseCharMatrix2D extends AbstractDenseCharMatrix2D implemen
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public char getChar(long row, long column) {

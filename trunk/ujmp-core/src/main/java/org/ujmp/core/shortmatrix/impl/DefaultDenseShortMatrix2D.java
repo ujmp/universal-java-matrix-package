@@ -32,7 +32,6 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 	private static final long serialVersionUID = 3387495964006716189L;
 
 	private final short[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -40,7 +39,6 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		super(m.getSize());
 		this.rows = (int) m.getRowCount();
 		this.cols = (int) m.getColumnCount();
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseShortMatrix2D) {
 			short[] v = ((DefaultDenseShortMatrix2D) m).values;
 			this.values = new short[v.length];
@@ -57,7 +55,6 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		super(size);
 		this.rows = (int) size[ROW];
 		this.cols = (int) size[COLUMN];
-		this.size = new long[] { rows, cols };
 		this.values = new short[rows * cols];
 	}
 
@@ -65,20 +62,7 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 		super(new long[] { rows, cols });
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public short getShort(long row, long column) {

@@ -16,11 +16,8 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 	private int capacity;
 	private int valueCount;
 
-	private long[] size;
-
 	public DefaultSparseDoubleVector1D(DefaultSparseDoubleVector1D source) {
 		super(source.getRowCount(), source.getColumnCount());
-		this.size = new long[] { source.getRowCount(), source.getColumnCount() };
 		this.valueCount = source.valueCount;
 		this.capacity = source.capacity;
 		this.indices = Arrays.copyOf(source.indices, source.indices.length);
@@ -29,7 +26,6 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 
 	public DefaultSparseDoubleVector1D(long rows, long cols) {
 		super(rows, 1);
-		this.size = new long[] { rows, 1 };
 		this.valueCount = 0;
 		this.capacity = initialCapacity;
 		this.indices = new long[initialCapacity];
@@ -131,10 +127,6 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 
 	public boolean contains(long... coordinates) {
 		return getDouble(coordinates) != 0.0;
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public Matrix divide(double value) {

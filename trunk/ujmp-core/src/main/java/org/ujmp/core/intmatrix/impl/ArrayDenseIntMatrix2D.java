@@ -31,7 +31,7 @@ import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3331102463077119410L;
 
-	private int[][] values = null;
+	private final int[][] values;
 
 	public ArrayDenseIntMatrix2D(Matrix m) {
 		super(m.getSize());
@@ -67,18 +67,6 @@ public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 		for (int r = v.length; --r >= 0;) {
 			values[r][0] = v[r];
 		}
-	}
-
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public int getInt(long row, long column) {

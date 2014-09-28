@@ -42,7 +42,8 @@ public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<
 	public abstract Set<E> getSet();
 
 	public synchronized final long[] getSize() {
-		return new long[] { size(), 2 };
+		size[ROW] = size();
+		return size;
 	}
 
 	public synchronized final E getObject(long row, long column) {

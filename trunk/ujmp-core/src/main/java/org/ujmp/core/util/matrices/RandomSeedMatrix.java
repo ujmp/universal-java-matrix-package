@@ -34,10 +34,6 @@ public class RandomSeedMatrix extends AbstractDenseLongMatrix2D {
 		setLabel("Random Seed");
 	}
 
-	public long[] getSize() {
-		return new long[] { 1, 1 };
-	}
-
 	public long getLong(long row, long column) {
 		return MathUtil.getSeed();
 	}

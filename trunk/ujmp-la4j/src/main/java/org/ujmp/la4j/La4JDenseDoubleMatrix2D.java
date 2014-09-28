@@ -75,10 +75,6 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		matrix.set(row, column, value);
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.rows(), matrix.columns() };
-	}
-
 	public Matrix plus(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.add(value));
 		MapMatrix<Object, Object> a = getMetaData();

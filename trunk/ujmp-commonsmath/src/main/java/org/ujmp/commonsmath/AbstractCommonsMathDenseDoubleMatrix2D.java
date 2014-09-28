@@ -29,7 +29,6 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
@@ -65,11 +64,6 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public void setDouble(double value, int row, int column) {
 		matrix.setEntry(row, column, value);
-	}
-
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D
-				: new long[] { matrix.getRowDimension(), matrix.getColumnDimension() };
 	}
 
 	public Matrix transpose() {

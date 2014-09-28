@@ -23,7 +23,6 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 
 public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
@@ -45,10 +44,6 @@ public class EmptyMatrix extends AbstractDenseObjectMatrix2D {
 	}
 
 	public void setObject(Object value, int row, int column) {
-	}
-
-	public long[] getSize() {
-		return Coordinates.ZERO2D;
 	}
 
 }

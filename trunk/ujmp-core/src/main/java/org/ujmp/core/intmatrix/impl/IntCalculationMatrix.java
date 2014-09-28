@@ -46,7 +46,8 @@ public class IntCalculationMatrix extends AbstractIntMatrix {
 	}
 
 	public long[] getSize() {
-		return calculation.getSize();
+		size = calculation.getSize();
+		return size;
 	}
 
 	public void fireValueChanged() {

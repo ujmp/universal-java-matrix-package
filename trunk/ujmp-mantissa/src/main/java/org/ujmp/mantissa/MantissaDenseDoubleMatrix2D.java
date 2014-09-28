@@ -26,7 +26,6 @@ package org.ujmp.mantissa;
 import org.spaceroots.mantissa.linalg.GeneralMatrix;
 import org.spaceroots.mantissa.linalg.GeneralSquareMatrix;
 import org.spaceroots.mantissa.linalg.SquareMatrix;
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractDenseDoubleMatrix2D;
 import org.ujmp.core.interfaces.Wrapper;
@@ -71,10 +70,6 @@ public class MantissaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public double getDouble(int row, int column) {
 		return matrix.getElement(row, column);
-	}
-
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : new long[] { matrix.getRows(), matrix.getColumns() };
 	}
 
 	public void setDouble(double value, long row, long column) {

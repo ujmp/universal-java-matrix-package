@@ -57,8 +57,4 @@ public class BitSetDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 		values.set((int) (column * rows + row), value);
 	}
 
-	public long[] getSize() {
-		return new long[] { rows, columns };
-	}
-
 }

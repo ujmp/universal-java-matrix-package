@@ -67,10 +67,6 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 		}
 	}
 
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
 	public long getRowCount() {
 		return values.length;
 	}

@@ -67,18 +67,6 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 		}
 	}
 
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
-	}
-
 	public byte getByte(long row, long column) {
 		return values[(int) row][(int) column];
 	}

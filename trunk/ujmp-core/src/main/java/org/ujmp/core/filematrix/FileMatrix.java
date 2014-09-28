@@ -62,30 +62,38 @@ public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryM
 
 	private void loadContent() {
 		if (matrix == null) {
-			try {
-				FileFormat format = FileFormat.guess(file);
-				setMetaData(FILEFORMAT, format);
-				switch (format) {
-				case BMP:
-				case GIF:
-				case JPG:
-				case JPEG2000:
-				case PNG:
-				case TIF:
-					matrix = Matrix.Factory.linkToImage(file);
-					break;
-				case DB:
-					matrix = Matrix.Factory.linkToJDBC(file);
-					break;
-				case ZIP:
-					matrix = Matrix.Factory.linkToZipFile(file);
-					break;
-				default:
-					matrix = Matrix.Factory.emptyMatrix();
-					break;
+			synchronized (this) {
+				if (matrix == null) {
+					try {
+						FileFormat format = FileFormat.guess(file);
+						setMetaData(FILEFORMAT, format);
+						switch (format) {
+						case BMP:
+						case GIF:
+						case JPG:
+						case JPEG2000:
+						case PNG:
+						case TIF:
+							matrix = Matrix.Factory.linkToImage(file);
+							break;
+						case DB:
+							matrix = Matrix.Factory.linkToJDBC(file);
+							break;
+						case ZIP:
+							matrix = Matrix.Factory.linkToZipFile(file);
+							break;
+						case TXT:
+						case CSV:
+							matrix = Matrix.Factory.linkToCSV(file);
+							break;
+						default:
+							matrix = Matrix.Factory.emptyMatrix();
+							break;
+						}
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
 				}
-			} catch (Exception e) {
-				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -102,7 +110,8 @@ public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryM
 
 	public long[] getSize() {
 		loadContent();
-		return matrix.getSize();
+		size = matrix.getSize();
+		return size;
 	}
 
 	public Object getObject(long... coordinates) {

@@ -34,7 +34,6 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 
 	private final BigDecimal[] values;
 
-	private final long[] size;
 	private int rows = 0;
 	private int cols = 0;
 
@@ -59,7 +58,6 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 		super(rows, columns);
 		this.rows = rows;
 		this.cols = columns;
-		this.size = new long[] { rows, columns };
 		this.values = new BigDecimal[rows * columns];
 		Arrays.fill(values, BigDecimal.ZERO);
 	}
@@ -68,20 +66,7 @@ public class DefaultDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatri
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public BigDecimal getBigDecimal(long row, long column) {

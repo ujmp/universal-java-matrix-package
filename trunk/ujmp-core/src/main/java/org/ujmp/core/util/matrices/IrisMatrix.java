@@ -197,8 +197,4 @@ public class IrisMatrix extends AbstractDenseStringMatrix2D {
 	public void setString(String value, long row, long column) {
 	}
 
-	public long[] getSize() {
-		return new long[] { data.length, data[0].length };
-	}
-
 }

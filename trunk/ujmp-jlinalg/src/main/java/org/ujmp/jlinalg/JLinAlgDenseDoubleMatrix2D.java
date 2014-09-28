@@ -77,10 +77,6 @@ public class JLinAlgDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		return d == null ? 0.0 : d.doubleValue();
 	}
 
-	public long[] getSize() {
-		return new long[] { matrix.getRows(), matrix.getCols() };
-	}
-
 	public void setDouble(double value, long row, long column) {
 		matrix.set((int) row + 1, (int) column + 1, new DoubleWrapper(value));
 	}

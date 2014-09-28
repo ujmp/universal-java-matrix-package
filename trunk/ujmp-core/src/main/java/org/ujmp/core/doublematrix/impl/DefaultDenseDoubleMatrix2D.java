@@ -32,7 +32,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 	private static final long serialVersionUID = -3605416349143850650L;
 
 	private final double[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -70,10 +69,6 @@ public class DefaultDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 		this.cols = cols;
 		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public final long[] getSize() {
-		return size;
 	}
 
 	public final long getRowCount() {

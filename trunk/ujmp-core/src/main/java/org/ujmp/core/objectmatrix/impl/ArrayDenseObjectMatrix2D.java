@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 public class ArrayDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 	private static final long serialVersionUID = -7051381548902586972L;
 
-	private Object[][] values = null;
+	private final Object[][] values;
 
 	public ArrayDenseObjectMatrix2D(Object[]... values) {
 		super(values.length, values[0].length);
@@ -57,18 +57,6 @@ public class ArrayDenseObjectMatrix2D extends AbstractDenseObjectMatrix2D {
 				setObject(m.getAsObject(c), c);
 			}
 		}
-	}
-
-	public long[] getSize() {
-		return new long[] { values.length, values.length == 0 ? 0 : values[0].length };
-	}
-
-	public long getRowCount() {
-		return values.length;
-	}
-
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
 	}
 
 	public Object getObject(long row, long column) {

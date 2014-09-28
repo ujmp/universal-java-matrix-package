@@ -41,7 +41,7 @@ public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD impleme
 
 	public static final MLDenseDoubleMatrixFactory Factory = new MLDenseDoubleMatrixFactory();
 
-	private transient MLDouble matrix = null;
+	private transient MLDouble matrix;
 
 	private int[] pack = null;
 
@@ -90,10 +90,6 @@ public class MLDenseDoubleMatrix extends AbstractDenseDoubleMatrixMultiD impleme
 		this.matrix = matrix;
 		setLabel(matrix.getName());
 		init();
-	}
-
-	public long[] getSize() {
-		return matrix == null ? Coordinates.ZERO2D : MathUtil.toLongArray(matrix.getDimensions());
 	}
 
 	// access to matrix data must be synchronized

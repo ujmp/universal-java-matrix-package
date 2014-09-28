@@ -100,6 +100,7 @@ import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.impl.ArrayDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.ArrayDenseStringMatrix2D;
+import org.ujmp.core.stringmatrix.impl.CSVMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
 import org.ujmp.core.util.matrices.IrisMatrix;
@@ -137,6 +138,10 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 
 	public ImageMatrix linkToImage(File file) throws IOException {
 		return new ImageMatrix(file);
+	}
+
+	public Matrix linkToCSV(File file) throws IOException {
+		return new CSVMatrix(file);
 	}
 
 	public Matrix linkToJDBC(File file) {

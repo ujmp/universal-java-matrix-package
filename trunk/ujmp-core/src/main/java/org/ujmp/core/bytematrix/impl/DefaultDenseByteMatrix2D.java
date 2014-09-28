@@ -34,7 +34,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 	private static final long serialVersionUID = -7637602510970244322L;
 
 	private final byte[] values;
-	private final long[] size;
 	private final int rows;
 	private final int cols;
 
@@ -42,7 +41,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		super(m.getRowCount(), m.getColumnCount());
 		this.rows = MathUtil.longToInt(m.getRowCount());
 		this.cols = MathUtil.longToInt(m.getColumnCount());
-		this.size = new long[] { rows, cols };
 		if (m instanceof DefaultDenseByteMatrix2D) {
 			byte[] v = ((DefaultDenseByteMatrix2D) m).values;
 			this.values = new byte[v.length];
@@ -59,7 +57,6 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = new byte[rows * cols];
 	}
 
@@ -67,20 +64,7 @@ public class DefaultDenseByteMatrix2D extends AbstractDenseByteMatrix2D implemen
 		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.size = new long[] { rows, cols };
 		this.values = v;
-	}
-
-	public long[] getSize() {
-		return size;
-	}
-
-	public long getRowCount() {
-		return rows;
-	}
-
-	public long getColumnCount() {
-		return cols;
 	}
 
 	public byte getByte(long row, long column) {

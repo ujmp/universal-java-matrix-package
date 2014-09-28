@@ -41,8 +41,6 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 
 	private String fieldDelimiter = "\t";
 
-	private long[] size = null;
-
 	private SeekableLineInputStream sli = null;
 
 	private final Map<Long, Object[]> data = new SoftHashMap<Long, Object[]>();
@@ -98,10 +96,6 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 		System.out.println("ok");
 		sli = new SeekableLineInputStream(file);
 
-	}
-
-	public long[] getSize() {
-		return size;
 	}
 
 	public final boolean isSparse() {

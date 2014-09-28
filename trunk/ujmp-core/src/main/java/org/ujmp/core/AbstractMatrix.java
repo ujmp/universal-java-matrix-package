@@ -25,6 +25,9 @@ package org.ujmp.core;
 
 import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -211,6 +214,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	protected transient GUIObject guiObject = null;
 
+	protected long[] size;
+
 	private final long id;
 
 	private MapMatrix<Object, Object> metaData = null;
@@ -252,6 +257,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		for (int i = size.length - 1; i != -1; i--) {
 			verifyTrue(size[i] >= 0, "coordinates must be positive");
 		}
+		this.size = size;
 		id = runningId++;
 	}
 
@@ -1172,6 +1178,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final long getSize(int dimension) {
 		return getSize()[dimension];
+	}
+
+	public long[] getSize() {
+		return size;
 	}
 
 	public Matrix prod(Ret returnType, int dimension, boolean ignoreNaN) {
@@ -2451,6 +2461,47 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			metaData = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
 		}
 		metaData.put(DESCRIPTION, description);
+	}
+
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+		s.defaultReadObject();
+		int dimensions = s.readInt();
+		this.size = new long[dimensions];
+		for (int i = 0; i < dimensions; i++) {
+			size[i] = s.readInt();
+		}
+		switch (getValueType()) {
+		case DOUBLE:
+			for (long[] c : allCoordinates()) {
+				setAsDouble(s.readDouble(), c);
+			}
+			break;
+		default:
+			for (long[] c : allCoordinates()) {
+				setAsObject(s.readObject(), c);
+			}
+			break;
+		}
+	}
+
+	private void writeObject(ObjectOutputStream s) throws IOException {
+		s.defaultWriteObject();
+		s.writeInt(getDimensionCount());
+		for (int i = 0; i < getSize().length; i++) {
+			s.writeLong(getSize()[i]);
+		}
+		switch (getValueType()) {
+		case DOUBLE:
+			for (long[] c : allCoordinates()) {
+				s.writeDouble(getAsDouble(c));
+			}
+			break;
+		default:
+			for (long[] c : allCoordinates()) {
+				s.writeObject(getAsObject(c));
+			}
+			break;
+		}
 	}
 
 }

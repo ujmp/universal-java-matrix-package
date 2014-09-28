@@ -27,7 +27,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.importer.DefaultMatrixFileImageImporter;
+import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSource {
 
@@ -47,19 +49,22 @@ public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSourc
 		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asJPG();
 	}
 
-	public Matrix asCSV() {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV() throws IOException {
+		return asCSV('\t');
 	}
 
-	public Matrix asCSV(String columnSeparator) {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV(char columnSeparator) throws IOException {
+		return asCSV(columnSeparator, '\0');
 	}
 
-	public Matrix asCSV(String columnSeparator, String lineSeparator) {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+		Matrix m = new DenseCSVStringMatrix2D(columnSeparator, enclosingCharacter, getFile());
+		if (getTargetMatrix() != null) {
+			getTargetMatrix().setContent(Ret.ORIG, m, 0, 0);
+			return getTargetMatrix();
+		} else {
+			return m;
+		}
 	}
 
 }

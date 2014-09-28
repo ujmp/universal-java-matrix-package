@@ -31,7 +31,7 @@ public interface MatrixCSVImportFormat extends MatrixImportFormat {
 
 	public Matrix asCSV() throws IOException;
 
-	public Matrix asCSV(String columnSeparator) throws IOException;
+	public Matrix asCSV(char columnSeparator) throws IOException;
 
-	public Matrix asCSV(String columnSeparator, String lineSeparator) throws IOException;
+	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException;
 }

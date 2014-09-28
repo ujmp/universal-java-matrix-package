@@ -48,31 +48,31 @@ public class DefaultMatrixImportSourceSelector extends AbstractMatrixImportSourc
 	public DefaultMatrixImportSourceSelector() {
 	}
 
-	public MatrixClipboardImportSource fromClipboard() {
+	public MatrixClipboardImportSource clipboard() {
 		return new DefaultMatrixClipboardImportSource(getTargetMatrix());
 	}
 
-	public MatrixFileImportSource fromFile(File file) throws IOException {
+	public MatrixFileImportSource file(File file) throws IOException {
 		return new DefaultMatrixFileImportSource(getTargetMatrix(), file);
 	}
 
-	public MatrixFileImportSource fromFile(String file) throws IOException {
+	public MatrixFileImportSource file(String file) throws IOException {
 		return new DefaultMatrixFileImportSource(getTargetMatrix(), file);
 	}
 
-	public MatrixReaderImportSource fromReader(Reader reader) throws IOException {
+	public MatrixReaderImportSource reader(Reader reader) throws IOException {
 		return null;
 	}
 
-	public MatrixStreamImportSource fromStream(InputStream stream) throws IOException {
+	public MatrixStreamImportSource stream(InputStream stream) throws IOException {
 		return null;
 	}
 
-	public MatrixStringImportSource fromString(String s) {
+	public MatrixStringImportSource string(String s) {
 		return null;
 	}
 
-	public MatrixURLImportSource fromURL(URL url) throws IOException {
+	public MatrixURLImportSource url(URL url) throws IOException {
 		return null;
 	}
 

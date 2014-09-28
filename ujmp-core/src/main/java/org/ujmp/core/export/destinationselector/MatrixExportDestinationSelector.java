@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.export.destination.MatrixClipboardExportDestination;
 import org.ujmp.core.export.destination.MatrixFileExportDestination;
 import org.ujmp.core.export.destination.MatrixStreamExportDestination;
@@ -37,18 +36,16 @@ import org.ujmp.core.export.destination.MatrixWriterExportDestination;
 
 public interface MatrixExportDestinationSelector {
 
-	public Matrix getMatrix();
+	public MatrixClipboardExportDestination clipboard();
 
-	public MatrixClipboardExportDestination toClipboard();
+	public MatrixFileExportDestination file(File file) throws IOException;
 
-	public MatrixFileExportDestination toFile(File file) throws IOException;
+	public MatrixFileExportDestination file(String file) throws IOException;
 
-	public MatrixFileExportDestination toFile(String file) throws IOException;
+	public MatrixWriterExportDestination writer(Writer writer) throws IOException;
 
-	public MatrixWriterExportDestination toWriter(Writer writer) throws IOException;
+	public MatrixStreamExportDestination stream(OutputStream stream) throws IOException;
 
-	public MatrixStreamExportDestination toStream(OutputStream stream) throws IOException;
-
-	public MatrixStringExportDestination toStringFormatted();
+	public MatrixStringExportDestination string();
 
 }

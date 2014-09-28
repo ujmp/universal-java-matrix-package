@@ -21,20 +21,12 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.importer.source;
+package org.ujmp.core.io;
 
-import org.ujmp.core.Matrix;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public abstract class AbstractMatrixImportSource implements MatrixImportSource {
-
-	private final Matrix matrix;
-
-	public AbstractMatrixImportSource(Matrix matrix) {
-		this.matrix = matrix;
-	}
-
-	public final Matrix getTargetMatrix() {
-		return matrix;
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({})
+public class AllTests {
 }

@@ -30,6 +30,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ org.ujmp.core.doublematrix.impl.AllTests.class,
 		org.ujmp.core.calculation.AllTests.class, org.ujmp.core.collections.AllTests.class,
 		org.ujmp.core.implementations.AllTests.class, org.ujmp.core.util.AllTests.class,
-		org.ujmp.core.annotation.AllTests.class })
+		org.ujmp.core.annotation.AllTests.class, org.ujmp.core.io.AllTests.class })
 public class AllTests {
 }

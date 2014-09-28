@@ -88,7 +88,7 @@ public class ExportMatrixAction extends AbstractObjectAction {
 			if (o instanceof MatrixGUIObject) {
 				MatrixGUIObject m = (MatrixGUIObject) o;
 				try {
-					m.getMatrix().export().toFile(file);
+					m.getMatrix().exportTo().file(file);
 				} catch (Exception e) {
 				}
 			}

@@ -41,12 +41,12 @@ public class DefaultDenseMatrixWriterExportDestination extends
 		super(matrix, writer);
 	}
 
-	public void asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public void asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		new DefaultDenseMatrixWriterCSVExporter(getMatrix(), getWriter()).asCSV(columnSeparator,
-				lineSeparator);
+				enclosingCharacter);
 	}
 
-	public void asCSV(String columnSeparator) throws IOException {
+	public void asCSV(char columnSeparator) throws IOException {
 		new DefaultDenseMatrixWriterCSVExporter(getMatrix(), getWriter()).asCSV(columnSeparator);
 	}
 

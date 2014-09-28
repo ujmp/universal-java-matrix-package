@@ -85,14 +85,14 @@ public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter i
 	}
 
 	public Matrix asCSV() throws IOException {
-		return asCSV("[,;\t]", System.getProperty("line.separator"));
+		return asCSV('\t');
 	}
 
-	public Matrix asCSV(String columnSeparator) throws IOException {
-		return asCSV(columnSeparator, System.getProperty("line.separator"));
+	public Matrix asCSV(char columnSeparator) throws IOException {
+		return asCSV(columnSeparator, '\0');
 	}
 
-	public Matrix asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		Matrix tmp = new DenseCSVStringMatrix2D(getFile());
 		if (getTargetMatrix() == null) {
 			return tmp;

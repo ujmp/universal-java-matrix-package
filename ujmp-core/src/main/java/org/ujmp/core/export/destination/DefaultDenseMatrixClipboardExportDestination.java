@@ -50,22 +50,22 @@ public class DefaultDenseMatrixClipboardExportDestination extends
 		throw new RuntimeException("not implemented");
 	}
 
-	public void asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public void asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		StringWriter writer = new StringWriter();
 		new DefaultDenseMatrixWriterCSVExporter(getMatrix(), writer).asCSV(columnSeparator,
-				lineSeparator);
+				enclosingCharacter);
 		writer.close();
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection ms = new StringSelection(writer.toString());
 		clipboard.setContents(ms, ms);
 	}
 
-	public void asCSV(String columnSeparator) throws IOException {
-		asCSV(columnSeparator, System.getProperty("line.separator"));
+	public void asCSV(char columnSeparator) throws IOException {
+		asCSV(columnSeparator, '\0');
 	}
 
 	public void asCSV() throws IOException {
-		asCSV("\t");
+		asCSV('\t');
 	}
 
 	public void asSQL(DBType db, String databaseName, String tableName) throws IOException {

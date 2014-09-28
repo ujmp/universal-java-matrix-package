@@ -27,9 +27,9 @@ import java.io.IOException;
 
 public interface MatrixCSVExportFormat extends MatrixExportFormat {
 
-	public void asCSV(String columnSeparator, String lineSeparator) throws IOException;
+	public void asCSV(char columnSeparator, char enclosingCharacter) throws IOException;
 
-	public void asCSV(String columnSeparator) throws IOException;
+	public void asCSV(char columnSeparator) throws IOException;
 
 	public void asCSV() throws IOException;
 

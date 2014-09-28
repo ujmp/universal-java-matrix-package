@@ -54,6 +54,10 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 		this(ByteBuffer.wrap(bytes));
 	}
 
+	public DenseCSVStringMatrix2D(char columnSeparator, char enclosingCharacter, final byte[] bytes) {
+		this(columnSeparator, enclosingCharacter, ByteBuffer.wrap(bytes));
+	}
+
 	public DenseCSVStringMatrix2D(final char columnSeparator, final byte[] bytes) {
 		this(columnSeparator, ByteBuffer.wrap(bytes));
 	}
@@ -94,9 +98,19 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 		this(columnSeparator, new RandomAccessFile(file, "r"));
 	}
 
+	public DenseCSVStringMatrix2D(char columnSeparator, char enclosingCharacter, File file)
+			throws IOException {
+		this(columnSeparator, enclosingCharacter, new RandomAccessFile(file, "r"));
+	}
+
 	public DenseCSVStringMatrix2D(char columnSeparator, RandomAccessFile randomAccessFile)
 			throws IOException {
 		this(columnSeparator, createByteBuffers(randomAccessFile));
+	}
+
+	public DenseCSVStringMatrix2D(char columnSeparator, char enclosingCharacter,
+			RandomAccessFile randomAccessFile) throws IOException {
+		this(columnSeparator, enclosingCharacter, createByteBuffers(randomAccessFile));
 	}
 
 	private static ByteBuffer[] createByteBuffers(RandomAccessFile randomAccessFile)
@@ -264,20 +278,25 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 						} else {
 							columnSeparator = '\t';
 						}
+						if (columnSeparator == '\t') {
+							size[ROW] = rows;
+							size[COLUMN] = maxTabCount + 1;
+						} else if (columnSeparator == ',') {
+							size[ROW] = rows;
+							size[COLUMN] = maxCommaCount + 1;
+						} else if (columnSeparator == ';') {
+							size[ROW] = rows;
+							size[COLUMN] = maxSemicolonCount + 1;
+						} else if (columnSeparator == ' ') {
+							size[ROW] = rows;
+							size[COLUMN] = maxSpaceCount + 1;
+						} else {
+							size[ROW] = rows;
+							size[COLUMN] = maxSepCount + 1;
+						}
 					} else {
-						size = new long[] { rows, maxSepCount + 1 };
-					}
-
-					if (columnSeparator == '\t') {
-						size = new long[] { rows, maxTabCount + 1 };
-					} else if (columnSeparator == ',') {
-						size = new long[] { rows, maxCommaCount + 1 };
-					} else if (columnSeparator == ';') {
-						size = new long[] { rows, maxSemicolonCount + 1 };
-					} else if (columnSeparator == ' ') {
-						size = new long[] { rows, maxSpaceCount + 1 };
-					} else {
-						size = new long[] { rows, maxTabCount + 1 };
+						size[ROW] = rows;
+						size[COLUMN] = maxSepCount + 1;
 					}
 
 				}

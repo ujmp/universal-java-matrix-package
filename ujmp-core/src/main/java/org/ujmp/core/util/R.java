@@ -176,7 +176,7 @@ public class R {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(matrix.export().toStringFormatted().asRScript(label));
+		execute(matrix.exportTo().string().asRScript(label));
 	}
 
 	private static String findR() {

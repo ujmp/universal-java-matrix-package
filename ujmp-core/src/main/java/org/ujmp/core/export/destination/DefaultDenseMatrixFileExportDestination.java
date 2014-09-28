@@ -43,21 +43,21 @@ public class DefaultDenseMatrixFileExportDestination extends
 		super(matrix, file);
 	}
 
-	public void asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public void asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		FileWriter fileWriter = new FileWriter(getFile());
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		new DefaultDenseMatrixWriterCSVExporter(getMatrix(), bufferedWriter).asCSV(columnSeparator,
-				lineSeparator);
+				enclosingCharacter);
 		bufferedWriter.close();
 		fileWriter.close();
 	}
 
-	public void asCSV(String columnSeparator) throws IOException {
-		asCSV(columnSeparator, System.getProperty("line.separator"));
+	public void asCSV(char columnSeparator) throws IOException {
+		asCSV(columnSeparator, '\0');
 	}
 
 	public void asCSV() throws IOException {
-		asCSV("\t");
+		asCSV('\t');
 	}
 
 	public void asSQL(DBType db, String databaseName, String tableName) throws IOException {

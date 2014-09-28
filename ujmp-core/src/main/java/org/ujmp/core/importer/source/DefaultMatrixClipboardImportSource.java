@@ -23,7 +23,16 @@
 
 package org.ujmp.core.importer.source;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class DefaultMatrixClipboardImportSource extends AbstractMatrixImportSource implements
 		MatrixClipboardImportSource {
@@ -32,19 +41,30 @@ public class DefaultMatrixClipboardImportSource extends AbstractMatrixImportSour
 		super(matrix);
 	}
 
-	public Matrix asCSV() {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV() throws IOException {
+		return asCSV('\t');
 	}
 
-	public Matrix asCSV(String columnSeparator) {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV(char columnSeparator) throws IOException {
+		return asCSV(columnSeparator, '\0');
 	}
 
-	public Matrix asCSV(String columnSeparator, String lineSeparator) {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable clipData = clipboard.getContents(null);
+		String s;
+		try {
+			s = (String) (clipData.getTransferData(DataFlavor.stringFlavor));
+		} catch (UnsupportedFlavorException e) {
+			throw new IOException(e);
+		}
+		Matrix m = new DenseCSVStringMatrix2D(columnSeparator, enclosingCharacter, s.getBytes());
+		if (getTargetMatrix() != null) {
+			getTargetMatrix().setContent(Ret.ORIG, m, 0, 0);
+			return getTargetMatrix();
+		} else {
+			return m;
+		}
 	}
 
 }

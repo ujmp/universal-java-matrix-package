@@ -38,7 +38,8 @@ public class DefaultDenseMatrixWriterCSVExporter extends AbstractDenseMatrixWrit
 		super(matrix, writer);
 	}
 
-	public void asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public void asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+		final String lineSeparator = System.getProperty("line.separator");
 		final Writer writer = getWriter();
 		final Matrix matrix = getMatrix();
 
@@ -47,6 +48,9 @@ public class DefaultDenseMatrixWriterCSVExporter extends AbstractDenseMatrixWrit
 
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
+				if (enclosingCharacter != '\0') {
+					writer.append(enclosingCharacter);
+				}
 				String s = StringUtil.convert(matrix.getAsObject(row, col));
 				if (s == null) {
 					s = "";
@@ -61,6 +65,9 @@ public class DefaultDenseMatrixWriterCSVExporter extends AbstractDenseMatrixWrit
 							"at least one cell contains a tabulator, CSV output will be garbage");
 				}
 				writer.append(s);
+				if (enclosingCharacter != '\0') {
+					writer.append(enclosingCharacter);
+				}
 				if (col < colCount - 1) {
 					writer.append(columnSeparator);
 				}
@@ -71,12 +78,12 @@ public class DefaultDenseMatrixWriterCSVExporter extends AbstractDenseMatrixWrit
 		}
 	}
 
-	public void asCSV(String columnSeparator) throws IOException {
-		asCSV(columnSeparator, System.getProperty("line.separator"));
+	public void asCSV(char columnSeparator) throws IOException {
+		asCSV(columnSeparator, '\0');
 	}
 
 	public void asCSV() throws IOException {
-		asCSV("\t");
+		asCSV('\t');
 	}
 
 }

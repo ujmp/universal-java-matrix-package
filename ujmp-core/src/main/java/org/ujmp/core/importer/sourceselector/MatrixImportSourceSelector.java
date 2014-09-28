@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.importer.source.MatrixClipboardImportSource;
 import org.ujmp.core.importer.source.MatrixFileImportSource;
 import org.ujmp.core.importer.source.MatrixReaderImportSource;
@@ -39,20 +38,18 @@ import org.ujmp.core.importer.source.MatrixURLImportSource;
 
 public interface MatrixImportSourceSelector {
 
-	public Matrix getTargetMatrix();
+	public MatrixClipboardImportSource clipboard();
 
-	public MatrixClipboardImportSource fromClipboard();
+	public MatrixURLImportSource url(URL url) throws IOException;
 
-	public MatrixURLImportSource fromURL(URL url) throws IOException;
+	public MatrixFileImportSource file(File file) throws IOException;
 
-	public MatrixFileImportSource fromFile(File file) throws IOException;
+	public MatrixFileImportSource file(String file) throws IOException;
 
-	public MatrixFileImportSource fromFile(String file) throws IOException;
+	public MatrixReaderImportSource reader(Reader reader) throws IOException;
 
-	public MatrixReaderImportSource fromReader(Reader reader) throws IOException;
+	public MatrixStreamImportSource stream(InputStream stream) throws IOException;
 
-	public MatrixStreamImportSource fromStream(InputStream stream) throws IOException;
-
-	public MatrixStringImportSource fromString(String s);
+	public MatrixStringImportSource string(String s);
 
 }

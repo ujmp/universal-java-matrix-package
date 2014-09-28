@@ -52,7 +52,7 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 			m = m.replaceRegex(Ret.NEW, "NaN", "999");
 			File file1 = File.createTempFile("matrix", ".csv");
 			File file2 = File.createTempFile("matrix", ".csv");
-			m.export().toFile(file1).asCSV();
+			m.exportTo().file(file1).asCSV();
 			Class<?> c = Class.forName("JBPCAfill");
 			Method me = c.getMethod("main", String[].class);
 			me.invoke(null, new Object[] { new String[] { file1.toString(), file2.toString() } });

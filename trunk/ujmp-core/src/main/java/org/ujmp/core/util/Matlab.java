@@ -149,7 +149,7 @@ public class Matlab {
 	}
 
 	public void setMatrix(String label, Matrix matrix) throws Exception {
-		execute(matrix.export().toStringFormatted().asMatlabScript(label));
+		execute(matrix.exportTo().string().asMatlabScript(label));
 	}
 
 	public Matrix getMatrix(String label) throws Exception {

@@ -41,20 +41,20 @@ public class DefaultDenseMatrixStringExportDestination extends
 		super(matrix);
 	}
 
-	public String asCSV(String columnSeparator, String lineSeparator) throws IOException {
+	public String asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		StringWriter writer = new StringWriter();
 		new DefaultDenseMatrixWriterCSVExporter(getMatrix(), writer).asCSV(columnSeparator,
-				lineSeparator);
+				enclosingCharacter);
 		writer.close();
 		return writer.toString();
 	}
 
-	public String asCSV(String columnSeparator) throws IOException {
-		return asCSV(columnSeparator, System.getProperty("line.separator"));
+	public String asCSV(char columnSeparator) throws IOException {
+		return asCSV(columnSeparator, '\0');
 	}
 
 	public String asCSV() throws IOException {
-		return asCSV("\t");
+		return asCSV('\t');
 	}
 
 	public String asSQL(DBType db, String databaseName, String tableName) throws IOException {

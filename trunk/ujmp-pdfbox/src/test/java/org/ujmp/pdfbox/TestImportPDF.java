@@ -44,7 +44,7 @@ public class TestImportPDF {
 
 		assertTrue(file.exists());
 
-		Matrix m = Matrix.Factory.importSelector().fromFile(file).asPDF();
+		Matrix m = Matrix.Factory.importFrom().file(file).asPDF();
 
 		String s = m.getAsString(0, 0);
 		assertEquals("test", s.trim());

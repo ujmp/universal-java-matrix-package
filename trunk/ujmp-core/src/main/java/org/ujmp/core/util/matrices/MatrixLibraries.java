@@ -1249,7 +1249,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public static void printLatex(String[] args) throws Exception {
 		MatrixLibraries ml = new MatrixLibraries(MatrixLibrariesFormat.LATEX);
 		Matrix m = ml.deleteRows(Ret.NEW, ml.getRowCount() - 1);
-		String s = m.export().toStringFormatted().asLatex();
+		String s = m.exportTo().string().asLatex();
 		s = s.replaceAll("table", "sidewaystable");
 		s = s.replaceAll("\\\\centering", "");
 		s = s.replaceAll("\\\\toprule", "");

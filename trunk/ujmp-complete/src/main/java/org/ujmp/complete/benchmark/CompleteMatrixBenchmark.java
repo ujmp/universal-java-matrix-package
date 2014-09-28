@@ -176,15 +176,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		File propFile = new File(resultDir + File.separator + "props.csv");
 		File confFile = new File(resultDir + File.separator + "conf.csv");
 		File versionFile = new File(resultDir + File.separator + "versions.csv");
-		new SystemEnvironmentMatrix().export().toFile(envFile).asCSV();
+		new SystemEnvironmentMatrix().exportTo().file(envFile).asCSV();
 		Matrix props = new SystemPropertiesMatrix().replaceRegex(Ret.NEW, "\r\n", " ");
 		props = props.replaceRegex(Ret.NEW, "\n", " ");
-		props.export().toFile(propFile).asCSV();
-		getConfig().export().toFile(confFile).asCSV();
+		props.exportTo().file(propFile).asCSV();
+		getConfig().exportTo().file(confFile).asCSV();
 		Matrix libraries = new MatrixLibraries();
 		System.out.println(libraries);
 		Matrix versions = libraries.selectRows(Ret.NEW, 0, 1).transpose();
-		versions.export().toFile(versionFile).asCSV();
+		versions.exportTo().file(versionFile).asCSV();
 	}
 
 	public void evaluate() throws Exception {
@@ -368,14 +368,14 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				matrix);
 		Matrix complete = Matrix.Factory.vertCat(firstPart, lastPart);
 		try {
-			complete.export()
-					.toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"))
+			complete.exportTo()
+					.file(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"))
 					.asCSV();
 		} catch (Exception e) {
 		}
 		try {
-			complete.export()
-					.toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".xls"))
+			complete.exportTo()
+					.file(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".xls"))
 					.asXLS();
 		} catch (Exception e) {
 		}
@@ -392,7 +392,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 			} else {
 				params = new Object[] { "xy", "logx", "logy" };
 			}
-			plt.export().toFile(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".plt"))
+			plt.exportTo().file(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".plt"))
 					.asPLT(params);
 		} catch (Exception e) {
 		}

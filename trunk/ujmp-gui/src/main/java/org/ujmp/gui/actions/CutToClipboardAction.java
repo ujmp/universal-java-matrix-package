@@ -47,7 +47,7 @@ public class CutToClipboardAction extends AbstractMatrixAction {
 	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		try {
-			m.getMatrix().export().toClipboard().asCSV();
+			m.getMatrix().exportTo().clipboard().asCSV();
 			m.getMatrix().clear();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -132,7 +132,7 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 
 	public Matrix clone();
 
-	public MatrixExportDestinationSelector export();
+	public MatrixExportDestinationSelector exportTo();
 
 	public MatrixImportSourceSelector importFrom();
 

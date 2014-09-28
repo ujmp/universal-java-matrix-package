@@ -52,27 +52,27 @@ public class DefaultDenseMatrixExportDestinationSelector implements MatrixExport
 		return matrix;
 	}
 
-	public final MatrixClipboardExportDestination toClipboard() {
+	public final MatrixClipboardExportDestination clipboard() {
 		return new DefaultDenseMatrixClipboardExportDestination(getMatrix());
 	}
 
-	public final MatrixFileExportDestination toFile(String filename) throws IOException {
-		return toFile(new File(filename));
+	public final MatrixFileExportDestination file(String filename) throws IOException {
+		return file(new File(filename));
 	}
 
-	public final MatrixFileExportDestination toFile(File file) throws IOException {
+	public final MatrixFileExportDestination file(File file) throws IOException {
 		return new DefaultDenseMatrixFileExportDestination(getMatrix(), file);
 	}
 
-	public final MatrixWriterExportDestination toWriter(Writer writer) throws IOException {
+	public final MatrixWriterExportDestination writer(Writer writer) throws IOException {
 		return new DefaultDenseMatrixWriterExportDestination(getMatrix(), writer);
 	}
 
-	public MatrixStringExportDestination toStringFormatted() {
+	public MatrixStringExportDestination string() {
 		return new DefaultDenseMatrixStringExportDestination(getMatrix());
 	}
 
-	public MatrixStreamExportDestination toStream(OutputStream outputStream) {
+	public MatrixStreamExportDestination stream(OutputStream outputStream) {
 		return new DefaultDenseMatrixStreamExportDestination(getMatrix(), outputStream);
 	}
 

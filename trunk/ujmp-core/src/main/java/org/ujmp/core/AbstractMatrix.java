@@ -26,8 +26,10 @@ package org.ujmp.core;
 import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -2421,7 +2423,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return false;
 	}
 
-	public MatrixExportDestinationSelector export() {
+	public MatrixExportDestinationSelector exportTo() {
 		if (this instanceof DenseMatrix) {
 			return new DefaultDenseMatrixExportDestinationSelector((DenseMatrix) this);
 		} else {
@@ -2463,42 +2465,52 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		metaData.put(DESCRIPTION, description);
 	}
 
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-		s.defaultReadObject();
-		int dimensions = s.readInt();
-		this.size = new long[dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			size[i] = s.readInt();
+	public void exportToStream(OutputStream os) throws IOException {
+		ObjectOutputStream oos;
+		if (os instanceof ObjectOutputStream) {
+			oos = (ObjectOutputStream) os;
+		} else {
+			oos = new ObjectOutputStream(os);
+		}
+		oos.writeInt(getDimensionCount());
+		for (int i = 0; i < getSize().length; i++) {
+			oos.writeLong(getSize()[i]);
 		}
 		switch (getValueType()) {
 		case DOUBLE:
 			for (long[] c : allCoordinates()) {
-				setAsDouble(s.readDouble(), c);
+				oos.writeDouble(getAsDouble(c));
 			}
 			break;
 		default:
 			for (long[] c : allCoordinates()) {
-				setAsObject(s.readObject(), c);
+				oos.writeObject(getAsObject(c));
 			}
 			break;
 		}
 	}
 
-	private void writeObject(ObjectOutputStream s) throws IOException {
-		s.defaultWriteObject();
-		s.writeInt(getDimensionCount());
-		for (int i = 0; i < getSize().length; i++) {
-			s.writeLong(getSize()[i]);
+	public void importFromStream(InputStream is) throws IOException, ClassNotFoundException {
+		ObjectInputStream ois;
+		if (is instanceof ObjectInputStream) {
+			ois = (ObjectInputStream) is;
+		} else {
+			ois = new ObjectInputStream(is);
+		}
+		int dimensions = ois.readInt();
+		this.size = new long[dimensions];
+		for (int i = 0; i < dimensions; i++) {
+			size[i] = ois.readInt();
 		}
 		switch (getValueType()) {
 		case DOUBLE:
 			for (long[] c : allCoordinates()) {
-				s.writeDouble(getAsDouble(c));
+				setAsDouble(ois.readDouble(), c);
 			}
 			break;
 		default:
 			for (long[] c : allCoordinates()) {
-				s.writeObject(getAsObject(c));
+				setAsObject(ois.readObject(), c);
 			}
 			break;
 		}

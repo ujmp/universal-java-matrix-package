@@ -34,7 +34,10 @@ import org.ujmp.core.util.UJMPSettings;
 public abstract class HttpUtil {
 
 	public static final byte[] getBytesFromUrl(String urlString) throws IOException {
-		URL url = new URL(urlString);
+		return getBytesFromUrl(new URL(urlString));
+	}
+
+	public static final byte[] getBytesFromUrl(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
 		connection.setRequestProperty("User-Agent", UJMPSettings.getInstance().getUserAgent());
 		connection.setUseCaches(false);

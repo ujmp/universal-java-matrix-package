@@ -39,7 +39,7 @@ public class SetContent extends AbstractObjectCalculation {
 	}
 
 	public Object getObject(long... coordinates) {
-		if (Coordinates.isSmallerThan(coordinates, position)) {
+		if (!Coordinates.isGreaterOrEqual(coordinates, position)) {
 			return getSource().getAsObject(coordinates);
 		}
 		long[] c = Coordinates.minus(coordinates, position);

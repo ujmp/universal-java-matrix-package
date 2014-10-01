@@ -41,15 +41,15 @@ public class DefaultMatrixClipboardImportSource extends AbstractMatrixImportSour
 		super(matrix);
 	}
 
-	public Matrix asCSV() throws IOException {
-		return asCSV('\t');
+	public Matrix asDenseCSV() throws IOException {
+		return asDenseCSV('\0');
 	}
 
-	public Matrix asCSV(char columnSeparator) throws IOException {
-		return asCSV(columnSeparator, '\0');
+	public Matrix asDenseCSV(char columnSeparator) throws IOException {
+		return asDenseCSV(columnSeparator, '\0');
 	}
 
-	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+	public Matrix asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable clipData = clipboard.getContents(null);
 		String s;

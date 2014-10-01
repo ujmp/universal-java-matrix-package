@@ -23,7 +23,17 @@
 
 package org.ujmp.core.importer.source;
 
-public interface MatrixByteArrayImportSource extends MatrixImportSource {
+import org.ujmp.core.importer.format.MatrixBMPImportFormat;
+import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
+import org.ujmp.core.importer.format.MatrixGIFImportFormat;
+import org.ujmp.core.importer.format.MatrixJPGImportFormat;
+import org.ujmp.core.importer.format.MatrixPDFImportFormat;
+import org.ujmp.core.importer.format.MatrixPNGImportFormat;
+import org.ujmp.core.importer.format.MatrixTIFFImportFormat;
+
+public interface MatrixByteArrayImportSource extends MatrixImportSource, MatrixDenseCSVImportFormat,
+		MatrixPDFImportFormat, MatrixJPGImportFormat, MatrixGIFImportFormat, MatrixBMPImportFormat,
+		MatrixPNGImportFormat, MatrixTIFFImportFormat {
 
 	public byte[] getByteArray();
 }

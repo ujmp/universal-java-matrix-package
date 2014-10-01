@@ -55,7 +55,7 @@ public class ImportMatrixFromURLAction extends AbstractObjectAction {
 					"Import Matrix", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, FileFormat.values(),
 					FileFormat.CSV)];
 
-			Matrix m = Matrix.Factory.importFromURL(fileFormat, url);
+			Matrix m = Matrix.Factory.importFrom().url(url).asDenseCSV();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

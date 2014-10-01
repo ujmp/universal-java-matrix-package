@@ -23,7 +23,9 @@
 
 package org.ujmp.core.importer.source;
 
-public interface MatrixStringImportSource extends MatrixImportSource {
+import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
+
+public interface MatrixStringImportSource extends MatrixImportSource, MatrixDenseCSVImportFormat {
 
 	public String getString();
 }

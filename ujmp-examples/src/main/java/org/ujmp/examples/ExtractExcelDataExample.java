@@ -41,7 +41,7 @@ public class ExtractExcelDataExample {
 		for (int i = 0; i < files.length; i++) {
 
 			// import file as matrix
-			Matrix m = Matrix.Factory.importFromFile(files[i]);
+			Matrix m = Matrix.Factory.importFrom().file(files[i]).asDenseCSV();
 
 			// store file name in result matrix
 			result.setAsString(files[i].getName(), i, 0);

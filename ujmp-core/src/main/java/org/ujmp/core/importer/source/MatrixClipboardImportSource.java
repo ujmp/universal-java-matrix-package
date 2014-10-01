@@ -23,8 +23,8 @@
 
 package org.ujmp.core.importer.source;
 
-import org.ujmp.core.importer.format.MatrixCSVImportFormat;
+import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
 
-public interface MatrixClipboardImportSource extends MatrixImportSource, MatrixCSVImportFormat {
+public interface MatrixClipboardImportSource extends MatrixImportSource, MatrixDenseCSVImportFormat {
 
 }

@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
-import org.ujmp.core.filematrix.FileFormat;
 
 public class ImputeBPCA extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -8635313044017639669L;
@@ -52,11 +51,11 @@ public class ImputeBPCA extends AbstractDoubleCalculation {
 			m = m.replaceRegex(Ret.NEW, "NaN", "999");
 			File file1 = File.createTempFile("matrix", ".csv");
 			File file2 = File.createTempFile("matrix", ".csv");
-			m.exportTo().file(file1).asCSV();
+			m.exportTo().file(file1).asDenseCSV();
 			Class<?> c = Class.forName("JBPCAfill");
 			Method me = c.getMethod("main", String[].class);
 			me.invoke(null, new Object[] { new String[] { file1.toString(), file2.toString() } });
-			m = Matrix.Factory.importFromFile(FileFormat.CSV, file2, "\\s");
+			m = Matrix.Factory.importFrom().file(file2).asDenseCSV();
 			m = m.replaceRegex(Ret.NEW, ",", "");
 			file1.delete();
 			file2.delete();

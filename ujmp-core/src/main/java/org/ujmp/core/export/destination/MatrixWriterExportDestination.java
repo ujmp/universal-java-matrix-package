@@ -23,13 +23,13 @@
 
 package org.ujmp.core.export.destination;
 
-import org.ujmp.core.export.format.MatrixCSVExportFormat;
+import org.ujmp.core.export.format.MatrixDenseCSVExportFormat;
 import org.ujmp.core.export.format.MatrixLatexExportFormat;
 import org.ujmp.core.export.format.MatrixMatlabScriptExportFormat;
 import org.ujmp.core.export.format.MatrixRScriptExportFormat;
 import org.ujmp.core.export.format.MatrixSQLExportFormat;
 
-public interface MatrixWriterExportDestination extends MatrixCSVExportFormat,
+public interface MatrixWriterExportDestination extends MatrixDenseCSVExportFormat,
 		MatrixSQLExportFormat, MatrixMatlabScriptExportFormat, MatrixRScriptExportFormat,
 		MatrixLatexExportFormat, MatrixExportDestination {
 

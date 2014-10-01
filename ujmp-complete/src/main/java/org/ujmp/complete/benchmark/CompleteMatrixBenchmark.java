@@ -45,7 +45,6 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
-import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.CommandLineUtil;
@@ -176,15 +175,15 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		File propFile = new File(resultDir + File.separator + "props.csv");
 		File confFile = new File(resultDir + File.separator + "conf.csv");
 		File versionFile = new File(resultDir + File.separator + "versions.csv");
-		new SystemEnvironmentMatrix().exportTo().file(envFile).asCSV();
+		new SystemEnvironmentMatrix().exportTo().file(envFile).asDenseCSV();
 		Matrix props = new SystemPropertiesMatrix().replaceRegex(Ret.NEW, "\r\n", " ");
 		props = props.replaceRegex(Ret.NEW, "\n", " ");
-		props.exportTo().file(propFile).asCSV();
-		getConfig().exportTo().file(confFile).asCSV();
+		props.exportTo().file(propFile).asDenseCSV();
+		getConfig().exportTo().file(confFile).asDenseCSV();
 		Matrix libraries = new MatrixLibraries();
 		System.out.println(libraries);
 		Matrix versions = libraries.selectRows(Ret.NEW, 0, 1).transpose();
-		versions.exportTo().file(versionFile).asCSV();
+		versions.exportTo().file(versionFile).asDenseCSV();
 	}
 
 	public void evaluate() throws Exception {
@@ -206,7 +205,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 				Collections.sort(results);
 				for (File r : results) {
 					String benchmarkName = r.getName().replaceAll(".csv", "");
-					Matrix data = Matrix.Factory.importFromFile(FileFormat.CSV, r, "\t");
+					Matrix data = Matrix.Factory.importFrom().file(r).asDenseCSV();
 					data.setLabel(matrixName);
 					List<Matrix> list = statistics.get(benchmarkName);
 					if (list == null) {
@@ -370,7 +369,7 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 		try {
 			complete.exportTo()
 					.file(new File(BenchmarkUtil.getResultDir(getConfig()) + name + ".csv"))
-					.asCSV();
+					.asDenseCSV();
 		} catch (Exception e) {
 		}
 		try {

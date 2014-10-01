@@ -30,8 +30,14 @@ import java.io.Reader;
 import java.net.URL;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.importer.source.DefaultMatrixByteArrayImportSource;
 import org.ujmp.core.importer.source.DefaultMatrixClipboardImportSource;
 import org.ujmp.core.importer.source.DefaultMatrixFileImportSource;
+import org.ujmp.core.importer.source.DefaultMatrixReaderImportSource;
+import org.ujmp.core.importer.source.DefaultMatrixStreamImportSource;
+import org.ujmp.core.importer.source.DefaultMatrixStringImportSource;
+import org.ujmp.core.importer.source.DefaultMatrixUrlImportSource;
+import org.ujmp.core.importer.source.MatrixByteArrayImportSource;
 import org.ujmp.core.importer.source.MatrixClipboardImportSource;
 import org.ujmp.core.importer.source.MatrixFileImportSource;
 import org.ujmp.core.importer.source.MatrixReaderImportSource;
@@ -61,19 +67,23 @@ public class DefaultMatrixImportSourceSelector extends AbstractMatrixImportSourc
 	}
 
 	public MatrixReaderImportSource reader(Reader reader) throws IOException {
-		return null;
+		return new DefaultMatrixReaderImportSource(getTargetMatrix(), reader);
 	}
 
 	public MatrixStreamImportSource stream(InputStream stream) throws IOException {
-		return null;
+		return new DefaultMatrixStreamImportSource(getTargetMatrix(), stream);
 	}
 
-	public MatrixStringImportSource string(String s) {
-		return null;
+	public MatrixStringImportSource string(String string) {
+		return new DefaultMatrixStringImportSource(getTargetMatrix(), string);
 	}
 
 	public MatrixURLImportSource url(URL url) throws IOException {
-		return null;
+		return new DefaultMatrixUrlImportSource(getTargetMatrix(), url);
+	}
+
+	public MatrixByteArrayImportSource byteArray(byte[] bytes) {
+		return new DefaultMatrixByteArrayImportSource(getTargetMatrix(), bytes);
 	}
 
 }

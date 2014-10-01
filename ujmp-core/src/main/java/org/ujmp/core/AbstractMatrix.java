@@ -140,7 +140,7 @@ import org.ujmp.core.doublematrix.calculation.general.statistical.Std;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Sum;
 import org.ujmp.core.doublematrix.calculation.general.statistical.Var;
 import org.ujmp.core.enums.ValueType;
-import org.ujmp.core.export.destinationselector.DefaultDenseMatrixExportDestinationSelector;
+import org.ujmp.core.export.destinationselector.DefaultMatrixExportDestinationSelector;
 import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
 import org.ujmp.core.floatmatrix.FloatMatrix;
 import org.ujmp.core.floatmatrix.calculation.ToFloatMatrix;
@@ -2425,7 +2425,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public MatrixExportDestinationSelector exportTo() {
 		if (this instanceof DenseMatrix) {
-			return new DefaultDenseMatrixExportDestinationSelector((DenseMatrix) this);
+			return new DefaultMatrixExportDestinationSelector((DenseMatrix) this);
 		} else {
 			throw new RuntimeException("export only works for dense matrices");
 		}

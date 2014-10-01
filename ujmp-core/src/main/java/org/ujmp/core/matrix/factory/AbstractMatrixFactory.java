@@ -32,8 +32,6 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,7 +59,6 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Range;
 import org.ujmp.core.doublematrix.impl.ArrayDenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DenseFileMatrix;
 import org.ujmp.core.enums.DBType;
-import org.ujmp.core.filematrix.FileFormat;
 import org.ujmp.core.filematrix.FileMatrix;
 import org.ujmp.core.filematrix.ZipFileMatrix;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
@@ -73,10 +70,10 @@ import org.ujmp.core.intmatrix.DenseIntMatrix2D;
 import org.ujmp.core.intmatrix.calculation.Magic;
 import org.ujmp.core.intmatrix.impl.ArrayDenseIntMatrix2D;
 import org.ujmp.core.intmatrix.impl.ImageMatrix;
-import org.ujmp.core.io.ImportMatrix;
 import org.ujmp.core.io.ImportMatrixJDBC;
-import org.ujmp.core.io.LinkMatrix;
 import org.ujmp.core.io.LinkMatrixJDBC;
+import org.ujmp.core.link.sourceselector.DefaultMatrixLinkSourceSelector;
+import org.ujmp.core.link.sourceselector.MatrixLinkSourceSelector;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
@@ -100,7 +97,6 @@ import org.ujmp.core.shortmatrix.DenseShortMatrix2D;
 import org.ujmp.core.shortmatrix.impl.ArrayDenseShortMatrix2D;
 import org.ujmp.core.stringmatrix.DenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.ArrayDenseStringMatrix2D;
-import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.AvailableProcessorsMatrix;
 import org.ujmp.core.util.matrices.IrisMatrix;
@@ -138,10 +134,6 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 
 	public ImageMatrix linkToImage(File file) throws IOException {
 		return new ImageMatrix(file);
-	}
-
-	public Matrix linkToCSV(File file) throws IOException {
-		return new DenseCSVStringMatrix2D(file);
 	}
 
 	public Matrix linkToJDBC(File file) {
@@ -260,6 +252,10 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return new DefaultMatrixImportSourceSelector();
 	}
 
+	public final MatrixLinkSourceSelector linkTo() {
+		return new DefaultMatrixLinkSourceSelector();
+	}
+
 	public final Matrix like(Matrix matrix, long rowCount, long columnCount) {
 		return matrix.getFactory().zeros(rowCount, columnCount);
 	}
@@ -312,38 +308,6 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return new ArrayDenseBooleanMatrix2D(values);
 	}
 
-	public final Matrix linkToFile(FileFormat format, File file, Object... parameters)
-			throws IOException {
-		return LinkMatrix.toFile(format, file, parameters);
-	}
-
-	public final Matrix linkToFile(File file, Object... parameters) throws IOException {
-		return LinkMatrix.toFile(file, parameters);
-	}
-
-	public final Matrix importFromFile(String filename, Object... parameters) throws IOException {
-		return ImportMatrix.fromFile(new File(filename), parameters);
-	}
-
-	public final Matrix importFromFile(File file, Object... parameters) throws IOException {
-		return ImportMatrix.fromFile(file, parameters);
-	}
-
-	public final Matrix importFromFile(FileFormat format, String file, Object... parameters)
-			throws IOException {
-		return ImportMatrix.fromFile(format, new File(file), parameters);
-	}
-
-	public final Matrix importFromResource(FileFormat format, String name, Object... parameters)
-			throws IOException {
-		return ImportMatrix.fromResource(format, name, parameters);
-	}
-
-	public final Matrix importFromFile(FileFormat format, File file, Object... parameters)
-			throws IOException {
-		return ImportMatrix.fromFile(format, file, parameters);
-	}
-
 	public final DenseDoubleMatrix2D createVectorForClass(int classID, int classCount) {
 		DenseDoubleMatrix2D matrix = DenseDoubleMatrix2D.Factory.zeros(classCount, 1);
 		matrix.setAsDouble(1.0, classID, 0);
@@ -388,25 +352,6 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		} else {
 			return new DefaultSetMatrix<V>(set);
 		}
-	}
-
-	public final Matrix importFromStream(FileFormat format, InputStream stream,
-			Object... parameters) throws IOException {
-		return ImportMatrix.fromStream(format, stream, parameters);
-	}
-
-	public final Matrix importFromURL(FileFormat format, URL url, Object... parameters)
-			throws IOException {
-		return ImportMatrix.fromURL(format, url, parameters);
-	}
-
-	public final Matrix importFromURL(FileFormat format, String url, Object... parameters)
-			throws IOException {
-		return ImportMatrix.fromURL(format, url, parameters);
-	}
-
-	public final Matrix importFromString(FileFormat format, String string, Object... parameters) {
-		return ImportMatrix.fromString(format, string, parameters);
 	}
 
 	/**
@@ -537,6 +482,12 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return vertCat(matrices);
 	}
 
+	public final Matrix horCat(Ret ret, Matrix column, long columnCount) {
+		Matrix[] matrices = new Matrix[(int) columnCount];
+		Arrays.fill(matrices, column);
+		return horCat(ret, matrices);
+	}
+
 	public final Matrix horCat(Matrix column, long columnCount) {
 		Matrix[] matrices = new Matrix[(int) columnCount];
 		Arrays.fill(matrices, column);
@@ -567,12 +518,20 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return concat(COLUMN, matrices);
 	}
 
+	public final Matrix horCat(Ret ret, Matrix... matrices) {
+		return concat(ret, COLUMN, matrices);
+	}
+
 	public final <V> Matrix vertCat(Matrix... matrices) {
 		return concat(ROW, matrices);
 	}
 
 	public final <V> Matrix vertCat(Collection<Matrix> matrices) {
 		return concat(ROW, matrices);
+	}
+
+	public final <V> Matrix vertCat(Ret ret, Collection<Matrix> matrices) {
+		return concat(ret, ROW, matrices);
 	}
 
 	public final Matrix horCat(Collection<Matrix> matrices) {
@@ -583,8 +542,16 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return concat(dimension, Arrays.asList(matrices));
 	}
 
+	public final Matrix concat(Ret ret, int dimension, Matrix... matrices) {
+		return concat(ret, dimension, Arrays.asList(matrices));
+	}
+
 	public final Matrix concat(int dimension, Collection<Matrix> matrices) {
 		return new Concatenation(dimension, matrices).calc(Ret.NEW);
+	}
+
+	public final Matrix concat(Ret ret, int dimension, Collection<Matrix> matrices) {
+		return new Concatenation(dimension, matrices).calc(ret);
 	}
 
 	public final SystemTimeMatrix systemTime() {

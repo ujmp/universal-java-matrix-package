@@ -51,7 +51,7 @@ public class MatrixSelection implements Transferable, ClipboardOwner, Serializab
 	private String stringData = null;
 
 	public MatrixSelection(Matrix matrix) throws IOException {
-		stringData = matrix.exportTo().string().asCSV();
+		stringData = matrix.exportTo().string().asDenseCSV();
 	}
 
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {

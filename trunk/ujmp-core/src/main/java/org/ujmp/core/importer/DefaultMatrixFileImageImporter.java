@@ -29,16 +29,17 @@ import java.io.IOException;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.importer.format.MatrixBMPImportFormat;
-import org.ujmp.core.importer.format.MatrixCSVImportFormat;
+import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
 import org.ujmp.core.importer.format.MatrixGIFImportFormat;
 import org.ujmp.core.importer.format.MatrixJPGImportFormat;
 import org.ujmp.core.importer.format.MatrixPNGImportFormat;
+import org.ujmp.core.importer.format.MatrixTIFFImportFormat;
 import org.ujmp.core.intmatrix.impl.ImageMatrix;
 import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter implements
 		MatrixJPGImportFormat, MatrixPNGImportFormat, MatrixBMPImportFormat, MatrixGIFImportFormat,
-		MatrixCSVImportFormat {
+		MatrixTIFFImportFormat, MatrixDenseCSVImportFormat {
 
 	public DefaultMatrixFileImageImporter(Matrix matrix, File file) {
 		super(matrix, file);
@@ -55,6 +56,16 @@ public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter i
 	}
 
 	public Matrix asGIF() throws IOException {
+		Matrix tmp = new ImageMatrix(getFile());
+		if (getTargetMatrix() == null) {
+			return tmp;
+		} else {
+			getTargetMatrix().setContent(Ret.ORIG, tmp, 0, 0);
+			return getTargetMatrix();
+		}
+	}
+
+	public Matrix asTIFF() throws IOException {
 		Matrix tmp = new ImageMatrix(getFile());
 		if (getTargetMatrix() == null) {
 			return tmp;
@@ -84,15 +95,15 @@ public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter i
 		}
 	}
 
-	public Matrix asCSV() throws IOException {
-		return asCSV('\t');
+	public Matrix asDenseCSV() throws IOException {
+		return asDenseCSV('\t');
 	}
 
-	public Matrix asCSV(char columnSeparator) throws IOException {
-		return asCSV(columnSeparator, '\0');
+	public Matrix asDenseCSV(char columnSeparator) throws IOException {
+		return asDenseCSV(columnSeparator, '\0');
 	}
 
-	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+	public Matrix asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		Matrix tmp = new DenseCSVStringMatrix2D(getFile());
 		if (getTargetMatrix() == null) {
 			return tmp;

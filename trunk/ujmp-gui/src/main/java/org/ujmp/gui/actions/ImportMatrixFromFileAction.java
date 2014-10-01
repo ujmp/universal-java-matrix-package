@@ -74,7 +74,7 @@ public class ImportMatrixFromFileAction extends AbstractObjectAction {
 			if (file == null)
 				return null;
 
-			Matrix m = Matrix.Factory.importFromFile(fileFormat, file);
+			Matrix m = Matrix.Factory.importFrom().file(file).asDenseCSV();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

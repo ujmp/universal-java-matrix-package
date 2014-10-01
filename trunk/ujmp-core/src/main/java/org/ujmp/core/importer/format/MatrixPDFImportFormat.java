@@ -23,9 +23,11 @@
 
 package org.ujmp.core.importer.format;
 
+import java.io.IOException;
+
 import org.ujmp.core.Matrix;
 
 public interface MatrixPDFImportFormat extends MatrixImportFormat {
 
-	public Matrix asPDF();
+	public Matrix asPDF() throws IOException;
 }

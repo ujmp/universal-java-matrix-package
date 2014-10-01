@@ -48,7 +48,7 @@ public class PasteFromClipboardAction extends AbstractMatrixAction {
 	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		try {
-			Matrix copy = Matrix.Factory.importFrom().clipboard().asCSV();
+			Matrix copy = Matrix.Factory.importFrom().clipboard().asDenseCSV();
 			m.getMatrix().setContent(Ret.ORIG, copy, 0, 0);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -84,7 +84,7 @@ public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryM
 							break;
 						case TXT:
 						case CSV:
-							matrix = Matrix.Factory.linkToCSV(file);
+							matrix = Matrix.Factory.linkTo().file(file).asDenseCSV();
 							break;
 						default:
 							matrix = Matrix.Factory.emptyMatrix();

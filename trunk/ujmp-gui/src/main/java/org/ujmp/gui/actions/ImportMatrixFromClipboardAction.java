@@ -52,7 +52,7 @@ public class ImportMatrixFromClipboardAction extends AbstractObjectAction {
 			Matrix m = null;
 			switch (fileFormat) {
 			case CSV:
-				m = Matrix.Factory.importFrom().clipboard().asCSV();
+				m = Matrix.Factory.importFrom().clipboard().asDenseCSV();
 				break;
 			default:
 				throw new RuntimeException("fileformat not yet supported: " + fileFormat);

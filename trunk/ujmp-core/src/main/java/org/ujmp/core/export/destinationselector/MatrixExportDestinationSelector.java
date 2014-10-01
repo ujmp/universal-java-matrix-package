@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
+import org.ujmp.core.export.destination.MatrixByteArrayExportDestination;
 import org.ujmp.core.export.destination.MatrixClipboardExportDestination;
 import org.ujmp.core.export.destination.MatrixFileExportDestination;
 import org.ujmp.core.export.destination.MatrixStreamExportDestination;
@@ -47,5 +48,7 @@ public interface MatrixExportDestinationSelector {
 	public MatrixStreamExportDestination stream(OutputStream stream) throws IOException;
 
 	public MatrixStringExportDestination string();
+
+	public MatrixByteArrayExportDestination byteArray();
 
 }

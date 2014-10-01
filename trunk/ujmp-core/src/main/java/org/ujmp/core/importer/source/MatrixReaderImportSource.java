@@ -25,7 +25,9 @@ package org.ujmp.core.importer.source;
 
 import java.io.Reader;
 
-public interface MatrixReaderImportSource extends MatrixImportSource {
+import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
+
+public interface MatrixReaderImportSource extends MatrixImportSource, MatrixDenseCSVImportFormat {
 
 	public Reader getReader();
 

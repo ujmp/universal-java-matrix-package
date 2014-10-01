@@ -173,6 +173,10 @@ public abstract class MathUtil {
 
 	public static double[] logToProbs(double[] logs) {
 		double[] probs = new double[logs.length];
+
+		double max = MathUtil.max(logs);
+		logs = MathUtil.minus(logs, max);
+
 		double sum = 0.0;
 		for (int i = 0; i < probs.length; i++) {
 			probs[i] = Math.exp(logs[i]);
@@ -197,6 +201,22 @@ public abstract class MathUtil {
 			probs[i] = probs[i] / sum;
 		}
 		return probs;
+	}
+
+	public static double[] plus(double[] values, double value) {
+		double[] result = Arrays.copyOf(values, values.length);
+		for (int i = 0; i < values.length; i++) {
+			result[i] += value;
+		}
+		return result;
+	}
+
+	public static double[] minus(double[] values, double value) {
+		double[] result = Arrays.copyOf(values, values.length);
+		for (int i = 0; i < values.length; i++) {
+			result[i] -= value;
+		}
+		return result;
 	}
 
 	public static final long getSeed() {
@@ -1041,6 +1061,14 @@ public abstract class MathUtil {
 
 	public static int max(int[] values) {
 		int max = -Integer.MAX_VALUE;
+		for (int i = values.length - 1; i != -1; i--) {
+			max = values[i] > max ? values[i] : max;
+		}
+		return max;
+	}
+
+	public static double max(double[] values) {
+		double max = -Double.MAX_VALUE;
 		for (int i = values.length - 1; i != -1; i--) {
 			max = values[i] > max ? values[i] : max;
 		}

@@ -49,15 +49,31 @@ public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSourc
 		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asJPG();
 	}
 
-	public Matrix asCSV() throws IOException {
-		return asCSV('\t');
+	public Matrix asTIFF() throws IOException {
+		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asTIFF();
 	}
 
-	public Matrix asCSV(char columnSeparator) throws IOException {
-		return asCSV(columnSeparator, '\0');
+	public Matrix asBMP() throws IOException {
+		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asBMP();
 	}
 
-	public Matrix asCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+	public Matrix asGIF() throws IOException {
+		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asGIF();
+	}
+
+	public Matrix asPNG() throws IOException {
+		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asPNG();
+	}
+
+	public Matrix asDenseCSV() throws IOException {
+		return asDenseCSV('\0');
+	}
+
+	public Matrix asDenseCSV(char columnSeparator) throws IOException {
+		return asDenseCSV(columnSeparator, '\0');
+	}
+
+	public Matrix asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
 		Matrix m = new DenseCSVStringMatrix2D(columnSeparator, enclosingCharacter, getFile());
 		if (getTargetMatrix() != null) {
 			getTargetMatrix().setContent(Ret.ORIG, m, 0, 0);

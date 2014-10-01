@@ -74,7 +74,7 @@ public class LinkMatrixToFileAction extends AbstractObjectAction {
 			if (file == null)
 				return null;
 
-			Matrix m = Matrix.Factory.linkToFile(fileFormat, file);
+			Matrix m = Matrix.Factory.linkTo().file(file).asDenseCSV();
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();

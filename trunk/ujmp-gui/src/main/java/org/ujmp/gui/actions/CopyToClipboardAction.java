@@ -47,7 +47,7 @@ public class CopyToClipboardAction extends AbstractMatrixAction {
 	public Object call() {
 		MatrixGUIObject m = getMatrixObject();
 		try {
-			m.getMatrix().exportTo().clipboard().asCSV();
+			m.getMatrix().exportTo().clipboard().asDenseCSV();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -169,10 +169,10 @@ public abstract class AbstractBenchmarkTask {
 		Matrix mem = Matrix.Factory.vertCat(resultMem.getMetaDataDimensionMatrix(Matrix.ROW),
 				resultMem);
 		try {
-			temp.exportTo().file(timeFile).asCSV();
-			mem.exportTo().file(memFile).asCSV();
+			temp.exportTo().file(timeFile).asDenseCSV();
+			mem.exportTo().file(memFile).asDenseCSV();
 			if (!diff.containsMissingValues()) {
-				diff.exportTo().file(diffFile).asCSV();
+				diff.exportTo().file(diffFile).asDenseCSV();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

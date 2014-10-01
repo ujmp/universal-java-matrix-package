@@ -24,13 +24,16 @@
 package org.ujmp.core.intmatrix.impl;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
+import org.ujmp.core.util.io.HttpUtil;
 
 public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -1354524587823816194L;
@@ -50,8 +53,16 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 		this(ImageIO.read(file));
 	}
 
+	public ImageMatrix(byte[] bytes) throws IOException {
+		this(ImageIO.read(new ByteArrayInputStream(bytes)));
+	}
+
 	public ImageMatrix(InputStream stream) throws IOException {
 		this(ImageIO.read(stream));
+	}
+
+	public ImageMatrix(URL url) throws IOException {
+		this(HttpUtil.getBytesFromUrl(url));
 	}
 
 	public int getInt(long row, long column) {

@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
 
+import org.ujmp.core.importer.source.MatrixByteArrayImportSource;
 import org.ujmp.core.importer.source.MatrixClipboardImportSource;
 import org.ujmp.core.importer.source.MatrixFileImportSource;
 import org.ujmp.core.importer.source.MatrixReaderImportSource;
@@ -51,5 +52,7 @@ public interface MatrixImportSourceSelector {
 	public MatrixStreamImportSource stream(InputStream stream) throws IOException;
 
 	public MatrixStringImportSource string(String s);
+
+	public MatrixByteArrayImportSource byteArray(byte[] bytes);
 
 }

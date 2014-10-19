@@ -23,19 +23,12 @@
 
 package org.ujmp.pdfbox;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("library for reading PDF files");
 		dependencies.add("ujmp-core");
 		dependencies.add("pdfbox.jar");
 		dependencies.add("jempbox.jar");
@@ -45,18 +38,6 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.apache.jempbox.impl.XMLUtil");
 		neededClasses.add("org.apache.fontbox.util.BoundingBox");
 		neededClasses.add("org.apache.commons.logging.Log");
-	}
-
-	public String getDescription() {
-		return "library for reading PDF files";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

@@ -23,36 +23,17 @@
 
 package org.ujmp.hadoop;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("library for parallel computing in a Hadoop cluster");
 		dependencies.add("ujmp-core");
 		dependencies.add("hadoop-core.jar");
 		dependencies.add("commons-logging.jar");
 		neededClasses.add("org.apache.hadoop.conf.Configuration");
 		neededClasses.add("org.apache.commons.logging.Log");
-	}
-
-	public String getDescription() {
-		return "library for parallel computing in a Hadoop cluster";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

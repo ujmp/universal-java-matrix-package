@@ -23,36 +23,17 @@
 
 package org.ujmp.itext;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface for PDF export");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("iText.jar");
 		neededClasses.add("org.ujmp.gui.Plugin");
 		neededClasses.add("com.itextpdf.text.Document");
-	}
-
-	public String getDescription() {
-		return "interface for PDF export";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

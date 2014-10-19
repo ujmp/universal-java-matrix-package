@@ -36,11 +36,7 @@
 		<fileSet>
 			<directory>../ujmp-ejml/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-googletranslate/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-hadoop/src/main/java</directory>
 			<outputDirectory></outputDirectory>
@@ -56,51 +52,23 @@
 		<fileSet>
 			<directory>../ujmp-jama/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jampack/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jblas/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jbpcafill/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jdbc/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jexcelapi/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jfreechart/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jlinalg/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jmatharray/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jmathplot/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jmatio/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-jmatrices/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jsci/src/main/java</directory>
 			<outputDirectory></outputDirectory>
@@ -114,7 +82,7 @@
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>../ujmp-lsimpute/src/main/java</directory>
+			<directory>../ujmp-la4j/src/main/java</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>
 		<fileSet>
@@ -124,11 +92,7 @@
 		<fileSet>
 			<directory>../ujmp-mail/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-mantissa/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-mtj/src/main/java</directory>
 			<outputDirectory></outputDirectory>
@@ -136,11 +100,7 @@
 		<fileSet>
 			<directory>../ujmp-ojalgo/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-orbital/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>		
+		</fileSet>				
 		<fileSet>
 			<directory>../ujmp-parallelcolt/src/main/java</directory>
 			<outputDirectory></outputDirectory>
@@ -148,11 +108,7 @@
 		<fileSet>
 			<directory>../ujmp-pdfbox/src/main/java</directory>
 			<outputDirectory></outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>../ujmp-sst/src/main/java</directory>
-			<outputDirectory></outputDirectory>
-		</fileSet>
+		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-vecmath/src/main/java</directory>
 			<outputDirectory></outputDirectory>

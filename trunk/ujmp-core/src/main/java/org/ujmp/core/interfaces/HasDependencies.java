@@ -27,5 +27,5 @@ import java.util.Collection;
 
 public interface HasDependencies {
 
-	public Collection<Object> getDependencies();
+	public Collection<String> getDependencies();
 }

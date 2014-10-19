@@ -23,19 +23,12 @@
 
 package org.ujmp.jung;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("library for plotting graphs");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("jung-api.jar");
@@ -49,18 +42,6 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("edu.uci.ics.jung.graph.Graph");
 		neededClasses.add("cern.colt.matrix.DoubleMatrix2D");
 		neededClasses.add("EDU.oswego.cs.dl.util.concurrent.Callable");
-	}
-
-	public String getDescription() {
-		return "library for plotting graphs";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

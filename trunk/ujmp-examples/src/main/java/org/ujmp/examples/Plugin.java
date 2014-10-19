@@ -23,36 +23,17 @@
 
 package org.ujmp.examples;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface to UJMP examples");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("ujmp-jmathplot");
 		dependencies.add("ujmp-jung");
 		dependencies.add("ujmp-ojalgo");
-	}
-
-	public String getDescription() {
-		return "interface to UJMP examples";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

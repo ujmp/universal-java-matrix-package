@@ -23,36 +23,17 @@
 
 package org.ujmp.ehcache;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("library for caching using EhCache");
 		dependencies.add("ujmp-core");
 		dependencies.add("ehcache-core.jar");
 		dependencies.add("slf4j-api.jar");
 		neededClasses.add("net.sf.ehcache.Cache");
 		neededClasses.add("org.slf4j.Logger");
-	}
-
-	public String getDescription() {
-		return "library for caching using EhCache";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

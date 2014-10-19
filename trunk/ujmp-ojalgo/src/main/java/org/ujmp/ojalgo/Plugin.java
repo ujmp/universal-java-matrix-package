@@ -23,34 +23,15 @@
 
 package org.ujmp.ojalgo;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface to the ojAlgo library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ojalgo.jar");
 		neededClasses.add("org.ojalgo.array.PrimitiveArray");
-	}
-
-	public String getDescription() {
-		return "interface to the ojAlgo library";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

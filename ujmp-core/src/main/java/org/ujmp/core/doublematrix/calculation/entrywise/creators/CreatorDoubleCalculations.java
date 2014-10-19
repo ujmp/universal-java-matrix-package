@@ -43,6 +43,14 @@ public interface CreatorDoubleCalculations {
 	public Matrix ones(Ret ret);
 
 	/**
+	 * Returns a matrix with equal size, where all entries are set to
+	 * Double.NaN.
+	 * 
+	 * @return Matrix with NaNs.
+	 */
+	public Matrix nans(Ret ret);
+
+	/**
 	 * Returns a matrix with equal size, where all entries are set to uniform
 	 * random values between 0.0 and 1.0.
 	 * 

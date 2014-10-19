@@ -64,9 +64,9 @@ public class MemoryUsage extends JProgressBar {
 	}
 
 	public void update() {
-		int max = (int) Runtime.getRuntime().maxMemory() / 1048576;
-		int total = (int) Runtime.getRuntime().totalMemory() / 1048576;
-		int free = (int) Runtime.getRuntime().freeMemory() / 1048576;
+		int max = (int) (Runtime.getRuntime().maxMemory() / 1048576);
+		int total = (int) (Runtime.getRuntime().totalMemory() / 1048576);
+		int free = (int) (Runtime.getRuntime().freeMemory() / 1048576);
 		used = total - free;
 		setMinimum(0);
 		setMaximum(max);

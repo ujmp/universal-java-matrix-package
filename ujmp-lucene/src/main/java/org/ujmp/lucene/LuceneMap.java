@@ -282,14 +282,11 @@ public class LuceneMap<K, V> extends AbstractMap<K, V> implements Flushable, Clo
 			indexSearcher.getIndexReader().close();
 			indexSearcher = null;
 		}
-		if (directory != null) {
-			directory.close();
-		}
 	}
 
 	private synchronized IndexWriter getIndexWriter() {
 		try {
-			if (!readOnly && indexSearcher != null) {
+			if (!readOnly && indexSearcher != null && indexSearcher.getIndexReader().getRefCount() > 0) {
 				indexSearcher.getIndexReader().close();
 				indexSearcher = null;
 			}

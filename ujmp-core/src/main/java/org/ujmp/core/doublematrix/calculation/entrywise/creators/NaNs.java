@@ -21,32 +21,20 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.pdfbox;
+package org.ujmp.core.doublematrix.calculation.entrywise.creators;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 
-public abstract class ImportMatrixPDF {
+public class NaNs extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 519215489428190486L;
 
-	public static final Matrix fromFile(File file) throws IOException {
-		PDDocument pdd = PDDocument.load(file);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	public NaNs(Matrix matrix) {
+		super(matrix);
 	}
 
-	public static final Matrix fromStream(InputStream inputStream) throws IOException {
-		PDDocument pdd = PDDocument.load(inputStream);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	public double getDouble(long... coordinates) {
+		return Double.NaN;
 	}
 
 }

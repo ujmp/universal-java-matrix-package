@@ -28,7 +28,7 @@ import org.ujmp.core.Matrix;
 public class Fill extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -3477957135967841340L;
 
-	private Object fill = null;
+	private final Object fill;
 
 	public Fill(Matrix matrix, Object value) {
 		super(matrix);

@@ -23,6 +23,8 @@
 
 package org.ujmp.core.doublematrix.calculation.general.missingvalues;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -35,6 +37,7 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.doublematrix.calculation.general.missingvalues.Impute.ImputationMethod;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.UJMPSettings;
 
 public class ImputeEM extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -1272010036598212696L;
@@ -47,19 +50,22 @@ public class ImputeEM extends AbstractDoubleCalculation {
 
 	private final double decay = 0.66;
 
-	public ImputeEM(Matrix matrix) {
-		super(matrix);
+	private File tempFile;
+
+	public ImputeEM(Matrix matrix) throws IOException {
+		this(matrix, null);
 	}
 
-	public ImputeEM(Matrix matrix, Matrix firstGuess) {
-		super(matrix);
-		this.bestGuess = firstGuess;
+	public ImputeEM(Matrix matrix, Matrix firstGuess) throws IOException {
+		this(matrix, firstGuess, 1e-6, File.createTempFile(
+				"ujmp-impute-em-" + System.currentTimeMillis(), ".csv"));
 	}
 
-	public ImputeEM(Matrix matrix, Matrix firstGuess, double delta) {
+	public ImputeEM(Matrix matrix, Matrix firstGuess, double delta, File tempFile) {
 		super(matrix);
 		this.bestGuess = firstGuess;
 		this.delta = delta;
+		this.tempFile = tempFile;
 	}
 
 	public double getDouble(long... coordinates) {
@@ -76,7 +82,8 @@ public class ImputeEM extends AbstractDoubleCalculation {
 
 	private void createMatrix() {
 		try {
-			ExecutorService executor = Executors.newFixedThreadPool(1);
+			ExecutorService executor = Executors.newFixedThreadPool(UJMPSettings.getInstance()
+					.getNumberOfThreads());
 
 			Matrix x = getSource();
 
@@ -91,9 +98,8 @@ public class ImputeEM extends AbstractDoubleCalculation {
 			}
 
 			int run = 0;
-
-			while (true) {
-
+			double d;
+			do {
 				System.out.println("Iteration " + run++);
 
 				List<Future<Long>> futures = new ArrayList<Future<Long>>();
@@ -103,7 +109,9 @@ public class ImputeEM extends AbstractDoubleCalculation {
 				long t0 = System.currentTimeMillis();
 
 				for (long c = 0; c < x.getColumnCount(); c++) {
-					futures.add(executor.submit(new PredictColumn(c)));
+					if (containsMissingValues(c)) {
+						futures.add(executor.submit(new PredictColumn(c)));
+					}
 				}
 
 				for (Future<Long> f : futures) {
@@ -116,17 +124,25 @@ public class ImputeEM extends AbstractDoubleCalculation {
 							+ "% completed (" + remainingTime + " seconds remaining)");
 				}
 
-				double d = imputed.euklideanDistanceTo(bestGuess, true) / missingCount;
+				Matrix newBestGuess = bestGuess.times(decay).plus(imputed.times(1 - decay));
+
+				for (int r = 0; r < getSource().getRowCount(); r++) {
+					for (int c = 0; c < getSource().getColumnCount(); c++) {
+						double value = getSource().getAsDouble(r, c);
+						if (!MathUtil.isNaNOrInfinite(value)) {
+							newBestGuess.setAsDouble(value, r, c);
+						}
+					}
+				}
+
+				d = newBestGuess.euklideanDistanceTo(bestGuess, true) / missingCount;
 				System.out.println("delta: " + d);
 				System.out.println("============================================");
 
-				bestGuess = bestGuess.times(decay).plus(imputed.times(1 - decay));
+				bestGuess = newBestGuess;
+				bestGuess.exportTo().file(tempFile).asDenseCSV();
 
-				if (d < delta) {
-					break;
-				}
-
-			}
+			} while (delta < d);
 
 			executor.shutdown();
 
@@ -141,6 +157,15 @@ public class ImputeEM extends AbstractDoubleCalculation {
 		}
 	}
 
+	private boolean containsMissingValues(long c) {
+		for (int r = 0; r < getSource().getRowCount(); r++) {
+			if (MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	class PredictColumn implements Callable<Long> {
 
 		long column = 0;
@@ -151,8 +176,10 @@ public class ImputeEM extends AbstractDoubleCalculation {
 
 		public Long call() throws Exception {
 			Matrix newColumn = replaceInColumn(getSource(), bestGuess, column);
-			for (int r = 0; r < newColumn.getRowCount(); r++) {
-				imputed.setAsDouble(newColumn.getAsDouble(r, 0), r, column);
+			synchronized (imputed) {
+				for (int r = 0; r < newColumn.getRowCount(); r++) {
+					imputed.setAsDouble(newColumn.getAsDouble(r, 0), r, column);
+				}
 			}
 			return column;
 		}

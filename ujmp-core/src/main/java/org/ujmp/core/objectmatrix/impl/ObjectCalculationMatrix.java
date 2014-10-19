@@ -29,7 +29,7 @@ import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix;
 public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 	private static final long serialVersionUID = -2992446453080748754L;
 
-	private ObjectCalculation calculation = null;
+	private final ObjectCalculation calculation;
 
 	public ObjectCalculationMatrix(ObjectCalculation calculation) {
 		super(calculation.getSize());

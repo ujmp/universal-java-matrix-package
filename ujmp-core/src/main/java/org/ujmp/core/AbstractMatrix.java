@@ -72,11 +72,15 @@ import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.ToDoubleMatrix;
 import org.ujmp.core.doublematrix.calculation.basic.Atimes;
-import org.ujmp.core.doublematrix.calculation.basic.Divide;
-import org.ujmp.core.doublematrix.calculation.basic.Minus;
+import org.ujmp.core.doublematrix.calculation.basic.DivideMatrix;
+import org.ujmp.core.doublematrix.calculation.basic.DivideScalar;
+import org.ujmp.core.doublematrix.calculation.basic.MinusMatrix;
+import org.ujmp.core.doublematrix.calculation.basic.MinusScalar;
 import org.ujmp.core.doublematrix.calculation.basic.Mtimes;
-import org.ujmp.core.doublematrix.calculation.basic.Plus;
-import org.ujmp.core.doublematrix.calculation.basic.Times;
+import org.ujmp.core.doublematrix.calculation.basic.PlusMatrix;
+import org.ujmp.core.doublematrix.calculation.basic.PlusScalar;
+import org.ujmp.core.doublematrix.calculation.basic.TimesMatrix;
+import org.ujmp.core.doublematrix.calculation.basic.TimesScalar;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Abs;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Exp;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Log;
@@ -86,6 +90,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.basic.Power;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Sign;
 import org.ujmp.core.doublematrix.calculation.entrywise.basic.Sqrt;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Eye;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.NaNs;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Ones;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Rand;
 import org.ujmp.core.doublematrix.calculation.entrywise.creators.Randn;
@@ -93,6 +98,8 @@ import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.Cosh;
 import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.Sinh;
 import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.Tanh;
+import org.ujmp.core.doublematrix.calculation.entrywise.misc.GrayScale;
+import org.ujmp.core.doublematrix.calculation.entrywise.misc.GrayScale.ColorChannel;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Ceil;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Floor;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
@@ -579,19 +586,19 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix divide(Ret returnType, boolean ignoreNaN, double factor) {
-		return new Divide(ignoreNaN, this, factor).calc(returnType);
+		return new DivideScalar(ignoreNaN, this, factor).calc(returnType);
 	}
 
 	public Matrix times(Ret returnType, boolean ignoreNaN, double factor) {
-		return new Times(ignoreNaN, this, factor).calc(returnType);
+		return new TimesScalar(ignoreNaN, this, factor).calc(returnType);
 	}
 
 	public Matrix times(Ret returnType, boolean ignoreNaN, Matrix factor) {
-		return new Times(ignoreNaN, this, factor).calc(returnType);
+		return new TimesMatrix(ignoreNaN, this, factor).calc(returnType);
 	}
 
 	public Matrix divide(Ret returnType, boolean ignoreNaN, Matrix factor) {
-		return new Divide(ignoreNaN, this, factor).calc(returnType);
+		return new DivideMatrix(ignoreNaN, this, factor).calc(returnType);
 	}
 
 	public final Matrix power(Ret returnType, double power) {
@@ -1119,19 +1126,19 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double v) {
-		return new Minus(ignoreNaN, this, v).calc(returnType);
+		return new MinusScalar(ignoreNaN, this, v).calc(returnType);
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, Matrix m) {
-		return new Minus(ignoreNaN, this, m).calc(returnType);
+		return new MinusMatrix(ignoreNaN, this, m).calc(returnType);
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, double v) {
-		return new Plus(ignoreNaN, this, v).calc(returnType);
+		return new PlusScalar(ignoreNaN, this, v).calc(returnType);
 	}
 
 	public Matrix plus(Ret returnType, boolean ignoreNaN, Matrix m) {
-		return new Plus(ignoreNaN, this, m).calc(returnType);
+		return new PlusMatrix(ignoreNaN, this, m).calc(returnType);
 	}
 
 	public Matrix transpose() {
@@ -1208,6 +1215,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final Matrix ones(Ret ret) {
 		return new Ones(this).calc(ret);
+	}
+
+	public final Matrix nans(Ret ret) {
+		return new NaNs(this).calc(ret);
 	}
 
 	public final Matrix fill(Ret ret, Object value) {
@@ -1399,7 +1410,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public boolean isSingular() {
 		if (getDimensionCount() != 2 || !isSquare()) {
-			throw new RuntimeException("only supported for 2d square matrices");
+			return false;
 		}
 		return !new LU.LUMatrix(this).isNonsingular();
 	}
@@ -1548,6 +1559,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public Matrix bootstrap(Ret returnType) {
 		return new Bootstrap(this).calc(returnType);
+	}
+
+	public Matrix grayScale(Ret returnType, ColorChannel colorChannel) {
+		return new GrayScale(this, colorChannel).calc(returnType);
 	}
 
 	public Matrix translate(Ret returnType, String sourceLanguage, String targetLanguage) {

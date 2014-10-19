@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -2081,6 +2082,9 @@ public abstract class AbstractMatrixTest {
 		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.RANDN)) {
 			return;
 		}
+		if (!isSupported(a, MatrixLibraries.LU, MatrixLayout.SQUARE, EntryType.SINGULAR)) {
+			return;
+		}
 
 		a.randn(Ret.ORIG);
 		Matrix[] lu = a.lu();
@@ -2364,6 +2368,16 @@ public abstract class AbstractMatrixTest {
 		}
 	}
 
+	private final boolean supportsSingular(Matrix a, long feature) {
+		long col = getMatrixLibraryId();
+		String supported = LIBRARIES.getAsString(feature, col);
+		if (supported.contains(MatrixLibraries.NONSINGULARTEXT)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	private final boolean isSupported(Matrix a, long feature, MatrixLayout layout,
 			EntryType generator) {
 		long col = getMatrixLibraryId();
@@ -2427,6 +2441,13 @@ public abstract class AbstractMatrixTest {
 			for (Size size : sizes) {
 				for (EntryType generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
+
+					if (!isSupported(a, MatrixLibraries.LU, layout, generator)) {
+						continue;
+					}
+					if (a.isSingular() && !supportsSingular(a, MatrixLibraries.LU)) {
+						continue;
+					}
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {
@@ -2502,6 +2523,13 @@ public abstract class AbstractMatrixTest {
 			for (Size size : sizes) {
 				for (EntryType generator : generators) {
 					String label = getLabel() + "-" + layout + "-" + size + "-" + generator;
+
+					if (!isSupported(a, MatrixLibraries.SVD, layout, generator)) {
+						continue;
+					}
+					if (a.isSingular() && !supportsSingular(a, MatrixLibraries.SVD)) {
+						continue;
+					}
 
 					// symmetric only for square matrices
 					if (!MatrixLayout.SQUARE.equals(layout)) {

@@ -30,9 +30,9 @@ import org.ujmp.core.util.MathUtil;
 public class Atimes extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 4170937261358240120L;
 
-	private boolean ignoreNaN = false;
+	private final boolean ignoreNaN;
 
-	private long[] size = null;
+	private final long[] size;
 
 	public Atimes(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
@@ -40,16 +40,12 @@ public class Atimes extends AbstractDoubleCalculation {
 		this.size = new long[] { m1.getRowCount(), m2.getColumnCount() };
 	}
 
-	public Atimes() {
-		super();
-	}
+	public final double getDouble(final long... coordinates) {
+		final Matrix m1 = getSources()[0];
+		final Matrix m2 = getSources()[1];
 
-	public double getDouble(long... coordinates) {
-		Matrix m1 = getSources()[0];
-		Matrix m2 = getSources()[1];
-
-		long row = coordinates[ROW];
-		long col = coordinates[COLUMN];
+		final long row = coordinates[ROW];
+		final long col = coordinates[COLUMN];
 
 		double sum = 0.0;
 		double count = 0;

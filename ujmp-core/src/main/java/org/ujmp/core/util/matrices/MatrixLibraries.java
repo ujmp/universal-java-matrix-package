@@ -663,7 +663,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(yes(), SCALE, JSCI);
 		setString(no() + footnote("v", "only for $A \\cdot X = \\mbox{vector}$"), SOLVE, JSCI);
 		setString(yes(), INV, JSCI);
-		setString(square(), SVD, JSCI);
+		setString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), SVD, JSCI);
 		setString(square() + footnote(NONSINGULARLETTER, NONSINGULARTEXT), LU, JSCI);
 		setString(square(), QR, JSCI);
 		setString(

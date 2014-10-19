@@ -21,32 +21,32 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.pdfbox;
+package org.ujmp.core.doublematrix.calculation.basic;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
+import org.ujmp.core.util.MathUtil;
 
-public abstract class ImportMatrixPDF {
+public class TimesScalar extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = -8325249300328944598L;
 
-	public static final Matrix fromFile(File file) throws IOException {
-		PDDocument pdd = PDDocument.load(file);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	private final boolean ignoreNaN;
+
+	private final double value;
+
+	public TimesScalar(Matrix m1, double v) {
+		this(true, m1, v);
 	}
 
-	public static final Matrix fromStream(InputStream inputStream) throws IOException {
-		PDDocument pdd = PDDocument.load(inputStream);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	public TimesScalar(boolean ignoreNaN, Matrix m1, double v) {
+		super(m1);
+		this.ignoreNaN = ignoreNaN;
+		this.value = ignoreNaN ? MathUtil.ignoreNaN(v) : v;
+	}
+
+	public double getDouble(long... coordinates) {
+		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates)) * value
+				: getSources()[0].getAsDouble(coordinates) * value;
 	}
 
 }

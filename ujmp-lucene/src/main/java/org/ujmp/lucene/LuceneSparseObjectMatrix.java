@@ -42,6 +42,9 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper i
 
 	public LuceneSparseObjectMatrix(Matrix matrix) throws IOException {
 		super(new LuceneMap<Coordinates, Object>(), matrix);
+		if (matrix.getMetaData() != null) {
+			setMetaData(matrix.getMetaData().clone());
+		}
 	}
 
 	public void erase() throws IOException {

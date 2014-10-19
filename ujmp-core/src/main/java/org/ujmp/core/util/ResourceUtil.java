@@ -105,4 +105,9 @@ public abstract class ResourceUtil {
 		return icon;
 	}
 
+	public static InputStream getResourceAsStream(String url) {
+		InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(url);
+		return stream;
+	}
+
 }

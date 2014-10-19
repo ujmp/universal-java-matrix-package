@@ -21,32 +21,34 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.pdfbox;
+package org.ujmp.core.doublematrix.calculation.entrywise.misc;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 
-public abstract class ImportMatrixPDF {
+public class GrayScale extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = -4082255477140195806L;
 
-	public static final Matrix fromFile(File file) throws IOException {
-		PDDocument pdd = PDDocument.load(file);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	public enum ColorChannel {
+		Red, Green, Blue
 	}
 
-	public static final Matrix fromStream(InputStream inputStream) throws IOException {
-		PDDocument pdd = PDDocument.load(inputStream);
-		PDFTextStripper pts = new PDFTextStripper();
-		String text = pts.getText(pdd);
-		pdd.close();
-		return Matrix.Factory.linkToValue(text);
+	private final ColorChannel colorChannel;;
+
+	public GrayScale(Matrix matrix, ColorChannel colorChannel) {
+		super(matrix);
+		this.colorChannel = colorChannel;
 	}
 
+	public double getDouble(long... coordinates) {
+		final int value = getSource().getAsInt(coordinates);
+		switch (colorChannel) {
+		case Red:
+			return ((value >> 16) & 0xFF) / 255.0;
+		case Green:
+			return ((value >> 8) & 0xFF) / 255.0;
+		default:
+			return (value & 0xFF) / 255.0;
+		}
+	}
 }

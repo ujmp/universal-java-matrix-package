@@ -28,6 +28,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.junit.Test;
 import org.ujmp.core.Matrix;
@@ -35,12 +36,13 @@ import org.ujmp.core.util.ResourceUtil;
 
 public class TestImportPDF {
 
-	@Test
-	public void testImportPDF() throws Exception {
-		File file = File.createTempFile("test", ".pdf");
-		String resource = "org/ujmp/pdfbox/test.pdf";
+	public static final String PDFRESOURCE = "org/ujmp/pdfbox/test.pdf";
 
-		ResourceUtil.copyToFile(resource, file);
+	@Test
+	public void testImportPDFFile() throws Exception {
+		File file = File.createTempFile("test", ".pdf");
+
+		ResourceUtil.copyToFile(PDFRESOURCE, file);
 
 		assertTrue(file.exists());
 
@@ -52,5 +54,15 @@ public class TestImportPDF {
 		file.delete();
 
 		assertFalse(file.exists());
+	}
+
+	@Test
+	public void testImportPDFStream() throws Exception {
+		InputStream is = ResourceUtil.getResourceAsStream(PDFRESOURCE);
+
+		Matrix m = Matrix.Factory.importFrom().stream(is).asPDF();
+
+		String s = m.getAsString(0, 0);
+		assertEquals("test", s.trim());
 	}
 }

@@ -23,42 +23,28 @@
 
 package org.ujmp.core.doublematrix.calculation.basic;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.util.MathUtil;
 
-public class Plus extends AbstractDoubleCalculation {
-	private static final long serialVersionUID = -2670849261944345597L;
+public class DivideMatrix extends AbstractDoubleCalculation {
+	private static final long serialVersionUID = 7228531369984022350L;
 
-	private boolean ignoreNaN = false;
+	private final boolean ignoreNaN;
 
-	public Plus(boolean ignoreNaN, Matrix m1, Matrix m2) {
-		super(m1, m2);
-		this.ignoreNaN = ignoreNaN;
-		if (m2.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[1] = Matrix.Factory.fill(m2.getAsDouble(0, 0), m1.getSize());
-		} else if (m1.isScalar() && !Coordinates.equals(m1.getSize(), m2.getSize())) {
-			getSources()[0] = Matrix.Factory.fill(m1.getAsDouble(0, 0), m2.getSize());
-		}
-	}
-
-	public Plus(Matrix m1, Matrix m2) {
+	public DivideMatrix(Matrix m1, Matrix m2) {
 		this(true, m1, m2);
 	}
 
-	public Plus(boolean ignoreNaN, Matrix m1, double v2) {
-		this(m1, Matrix.Factory.fill(v2, m1.getSize()));
-	}
-
-	public Plus() {
-		super();
+	public DivideMatrix(boolean ignoreNaN, Matrix m1, Matrix m2) {
+		super(m1, m2);
+		this.ignoreNaN = ignoreNaN;
 	}
 
 	public double getDouble(long... coordinates) {
 		return ignoreNaN ? MathUtil.ignoreNaN(getSources()[0].getAsDouble(coordinates))
-				+ MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
-				.getAsDouble(coordinates) + getSources()[1].getAsDouble(coordinates);
+				/ MathUtil.ignoreNaN(getSources()[1].getAsDouble(coordinates)) : getSources()[0]
+				.getAsDouble(coordinates) / getSources()[1].getAsDouble(coordinates);
 	}
 
 }

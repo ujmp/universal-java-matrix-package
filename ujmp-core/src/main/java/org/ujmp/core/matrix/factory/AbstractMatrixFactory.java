@@ -619,6 +619,12 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 		return m;
 	}
 
+	public final T nans(final long... size) {
+		final T m = zeros(size);
+		m.nans(Ret.ORIG);
+		return m;
+	}
+
 	public final T eye(final long... size) {
 		final T m = zeros(size);
 		m.eye(Ret.ORIG);

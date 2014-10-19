@@ -158,7 +158,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public Matrix minus(Matrix m) {
 		if (m instanceof EJMLDenseDoubleMatrix2D) {
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
-			CommonOps.sub(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
+			CommonOps.subtract(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
 			MapMatrix<Object, Object> a = getMetaData();
 			if (a != null) {

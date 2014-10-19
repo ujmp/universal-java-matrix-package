@@ -33,7 +33,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,6 +42,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.collections.list.FastArrayList;
 
 public abstract class MathUtil {
 
@@ -81,7 +81,7 @@ public abstract class MathUtil {
 	static {
 		try {
 			getRandom().setSeed(seed);
-			dateFormats = new ArrayList<DateFormat>();
+			dateFormats = new FastArrayList<DateFormat>();
 			dateFormats.add(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US));
 			dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US));
 			dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, Locale.US));
@@ -351,7 +351,7 @@ public abstract class MathUtil {
 		return new Date(getLong(o));
 	}
 
-	public static final double getDouble(Object o) {
+	public static final double getDouble(final Object o) {
 		if (o == null) {
 			return 0.0;
 		} else if (o instanceof Double) {
@@ -376,7 +376,7 @@ public abstract class MathUtil {
 	}
 
 	/** sqrt(a^2 + b^2) without under/overflow. **/
-	public static final double hypot(double a, double b) {
+	public static final double hypot(final double a, final double b) {
 		double r;
 		if (Math.abs(a) > Math.abs(b)) {
 			r = b / a;
@@ -390,8 +390,8 @@ public abstract class MathUtil {
 		return r;
 	}
 
-	public static long[] collectionToLong(Collection<? extends Number> numbers) {
-		long[] ret = new long[numbers.size()];
+	public static final long[] collectionToLong(final Collection<? extends Number> numbers) {
+		final long[] ret = new long[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
 			ret[i++] = n.longValue();
@@ -399,8 +399,8 @@ public abstract class MathUtil {
 		return ret;
 	}
 
-	public static double[] collectionToDouble(Collection<? extends Number> numbers) {
-		double[] ret = new double[numbers.size()];
+	public static final double[] collectionToDouble(final Collection<? extends Number> numbers) {
+		final double[] ret = new double[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
 			ret[i++] = n.doubleValue();
@@ -408,8 +408,8 @@ public abstract class MathUtil {
 		return ret;
 	}
 
-	public static int[] collectionToInt(Collection<? extends Number> numbers) {
-		int[] ret = new int[numbers.size()];
+	public static final int[] collectionToInt(final Collection<? extends Number> numbers) {
+		final int[] ret = new int[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
 			ret[i++] = n.intValue();
@@ -418,7 +418,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Long> toLongList(long[] numbers) {
-		List<Long> ret = new ArrayList<Long>(numbers.length);
+		List<Long> ret = new FastArrayList<Long>(numbers.length);
 		for (int i = 0; i < numbers.length; i++) {
 			ret.add(numbers[i]);
 		}
@@ -426,7 +426,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Long> toLongList(int[] numbers) {
-		List<Long> ret = new ArrayList<Long>(numbers.length);
+		List<Long> ret = new FastArrayList<Long>(numbers.length);
 		for (int i = 0; i < numbers.length; i++) {
 			ret.add((long) numbers[i]);
 		}
@@ -434,7 +434,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Double> toDoubleList(double[] numbers) {
-		List<Double> ret = new ArrayList<Double>(numbers.length);
+		List<Double> ret = new FastArrayList<Double>(numbers.length);
 		for (int i = 0; i < numbers.length; i++) {
 			ret.add(numbers[i]);
 		}
@@ -442,7 +442,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Double> toDoubleList(int[] numbers) {
-		List<Double> ret = new ArrayList<Double>(numbers.length);
+		List<Double> ret = new FastArrayList<Double>(numbers.length);
 		for (int i = 0; i < numbers.length; i++) {
 			ret.add((double) numbers[i]);
 		}
@@ -450,7 +450,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Double> toDoubleList(long[] numbers) {
-		List<Double> ret = new ArrayList<Double>(numbers.length);
+		List<Double> ret = new FastArrayList<Double>(numbers.length);
 		for (int i = 0; i < numbers.length; i++) {
 			ret.add((double) numbers[i]);
 		}
@@ -484,7 +484,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Long> sequenceListLong(long start, long end, long stepsize) {
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new FastArrayList<Long>();
 
 		if (start < end) {
 			stepsize = Math.abs(stepsize);
@@ -505,7 +505,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Double> sequenceListDouble(double start, double end, double stepsize) {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new FastArrayList<Double>();
 
 		if (start < end) {
 			stepsize = Math.abs(stepsize);
@@ -522,7 +522,7 @@ public abstract class MathUtil {
 	}
 
 	public static List<Integer> sequenceListInt(int start, int end) {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new FastArrayList<Integer>();
 
 		if (start < end) {
 			for (int l = start; l <= end; l++) {

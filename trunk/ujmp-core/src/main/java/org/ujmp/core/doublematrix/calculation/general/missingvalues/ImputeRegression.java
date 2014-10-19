@@ -52,7 +52,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		this.firstGuess = firstGuess;
 	}
 
-	public double getDouble(long... coordinates) {
+	public synchronized double getDouble(long... coordinates) {
 		if (imputed == null) {
 			createMatrix();
 		}
@@ -64,7 +64,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		}
 	}
 
-	private void createMatrix() {
+	private synchronized void createMatrix() {
 		try {
 			Matrix x = getSource();
 
@@ -80,7 +80,9 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 			long t0 = System.currentTimeMillis();
 
 			for (long c = 0; c < x.getColumnCount(); c++) {
-				futures.add(executor.submit(new PredictColumn(c)));
+				if (containsMissingValues(c)) {
+					futures.add(executor.submit(new PredictColumn(c)));
+				}
 			}
 
 			for (Future<Long> f : futures) {
@@ -98,6 +100,15 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private boolean containsMissingValues(long c) {
+		for (int r = 0; r < getSource().getRowCount(); r++) {
+			if (MathUtil.isNaNOrInfinite(getSource().getAsDouble(r, c))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	class PredictColumn implements Callable<Long> {

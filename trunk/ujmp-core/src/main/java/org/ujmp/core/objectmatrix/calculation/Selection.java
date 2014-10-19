@@ -34,7 +34,8 @@ import org.ujmp.core.util.StringUtil;
 public class Selection extends AbstractObjectCalculation {
 	private static final long serialVersionUID = 4576183558391811345L;
 
-	private long[][] selection = null;
+	private final long[][] selection;
+	private final long[] size;
 
 	public Selection(Matrix m, String selectionString) {
 		this(m, StringUtil.parseSelection(selectionString, m.getSize()));
@@ -49,12 +50,30 @@ public class Selection extends AbstractObjectCalculation {
 		if (selection[COLUMN] != null) {
 			this.selection[COLUMN] = MathUtil.collectionToLong(selection[COLUMN]);
 		}
+		if (this.selection[ROW] != null && this.selection[COLUMN] != null) {
+			size = new long[] { this.selection[ROW].length, this.selection[COLUMN].length };
+		} else {
+			if (this.selection[ROW] == null) {
+				size = new long[] { getSource().getRowCount(), this.selection[COLUMN].length };
+			} else {
+				size = new long[] { this.selection[ROW].length, getSource().getColumnCount() };
+			}
+		}
 		createAnnotation();
 	}
 
 	public Selection(Matrix m, long[]... selection) {
 		super(m);
 		this.selection = selection;
+		if (selection[ROW] != null && selection[COLUMN] != null) {
+			size = new long[] { selection[ROW].length, selection[COLUMN].length };
+		} else {
+			if (selection[ROW] == null) {
+				size = new long[] { getSource().getRowCount(), selection[COLUMN].length };
+			} else {
+				size = new long[] { selection[ROW].length, getSource().getColumnCount() };
+			}
+		}
 		createAnnotation();
 	}
 
@@ -113,15 +132,7 @@ public class Selection extends AbstractObjectCalculation {
 	}
 
 	public long[] getSize() {
-		if (selection[ROW] != null && selection[COLUMN] != null) {
-			return new long[] { selection[ROW].length, selection[COLUMN].length };
-		} else {
-			if (selection[ROW] == null) {
-				return new long[] { getSource().getRowCount(), selection[COLUMN].length };
-			} else {
-				return new long[] { selection[ROW].length, getSource().getColumnCount() };
-			}
-		}
+		return size;
 	}
 
 	public void setObject(Object value, long... coordinates) {

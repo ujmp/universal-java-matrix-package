@@ -26,6 +26,7 @@ package org.ujmp.core.importer.source;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -64,9 +65,15 @@ public class DefaultMatrixStreamImportSource extends AbstractMatrixStreamImportS
 		}
 	}
 
-	public Matrix asPDF() {
-		// TODO Auto-generated method stub
-		return null;
+	public Matrix asPDF() throws IOException {
+		try {
+			Class<?> c = Class.forName("org.ujmp.pdfbox.ImportMatrixPDF");
+			Method m = c.getMethod("fromStream", InputStream.class);
+			Matrix matrix = (Matrix) m.invoke(null, getStream());
+			return matrix;
+		} catch (Exception e) {
+			throw new IOException("could not import PDF", e);
+		}
 	}
 
 	public Matrix asJPG() throws IOException {

@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.importer.DefaultMatrixFileImageImporter;
+import org.ujmp.core.importer.DefaultMatrixFileImporter;
 import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
 public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSource {
@@ -41,28 +41,28 @@ public class DefaultMatrixFileImportSource extends AbstractMatrixFileImportSourc
 		super(matrix, file);
 	}
 
-	public Matrix asPDF() {
-		return null;
+	public Matrix asPDF() throws IOException {
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asPDF();
 	}
 
 	public Matrix asJPG() throws IOException {
-		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asJPG();
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asJPG();
 	}
 
 	public Matrix asTIFF() throws IOException {
-		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asTIFF();
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asTIFF();
 	}
 
 	public Matrix asBMP() throws IOException {
-		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asBMP();
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asBMP();
 	}
 
 	public Matrix asGIF() throws IOException {
-		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asGIF();
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asGIF();
 	}
 
 	public Matrix asPNG() throws IOException {
-		return new DefaultMatrixFileImageImporter(getTargetMatrix(), getFile()).asPNG();
+		return new DefaultMatrixFileImporter(getTargetMatrix(), getFile()).asPNG();
 	}
 
 	public Matrix asDenseCSV() throws IOException {

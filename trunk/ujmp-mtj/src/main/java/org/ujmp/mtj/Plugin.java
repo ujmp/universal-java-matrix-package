@@ -38,11 +38,11 @@ public class Plugin extends AbstractPlugin {
 	public Plugin() {
 		dependencies.add("ujmp-core");
 		dependencies.add("mtj.jar");
-		dependencies.add("arpack-combo.jar");
-		dependencies.add("netlib-java.jar");
+		dependencies.add("arpack-combined_all.jar");
+		dependencies.add("native_system-java.jar");
 		neededClasses.add("no.uib.cipr.matrix.AbstractMatrix");
 		neededClasses.add("org.netlib.arpack.Svout");
-		neededClasses.add("org.netlib.blas.JBLAS");
+		neededClasses.add("com.github.fommil.netlib.NativeRefBLAS");
 	}
 
 	public String getDescription() {

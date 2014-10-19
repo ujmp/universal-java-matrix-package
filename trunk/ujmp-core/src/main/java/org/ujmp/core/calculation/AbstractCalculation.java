@@ -32,7 +32,7 @@ public abstract class AbstractCalculation implements Calculation {
 
 	private static final long serialVersionUID = -36063772015381070L;
 
-	private Matrix[] sources = null;
+	private final Matrix[] sources;
 
 	private int dimension = NONE;
 

@@ -18,7 +18,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
-			<artifactId>ejml</artifactId>
+			<artifactId>core</artifactId>
 		</dependency>
 
 		<dependency>

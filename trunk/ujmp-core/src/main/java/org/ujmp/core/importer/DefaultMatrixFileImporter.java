@@ -25,6 +25,7 @@ package org.ujmp.core.importer;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
@@ -32,17 +33,19 @@ import org.ujmp.core.importer.format.MatrixBMPImportFormat;
 import org.ujmp.core.importer.format.MatrixDenseCSVImportFormat;
 import org.ujmp.core.importer.format.MatrixGIFImportFormat;
 import org.ujmp.core.importer.format.MatrixJPGImportFormat;
+import org.ujmp.core.importer.format.MatrixPDFImportFormat;
 import org.ujmp.core.importer.format.MatrixPNGImportFormat;
 import org.ujmp.core.importer.format.MatrixTIFFImportFormat;
 import org.ujmp.core.intmatrix.impl.ImageMatrix;
 import org.ujmp.core.stringmatrix.impl.DenseCSVStringMatrix2D;
 
-public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter implements
+public class DefaultMatrixFileImporter extends AbstractMatrixFileImporter implements
 		MatrixJPGImportFormat, MatrixPNGImportFormat, MatrixBMPImportFormat, MatrixGIFImportFormat,
-		MatrixTIFFImportFormat, MatrixDenseCSVImportFormat {
+		MatrixTIFFImportFormat, MatrixDenseCSVImportFormat, MatrixPDFImportFormat {
 
-	public DefaultMatrixFileImageImporter(Matrix matrix, File file) {
+	public DefaultMatrixFileImporter(Matrix matrix, File file) {
 		super(matrix, file);
+
 	}
 
 	public Matrix asJPG() throws IOException {
@@ -113,4 +116,14 @@ public class DefaultMatrixFileImageImporter extends AbstractMatrixFileImporter i
 		}
 	}
 
+	public Matrix asPDF() throws IOException {
+		try {
+			Class<?> c = Class.forName("org.ujmp.pdfbox.ImportMatrixPDF");
+			Method m = c.getMethod("fromFile", File.class);
+			Matrix matrix = (Matrix) m.invoke(null, getFile());
+			return matrix;
+		} catch (Exception e) {
+			throw new IOException("could not import PDF", e);
+		}
+	}
 }

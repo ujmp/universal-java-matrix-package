@@ -23,6 +23,11 @@
 
 package org.ujmp.core.doublematrix.calculation.entrywise.misc;
 
+import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.misc.GrayScale.ColorChannel;
+
 public interface MiscEntrywiseDoubleCalculations {
 
+	public Matrix grayScale(Ret ret, ColorChannel colorChannel);
 }

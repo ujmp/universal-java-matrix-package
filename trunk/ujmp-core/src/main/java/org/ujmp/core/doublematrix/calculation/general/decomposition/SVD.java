@@ -91,6 +91,9 @@ public interface SVD<T> {
 			if (svd == null && UJMPSettings.getInstance().isUseOjalgo()) {
 				svd = DecompositionOps.SVD_OJALGO;
 			}
+			if (svd == null && UJMPSettings.getInstance().isUseEJML()) {
+				svd = DecompositionOps.SVD_EJML;
+			}
 			if (svd == null) {
 				svd = UJMP;
 			}
@@ -109,6 +112,9 @@ public interface SVD<T> {
 			}
 			if (svd == null && UJMPSettings.getInstance().isUseMTJ()) {
 				svd = DecompositionOps.SVD_MTJ;
+			}
+			if (svd == null && UJMPSettings.getInstance().isUseEJML()) {
+				svd = DecompositionOps.SVD_EJML;
 			}
 			if (svd == null) {
 				svd = UJMP;

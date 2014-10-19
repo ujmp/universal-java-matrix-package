@@ -35,8 +35,8 @@ public class Transpose extends AbstractObjectCalculation {
 	private static final long serialVersionUID = -2749226948849267413L;
 
 	private int swap1 = ROW;
-
 	private int swap2 = COLUMN;
+	private final long[] size;
 
 	public Transpose(Matrix m) {
 		this(m, ROW, COLUMN);
@@ -46,8 +46,9 @@ public class Transpose extends AbstractObjectCalculation {
 		super(m);
 		this.swap1 = swap1;
 		this.swap2 = swap2;
+		this.size = Coordinates.transpose(getSource().getSize(), swap1, swap2);
 		if (getMetaData() != null) {
-			setMetaData(transposeAnnotation(m.getMetaData(), getSize(), swap1, swap2));
+			setMetaData(transposeAnnotation(m.getMetaData(), size, swap1, swap2));
 		}
 	}
 
@@ -81,7 +82,7 @@ public class Transpose extends AbstractObjectCalculation {
 	}
 
 	public long[] getSize() {
-		return Coordinates.transpose(getSource().getSize(), swap1, swap2);
+		return size;
 	}
 
 	public boolean contains(long... coordinates) {

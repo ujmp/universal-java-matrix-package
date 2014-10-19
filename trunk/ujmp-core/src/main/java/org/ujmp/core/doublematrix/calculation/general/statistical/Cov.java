@@ -24,8 +24,10 @@
 package org.ujmp.core.doublematrix.calculation.general.statistical;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.concurrent.PFor;
 
 public class Cov extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -2100820298353936855L;
@@ -36,21 +38,28 @@ public class Cov extends AbstractDoubleCalculation {
 
 	private boolean besselsCorrection = true;
 
+	private final long[] size;
+
 	public Cov(boolean ignoreNaN, Matrix matrix, boolean besselsCorrection) {
 		super(matrix);
+		this.size = new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
 		this.ignoreNaN = ignoreNaN;
 		this.besselsCorrection = besselsCorrection;
 	}
 
 	public double getDouble(long... coordinates) {
 		double sumProd = 0.0;
-		long rows = getSource().getRowCount();
+		final long rows = getSource().getRowCount();
 		long N = 0;
 		double deltaX = 0.0;
 		double deltaY = 0.0;
 
 		if (mean == null) {
-			mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
+			synchronized (this) {
+				if (mean == null) {
+					mean = new Mean(ROW, ignoreNaN, getSource()).calc(Ret.NEW);
+				}
+			}
 		}
 
 		if (ignoreNaN) {
@@ -92,7 +101,31 @@ public class Cov extends AbstractDoubleCalculation {
 	}
 
 	public long[] getSize() {
-		return new long[] { getSource().getColumnCount(), getSource().getColumnCount() };
+		return size;
+	}
+
+	public Matrix calcNew() {
+		final int count = MathUtil.longToInt(getSize()[ROW]);
+
+		final Matrix result = DoubleMatrix2D.Factory.zeros(count, count);
+
+		new PFor(0, count - 1) {
+
+			@Override
+			public void step(int i) {
+				result.setAsDouble(1, i, i);
+				for (int c = 0; c < count && c < i; c++) {
+					double value = getDouble(i, c);
+					result.setAsDouble(value, i, c);
+					result.setAsDouble(value, c, i);
+				}
+			}
+		};
+
+		if (getMetaData() != null) {
+			result.setMetaData(getMetaData().clone());
+		}
+		return result;
 	}
 
 }

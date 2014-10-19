@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.calculation.AbstractDoubleCalculation;
 import org.ujmp.core.util.MathUtil;
@@ -41,21 +42,16 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 
 	private boolean ignoreNaN = false;
 
+	private long[] size;
+
 	public DiscretizeToColumns(Matrix matrix, boolean ignoreNaN, long column) {
 		super(matrix);
 		this.column = column;
 		this.ignoreNaN = ignoreNaN;
+		countValues();
 	}
 
 	public long[] getSize() {
-		try {
-			countValues();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		long[] size = getSource().getSize();
-		size[COLUMN] += values.size() - 1;
 		return size;
 	}
 
@@ -117,6 +113,8 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 			}
 			values = new ArrayList<Object>(set);
 		}
+		size = Coordinates.copyOf(getSource().getSize());
+		size[COLUMN] += values.size() - 1;
 	}
 
 }

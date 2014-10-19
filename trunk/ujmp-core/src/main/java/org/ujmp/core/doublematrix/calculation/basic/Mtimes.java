@@ -30,18 +30,14 @@ import org.ujmp.core.util.MathUtil;
 public class Mtimes extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = 4170937261358240120L;
 
-	private boolean ignoreNaN = false;
+	private final boolean ignoreNaN;
 
-	private long[] size = null;
+	private final long[] size;
 
 	public Mtimes(boolean ignoreNaN, Matrix m1, Matrix m2) {
 		super(m1, m2);
 		this.ignoreNaN = ignoreNaN;
 		this.size = new long[] { m1.getRowCount(), m2.getColumnCount() };
-	}
-
-	public Mtimes() {
-		super();
 	}
 
 	public double getDouble(long... coordinates) {

@@ -24,6 +24,8 @@
 package org.ujmp.core.util;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.ujmp.core.interfaces.HasDependencies;
 import org.ujmp.core.interfaces.HasDescription;
@@ -31,7 +33,14 @@ import org.ujmp.core.interfaces.HasStatus;
 
 public abstract class AbstractPlugin implements HasDescription, HasDependencies, HasStatus {
 
-	public abstract Collection<String> getNeededClasses();
+	protected final Set<String> dependencies = new TreeSet<String>();
+	protected final Set<String> neededClasses = new TreeSet<String>();
+
+	private final String decription;
+
+	public AbstractPlugin(String description) {
+		this.decription = description;
+	}
 
 	public String getStatus() {
 		for (String s : getNeededClasses()) {
@@ -51,5 +60,17 @@ public abstract class AbstractPlugin implements HasDescription, HasDependencies,
 	}
 
 	public final void setDescription(String description) {
+	}
+
+	public final String getDescription() {
+		return decription;
+	}
+
+	public final Collection<String> getNeededClasses() {
+		return neededClasses;
+	}
+
+	public final Collection<String> getDependencies() {
+		return dependencies;
 	}
 }

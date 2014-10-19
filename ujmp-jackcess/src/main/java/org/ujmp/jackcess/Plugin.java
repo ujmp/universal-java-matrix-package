@@ -23,19 +23,12 @@
 
 package org.ujmp.jackcess;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("import and export filters for mdb files (MS Access databases)");
 		dependencies.add("ujmp-core");
 		dependencies.add("jackcess.jar");
 		dependencies.add("commons-logging.jar");
@@ -43,18 +36,6 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("com.healthmarketscience.jackcess.Database");
 		neededClasses.add("org.apache.commons.logging.Log");
 		neededClasses.add("org.apache.commons.lang.ClassUtils");
-	}
-
-	public String getDescription() {
-		return "import and export filters for mdb files (MS Access databases)";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

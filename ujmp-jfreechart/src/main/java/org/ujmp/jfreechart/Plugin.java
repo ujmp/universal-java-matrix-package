@@ -23,37 +23,18 @@
 
 package org.ujmp.jfreechart;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("visualization using the JFreeChart library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("jfreechart.jar");
 		dependencies.add("jcommon.jar");
 		neededClasses.add("org.jfree.chart.ChartPanel");
 		neededClasses.add("org.jfree.JCommon");
-	}
-
-	public String getDescription() {
-		return "visualization using the JFreeChart library";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

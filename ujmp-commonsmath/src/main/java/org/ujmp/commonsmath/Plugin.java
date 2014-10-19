@@ -23,34 +23,15 @@
 
 package org.ujmp.commonsmath;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface to Apache commons mathemathics library");
 		dependencies.add("ujmp-core");
 		dependencies.add("commons-math.jar");
 		neededClasses.add("org.apache.commons.math3.Field");
-	}
-
-	public String getDescription() {
-		return "interface to Apache commons mathemathics library";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

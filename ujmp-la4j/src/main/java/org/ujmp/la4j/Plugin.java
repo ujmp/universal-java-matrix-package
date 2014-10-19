@@ -23,34 +23,15 @@
 
 package org.ujmp.la4j;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface to JSch");
 		dependencies.add("ujmp-core");
 		dependencies.add("ja4j.jar");
 		neededClasses.add("org.la4j.LinearAlgebra");
-	}
-
-	public String getDescription() {
-		return "interface to JSch";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

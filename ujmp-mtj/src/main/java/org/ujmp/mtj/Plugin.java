@@ -23,19 +23,12 @@
 
 package org.ujmp.mtj;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
-	private final List<Object> dependencies = new ArrayList<Object>();
-
-	private final List<String> neededClasses = new ArrayList<String>();
-
 	public Plugin() {
+		super("interface to Matrix Toolkits for Java");
 		dependencies.add("ujmp-core");
 		dependencies.add("mtj.jar");
 		dependencies.add("arpack-combined_all.jar");
@@ -43,18 +36,6 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("no.uib.cipr.matrix.AbstractMatrix");
 		neededClasses.add("org.netlib.arpack.Svout");
 		neededClasses.add("com.github.fommil.netlib.NativeRefBLAS");
-	}
-
-	public String getDescription() {
-		return "interface to Matrix Toolkits for Java";
-	}
-
-	public Collection<Object> getDependencies() {
-		return dependencies;
-	}
-
-	public Collection<String> getNeededClasses() {
-		return neededClasses;
 	}
 
 }

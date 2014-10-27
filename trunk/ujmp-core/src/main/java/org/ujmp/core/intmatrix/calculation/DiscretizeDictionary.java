@@ -24,14 +24,27 @@
 package org.ujmp.core.intmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.collections.Dictionary;
-import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 
-public interface IntCalculations {
+public class DiscretizeDictionary extends AbstractIntCalculation {
+	private static final long serialVersionUID = -7099390912822238040L;
 
-	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
-			int numberOfBins);
+	private final Dictionary dictionary;
 
-	public Matrix discretize(Ret returnType, Dictionary dictionary);
+	public DiscretizeDictionary(Matrix matrix, Dictionary dictionary) {
+		super(matrix);
+		this.dictionary = dictionary;
+		if (!dictionary.isFixed()) {
+			for (long[] c : getSource().availableCoordinates()) {
+				dictionary.add(getSource().getAsString(c));
+			}
+		}
+	}
+
+	public int getInt(long... coordinates) {
+		String s = getSource().getAsString(coordinates);
+		int index = dictionary.indexOf(s);
+		return index;
+	}
+
 }

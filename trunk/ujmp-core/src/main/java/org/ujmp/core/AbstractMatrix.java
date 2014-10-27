@@ -67,6 +67,7 @@ import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.CharMatrix;
 import org.ujmp.core.charmatrix.calculation.ToCharMatrix;
+import org.ujmp.core.collections.Dictionary;
 import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix;
@@ -160,6 +161,7 @@ import org.ujmp.core.interfaces.HasRowMajorDoubleArray2D;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.calculation.Discretize;
 import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
+import org.ujmp.core.intmatrix.calculation.DiscretizeDictionary;
 import org.ujmp.core.intmatrix.calculation.ToIntMatrix;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
@@ -439,6 +441,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
 			int numberOfBins) {
 		return new Discretize(this, dimension, method, numberOfBins).calc(returnType);
+	}
+
+	public Matrix discretize(Ret returnType, Dictionary dictionary) {
+		return new DiscretizeDictionary(this, dictionary).calc(returnType);
 	}
 
 	public Matrix indexOfMax(Ret returnType, int dimension) {

@@ -24,14 +24,45 @@
 package org.ujmp.core.intmatrix.calculation;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.collections.Dictionary;
-import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 
-public interface IntCalculations {
+public class ValueToColumn extends AbstractIntCalculation {
+	private static final long serialVersionUID = 1294551769508034360L;
 
-	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
-			int numberOfBins);
+	private int max;
 
-	public Matrix discretize(Ret returnType, Dictionary dictionary);
+	private final long[] size;
+
+	public ValueToColumn(Matrix matrix, int max) {
+		super(matrix);
+		if (matrix.getColumnCount() != 1) {
+			throw new RuntimeException("matrix must have one column");
+		}
+		this.max = max;
+		this.size = new long[] { getSource().getRowCount(), max + 1 };
+	}
+
+	public ValueToColumn(Matrix matrix) {
+		super(matrix);
+		if (matrix.getColumnCount() != 1) {
+			throw new RuntimeException("matrix must have one column");
+		}
+		for (long[] c : getSource().availableCoordinates()) {
+			max = Math.max(max, getSource().getAsInt(c));
+		}
+		this.size = new long[] { getSource().getRowCount(), max + 1 };
+	}
+
+	public final long[] getSize() {
+		return size;
+	}
+
+	public int getInt(long... coordinates) {
+		int col = getSource().getAsInt(coordinates[ROW], 0);
+		if (col == coordinates[COLUMN]) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
 }

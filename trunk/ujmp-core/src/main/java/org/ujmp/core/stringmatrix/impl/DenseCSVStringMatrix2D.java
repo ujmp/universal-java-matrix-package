@@ -200,49 +200,61 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 					boolean active = true;
 
-					final byte[] buffer = new byte[65536];
+					final byte[] buffer = new byte[1048576];
 
 					rowIndexList.add(0l);
 					for (long pos = 0; pos < byteBufferConcatenation.getLength(); pos += buffer.length) {
-						final int remaining = (int) (byteBufferConcatenation.getLength() - pos);
-						final int lengthToRead = Math.min(remaining, buffer.length);
+						final long remaining = byteBufferConcatenation.getLength() - pos;
+						final int lengthToRead = MathUtil.longToInt(Math.min(remaining,
+								buffer.length));
 						byteBufferConcatenation.getBytes(buffer, pos, lengthToRead);
 						for (int i = 0; i < lengthToRead; i++) {
-							final byte b = buffer[i];
-
-							if (b == enclosingCharacter) {
+							if (buffer[i] == enclosingCharacter) {
 								active = !active;
 							} else if (active) {
-								if (b == '\\') {
-									i++; // skip masked character
-								} else if (b == '\n') {
-									maxTabCount = Math.max(maxTabCount, tabCount);
-									minTabCount = Math.min(minTabCount, tabCount);
-									maxCommaCount = Math.max(maxCommaCount, commaCount);
-									minCommaCount = Math.min(minCommaCount, commaCount);
-									maxSemicolonCount = Math.max(maxSemicolonCount, semicolonCount);
-									minSemicolonCount = Math.min(minSemicolonCount, semicolonCount);
-									maxSpaceCount = Math.max(maxSpaceCount, spaceCount);
-									minSpaceCount = Math.min(minSpaceCount, spaceCount);
-									maxSepCount = Math.max(maxSepCount, sepCount);
-									minSepCount = Math.min(minSepCount, sepCount);
-									tabCount = 0;
-									commaCount = 0;
-									semicolonCount = 0;
-									spaceCount = 0;
-									sepCount = 0;
-									rowIndexList.add(pos + i + 1);
-									rows++;
-								} else if (b == columnSeparator) {
+								if (buffer[i] == columnSeparator) {
 									sepCount++;
-								} else if (b == '\t') {
-									tabCount++;
-								} else if (b == ';') {
-									semicolonCount++;
-								} else if (b == ',') {
-									commaCount++;
-								} else if (b == ' ') {
-									spaceCount++;
+								} else {
+									switch (buffer[i]) {
+									case '\\':
+										i++; // skip masked character
+										break;
+									case '\n':
+										maxTabCount = Math.max(maxTabCount, tabCount);
+										minTabCount = Math.min(minTabCount, tabCount);
+										maxCommaCount = Math.max(maxCommaCount, commaCount);
+										minCommaCount = Math.min(minCommaCount, commaCount);
+										maxSemicolonCount = Math.max(maxSemicolonCount,
+												semicolonCount);
+										minSemicolonCount = Math.min(minSemicolonCount,
+												semicolonCount);
+										maxSpaceCount = Math.max(maxSpaceCount, spaceCount);
+										minSpaceCount = Math.min(minSpaceCount, spaceCount);
+										maxSepCount = Math.max(maxSepCount, sepCount);
+										minSepCount = Math.min(minSepCount, sepCount);
+										tabCount = 0;
+										commaCount = 0;
+										semicolonCount = 0;
+										spaceCount = 0;
+										sepCount = 0;
+										rowIndexList.add(pos + i + 1);
+										rows++;
+										break;
+									case '\t':
+										tabCount++;
+										break;
+									case ';':
+										semicolonCount++;
+										break;
+									case ',':
+										commaCount++;
+										break;
+									case ' ':
+										spaceCount++;
+										break;
+									default:
+										break;
+									}
 								}
 							}
 						}

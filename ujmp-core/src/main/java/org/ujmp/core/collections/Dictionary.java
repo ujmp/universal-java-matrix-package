@@ -28,12 +28,22 @@ import org.ujmp.core.collections.list.ArrayIndexList;
 public class Dictionary extends ArrayIndexList<String> {
 	private static final long serialVersionUID = -1114756607585569698L;
 
+	private boolean isFixed = false;
+
 	public boolean add(String string) {
-		if (!contains(string)) {
+		if (!isFixed && !contains(string)) {
 			return super.add(string);
 		} else {
 			return false;
 		}
+	}
+
+	public boolean isFixed() {
+		return isFixed;
+	}
+
+	public void setFixed(boolean fixed) {
+		this.isFixed = fixed;
 	}
 
 }

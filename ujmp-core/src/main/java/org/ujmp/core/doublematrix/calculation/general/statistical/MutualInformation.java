@@ -35,7 +35,6 @@ import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.concurrent.PFor;
 
 public class MutualInformation extends AbstractDoubleCalculation {
 	private static final long serialVersionUID = -4891250637894943873L;

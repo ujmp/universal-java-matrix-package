@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2008-2014 by Holger Arndt
+ *
+ * This file is part of the Java Data Mining Package (JDMP).
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership and licensing.
+ *
+ * JDMP is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * JDMP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with JDMP; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
 package org.ujmp.core.util;
 
 import java.util.Arrays;
@@ -15,6 +38,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 	private double[] values;
 	private int capacity;
 	private int valueCount;
+	private boolean transposed;
 
 	public DefaultSparseDoubleVector1D(DefaultSparseDoubleVector1D source) {
 		super(source.getRowCount(), source.getColumnCount());
@@ -22,33 +46,49 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		this.capacity = source.capacity;
 		this.indices = Arrays.copyOf(source.indices, source.indices.length);
 		this.values = Arrays.copyOf(source.values, source.values.length);
+		this.transposed = getColumnCount() > getRowCount();
 	}
 
-	public DefaultSparseDoubleVector1D(long rows, long cols) {
-		super(rows, 1);
+	public DefaultSparseDoubleVector1D(long rows, long columns) {
+		super(rows, columns);
+		VerifyUtil.verifyTrue(rows == 1 || columns == 1, "not a vector");
 		this.valueCount = 0;
 		this.capacity = initialCapacity;
 		this.indices = new long[initialCapacity];
 		this.values = new double[initialCapacity];
+		this.transposed = columns > rows;
 	}
 
 	public double getDouble(long row, long column) {
-		if (column != 0) {
-			return 0.0;
+		long pos;
+		if (transposed) {
+			VerifyUtil.verifyEquals(row, 0, "row must be 0");
+			pos = column;
 		} else {
-			int index = binarySearch(indices, 0, valueCount, row);
-			if (index >= 0) {
-				return values[index];
-			} else {
-				return 0.0;
-			}
+			VerifyUtil.verifyEquals(column, 0, "column must be 0");
+			pos = row;
+		}
+
+		int index = binarySearch(indices, 0, valueCount, pos);
+		if (index >= 0) {
+			return values[index];
+		} else {
+			return 0.0;
 		}
 	}
 
 	public void setDouble(double value, long row, long column) {
-		VerifyUtil.verifyEquals(column, 0, "must be 0");
+		long pos;
+		if (transposed) {
+			VerifyUtil.verifyEquals(row, 0, "row must be 0");
+			pos = column;
+		} else {
+			VerifyUtil.verifyEquals(column, 0, "column must be 0");
+			pos = row;
+		}
+
 		synchronized (indices) {
-			int index = binarySearch(indices, 0, valueCount, row);
+			int index = binarySearch(indices, 0, valueCount, pos);
 			if (index >= 0) {
 				// value exists
 				if (value == 0.0) {
@@ -69,13 +109,13 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 						indices = Arrays.copyOf(indices, capacity);
 						values = Arrays.copyOf(values, capacity);
 					}
-					index = findInsertPosition(indices, 0, valueCount, row);
+					index = findInsertPosition(indices, 0, valueCount, pos);
 					if (index != capacity) {
 						// make space in the middle
 						System.arraycopy(indices, index, indices, index + 1, valueCount - index);
 						System.arraycopy(values, index, values, index + 1, valueCount - index);
 					}
-					indices[index] = row;
+					indices[index] = pos;
 					values[index] = value;
 					valueCount++;
 				}
@@ -151,7 +191,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		DefaultSparseDoubleVector1D result = new DefaultSparseDoubleVector1D(this);
 		final double[] resultValues = result.values;
 		for (int i = resultValues.length; --i != -1;) {
-			resultValues[i] *= matrix.getAsDouble(i, 0);
+			resultValues[i] *= matrix.getAsDouble(indices[i], 0);
 		}
 		return result;
 	}
@@ -160,7 +200,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		DefaultSparseDoubleVector1D result = new DefaultSparseDoubleVector1D(this);
 		final double[] resultValues = result.values;
 		for (int i = resultValues.length; --i != -1;) {
-			resultValues[i] /= matrix.getAsDouble(i, 0);
+			resultValues[i] /= matrix.getAsDouble(indices[i], 0);
 		}
 		return result;
 	}

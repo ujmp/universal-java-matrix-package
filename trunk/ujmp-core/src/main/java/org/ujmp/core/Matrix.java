@@ -23,6 +23,9 @@
 
 package org.ujmp.core;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import org.ujmp.core.annotation.HasMetaData;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.CanPerformCalculations;
@@ -135,6 +138,10 @@ public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSette
 	public MatrixExportDestinationSelector exportTo();
 
 	public MatrixImportSourceSelector importFrom();
+
+	public void share(String hostname, int port) throws UnknownHostException, IOException;
+
+	public void share(int port) throws IOException;
 
 	public void fireValueChanged();
 

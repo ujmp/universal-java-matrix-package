@@ -26,14 +26,13 @@ package org.ujmp.core;
 import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -217,6 +216,7 @@ import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.concurrent.PForEquidistant;
+import org.ujmp.core.util.io.MatrixSocketThread;
 
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
@@ -2486,55 +2486,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		metaData.put(DESCRIPTION, description);
 	}
 
-	public void exportToStream(OutputStream os) throws IOException {
-		ObjectOutputStream oos;
-		if (os instanceof ObjectOutputStream) {
-			oos = (ObjectOutputStream) os;
-		} else {
-			oos = new ObjectOutputStream(os);
-		}
-		oos.writeInt(getDimensionCount());
-		for (int i = 0; i < getSize().length; i++) {
-			oos.writeLong(getSize()[i]);
-		}
-		switch (getValueType()) {
-		case DOUBLE:
-			for (long[] c : allCoordinates()) {
-				oos.writeDouble(getAsDouble(c));
-			}
-			break;
-		default:
-			for (long[] c : allCoordinates()) {
-				oos.writeObject(getAsObject(c));
-			}
-			break;
-		}
+	public final void share(String hostname, int port) throws UnknownHostException, IOException {
+		ServerSocket serverSocket = new ServerSocket(port, 50, InetAddress.getByName(hostname));
+		new MatrixSocketThread(this, serverSocket);
 	}
 
-	public void importFromStream(InputStream is) throws IOException, ClassNotFoundException {
-		ObjectInputStream ois;
-		if (is instanceof ObjectInputStream) {
-			ois = (ObjectInputStream) is;
-		} else {
-			ois = new ObjectInputStream(is);
-		}
-		int dimensions = ois.readInt();
-		this.size = new long[dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			size[i] = ois.readInt();
-		}
-		switch (getValueType()) {
-		case DOUBLE:
-			for (long[] c : allCoordinates()) {
-				setAsDouble(ois.readDouble(), c);
-			}
-			break;
-		default:
-			for (long[] c : allCoordinates()) {
-				setAsObject(ois.readObject(), c);
-			}
-			break;
-		}
+	public final void share(int port) throws IOException {
+		ServerSocket serverSocket = new ServerSocket(port);
+		new MatrixSocketThread(this, serverSocket);
 	}
 
 }

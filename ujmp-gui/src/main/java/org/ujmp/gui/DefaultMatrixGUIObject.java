@@ -29,7 +29,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.TimerTask;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,11 +39,12 @@ import org.ujmp.core.collections.list.ArrayIndexList;
 import org.ujmp.core.collections.map.SoftHashMap;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.core.util.UJMPTimer;
-import org.ujmp.gui.renderer.MatrixHeatmapRenderer;
 import org.ujmp.gui.table.TableModelEvent64;
 import org.ujmp.gui.table.TableModelListener64;
 import org.ujmp.gui.util.ColorUtil;
+import org.ujmp.gui.util.DataItem;
+import org.ujmp.gui.util.LoadDataTask;
+import org.ujmp.gui.util.UpdateIconTimerTask;
 
 public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	private static final long serialVersionUID = -7974044446109857973L;
@@ -60,17 +60,12 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 	protected volatile boolean rowCountUpToDate = false;
 	protected volatile boolean columnCountUpToDate = false;
 
-	private final UpdateIconTimerTask updateIconTimerTask;
-	private final LoadDataTask loadDataTask;
-
 	protected Image icon = null;
 
 	public DefaultMatrixGUIObject(Matrix matrix) {
 		super(matrix);
-		updateIconTimerTask = new UpdateIconTimerTask(this);
-		loadDataTask = new LoadDataTask(this);
-		UJMPTimer.newInstance().schedule(loadDataTask, 50, 50);
-		UJMPTimer.newInstance().schedule(updateIconTimerTask, 300, 300);
+		UpdateIconTimerTask.getInstance().add(this);
+		LoadDataTask.getInstance().add(this);
 	}
 
 	public long getRowCount64() {
@@ -193,74 +188,48 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		}
 	}
 
-}
-
-class DataItem {
-	private final Object object;
-	private final Color color;
-
-	public DataItem(Object object, Color color) {
-		this.object = object;
-		this.color = color;
+	public boolean isIconUpToDate() {
+		return iconUpToDate;
 	}
 
-	public Color getColor() {
-		return color;
+	public void setIconUpToDate(boolean b) {
+		this.iconUpToDate = b;
 	}
 
-	public Object getObject() {
-		return object;
-	}
-}
-
-class UpdateIconTimerTask extends TimerTask {
-	private final DefaultMatrixGUIObject matrixGuiObject;
-
-	public UpdateIconTimerTask(DefaultMatrixGUIObject matrixGuiObject) {
-		this.matrixGuiObject = matrixGuiObject;
+	public void setIcon(BufferedImage image) {
+		this.icon = image;
 	}
 
-	@Override
-	public void run() {
-		if (!matrixGuiObject.iconUpToDate) {
-			matrixGuiObject.iconUpToDate = true;
-			BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
-			MatrixHeatmapRenderer.paintMatrix(image.getGraphics(), matrixGuiObject, 16, 16, 0, 0);
-			matrixGuiObject.icon = image;
-		}
-	}
-}
-
-class LoadDataTask extends TimerTask {
-	private final DefaultMatrixGUIObject matrixGUIObject;
-
-	public LoadDataTask(DefaultMatrixGUIObject matrixGUIObject) {
-		this.matrixGUIObject = matrixGUIObject;
+	public boolean isColumnCountUpToDate() {
+		return columnCountUpToDate;
 	}
 
-	@Override
-	public void run() {
-		if (!matrixGUIObject.columnCountUpToDate) {
-			matrixGUIObject.columnCount = matrixGUIObject.getMatrix().getColumnCount();
-			matrixGUIObject.columnCountUpToDate = true;
-			matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
-		}
-
-		if (!matrixGUIObject.rowCountUpToDate) {
-			matrixGUIObject.rowCount = matrixGUIObject.getMatrix().getRowCount();
-			matrixGUIObject.rowCountUpToDate = true;
-			matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
-		}
-
-		if (matrixGUIObject.rowCountUpToDate && matrixGUIObject.columnCountUpToDate && !matrixGUIObject.todo.isEmpty()) {
-			long t0 = System.currentTimeMillis();
-			while (matrixGUIObject.rowCountUpToDate && matrixGUIObject.columnCountUpToDate
-					&& !matrixGUIObject.todo.isEmpty() && System.currentTimeMillis() - t0 < 300) {
-				Coordinates coordinates = matrixGUIObject.todo.remove(matrixGUIObject.todo.size() - 1);
-				Object object = matrixGUIObject.getMatrix().getAsObject(coordinates.getLongCoordinates());
-				matrixGUIObject.dataCache.put(coordinates, new DataItem(object, ColorUtil.fromObject(object)));
-			}
-			matrixGUIObject.fireValueChanged();
-		}
+	public void setColumnCount(long columnCount) {
+		this.columnCount = columnCount;
 	}
+
+	public void setColumnCountUpToDate(boolean b) {
+		this.columnCountUpToDate = b;
+	}
+
+	public boolean isRowCountUpToDate() {
+		return rowCountUpToDate;
+	}
+
+	public void setRowCount(long rowCount) {
+		this.rowCount = rowCount;
+	}
+
+	public void setRowCountUpToDate(boolean b) {
+		this.rowCountUpToDate = b;
+	}
+
+	public List<Coordinates> getTodo() {
+		return todo;
+	}
+
+	public Map<Coordinates, DataItem> getDataCache() {
+		return dataCache;
+	}
+
 }

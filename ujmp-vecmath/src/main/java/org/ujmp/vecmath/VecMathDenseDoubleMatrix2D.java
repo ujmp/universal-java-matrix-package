@@ -98,7 +98,7 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = (GMatrix) matrix.clone();
 			result.add(((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				ret.setMetaData(a.clone());
 			}
@@ -113,7 +113,7 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = (GMatrix) matrix.clone();
 			result.sub(((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				ret.setMetaData(a.clone());
 			}
@@ -128,7 +128,7 @@ public class VecMathDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impl
 			GMatrix result = new GMatrix(matrix.getNumRow(), (int) m.getColumnCount());
 			result.mul(matrix, ((VecMathDenseDoubleMatrix2D) m).matrix);
 			Matrix ret = new VecMathDenseDoubleMatrix2D(result);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				ret.setMetaData(a.clone());
 			}

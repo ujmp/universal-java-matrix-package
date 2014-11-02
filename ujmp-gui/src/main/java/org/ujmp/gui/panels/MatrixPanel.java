@@ -59,7 +59,7 @@ public class MatrixPanel extends AbstractPanel {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setMinimumSize(new Dimension(10, 10));
 
-		MapMatrix<Object, Object> metaData = m.getMatrix().getMetaData();
+		MapMatrix<String, Object> metaData = m.getMatrix().getMetaData();
 		if (metaData != null) {
 			splitPane2.setTopComponent(new MatrixEditorPanel("Meta Data", (MatrixGUIObject) m.getMatrix().getMetaData()
 					.getGUIObject()));

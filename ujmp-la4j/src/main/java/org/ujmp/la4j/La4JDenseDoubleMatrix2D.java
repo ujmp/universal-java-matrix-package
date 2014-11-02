@@ -77,7 +77,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix plus(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.add(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -88,7 +88,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
 			Matrix result = new La4JDenseDoubleMatrix2D(
 					(Basic2DMatrix) matrix.add(((La4JDenseDoubleMatrix2D) m).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -110,7 +110,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix minus(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.subtract(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -121,7 +121,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		if (m instanceof La4JDenseDoubleMatrix2D) {
 			Matrix result = new La4JDenseDoubleMatrix2D(
 					(Basic2DMatrix) matrix.subtract(((La4JDenseDoubleMatrix2D) m).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -133,7 +133,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix divide(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.divide(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -142,7 +142,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public Matrix times(double value) {
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) matrix.multiply(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

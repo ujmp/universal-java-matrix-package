@@ -65,7 +65,7 @@ class DivideScalarMatrix implements DivideScalarCalculation<Matrix, Matrix> {
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				MapMatrix<Object, Object> a = source.getMetaData();
+				MapMatrix<String, Object> a = source.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -100,7 +100,7 @@ class DivideScalarDenseMatrix implements DivideScalarCalculation<DenseMatrix, De
 				target.setAsBigDecimal(result, c);
 			}
 			if (source != target) {
-				MapMatrix<Object, Object> a = source.getMetaData();
+				MapMatrix<String, Object> a = source.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -130,7 +130,7 @@ class DivideScalarSparseMatrix implements DivideScalarCalculation<SparseMatrix, 
 			target.setAsBigDecimal(result, c);
 		}
 		if (source != target) {
-			MapMatrix<Object, Object> a = source.getMetaData();
+			MapMatrix<String, Object> a = source.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}
@@ -159,7 +159,7 @@ class DivideScalarDenseMatrix2D implements DivideScalarCalculation<DenseMatrix2D
 				}
 			}
 			if (source != target) {
-				MapMatrix<Object, Object> a = source.getMetaData();
+				MapMatrix<String, Object> a = source.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -206,7 +206,7 @@ class DivideScalarDenseDoubleMatrix2D implements
 			}
 		}
 		if (source != target) {
-			MapMatrix<Object, Object> a = source.getMetaData();
+			MapMatrix<String, Object> a = source.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}

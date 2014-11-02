@@ -54,7 +54,7 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 		for (long[] c : source.availableCoordinates()) {
 			setObject(source.getAsObject(c), c);
 		}
-		MapMatrix<Object, Object> a = source.getMetaData();
+		MapMatrix<String, Object> a = source.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}

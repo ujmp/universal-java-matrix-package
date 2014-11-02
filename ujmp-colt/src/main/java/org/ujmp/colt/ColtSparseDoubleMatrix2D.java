@@ -131,7 +131,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix plus(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.plus(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -166,7 +166,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix times(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.mult(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -189,7 +189,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 
 	public Matrix divide(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy().assign(Functions.div(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -199,7 +199,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 	public Matrix minus(double value) {
 		Matrix result = new ColtSparseDoubleMatrix2D((SparseDoubleMatrix2D) matrix.copy()
 				.assign(Functions.minus(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

@@ -137,7 +137,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
 					.add(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -151,7 +151,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 		if (m2 instanceof AbstractCommonsMathDenseDoubleMatrix2D) {
 			Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix
 					.subtract(((AbstractCommonsMathDenseDoubleMatrix2D) m2).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -163,7 +163,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public Matrix times(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -172,7 +172,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public Matrix divide(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarMultiply(1.0 / value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -181,7 +181,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public Matrix plus(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -190,7 +190,7 @@ public abstract class AbstractCommonsMathDenseDoubleMatrix2D extends AbstractDen
 
 	public Matrix minus(double value) {
 		Matrix result = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE.dense(matrix.scalarAdd(-value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

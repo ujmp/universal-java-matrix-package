@@ -29,12 +29,12 @@ public class UJMPTimer extends Timer {
 
 	private static int runningId = 1;
 
-	public static final UJMPTimer newInstance() {
-		return new UJMPTimer();
+	public static final UJMPTimer newInstance(String label) {
+		return new UJMPTimer(label);
 	}
 
-	private UJMPTimer() {
-		super("UJMPTimer-" + runningId++, true);
+	private UJMPTimer(String label) {
+		super(label + " " + runningId++, true);
 	}
 
 }

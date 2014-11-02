@@ -209,7 +209,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 			DenseMatrix ret = matrix.copy();
 			ret.add(((MTJDenseDoubleMatrix2D) m2).getWrappedObject());
 			Matrix result = new MTJDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -223,7 +223,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		DenseMatrix ret = matrix.copy();
 		ret.scale(f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -234,7 +234,7 @@ public class MTJDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implemen
 		DenseMatrix ret = matrix.copy();
 		ret.scale(1.0 / f);
 		Matrix result = new MTJDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

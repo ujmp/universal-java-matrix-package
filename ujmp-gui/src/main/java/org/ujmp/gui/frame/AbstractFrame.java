@@ -100,8 +100,8 @@ public abstract class AbstractFrame extends JFrame {
 		};
 
 		updateTitle();
-		timer = UJMPTimer.newInstance();
-		timer.scheduleAtFixedRate(updateTask, 500, 500);
+		timer = UJMPTimer.newInstance("FrameUpdate "+guiObject.getCoreObject().getClass().getSimpleName());
+		timer.schedule(updateTask, 500, 500);
 	}
 
 	public final void setVisible(boolean state) {

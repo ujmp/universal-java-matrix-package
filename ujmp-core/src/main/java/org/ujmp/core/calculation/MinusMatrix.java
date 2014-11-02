@@ -70,7 +70,7 @@ class MinusMatrixMatrix implements MinusMatrixCalculation<Matrix, Matrix, Matrix
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -85,7 +85,7 @@ class MinusMatrixDenseMatrix implements
 	public final void calc(final DenseMatrix source1, final DenseMatrix source2,
 			final DenseMatrix target) {
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}
@@ -103,7 +103,7 @@ class MinusMatrixDenseMatrix implements
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -131,7 +131,7 @@ class MinusMatrixSparseMatrix implements
 			target.setAsBigDecimal(result, c);
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}
@@ -160,7 +160,7 @@ class MinusMatrixDenseMatrix2D implements
 				}
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -195,7 +195,7 @@ class MinusMatrixDenseDoubleMatrix2D implements
 			}
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}

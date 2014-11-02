@@ -70,7 +70,7 @@ class TimesMatrixMatrix implements TimesMatrixCalculation<Matrix, Matrix, Matrix
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -97,7 +97,7 @@ class TimesMatrixDenseMatrix implements
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -119,7 +119,7 @@ class TimesMatrixSparseMatrix implements
 			target.setAsBigDecimal(MathUtil.times(v1, v2), c);
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}
@@ -148,7 +148,7 @@ class TimesMatrixDenseMatrix2D implements
 				}
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -183,7 +183,7 @@ class TimesMatrixDenseDoubleMatrix2D implements
 			}
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}

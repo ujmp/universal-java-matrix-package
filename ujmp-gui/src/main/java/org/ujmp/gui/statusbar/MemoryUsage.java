@@ -45,7 +45,7 @@ public class MemoryUsage extends JProgressBar {
 	public MemoryUsage() {
 		setBorder(BorderFactory.createEtchedBorder());
 		setMinimumSize(new Dimension(50, 30));
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
 		timer.schedule(new UpdateTask(this), 0, 1000);
 	}
 

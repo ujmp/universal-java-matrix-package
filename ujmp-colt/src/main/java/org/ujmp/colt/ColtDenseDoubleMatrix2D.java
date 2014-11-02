@@ -138,7 +138,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix plus(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.plus(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -147,7 +147,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix minus(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.minus(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -156,7 +156,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix times(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.mult(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -165,7 +165,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix divide(double value) {
 		Matrix result = new ColtDenseDoubleMatrix2D((DenseDoubleMatrix2D) matrix.copy().assign(Functions.div(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -188,7 +188,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -204,7 +204,7 @@ public class ColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			ret.assign(matrix);
 			SmpBlas.smpBlas.daxpy(-1, ((ColtDenseDoubleMatrix2D) m).getWrappedObject(), ret);
 			Matrix result = new ColtDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}

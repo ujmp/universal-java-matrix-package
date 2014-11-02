@@ -24,13 +24,18 @@
 package org.ujmp.gui;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.event.EventListenerList;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.table.FastListSelectionModel64;
 import org.ujmp.gui.table.TableModel64;
+import org.ujmp.gui.util.DataItem;
 
 public interface MatrixGUIObject extends GUIObject, TableModel64 {
 
@@ -49,5 +54,27 @@ public interface MatrixGUIObject extends GUIObject, TableModel64 {
 	public void setMouseOverCoordinates(long... coordinates);
 
 	public long[] getMouseOverCoordinates();
+
+	public boolean isIconUpToDate();
+
+	public void setIconUpToDate(boolean b);
+
+	public void setIcon(BufferedImage image);
+
+	public boolean isColumnCountUpToDate();
+
+	public void setColumnCount(long columnCount);
+
+	public void setColumnCountUpToDate(boolean b);
+
+	public boolean isRowCountUpToDate();
+
+	public void setRowCount(long rowCount);
+
+	public void setRowCountUpToDate(boolean b);
+
+	public List<Coordinates> getTodo();
+
+	public Map<Coordinates, DataItem> getDataCache();
 
 }

@@ -78,7 +78,7 @@ class PlusMatrixMatrix implements PlusMatrixCalculation<Matrix, Matrix, Matrix> 
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -104,7 +104,7 @@ class PlusMatrixDenseMatrix implements PlusMatrixCalculation<DenseMatrix, DenseM
 				target.setAsBigDecimal(result, c);
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -132,7 +132,7 @@ class PlusMatrixSparseMatrix implements
 			target.setAsBigDecimal(result, c);
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}
@@ -161,7 +161,7 @@ class PlusMatrixDenseMatrix2D implements
 				}
 			}
 			if (source1 != target) {
-				MapMatrix<Object, Object> a = source1.getMetaData();
+				MapMatrix<String, Object> a = source1.getMetaData();
 				if (a != null) {
 					target.setMetaData(a.clone());
 				}
@@ -196,7 +196,7 @@ class PlusMatrixDenseDoubleMatrix2D implements
 			}
 		}
 		if (source1 != target) {
-			MapMatrix<Object, Object> a = source1.getMetaData();
+			MapMatrix<String, Object> a = source1.getMetaData();
 			if (a != null) {
 				target.setMetaData(a.clone());
 			}

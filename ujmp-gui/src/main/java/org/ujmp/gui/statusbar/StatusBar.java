@@ -77,7 +77,7 @@ public class StatusBar extends JPanel {
 		add(jProgressBar, new GridBagConstraints(1, 0, 1, 1, 0.8, 1.0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
 
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance("StatusBar "+guiObject.getCoreObject().getClass().getSimpleName());
 		timer.schedule(new UpdateTask(this), 200, 200);
 	}
 

@@ -52,12 +52,12 @@ public class Transpose extends AbstractObjectCalculation {
 		}
 	}
 
-	public static MapMatrix<Object, Object> transposeAnnotation(MapMatrix<Object, Object> aorig,
+	public static MapMatrix<String, Object> transposeAnnotation(MapMatrix<String, Object> aorig,
 			long[] newSize, int swap1, int swap2) {
 
 		if (aorig != null) {
-			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>(
-					new TreeMap<Object, Object>());
+			MapMatrix<String, Object> a = new DefaultMapMatrix<String, Object>(
+					new TreeMap<String, Object>());
 			a.put(Matrix.LABEL, aorig.get(Matrix.LABEL));
 			for (int i = 0; i < newSize.length; i++) {
 				Matrix am = (Matrix) aorig.get(Matrix.DIMENSIONMETADATA + i);
@@ -121,8 +121,8 @@ public class Transpose extends AbstractObjectCalculation {
 		}
 	}
 
-	public static MapMatrix<Object, Object> transposeAnnotation(
-			MapMatrix<Object, Object> annotation, long[] newSize) {
+	public static MapMatrix<String, Object> transposeAnnotation(
+			MapMatrix<String, Object> annotation, long[] newSize) {
 		return transposeAnnotation(annotation, newSize, ROW, COLUMN);
 	}
 

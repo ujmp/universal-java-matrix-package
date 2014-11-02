@@ -149,7 +149,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public Matrix plus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.plus(((JScienceDenseDoubleMatrix2D) that).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -162,7 +162,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 	public Matrix minus(Matrix that) {
 		if (that instanceof JScienceDenseDoubleMatrix2D) {
 			Matrix result = new JScienceDenseDoubleMatrix2D(matrix.minus(((JScienceDenseDoubleMatrix2D) that).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -174,7 +174,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public Matrix times(double value) {
 		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -183,7 +183,7 @@ public class JScienceDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imp
 
 	public Matrix divide(double value) {
 		Matrix result = new JScienceDenseDoubleMatrix2D(matrix.times(Float64.valueOf(1.0 / value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

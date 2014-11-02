@@ -39,7 +39,7 @@ public class IncludeAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]++;
-		setMetaData(new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>()));
+		setMetaData(new DefaultMapMatrix<String, Object>(new TreeMap<String, Object>()));
 		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 	}
 

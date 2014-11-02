@@ -45,7 +45,7 @@ public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapp
 		for (long[] c : source.availableCoordinates()) {
 			setAsObject(source.getAsObject(c), c);
 		}
-		MapMatrix<Object, Object> a = source.getMetaData();
+		MapMatrix<String, Object> a = source.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}

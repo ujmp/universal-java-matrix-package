@@ -54,7 +54,7 @@ public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 				m.fireValueChanged();
 			}
 		};
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
 		timer.schedule(task, 1000, 1000);
 	}
 

@@ -220,7 +220,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				System.arraycopy(block, 0, this.data[i], 0, block.length);
 			}
 		}
-		MapMatrix<Object, Object> a = m.getMetaData();
+		MapMatrix<String, Object> a = m.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}
@@ -266,7 +266,7 @@ public class BlockDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 				setDouble(m.getAsDouble(c), c);
 			}
 		}
-		MapMatrix<Object, Object> a = m.getMetaData();
+		MapMatrix<String, Object> a = m.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}

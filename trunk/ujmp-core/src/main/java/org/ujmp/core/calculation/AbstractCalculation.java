@@ -36,7 +36,7 @@ public abstract class AbstractCalculation implements Calculation {
 
 	private int dimension = NONE;
 
-	private MapMatrix<Object, Object> annotation = null;
+	private MapMatrix<String, Object> annotation = null;
 
 	public AbstractCalculation(Matrix... sources) {
 		this.sources = sources;
@@ -49,7 +49,7 @@ public abstract class AbstractCalculation implements Calculation {
 		this.dimension = dimension;
 	}
 
-	public void setMetaData(MapMatrix<Object, Object> annotation) {
+	public void setMetaData(MapMatrix<String, Object> annotation) {
 		this.annotation = annotation;
 	}
 
@@ -61,7 +61,7 @@ public abstract class AbstractCalculation implements Calculation {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
-	public MapMatrix<Object, Object> getMetaData() {
+	public MapMatrix<String, Object> getMetaData() {
 		return annotation;
 	}
 

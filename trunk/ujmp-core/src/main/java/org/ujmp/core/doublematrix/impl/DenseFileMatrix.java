@@ -185,7 +185,7 @@ public class DenseFileMatrix extends AbstractDenseDoubleMatrixMultiD implements 
 		for (long[] c : m.allCoordinates()) {
 			setAsDouble(m.getAsDouble(c), c);
 		}
-		MapMatrix<Object, Object> a = m.getMetaData();
+		MapMatrix<String, Object> a = m.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}

@@ -50,7 +50,7 @@ public class OperatingSystemMatrix extends AbstractDenseObjectMatrix2D {
 		setRowLabel(5, "Version");
 		matrix = this;
 		os = ManagementFactory.getOperatingSystemMXBean();
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
 		timer.schedule(task, 1000, 1000);
 	}
 

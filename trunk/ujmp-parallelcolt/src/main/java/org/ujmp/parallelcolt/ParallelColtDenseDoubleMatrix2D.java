@@ -127,7 +127,7 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix plus(double value) {
 		Matrix result = new ParallelColtDenseDoubleMatrix2D((cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.plus(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -142,7 +142,7 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 	public Matrix times(double value) {
 		Matrix result = new ParallelColtDenseDoubleMatrix2D((cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D) matrix
 				.copy().assign(DoubleFunctions.mult(value)));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -159,7 +159,7 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DoubleMatrix2D result = matrix.copy();
 			result.assign(((ParallelColtDenseDoubleMatrix2D) m).getWrappedObject(), DoubleFunctions.plus);
 			Matrix ret = new ParallelColtDenseDoubleMatrix2D(result);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				ret.setMetaData(a.clone());
 			}
@@ -174,7 +174,7 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 			DoubleMatrix2D result = matrix.copy();
 			result.assign(((ParallelColtDenseDoubleMatrix2D) m).getWrappedObject(), DoubleFunctions.minus);
 			Matrix ret = new ParallelColtDenseDoubleMatrix2D(result);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				ret.setMetaData(a.clone());
 			}
@@ -190,7 +190,7 @@ public class ParallelColtDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D
 					(int) getRowCount(), (int) m.getColumnCount());
 			matrix.zMult(((ParallelColtDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new ParallelColtDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}

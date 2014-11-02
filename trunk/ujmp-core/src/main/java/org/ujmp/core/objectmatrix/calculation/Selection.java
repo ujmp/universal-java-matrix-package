@@ -81,9 +81,9 @@ public class Selection extends AbstractObjectCalculation {
 		if (getSource().getDimensionCount() != 2) {
 			throw new RuntimeException("only supported for 2d matrices");
 		}
-		MapMatrix<Object, Object> a = getSource().getMetaData();
+		MapMatrix<String, Object> a = getSource().getMetaData();
 		if (a != null) {
-			MapMatrix<Object, Object> anew = new DefaultMapMatrix<Object, Object>();
+			MapMatrix<String, Object> anew = new DefaultMapMatrix<String, Object>();
 			anew.put(Matrix.LABEL, a.get(Matrix.LABEL));
 			if (selection[ROW] == null) {
 				long rowCount = getSource().getRowCount();

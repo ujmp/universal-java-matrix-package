@@ -62,9 +62,9 @@ public interface Calculation extends Serializable {
 
 	public Matrix calcOrig();
 
-	public MapMatrix<Object, Object> getMetaData();
+	public MapMatrix<String, Object> getMetaData();
 
-	public void setMetaData(MapMatrix<Object, Object> metaData);
+	public void setMetaData(MapMatrix<String, Object> metaData);
 
 	public Iterable<long[]> availableCoordinates();
 

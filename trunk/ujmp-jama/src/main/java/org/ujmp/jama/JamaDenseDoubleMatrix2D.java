@@ -178,7 +178,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix times(double value) {
 		Matrix result = new JamaDenseDoubleMatrix2D(matrix.times(value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -187,7 +187,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 
 	public Matrix divide(double value) {
 		Matrix result = new JamaDenseDoubleMatrix2D(matrix.times(1.0 / value));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -201,7 +201,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public Matrix plus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			Matrix result = new JamaDenseDoubleMatrix2D(matrix.plus(((JamaDenseDoubleMatrix2D) m).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -214,7 +214,7 @@ public class JamaDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 	public Matrix minus(Matrix m) {
 		if (m instanceof JamaDenseDoubleMatrix2D) {
 			Matrix result = new JamaDenseDoubleMatrix2D(matrix.minus(((JamaDenseDoubleMatrix2D) m).matrix));
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}

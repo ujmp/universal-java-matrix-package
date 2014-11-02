@@ -40,7 +40,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 		setLabel("System Time");
 		setColumnLabel(0, "System.currentTimeMillis()");
 		matrix = this;
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
 		timer.schedule(task, 1000, 1000);
 	}
 

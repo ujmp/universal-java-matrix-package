@@ -83,7 +83,7 @@ public class AutoCloseConnection implements Connection {
 				}
 			}
 		};
-		timer = UJMPTimer.newInstance();
+		timer = UJMPTimer.newInstance("AutoCloseConnection");
 		timer.schedule(timerTask, checkInterval, checkInterval);
 	}
 

@@ -98,8 +98,8 @@ public class Concatenation extends AbstractObjectCalculation {
 
 		// Annotation
 		if (matrices[0].getLabelObject() != null) {
-			MapMatrix<Object, Object> annotation = new DefaultMapMatrix<Object, Object>(
-					new TreeMap<Object, Object>());
+			MapMatrix<String, Object> annotation = new DefaultMapMatrix<String, Object>(
+					new TreeMap<String, Object>());
 			setMetaData(annotation);
 			annotation.put(Matrix.LABEL, matrices[0].getLabelObject());
 			for (int d = 0; d < matrices[0].getDimensionCount(); d++) {
@@ -109,7 +109,7 @@ public class Concatenation extends AbstractObjectCalculation {
 				} else {
 					Matrix[] annotationMatrices = new Matrix[matrices.length];
 					for (int i = 0; i < annotationMatrices.length; i++) {
-						MapMatrix<Object, Object> a = matrices[i].getMetaData();
+						MapMatrix<String, Object> a = matrices[i].getMetaData();
 						Matrix am = null;
 						if (a == null) {
 							long[] size = Coordinates.copyOf(matrices[i].getSize());

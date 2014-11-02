@@ -144,10 +144,10 @@ public class Sortrows extends AbstractObjectCalculation {
 
 		LongMatrix2D indexMatrix = LongMatrix2D.Factory.zeros(rows.size(), 1);
 
-		MapMatrix<Object, Object> annotation = m.getMetaData();
+		MapMatrix<String, Object> annotation = m.getMetaData();
 		if (annotation != null) {
-			annotation = new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>());
-			for (Object key : m.getMetaData().keySet()) {
+			annotation = new DefaultMapMatrix<String, Object>(new TreeMap<String, Object>());
+			for (String key : m.getMetaData().keySet()) {
 				Object o = m.getMetaData(key);
 				if (o instanceof Matrix) {
 					annotation.put(key, ((Matrix) o).clone());

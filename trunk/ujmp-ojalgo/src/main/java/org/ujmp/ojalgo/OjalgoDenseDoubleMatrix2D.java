@@ -106,7 +106,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -125,7 +125,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.DIVIDE, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -197,7 +197,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.SUBTRACT, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -228,7 +228,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.ADD, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -247,7 +247,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.ADD, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -298,7 +298,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 		retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, factor);
 
 		Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -317,7 +317,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
 			retVal.fillMatching(matrix, PrimitiveFunction.MULTIPLY, tmpArg);
 
 			Matrix result = new OjalgoDenseDoubleMatrix2D(retVal);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}

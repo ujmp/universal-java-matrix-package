@@ -35,7 +35,7 @@ public class Convert {
 		for (long[] c : source.availableCoordinates()) {
 			ret.setAsObject(source.getAsObject(c), c);
 		}
-		MapMatrix<Object, Object> a = source.getMetaData();
+		MapMatrix<String, Object> a = source.getMetaData();
 		if (a != null) {
 			ret.setMetaData(a.clone());
 		}

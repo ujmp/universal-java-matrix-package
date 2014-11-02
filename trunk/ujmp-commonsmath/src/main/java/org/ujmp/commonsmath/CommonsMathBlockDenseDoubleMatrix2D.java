@@ -42,7 +42,7 @@ public class CommonsMathBlockDenseDoubleMatrix2D extends AbstractCommonsMathDens
 		for (long[] c : source.availableCoordinates()) {
 			setDouble(source.getAsDouble(c), c);
 		}
-		MapMatrix<Object, Object> a = source.getMetaData();
+		MapMatrix<String, Object> a = source.getMetaData();
 		if (a != null) {
 			setMetaData(a.clone());
 		}

@@ -133,7 +133,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, value, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -145,7 +145,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.add(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -160,7 +160,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 			DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 			CommonOps.subtract(matrix, ((EJMLDenseDoubleMatrix2D) m).matrix, ret);
 			Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -174,7 +174,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.add(matrix, -value, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -185,7 +185,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(value, matrix, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -196,7 +196,7 @@ public class EJMLDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D impleme
 		DenseMatrix64F ret = new DenseMatrix64F(matrix.numRows, matrix.numCols);
 		CommonOps.scale(1.0 / value, matrix, ret);
 		Matrix result = new EJMLDenseDoubleMatrix2D(ret);
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

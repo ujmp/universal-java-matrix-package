@@ -39,11 +39,11 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 		super(dim, m);
 		size = Coordinates.copyOf(m.getSize());
 		size[dim]--;
-		setMetaData(new DefaultMapMatrix<Object, Object>(new TreeMap<Object, Object>()));
+		setMetaData(new DefaultMapMatrix<String, Object>(new TreeMap<String, Object>()));
 		getMetaData().put(Matrix.LABEL, m.getLabelObject());
 
 		if (dim == ROW) {
-			MapMatrix<Object, Object> a = m.getMetaData();
+			MapMatrix<String, Object> a = m.getMetaData();
 			if (a != null) {
 				Matrix ai = (Matrix) a.get(Matrix.DIMENSIONMETADATA + COLUMN);
 				if (ai != null) {
@@ -53,7 +53,7 @@ public class ExtractAnnotation extends AbstractObjectCalculation {
 			}
 			getMetaData().put(Matrix.DIMENSIONMETADATA + ROW, m.selectRows(Ret.NEW, 0));
 		} else if (dim == COLUMN) {
-			MapMatrix<Object, Object> a = m.getMetaData();
+			MapMatrix<String, Object> a = m.getMetaData();
 			if (a != null) {
 				Matrix ai = (Matrix) a.get(Matrix.DIMENSIONMETADATA + ROW);
 				if (ai != null) {

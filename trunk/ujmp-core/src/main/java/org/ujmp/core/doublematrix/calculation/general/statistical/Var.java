@@ -42,9 +42,9 @@ public class Var extends AbstractDoubleCalculation {
 		super(dimension, matrix);
 		this.ignoreNaN = ignoreNaN;
 		this.besselsCorrection = besselsCorrection;
-		MapMatrix<Object, Object> aold = matrix.getMetaData();
+		MapMatrix<String, Object> aold = matrix.getMetaData();
 		if (aold != null) {
-			MapMatrix<Object, Object> a = new DefaultMapMatrix<Object, Object>();
+			MapMatrix<String, Object> a = new DefaultMapMatrix<String, Object>();
 			a.put(Matrix.LABEL, aold.get(Matrix.LABEL));
 			if (dimension == ROW) {
 				// a.setDimensionMatrix(ROW, aold.getDimensionMatrix(ROW));

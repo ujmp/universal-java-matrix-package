@@ -159,7 +159,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.addi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -174,7 +174,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 			DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 			matrix.subi(((JBlasDenseDoubleMatrix2D) m).matrix, r);
 			Matrix result = new JBlasDenseDoubleMatrix2D(r);
-			MapMatrix<Object, Object> a = getMetaData();
+			MapMatrix<String, Object> a = getMetaData();
 			if (a != null) {
 				result.setMetaData(a.clone());
 			}
@@ -187,7 +187,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix times(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.muli(value, r));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -197,7 +197,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix divide(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.divi(value, r));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -207,7 +207,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix plus(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.addi(value, r));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}
@@ -217,7 +217,7 @@ public class JBlasDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D implem
 	public Matrix minus(double value) {
 		DoubleMatrix r = new DoubleMatrix((int) getRowCount(), (int) getColumnCount());
 		Matrix result = new JBlasDenseDoubleMatrix2D(matrix.subi(value, r));
-		MapMatrix<Object, Object> a = getMetaData();
+		MapMatrix<String, Object> a = getMetaData();
 		if (a != null) {
 			result.setMetaData(a.clone());
 		}

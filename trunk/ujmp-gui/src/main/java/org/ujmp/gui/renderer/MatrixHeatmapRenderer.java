@@ -109,18 +109,20 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		g2d.setColor(getBackground());
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 
+		int width = getWidth();
+		int height = getHeight();
+		width = width == 0 ? 1 : width;
+		height = height == 0 ? 1 : height;
+
 		try {
 			if (matrixGUIObject != null) {
 
-				int width = getWidth();
-				int height = getHeight();
-				width = width == 0 ? 1 : width;
-				height = height == 0 ? 1 : height;
 				long totalColumn = matrixGUIObject.getColumnCount();
 				long totalRows = matrixGUIObject.getRowCount();
 
 				if (totalColumn < 1 || totalRows < 1) {
-					// no data
+					g2d.setColor(Color.GRAY);
+					g2d.fillRect(PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY - PADDINGY);
 					return;
 				}
 
@@ -183,8 +185,7 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 			} else {
 				g2d.setColor(Color.GRAY);
-				g2d.drawLine(PADDINGX, PADDINGY, getWidth() - PADDINGX, getHeight() - PADDINGY);
-				g2d.drawLine(PADDINGX, getHeight() - PADDINGY, getWidth() - PADDINGX, 0 + PADDINGY);
+				g2d.fillRect(PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY - PADDINGY);
 			}
 		} catch (ConcurrentModificationException e) {
 			// not too bad

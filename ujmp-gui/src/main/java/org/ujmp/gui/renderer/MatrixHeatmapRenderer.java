@@ -31,8 +31,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.ConcurrentModificationException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -48,8 +48,13 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 
 	private MatrixGUIObject matrixGUIObject = null;
 
-	private static final int PADDINGX = UIManager.getInt("Table.paddingX");
-	private static final int PADDINGY = UIManager.getInt("Table.paddingY");
+	// private static final int PADDINGX = UIManager.getInt("Table.paddingX");
+	// private static final int PADDINGY = UIManager.getInt("Table.paddingY");
+
+	private static final int PADDINGX = 1;
+	private static final int PADDINGY = 1;
+
+	private final Border borderSelected = BorderFactory.createLineBorder(Color.blue, 1);
 
 	public MatrixHeatmapRenderer() {
 	}
@@ -69,37 +74,14 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 		if (isSelected) {
 			super.setForeground(table.getSelectionForeground());
 			super.setBackground(table.getSelectionBackground());
+			super.setBorder(borderSelected);
 		} else {
 			super.setForeground(table.getForeground());
 			super.setBackground(table.getBackground());
+			super.setBorder(null);
 		}
 
 		setFont(table.getFont());
-
-		if (hasFocus) {
-			Border border = null;
-			if (isSelected) {
-				border = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
-			}
-			if (border == null) {
-				border = UIManager.getBorder("Table.focusCellHighlightBorder");
-			}
-			setBorder(border);
-
-			if (!isSelected && table.isCellEditable(row, column)) {
-				Color col;
-				col = UIManager.getColor("Table.focusCellForeground");
-				if (col != null) {
-					super.setForeground(col);
-				}
-				col = UIManager.getColor("Table.focusCellBackground");
-				if (col != null) {
-					super.setBackground(col);
-				}
-			}
-		} else {
-			setBorder(noFocusBorder);
-		}
 
 		return this;
 	}
@@ -123,6 +105,16 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 				if (totalColumn < 1 || totalRows < 1) {
 					g2d.setColor(Color.GRAY);
 					g2d.fillRect(PADDINGX, PADDINGY, width - PADDINGX - PADDINGX, height - PADDINGY - PADDINGY);
+					g2d.setColor(Color.DARK_GRAY);
+					g2d.addRenderingHints(UIDefaults.AALIAS);
+					String s = "";
+					if (matrixGUIObject.getLabel() != null) {
+						s += "[" + matrixGUIObject.getLabel() + "]";
+					} else {
+						s += matrixGUIObject.getMatrix().getClass().getSimpleName();
+					}
+					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
+							GraphicsUtil.ALIGNCENTER, s);
 					return;
 				}
 
@@ -178,6 +170,18 @@ public class MatrixHeatmapRenderer extends DefaultTableCellRenderer {
 					String s = UJMPFormat.getSingleLineInstance().format(matrixGUIObject.getValueAt(0, 0));
 					if (s != null && s.length() > 25) {
 						s = s.substring(0, 25) + "...";
+					}
+					g2d.addRenderingHints(UIDefaults.AALIAS);
+					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
+							GraphicsUtil.ALIGNCENTER, s);
+				} else if (width > 20) {
+					g2d.setColor(Color.DARK_GRAY);
+					g2d.addRenderingHints(UIDefaults.AALIAS);
+					String s = "";
+					if (matrixGUIObject.getLabel() != null) {
+						s += "[" + matrixGUIObject.getLabel() + "]";
+					} else {
+						s += matrixGUIObject.getMatrix().getClass().getSimpleName();
 					}
 					GraphicsUtil.drawString(g2d, width / 2.0, height / 2.0 - 1.0, GraphicsUtil.ALIGNCENTER,
 							GraphicsUtil.ALIGNCENTER, s);

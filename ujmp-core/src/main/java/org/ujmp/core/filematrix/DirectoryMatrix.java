@@ -114,7 +114,8 @@ public class DirectoryMatrix extends AbstractListMatrix<FileOrDirectoryMatrix> i
 		if (path == null) {
 			return File.listRoots().length;
 		} else {
-			return path.listFiles().length;
+			File[] files = path.listFiles();
+			return files == null ? 0 : files.length;
 		}
 	}
 }

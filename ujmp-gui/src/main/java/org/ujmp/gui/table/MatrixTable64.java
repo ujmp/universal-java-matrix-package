@@ -33,7 +33,7 @@ public class MatrixTable64 extends JTable64 {
 	public static final int SMALLCOLUMNWIDTH = 80;
 	public static final int LARGECOLUMNWIDTH = 200;
 	public static final int ROWHEADERCOLUMNWIDTH = 80;
-	public static final int ROWHEIGHT = 15;
+	public static final int ROWHEIGHT = 25;
 
 	public MatrixTable64(MatrixGUIObject matrix) {
 		super(matrix, new DefaultTableColumnModel64(matrix), matrix.getRowSelectionModel());

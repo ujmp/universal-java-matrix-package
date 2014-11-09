@@ -46,6 +46,22 @@ public class DefaultTextSentence extends DefaultListMatrix<TextToken> implements
 		addAll(textTokens);
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (TextToken token : this) {
+			int i = 0;
+			sb.append(token.getText());
+			String tag = token.getTag();
+			if (!"n/a".equals(tag)) {
+				sb.append(" [" + tag + "]");
+			}
+			if (i++ < size() - 1) {
+				sb.append(" ");
+			}
+		}
+		return sb.toString();
+	}
+
 	public String toJson() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("  {\n");

@@ -63,31 +63,54 @@ public class LoadDataTask extends TimerTask {
 	public void run() {
 		try {
 			for (DefaultMatrixGUIObject matrixGUIObject : list) {
-				if (!matrixGUIObject.isColumnCountUpToDate()) {
-					matrixGUIObject.setColumnCount(matrixGUIObject.getMatrix().getColumnCount());
+
+				try {
+					if (!matrixGUIObject.isColumnCountUpToDate()) {
+						matrixGUIObject.setColumnCount(matrixGUIObject.getMatrix().getColumnCount());
+						matrixGUIObject.setColumnCountUpToDate(true);
+						matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					matrixGUIObject.setColumnCount(0);
 					matrixGUIObject.setColumnCountUpToDate(true);
 					matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+					// continue for other objects
 				}
 
-				if (!matrixGUIObject.isRowCountUpToDate()) {
-					matrixGUIObject.setRowCount(matrixGUIObject.getMatrix().getRowCount());
+				try {
+					if (!matrixGUIObject.isRowCountUpToDate()) {
+						matrixGUIObject.setRowCount(matrixGUIObject.getMatrix().getRowCount());
+						matrixGUIObject.setRowCountUpToDate(true);
+						matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					matrixGUIObject.setRowCount(0);
 					matrixGUIObject.setRowCountUpToDate(true);
 					matrixGUIObject.fireValueChanged(TableModelEvent.HEADER_ROW, TableModelEvent.ALL_COLUMNS, null);
+					// continue for other objects
 				}
 
-				if (matrixGUIObject.isRowCountUpToDate() && matrixGUIObject.isColumnCountUpToDate()
-						&& !matrixGUIObject.getTodo().isEmpty()) {
-					long t0 = System.currentTimeMillis();
-					while (matrixGUIObject.isRowCountUpToDate() && matrixGUIObject.isColumnCountUpToDate()
-							&& !matrixGUIObject.getTodo().isEmpty() && System.currentTimeMillis() - t0 < 300) {
-						Coordinates coordinates = matrixGUIObject.getTodo()
-								.remove(matrixGUIObject.getTodo().size() - 1);
-						Object object = matrixGUIObject.getMatrix().getAsObject(coordinates.getLongCoordinates());
-						matrixGUIObject.getDataCache().put(coordinates,
-								new DataItem(object, ColorUtil.fromObject(object)));
+				try {
+					if (matrixGUIObject.isRowCountUpToDate() && matrixGUIObject.isColumnCountUpToDate()
+							&& !matrixGUIObject.getTodo().isEmpty()) {
+						long t0 = System.currentTimeMillis();
+						while (matrixGUIObject.isRowCountUpToDate() && matrixGUIObject.isColumnCountUpToDate()
+								&& !matrixGUIObject.getTodo().isEmpty() && System.currentTimeMillis() - t0 < 300) {
+							Coordinates coordinates = matrixGUIObject.getTodo().remove(
+									matrixGUIObject.getTodo().size() - 1);
+							Object object = matrixGUIObject.getMatrix().getAsObject(coordinates.getLongCoordinates());
+							matrixGUIObject.getDataCache().put(coordinates,
+									new DataItem(object, ColorUtil.fromObject(object)));
+						}
+						matrixGUIObject.fireValueChanged();
 					}
-					matrixGUIObject.fireValueChanged();
+				} catch (Exception e) {
+					e.printStackTrace();
+					// continue for other objects
 				}
+
 			}
 		} catch (ConcurrentModificationException e) {
 			// no problem, retry later

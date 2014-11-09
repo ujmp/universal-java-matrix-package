@@ -49,10 +49,10 @@ public class MatrixCommunicationThread extends Thread {
 	}
 
 	public void run() {
-		byte[] inputBuffer = new byte[1000000];
-		byte[] outputBuffer = new byte[1000000];
-		ByteBuffer inputBB = ByteBuffer.wrap(inputBuffer);
-		ByteBuffer outputBB = ByteBuffer.wrap(outputBuffer);
+		final byte[] inputBuffer = new byte[1000000];
+		final byte[] outputBuffer = new byte[1000000];
+		final ByteBuffer inputBB = ByteBuffer.wrap(inputBuffer);
+		final ByteBuffer outputBB = ByteBuffer.wrap(outputBuffer);
 		try {
 			while (socket.isConnected() && !socket.isInputShutdown() && !socket.isOutputShutdown()) {
 				inputStream.read(inputBuffer);
@@ -63,6 +63,9 @@ public class MatrixCommunicationThread extends Thread {
 				case ClientMatrix.GETSIZE:
 					outputBB.putLong(matrix.getRowCount());
 					outputBB.putLong(matrix.getColumnCount());
+					break;
+				case ClientMatrix.ISREADONLY:
+					outputBB.put(matrix.isReadOnly() ? (byte) 1 : (byte) 0);
 					break;
 				case ClientMatrix.GETDOUBLE:
 					outputBB.putDouble(matrix.getAsDouble(inputBB.getLong(), inputBB.getLong()));

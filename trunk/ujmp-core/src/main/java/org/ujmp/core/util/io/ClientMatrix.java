@@ -40,7 +40,8 @@ public class ClientMatrix extends AbstractDenseDoubleMatrix2D {
 	public static final int GETSIZE = 1;
 	public static final int GETDOUBLE = 2;
 	public static final int SETDOUBLE = 3;
-	public static final int PLUSMATRIX = 4;
+	public static final int ISREADONLY = 4;
+	public static final int PLUSMATRIX = 5;
 
 	private final byte[] inputBuffer = new byte[1000000];
 	private final byte[] outputBuffer = new byte[1000000];
@@ -48,6 +49,7 @@ public class ClientMatrix extends AbstractDenseDoubleMatrix2D {
 	private final ByteBuffer outputBB = ByteBuffer.wrap(outputBuffer);
 	private final InputStream inputStream;
 	private final OutputStream outputStream;
+	private final boolean isReadOnly;
 
 	public ClientMatrix(int port) throws UnknownHostException, IOException {
 		this(open("localhost", port));
@@ -66,13 +68,16 @@ public class ClientMatrix extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public ClientMatrix(InputStream inputStream, OutputStream outputStream) throws IOException {
-		this(inputStream, outputStream, getSize(inputStream, outputStream));
+		this(inputStream, outputStream, getSize(inputStream, outputStream), isReadOnly(inputStream,
+				outputStream));
 	}
 
-	private ClientMatrix(InputStream inputStream, OutputStream outputStream, long[] size) {
+	private ClientMatrix(InputStream inputStream, OutputStream outputStream, long[] size,
+			boolean isReadOnly) {
 		super(size[ROW], size[COLUMN]);
 		this.inputStream = inputStream;
 		this.outputStream = outputStream;
+		this.isReadOnly = isReadOnly;
 	}
 
 	private static InputStream getInputStream(Socket socket) throws IOException {
@@ -95,6 +100,18 @@ public class ClientMatrix extends AbstractDenseDoubleMatrix2D {
 		return new long[] { bb.getLong(), bb.getLong() };
 	}
 
+	private static boolean isReadOnly(InputStream inputStream, OutputStream outputStream)
+			throws IOException {
+		byte[] buffer = new byte[128];
+		ByteBuffer bb = ByteBuffer.wrap(buffer);
+		bb.putInt(ISREADONLY);
+		outputStream.write(buffer, 0, bb.position());
+		outputStream.flush();
+		inputStream.read(buffer);
+		bb.rewind();
+		return bb.get() == 1;
+	}
+
 	public synchronized double getDouble(long row, long column) {
 		try {
 			outputBB.rewind();
@@ -111,7 +128,14 @@ public class ClientMatrix extends AbstractDenseDoubleMatrix2D {
 		}
 	}
 
+	public final boolean isReadOnly() {
+		return isReadOnly;
+	}
+
 	public synchronized void setDouble(double value, long row, long column) {
+		if (isReadOnly) {
+			throw new RuntimeException("matrix is read only");
+		}
 		try {
 			outputBB.rewind();
 			outputBB.putInt(SETDOUBLE);

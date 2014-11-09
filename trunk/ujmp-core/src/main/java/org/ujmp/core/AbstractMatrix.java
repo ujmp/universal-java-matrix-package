@@ -2042,7 +2042,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix getMetaDataMatrix(Object key) {
-		return metaData == null ? null : (Matrix) metaData.get(key);
+		return metaData == null ? null : MathUtil.getMatrix(metaData.get(key));
 	}
 
 	public final double getMetaDataDouble(Object key) {

@@ -42,7 +42,10 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 
 	private static final Color SELECTCOLOR = new Color(100, 100, 255, 76);
 
-	private final Border border = BorderFactory.createLineBorder(Color.blue, 2);
+	private static final Border borderSelected = BorderFactory.createLineBorder(Color.blue, 1);
+	private static final Border borderNotSelected = BorderFactory.createLineBorder(Color.white, 1);
+
+	private final MatrixHeatmapRenderer matrixRenderer = new MatrixHeatmapRenderer();
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -66,6 +69,7 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 				} else {
 					s += ma.getClass().getSimpleName();
 				}
+				return matrixRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			} else if (value instanceof Integer) {
 				s = String.valueOf(value);
 			} else if (value instanceof Byte) {
@@ -82,10 +86,10 @@ public class MatrixValueTableCellRenderer extends DefaultTableCellRenderer {
 		}
 		label.setForeground(ColorUtil.contrastBW(c));
 		if (isSelected) {
-			label.setBorder(border);
+			label.setBorder(borderSelected);
 			label.setBackground(ColorUtil.add(c, SELECTCOLOR));
 		} else {
-			label.setBorder(null);
+			label.setBorder(borderNotSelected);
 			label.setBackground(c);
 		}
 

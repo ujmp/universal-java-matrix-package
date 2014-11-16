@@ -29,8 +29,7 @@ import java.util.List;
 
 import org.ujmp.core.util.MathUtil;
 
-public class MemoryByteBufferConcatenation extends AbstractByteBufferConcatenation {
-	public static final int DEFAULTBUFFERSIZE = 1048576;
+public class MemoryByteBufferConcatenation extends AbstractMemoryByteBufferConcatenation {
 
 	private final boolean useDirect;
 	private final int maxBufferSize;
@@ -72,8 +71,7 @@ public class MemoryByteBufferConcatenation extends AbstractByteBufferConcatenati
 	}
 
 	public void insertBytes(final byte[] bytes, final long position) {
-		// TODO Auto-generated method stub
-
+		throw new RuntimeException("not supported");
 	}
 
 	public void expand(long bytesToAdd) {
@@ -101,8 +99,7 @@ public class MemoryByteBufferConcatenation extends AbstractByteBufferConcatenati
 	}
 
 	public void shrink(final long bytesToRemove) {
-		// TODO Auto-generated method stub
-
+		throw new RuntimeException("not supported");
 	}
 
 	private static final ByteBuffer allocate(final boolean useDirect, final int capacity) {

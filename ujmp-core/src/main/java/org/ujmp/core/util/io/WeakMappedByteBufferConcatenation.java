@@ -23,24 +23,22 @@
 
 package org.ujmp.core.util.io;
 
-public abstract class AbstractByteBufferConcatenation implements ByteBufferConcatenation {
+public class WeakMappedByteBufferConcatenation extends AbstractWeakMappedByteBufferConcatenation {
 
-	public static final int DEFAULTBUFFERSIZE = 8388608;
-
-	public final void deleteByte(final long position) {
-		deleteBytes(position, 1);
+	public WeakMappedByteBufferConcatenation(final WeakMappedByteBuffer... byteBuffers) {
+		super(byteBuffers);
 	}
 
-	public final void getBytes(final byte[] bytes, final long position) {
-		getBytes(bytes, position, bytes.length);
+	public void insertBytes(final byte[] bytes, final long position) {
+		throw new RuntimeException("not supported");
 	}
 
-	public final void setBytes(final byte[] bytes, final long position) {
-		setBytes(bytes, position, bytes.length);
+	public void expand(long bytesToAdd) {
+		throw new RuntimeException("not supported");
 	}
 
-	public final void appendBytes(final byte[] bytes) {
-		insertBytes(bytes, getLength());
+	public void shrink(final long bytesToRemove) {
+		throw new RuntimeException("not supported");
 	}
 
 }

@@ -50,4 +50,5 @@ public interface ByteBufferConcatenation {
 	public void expand(final long bytesToAdd);
 
 	public void shrink(final long bytesToRemove);
+
 }

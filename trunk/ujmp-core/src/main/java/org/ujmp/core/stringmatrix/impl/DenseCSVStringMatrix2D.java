@@ -27,19 +27,22 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
 import java.util.List;
 
 import org.ujmp.core.stringmatrix.stub.AbstractDenseStringMatrix2D;
 import org.ujmp.core.util.LongArrayList;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
+import org.ujmp.core.util.io.AbstractByteBufferConcatenation;
 import org.ujmp.core.util.io.ByteBufferConcatenation;
 import org.ujmp.core.util.io.MemoryByteBufferConcatenation;
+import org.ujmp.core.util.io.WeakMappedByteBuffer;
+import org.ujmp.core.util.io.WeakMappedByteBufferConcatenation;
 
 public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 	private static final long serialVersionUID = -1966465041178705488L;
+
+	public static final int DEFAULTBUFFERSIZE = AbstractByteBufferConcatenation.DEFAULTBUFFERSIZE;
 
 	private final ByteBufferConcatenation byteBufferConcatenation;
 	private char columnSeparator;
@@ -62,8 +65,21 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 		this(columnSeparator, ByteBuffer.wrap(bytes));
 	}
 
+	public DenseCSVStringMatrix2D(final char columnSeparator,
+			final WeakMappedByteBuffer... byteBuffers) {
+		this(columnSeparator, '\0', byteBuffers);
+	}
+
 	public DenseCSVStringMatrix2D(final char columnSeparator, final ByteBuffer... byteBuffers) {
 		this(columnSeparator, '\0', byteBuffers);
+	}
+
+	public DenseCSVStringMatrix2D(final char columnSeparator, final char enclosingCharacter,
+			final WeakMappedByteBuffer... byteBuffers) {
+		super(0, 0);
+		this.byteBufferConcatenation = new WeakMappedByteBufferConcatenation(byteBuffers);
+		this.columnSeparator = columnSeparator;
+		this.enclosingCharacter = enclosingCharacter;
 	}
 
 	public DenseCSVStringMatrix2D(final char columnSeparator, final char enclosingCharacter,
@@ -78,6 +94,10 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 		this('\0', byteBuffers);
 	}
 
+	public DenseCSVStringMatrix2D(WeakMappedByteBuffer... byteBuffers) {
+		this('\0', byteBuffers);
+	}
+
 	public DenseCSVStringMatrix2D(String filename) throws IOException {
 		this(new File(filename));
 	}
@@ -87,7 +107,7 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 	}
 
 	public DenseCSVStringMatrix2D(RandomAccessFile randomAccessFile) throws IOException {
-		this(createByteBuffers(randomAccessFile));
+		this(WeakMappedByteBuffer.create(randomAccessFile));
 	}
 
 	public DenseCSVStringMatrix2D(char columnSeparator, String filename) throws IOException {
@@ -105,30 +125,12 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 	public DenseCSVStringMatrix2D(char columnSeparator, RandomAccessFile randomAccessFile)
 			throws IOException {
-		this(columnSeparator, createByteBuffers(randomAccessFile));
+		this(columnSeparator, WeakMappedByteBuffer.create(randomAccessFile));
 	}
 
 	public DenseCSVStringMatrix2D(char columnSeparator, char enclosingCharacter,
 			RandomAccessFile randomAccessFile) throws IOException {
-		this(columnSeparator, enclosingCharacter, createByteBuffers(randomAccessFile));
-	}
-
-	private static ByteBuffer[] createByteBuffers(RandomAccessFile randomAccessFile)
-			throws IOException {
-		long fileLength = randomAccessFile.length();
-		FileChannel fc = randomAccessFile.getChannel();
-		int bufferLength = 32 * 1024 * 1024;
-
-		MapMode mapMode = MapMode.READ_ONLY;
-
-		final int bufferCount = (int) Math.ceil((double) fileLength / (double) bufferLength);
-		final ByteBuffer[] buffers = new ByteBuffer[bufferCount];
-		int i = 0;
-		for (long filePos = 0; filePos < fileLength; filePos += bufferLength) {
-			ByteBuffer buf = fc.map(mapMode, filePos, Math.min(bufferLength, fileLength - filePos));
-			buffers[i++] = buf;
-		}
-		return buffers;
+		this(columnSeparator, enclosingCharacter, WeakMappedByteBuffer.create(randomAccessFile));
 	}
 
 	public char getColumnSeparator() {
@@ -200,9 +202,10 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 					boolean active = true;
 
-					final byte[] buffer = new byte[1048576];
+					final byte[] buffer = new byte[DEFAULTBUFFERSIZE];
 
 					rowIndexList.add(0l);
+
 					for (long pos = 0; pos < byteBufferConcatenation.getLength(); pos += buffer.length) {
 						final long remaining = byteBufferConcatenation.getLength() - pos;
 						final int lengthToRead = MathUtil.longToInt(Math.min(remaining,
@@ -313,6 +316,7 @@ public class DenseCSVStringMatrix2D extends AbstractDenseStringMatrix2D {
 
 				}
 			}
+			System.out.println(size[ROW] + " rows, " + size[COLUMN] + " columns");
 		}
 	}
 

@@ -46,4 +46,8 @@ public class TestArrayDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.UJMP;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

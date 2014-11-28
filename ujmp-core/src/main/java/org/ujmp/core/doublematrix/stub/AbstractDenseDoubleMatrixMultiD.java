@@ -24,22 +24,32 @@
 package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrixMultiD;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseDoubleMatrixMultiD extends AbstractDoubleMatrixMultiD implements
 		DenseDoubleMatrixMultiD {
 	private static final long serialVersionUID = -7916316088335979360L;
 
-	public AbstractDenseDoubleMatrixMultiD(long[] size) {
+	public AbstractDenseDoubleMatrixMultiD(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

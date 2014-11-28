@@ -68,7 +68,7 @@ public interface Calculation extends Serializable {
 
 	public Iterable<long[]> availableCoordinates();
 
-	public boolean contains(long... coordinates);
+	public boolean containsCoordinates(long... coordinates);
 
 	public Matrix getSource();
 

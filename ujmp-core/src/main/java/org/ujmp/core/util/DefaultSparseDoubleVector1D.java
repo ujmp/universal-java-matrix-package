@@ -24,6 +24,7 @@
 package org.ujmp.core.util;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
@@ -59,6 +60,10 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		this.transposed = columns > rows;
 	}
 
+	public final void clear() {
+		valueCount = 0;
+	}
+
 	public double getDouble(long row, long column) {
 		long pos;
 		if (transposed) {
@@ -69,7 +74,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 			pos = row;
 		}
 
-		int index = binarySearch(indices, 0, valueCount, pos);
+		int index = MathUtil.search(indices, 0, valueCount, pos);
 		if (index >= 0) {
 			return values[index];
 		} else {
@@ -88,7 +93,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		}
 
 		synchronized (indices) {
-			int index = binarySearch(indices, 0, valueCount, pos);
+			int index = MathUtil.search(indices, 0, valueCount, pos);
 			if (index >= 0) {
 				// value exists
 				if (value == 0.0) {
@@ -140,23 +145,6 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		return fromIndex;
 	}
 
-	private static final int binarySearch(final long[] values, int fromIndex, int toIndex,
-			final long key) {
-		toIndex--;
-		while (fromIndex <= toIndex) {
-			int mid = (fromIndex + toIndex) >>> 1;
-			long midVal = values[mid];
-			if (midVal < key) {
-				fromIndex = mid + 1;
-			} else if (midVal > key) {
-				toIndex = mid - 1;
-			} else {
-				return mid;
-			}
-		}
-		return -(fromIndex + 1);
-	}
-
 	public double getDouble(int row, int column) {
 		return getDouble((long) row, (long) column);
 	}
@@ -165,7 +153,7 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 		setDouble(value, (long) row, (long) column);
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return getDouble(coordinates) != 0.0;
 	}
 
@@ -203,6 +191,57 @@ public class DefaultSparseDoubleVector1D extends AbstractSparseDoubleMatrix2D {
 			resultValues[i] /= matrix.getAsDouble(indices[i], 0);
 		}
 		return result;
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		return new NonZeroIterable(indices, valueCount);
+	}
+
+}
+
+class NonZeroIterable implements Iterable<long[]> {
+
+	private final long[] indices;
+	private final int valueCount;
+
+	public NonZeroIterable(long[] indices, int valueCount) {
+		this.indices = indices;
+		this.valueCount = valueCount;
+	}
+
+	public Iterator<long[]> iterator() {
+		return new NonZeroIterator(indices, valueCount);
+	}
+
+}
+
+class NonZeroIterator implements Iterator<long[]> {
+
+	private final long[] indices;
+	private final int valueCount;
+	private final long[] coordinates = new long[] { -1, 0 };
+	private int currentPos = -1;
+
+	public NonZeroIterator(long[] indices, int valueCount) {
+		this.indices = indices;
+		this.valueCount = valueCount;
+		if (valueCount > 0) {
+			currentPos = 0;
+		}
+	}
+
+	public boolean hasNext() {
+		return currentPos >= 0 && currentPos < valueCount;
+	}
+
+	public long[] next() {
+		coordinates[Matrix.ROW] = indices[currentPos];
+		currentPos++;
+		return coordinates;
+	}
+
+	public void remove() {
+		throw new RuntimeException("cannot modify matrix");
 	}
 
 }

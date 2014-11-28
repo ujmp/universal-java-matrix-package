@@ -29,8 +29,12 @@ public abstract class AbstractSparseDoubleMatrix extends AbstractDoubleMatrix im
 		SparseDoubleMatrix {
 	private static final long serialVersionUID = 3204626510806761165L;
 
-	public AbstractSparseDoubleMatrix(long[] size) {
+	public AbstractSparseDoubleMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

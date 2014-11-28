@@ -33,7 +33,7 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractByteMatrix extends AbstractGenericMatrix<Byte> implements ByteMatrix {
 	private static final long serialVersionUID = 701344082157040644L;
 
-	public AbstractByteMatrix(long[] size) {
+	public AbstractByteMatrix(long... size) {
 		super(size);
 	}
 

@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import org.ujmp.core.annotation.HasMetaData;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.CanPerformCalculations;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideMatrixCalculation;
@@ -58,13 +57,12 @@ import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
 import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
 import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
 import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
-import org.ujmp.core.interfaces.BasicMatrixProperties;
 import org.ujmp.core.interfaces.Conversions;
 import org.ujmp.core.interfaces.CoordinateFunctions;
 import org.ujmp.core.interfaces.CoreObject;
 import org.ujmp.core.interfaces.DistanceMeasures;
+import org.ujmp.core.interfaces.ExtendedMatrixProperties;
 import org.ujmp.core.interfaces.GettersAndSetters;
-import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
 
 /**
@@ -75,29 +73,14 @@ import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
  * 
  * @author Holger Arndt
  */
-public interface Matrix extends CoreObject, CoordinateFunctions, GettersAndSetters,
-		BasicMatrixProperties, CanPerformCalculations, DistanceMeasures, Comparable<Matrix>,
-		HasMetaData, Conversions {
+public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, GettersAndSetters,
+		CanPerformCalculations, DistanceMeasures, Comparable<Matrix>, HasMetaData, Conversions,
+		ExtendedMatrixProperties {
 
 	/**
 	 * A factory for creating matrices.
 	 */
 	public static final DefaultDenseMatrixFactory Factory = new DefaultDenseMatrixFactory();
-
-	public BaseMatrixFactory<? extends Matrix> getFactory();
-
-	public static final Ret LINK = Ret.LINK;
-	public static final Ret ORIG = Ret.ORIG;
-	public static final Ret NEW = Ret.NEW;
-
-	public static final int Y = 0;
-	public static final int X = 1;
-	public static final int Z = 2;
-
-	public static final int ROW = 0;
-	public static final int COLUMN = 1;
-	public static final int ALL = 0x7fffffff;
-	public static final int NONE = -1;
 
 	public static TransposeCalculation<Matrix, Matrix> transpose = Transpose.MATRIX;
 

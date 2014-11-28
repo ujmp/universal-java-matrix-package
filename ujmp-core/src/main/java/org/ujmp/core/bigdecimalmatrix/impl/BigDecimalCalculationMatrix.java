@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.bigdecimalmatrix.calculation.BigDecimalCalculation;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractBigDecimalMatrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 	private static final long serialVersionUID = -1984605379151298934L;
@@ -39,8 +41,8 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 		setMetaData(calculation.getMetaData());
 	}
 
-	public boolean contains(long... coordinates) {
-		return calculation.contains(coordinates);
+	public boolean containsCoordinates(long... coordinates) {
+		return calculation.containsCoordinates(coordinates);
 	}
 
 	public Iterable<long[]> availableCoordinates() {
@@ -93,5 +95,9 @@ public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final void clear() {
+		throw new RuntimeException("matrix cannot be modified");
 	}
 }

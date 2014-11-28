@@ -34,7 +34,7 @@ public abstract class AbstractCharMatrix extends AbstractGenericMatrix<Character
 		CharMatrix {
 	private static final long serialVersionUID = 1967840166659276033L;
 
-	public AbstractCharMatrix(long[] size) {
+	public AbstractCharMatrix(long... size) {
 		super(size);
 	}
 

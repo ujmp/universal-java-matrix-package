@@ -23,6 +23,7 @@
 
 package org.ujmp.examples;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.util.MathUtil;
 
@@ -31,15 +32,37 @@ public class BigSparseMatrixExample {
 	public static void main(String[] args) throws Exception {
 
 		// create a very large sparse matrix
-		SparseMatrix m = SparseMatrix.Factory.zeros(100000000, 100000000);
+		SparseMatrix m1 = SparseMatrix.Factory.zeros(1000000, 500000);
 
-		// set some values to 1
+		// set some values
+		m1.setAsDouble(MathUtil.nextGaussian(), 0, 0);
+		m1.setAsDouble(MathUtil.nextGaussian(), 1, 1);
 		for (int i = 0; i < 10000; i++) {
-			m.setAsDouble(1, MathUtil.nextInteger(0, 100000), MathUtil.nextInteger(0, 100000));
+			m1.setAsDouble(MathUtil.nextGaussian(), MathUtil.nextInteger(0, 1000), MathUtil.nextInteger(0, 1000));
 		}
 
 		// show on screen
-		m.showGUI();
+		m1.showGUI();
+
+		// create another matrix
+		SparseMatrix m2 = SparseMatrix.Factory.zeros(3000000, 500000);
+
+		// set some values
+		m2.setAsDouble(MathUtil.nextGaussian(), 0, 0);
+		m2.setAsDouble(MathUtil.nextGaussian(), 1, 1);
+		for (int i = 0; i < 10000; i++) {
+			m2.setAsDouble(MathUtil.nextGaussian(), MathUtil.nextInteger(0, 1000), MathUtil.nextInteger(0, 1000));
+		}
+
+		// show on screen
+		m2.showGUI();
+
+		// do some operations
+		Matrix m3 = m1.mtimes(m2.transpose());
+
+		// show on screen
+		m3.showGUI();
+
 	}
 
 }

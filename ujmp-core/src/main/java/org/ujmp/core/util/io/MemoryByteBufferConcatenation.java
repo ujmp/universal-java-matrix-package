@@ -27,6 +27,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
+import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.util.MathUtil;
 
 public class MemoryByteBufferConcatenation extends AbstractMemoryByteBufferConcatenation {
@@ -98,8 +99,29 @@ public class MemoryByteBufferConcatenation extends AbstractMemoryByteBufferConca
 		}
 	}
 
-	public void shrink(final long bytesToRemove) {
-		throw new RuntimeException("not supported");
+	public void shrink(long bytesToRemove) {
+		synchronized (this) {
+			List<ByteBuffer> byteBufferList = new FastArrayList<ByteBuffer>(byteBuffers);
+			while (bytesToRemove > 0) {
+				ByteBuffer lastBuffer = byteBufferList.remove(byteBufferList.size() - 1);
+				int capacity = lastBuffer.capacity();
+				if (capacity <= bytesToRemove) {
+					totalLength -= capacity;
+					bytesToRemove -= capacity;
+				} else {
+					int newSize = (int) (capacity - bytesToRemove);
+					totalLength -= bytesToRemove;
+					bytesToRemove = 0;
+					ByteBuffer newBuffer = allocate(useDirect, newSize);
+					lastBuffer.rewind();
+					for (int i = 0; i < newSize; i++) {
+						newBuffer.put(lastBuffer.get());
+					}
+					byteBufferList.add(newBuffer);
+				}
+			}
+			byteBuffers = byteBufferList.toArray(byteBuffers);
+		}
 	}
 
 	private static final ByteBuffer allocate(final boolean useDirect, final int capacity) {

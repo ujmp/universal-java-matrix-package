@@ -28,7 +28,7 @@ import java.nio.ByteBuffer;
 public abstract class AbstractMemoryByteBufferConcatenation extends AbstractByteBufferConcatenation {
 
 	protected ByteBuffer[] byteBuffers;
-	protected final long totalLength;
+	protected long totalLength;
 
 	public AbstractMemoryByteBufferConcatenation(final ByteBuffer... byteBuffers) {
 		if (byteBuffers.length == 0) {

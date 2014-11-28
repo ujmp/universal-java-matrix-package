@@ -57,6 +57,10 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		}
 	}
 
+	public final void clear() {
+		rows.clear();
+	}
+
 	public Object getObject(long row, long column) {
 		Matrix m = rows.get(row);
 		return m == null ? null : m.getAsObject(0, column);
@@ -78,7 +82,7 @@ public class DefaultSparseRowObjectMatrix2D extends AbstractSparseObjectMatrix2D
 		return coordinates;
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		if (Coordinates.isSmallerThan(coordinates, size)) {
 			return getObject(coordinates) != null;
 		} else {

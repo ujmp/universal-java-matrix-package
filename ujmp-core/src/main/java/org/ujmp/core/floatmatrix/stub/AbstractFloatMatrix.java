@@ -31,7 +31,7 @@ public abstract class AbstractFloatMatrix extends AbstractGenericMatrix<Float> i
 		FloatMatrix {
 	private static final long serialVersionUID = -6051872055791093546L;
 
-	public AbstractFloatMatrix(long[] size) {
+	public AbstractFloatMatrix(long... size) {
 		super(size);
 	}
 

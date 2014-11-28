@@ -29,8 +29,12 @@ public abstract class AbstractSparseBigDecimalMatrix extends AbstractBigDecimalM
 		SparseBigDecimalMatrix {
 	private static final long serialVersionUID = 3126623274231957611L;
 
-	public AbstractSparseBigDecimalMatrix(long[] size) {
+	public AbstractSparseBigDecimalMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

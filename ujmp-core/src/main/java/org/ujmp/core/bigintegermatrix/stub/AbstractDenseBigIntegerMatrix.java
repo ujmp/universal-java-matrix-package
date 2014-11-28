@@ -24,26 +24,31 @@
 package org.ujmp.core.bigintegermatrix.stub;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseBigIntegerMatrix extends AbstractBigIntegerMatrix implements
 		DenseBigIntegerMatrix {
 	private static final long serialVersionUID = 97884327461753962L;
 
-	public AbstractDenseBigIntegerMatrix(Matrix m) {
-		super(m);
-	}
-
-	public AbstractDenseBigIntegerMatrix(long[] size) {
+	public AbstractDenseBigIntegerMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

@@ -29,8 +29,12 @@ public abstract class AbstractSparseCharMatrix extends AbstractCharMatrix implem
 		SparseCharMatrix {
 	private static final long serialVersionUID = 3907833890262323770L;
 
-	public AbstractSparseCharMatrix(long[] size) {
+	public AbstractSparseCharMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

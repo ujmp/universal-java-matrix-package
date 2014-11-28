@@ -24,17 +24,31 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.charmatrix.DenseCharMatrix;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseCharMatrix extends AbstractCharMatrix implements DenseCharMatrix {
 	private static final long serialVersionUID = 2417103022320228350L;
 
-	public AbstractDenseCharMatrix(long[] size) {
+	public AbstractDenseCharMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
+
+	public final boolean isSparse() {
+		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

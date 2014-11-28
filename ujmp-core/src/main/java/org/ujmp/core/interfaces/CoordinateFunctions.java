@@ -108,6 +108,6 @@ public interface CoordinateFunctions {
 	 *            The coordinates to check
 	 * @return a boolean stating if the coordinates are part of the Matrix
 	 */
-	public boolean contains(long... coordinates);
+	public boolean containsCoordinates(long... coordinates);
 
 }

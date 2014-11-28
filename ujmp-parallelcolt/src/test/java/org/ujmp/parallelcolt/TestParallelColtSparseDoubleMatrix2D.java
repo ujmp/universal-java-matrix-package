@@ -47,4 +47,9 @@ public class TestParallelColtSparseDoubleMatrix2D extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.PARALLELCOLT;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

@@ -26,6 +26,8 @@ package org.ujmp.core.filematrix;
 import java.io.File;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.objectmatrix.stub.AbstractObjectMatrix;
 
 public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryMatrix {
@@ -98,9 +100,9 @@ public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryM
 		}
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		loadContent();
-		return matrix.contains(coordinates);
+		return matrix.containsCoordinates(coordinates);
 	}
 
 	public boolean isSparse() {
@@ -117,6 +119,15 @@ public class FileMatrix extends AbstractObjectMatrix implements FileOrDirectoryM
 	public Object getObject(long... coordinates) {
 		loadContent();
 		return matrix.getAsObject(coordinates);
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		loadContent();
+		return matrix.availableCoordinates();
+	}
+
+	public final void clear() {
+		matrix.clear();
 	}
 
 }

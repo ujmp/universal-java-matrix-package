@@ -31,32 +31,9 @@ public class ArrayDenseShortMatrix2D extends AbstractDenseShortMatrix2D {
 
 	private final short[][] values;
 
-	public ArrayDenseShortMatrix2D(Matrix m) {
-		super(m.getSize());
-		if (m instanceof ArrayDenseShortMatrix2D) {
-			short[][] v = ((ArrayDenseShortMatrix2D) m).values;
-			this.values = new short[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new short[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsShort(m.getAsShort(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseShortMatrix2D(short[]... v) {
-		super(new long[] { v.length, v[0].length });
+		super(v.length, v[0].length);
 		this.values = v;
-	}
-
-	public ArrayDenseShortMatrix2D(long... size) {
-		super(size);
-		values = new short[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public short getShort(long row, long column) {

@@ -24,18 +24,13 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.DenseCharMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix implements
 		DenseCharMatrix2D {
 	private static final long serialVersionUID = -261545946520505256L;
 
 	public AbstractDenseCharMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final char getChar(long... coordinates) {
@@ -64,10 +59,6 @@ public abstract class AbstractDenseCharMatrix2D extends AbstractDenseCharMatrix 
 
 	public final int getDimensionCount() {
 		return 2;
-	}
-
-	public final boolean isSparse() {
-		return false;
 	}
 
 }

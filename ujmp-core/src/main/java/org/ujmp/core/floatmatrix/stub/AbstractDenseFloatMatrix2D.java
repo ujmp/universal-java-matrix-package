@@ -24,20 +24,13 @@
 package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.floatmatrix.DenseFloatMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseFloatMatrix2D extends AbstractDenseFloatMatrix implements
 		DenseFloatMatrix2D {
 	private static final long serialVersionUID = 4140127470234900713L;
 
-	public AbstractDenseFloatMatrix2D(long[] size) {
-		super(size);
-		VerifyUtil.verify2D(size);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public AbstractDenseFloatMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final float getFloat(long... coordinates) {
@@ -68,7 +61,4 @@ public abstract class AbstractDenseFloatMatrix2D extends AbstractDenseFloatMatri
 		return 2;
 	}
 
-	public final boolean isSparse() {
-		return false;
-	}
 }

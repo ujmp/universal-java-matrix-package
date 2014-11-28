@@ -26,31 +26,12 @@ package org.ujmp.core.bigdecimalmatrix.impl;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractDenseBigDecimalMatrix2D;
 
 public class ArrayDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = 5701752483223767209L;
 
 	private final BigDecimal[][] values;
-
-	public ArrayDenseBigDecimalMatrix2D(Matrix m) {
-		super(m.getRowCount(), m.getColumnCount());
-		if (m instanceof ArrayDenseBigDecimalMatrix2D) {
-			BigDecimal[][] v = ((ArrayDenseBigDecimalMatrix2D) m).values;
-			this.values = new BigDecimal[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new BigDecimal[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsBigDecimal(m.getAsBigDecimal(c), c);
-			}
-		}
-	}
 
 	public ArrayDenseBigDecimalMatrix2D(BigDecimal[]... v) {
 		super(v.length, v[0].length);

@@ -29,8 +29,12 @@ public abstract class AbstractSparseBooleanMatrix extends AbstractBooleanMatrix 
 		SparseBooleanMatrix {
 	private static final long serialVersionUID = 921125319412028934L;
 
-	public AbstractSparseBooleanMatrix(long[] size) {
+	public AbstractSparseBooleanMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

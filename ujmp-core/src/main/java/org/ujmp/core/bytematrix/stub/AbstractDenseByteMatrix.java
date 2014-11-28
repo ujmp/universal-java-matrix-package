@@ -25,19 +25,29 @@ package org.ujmp.core.bytematrix.stub;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.bytematrix.DenseByteMatrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseByteMatrix extends AbstractByteMatrix implements DenseByteMatrix {
 	private static final long serialVersionUID = -3579091070306434169L;
 
-	public AbstractDenseByteMatrix(long[] size) {
+	public AbstractDenseByteMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

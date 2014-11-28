@@ -24,20 +24,13 @@
 package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
-import org.ujmp.core.util.VerifyUtil;
 
 public abstract class AbstractDenseLongMatrix2D extends AbstractDenseLongMatrix implements
 		DenseLongMatrix2D {
 	private static final long serialVersionUID = 3504437963719013875L;
 
-	public AbstractDenseLongMatrix2D(long[] size) {
-		super(size);
-		VerifyUtil.verify2D(size);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public AbstractDenseLongMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final long getLong(long... coordinates) {

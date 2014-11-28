@@ -25,24 +25,14 @@ package org.ujmp.core.bigintegermatrix.stub;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.DenseBigIntegerMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix
 		implements DenseBigIntegerMatrix2D {
 	private static final long serialVersionUID = -4540890616031025558L;
 
-	public AbstractDenseBigIntegerMatrix2D(Matrix m) {
-		super(m);
-	}
-
 	public AbstractDenseBigIntegerMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final BigInteger getBigInteger(long... coordinates) {

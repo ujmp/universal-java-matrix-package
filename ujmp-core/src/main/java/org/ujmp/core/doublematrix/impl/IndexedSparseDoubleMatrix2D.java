@@ -24,6 +24,8 @@
 package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 
 public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
@@ -103,6 +105,10 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private void grow() {
 	}
 
+	public final void clear() {
+		entryCount = 0;
+	}
+
 	private int getPos(long row, long column) {
 		int stepSize = entryCount / 2;
 		int pos = stepSize * 3;
@@ -136,8 +142,12 @@ public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 		setDouble(value, (long) row, (long) column);
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return getDouble(coordinates) == 0.0;
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

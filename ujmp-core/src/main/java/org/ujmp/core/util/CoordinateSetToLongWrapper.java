@@ -28,22 +28,13 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.interfaces.Wrapper;
 
-public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coordinates>> {
+public class CoordinateSetToLongWrapper implements Set<long[]> {
 
-	private Set<Coordinates> set = null;
+	private final Set<Coordinates> set;
 
 	public CoordinateSetToLongWrapper(Set<Coordinates> set) {
 		this.set = set;
-	}
-
-	public Set<Coordinates> getWrappedObject() {
-		return set;
-	}
-
-	public void setWrappedObject(Set<Coordinates> object) {
-		this.set = object;
 	}
 
 	public boolean add(long[] e) {
@@ -59,7 +50,11 @@ public class CoordinateSetToLongWrapper implements Set<long[]>, Wrapper<Set<Coor
 	}
 
 	public boolean contains(Object o) {
-		return set.contains(Coordinates.wrap((long[]) o));
+		if (o instanceof long[]) {
+			return set.contains(Coordinates.wrap((long[]) o));
+		} else {
+			return false;
+		}
 	}
 
 	public boolean containsAll(Collection<?> c) {

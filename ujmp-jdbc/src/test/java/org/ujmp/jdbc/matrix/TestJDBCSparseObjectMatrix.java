@@ -51,4 +51,9 @@ public class TestJDBCSparseObjectMatrix extends AbstractMatrixTest {
 		return MatrixLibraries.UJMP;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return true;
+	}
+
 }

@@ -24,18 +24,13 @@
 package org.ujmp.core.bytearraymatrix.stub;
 
 import org.ujmp.core.bytearraymatrix.SparseByteArrayMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseByteArrayMatrix2D extends AbstractSparseByteArrayMatrix
 		implements SparseByteArrayMatrix2D {
 	private static final long serialVersionUID = 6615523781564256586L;
 
 	public AbstractSparseByteArrayMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final byte[] getByteArray(long... coordinates) {

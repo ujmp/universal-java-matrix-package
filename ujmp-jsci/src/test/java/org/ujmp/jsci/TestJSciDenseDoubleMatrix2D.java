@@ -48,4 +48,8 @@ public class TestJSciDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.JSCI;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

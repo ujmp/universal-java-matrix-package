@@ -27,16 +27,20 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ org.ujmp.complete.TestPlugins.class,
-		org.ujmp.complete.TestCompareMatrices.class, org.ujmp.core.AllTests.class,
-		org.ujmp.gui.AllTests.class, org.ujmp.hadoop.AllTests.class, org.ujmp.colt.AllTests.class,
-		org.ujmp.ehcache.AllTests.class, org.ujmp.jackcess.AllTests.class,
-		org.ujmp.jama.AllTests.class, org.ujmp.jfreechart.AllTests.class,
-		org.ujmp.jblas.AllTests.class, org.ujmp.commonsmath.AllTests.class,
-		org.ujmp.jmatio.AllTests.class, org.ujmp.parallelcolt.AllTests.class,
-		org.ujmp.jsci.AllTests.class, org.ujmp.jscience.AllTests.class,
-		org.ujmp.jung.AllTests.class, org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
-		org.ujmp.mtj.AllTests.class, org.ujmp.pdfbox.AllTests.class,
-		org.ujmp.vecmath.AllTests.class, org.ujmp.ejml.AllTests.class })
+@Suite.SuiteClasses({ org.ujmp.colt.AllTests.class, org.ujmp.commonsmath.AllTests.class,
+		org.ujmp.complete.TestPlugins.class, org.ujmp.complete.TestCompareMatrices.class,
+		org.ujmp.core.AllTests.class, org.ujmp.ehcache.AllTests.class,
+		org.ujmp.ejml.AllTests.class, org.ujmp.elasticsearch.AllTests.class,
+		org.ujmp.examples.AllTests.class, org.ujmp.gui.AllTests.class,
+		org.ujmp.hadoop.AllTests.class, org.ujmp.itext.AllTests.class,
+		org.ujmp.jackcess.AllTests.class, org.ujmp.jama.AllTests.class,
+		org.ujmp.jblas.AllTests.class, org.ujmp.jdbc.AllTests.class,
+		org.ujmp.jfreechart.AllTests.class, org.ujmp.jmatio.AllTests.class,
+		org.ujmp.jsch.AllTests.class, org.ujmp.jsci.AllTests.class,
+		org.ujmp.jscience.AllTests.class, org.ujmp.jung.AllTests.class,
+		org.ujmp.la4j.AllTests.class, org.ujmp.lucene.AllTests.class, org.ujmp.mail.AllTests.class,
+		org.ujmp.mtj.AllTests.class, org.ujmp.ojalgo.AllTests.class,
+		org.ujmp.parallelcolt.AllTests.class, org.ujmp.pdfbox.AllTests.class,
+		org.ujmp.poi.AllTests.class, org.ujmp.vecmath.AllTests.class })
 public class AllTests {
 }

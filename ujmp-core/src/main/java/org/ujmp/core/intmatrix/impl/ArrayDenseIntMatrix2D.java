@@ -24,7 +24,6 @@
 package org.ujmp.core.intmatrix.impl;
 
 import org.ujmp.core.Coordinates;
-import org.ujmp.core.Matrix;
 import org.ujmp.core.intmatrix.IntMatrix;
 import org.ujmp.core.intmatrix.stub.AbstractDenseIntMatrix2D;
 
@@ -33,40 +32,14 @@ public class ArrayDenseIntMatrix2D extends AbstractDenseIntMatrix2D {
 
 	private final int[][] values;
 
-	public ArrayDenseIntMatrix2D(Matrix m) {
-		super(m.getSize());
-		if (m instanceof ArrayDenseIntMatrix2D) {
-			int[][] v = ((ArrayDenseIntMatrix2D) m).values;
-			this.values = new int[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new int[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsDouble(m.getAsDouble(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseIntMatrix2D(int[]... v) {
-		super(new long[] { v.length, v[0].length });
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseIntMatrix2D(long... size) {
-		super(size);
-		values = new int[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
-	public ArrayDenseIntMatrix2D(int[] v) {
-		super(new long[] { v.length, 1 });
-		this.values = new int[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public ArrayDenseIntMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new int[rows][columns];
 	}
 
 	public int getInt(long row, long column) {

@@ -23,21 +23,19 @@
 
 package org.ujmp.core.doublematrix.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
-import org.ujmp.core.objectmatrix.impl.DefaultSparseObjectMatrix;
+import org.ujmp.core.util.DefaultSparseDoubleVector1D;
 
 public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {
 	private static final long serialVersionUID = -5291604525500706427L;
 
-	private final Map<Long, Matrix> rows = new HashMap<Long, Matrix>();
+	protected final Map<Long, DefaultSparseDoubleVector1D> rows = new HashMap<Long, DefaultSparseDoubleVector1D>();
 
 	public DefaultSparseRowDoubleMatrix2D(long rows, long columns) {
 		super(rows, columns);
@@ -64,27 +62,18 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 		return getDouble((long) row, (long) column);
 	}
 
-	// TODO: this is certainly not the optimal way to do it!
 	public Iterable<long[]> availableCoordinates() {
-		List<long[]> coordinates = new ArrayList<long[]>();
-		for (Long r : rows.keySet()) {
-			Matrix m = rows.get(r);
-			for (long[] c : m.availableCoordinates()) {
-				coordinates.add(Coordinates.plus(c, new long[] { r, 0 }));
-			}
-		}
-		return coordinates;
+		return new NonZeroIterable(this);
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return getDouble(coordinates) != 0.0;
 	}
 
 	public void setDouble(double o, long row, long column) {
-		Matrix m = rows.get(row);
+		DefaultSparseDoubleVector1D m = rows.get(row);
 		if (m == null) {
-			// TODO: there should be a faster implementation than this:
-			m = new DefaultSparseObjectMatrix((long) 1, getColumnCount());
+			m = new DefaultSparseDoubleVector1D(1l, getColumnCount());
 			rows.put(row, m);
 		}
 		m.setAsDouble(o, 0, column);
@@ -110,8 +99,67 @@ public class DefaultSparseRowDoubleMatrix2D extends AbstractSparseDoubleMatrix2D
 	public Matrix selectRows(Ret returnType, long... rows) {
 		if (returnType == Ret.LINK && rows.length == 1) {
 			return getRow(rows[0]);
+		} else {
+			return super.selectRows(returnType, rows);
 		}
-		return super.selectRows(returnType, rows);
+	}
+
+	public final void clear() {
+		rows.clear();
+	}
+
+}
+
+class NonZeroIterable implements Iterable<long[]> {
+
+	private final DefaultSparseRowDoubleMatrix2D matrix;
+
+	public NonZeroIterable(DefaultSparseRowDoubleMatrix2D matrix) {
+		this.matrix = matrix;
+	}
+
+	public Iterator<long[]> iterator() {
+		return new NonZeroIterator(matrix);
+	}
+
+}
+
+class NonZeroIterator implements Iterator<long[]> {
+
+	private final DefaultSparseRowDoubleMatrix2D matrix;
+	private final long[] coordinates = new long[] { -1, -1 };
+	private final Iterator<Long> rowIterator;
+	private Iterator<long[]> columnIterator;
+	private long currentRow;
+
+	public NonZeroIterator(DefaultSparseRowDoubleMatrix2D matrix) {
+		this.matrix = matrix;
+		rowIterator = matrix.rows.keySet().iterator();
+		while (rowIterator.hasNext() && (columnIterator == null || !columnIterator.hasNext())) {
+			currentRow = rowIterator.next();
+			columnIterator = matrix.rows.get(currentRow).availableCoordinates().iterator();
+		}
+	}
+
+	public boolean hasNext() {
+		return columnIterator != null && columnIterator.hasNext();
+	}
+
+	public long[] next() {
+		final long[] rowCoordinates = columnIterator.next();
+		coordinates[Matrix.ROW] = currentRow;
+		coordinates[Matrix.COLUMN] = rowCoordinates[Matrix.ROW];
+		if (!columnIterator.hasNext()) {
+			while (rowIterator.hasNext() && (columnIterator == null || !columnIterator.hasNext())) {
+				currentRow = rowIterator.next();
+				columnIterator = matrix.rows.get(currentRow).availableCoordinates().iterator();
+			}
+		}
+		return coordinates;
+	}
+
+	public void remove() {
+		throw new RuntimeException("cannot modify matrix");
 	}
 
 }

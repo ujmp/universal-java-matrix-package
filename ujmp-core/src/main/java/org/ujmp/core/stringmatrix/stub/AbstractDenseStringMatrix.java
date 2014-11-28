@@ -24,21 +24,31 @@
 package org.ujmp.core.stringmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.stringmatrix.DenseStringMatrix;
 
 public abstract class AbstractDenseStringMatrix extends AbstractStringMatrix implements
 		DenseStringMatrix {
 	private static final long serialVersionUID = 136971218246199758L;
 
-	public AbstractDenseStringMatrix(long[] size) {
+	public AbstractDenseStringMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

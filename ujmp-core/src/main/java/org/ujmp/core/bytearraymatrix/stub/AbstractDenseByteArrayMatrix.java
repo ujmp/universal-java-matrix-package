@@ -30,12 +30,20 @@ public abstract class AbstractDenseByteArrayMatrix extends AbstractByteArrayMatr
 		DenseByteArrayMatrix {
 	private static final long serialVersionUID = -3701288367177324324L;
 
-	public AbstractDenseByteArrayMatrix(long[] size) {
+	public AbstractDenseByteArrayMatrix(long... size) {
 		super(size);
 	}
 
 	public final boolean contains(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
+
+	public final boolean isSparse() {
+		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
 	}
 
 }

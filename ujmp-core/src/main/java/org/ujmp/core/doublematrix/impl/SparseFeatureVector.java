@@ -64,7 +64,7 @@ public class SparseFeatureVector extends AbstractSparseDoubleMatrix2D {
 		setFeatureValue(featureName, value);
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		String featureName = dictionary.get(MathUtil.longToInt(coordinates[ROW]));
 		return hasFeature(featureName);
 	}
@@ -90,5 +90,9 @@ public class SparseFeatureVector extends AbstractSparseDoubleMatrix2D {
 		} else {
 			values.put(featureName, value);
 		}
+	}
+
+	public final void clear() {
+		values.clear();
 	}
 }

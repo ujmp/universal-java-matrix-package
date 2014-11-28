@@ -54,15 +54,16 @@ class TransposeMatrix implements TransposeCalculation<Matrix, Matrix> {
 		if (source == target) {
 			throw new RuntimeException("cannot transpose into original matrix");
 		}
-		if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
+		if (source.isSparse() && source instanceof SparseMatrix && target.isSparse()
+				&& target instanceof SparseMatrix) {
+			Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
+		} else if (source instanceof DenseDoubleMatrix2D && target instanceof DenseDoubleMatrix2D) {
 			Transpose.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source,
 					(DenseDoubleMatrix2D) target);
 		} else if (source instanceof DenseMatrix2D && target instanceof DenseMatrix2D) {
 			Transpose.DENSEMATRIX2D.calc((DenseMatrix2D) source, (DenseMatrix2D) target);
 		} else if (source instanceof DenseMatrix && target instanceof DenseMatrix) {
 			Transpose.DENSEMATRIX.calc((DenseMatrix) source, (DenseMatrix) target);
-		} else if (source instanceof SparseMatrix && target instanceof SparseMatrix) {
-			Transpose.SPARSEMATRIX.calc((SparseMatrix) source, (SparseMatrix) target);
 		} else {
 			VerifyUtil.verify2D(source);
 			VerifyUtil.verify2D(target);

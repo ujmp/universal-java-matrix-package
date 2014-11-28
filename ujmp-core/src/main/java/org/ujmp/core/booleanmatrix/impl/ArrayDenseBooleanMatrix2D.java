@@ -31,24 +31,6 @@ public class ArrayDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix2D {
 
 	private final boolean[][] values;
 
-	public ArrayDenseBooleanMatrix2D(Matrix m) {
-		super(m.getRowCount(), m.getColumnCount());
-		if (m instanceof ArrayDenseBooleanMatrix2D) {
-			boolean[][] v = ((ArrayDenseBooleanMatrix2D) m).values;
-			this.values = new boolean[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new boolean[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsBoolean(m.getAsBoolean(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseBooleanMatrix2D(boolean[]... v) {
 		super(v.length, v[0].length);
 		this.values = v;

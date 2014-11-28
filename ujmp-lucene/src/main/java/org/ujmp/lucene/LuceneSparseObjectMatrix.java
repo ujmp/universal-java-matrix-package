@@ -59,4 +59,8 @@ public class LuceneSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper i
 		((Closeable) getMap()).close();
 	}
 
+	public final void clear() {
+		getMap().clear();
+	}
+
 }

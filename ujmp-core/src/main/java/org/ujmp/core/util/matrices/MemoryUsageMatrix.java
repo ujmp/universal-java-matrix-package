@@ -29,7 +29,7 @@ public class MemoryUsageMatrix extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = -3863745960302379726L;
 
 	public MemoryUsageMatrix() {
-		super(new long[] { 3, 1 });
+		super(3, 1);
 		setLabel("Memory Usage");
 		setColumnLabel(0, "Bytes");
 		setRowLabel(0, "Free Memory");

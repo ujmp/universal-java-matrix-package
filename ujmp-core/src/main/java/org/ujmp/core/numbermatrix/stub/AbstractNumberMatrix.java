@@ -28,7 +28,7 @@ import org.ujmp.core.genericmatrix.stub.AbstractGenericMatrix;
 public abstract class AbstractNumberMatrix<T extends Number> extends AbstractGenericMatrix<T> {
 	private static final long serialVersionUID = 606534107030576782L;
 
-	protected AbstractNumberMatrix(long[] size) {
+	protected AbstractNumberMatrix(long... size) {
 		super(size);
 	}
 

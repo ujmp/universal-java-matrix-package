@@ -24,18 +24,13 @@
 package org.ujmp.core.charmatrix.stub;
 
 import org.ujmp.core.charmatrix.SparseCharMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseCharMatrix2D extends AbstractSparseCharMatrix implements
 		SparseCharMatrix2D {
 	private static final long serialVersionUID = -3805321813335029419L;
 
-	public AbstractSparseCharMatrix2D(long[] size) {
-		super(size);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public AbstractSparseCharMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final char getChar(long... coordinates) {

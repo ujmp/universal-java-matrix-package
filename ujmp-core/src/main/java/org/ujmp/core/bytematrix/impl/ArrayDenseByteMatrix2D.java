@@ -31,24 +31,6 @@ public class ArrayDenseByteMatrix2D extends AbstractDenseByteMatrix2D {
 
 	private final byte[][] values;
 
-	public ArrayDenseByteMatrix2D(Matrix m) {
-		super(m.getRowCount(), m.getColumnCount());
-		if (m instanceof ArrayDenseByteMatrix2D) {
-			byte[][] v = ((ArrayDenseByteMatrix2D) m).values;
-			this.values = new byte[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new byte[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsByte(m.getAsByte(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseByteMatrix2D(byte[]... v) {
 		super(v.length, v[0].length);
 		this.values = v;

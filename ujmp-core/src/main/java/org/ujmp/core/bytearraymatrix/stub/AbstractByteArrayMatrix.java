@@ -31,7 +31,7 @@ public abstract class AbstractByteArrayMatrix extends AbstractGenericMatrix<byte
 		ByteArrayMatrix {
 	private static final long serialVersionUID = 7605165569237745514L;
 
-	public AbstractByteArrayMatrix(long[] size) {
+	public AbstractByteArrayMatrix(long... size) {
 		super(size);
 	}
 

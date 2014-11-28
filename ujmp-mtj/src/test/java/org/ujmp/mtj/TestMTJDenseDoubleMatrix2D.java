@@ -47,4 +47,9 @@ public class TestMTJDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.MTJ;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
+
 }

@@ -47,4 +47,9 @@ public class TestEJMLDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.EJML;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

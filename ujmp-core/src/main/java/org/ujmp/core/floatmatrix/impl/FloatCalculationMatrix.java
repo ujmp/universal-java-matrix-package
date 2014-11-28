@@ -37,8 +37,8 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 		setMetaData(calculation.getMetaData());
 	}
 
-	public boolean contains(long... coordinates) {
-		return calculation.contains(coordinates);
+	public boolean containsCoordinates(long... coordinates) {
+		return calculation.containsCoordinates(coordinates);
 	}
 
 	public Iterable<long[]> availableCoordinates() {
@@ -67,6 +67,10 @@ public class FloatCalculationMatrix extends AbstractFloatMatrix {
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final void clear() {
+		throw new RuntimeException("matrix cannot be modified");
 	}
 
 }

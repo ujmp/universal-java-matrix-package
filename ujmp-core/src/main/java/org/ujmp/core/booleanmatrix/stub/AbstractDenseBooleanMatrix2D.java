@@ -24,18 +24,13 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseBooleanMatrix2D extends AbstractDenseBooleanMatrix implements
 		DenseBooleanMatrix2D {
 	private static final long serialVersionUID = 1382622388004356999L;
 
 	public AbstractDenseBooleanMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final boolean getBoolean(long... coordinates) {

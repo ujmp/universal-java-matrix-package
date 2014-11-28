@@ -37,8 +37,8 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		setMetaData(calculation.getMetaData());
 	}
 
-	public boolean contains(long... coordinates) {
-		return calculation.contains(coordinates);
+	public boolean containsCoordinates(long... coordinates) {
+		return calculation.containsCoordinates(coordinates);
 	}
 
 	public Iterable<long[]> availableCoordinates() {
@@ -69,4 +69,7 @@ public class ByteCalculationMatrix extends AbstractByteMatrix {
 		return false;
 	}
 
+	public final void clear() {
+		throw new RuntimeException("matrix cannot be modified");
+	}
 }

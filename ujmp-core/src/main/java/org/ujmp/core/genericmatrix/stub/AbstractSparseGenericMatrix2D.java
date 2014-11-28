@@ -27,12 +27,11 @@ import org.ujmp.core.genericmatrix.SparseGenericMatrix2D;
 
 public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGenericMatrix<A>
 		implements SparseGenericMatrix2D<A> {
+	private static final long serialVersionUID = 5833681469274664616L;
 
 	public AbstractSparseGenericMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
+		super(rows, columns);
 	}
-
-	private static final long serialVersionUID = 5833681469274664616L;
 
 	public final A getObject(long... coordinates) {
 		return getObject(coordinates[ROW], coordinates[COLUMN]);
@@ -40,6 +39,10 @@ public abstract class AbstractSparseGenericMatrix2D<A> extends AbstractSparseGen
 
 	public final void setObject(A value, long... coordinates) {
 		setObject(value, coordinates[ROW], coordinates[COLUMN]);
+	}
+
+	public final int getDimensionCount() {
+		return 2;
 	}
 
 }

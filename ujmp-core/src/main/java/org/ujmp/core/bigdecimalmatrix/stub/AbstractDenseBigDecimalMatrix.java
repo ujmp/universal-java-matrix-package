@@ -25,21 +25,31 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseBigDecimalMatrix extends AbstractBigDecimalMatrix implements
 		DenseBigDecimalMatrix {
 	private static final long serialVersionUID = -6973048827282789030L;
 
-	public AbstractDenseBigDecimalMatrix(long[] size) {
+	public AbstractDenseBigDecimalMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
-	
+
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

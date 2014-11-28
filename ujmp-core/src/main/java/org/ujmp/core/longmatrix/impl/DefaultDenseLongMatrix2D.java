@@ -35,34 +35,11 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 	private final int rows;
 	private final int cols;
 
-	public DefaultDenseLongMatrix2D(Matrix m) {
-		super(m.getSize());
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
-		if (m instanceof DefaultDenseLongMatrix2D) {
-			long[] v = ((DefaultDenseLongMatrix2D) m).values;
-			this.values = new long[v.length];
-			System.arraycopy(v, 0, this.values, 0, v.length);
-		} else {
-			this.values = new long[rows * cols];
-			for (long[] c : m.allCoordinates()) {
-				setLong(m.getAsLong(c), c);
-			}
-		}
-	}
-
-	public DefaultDenseLongMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.values = new long[rows * cols];
-	}
-
-	public DefaultDenseLongMatrix2D(long[] v, int rows, int cols) {
-		super(new long[] { rows, cols });
+	public DefaultDenseLongMatrix2D(int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.values = v;
+		this.values = new long[rows * cols];
 	}
 
 	public long getLong(long row, long column) {
@@ -114,9 +91,9 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 	}
 
 	public final Matrix copy() {
-		long[] result = new long[values.length];
+		DefaultDenseLongMatrix2D m = new DefaultDenseLongMatrix2D(rows, cols);
+		long[] result = m.values;
 		System.arraycopy(values, 0, result, 0, values.length);
-		Matrix m = new DefaultDenseLongMatrix2D(result, rows, cols);
 		if (getMetaData() != null) {
 			m.setMetaData(getMetaData().clone());
 		}
@@ -124,13 +101,14 @@ public class DefaultDenseLongMatrix2D extends AbstractDenseLongMatrix2D implemen
 	}
 
 	public final Matrix transpose() {
-		final long[] result = new long[cols * rows];
+		DefaultDenseLongMatrix2D m = new DefaultDenseLongMatrix2D(cols, rows);
+		final long[] result = m.values;
 		for (int c = rows; --c != -1;) {
 			for (int r = cols; --r != -1;) {
 				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseLongMatrix2D(result, cols, rows);
+		return m;
 	}
 
 	public long[] getLongArray() {

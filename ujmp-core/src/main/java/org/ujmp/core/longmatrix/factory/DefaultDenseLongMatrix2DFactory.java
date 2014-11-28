@@ -25,11 +25,12 @@ package org.ujmp.core.longmatrix.factory;
 
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultDenseLongMatrix2DFactory extends
 		AbstractDenseLongMatrix2DFactory<DenseLongMatrix2D> {
 
 	public DenseLongMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseLongMatrix2D(rows, columns);
+		return new DefaultDenseLongMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 }

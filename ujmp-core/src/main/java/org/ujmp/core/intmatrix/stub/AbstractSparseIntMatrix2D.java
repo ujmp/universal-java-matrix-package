@@ -24,18 +24,13 @@
 package org.ujmp.core.intmatrix.stub;
 
 import org.ujmp.core.intmatrix.SparseIntMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseIntMatrix2D extends AbstractSparseIntMatrix implements
 		SparseIntMatrix2D {
 	private static final long serialVersionUID = 5912652268778578339L;
 
-	public AbstractSparseIntMatrix2D(long[] size) {
-		super(size);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public AbstractSparseIntMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final int getInt(long... coordinates) {
@@ -60,5 +55,9 @@ public abstract class AbstractSparseIntMatrix2D extends AbstractSparseIntMatrix 
 
 	public final void setObject(Integer value, int row, int column) {
 		setInt(value, row, column);
+	}
+
+	public final int getDimensionCount() {
+		return 2;
 	}
 }

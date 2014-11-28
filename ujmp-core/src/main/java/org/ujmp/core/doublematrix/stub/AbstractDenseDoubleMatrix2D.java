@@ -25,6 +25,7 @@ package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.calculation.DivideMatrix;
 import org.ujmp.core.calculation.DivideScalar;
 import org.ujmp.core.calculation.MinusMatrix;
@@ -36,7 +37,7 @@ import org.ujmp.core.calculation.TimesMatrix;
 import org.ujmp.core.calculation.TimesScalar;
 import org.ujmp.core.calculation.Transpose;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D implements
 		DenseDoubleMatrix2D {
@@ -44,10 +45,6 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 
 	public AbstractDenseDoubleMatrix2D(long rows, long columns) {
 		super(rows, columns);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
 	}
 
 	public final Double getObject(long row, long column) {
@@ -180,8 +177,16 @@ public abstract class AbstractDenseDoubleMatrix2D extends AbstractDoubleMatrix2D
 		return 2;
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

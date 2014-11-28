@@ -37,10 +37,6 @@ public class ObjectCalculationMatrix extends AbstractDenseObjectMatrix {
 		setMetaData(calculation.getMetaData());
 	}
 
-	public Iterable<long[]> availableCoordinates() {
-		return calculation.availableCoordinates();
-	}
-
 	public long[] getSize() {
 		size = calculation.getSize();
 		return size;

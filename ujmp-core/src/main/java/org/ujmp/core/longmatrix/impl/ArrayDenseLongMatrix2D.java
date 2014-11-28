@@ -29,34 +29,11 @@ import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 public class ArrayDenseLongMatrix2D extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 2888746188860361425L;
 
-	private long[][] values = null;
-
-	public ArrayDenseLongMatrix2D(Matrix m) {
-		super(m.getSize());
-		if (m instanceof ArrayDenseLongMatrix2D) {
-			long[][] v = ((ArrayDenseLongMatrix2D) m).values;
-			this.values = new long[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new long[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsLong(m.getAsLong(c), c);
-			}
-		}
-	}
+	private final long[][] values;
 
 	public ArrayDenseLongMatrix2D(long[]... v) {
-		super(new long[] { v.length, v[0].length });
+		super(v.length, v[0].length);
 		this.values = v;
-	}
-
-	public ArrayDenseLongMatrix2D(long... size) {
-		super(size);
-		values = new long[(int) size[ROW]][(int) size[COLUMN]];
 	}
 
 	public long getLong(long row, long column) {

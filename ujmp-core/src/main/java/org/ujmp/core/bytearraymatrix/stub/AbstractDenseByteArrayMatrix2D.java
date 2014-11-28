@@ -24,18 +24,13 @@
 package org.ujmp.core.bytearraymatrix.stub;
 
 import org.ujmp.core.bytearraymatrix.DenseByteArrayMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseByteArrayMatrix2D extends AbstractDenseByteArrayMatrix implements
 		DenseByteArrayMatrix2D {
 	private static final long serialVersionUID = 1145951193934208497L;
 
 	public AbstractDenseByteArrayMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final byte[] getByteArray(long... coordinates) {

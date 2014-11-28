@@ -33,7 +33,7 @@ public abstract class AbstractBigDecimalMatrix extends AbstractNumberMatrix<BigD
 		BigDecimalMatrix {
 	private static final long serialVersionUID = 499221768058489393L;
 
-	public AbstractBigDecimalMatrix(long[] size) {
+	public AbstractBigDecimalMatrix(long... size) {
 		super(size);
 	}
 

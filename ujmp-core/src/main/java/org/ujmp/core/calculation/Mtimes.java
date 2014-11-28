@@ -64,6 +64,8 @@ public class Mtimes {
 
 	public static final MtimesCalculation<Matrix, SparseMatrix, Matrix> SPARSEMATRIX2 = new MtimesSparseMatrix2();
 
+	public static final MtimesCalculation<SparseMatrix, SparseMatrix, Matrix> SPARSEMATRIXBOTH = new MtimesSparseMatrixBoth();
+
 	public static MtimesCalculation<Matrix, Matrix, Matrix> MTIMES_JBLAS = null;
 
 	public static final boolean RESET_BLOCK_ORDER = false;
@@ -90,7 +92,14 @@ public class Mtimes {
 class MtimesMatrix implements MtimesCalculation<Matrix, Matrix, Matrix> {
 
 	public final void calc(final Matrix source1, final Matrix source2, final Matrix target) {
-		if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
+		if (source1.isSparse() && source1 instanceof SparseMatrix && source2.isSparse()
+				&& source2 instanceof SparseMatrix) {
+			Mtimes.SPARSEMATRIXBOTH.calc((SparseMatrix) source1, (SparseMatrix) source2, target);
+		} else if (source1.isSparse() && source1 instanceof SparseMatrix) {
+			Mtimes.SPARSEMATRIX1.calc((SparseMatrix) source1, source2, target);
+		} else if (source2.isSparse() && source2 instanceof SparseMatrix) {
+			Mtimes.SPARSEMATRIX2.calc(source1, (SparseMatrix) source2, target);
+		} else if (source1 instanceof DenseDoubleMatrix2D && source2 instanceof DenseDoubleMatrix2D
 				&& target instanceof DenseDoubleMatrix2D) {
 			Mtimes.DENSEDOUBLEMATRIX2D.calc((DenseDoubleMatrix2D) source1,
 					(DenseDoubleMatrix2D) source2, (DenseDoubleMatrix2D) target);
@@ -102,10 +111,6 @@ class MtimesMatrix implements MtimesCalculation<Matrix, Matrix, Matrix> {
 				&& target instanceof DenseMatrix) {
 			Mtimes.DENSEMATRIX.calc((DenseMatrix) source1, (DenseMatrix) source2,
 					(DenseMatrix) target);
-		} else if (source1 instanceof SparseMatrix) {
-			Mtimes.SPARSEMATRIX1.calc((SparseMatrix) source1, source2, target);
-		} else if (source2 instanceof SparseMatrix) {
-			Mtimes.SPARSEMATRIX2.calc(source1, (SparseMatrix) source2, target);
 		} else {
 			gemm(source1, source2, target);
 		}
@@ -250,6 +255,38 @@ class MtimesSparseMatrix1 implements MtimesCalculation<SparseMatrix, Matrix, Mat
 					if (temp != 0.0d) {
 						final double v3 = target.getAsDouble(c1[0], col2);
 						target.setAsDouble(v3 + temp, c1[0], col2);
+					}
+				}
+			}
+		}
+	}
+};
+
+class MtimesSparseMatrixBoth implements MtimesCalculation<SparseMatrix, SparseMatrix, Matrix> {
+
+	public final void calc(final SparseMatrix source1, final SparseMatrix source2,
+			final Matrix target) {
+		VerifyUtil.verify2D(source1);
+		VerifyUtil.verify2D(source2);
+		VerifyUtil.verify2D(target);
+		VerifyUtil.verifyEquals(source1.getColumnCount(), source2.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.verifyEquals(target.getRowCount(), source1.getRowCount(),
+				"matrices have wrong sizes");
+		VerifyUtil.verifyEquals(target.getColumnCount(), source2.getColumnCount(),
+				"matrices have wrong sizes");
+		target.clear();
+		for (long[] c1 : source1.availableCoordinates()) {
+			final double v1 = source1.getAsDouble(c1);
+			if (v1 != 0.0) {
+				for (long[] c2 : source2.availableCoordinates()) {
+					if (c2[0] == c1[1]) {
+						final double v2 = source2.getAsDouble(c2);
+						if (v1 != 0.0) {
+							final double temp = v1 * v2;
+							final double v3 = target.getAsDouble(c1[0], c2[1]);
+							target.setAsDouble(v3 + temp, c1[0], c2[1]);
+						}
 					}
 				}
 			}

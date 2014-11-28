@@ -40,8 +40,8 @@ public abstract class AbstractTreeMatrix<T> extends AbstractSparseDoubleMatrix2D
 		super(1, 1);
 	}
 
-	public boolean contains(long... coordinates) {
-		return false;
+	public boolean containsCoordinates(long... coordinates) {
+		throw new RuntimeException("not implemented");
 	}
 
 	public final boolean isChild(Object parent, Object child) {

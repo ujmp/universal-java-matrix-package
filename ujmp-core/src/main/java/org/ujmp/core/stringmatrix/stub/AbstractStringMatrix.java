@@ -32,7 +32,7 @@ public abstract class AbstractStringMatrix extends AbstractGenericMatrix<String>
 		StringMatrix {
 	private static final long serialVersionUID = -8163097072559207L;
 
-	public AbstractStringMatrix(long[] size) {
+	public AbstractStringMatrix(long... size) {
 		super(size);
 	}
 

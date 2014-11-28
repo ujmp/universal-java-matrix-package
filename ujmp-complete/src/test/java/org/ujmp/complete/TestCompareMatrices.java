@@ -78,13 +78,27 @@ public class TestCompareMatrices {
 
 	private Matrix getMatrix(Class<? extends Matrix> mclass, Matrix m) {
 		try {
-			Constructor<? extends Matrix> con = mclass.getConstructor(Matrix.class);
-			return con.newInstance(m);
+			Constructor<? extends Matrix> con = mclass.getConstructor(long.class, long.class);
+			Matrix result = con.newInstance(m.getRowCount(), m.getColumnCount());
+			result.setContent(Ret.ORIG, m, 0, 0);
+			return result;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
 		}
-
+		try {
+			Constructor<? extends Matrix> con = mclass.getConstructor(int.class, int.class);
+			Matrix result = con.newInstance((int) m.getRowCount(), (int) m.getColumnCount());
+			result.setContent(Ret.ORIG, m, 0, 0);
+			return result;
+		} catch (Exception e) {
+		}
+		try {
+			Constructor<? extends Matrix> con = mclass.getConstructor(long[].class);
+			Matrix result = con.newInstance(new long[] { m.getRowCount(), m.getColumnCount() });
+			result.setContent(Ret.ORIG, m, 0, 0);
+			return result;
+		} catch (Exception e) {
+		}
+		throw new RuntimeException("cannot create matrix class by reflection: " + mclass);
 	}
 
 	@Test

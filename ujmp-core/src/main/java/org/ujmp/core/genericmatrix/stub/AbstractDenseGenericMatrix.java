@@ -24,21 +24,31 @@
 package org.ujmp.core.genericmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.genericmatrix.DenseGenericMatrix;
 
 public abstract class AbstractDenseGenericMatrix<A> extends AbstractGenericMatrix<A> implements
 		DenseGenericMatrix<A> {
 	private static final long serialVersionUID = 5734205405544264050L;
 
-	protected AbstractDenseGenericMatrix(long[] size) {
+	protected AbstractDenseGenericMatrix(long... size) {
 		super(size);
 	}
 
-	public boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

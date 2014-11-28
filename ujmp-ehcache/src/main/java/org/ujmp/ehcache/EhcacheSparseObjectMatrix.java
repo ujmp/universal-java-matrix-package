@@ -56,4 +56,8 @@ public class EhcacheSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper 
 		((Closeable) getMap()).close();
 	}
 
+	public final void clear() {
+		getMap().clear();
+	}
+
 }

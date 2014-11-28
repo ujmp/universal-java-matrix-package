@@ -27,5 +27,5 @@ import org.ujmp.core.booleanmatrix.DenseBooleanMatrix;
 import org.ujmp.core.genericmatrix.factory.DenseGenericMatrixFactory;
 
 public interface DenseBooleanMatrixFactory<T extends DenseBooleanMatrix> extends
-		DenseGenericMatrixFactory<T>, BooleanMatrixFactory<T> {
+		DenseGenericMatrixFactory<T>, BaseBooleanMatrixFactory<T> {
 }

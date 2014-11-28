@@ -31,7 +31,7 @@ public abstract class AbstractDoubleMatrix extends AbstractNumberMatrix<Double> 
 		DoubleMatrix {
 	private static final long serialVersionUID = 8234957657491264944L;
 
-	public AbstractDoubleMatrix(long[] size) {
+	public AbstractDoubleMatrix(long... size) {
 		super(size);
 	}
 

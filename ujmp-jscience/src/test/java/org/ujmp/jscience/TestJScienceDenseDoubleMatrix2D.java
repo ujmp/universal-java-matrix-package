@@ -48,4 +48,8 @@ public class TestJScienceDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.JSCIENCE;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

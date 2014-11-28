@@ -23,8 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.util.MathUtil;
@@ -33,61 +33,44 @@ import org.ujmp.core.util.StringUtil;
 public class Deletion extends AbstractObjectCalculation {
 	private static final long serialVersionUID = 3714270132906708701L;
 
-	private long[][] selection = null;
+	private final long[][] deletion;
+
+	private final long[] size;
 
 	public Deletion(Matrix m, String deletionString) {
 		this(m, StringUtil.parseSelection(deletionString, m.getSize()));
 	}
 
-	public Deletion(Matrix m, Collection<? extends Number>... deletion) {
+	public Deletion(Matrix m, Collection<? extends Number>... del) {
 		super(m);
-
-		List<Long> rows = MathUtil.sequenceListLong(0, getSource().getRowCount() - 1);
-		List<Long> columns = MathUtil.sequenceListLong(0, getSource().getColumnCount() - 1);
-
-		for (Number n : deletion[ROW]) {
-			rows.remove(n.longValue());
-		}
-
-		for (Number n : deletion[COLUMN]) {
-			columns.remove(n.longValue());
-		}
-
-		selection = new long[2][];
-		selection[ROW] = MathUtil.collectionToLong(rows);
-		selection[COLUMN] = MathUtil.collectionToLong(columns);
+		deletion = new long[2][];
+		deletion[ROW] = MathUtil.collectionToLong(del[ROW]);
+		deletion[COLUMN] = MathUtil.collectionToLong(del[COLUMN]);
+		Arrays.sort(deletion[ROW]);
+		Arrays.sort(deletion[COLUMN]);
+		size = new long[] { getSource().getRowCount() - deletion[ROW].length,
+				getSource().getColumnCount() - deletion[COLUMN].length };
 	}
 
-	public Deletion(Matrix m, long[]... deletion) {
+	public Deletion(Matrix m, long[]... del) {
 		super(m);
-
-		List<Long> rows = MathUtil.sequenceListLong(0, getSource().getRowCount() - 1);
-		List<Long> columns = MathUtil.sequenceListLong(0, getSource().getColumnCount() - 1);
-
-		if (deletion != null && deletion[ROW] != null) {
-			for (int r = 0; r < deletion[ROW].length; r++) {
-				rows.remove(deletion[ROW][r]);
-			}
-		}
-
-		if (deletion.length > 1 && deletion[COLUMN] != null) {
-			for (int c = 0; c < deletion[COLUMN].length; c++) {
-				columns.remove(deletion[COLUMN][c]);
-			}
-		}
-
-		selection = new long[2][];
-		selection[ROW] = MathUtil.collectionToLong(rows);
-		selection[COLUMN] = MathUtil.collectionToLong(columns);
+		deletion = del;
+		Arrays.sort(deletion[ROW]);
+		Arrays.sort(deletion[COLUMN]);
+		size = new long[] { getSource().getRowCount() - deletion[ROW].length,
+				getSource().getColumnCount() - deletion[COLUMN].length };
 	}
 
 	public Object getObject(long... coordinates) {
-		return getSource().getAsObject(selection[ROW][(int) coordinates[ROW]],
-				selection[COLUMN][(int) coordinates[COLUMN]]);
+		long row = coordinates[ROW];
+		long col = coordinates[COLUMN];
+		int rowPos = MathUtil.search(deletion[ROW], 0, deletion[ROW].length, row);
+		int colPos = MathUtil.search(deletion[ROW], 0, deletion[ROW].length, col);
+		return getSource().getAsObject(row + rowPos, col + colPos);
 	}
 
 	public long[] getSize() {
-		return new long[] { selection[ROW].length, selection[COLUMN].length };
+		return size;
 	}
 
 }

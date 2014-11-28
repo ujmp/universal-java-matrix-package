@@ -210,6 +210,7 @@ import org.ujmp.core.stringmatrix.calculation.ToStringMatrix;
 import org.ujmp.core.stringmatrix.calculation.Translate;
 import org.ujmp.core.stringmatrix.calculation.UpperCase;
 import org.ujmp.core.util.CoordinateIterator;
+import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
@@ -273,11 +274,19 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
-		return Matrix.Factory;
+		if (isSparse()) {
+			return SparseMatrix.Factory;
+		} else {
+			return DenseMatrix.Factory;
+		}
 	}
 
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator(getSize());
+	public final Iterable<long[]> allCoordinates() {
+		if (getDimensionCount() == 2) {
+			return new CoordinateIterator2D(getSize());
+		} else {
+			return new CoordinateIterator(getSize());
+		}
 	}
 
 	public final long getCoreObjectId() {
@@ -739,10 +748,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return availableCoordinates();
 	}
 
-	public Iterable<long[]> availableCoordinates() {
-		return allCoordinates();
-	}
-
 	public double[][] toDoubleArray() {
 		final int rows = (int) getRowCount();
 		final int columns = (int) getColumnCount();
@@ -977,7 +982,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix mtimes(Matrix matrix) {
-		Matrix result = Matrix.Factory.like(this, getRowCount(), matrix.getColumnCount());
+		Matrix result = getFactory().zeros(getRowCount(), matrix.getColumnCount());
 		Matrix.mtimes.calc(this, matrix, result);
 		return result;
 	}
@@ -1148,13 +1153,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public Matrix transpose() {
-		Matrix result = null;
-		try {
-			result = this.getClass().getConstructor(long[].class)
-					.newInstance(Coordinates.transpose(getSize()));
-		} catch (Exception e) {
-			result = Matrix.Factory.zeros(Coordinates.transpose(getSize()));
-		}
+		Matrix result = getFactory().zeros(Coordinates.transpose(getSize()));
 		Matrix.transpose.calc(this, result);
 		return result;
 	}
@@ -1261,10 +1260,6 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		Matrix result = this.getFactory().zeros(getSize());
 		Matrix.minusMatrix.calc(this, m, result);
 		return result;
-	}
-
-	public void clear() {
-		new Zeros(this).calc(Ret.ORIG);
 	}
 
 	public final Matrix rand(Ret ret) {

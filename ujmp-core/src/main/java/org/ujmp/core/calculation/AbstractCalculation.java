@@ -57,7 +57,7 @@ public abstract class AbstractCalculation implements Calculation {
 		return new CoordinateIterator(getSize());
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 

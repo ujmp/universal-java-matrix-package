@@ -48,9 +48,17 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		return true;
 	}
 
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
+	}
+
 	public VolatileSparseObjectMatrix(long... size) {
 		super(size);
 		this.size = Coordinates.copyOf(size);
+	}
+
+	public final void clear() {
+		values.clear();
 	}
 
 	public Object getObject(long... coordinates) {
@@ -69,7 +77,7 @@ public class VolatileSparseObjectMatrix extends AbstractSparseObjectMatrix {
 		return new CoordinateSetToLongWrapper(values.keySet());
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return values.containsKey(Coordinates.wrap(coordinates));
 	}
 

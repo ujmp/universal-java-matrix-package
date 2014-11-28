@@ -24,18 +24,13 @@
 package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.floatmatrix.SparseFloatMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseFloatMatrix2D extends AbstractSparseFloatMatrix implements
 		SparseFloatMatrix2D {
 	private static final long serialVersionUID = 6828460129067551021L;
 
-	public AbstractSparseFloatMatrix2D(long[] size) {
-		super(size);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+	public AbstractSparseFloatMatrix2D(long rows, long columns) {
+		super(rows, columns);
 	}
 
 	public final char getChar(long... coordinates) {

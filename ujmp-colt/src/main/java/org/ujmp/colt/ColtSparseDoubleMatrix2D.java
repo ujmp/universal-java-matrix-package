@@ -35,6 +35,7 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.CoordinateSetToLongWrapper;
 import org.ujmp.core.util.MathUtil;
 
+import cern.colt.function.IntIntDoubleFunction;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
@@ -73,6 +74,14 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		if (source.getMetaData() != null) {
 			setMetaData(source.getMetaData().clone());
 		}
+	}
+
+	public final void clear() {
+		matrix.forEachNonZero(new IntIntDoubleFunction() {
+			public double apply(int arg0, int arg1, double arg2) {
+				return 0;
+			}
+		});
 	}
 
 	public double getDouble(long row, long column) {
@@ -121,7 +130,7 @@ public class ColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D imple
 		}
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return getAsDouble(coordinates) != 0.0;
 	}
 

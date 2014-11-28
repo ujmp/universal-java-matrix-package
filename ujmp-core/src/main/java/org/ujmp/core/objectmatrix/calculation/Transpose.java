@@ -85,8 +85,8 @@ public class Transpose extends AbstractObjectCalculation {
 		return size;
 	}
 
-	public boolean contains(long... coordinates) {
-		return getSource().contains(Coordinates.transpose(coordinates, swap1, swap2));
+	public boolean containsCoordinates(long... coordinates) {
+		return getSource().containsCoordinates(Coordinates.transpose(coordinates, swap1, swap2));
 	}
 
 	public boolean isSparse() {

@@ -47,4 +47,9 @@ public class TestJBlasDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.JBLAS;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

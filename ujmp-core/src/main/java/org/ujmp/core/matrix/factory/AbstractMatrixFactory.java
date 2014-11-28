@@ -78,7 +78,6 @@ import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.longmatrix.DenseLongMatrix2D;
 import org.ujmp.core.longmatrix.impl.ArrayDenseLongMatrix2D;
-import org.ujmp.core.longmatrix.impl.DefaultDenseLongMatrix2D;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
@@ -193,7 +192,7 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 	}
 
 	public final DenseLongMatrix2D linkToArray(long... values) {
-		return new DefaultDenseLongMatrix2D(values);
+		return new ArrayDenseLongMatrix2D(values);
 	}
 
 	public final DenseObjectMatrix2D linkToArray(Object[]... values) {
@@ -254,10 +253,6 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 
 	public final MatrixLinkSourceSelector linkTo() {
 		return new DefaultMatrixLinkSourceSelector();
-	}
-
-	public final Matrix like(Matrix matrix, long rowCount, long columnCount) {
-		return matrix.getFactory().zeros(rowCount, columnCount);
 	}
 
 	public final Matrix copyFromMatrix(Matrix matrix) {

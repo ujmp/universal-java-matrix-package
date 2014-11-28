@@ -73,7 +73,7 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 		return v == null ? defaultValue : v;
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return getMap().containsKey(Coordinates.wrap(coordinates));
 	}
 
@@ -86,11 +86,15 @@ public abstract class AbstractMapToSparseMatrixWrapper extends AbstractSparseObj
 	}
 
 	public final void setObject(Object o, long... coordinates) {
-		while (maximumNumberOfEntries > 0 && getMap().size() > maximumNumberOfEntries) {
-			getMap().remove(getMap().keySet().iterator().next());
-		}
-		if (Coordinates.isSmallerThan(coordinates, getSize())) {
-			getMap().put(Coordinates.wrap(coordinates).clone(), o);
+		if (MathUtil.getDouble(o) == 0.0) {
+			getMap().remove(Coordinates.wrap(coordinates));
+		} else {
+			while (maximumNumberOfEntries > 0 && getMap().size() > maximumNumberOfEntries) {
+				getMap().remove(getMap().keySet().iterator().next());
+			}
+			if (Coordinates.isSmallerThan(coordinates, getSize())) {
+				getMap().put(Coordinates.wrap(coordinates).clone(), o);
+			}
 		}
 	}
 

@@ -24,18 +24,13 @@
 package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.objectmatrix.DenseObjectMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseObjectMatrix2D extends AbstractDenseObjectMatrix implements
 		DenseObjectMatrix2D {
 	private static final long serialVersionUID = -4318215251761676880L;
 
 	public AbstractDenseObjectMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final Object getObject(long... coordinates) {

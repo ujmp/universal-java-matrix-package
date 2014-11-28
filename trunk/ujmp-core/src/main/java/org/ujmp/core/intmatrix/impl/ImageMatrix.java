@@ -45,7 +45,7 @@ public class ImageMatrix extends AbstractDenseIntMatrix2D {
 	}
 
 	public ImageMatrix(BufferedImage bufferedImage) {
-		super(new long[] { bufferedImage.getHeight(), bufferedImage.getWidth() });
+		super(bufferedImage.getHeight(), bufferedImage.getWidth());
 		this.bufferedImage = bufferedImage;
 	}
 

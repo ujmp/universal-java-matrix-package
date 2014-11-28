@@ -51,6 +51,17 @@ public class DefaultTreeMatrix<T> extends AbstractTreeMatrix<T> {
 		return children;
 	}
 
+	public final void clear() {
+		objects.clear();
+		childrenMap.clear();
+		parentMap.clear();
+		root = null;
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
+	}
+
 	public Map<T, T> getParentMap() {
 		return parentMap;
 	}

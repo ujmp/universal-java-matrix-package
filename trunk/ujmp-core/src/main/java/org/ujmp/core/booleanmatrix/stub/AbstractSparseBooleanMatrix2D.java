@@ -24,18 +24,13 @@
 package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.booleanmatrix.SparseBooleanMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseBooleanMatrix2D extends AbstractSparseBooleanMatrix implements
 		SparseBooleanMatrix2D {
 	private static final long serialVersionUID = -1162771712274772327L;
 
 	public AbstractSparseBooleanMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public final boolean getBoolean(long... coordinates) {

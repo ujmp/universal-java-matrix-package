@@ -29,8 +29,12 @@ public abstract class AbstractSparseShortMatrix extends AbstractShortMatrix impl
 		SparseShortMatrix {
 	private static final long serialVersionUID = -8028091062602474600L;
 
-	public AbstractSparseShortMatrix(long[] size) {
+	public AbstractSparseShortMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

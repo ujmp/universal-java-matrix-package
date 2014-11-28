@@ -35,34 +35,11 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 	private final int rows;
 	private final int cols;
 
-	public DefaultDenseIntMatrix2D(Matrix m) {
-		super(m.getSize());
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
-		if (m instanceof DefaultDenseIntMatrix2D) {
-			int[] v = ((DefaultDenseIntMatrix2D) m).values;
-			this.values = new int[v.length];
-			System.arraycopy(v, 0, this.values, 0, v.length);
-		} else {
-			this.values = new int[rows * cols];
-			for (long[] c : m.allCoordinates()) {
-				setInt(m.getAsInt(c), c);
-			}
-		}
-	}
-
-	public DefaultDenseIntMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.values = new int[rows * cols];
-	}
-
-	public DefaultDenseIntMatrix2D(int[] v, int rows, int cols) {
-		super(new long[] { rows, cols });
+	public DefaultDenseIntMatrix2D(int rows, int cols) {
+		super(rows, cols);
 		this.rows = rows;
 		this.cols = cols;
-		this.values = v;
+		this.values = new int[rows * cols];
 	}
 
 	public int getInt(long row, long column) {
@@ -114,9 +91,9 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 	}
 
 	public final Matrix copy() {
-		int[] result = new int[values.length];
+		DefaultDenseIntMatrix2D m = new DefaultDenseIntMatrix2D(rows, cols);
+		int[] result = m.values;
 		System.arraycopy(values, 0, result, 0, values.length);
-		Matrix m = new DefaultDenseIntMatrix2D(result, rows, cols);
 		if (getMetaData() != null) {
 			m.setMetaData(getMetaData().clone());
 		}
@@ -124,13 +101,14 @@ public class DefaultDenseIntMatrix2D extends AbstractDenseIntMatrix2D implements
 	}
 
 	public final Matrix transpose() {
-		final int[] result = new int[cols * rows];
+		DefaultDenseIntMatrix2D m = new DefaultDenseIntMatrix2D(cols, rows);
+		final int[] result = m.values;
 		for (int c = rows; --c != -1;) {
 			for (int r = cols; --r != -1;) {
 				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseIntMatrix2D(result, cols, rows);
+		return m;
 	}
 
 	public int[] getIntArray() {

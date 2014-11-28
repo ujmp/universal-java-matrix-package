@@ -25,15 +25,17 @@ package org.ujmp.core.shortmatrix.factory;
 
 import org.ujmp.core.shortmatrix.ShortMatrix2D;
 import org.ujmp.core.shortmatrix.impl.DefaultDenseShortMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultShortMatrix2DFactory extends AbstractShortMatrix2DFactory {
 
 	public ShortMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseShortMatrix2D(rows, columns);
+		return new DefaultDenseShortMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 	public ShortMatrix2D zeros(long... size) {
-		return new DefaultDenseShortMatrix2D(size[ROW], size[COLUMN]);
+		return new DefaultDenseShortMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

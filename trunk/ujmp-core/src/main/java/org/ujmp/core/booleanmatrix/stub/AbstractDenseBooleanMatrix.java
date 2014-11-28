@@ -25,21 +25,31 @@ package org.ujmp.core.booleanmatrix.stub;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.booleanmatrix.DenseBooleanMatrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public abstract class AbstractDenseBooleanMatrix extends AbstractBooleanMatrix implements
 		DenseBooleanMatrix {
 	private static final long serialVersionUID = 1884839957291665282L;
 
-	public AbstractDenseBooleanMatrix(long[] size) {
+	public AbstractDenseBooleanMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
-	
+
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

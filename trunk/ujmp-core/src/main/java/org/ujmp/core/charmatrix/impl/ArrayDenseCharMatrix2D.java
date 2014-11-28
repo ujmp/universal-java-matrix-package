@@ -31,24 +31,6 @@ public class ArrayDenseCharMatrix2D extends AbstractDenseCharMatrix2D {
 
 	private final char[][] values;
 
-	public ArrayDenseCharMatrix2D(Matrix m) {
-		super(m.getRowCount(), m.getColumnCount());
-		if (m instanceof ArrayDenseCharMatrix2D) {
-			char[][] v = ((ArrayDenseCharMatrix2D) m).values;
-			this.values = new char[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new char[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsChar(m.getAsChar(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseCharMatrix2D(char[]... v) {
 		super(v.length, v[0].length);
 		this.values = v;

@@ -28,8 +28,12 @@ import org.ujmp.core.intmatrix.SparseIntMatrix;
 public abstract class AbstractSparseIntMatrix extends AbstractIntMatrix implements SparseIntMatrix {
 	private static final long serialVersionUID = 5391576722782755001L;
 
-	public AbstractSparseIntMatrix(long[] size) {
+	public AbstractSparseIntMatrix(long... size) {
 		super(size);
+	}
+
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

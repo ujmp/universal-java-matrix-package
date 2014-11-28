@@ -24,22 +24,32 @@
 package org.ujmp.core.shortmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.shortmatrix.DenseShortMatrix;
 
 public abstract class AbstractDenseShortMatrix extends AbstractShortMatrix implements
 		DenseShortMatrix {
 	private static final long serialVersionUID = -2379265136500592409L;
 
-	public AbstractDenseShortMatrix(long[] size) {
+	public AbstractDenseShortMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

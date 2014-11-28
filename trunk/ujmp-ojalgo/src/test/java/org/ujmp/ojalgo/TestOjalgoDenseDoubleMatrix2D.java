@@ -47,4 +47,9 @@ public class TestOjalgoDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.OJALGO;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

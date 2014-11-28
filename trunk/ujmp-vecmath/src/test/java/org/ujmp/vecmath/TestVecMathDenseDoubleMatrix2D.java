@@ -47,4 +47,9 @@ public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.VECMATH;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

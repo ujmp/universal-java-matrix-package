@@ -24,20 +24,30 @@
 package org.ujmp.core.longmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.longmatrix.DenseLongMatrix;
 
 public abstract class AbstractDenseLongMatrix extends AbstractLongMatrix implements DenseLongMatrix {
 	private static final long serialVersionUID = -2604308460484616556L;
 
-	public AbstractDenseLongMatrix(long[] size) {
+	public AbstractDenseLongMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

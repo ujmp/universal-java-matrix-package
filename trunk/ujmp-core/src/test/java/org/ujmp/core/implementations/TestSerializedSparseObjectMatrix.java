@@ -45,4 +45,9 @@ public class TestSerializedSparseObjectMatrix extends AbstractMatrixTest {
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.UJMP;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return true;
+	}
 }

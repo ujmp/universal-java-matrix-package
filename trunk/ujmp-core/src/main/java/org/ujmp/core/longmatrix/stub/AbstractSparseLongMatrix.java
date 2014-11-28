@@ -29,8 +29,11 @@ public abstract class AbstractSparseLongMatrix extends AbstractLongMatrix implem
 		SparseLongMatrix {
 	private static final long serialVersionUID = 5682519172871817291L;
 
-	public AbstractSparseLongMatrix(long[] size) {
+	public AbstractSparseLongMatrix(long... size) {
 		super(size);
 	}
 
+	public final boolean isSparse() {
+		return true;
+	}
 }

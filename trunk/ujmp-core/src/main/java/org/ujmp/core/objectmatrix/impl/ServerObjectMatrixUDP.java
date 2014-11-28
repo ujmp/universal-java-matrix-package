@@ -72,6 +72,10 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		return size;
 	}
 
+	public final void clear() {
+		matrix.clear();
+	}
+
 	public double getAsDouble(long... coordinates) {
 		return matrix.getAsDouble(coordinates);
 	}
@@ -90,6 +94,10 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 
 	public void setObject(Object o, long... coordinates) {
 		matrix.setAsObject(o, coordinates);
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
 	}
 
 	class ServerThread extends Thread {
@@ -149,8 +157,8 @@ public class ServerObjectMatrixUDP extends AbstractSparseObjectMatrix {
 		}
 	}
 
-	public boolean contains(long... coordinates) {
-		return matrix.contains(coordinates);
+	public boolean containsCoordinates(long... coordinates) {
+		return matrix.containsCoordinates(coordinates);
 	}
 
 	public boolean isReadOnly() {

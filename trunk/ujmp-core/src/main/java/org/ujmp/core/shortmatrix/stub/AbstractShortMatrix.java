@@ -34,7 +34,7 @@ public abstract class AbstractShortMatrix extends AbstractNumberMatrix<Short> im
 		ShortMatrix {
 	private static final long serialVersionUID = 34811716349836913L;
 
-	public AbstractShortMatrix(long[] size) {
+	public AbstractShortMatrix(long... size) {
 		super(size);
 	}
 

@@ -45,4 +45,9 @@ public class TestCommonsMathArrayDenseDoubleMatrix2D extends AbstractMatrixTest 
 	public int getMatrixLibraryId() {
 		return MatrixLibraries.COMMONSMATH;
 	}
+
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

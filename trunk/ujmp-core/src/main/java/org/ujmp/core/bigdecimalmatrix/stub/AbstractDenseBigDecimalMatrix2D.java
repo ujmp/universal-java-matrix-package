@@ -26,18 +26,13 @@ package org.ujmp.core.bigdecimalmatrix.stub;
 import java.math.BigDecimal;
 
 import org.ujmp.core.bigdecimalmatrix.DenseBigDecimalMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractDenseBigDecimalMatrix2D extends AbstractDenseBigDecimalMatrix
 		implements DenseBigDecimalMatrix2D {
 	private static final long serialVersionUID = -6735931200406642163L;
 
 	public AbstractDenseBigDecimalMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
+		super(rows, columns);
 	}
 
 	public BigDecimal getNumber(long... coordinates) {

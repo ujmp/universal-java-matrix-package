@@ -29,7 +29,7 @@ public abstract class AbstractDoubleMatrix2D extends AbstractDoubleMatrix implem
 	private static final long serialVersionUID = -4189202907633610643L;
 
 	public AbstractDoubleMatrix2D(long rows, long columns) {
-		super(new long[] { rows, columns });
+		super(rows, columns);
 	}
 
 	public final double getDouble(long... coordinates) {

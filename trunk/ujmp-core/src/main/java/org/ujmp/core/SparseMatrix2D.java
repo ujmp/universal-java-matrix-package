@@ -23,6 +23,10 @@
 
 package org.ujmp.core;
 
+import org.ujmp.core.matrix.factory.DefaultSparseMatrixFactory;
+
 public interface SparseMatrix2D extends SparseMatrix, Matrix2D {
+
+	public static final DefaultSparseMatrixFactory Factory = new DefaultSparseMatrixFactory();
 
 }

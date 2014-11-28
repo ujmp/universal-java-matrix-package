@@ -31,40 +31,14 @@ public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
 
 	private final float[][] values;
 
-	public ArrayDenseFloatMatrix2D(Matrix m) {
-		super(m.getSize());
-		if (m instanceof ArrayDenseFloatMatrix2D) {
-			float[][] v = ((ArrayDenseFloatMatrix2D) m).values;
-			this.values = new float[v.length][v[0].length];
-			for (int r = v.length; --r >= 0;) {
-				for (int c = v[0].length; --c >= 0;) {
-					values[r][c] = v[r][c];
-				}
-			}
-		} else {
-			values = new float[(int) m.getRowCount()][(int) m.getColumnCount()];
-			for (long[] c : m.allCoordinates()) {
-				setAsFloat(m.getAsFloat(c), c);
-			}
-		}
-	}
-
 	public ArrayDenseFloatMatrix2D(float[]... v) {
-		super(new long[] { v.length, v[0].length });
+		super(v.length, v[0].length);
 		this.values = v;
 	}
 
-	public ArrayDenseFloatMatrix2D(long... size) {
-		super(size);
-		values = new float[(int) size[ROW]][(int) size[COLUMN]];
-	}
-
-	public ArrayDenseFloatMatrix2D(float[] v) {
-		super(new long[] { v.length, 1 });
-		this.values = new float[v.length][1];
-		for (int r = v.length; --r >= 0;) {
-			values[r][0] = v[r];
-		}
+	public ArrayDenseFloatMatrix2D(int rows, int columns) {
+		super(rows, columns);
+		values = new float[rows][columns];
 	}
 
 	public long getRowCount() {

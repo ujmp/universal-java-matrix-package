@@ -36,7 +36,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 	private final UJMPTimer timer;
 
 	public SystemTimeMatrix() {
-		super(new long[] { 1, 1 });
+		super(1, 1);
 		setLabel("System Time");
 		setColumnLabel(0, "System.currentTimeMillis()");
 		matrix = this;

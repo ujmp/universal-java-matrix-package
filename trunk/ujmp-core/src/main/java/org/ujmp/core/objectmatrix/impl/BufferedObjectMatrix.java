@@ -82,6 +82,15 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		setOutputBufferSize(outputBufferSize);
 	}
 
+	public final void clear() {
+		original.clear();
+		inputBuffer.clear();
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
+	}
+
 	public synchronized long[] getSize() {
 		size = inputBuffer.getSize();
 		return size;
@@ -202,8 +211,9 @@ public class BufferedObjectMatrix extends AbstractSparseObjectMatrix implements 
 		}
 	}
 
-	public boolean contains(long... coordinates) {
-		return inputBuffer.contains(coordinates) || original.contains(coordinates);
+	public boolean containsCoordinates(long... coordinates) {
+		return inputBuffer.containsCoordinates(coordinates)
+				|| original.containsCoordinates(coordinates);
 	}
 
 	public boolean isReadOnly() {

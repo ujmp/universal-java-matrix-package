@@ -23,16 +23,12 @@
 
 package org.ujmp.core.interfaces;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 
-public interface BasicMatrixProperties {
+public interface BaseMatrixProperties {
 
 	public Iterable<Object> allValues();
 
@@ -50,19 +46,11 @@ public interface BasicMatrixProperties {
 
 	public boolean equalsAnnotation(Object o);
 
-	public int rank();
-
-	public double trace();
-
-	public double det();
-
 	public boolean isDiagonal();
 
 	public boolean isSquare();
 
 	public boolean isSymmetric();
-
-	public boolean isSPD();
 
 	public boolean isEmpty();
 
@@ -80,53 +68,9 @@ public interface BasicMatrixProperties {
 
 	public boolean isTransient();
 
-	public boolean containsMissingValues();
-
-	public double doubleValue();
-
-	public int intValue();
-
-	public long longValue();
-
-	public short shortValue();
-
-	public byte byteValue();
-
-	public boolean booleanValue();
-
-	public String stringValue();
-
-	public Date dateValue();
-
-	public char charValue();
-
-	public BigInteger bigIntegerValue();
-
-	public BigDecimal bigDecimalValue();
-
-	public float floatValue();
-
-	public double getMinValue();
-
-	public double getMeanValue();
-
-	public double getStdValue();
-
-	public double getMaxValue();
-
-	public double getEuklideanValue();
-
-	public double getValueSum();
-
-	public double getAbsoluteValueSum();
-
-	public double getAbsoluteValueMean();
-
 	public List<Matrix> getRowList();
 
 	public List<Matrix> getColumnList();
-
-	public double getRMS();
 
 	public long getRowCount();
 
@@ -151,43 +95,5 @@ public interface BasicMatrixProperties {
 	public int getDimensionCount();
 
 	public String toString();
-
-	public double norm1();
-
-	public double norm2();
-
-	public double normF();
-
-	public double normInf();
-
-	public boolean containsNull();
-
-	public boolean containsBigDecimal(BigDecimal v);
-
-	public boolean containsBigInteger(BigInteger v);
-
-	public boolean containsBoolean(boolean v);
-
-	public boolean containsByte(byte v);
-
-	public boolean containsChar(char v);
-
-	public boolean containsDate(Date v);
-
-	public boolean containsDouble(double v);
-
-	public boolean containsFloat(float v);
-
-	public boolean containsInt(int v);
-
-	public boolean containsLong(long v);
-
-	public boolean containsObject(Object o);
-
-	public boolean containsShort(short v);
-
-	public boolean containsString(String s);
-
-	public Matrix setContent(Ret ret, Matrix matrix, long... coordinates);
 
 }

@@ -25,15 +25,17 @@ package org.ujmp.core.floatmatrix.factory;
 
 import org.ujmp.core.floatmatrix.FloatMatrix2D;
 import org.ujmp.core.floatmatrix.impl.ArrayDenseFloatMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultFloatMatrix2DFactory extends AbstractFloatMatrix2DFactory {
 
 	public FloatMatrix2D zeros(long rows, long columns) {
-		return new ArrayDenseFloatMatrix2D(rows, columns);
+		return new ArrayDenseFloatMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 	public FloatMatrix2D zeros(long... size) {
-		return new ArrayDenseFloatMatrix2D(size[ROW], size[COLUMN]);
+		return new ArrayDenseFloatMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

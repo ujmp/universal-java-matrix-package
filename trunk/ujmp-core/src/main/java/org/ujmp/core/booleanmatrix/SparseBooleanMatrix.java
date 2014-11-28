@@ -25,6 +25,6 @@ package org.ujmp.core.booleanmatrix;
 
 import org.ujmp.core.genericmatrix.SparseGenericMatrix;
 
-public interface SparseBooleanMatrix extends BooleanMatrix, SparseGenericMatrix<Boolean> {
+public interface SparseBooleanMatrix extends BaseBooleanMatrix, SparseGenericMatrix<Boolean> {
 
 }

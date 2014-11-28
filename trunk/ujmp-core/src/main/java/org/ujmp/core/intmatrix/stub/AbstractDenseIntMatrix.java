@@ -24,16 +24,18 @@
 package org.ujmp.core.intmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.intmatrix.DenseIntMatrix;
 
 public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix implements DenseIntMatrix {
 	private static final long serialVersionUID = 8649917347029363622L;
 
-	public AbstractDenseIntMatrix(long[] size) {
+	public AbstractDenseIntMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
@@ -41,4 +43,11 @@ public abstract class AbstractDenseIntMatrix extends AbstractIntMatrix implement
 		return false;
 	}
 
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
+	}
 }

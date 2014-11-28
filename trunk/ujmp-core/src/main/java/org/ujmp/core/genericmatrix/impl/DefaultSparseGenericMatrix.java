@@ -74,14 +74,18 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 
 	@SuppressWarnings("unchecked")
 	public void setObject(Object value, long... coordinates) {
-		while (maximumNumberOfEntries > 0 && values.size() > maximumNumberOfEntries) {
-			values.remove(values.keySet().iterator().next());
-		}
-		if (Coordinates.isSmallerThan(coordinates, size)) {
-			if (MathUtil.isNull(value)) {
-				values.remove(Coordinates.wrap(coordinates));
-			} else {
-				values.put(Coordinates.wrap(coordinates).clone(), (A) value);
+		if (MathUtil.isNull(value)) {
+			values.remove(Coordinates.wrap(coordinates));
+		} else {
+			while (maximumNumberOfEntries > 0 && values.size() > maximumNumberOfEntries) {
+				values.remove(values.keySet().iterator().next());
+			}
+			if (Coordinates.isSmallerThan(coordinates, size)) {
+				if (MathUtil.isNull(value)) {
+					values.remove(Coordinates.wrap(coordinates));
+				} else {
+					values.put(Coordinates.wrap(coordinates).clone(), (A) value);
+				}
 			}
 		}
 	}
@@ -90,7 +94,7 @@ public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A
 		return new CoordinateSetToLongWrapper(values.keySet());
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return values.containsKey(Coordinates.wrap(coordinates).clone());
 	}
 

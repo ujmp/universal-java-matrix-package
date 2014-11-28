@@ -31,7 +31,6 @@ import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.ObjectMatrix2D;
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObjectMatrix2D
@@ -84,10 +83,6 @@ public abstract class AbstractMapToTiledMatrix2DWrapper extends AbstractDenseObj
 
 	public final void setWrappedObject(Map<Coordinates, ObjectMatrix2D> object) {
 		throw new RuntimeException("cannot change map");
-	}
-
-	public Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
 	}
 
 	public synchronized final double getAsDouble(long... coordinates) {

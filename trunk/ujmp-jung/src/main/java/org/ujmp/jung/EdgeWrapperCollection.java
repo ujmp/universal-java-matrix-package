@@ -53,7 +53,7 @@ public class EdgeWrapperCollection<E> extends AbstractCollection<EdgeWrapper<E>>
 			return false;
 		}
 		if (o instanceof EdgeWrapper) {
-			return graphMatrix.contains(((EdgeWrapper<?>) o).getCoordinates().getLongCoordinates());
+			return graphMatrix.containsCoordinates(((EdgeWrapper<?>) o).getCoordinates().getLongCoordinates());
 		}
 		return false;
 	}

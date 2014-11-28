@@ -35,34 +35,11 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 	private final int rows;
 	private final int cols;
 
-	public DefaultDenseShortMatrix2D(Matrix m) {
-		super(m.getSize());
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
-		if (m instanceof DefaultDenseShortMatrix2D) {
-			short[] v = ((DefaultDenseShortMatrix2D) m).values;
-			this.values = new short[v.length];
-			System.arraycopy(v, 0, this.values, 0, v.length);
-		} else {
-			this.values = new short[rows * cols];
-			for (long[] c : m.allCoordinates()) {
-				setShort(m.getAsShort(c), c);
-			}
-		}
-	}
-
-	public DefaultDenseShortMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.values = new short[rows * cols];
-	}
-
-	public DefaultDenseShortMatrix2D(short[] v, int rows, int cols) {
-		super(new long[] { rows, cols });
+	public DefaultDenseShortMatrix2D(int rows, int columns) {
+		super(rows, columns);
 		this.rows = rows;
-		this.cols = cols;
-		this.values = v;
+		this.cols = columns;
+		this.values = new short[rows * cols];
 	}
 
 	public short getShort(long row, long column) {
@@ -114,9 +91,9 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 	}
 
 	public final Matrix copy() {
-		short[] result = new short[values.length];
+		DefaultDenseShortMatrix2D m = new DefaultDenseShortMatrix2D(rows, cols);
+		short[] result = m.values;
 		System.arraycopy(values, 0, result, 0, values.length);
-		Matrix m = new DefaultDenseShortMatrix2D(result, rows, cols);
 		if (getMetaData() != null) {
 			m.setMetaData(getMetaData().clone());
 		}
@@ -124,13 +101,14 @@ public class DefaultDenseShortMatrix2D extends AbstractDenseShortMatrix2D implem
 	}
 
 	public final Matrix transpose() {
-		final short[] result = new short[cols * rows];
+		DefaultDenseShortMatrix2D m = new DefaultDenseShortMatrix2D(cols, rows);
+		final short[] result = m.values;
 		for (int c = rows; --c != -1;) {
 			for (int r = cols; --r != -1;) {
 				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseShortMatrix2D(result, cols, rows);
+		return m;
 	}
 
 	public short[] getShortArray() {

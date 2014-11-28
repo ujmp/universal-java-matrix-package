@@ -24,18 +24,32 @@
 package org.ujmp.core.floatmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.floatmatrix.DenseFloatMatrix;
 
 public abstract class AbstractDenseFloatMatrix extends AbstractFloatMatrix implements
 		DenseFloatMatrix {
 	private static final long serialVersionUID = -2069841946241388853L;
 
-	public AbstractDenseFloatMatrix(long[] size) {
+	public AbstractDenseFloatMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
+	}
+
+	public final boolean isSparse() {
+		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public final void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 
 }

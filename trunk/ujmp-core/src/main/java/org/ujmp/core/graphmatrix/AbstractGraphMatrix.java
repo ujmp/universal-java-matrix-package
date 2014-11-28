@@ -39,7 +39,7 @@ public abstract class AbstractGraphMatrix<N, E> extends AbstractSparseGenericMat
 
 	private static final long serialVersionUID = -4939918585100574441L;
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return isConnected(coordinates[ROW], coordinates[COLUMN]);
 	}
 

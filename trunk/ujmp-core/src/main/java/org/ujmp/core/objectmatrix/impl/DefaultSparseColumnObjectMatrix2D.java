@@ -23,14 +23,14 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.interfaces.Wrapper;
 import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix2D;
 
@@ -38,7 +38,7 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		Wrapper<Map<Long, Matrix>> {
 	private static final long serialVersionUID = -1943118812754494387L;
 
-	private Map<Long, Matrix> columns = new HashMap<Long, Matrix>();
+	protected Map<Long, Matrix> columns = new HashMap<Long, Matrix>();
 
 	public DefaultSparseColumnObjectMatrix2D(long rows, long columns) {
 		super(rows, columns);
@@ -66,19 +66,11 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 		return m == null ? null : m.getAsObject(row, 0);
 	}
 
-	// TODO: this is certainly not the optimal way to do it!
 	public Iterable<long[]> availableCoordinates() {
-		List<long[]> coordinates = new ArrayList<long[]>();
-		for (Long i : columns.keySet()) {
-			Matrix m = columns.get(i);
-			for (long[] c : m.availableCoordinates()) {
-				coordinates.add(Coordinates.plus(c, new long[] { 0, i }));
-			}
-		}
-		return coordinates;
+		return new NonZeroIterable(this);
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		if (Coordinates.isSmallerThan(coordinates, size)) {
 			return getObject(coordinates) != null;
 		} else {
@@ -89,7 +81,6 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 	public void setObject(Object o, long row, long column) {
 		Matrix m = columns.get(column);
 		if (m == null) {
-			// TODO: there should be a faster implementation than this:
 			m = new DefaultSparseObjectMatrix(getRowCount(), 1);
 			columns.put(column, m);
 		}
@@ -107,6 +98,10 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 			}
 		}
 		this.size = size;
+	}
+
+	public final void clear() {
+		columns.clear();
 	}
 
 	public Matrix getColumn(long column) {
@@ -143,8 +138,9 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 	public Matrix selectColumns(Ret returnType, long... columns) {
 		if (returnType == Ret.LINK && columns.length == 1) {
 			return getColumn(columns[0]);
+		} else {
+			return super.selectColumns(returnType, columns);
 		}
-		return super.selectColumns(returnType, columns);
 	}
 
 	public Map<Long, Matrix> getWrappedObject() {
@@ -153,6 +149,60 @@ public class DefaultSparseColumnObjectMatrix2D extends AbstractSparseObjectMatri
 
 	public void setWrappedObject(Map<Long, Matrix> object) {
 		this.columns = object;
+	}
+
+}
+
+class NonZeroIterable implements Iterable<long[]> {
+
+	private final DefaultSparseColumnObjectMatrix2D matrix;
+
+	public NonZeroIterable(DefaultSparseColumnObjectMatrix2D matrix) {
+		this.matrix = matrix;
+	}
+
+	public Iterator<long[]> iterator() {
+		return new NonZeroIterator(matrix);
+	}
+
+}
+
+class NonZeroIterator implements Iterator<long[]> {
+
+	private final DefaultSparseColumnObjectMatrix2D matrix;
+	private final long[] coordinates = new long[] { -1, -1 };
+	private final Iterator<Long> columnIterator;
+	private Iterator<long[]> rowIterator;
+	private long currentColumn;
+
+	public NonZeroIterator(DefaultSparseColumnObjectMatrix2D matrix) {
+		this.matrix = matrix;
+		columnIterator = matrix.columns.keySet().iterator();
+		while (columnIterator.hasNext() && (rowIterator == null || !rowIterator.hasNext())) {
+			currentColumn = columnIterator.next();
+			rowIterator = matrix.columns.get(currentColumn).availableCoordinates().iterator();
+		}
+	}
+
+	public boolean hasNext() {
+		return rowIterator != null && rowIterator.hasNext();
+	}
+
+	public long[] next() {
+		final long[] rowCoordinates = rowIterator.next();
+		coordinates[Matrix.ROW] = rowCoordinates[Matrix.ROW];
+		coordinates[Matrix.COLUMN] = currentColumn;
+		if (!rowIterator.hasNext()) {
+			while (columnIterator.hasNext() && (rowIterator == null || !rowIterator.hasNext())) {
+				currentColumn = columnIterator.next();
+				rowIterator = matrix.columns.get(currentColumn).availableCoordinates().iterator();
+			}
+		}
+		return coordinates;
+	}
+
+	public void remove() {
+		throw new RuntimeException("cannot modify matrix");
 	}
 
 }

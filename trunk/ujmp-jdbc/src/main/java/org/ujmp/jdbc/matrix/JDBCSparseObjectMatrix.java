@@ -179,6 +179,10 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		return getEntryStatement;
 	}
 
+	public final void clear() {
+		throw new RuntimeException("matrix cannot be modified");
+	}
+
 	private PreparedStatement getInsertEntryStatement() throws SQLException {
 		if (insertEntryStatement == null) {
 			StringBuilder s = new StringBuilder();
@@ -324,7 +328,7 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 		return password;
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return getObject(coordinates) != null;
 	}
 
@@ -381,6 +385,10 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 				}
 			}
 		}
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
 	}
 
 }

@@ -48,4 +48,8 @@ public class TestJamaDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.JAMA;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
 }

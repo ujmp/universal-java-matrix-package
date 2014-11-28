@@ -24,7 +24,6 @@
 package org.ujmp.core.doublematrix.stub;
 
 import org.ujmp.core.doublematrix.SparseDoubleMatrix2D;
-import org.ujmp.core.util.CoordinateIterator2D;
 
 public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2D implements
 		SparseDoubleMatrix2D {
@@ -32,10 +31,6 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2
 
 	public AbstractSparseDoubleMatrix2D(long rows, long columns) {
 		super(rows, columns);
-	}
-
-	public final Iterable<long[]> allCoordinates() {
-		return new CoordinateIterator2D(getSize());
 	}
 
 	public final Double getObject(long row, long column) {
@@ -61,5 +56,7 @@ public abstract class AbstractSparseDoubleMatrix2D extends AbstractDoubleMatrix2
 	public final boolean isSparse() {
 		return true;
 	}
+
+	public abstract Iterable<long[]> availableCoordinates();
 
 }

@@ -166,6 +166,14 @@ public class FastArrayList<E> extends AbstractList<E> implements List<E>, Random
 			elementData = Arrays.copyOf(elementData, size, Object[].class);
 	}
 
+	public FastArrayList(E... c) {
+		elementData = c.clone();
+		size = elementData.length;
+		// c.toArray might (incorrectly) not return Object[] (see 6260652)
+		if (elementData.getClass() != Object[].class)
+			elementData = Arrays.copyOf(elementData, size, Object[].class);
+	}
+
 	public int hashCode() {
 		if (!hashCodeUpToDate) {
 			hashCode = super.hashCode();

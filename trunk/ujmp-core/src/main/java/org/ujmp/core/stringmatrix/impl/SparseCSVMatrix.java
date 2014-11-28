@@ -52,7 +52,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	}
 
 	public SparseCSVMatrix(File file, Object... parameters) throws IOException {
-		super(new long[] { 1, 1 });
+		super(1, 1);
 		if (parameters.length != 0 && parameters[0] instanceof String) {
 			this.fieldDelimiter = (String) parameters[0];
 		}
@@ -98,8 +98,8 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 
 	}
 
-	public final boolean isSparse() {
-		return true;
+	public final void clear() {
+		throw new RuntimeException("matrix cannot be modified");
 	}
 
 	public String getString(long row, long column) {
@@ -147,7 +147,7 @@ public class SparseCSVMatrix extends AbstractSparseStringMatrix2D {
 	public void setString(String value, long row, long column) {
 	}
 
-	public boolean contains(long... coordinates) {
+	public boolean containsCoordinates(long... coordinates) {
 		return getString(coordinates) != null;
 	}
 

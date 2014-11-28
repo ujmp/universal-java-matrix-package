@@ -26,7 +26,6 @@ package org.ujmp.core.bigintegermatrix.impl;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.stub.AbstractDenseBigIntegerMatrix2D;
 
 public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatrix2D {
@@ -35,22 +34,6 @@ public class DefaultDenseBigIntegerMatrix2D extends AbstractDenseBigIntegerMatri
 	private final BigInteger[] values;
 	private final int rows;
 	private final int cols;
-
-	public DefaultDenseBigIntegerMatrix2D(Matrix m) {
-		super(m);
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
-		if (m instanceof DefaultDenseBigIntegerMatrix2D) {
-			BigInteger[] v = ((DefaultDenseBigIntegerMatrix2D) m).values;
-			this.values = new BigInteger[v.length];
-			System.arraycopy(v, 0, this.values, 0, v.length);
-		} else {
-			this.values = new BigInteger[rows * cols];
-			for (long[] c : m.allCoordinates()) {
-				setBigInteger(m.getAsBigInteger(c), c);
-			}
-		}
-	}
 
 	public DefaultDenseBigIntegerMatrix2D(int rows, int cols) {
 		super(rows, cols);

@@ -34,7 +34,7 @@ public abstract class AbstractBooleanMatrix extends AbstractGenericMatrix<Boolea
 		BooleanMatrix {
 	private static final long serialVersionUID = -6190735100426536876L;
 
-	public AbstractBooleanMatrix(long[] size) {
+	public AbstractBooleanMatrix(long... size) {
 		super(size);
 	}
 

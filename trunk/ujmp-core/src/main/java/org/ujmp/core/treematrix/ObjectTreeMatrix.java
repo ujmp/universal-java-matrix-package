@@ -53,6 +53,17 @@ public class ObjectTreeMatrix extends AbstractTreeMatrix<Object> {
 		return parentMap;
 	}
 
+	public final void clear() {
+		objects.clear();
+		childrenMap.clear();
+		parentMap.clear();
+		root = null;
+	}
+
+	public Iterable<long[]> availableCoordinates() {
+		throw new RuntimeException("not implemented");
+	}
+
 	private void addSuperclass(String name, Object o) {
 		Class<?> superclass = o.getClass().getSuperclass();
 		if (superclass != null && !Object.class.equals(superclass)

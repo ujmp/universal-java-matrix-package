@@ -29,7 +29,7 @@ public class AvailableProcessorsMatrix extends AbstractDenseIntMatrix2D {
 	private static final long serialVersionUID = -3768846722489359117L;
 
 	public AvailableProcessorsMatrix() {
-		super(new long[] { 1, 1 });
+		super(1, 1);
 		setLabel("Available Processors");
 	}
 

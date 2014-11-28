@@ -29,7 +29,7 @@ public abstract class AbstractSparseGenericMatrix<A> extends AbstractGenericMatr
 		SparseGenericMatrix<A> {
 	private static final long serialVersionUID = 805145571160206604L;
 
-	public AbstractSparseGenericMatrix(long[] size) {
+	public AbstractSparseGenericMatrix(long... size) {
 		super(size);
 	}
 

@@ -29,8 +29,11 @@ public abstract class AbstractSparseFloatMatrix extends AbstractFloatMatrix impl
 		SparseFloatMatrix {
 	private static final long serialVersionUID = -344661054715207894L;
 
-	public AbstractSparseFloatMatrix(long[] size) {
+	public AbstractSparseFloatMatrix(long... size) {
 		super(size);
 	}
 
+	public final boolean isSparse() {
+		return true;
+	}
 }

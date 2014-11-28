@@ -31,40 +31,15 @@ import org.ujmp.core.interfaces.HasFloatArray;
 public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implements HasFloatArray {
 	private static final long serialVersionUID = -5449462775185759895L;
 
-	private float[] values;
+	private final float[] values;
+	private final int rows;
+	private final int cols;
 
-	private int rows;
-
-	private int cols;
-
-	public DefaultDenseFloatMatrix2D(Matrix m) {
-		super(m.getSize());
-		this.rows = (int) m.getRowCount();
-		this.cols = (int) m.getColumnCount();
-		if (m instanceof DefaultDenseFloatMatrix2D) {
-			float[] v = ((DefaultDenseFloatMatrix2D) m).values;
-			this.values = new float[v.length];
-			System.arraycopy(v, 0, this.values, 0, v.length);
-		} else {
-			this.values = new float[rows * cols];
-			for (long[] c : m.allCoordinates()) {
-				setFloat(m.getAsFloat(c), c);
-			}
-		}
-	}
-
-	public DefaultDenseFloatMatrix2D(long... size) {
-		super(size);
-		this.rows = (int) size[ROW];
-		this.cols = (int) size[COLUMN];
-		this.values = new float[rows * cols];
-	}
-
-	public DefaultDenseFloatMatrix2D(float[] v, int rows, int cols) {
-		super(new long[] { rows, cols });
+	public DefaultDenseFloatMatrix2D(int rows, int columns) {
+		super(rows, columns);
 		this.rows = rows;
-		this.cols = cols;
-		this.values = v;
+		this.cols = columns;
+		this.values = new float[rows * cols];
 	}
 
 	public float getFloat(long row, long column) {
@@ -116,9 +91,9 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 	}
 
 	public final Matrix copy() {
-		float[] result = new float[values.length];
+		DefaultDenseFloatMatrix2D m = new DefaultDenseFloatMatrix2D(rows, cols);
+		float[] result = m.values;
 		System.arraycopy(values, 0, result, 0, values.length);
-		Matrix m = new DefaultDenseFloatMatrix2D(result, rows, cols);
 		if (getMetaData() != null) {
 			m.setMetaData(getMetaData().clone());
 		}
@@ -126,13 +101,14 @@ public class DefaultDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D implem
 	}
 
 	public final Matrix transpose() {
-		final float[] result = new float[cols * rows];
+		DefaultDenseFloatMatrix2D m = new DefaultDenseFloatMatrix2D(cols, rows);
+		final float[] result = m.values;
 		for (int c = rows; --c != -1;) {
 			for (int r = cols; --r != -1;) {
 				result[c * cols + r] = values[r * rows + c];
 			}
 		}
-		return new DefaultDenseFloatMatrix2D(result, cols, rows);
+		return m;
 	}
 
 	public float[] getFloatArray() {

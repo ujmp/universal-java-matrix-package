@@ -27,5 +27,5 @@ import org.ujmp.core.booleanmatrix.SparseBooleanMatrix;
 import org.ujmp.core.genericmatrix.factory.SparseGenericMatrixFactory;
 
 public interface SparseBooleanMatrixFactory<T extends SparseBooleanMatrix> extends
-		SparseGenericMatrixFactory<T>, BooleanMatrixFactory<T> {
+		SparseGenericMatrixFactory<T>, BaseBooleanMatrixFactory<T> {
 }

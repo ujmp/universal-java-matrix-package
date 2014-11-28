@@ -24,21 +24,31 @@
 package org.ujmp.core.objectmatrix.stub;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.objectmatrix.DenseObjectMatrix;
 
 public abstract class AbstractDenseObjectMatrix extends AbstractObjectMatrix implements
 		DenseObjectMatrix {
 	private static final long serialVersionUID = -4546702335648155424L;
 
-	public AbstractDenseObjectMatrix(long[] size) {
+	public AbstractDenseObjectMatrix(long... size) {
 		super(size);
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return Coordinates.isSmallerThan(coordinates, getSize());
 	}
 
 	public final boolean isSparse() {
 		return false;
+	}
+
+	public final Iterable<long[]> availableCoordinates() {
+		return allCoordinates();
+	}
+
+	public void clear() {
+		new Zeros(this).calc(Ret.ORIG);
 	}
 }

@@ -25,7 +25,6 @@ package org.ujmp.core.bigintegermatrix.stub;
 
 import java.math.BigInteger;
 
-import org.ujmp.core.Matrix;
 import org.ujmp.core.bigintegermatrix.BigIntegerMatrix;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.numbermatrix.stub.AbstractNumberMatrix;
@@ -34,11 +33,7 @@ public abstract class AbstractBigIntegerMatrix extends AbstractNumberMatrix<BigI
 		BigIntegerMatrix {
 	private static final long serialVersionUID = 3292181924433131789L;
 
-	public AbstractBigIntegerMatrix(Matrix m) {
-		super(m.getSize());
-	}
-
-	public AbstractBigIntegerMatrix(long[] size) {
+	public AbstractBigIntegerMatrix(long... size) {
 		super(size);
 	}
 

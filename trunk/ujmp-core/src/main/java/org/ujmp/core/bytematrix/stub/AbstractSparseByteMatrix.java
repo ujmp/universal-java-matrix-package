@@ -29,8 +29,12 @@ public abstract class AbstractSparseByteMatrix extends AbstractByteMatrix implem
 		SparseByteMatrix {
 	private static final long serialVersionUID = 1233020617561440217L;
 
-	public AbstractSparseByteMatrix(long[] size) {
+	public AbstractSparseByteMatrix(long... size) {
 		super(size);
+	}
+	
+	public final boolean isSparse() {
+		return true;
 	}
 
 }

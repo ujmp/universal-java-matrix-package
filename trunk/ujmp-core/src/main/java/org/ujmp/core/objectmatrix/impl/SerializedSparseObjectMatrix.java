@@ -55,4 +55,7 @@ public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapp
 		((Erasable) getMap()).erase();
 	}
 
+	public final void clear() {
+		getMap().clear();
+	}
 }

@@ -30,7 +30,7 @@ public class RandomSeedMatrix extends AbstractDenseLongMatrix2D {
 	private static final long serialVersionUID = 1950244958868637395L;
 
 	public RandomSeedMatrix() {
-		super(new long[] { 1, 1 });
+		super(1, 1);
 		setLabel("Random Seed");
 	}
 

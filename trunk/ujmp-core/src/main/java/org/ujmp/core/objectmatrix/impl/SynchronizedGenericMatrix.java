@@ -63,8 +63,8 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 		matrix.setAsObject(value, c);
 	}
 
-	public synchronized boolean contains(long... coordinates) {
-		return matrix.contains(coordinates);
+	public synchronized boolean containsCoordinates(long... coordinates) {
+		return matrix.containsCoordinates(coordinates);
 	}
 
 	public synchronized boolean isReadOnly() {
@@ -73,5 +73,13 @@ public class SynchronizedGenericMatrix<T> extends AbstractGenericMatrix<T> {
 
 	public final boolean isSparse() {
 		return matrix.isSparse();
+	}
+
+	public synchronized Iterable<long[]> availableCoordinates() {
+		return matrix.availableCoordinates();
+	}
+
+	public final void clear() {
+		matrix.clear();
 	}
 }

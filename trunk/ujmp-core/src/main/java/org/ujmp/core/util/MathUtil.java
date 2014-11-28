@@ -102,6 +102,22 @@ public abstract class MathUtil {
 		return md5(text.getBytes());
 	}
 
+	public static final int search(final long[] values, int fromIndex, int toIndex, final long key) {
+		toIndex--;
+		while (fromIndex <= toIndex) {
+			int mid = (fromIndex + toIndex) >>> 1;
+			long midVal = values[mid];
+			if (midVal < key) {
+				fromIndex = mid + 1;
+			} else if (midVal > key) {
+				toIndex = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return -(fromIndex + 1);
+	}
+
 	public static String md5(byte[] data) throws NoSuchAlgorithmException {
 		MessageDigest mdAlgorithm;
 		StringBuilder hexString = new StringBuilder();

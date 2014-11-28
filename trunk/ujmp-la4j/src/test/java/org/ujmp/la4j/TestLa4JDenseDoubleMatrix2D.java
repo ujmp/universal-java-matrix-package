@@ -51,4 +51,9 @@ public class TestLa4JDenseDoubleMatrix2D extends AbstractMatrixTest {
 		return MatrixLibraries.LA4J;
 	}
 
+	@Override
+	public boolean isTestSparse() {
+		return false;
+	}
+
 }

@@ -30,7 +30,7 @@ import org.ujmp.core.longmatrix.LongMatrix;
 public abstract class AbstractLongMatrix extends AbstractGenericMatrix<Long> implements LongMatrix {
 	private static final long serialVersionUID = -47058946507188869L;
 
-	public AbstractLongMatrix(long[] size) {
+	public AbstractLongMatrix(long... size) {
 		super(size);
 	}
 

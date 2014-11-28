@@ -66,6 +66,10 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 		}
 	}
 
+	public final void clear() {
+		matrix.elements().clear();
+	}
+
 	public double getDouble(long row, long column) {
 		return matrix.getQuick((int) row, (int) column);
 	}
@@ -110,7 +114,7 @@ public class ParallelColtSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix
 		}
 	}
 
-	public final boolean contains(long... coordinates) {
+	public final boolean containsCoordinates(long... coordinates) {
 		return getAsDouble(coordinates) != 0.0;
 	}
 

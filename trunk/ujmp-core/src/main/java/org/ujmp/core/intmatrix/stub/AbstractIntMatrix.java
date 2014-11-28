@@ -33,7 +33,7 @@ import org.ujmp.core.util.MathUtil;
 public abstract class AbstractIntMatrix extends AbstractGenericMatrix<Integer> implements IntMatrix {
 	private static final long serialVersionUID = -5153569448031492210L;
 
-	public AbstractIntMatrix(long[] size) {
+	public AbstractIntMatrix(long... size) {
 		super(size);
 	}
 

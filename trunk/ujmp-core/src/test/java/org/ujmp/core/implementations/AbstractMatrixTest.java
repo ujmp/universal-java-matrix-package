@@ -50,6 +50,9 @@ import org.ujmp.core.util.matrices.MatrixLibraries;
 
 public abstract class AbstractMatrixTest {
 
+	public static final int ROW = Matrix.ROW;
+	public static final int COLUMN = Matrix.COLUMN;
+
 	private static final MatrixLibraries LIBRARIES = new MatrixLibraries();
 
 	private static final String SQUARE = LIBRARIES.square();
@@ -77,6 +80,8 @@ public abstract class AbstractMatrixTest {
 
 	public abstract boolean isTestLarge();
 
+	public abstract boolean isTestSparse();
+
 	public abstract int getMatrixLibraryId();
 
 	public String getLabel() {
@@ -103,6 +108,151 @@ public abstract class AbstractMatrixTest {
 		Matrix m = createMatrix(matrix);
 		setAnnotation(m);
 		return m;
+	}
+
+	@Test
+	public void testSparseSetToZero() throws Exception {
+		Matrix m = createMatrix(2, 2);
+		if (isTestSparse() && m.isSparse()) {
+			m = createMatrix(800000, 900000);
+			m.setAsDouble(1.0, 3, 4);
+			m.setAsDouble(2.0, 334, 2214);
+			m.setAsDouble(3.0, 335, 2215);
+			m.setAsDouble(4.0, 334232, 3434);
+			assertEquals(1.0, m.getAsDouble(3, 4), TOLERANCE);
+			assertEquals(2.0, m.getAsDouble(334, 2214), TOLERANCE);
+			assertEquals(3.0, m.getAsDouble(335, 2215), TOLERANCE);
+			assertEquals(4.0, m.getAsDouble(334232, 3434), TOLERANCE);
+			m.setAsDouble(0.0, 335, 2215);
+			assertEquals(1.0, m.getAsDouble(3, 4), TOLERANCE);
+			assertEquals(2.0, m.getAsDouble(334, 2214), TOLERANCE);
+			assertEquals(0.0, m.getAsDouble(335, 2215), TOLERANCE);
+			assertEquals(4.0, m.getAsDouble(334232, 3434), TOLERANCE);
+		}
+	}
+
+	@Test
+	public void testClear() throws Exception {
+		Matrix m = createMatrix(3, 2);
+		m.randn(Ret.ORIG);
+		m.clear();
+		assertEquals(0.0, m.getAsDouble(0, 0), TOLERANCE);
+		assertEquals(0.0, m.getAsDouble(1, 0), TOLERANCE);
+		assertEquals(0.0, m.getAsDouble(2, 0), TOLERANCE);
+		assertEquals(0.0, m.getAsDouble(0, 1), TOLERANCE);
+		assertEquals(0.0, m.getAsDouble(1, 1), TOLERANCE);
+		assertEquals(0.0, m.getAsDouble(2, 1), TOLERANCE);
+	}
+
+	@Test
+	public void testSparseMultiplyLarge() throws Exception {
+		Matrix m1 = createMatrix(2, 2);
+		Matrix m2 = null;
+		if (isTestSparse() && m1.isSparse()) {
+			m1 = createMatrix(800000, 900000);
+			m2 = createMatrix(900000, 400000);
+			m1.setAsDouble(5.0, 0, 0);
+			m1.setAsDouble(4.0, 1, 1);
+			m1.setAsDouble(1.0, 3, 4);
+			m1.setAsDouble(2.0, 4, 2);
+			m1.setAsDouble(3.0, 3, 5);
+			m1.setAsDouble(4.0, 4, 4);
+			m1.setAsDouble(2.0, 334, 2214);
+			m1.setAsDouble(3.0, 335, 2215);
+			m1.setAsDouble(4.0, 334232, 3434);
+			m2.setAsDouble(7.0, 0, 0);
+			m2.setAsDouble(6.0, 1, 1);
+			m2.setAsDouble(1.0, 3, 4);
+			m2.setAsDouble(2.0, 4, 1);
+			m2.setAsDouble(3.0, 3, 2);
+			m2.setAsDouble(4.0, 2, 3);
+			m2.setAsDouble(2.0, 2214, 334);
+			m2.setAsDouble(3.0, 2215, 335);
+			m2.setAsDouble(4.0, 334232, 3434);
+			Matrix m3 = m1.mtimes(m2);
+			assertEquals(35.0, m3.getAsDouble(0, 0), TOLERANCE);
+			assertEquals(24.0, m3.getAsDouble(1, 1), TOLERANCE);
+			assertEquals(2.0, m3.getAsDouble(3, 1), TOLERANCE);
+			assertEquals(8.0, m3.getAsDouble(4, 1), TOLERANCE);
+			assertEquals(8.0, m3.getAsDouble(4, 3), TOLERANCE);
+		}
+	}
+
+	@Test
+	public void testSparseMultiplySmall() throws Exception {
+		Matrix m1 = createMatrix(2, 2);
+		Matrix m2 = null;
+		if (isTestSparse() && m1.isSparse()) {
+			m1 = createMatrix(8, 9);
+			m2 = createMatrix(9, 4);
+			m1.setAsDouble(5.0, 0, 0);
+			m1.setAsDouble(4.0, 1, 1);
+			m1.setAsDouble(1.0, 3, 4);
+			m1.setAsDouble(2.0, 4, 2);
+			m1.setAsDouble(3.0, 3, 5);
+			m1.setAsDouble(4.0, 4, 4);
+			m2.setAsDouble(7.0, 0, 0);
+			m2.setAsDouble(6.0, 1, 1);
+			m2.setAsDouble(1.0, 3, 4);
+			m2.setAsDouble(2.0, 4, 1);
+			m2.setAsDouble(3.0, 3, 2);
+			m2.setAsDouble(4.0, 2, 3);
+			Matrix m3 = m1.mtimes(m2);
+			Matrix m4 = m1.mtimes(Ret.LINK, true, m2);
+			assertEquals(m3, m4);
+		}
+	}
+
+	@Test
+	public void testSparseIterator() throws Exception {
+		Matrix m = createMatrix(2, 2);
+		if (isTestSparse() && m.isSparse()) {
+			m = createMatrix(800000, 900000);
+			m.setAsDouble(1.0, 3, 4);
+			m.setAsDouble(2.0, 334, 2214);
+			m.setAsDouble(3.0, 335, 2215);
+			m.setAsDouble(4.0, 334232, 3434);
+
+			List<Coordinates> list = new ArrayList<Coordinates>();
+
+			for (long[] c : m.nonZeroCoordinates()) {
+				list.add(Coordinates.wrap(Coordinates.copyOf(c)));
+			}
+
+			assertEquals(4, list.size());
+			assertTrue(list.contains(Coordinates.wrap(3, 4)));
+			assertTrue(list.contains(Coordinates.wrap(334, 2214)));
+			assertTrue(list.contains(Coordinates.wrap(335, 2215)));
+			assertTrue(list.contains(Coordinates.wrap(334232, 3434)));
+
+			m.setAsDouble(0.0, 335, 2215);
+
+			list.clear();
+
+			for (long[] c : m.nonZeroCoordinates()) {
+				list.add(Coordinates.wrap(Coordinates.copyOf(c)));
+			}
+
+			assertEquals(3, list.size());
+			assertTrue(list.contains(Coordinates.wrap(3, 4)));
+			assertTrue(list.contains(Coordinates.wrap(334, 2214)));
+			assertTrue(list.contains(Coordinates.wrap(334232, 3434)));
+		}
+	}
+
+	@Test
+	public void testSparseTranspose() throws Exception {
+		Matrix m = createMatrix(2, 2);
+		if (isTestSparse() && m.isSparse()) {
+			m = createMatrix(800000, 900000);
+			m.setAsDouble(1, 3, 4);
+			m.setAsDouble(1, 334534, 4454);
+			assertEquals(1.0, m.getAsDouble(3, 4), TOLERANCE);
+			assertEquals(1.0, m.getAsDouble(334534, 4454), TOLERANCE);
+			m = m.transpose();
+			assertEquals(1.0, m.getAsDouble(4, 3), TOLERANCE);
+			assertEquals(1.0, m.getAsDouble(4454, 334534), TOLERANCE);
+		}
 	}
 
 	@Test
@@ -357,44 +507,44 @@ public abstract class AbstractMatrixTest {
 	public final void testContains() throws Exception {
 		Matrix m = getTestMatrix();
 
-		assertTrue(m.contains(0, 0));
+		assertTrue(m.containsCoordinates(0, 0));
 
 		if (m.isSparse()) {
-			assertFalse(m.contains(0, 1));
+			assertFalse(m.containsCoordinates(0, 1));
 		} else {
-			assertTrue(m.contains(0, 1));
+			assertTrue(m.containsCoordinates(0, 1));
 		}
 
 		if (m.isSparse()) {
-			assertFalse(m.contains(0, 2));
+			assertFalse(m.containsCoordinates(0, 2));
 		} else {
-			assertTrue(m.contains(0, 2));
+			assertTrue(m.containsCoordinates(0, 2));
 		}
 
-		assertTrue(m.contains(1, 0));
-		assertTrue(m.contains(1, 1));
+		assertTrue(m.containsCoordinates(1, 0));
+		assertTrue(m.containsCoordinates(1, 1));
 
 		if (m.isSparse()) {
-			assertFalse(m.contains(0, 1));
+			assertFalse(m.containsCoordinates(0, 1));
 		} else {
-			assertTrue(m.contains(1, 2));
+			assertTrue(m.containsCoordinates(1, 2));
 		}
 
 		if (m.isSparse()) {
-			assertFalse(m.contains(0, 1));
+			assertFalse(m.containsCoordinates(0, 1));
 		} else {
-			assertTrue(m.contains(2, 0));
+			assertTrue(m.containsCoordinates(2, 0));
 		}
 
-		assertTrue(m.contains(2, 1));
+		assertTrue(m.containsCoordinates(2, 1));
 
 		if (m.isSparse()) {
-			assertFalse(m.contains(0, 1));
+			assertFalse(m.containsCoordinates(0, 1));
 		} else {
-			assertTrue(m.contains(2, 2));
+			assertTrue(m.containsCoordinates(2, 2));
 		}
 
-		assertFalse(m.contains(7, 7));
+		assertFalse(m.containsCoordinates(7, 7));
 
 		if (m instanceof Erasable) {
 			((Erasable) m).erase();

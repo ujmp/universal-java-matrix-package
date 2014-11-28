@@ -25,15 +25,17 @@ package org.ujmp.core.intmatrix.factory;
 
 import org.ujmp.core.intmatrix.IntMatrix2D;
 import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
+import org.ujmp.core.util.MathUtil;
 
 public class DefaultIntMatrix2DFactory extends AbstractIntMatrix2DFactory {
 
 	public IntMatrix2D zeros(long rows, long columns) {
-		return new DefaultDenseIntMatrix2D(rows, columns);
+		return new DefaultDenseIntMatrix2D(MathUtil.longToInt(rows), MathUtil.longToInt(columns));
 	}
 
 	public IntMatrix2D zeros(long... size) {
-		return new DefaultDenseIntMatrix2D(size[ROW], size[COLUMN]);
+		return new DefaultDenseIntMatrix2D(MathUtil.longToInt(size[ROW]),
+				MathUtil.longToInt(size[COLUMN]));
 	}
 
 }

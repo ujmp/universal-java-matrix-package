@@ -79,24 +79,28 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public static final int MAXIMUMSIZE = 42;
 	public static final int HOMEPAGE = 43;
 
-	public static final int COLT = 0;
-	public static final int COMMONSMATH = 1;
-	public static final int EJML = 2;
-	public static final int JAMA = 3;
-	public static final int JBLAS = 4;
-	public static final int JLINALG = 5;
-	public static final int JMATHARRAY = 6;
-	public static final int JMATRICES = 7;
-	public static final int JSCI = 8;
-	public static final int JSCIENCE = 9;
-	public static final int LA4J = 10;
-	public static final int MANTISSA = 11;
-	public static final int MTJ = 12;
-	public static final int OJALGO = 13;
-	public static final int PARALLELCOLT = 14;
-	public static final int SST = 15;
-	public static final int UJMP = 16;
-	public static final int VECMATH = 17;
+	public enum MatrixLibrary {
+		Colt, CommonsMath, EJML, JAMA, jblas, JlinAlg, JMathArray, JMatrices, Jsci, Jscience, la4j, Mantissa, MTJ, ojAlgo, ParallelColt, SST, UJMP, VecMath
+	};
+
+	public static final int COLT = MatrixLibrary.Colt.ordinal();
+	public static final int COMMONSMATH = MatrixLibrary.CommonsMath.ordinal();
+	public static final int EJML = MatrixLibrary.EJML.ordinal();;
+	public static final int JAMA = MatrixLibrary.JAMA.ordinal();
+	public static final int JBLAS = MatrixLibrary.jblas.ordinal();
+	public static final int JLINALG = MatrixLibrary.JlinAlg.ordinal();
+	public static final int JMATHARRAY = MatrixLibrary.JMathArray.ordinal();
+	public static final int JMATRICES = MatrixLibrary.JMatrices.ordinal();
+	public static final int JSCI = MatrixLibrary.Jsci.ordinal();
+	public static final int JSCIENCE = MatrixLibrary.Jscience.ordinal();
+	public static final int LA4J = MatrixLibrary.la4j.ordinal();
+	public static final int MANTISSA = MatrixLibrary.Mantissa.ordinal();
+	public static final int MTJ = MatrixLibrary.MTJ.ordinal();
+	public static final int OJALGO = MatrixLibrary.ojAlgo.ordinal();
+	public static final int PARALLELCOLT = MatrixLibrary.ParallelColt.ordinal();
+	public static final int SST = MatrixLibrary.SST.ordinal();
+	public static final int UJMP = MatrixLibrary.UJMP.ordinal();
+	public static final int VECMATH = MatrixLibrary.VecMath.ordinal();
 
 	public static final String NONSINGULARLETTER = "n";
 	public static final String NONSINGULARTEXT = "non-singular matrices only";

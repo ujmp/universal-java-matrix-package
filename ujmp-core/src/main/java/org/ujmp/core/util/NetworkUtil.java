@@ -23,8 +23,10 @@
 
 package org.ujmp.core.util;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -50,6 +52,13 @@ public abstract class NetworkUtil {
 			}
 		}
 		return ips;
+	}
+
+	public static int getRandomLocalPort() throws IOException {
+		ServerSocket serverSocket = new ServerSocket(0);
+		int port = serverSocket.getLocalPort();
+		serverSocket.close();
+		return port;
 	}
 
 }

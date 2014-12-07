@@ -44,6 +44,7 @@ public abstract class HttpUtil {
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
 		connection.setConnectTimeout(3000);
+
 		InputStream input = connection.getInputStream();
 		byte[] buffer = new byte[8192];
 		int n = -1;

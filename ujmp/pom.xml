@@ -225,7 +225,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.ujmp.gui.UJMP</mainClass>
+							<mainClass>org.ujmp.core.UJMP</mainClass>
 							<packageName>org.ujmp</packageName>
 						</manifest>
 						<manifestEntries>

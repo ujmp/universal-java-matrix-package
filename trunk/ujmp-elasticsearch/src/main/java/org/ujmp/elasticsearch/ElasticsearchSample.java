@@ -33,6 +33,7 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = -9091555583281035794L;
 
 	public static final String ID = ElasticsearchIndex.ID;
+	public static final String SCORE = ElasticsearchIndex.SCORE;
 
 	private final ElasticsearchIndex elasticsearchIndex;
 
@@ -76,8 +77,18 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	@Override
 	protected Object putIntoMap(String key, Object value) {
 		Object old = map.put(key, value);
-		elasticsearchIndex.put(this);
+		if (!SCORE.equals(key)) {
+			elasticsearchIndex.put(this);
+		}
 		return old;
+	}
+
+	public double getScore() {
+		return getMetaDataDouble(SCORE);
+	}
+
+	public void setScore(double score) {
+		setMetaData(SCORE, score);
 	}
 
 }

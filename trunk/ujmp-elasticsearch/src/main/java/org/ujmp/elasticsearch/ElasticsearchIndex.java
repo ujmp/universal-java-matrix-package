@@ -26,13 +26,18 @@ package org.ujmp.elasticsearch;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.print.attribute.UnmodifiableSetException;
 
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -47,8 +52,9 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder.Operator;
 import org.elasticsearch.search.SearchHit;
-import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.collections.set.AbstractSet;
+import org.ujmp.core.listmatrix.DefaultListMatrix;
+import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
@@ -58,34 +64,31 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	public static final int SCROLLTIMEOUT = 600000;
 	public static final int SCROLLSIZE = 1000;
+	public static final int DEFAULTPORT = 9300;
 
 	public static final String ID = "_id";
+	public static final String SCORE = "score";
 
 	private final Client client;
 	private final String index;
 	private final String type;
 
 	public ElasticsearchIndex(String hostname, String index, String type) {
-		this("elasticsearch", hostname, 9300, index, type);
-	}
-
-	public ElasticsearchIndex(String clustername, String hostname, String index, String type) {
-		this(clustername, hostname, 9300, index, type);
+		this(hostname, DEFAULTPORT, index, type);
 	}
 
 	public ElasticsearchIndex(String hostname, int port, String index, String type) {
-		this("elasticsearch", hostname, port, index, type);
-	}
-
-	public ElasticsearchIndex(String clustername, String hostname, int port, String index, String type) {
-		this(new TransportClient(ImmutableSettings.settingsBuilder().put("cluster.name", clustername).build())
-				.addTransportAddress(new InetSocketTransportAddress(hostname, port)), index, type);
+		this(new TransportClient(ImmutableSettings.settingsBuilder().put("client.transport.ignore_cluster_name", true)
+				.build()).addTransportAddress(new InetSocketTransportAddress(hostname, port)), index, type);
 	}
 
 	public ElasticsearchIndex(Client client, String index, String type) {
 		this.client = client;
 		this.index = index;
 		this.type = type;
+		if (!indexExists()) {
+			createIndex();
+		}
 	}
 
 	public void put(MapMatrix<String, Object> map) {
@@ -93,8 +96,29 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		if (id != null && id instanceof String) {
 			put((String) id, map);
 		} else {
-			throw new IllegalArgumentException("id field missing");
+			throw new IllegalArgumentException(ID + " field missing");
 		}
+	}
+
+	private boolean indexExists() {
+		IndicesExistsResponse response = client.admin().indices().exists(new IndicesExistsRequest(index)).actionGet();
+		return response.isExists();
+	}
+
+	private synchronized void createIndex() {
+		CreateIndexResponse response = client.admin().indices().create(new CreateIndexRequest(index)).actionGet();
+		if (!response.isAcknowledged()) {
+			throw new RuntimeException("cannot create index " + index);
+		}
+		client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+	}
+
+	public synchronized void deleteIndex() {
+		DeleteIndexResponse response = client.admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+		if (!response.isAcknowledged()) {
+			throw new RuntimeException("cannot delete index " + index);
+		}
+		client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
 	}
 
 	public String getIndex() {
@@ -109,7 +133,12 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	public MapMatrix<String, Object> get(Object key) {
 		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
-		return new ElasticsearchSample(this, getResponse.getSource());
+		Map<String, Object> map = getResponse.getSource();
+		if (map == null) {
+			return null;
+		} else {
+			return new ElasticsearchSample(this, getResponse.getSource());
+		}
 	}
 
 	public Set<String> keySet() {
@@ -142,17 +171,19 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		return client;
 	}
 
-	public List<Map<String, Object>> search(String query) {
-		List<Map<String, Object>> list = new FastArrayList<Map<String, Object>>();
+	public ListMatrix<ElasticsearchSample> search(String query) {
+		ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
 
 		QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
-		SearchResponse response = client.prepareSearch(index, type).setSearchType(SearchType.QUERY_AND_FETCH)
+		SearchResponse response = client.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
 				.setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
 
 		SearchHit[] results = response.getHits().getHits();
 
 		for (SearchHit hit : results) {
-			list.add(hit.getSource());
+			ElasticsearchSample sample = new ElasticsearchSample(this, hit.getSource());
+			sample.setScore(hit.getScore());
+			list.add(sample);
 		}
 
 		return list;
@@ -261,7 +292,6 @@ class KeyIterator implements Iterator<String> {
 
 	public void remove() {
 		throw new UnmodifiableSetException();
-
 	}
 
 }

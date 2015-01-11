@@ -23,19 +23,21 @@
 
 package org.ujmp.jdbc.set;
 
+import java.io.File;
 import java.util.Set;
 
 import org.ujmp.core.collections.AbstractStringSetTest;
 
-public class TestJDBCStringSet extends AbstractStringSetTest {
+public class TestSQLiteStringSet extends AbstractStringSetTest {
 
 	@Override
 	public Set<String> createSet() throws Exception {
-		return JDBCStringSet.connectToHSQLDB();
+		JDBCSetMatrix.connectToSQLite(File.createTempFile("junit-ujmp", ""));
+		JDBCSetMatrix.connectToSQLite(File.createTempFile("junit-ujmp", ""), "test table");
+		return JDBCSetMatrix.connectToSQLite();
 	}
 
 	public void testSerialize() throws Exception {
-		// not yet working
 	}
 
 }

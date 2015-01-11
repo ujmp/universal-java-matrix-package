@@ -31,9 +31,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.ujmp.core.listmatrix.AbstractListMatrix;
-import org.ujmp.jdbc.SQLUtil;
-import org.ujmp.jdbc.SQLUtil.SQLDialect;
 import org.ujmp.jdbc.autoclose.AutoOpenCloseConnection;
+import org.ujmp.jdbc.util.SQLUtil;
+import org.ujmp.jdbc.util.SQLUtil.SQLDialect;
 
 public class JDBCCatalogListMatrix extends AbstractListMatrix<JDBCCatalogMatrix> {
 	private static final long serialVersionUID = -1738017101718658172L;

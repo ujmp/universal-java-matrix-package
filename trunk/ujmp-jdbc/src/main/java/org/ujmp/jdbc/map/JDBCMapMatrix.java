@@ -24,6 +24,7 @@
 package org.ujmp.jdbc.map;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -33,37 +34,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.ujmp.core.collections.set.AbstractSet;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.util.MathUtil;
-import org.ujmp.jdbc.SQLUtil;
-import org.ujmp.jdbc.SQLUtil.SQLDialect;
 import org.ujmp.jdbc.autoclose.AutoOpenCloseConnection;
+import org.ujmp.jdbc.util.JDBCKeySet;
+import org.ujmp.jdbc.util.SQLUtil;
+import org.ujmp.jdbc.util.SQLUtil.SQLDialect;
 
-public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V> implements Closeable, Erasable,
-		Flushable {
-	private static final long serialVersionUID = -2850934349684973487L;
-
-	public static final String URL = "URL";
-	public static final String TABLENAME = "TableName";
-	public static final String DATABASENAME = "DatabaseName";
-	public static final String KEYCOLUMNNAME = "KeyColumnName";
-	public static final String VALUECOLUMNNAME = "ValueColumnName";
-	public static final String KEYCLASS = "KeyClass";
-	public static final String VALUECLASS = "ValueClass";
-	public static final String SQLDIALECT = "SQLDialect";
+public class JDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V> implements Closeable, Erasable, Flushable {
+	private static final long serialVersionUID = 4744307432617930795L;
 
 	private boolean tableExists;
-
-	private transient ResultSet resultSet = null;
-
 	private transient Connection connection;
+	private transient ResultSet resultSet = null;
 
 	private transient PreparedStatement truncateTableStatement = null;
 	private transient PreparedStatement insertStatement = null;
@@ -74,36 +62,37 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 	private transient PreparedStatement containsValueStatement = null;
 	private transient PreparedStatement keyStatement = null;
 	private transient PreparedStatement dropTableStatement = null;
+	private transient PreparedStatement countStatement = null;
 
-	protected AbstractJDBCMapMatrix(String url, String username, String password, String tableName,
-			String keyColumnName, String valueColumnName) throws SQLException {
+	private JDBCMapMatrix(String url, String username, String password, String tableName, String keyColumnName,
+			String valueColumnName) throws SQLException {
 		this(new AutoOpenCloseConnection(url, username, password), tableName, keyColumnName, valueColumnName);
 	}
 
-	protected AbstractJDBCMapMatrix(Connection connection, String tableName, String keyColumnName,
-			String valueColumnName) throws SQLException {
+	private JDBCMapMatrix(Connection connection, String tableName, String keyColumnName, String valueColumnName)
+			throws SQLException {
 		this.connection = connection;
 		String url = connection.getMetaData().getURL();
-		setMetaData(URL, url);
-		setMetaData(SQLDIALECT, SQLUtil.getSQLDialect(url));
-		setMetaData(DATABASENAME, SQLUtil.getDatabaseName(url));
-		setMetaData(TABLENAME, tableName == null ? "ujmp_map_" + UUID.randomUUID() : tableName);
+		setMetaData(SQLUtil.URL, url);
+		setMetaData(SQLUtil.SQLDIALECT, SQLUtil.getSQLDialect(url));
+		setMetaData(SQLUtil.DATABASENAME, SQLUtil.getDatabaseName(url));
+		setMetaData(SQLUtil.TABLENAME, tableName == null ? "ujmp_map_" + UUID.randomUUID() : tableName);
 		setLabel(getTableName());
 		this.tableExists = SQLUtil.tableExists(connection, getTableName());
 
 		if (!tableExists) {
 			if (keyColumnName == null || keyColumnName.isEmpty()) {
-				setMetaData(KEYCOLUMNNAME, "id");
+				setMetaData(SQLUtil.KEYCOLUMNNAME, "id");
 				setColumnLabel(0, "id");
 			} else {
-				setMetaData(KEYCOLUMNNAME, keyColumnName);
+				setMetaData(SQLUtil.KEYCOLUMNNAME, keyColumnName);
 				setColumnLabel(0, keyColumnName);
 			}
 			if (valueColumnName == null || valueColumnName.isEmpty()) {
-				setMetaData(VALUECOLUMNNAME, "data");
+				setMetaData(SQLUtil.VALUECOLUMNNAME, "data");
 				setColumnLabel(1, "data");
 			} else {
-				setMetaData(VALUECOLUMNNAME, valueColumnName);
+				setMetaData(SQLUtil.VALUECOLUMNNAME, valueColumnName);
 				setColumnLabel(1, valueColumnName);
 			}
 			createTable(getTableName(), getKeyColumnName(), getValueColumnName());
@@ -111,33 +100,33 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 			if (keyColumnName == null || keyColumnName.isEmpty()) {
 				List<String> keyColumnNames = SQLUtil.getPrimaryKeyColumnNames(connection, getTableName());
 				if (keyColumnNames.size() == 1) {
-					setMetaData(KEYCOLUMNNAME, keyColumnNames.get(0));
+					setMetaData(SQLUtil.KEYCOLUMNNAME, keyColumnNames.get(0));
 					setColumnLabel(0, keyColumnNames.get(0));
 				} else {
 					throw new RuntimeException("cannot determine id column");
 				}
 			} else {
-				setMetaData(KEYCOLUMNNAME, keyColumnName);
+				setMetaData(SQLUtil.KEYCOLUMNNAME, keyColumnName);
 				setColumnLabel(0, keyColumnName);
 			}
 			if (valueColumnName == null || valueColumnName.isEmpty()) {
 				List<String> columnNames = SQLUtil.getColumnNames(connection, getTableName());
 				columnNames.remove(keyColumnName);
 				if (columnNames.size() == 1) {
-					setMetaData(VALUECOLUMNNAME, columnNames.get(0));
+					setMetaData(SQLUtil.VALUECOLUMNNAME, columnNames.get(0));
 					setColumnLabel(1, columnNames.get(0));
 				} else {
 					List<String> keyColumnNames = SQLUtil.getPrimaryKeyColumnNames(connection, getTableName());
 					columnNames.removeAll(keyColumnNames);
 					if (columnNames.size() == 1) {
-						setMetaData(VALUECOLUMNNAME, columnNames.get(0));
+						setMetaData(SQLUtil.VALUECOLUMNNAME, columnNames.get(0));
 						setColumnLabel(1, columnNames.get(0));
 					} else {
 						throw new RuntimeException("cannot determine data column");
 					}
 				}
 			} else {
-				setMetaData(VALUECOLUMNNAME, valueColumnName);
+				setMetaData(SQLUtil.VALUECOLUMNNAME, valueColumnName);
 				setColumnLabel(1, valueColumnName);
 			}
 		}
@@ -148,37 +137,37 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 	}
 
 	public final String getURL() {
-		return getMetaDataString(URL);
+		return getMetaDataString(SQLUtil.URL);
 	}
 
 	public final String getTableName() {
-		return getMetaDataString(TABLENAME);
+		return getMetaDataString(SQLUtil.TABLENAME);
 	}
 
 	public final String getDatabaseName() {
-		return getMetaDataString(DATABASENAME);
+		return getMetaDataString(SQLUtil.DATABASENAME);
 	}
 
 	public final Class<?> getKeyClass() {
-		return (Class<?>) getMetaData(KEYCLASS);
+		return (Class<?>) getMetaData(SQLUtil.KEYCLASS);
 	}
 
 	public final Class<?> getValueClass() {
-		return (Class<?>) getMetaData(VALUECLASS);
+		return (Class<?>) getMetaData(SQLUtil.VALUECLASS);
 	}
 
 	public final String getKeyColumnName() {
-		return getMetaDataString(KEYCOLUMNNAME);
+		return getMetaDataString(SQLUtil.KEYCOLUMNNAME);
 	}
 
 	public final String getValueColumnName() {
-		return getMetaDataString(VALUECOLUMNNAME);
+		return getMetaDataString(SQLUtil.VALUECOLUMNNAME);
 	}
 
 	public final SQLDialect getSQLDialect() {
-		Object sqlDialect = getMetaData(SQLDIALECT);
+		Object sqlDialect = getMetaData(SQLUtil.SQLDIALECT);
 		if (sqlDialect instanceof SQLDialect) {
-			return (SQLDialect) getMetaData(SQLDIALECT);
+			return (SQLDialect) getMetaData(SQLUtil.SQLDIALECT);
 		} else {
 			return null;
 		}
@@ -216,13 +205,12 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 				resultSet.close();
 			}
 			resultSet = keyStatement.executeQuery();
-			return new JDBCKeySet(this, resultSet);
+			return new JDBCKeySet<K>(this, resultSet, getKeyClass());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected final synchronized V removeFromMap(Object key) {
 		if (key == null) {
@@ -238,7 +226,7 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 					deleteStatement = SQLUtil.getDeleteIdStatement(connection, getSQLDialect(), getTableName(),
 							getKeyColumnName());
 				}
-				setKey(deleteStatement, 1, (K) key);
+				deleteStatement.setObject(1, key);
 				deleteStatement.executeUpdate();
 			}
 			return oldValue;
@@ -276,12 +264,11 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 	protected final synchronized V putIntoMap(K key, V value) {
 		if (key == null) {
 			throw new RuntimeException("key cannot be null");
-		}
-		if (getKeyClass() == null && key != null) {
-			setMetaData(KEYCLASS, key.getClass());
+		} else if (getKeyClass() == null) {
+			setMetaData(SQLUtil.KEYCLASS, key.getClass());
 		}
 		if (getValueClass() == null && value != null) {
-			setMetaData(VALUECLASS, value.getClass());
+			setMetaData(SQLUtil.VALUECLASS, value.getClass());
 		}
 		try {
 			V oldValue = get(key);
@@ -290,16 +277,16 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 					insertStatement = SQLUtil.getInsertKeyValueStatement(connection, getSQLDialect(), getTableName(),
 							getKeyColumnName(), getValueColumnName());
 				}
-				setKey(insertStatement, 1, key);
-				setValue(insertStatement, 2, value);
+				insertStatement.setObject(1, key);
+				insertStatement.setObject(2, value);
 				insertStatement.executeUpdate();
 			} else if (!oldValue.equals(value)) {
 				if (updateStatement == null || updateStatement.isClosed()) {
 					updateStatement = SQLUtil.getUpdateKeyValueStatement(connection, getSQLDialect(), getTableName(),
 							getKeyColumnName(), getValueColumnName());
 				}
-				setValue(updateStatement, 1, value);
-				setKey(updateStatement, 2, key);
+				updateStatement.setObject(1, value);
+				updateStatement.setObject(2, key);
 				updateStatement.executeUpdate();
 			}
 			return oldValue;
@@ -317,25 +304,25 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 			return null;
 		}
 		if (getKeyClass() == null && key != null) {
-			setMetaData(KEYCLASS, key.getClass());
+			setMetaData(SQLUtil.KEYCLASS, key.getClass());
 		}
 		try {
 			if (selectByKeyStatement == null || selectByKeyStatement.isClosed()) {
 				selectByKeyStatement = SQLUtil.getValueForKeyStatement(connection, getSQLDialect(), getTableName(),
 						getKeyColumnName(), getValueColumnName());
 			}
-			setKey(selectByKeyStatement, 1, (K) key);
+			selectByKeyStatement.setObject(1, key);
 			if (resultSet != null && !resultSet.isClosed()) {
 				resultSet.close();
 			}
 			resultSet = selectByKeyStatement.executeQuery();
 			V value = null;
 			if (resultSet.next()) {
-				value = getValue(resultSet, 1);
+				value = (V) SQLUtil.getObject(resultSet, 1, getValueClass());
 			}
 			resultSet.close();
 			if (getValueClass() == null && value != null) {
-				setMetaData(VALUECLASS, value.getClass());
+				setMetaData(SQLUtil.VALUECLASS, value.getClass());
 			}
 			return value;
 		} catch (Exception e) {
@@ -343,7 +330,6 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public final synchronized boolean containsKey(Object key) {
 		if (key == null) {
@@ -357,7 +343,7 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 				containsKeyStatement = SQLUtil.getExistsStatement(connection, getSQLDialect(), getTableName(),
 						getKeyColumnName());
 			}
-			setKey(containsKeyStatement, 1, (K) key);
+			containsKeyStatement.setObject(1, key);
 			if (resultSet != null && !resultSet.isClosed()) {
 				resultSet.close();
 			}
@@ -373,7 +359,6 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public final synchronized boolean containsValue(Object value) {
 		if (value == null) {
@@ -387,7 +372,7 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 				containsValueStatement = SQLUtil.getExistsStatement(connection, getSQLDialect(), getTableName(),
 						getValueColumnName());
 			}
-			setValue(containsValueStatement, 1, (V) value);
+			containsValueStatement.setObject(1, value);
 			if (resultSet != null && !resultSet.isClosed()) {
 				resultSet.close();
 			}
@@ -429,13 +414,13 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 	}
 
 	protected void beforeReadObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-		setMetaData(SQLDIALECT, (SQLDialect) is.readObject());
-		setMetaData(DATABASENAME, is.readUTF());
-		setMetaData(TABLENAME, is.readUTF());
-		setMetaData(KEYCOLUMNNAME, is.readUTF());
-		setMetaData(VALUECOLUMNNAME, is.readUTF());
+		setMetaData(SQLUtil.SQLDIALECT, (SQLDialect) is.readObject());
+		setMetaData(SQLUtil.DATABASENAME, is.readUTF());
+		setMetaData(SQLUtil.TABLENAME, is.readUTF());
+		setMetaData(SQLUtil.KEYCOLUMNNAME, is.readUTF());
+		setMetaData(SQLUtil.VALUECOLUMNNAME, is.readUTF());
 		String url = is.readUTF();
-		setMetaData(URL, url);
+		setMetaData(SQLUtil.URL, url);
 		boolean containsUsername = is.readBoolean();
 		String username = null;
 		if (containsUsername) {
@@ -449,7 +434,7 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		connection = new AutoOpenCloseConnection(url, username, password);
 	}
 
-	public void flush() throws IOException {
+	public synchronized void flush() throws IOException {
 		try {
 			switch (getSQLDialect()) {
 			case H2:
@@ -472,108 +457,127 @@ public abstract class AbstractJDBCMapMatrix<K, V> extends AbstractMapMatrix<K, V
 		}
 	}
 
-	class JDBCKeyIterator implements Iterator<K> {
-
-		private final ResultSet rs;
-		private K currentKey = null;
-
-		public JDBCKeyIterator(ResultSet rs) {
-			this.rs = rs;
-			try {
-				if (rs.next()) {
-					currentKey = getKey(rs, 1);
-				}
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
+	public final synchronized int size() {
+		try {
+			if (!tableExists) {
+				return 0;
 			}
-		}
-
-		public boolean hasNext() {
-			return currentKey != null;
-		}
-
-		public K next() {
-			try {
-				K lastKey = currentKey;
-				if (rs.next()) {
-					currentKey = getKey(rs, 1);
-				} else {
-					currentKey = null;
-				}
-				return lastKey;
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
+			if (countStatement == null || countStatement.isClosed()) {
+				countStatement = SQLUtil.getCountStatement(connection, getSQLDialect(), getTableName());
 			}
-		}
-
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	class JDBCKeySet extends AbstractSet<K> {
-		private static final long serialVersionUID = 1429255834963921385L;
-
-		private final AbstractJDBCMapMatrix<K, V> map;
-		private final ResultSet rs;
-
-		public JDBCKeySet(AbstractJDBCMapMatrix<K, V> map, ResultSet rs) {
-			this.map = map;
-			this.rs = rs;
-		}
-
-		@Override
-		public boolean add(K value) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean remove(Object o) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean contains(Object o) {
-			return map.containsKey(o);
-		}
-
-		@Override
-		public Iterator<K> iterator() {
-			return new JDBCKeyIterator(rs);
-		}
-
-		@Override
-		public int size() {
-			return map.size();
+			ResultSet rs = countStatement.executeQuery();
+			int size = -1;
+			if (rs.next()) {
+				size = rs.getInt(1);
+			} else {
+				throw new RuntimeException("cannot count entries");
+			}
+			rs.close();
+			return size;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	protected void setKey(PreparedStatement statement, int position, K key) throws SQLException {
-		statement.setObject(position, key);
-	}
-
-	protected void setValue(PreparedStatement statement, int position, V value) throws SQLException {
-		statement.setObject(position, value);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected K getKey(ResultSet rs, int position) throws SQLException {
-		return (K) SQLUtil.getObject(rs, position, getKeyClass());
-	}
-
-	@SuppressWarnings("unchecked")
-	protected V getValue(ResultSet rs, int position) throws SQLException {
-		return (V) SQLUtil.getObject(rs, position, getValueClass());
-	}
-
-	protected void createTable(String tableName, String keyColumnName, String valueColumnName) throws SQLException {
+	private final synchronized void createTable(String tableName, String keyColumnName, String valueColumnName)
+			throws SQLException {
+		// ToDo: create tables other than String
 		SQLUtil.createKeyValueStringTable(getConnection(), getSQLDialect(), tableName, keyColumnName, valueColumnName);
 		this.tableExists = true;
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToMySQL(String serverName, int port, String username,
+			String password, String databaseName, String tableName, String columnForKeys, String columnForValues)
+			throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName, username,
+				password, tableName, columnForKeys, columnForValues);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToMySQL(String serverName, int port, String userName,
+			String password, String databaseName, String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName, userName,
+				password, tableName, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToHSQLDB() throws SQLException, IOException {
+		return new JDBCMapMatrix<K, V>("jdbc:hsqldb:file:/" + File.createTempFile("ujmp", "hsqldb.temp"), null, null,
+				null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToSQLite() throws SQLException, IOException {
+		return new JDBCMapMatrix<K, V>("jdbc:sqlite:" + File.createTempFile("ujmp", "sqlite.temp"), null, null, null,
+				null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToDerby() throws SQLException, IOException {
+		return new JDBCMapMatrix<K, V>("jdbc:derby:"
+				+ new File(System.getProperty("java.io.tmpdir") + File.separator + "ujmp" + System.nanoTime()
+						+ "derby.temp"), null, null, null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToHSQLDB(File file) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:hsqldb:file:/" + file.getAbsolutePath(), null, null, null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToH2() throws SQLException, IOException {
+		return new JDBCMapMatrix<K, V>("jdbc:h2:" + File.createTempFile("ujmp", "h2.temp"), null, null, null, null,
+				null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToH2(File file) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:h2:" + file.getAbsolutePath(), null, null, null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToH2(File file, String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:h2:" + file.getAbsolutePath(), null, null, tableName, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToDerby(File folderName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:derby:" + folderName.getAbsolutePath() + "/", null, null, null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToDerby(File folderName, String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:derby:" + folderName.getAbsolutePath() + "/", null, null, tableName, null,
+				null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToSQLite(File file) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:sqlite:" + file.getAbsolutePath(), null, null, null, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToSQLite(File file, String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:sqlite:" + file.getAbsolutePath(), null, null, tableName, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToHSQLDB(File file, String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:hsqldb:file:/" + file.getAbsolutePath(), null, null, tableName, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToHSQLDB(File file, String userName, String password,
+			String tableName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:hsqldb:file:/" + file.getAbsolutePath(), userName, password, tableName,
+				null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connectToHSQLDB(File file, String userName, String password,
+			String tableName, String keyColumnName, String valueColumnName) throws SQLException {
+		return new JDBCMapMatrix<K, V>("jdbc:hsqldb:file:/" + file.getAbsolutePath(), userName, password, tableName,
+				keyColumnName, valueColumnName);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connect(String url, String userName, String password, String tableName,
+			String keyColumnName, String valueColumnName) throws SQLException {
+		return new JDBCMapMatrix<K, V>(url, userName, password, tableName, keyColumnName, valueColumnName);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connect(String url, String userName, String password, String tableName)
+			throws SQLException {
+		return new JDBCMapMatrix<K, V>(url, userName, password, tableName, null, null);
+	}
+
+	public static <K, V> JDBCMapMatrix<K, V> connect(Connection connection, String tableName, String keyColumnName,
+			String valueColumnName) throws SQLException {
+		return new JDBCMapMatrix<K, V>(connection, tableName, keyColumnName, valueColumnName);
 	}
 
 }

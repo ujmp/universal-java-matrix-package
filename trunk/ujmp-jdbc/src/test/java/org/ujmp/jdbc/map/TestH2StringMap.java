@@ -32,9 +32,9 @@ public class TestH2StringMap extends AbstractStringMapTest {
 
 	@Override
 	public Map<String, String> createMap() throws Exception {
-		DefaultJDBCMapMatrix.connectToH2(File.createTempFile("junit-ujmp", ""));
-		DefaultJDBCMapMatrix.connectToH2(File.createTempFile("junit-ujmp", ""), "testö table");
-		return DefaultJDBCMapMatrix.connectToH2();
+		JDBCMapMatrix.connectToH2(File.createTempFile("junit-ujmp", ""));
+		JDBCMapMatrix.connectToH2(File.createTempFile("junit-ujmp", ""), "test table");
+		return JDBCMapMatrix.connectToH2();
 	}
 
 	public void testSerialize() throws Exception {

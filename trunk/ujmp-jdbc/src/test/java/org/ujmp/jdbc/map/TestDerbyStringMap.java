@@ -33,11 +33,11 @@ public class TestDerbyStringMap extends AbstractStringMapTest {
 
 	@Override
 	public Map<String, String> createMap() throws Exception {
-		DefaultJDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
+		JDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
 				+ "junit-ujmp" + UUID.randomUUID()));
-		DefaultJDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
+		JDBCMapMatrix.connectToDerby(new File(System.getProperty("java.io.tmpdir") + File.separator
 				+ "junit-ujmp" + UUID.randomUUID()), "test table");
-		return DefaultJDBCMapMatrix.connectToDerby();
+		return JDBCMapMatrix.connectToDerby();
 	}
 
 	public void testSerialize() throws Exception {

@@ -43,8 +43,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import org.ujmp.jdbc.SQLUtil;
-import org.ujmp.jdbc.SQLUtil.SQLDialect;
+import org.ujmp.jdbc.util.SQLUtil;
+import org.ujmp.jdbc.util.SQLUtil.SQLDialect;
 
 public class AutoOpenCloseConnection implements Connection {
 

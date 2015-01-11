@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jdbc;
+package org.ujmp.jdbc.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -37,6 +37,16 @@ import java.util.Properties;
 import org.ujmp.core.util.MathUtil;
 
 public abstract class SQLUtil {
+
+	public static final String URL = "URL";
+	public static final String TABLENAME = "TableName";
+	public static final String DATABASENAME = "DatabaseName";
+	public static final String KEYCOLUMNNAME = "KeyColumnName";
+	public static final String VALUECOLUMNNAME = "ValueColumnName";
+	public static final String KEYCLASS = "KeyClass";
+	public static final String VALUECLASS = "ValueClass";
+	public static final String SQLDIALECT = "SQLDialect";
+
 	public static final Properties DEFAULTPROPERTIES = new Properties();
 	public static final Properties MYSQLPROPERTIES = new Properties();
 	public static final Properties DERBYPROPERTIES = new Properties();
@@ -49,7 +59,7 @@ public abstract class SQLUtil {
 		DERBYPROPERTIES.put("create", "true");
 	}
 
-	public static final String MYSQLDEFAULTCHARSET = "utf8mb4";
+	public static final String MYSQLDEFAULTCHARSET = "utf8";
 
 	protected final int maxKeyLength = 1024;
 
@@ -331,12 +341,12 @@ public abstract class SQLUtil {
 			sql.append("CREATE TABLE `" + tableName + "`");
 			sql.append(" (");
 			sql.append("`" + keyColumnName + "` VARCHAR(1024) ");
-			sql.append("COLLATE utf8mb4_bin NOT NULL, ");
+			sql.append("COLLATE utf8_bin NOT NULL, ");
 			sql.append("`" + valueColumnName + "` LONGTEXT ");
-			sql.append("COLLATE utf8mb4_bin NOT NULL, ");
+			sql.append("COLLATE utf8_bin NOT NULL, ");
 			sql.append("PRIMARY KEY (`" + keyColumnName + "`(190))");
 			sql.append(") ");
-			sql.append("DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=compressed");
+			sql.append("DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=compressed");
 			break;
 		case HSQLDB:
 			sql.append("CREATE TABLE \"" + tableName + "\"");
@@ -374,8 +384,7 @@ public abstract class SQLUtil {
 		switch (sqlDialect) {
 		case MYSQL:
 			if (columnClass == String.class) {
-				return isKeyColumn ? "VARCHAR(1024) COLLATE utf8mb4_bin NOT NULL"
-						: "LONGTEXT COLLATE utf8mb4_bin NOT NULL";
+				return isKeyColumn ? "VARCHAR(1024) COLLATE utf8_bin NOT NULL" : "LONGTEXT COLLATE utf8_bin NOT NULL";
 			} else if (columnClass == Integer.class) {
 				return isKeyColumn ? "INT NOT NULL" : "INT";
 			} else if (columnClass == Long.class) {
@@ -405,7 +414,7 @@ public abstract class SQLUtil {
 			sql.append("`" + keyColumnName + "` " + getColumnTypeSQL(sqlDialect, keyClass, true) + ", ");
 			sql.append("`" + valueColumnName + "` " + getColumnTypeSQL(sqlDialect, valueClass, false) + ", ");
 			sql.append("PRIMARY KEY (`" + keyColumnName + "`(190))");
-			sql.append(") DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=compressed");
+			sql.append(") DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=compressed");
 			break;
 		case HSQLDB:
 			sql.append("CREATE TABLE \"" + tableName + "\" (");
@@ -437,12 +446,12 @@ public abstract class SQLUtil {
 			sql.append("CREATE TABLE `" + tableName + "`");
 			sql.append(" (");
 			sql.append("`" + keyColumnName + "` VARCHAR(1024) ");
-			sql.append("COLLATE utf8mb4_bin NOT NULL, ");
+			sql.append("COLLATE utf8_bin NOT NULL, ");
 			sql.append("`" + valueColumnName + "` LONGBLOB ");
 			sql.append("NOT NULL, ");
 			sql.append("PRIMARY KEY (`" + keyColumnName + "`(190))");
 			sql.append(") ");
-			sql.append("DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin");
+			sql.append("DEFAULT CHARSET=utf8 COLLATE=utf8_bin");
 			break;
 		case HSQLDB:
 			sql.append("CREATE TABLE \"" + tableName + "\"");

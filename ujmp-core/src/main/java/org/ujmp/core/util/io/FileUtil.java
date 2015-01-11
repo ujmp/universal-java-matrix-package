@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.ujmp.core.filematrix.FileFormat;
+import org.ujmp.core.listmatrix.DefaultListMatrix;
+import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.VerifyUtil;
 
@@ -149,6 +152,10 @@ public class FileUtil {
 		return IntelligentFileReader.load(file);
 	}
 
+	public static byte[] getBytes(File file) {
+		return IntelligentFileReader.readBytes(file);
+	}
+
 	public static void copyFile(File source, File target) throws IOException {
 		VerifyUtil.verifyNotNull(source, "source file is null");
 		VerifyUtil.verifyNotNull(target, "target file is null");
@@ -185,7 +192,7 @@ public class FileUtil {
 		}
 	}
 
-	public static String md5Sum(File file) throws Exception {
+	public static String md5Sum(File file) throws NoSuchAlgorithmException, IOException {
 		return MathUtil.md5(file);
 	}
 
@@ -241,6 +248,21 @@ public class FileUtil {
 			}
 		}
 		return count;
+	}
+
+	public static ListMatrix<File> listRecursive(File path) {
+		ListMatrix<File> list = new DefaultListMatrix<File>();
+		File[] files = path.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					list.addAll(listRecursive(f));
+				} else {
+					list.add(f);
+				}
+			}
+		}
+		return list;
 	}
 
 	public static final File appendExtension(File file, String newExtension) {

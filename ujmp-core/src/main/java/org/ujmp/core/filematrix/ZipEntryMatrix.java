@@ -98,4 +98,9 @@ public class ZipEntryMatrix extends AbstractMapMatrix<String, Matrix> implements
 	protected Matrix putIntoMap(String key, Matrix value) {
 		throw new UnsupportedOperationException();
 	}
+
+	public int size() {
+		ensureData();
+		return map.size();
+	}
 }

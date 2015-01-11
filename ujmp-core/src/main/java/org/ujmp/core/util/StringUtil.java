@@ -419,11 +419,7 @@ public abstract class StringUtil {
 	}
 
 	public static String getString(Object object) {
-		if (object == null) {
-			return null;
-		} else {
-			return format(object);
-		}
+		return getString(object, false);
 	}
 
 	public static final boolean isASCII(char c) {
@@ -547,6 +543,39 @@ public abstract class StringUtil {
 		string = string.replaceAll(" x", " X");
 		string = string.replaceAll(" y", " Y");
 		string = string.replaceAll(" z", " Z");
+		string = string.replaceAll(" ö", " Ö");
+		string = string.replaceAll(" ä", " Ä");
+		string = string.replaceAll(" ü", " Ü");
+
+		string = string.replaceAll(",a", ",A");
+		string = string.replaceAll(",b", ",B");
+		string = string.replaceAll(",c", ",C");
+		string = string.replaceAll(",d", ",D");
+		string = string.replaceAll(",e", ",E");
+		string = string.replaceAll(",f", ",F");
+		string = string.replaceAll(",g", ",G");
+		string = string.replaceAll(",h", ",H");
+		string = string.replaceAll(",i", ",I");
+		string = string.replaceAll(",j", ",J");
+		string = string.replaceAll(",k", ",K");
+		string = string.replaceAll(",l", ",L");
+		string = string.replaceAll(",m", ",M");
+		string = string.replaceAll(",n", ",N");
+		string = string.replaceAll(",o", ",O");
+		string = string.replaceAll(",p", ",P");
+		string = string.replaceAll(",q", ",Q");
+		string = string.replaceAll(",r", ",R");
+		string = string.replaceAll(",s", ",S");
+		string = string.replaceAll(",t", ",T");
+		string = string.replaceAll(",u", ",U");
+		string = string.replaceAll(",v", ",V");
+		string = string.replaceAll(",w", ",W");
+		string = string.replaceAll(",x", ",X");
+		string = string.replaceAll(",y", ",Y");
+		string = string.replaceAll(",z", ",Z");
+		string = string.replaceAll(",ö", ",Ö");
+		string = string.replaceAll(",ä", ",Ä");
+		string = string.replaceAll(",ü", ",Ü");
 
 		string = string.replaceAll("\\(a", "(A");
 		string = string.replaceAll("\\(b", "(B");
@@ -574,6 +603,9 @@ public abstract class StringUtil {
 		string = string.replaceAll("\\(x", "(X");
 		string = string.replaceAll("\\(y", "(Y");
 		string = string.replaceAll("\\(z", "(Z");
+		string = string.replaceAll("\\(ö", "(Ö");
+		string = string.replaceAll("\\(ä", "(Ä");
+		string = string.replaceAll("\\(ü", "(Ü");
 
 		string = string.replaceAll("-a", "-A");
 		string = string.replaceAll("-b", "-B");
@@ -601,6 +633,9 @@ public abstract class StringUtil {
 		string = string.replaceAll("-x", "-X");
 		string = string.replaceAll("-y", "-Y");
 		string = string.replaceAll("-z", "-Z");
+		string = string.replaceAll("-ö", "-Ö");
+		string = string.replaceAll("-ä", "-Ä");
+		string = string.replaceAll("-ü", "-Ü");
 
 		string = string.replaceAll("\\[a", "[A");
 		string = string.replaceAll("\\[b", "[B");
@@ -628,6 +663,9 @@ public abstract class StringUtil {
 		string = string.replaceAll("\\[x", "[X");
 		string = string.replaceAll("\\[y", "[Y");
 		string = string.replaceAll("\\[z", "[Z");
+		string = string.replaceAll("\\[ö", "[Ö");
+		string = string.replaceAll("\\[ä", "[Ä");
+		string = string.replaceAll("\\[ü", "[Ü");
 
 		string = string.replaceFirst("^a", "A");
 		string = string.replaceFirst("^b", "B");
@@ -655,7 +693,9 @@ public abstract class StringUtil {
 		string = string.replaceFirst("^x", "X");
 		string = string.replaceFirst("^y", "Y");
 		string = string.replaceFirst("^z", "Z");
-
+		string = string.replaceFirst("^ö", "Ö");
+		string = string.replaceFirst("^ä", "Ä");
+		string = string.replaceFirst("^ü", "Ü");
 		return string;
 	}
 
@@ -705,5 +745,17 @@ public abstract class StringUtil {
 			strings.add(string.substring(startPos, endPos));
 		}
 		return strings;
+	}
+
+	public static String getString(Object object, boolean returnEmptyStringInsteadOfNull) {
+		if (object == null) {
+			if (returnEmptyStringInsteadOfNull) {
+				return "";
+			} else {
+				return null;
+			}
+		} else {
+			return format(object);
+		}
 	}
 }

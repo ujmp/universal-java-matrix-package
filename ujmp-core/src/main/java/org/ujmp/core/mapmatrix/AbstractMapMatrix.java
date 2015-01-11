@@ -184,13 +184,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		};
 	}
 
-	public synchronized int size() {
-		buildIndexIfNecessary();
-		return keyIndexList.size();
-	}
-
 	public final synchronized boolean isEmpty() {
-		buildIndexIfNecessary();
 		return size() == 0;
 	}
 
@@ -204,8 +198,9 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 
 	public synchronized final void putAll(Map<? extends K, ? extends V> map) {
 		for (K k : map.keySet()) {
-			put(k, map.get(k));
+			putIntoMap(k, map.get(k));
 		}
+		fireValueChanged();
 	}
 
 	public synchronized final V remove(Object key) {

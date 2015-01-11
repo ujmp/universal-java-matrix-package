@@ -21,23 +21,22 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jdbc.map;
+package org.ujmp.jdbc.set;
 
 import java.io.File;
-import java.util.Map;
+import java.util.Set;
 
-import org.ujmp.core.collections.AbstractStringMapTest;
+import org.ujmp.core.collections.AbstractStringSetTest;
 
-public class TestSQLiteStringMap extends AbstractStringMapTest {
+public class TestH2StringSet extends AbstractStringSetTest {
 
 	@Override
-	public Map<String, String> createMap() throws Exception {
-		JDBCMapMatrix.connectToSQLite(File.createTempFile("junit-ujmp", ""));
-		JDBCMapMatrix.connectToSQLite(File.createTempFile("junit-ujmp", ""), "test table");
-		return JDBCMapMatrix.connectToSQLite();
+	public Set<String> createSet() throws Exception {
+		JDBCSetMatrix.connectToH2(File.createTempFile("junit-ujmp", ""));
+		JDBCSetMatrix.connectToH2(File.createTempFile("junit-ujmp", ""), "test table");
+		return JDBCSetMatrix.connectToH2();
 	}
 
 	public void testSerialize() throws Exception {
 	}
-
 }

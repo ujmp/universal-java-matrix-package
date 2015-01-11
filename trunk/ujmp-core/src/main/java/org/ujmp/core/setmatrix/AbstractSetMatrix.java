@@ -23,13 +23,12 @@
 
 package org.ujmp.core.setmatrix;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Objects;
 
-import org.ujmp.core.enums.ValueType;
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
-import org.ujmp.core.util.MathUtil;
 
 public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<E> implements
 		SetMatrix<E> {
@@ -38,8 +37,6 @@ public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<
 	public AbstractSetMatrix() {
 		super(0, 1);
 	}
-
-	public abstract Set<E> getSet();
 
 	public synchronized final long[] getSize() {
 		size[ROW] = size();
@@ -54,58 +51,73 @@ public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<
 		setObject(value, (int) row, (int) column);
 	}
 
-	public boolean add(E e) {
-		boolean ret = getSet().add(e);
+	public final boolean add(E e) {
+		boolean ret = addToSet(e);
 		fireValueChanged();
 		return ret;
 	}
 
-	public boolean addAll(Collection<? extends E> c) {
-		boolean ret = getSet().addAll(c);
-		fireValueChanged();
+	public final boolean addAll(Collection<? extends E> c) {
+		boolean ret = false;
+		for (E value : c) {
+			ret = ret | addToSet(value);
+		}
+		if (ret) {
+			fireValueChanged();
+		}
 		return ret;
 	}
 
-	public boolean contains(Object o) {
-		return getSet().contains(o);
+	public final boolean containsAll(Collection<?> c) {
+		for (Object o : c) {
+			if (!contains(o)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
-	public boolean containsAll(Collection<?> c) {
-		return getSet().containsAll(c);
-	}
-
-	public boolean isEmpty() {
-		return getSet().isEmpty();
-	}
-
-	public Iterator<E> iterator() {
-		return getSet().iterator();
+	public final boolean isEmpty() {
+		return size() == 0;
 	}
 
 	public boolean remove(Object o) {
-		boolean ret = getSet().remove(o);
-		fireValueChanged();
+		boolean ret = removeFromSet(o);
+		if (ret) {
+			fireValueChanged();
+		}
 		return ret;
 	}
 
 	public boolean removeAll(Collection<?> c) {
-		boolean ret = getSet().removeAll(c);
-		fireValueChanged();
+		boolean ret = false;
+		for (Object o : c) {
+			ret = ret | removeFromSet(o);
+		}
+		if (ret) {
+			fireValueChanged();
+		}
 		return ret;
 	}
 
-	public boolean retainAll(Collection<?> c) {
-		boolean ret = getSet().retainAll(c);
-		fireValueChanged();
+	public final boolean retainAll(Collection<?> c) {
+		Objects.requireNonNull(c);
+		boolean ret = false;
+		Iterator<E> it = iterator();
+		while (it.hasNext()) {
+			if (!c.contains(it.next())) {
+				it.remove();
+				ret = true;
+			}
+		}
+		if (ret) {
+			fireValueChanged();
+		}
 		return ret;
 	}
 
-	public int size() {
-		return getSet().size();
-	}
-
-	public E getObject(int row, int column) {
-		Iterator<E> it = getSet().iterator();
+	public final E getObject(int row, int column) {
+		Iterator<E> it = iterator();
 		for (int i = 0; i < row && it.hasNext(); i++) {
 			it.next();
 		}
@@ -116,28 +128,36 @@ public abstract class AbstractSetMatrix<E> extends AbstractDenseGenericMatrix2D<
 		}
 	}
 
-	public Object[] toArray() {
-		return getSet().toArray();
+	public final Object[] toArray() {
+		final Object[] objects = new Object[size()];
+		final Iterator<E> it = iterator();
+		int i = 0;
+		while (it.hasNext()) {
+			objects[i++] = it.next();
+		}
+		return objects;
 	}
 
-	public <T> T[] toArray(T[] a) {
-		return getSet().toArray(a);
-	}
-
-	public double getAsDouble(long... coordinates) {
-		return MathUtil.getDouble(getObject(coordinates));
-	}
-
-	public void setAsDouble(double value, long... coordinates) {
-		setAsObject(value, coordinates);
-	}
-
-	public ValueType getValueType() {
-		return ValueType.OBJECT;
+	@SuppressWarnings("unchecked")
+	public final <T> T[] toArray(T[] a) {
+		final T[] objects = (T[]) Array.newInstance(a.getClass(), size());
+		final Iterator<E> it = iterator();
+		int i = 0;
+		while (it.hasNext()) {
+			objects[i++] = (T) it.next();
+		}
+		return objects;
 	}
 
 	public final void clear() {
-		getSet().clear();
+		clearSet();
+		fireValueChanged();
 	}
+
+	protected abstract void clearSet();
+
+	protected abstract boolean removeFromSet(Object value);
+
+	protected abstract boolean addToSet(E value);
 
 }

@@ -25,6 +25,7 @@ package org.ujmp.core.setmatrix;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
@@ -53,6 +54,33 @@ public class DefaultSetMatrix<A> extends AbstractSetMatrix<A> {
 
 	public Set<A> getSet() {
 		return set;
+	}
+
+	public int size() {
+		return set.size();
+	}
+
+	public boolean contains(Object o) {
+		return set.contains(o);
+	}
+
+	public Iterator<A> iterator() {
+		return set.iterator();
+	}
+
+	@Override
+	protected void clearSet() {
+		set.clear();
+	}
+
+	@Override
+	protected boolean removeFromSet(Object value) {
+		return set.remove(value);
+	}
+
+	@Override
+	protected boolean addToSet(A value) {
+		return set.add(value);
 	}
 
 }

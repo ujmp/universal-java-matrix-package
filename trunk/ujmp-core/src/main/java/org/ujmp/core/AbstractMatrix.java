@@ -1271,7 +1271,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	// TODO: this should also work for objects and Strings
-	public final int compareTo(Matrix m) {
+	public int compareTo(Matrix m) {
 		double v1 = doubleValue();
 		double v2 = m.doubleValue();
 		return new Double(v1).compareTo(v2);
@@ -2082,7 +2082,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return true;
 	}
 
-	public final boolean equals(Object o) {
+	public boolean equals(Object o) {
 		return equalsContent(o) && equalsAnnotation(o);
 	}
 

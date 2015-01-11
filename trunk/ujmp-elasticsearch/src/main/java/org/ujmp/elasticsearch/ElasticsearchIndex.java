@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.print.attribute.UnmodifiableSetException;
 
@@ -96,7 +97,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		if (id != null && id instanceof String) {
 			put((String) id, map);
 		} else {
-			throw new IllegalArgumentException(ID + " field missing");
+			put(MathUtil.guid(), map);
 		}
 	}
 
@@ -131,7 +132,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		return MathUtil.longToInt(response.getCount());
 	}
 
-	public MapMatrix<String, Object> get(Object key) {
+	public ElasticsearchSample get(Object key) {
 		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
 		Map<String, Object> map = getResponse.getSource();
 		if (map == null) {
@@ -139,6 +140,16 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		} else {
 			return new ElasticsearchSample(this, getResponse.getSource());
 		}
+	}
+
+	public ElasticsearchSample get(Object key, String... fields) {
+		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).setFields(fields).execute()
+				.actionGet();
+		Map<String, Object> map = new TreeMap<String, Object>();
+		for (String k : getResponse.getFields().keySet()) {
+			map.put(k, getResponse.getField(k).getValue());
+		}
+		return new ElasticsearchSample(this, map);
 	}
 
 	public Set<String> keySet() {
@@ -175,14 +186,14 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
 
 		QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
-		SearchResponse response = client.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
-				.setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
+		SearchResponse response = client.prepareSearch(index).setNoFields().setTypes(type)
+				.setSearchType(SearchType.QUERY_AND_FETCH).setQuery(qb).setFrom(0).setSize(10).setExplain(true)
+				.execute().actionGet();
 
 		SearchHit[] results = response.getHits().getHits();
 
 		for (SearchHit hit : results) {
-			ElasticsearchSample sample = new ElasticsearchSample(this, hit.getSource());
-			sample.setScore(hit.getScore());
+			ElasticsearchSample sample = new ElasticsearchSample(this, hit);
 			list.add(sample);
 		}
 
@@ -204,6 +215,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 	public String getType() {
 		return type;
 	}
+
 }
 
 class KeySet extends AbstractSet<String> {

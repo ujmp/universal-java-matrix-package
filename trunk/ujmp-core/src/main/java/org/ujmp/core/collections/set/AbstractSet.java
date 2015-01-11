@@ -37,16 +37,6 @@ public abstract class AbstractSet<E> extends java.util.AbstractSet<E> implements
 
 	public abstract boolean contains(Object o);
 
-	public boolean addAll(Collection<? extends E> c) {
-		boolean modified = false;
-		for (E e : c) {
-			if (add(e)) {
-				modified = true;
-			}
-		}
-		return modified;
-	}
-
 	public boolean removeAll(Collection<?> c) {
 		boolean modified = false;
 		for (Object e : c) {

@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.UUID;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.collections.list.FastArrayList;
@@ -332,7 +333,7 @@ public abstract class MathUtil {
 
 	public static final Matrix getMatrix(Object o) {
 		if (o == null) {
-			return Matrix.Factory.emptyMatrix();
+			return null;
 		}
 		if (o instanceof Matrix) {
 			Matrix m = (Matrix) o;
@@ -1406,6 +1407,10 @@ public abstract class MathUtil {
 
 	public static boolean isDiscrete(double number) {
 		return (int) number == number;
+	}
+
+	public static String guid() {
+		return UUID.randomUUID().toString();
 	}
 
 }

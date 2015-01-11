@@ -23,10 +23,11 @@
 
 package org.ujmp.elasticsearch;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
+import org.elasticsearch.search.SearchHit;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 
 public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
@@ -41,12 +42,23 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 
 	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex) {
 		this.elasticsearchIndex = elasticsearchIndex;
-		this.map = new HashMap<String, Object>();
+		this.map = new TreeMap<String, Object>();
 	}
 
 	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
 		this.elasticsearchIndex = elasticsearchIndex;
 		this.map = source;
+	}
+
+	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit hit) {
+		this.elasticsearchIndex = elasticsearchIndex;
+		setId(hit.getId());
+		if (hit.getSource() != null) {
+			this.map = hit.getSource();
+		} else {
+			this.map = new TreeMap<String, Object>();
+		}
+		setScore(hit.getScore());
 	}
 
 	public int size() {

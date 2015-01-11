@@ -15,15 +15,15 @@ public class SVDTask extends AbstractTask<MapMatrix<String, Matrix>> {
 	private boolean wantU = true;
 	private boolean wantV = true;
 	private boolean thin = true;
-	private int numSV = -1;
+	private int maxRank = -1;
 
 	public SVDTask(Matrix source) {
 		this.source = source;
 		new SVDTask(null).setWantU(false).executeInBackground();
 	}
 
-	public SVDTask setTruncated(int numSV) {
-		this.numSV = numSV;
+	public SVDTask setMaxRank(int maxRank) {
+		this.maxRank = maxRank;
 		return this;
 	}
 

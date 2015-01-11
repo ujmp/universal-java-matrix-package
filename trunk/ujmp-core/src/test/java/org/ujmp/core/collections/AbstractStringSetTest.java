@@ -42,41 +42,44 @@ public abstract class AbstractStringSetTest {
 	}
 
 	@Test
-	public void testClear() throws Exception {
+	public void testAddRemoveClearContainsSize() throws Exception {
+
 		Set<String> m = createSet();
-		assertTrue(getLabel(), m.isEmpty());
 		assertEquals(getLabel(), 0, m.size());
+		assertTrue(getLabel(), m.isEmpty());
+		assertFalse(getLabel(), m.contains("a"));
+		assertFalse(getLabel(), m.contains("b"));
+
 		m.add("a");
 		assertEquals(getLabel(), 1, m.size());
 		assertFalse(getLabel(), m.isEmpty());
+		assertTrue(getLabel(), m.contains("a"));
+		assertFalse(getLabel(), m.contains("b"));
+
 		m.add("b");
 		assertEquals(getLabel(), 2, m.size());
 		assertFalse(getLabel(), m.isEmpty());
+		assertTrue(getLabel(), m.contains("a"));
+		assertTrue(getLabel(), m.contains("b"));
+
+		m.add("b");
+		assertEquals(getLabel(), 2, m.size());
+		assertFalse(getLabel(), m.isEmpty());
+		assertTrue(getLabel(), m.contains("a"));
+		assertTrue(getLabel(), m.contains("b"));
+
+		m.remove("a");
+		assertEquals(getLabel(), 1, m.size());
+		assertFalse(getLabel(), m.isEmpty());
+		assertFalse(getLabel(), m.contains("a"));
+		assertTrue(getLabel(), m.contains("b"));
+
 		m.clear();
 		assertEquals(getLabel(), 0, m.size());
 		assertTrue(getLabel(), m.isEmpty());
-	}
+		assertFalse(getLabel(), m.contains("a"));
+		assertFalse(getLabel(), m.contains("b"));
 
-	@Test
-	public void testContains() throws Exception {
-		Set<String> m = createSet();
-		assertFalse(getLabel(), m.contains("a"));
-		assertFalse(getLabel(), m.contains("b"));
-		m.add("a");
-		assertTrue(getLabel(), m.contains("a"));
-		assertFalse(getLabel(), m.contains("b"));
-		m.add("b");
-		assertTrue(getLabel(), m.contains("a"));
-		assertTrue(getLabel(), m.contains("b"));
-		m.add("b");
-		assertTrue(getLabel(), m.contains("a"));
-		assertTrue(getLabel(), m.contains("b"));
-		m.remove("a");
-		assertFalse(getLabel(), m.contains("a"));
-		assertTrue(getLabel(), m.contains("b"));
-		m.clear();
-		assertFalse(getLabel(), m.contains("a"));
-		assertFalse(getLabel(), m.contains("b"));
 	}
 
 	@SuppressWarnings("unchecked")

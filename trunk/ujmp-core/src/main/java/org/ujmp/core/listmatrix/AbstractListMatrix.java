@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import org.ujmp.core.genericmatrix.stub.AbstractDenseGenericMatrix2D;
 import org.ujmp.core.util.MathUtil;
@@ -48,9 +49,9 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 		return ret;
 	}
 
-	public abstract boolean addToList(E t);
+	protected abstract boolean addToList(E t);
 
-	public abstract void addToList(int index, E element);
+	protected abstract void addToList(int index, E element);
 
 	public final E getObject(long row, long column) {
 		return get(MathUtil.longToInt(row));
@@ -71,7 +72,7 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 		return e;
 	}
 
-	public abstract E removeFromList(int index);
+	protected abstract E removeFromList(int index);
 
 	public final boolean remove(Object o) {
 		boolean ret = removeFromList(o);
@@ -79,7 +80,7 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 		return ret;
 	}
 
-	public abstract boolean removeFromList(Object o);
+	protected abstract boolean removeFromList(Object o);
 
 	public final E set(int index, E element) {
 		E ret = setToList(index, element);
@@ -87,14 +88,14 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 		return ret;
 	}
 
-	public abstract E setToList(int index, E element);
+	protected abstract E setToList(int index, E element);
 
 	public final void clear() {
 		clearList();
 		fireValueChanged();
 	}
 
-	public abstract void clearList();
+	protected abstract void clearList();
 
 	public abstract int size();
 
@@ -197,9 +198,12 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 	public boolean addAll(Collection<? extends E> c) {
 		boolean ret = false;
 		for (E o : c) {
-			if (add(o)) {
+			if (addToList(o)) {
 				ret = true;
 			}
+		}
+		if (ret) {
+			fireValueChanged();
 		}
 		return ret;
 	}
@@ -208,8 +212,20 @@ public abstract class AbstractListMatrix<E> extends AbstractDenseGenericMatrix2D
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean retainAll(Collection<?> c) {
-		throw new UnsupportedOperationException();
+	public final boolean retainAll(Collection<?> c) {
+		Objects.requireNonNull(c);
+		boolean ret = false;
+		Iterator<E> it = iterator();
+		while (it.hasNext()) {
+			if (!c.contains(it.next())) {
+				it.remove();
+				ret = true;
+			}
+		}
+		if (ret) {
+			fireValueChanged();
+		}
+		return ret;
 	}
 
 	public ListIterator<E> listIterator() {

@@ -21,38 +21,37 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.util;
+package org.ujmp.pdfbox;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.text.Normalizer;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
-public abstract class HtmlUtil {
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 
-	public static final String toSlug(String s) {
-		s = Normalizer.normalize(s, Normalizer.Form.NFD);
-		s = s.replaceAll("\\s+", "-");
-		s = s.replaceAll("[^\\p{ASCII}]", "");
-		s = s.replaceAll("[^a-zA-Z0-9- ]", "");
-		s = s.toLowerCase();
-		return s;
+public abstract class PdfUtil {
+
+	public static final String getTextFromFile(File file) throws IOException {
+		PDDocument pdd = PDDocument.load(file);
+		PDFTextStripper pts = new PDFTextStripper();
+		String text = pts.getText(pdd);
+		pdd.close();
+		return text;
 	}
 
-	public static final String urlEncode(Object o) {
-		try {
-			return URLEncoder.encode(String.valueOf(o), System.getProperty("file.encoding"));
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+	public static final String getTextFromStream(InputStream inputStream) throws IOException {
+		PDDocument pdd = PDDocument.load(inputStream);
+		PDFTextStripper pts = new PDFTextStripper();
+		String text = pts.getText(pdd);
+		pdd.close();
+		return text;
 	}
 
-	public static final String urlDecode(Object o) {
-		try {
-			return URLDecoder.decode(String.valueOf(o), System.getProperty("file.encoding"));
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+	public static final String getTextFromBytes(byte[] data) throws IOException {
+		ByteArrayInputStream is = new ByteArrayInputStream(data);
+		return getTextFromStream(is);
 	}
 
 }

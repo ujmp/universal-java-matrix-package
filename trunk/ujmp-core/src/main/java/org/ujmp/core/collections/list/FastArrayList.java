@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -172,6 +173,14 @@ public class FastArrayList<E> extends AbstractList<E> implements List<E>, Random
 		// c.toArray might (incorrectly) not return Object[] (see 6260652)
 		if (elementData.getClass() != Object[].class)
 			elementData = Arrays.copyOf(elementData, size, Object[].class);
+	}
+
+	public FastArrayList(Enumeration<E> enumeration) {
+		super();
+		this.elementData = EMPTY_ELEMENTDATA;
+		while (enumeration.hasMoreElements()) {
+			add((E) enumeration.nextElement());
+		}
 	}
 
 	public int hashCode() {

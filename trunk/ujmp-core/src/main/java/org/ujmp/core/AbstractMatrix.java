@@ -25,6 +25,7 @@ package org.ujmp.core;
 
 import static org.ujmp.core.util.VerifyUtil.verifyTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -213,6 +214,7 @@ import org.ujmp.core.util.CoordinateIterator;
 import org.ujmp.core.util.CoordinateIterator2D;
 import org.ujmp.core.util.DecompositionOps;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
@@ -415,6 +417,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final Matrix select(Ret returnType, long[]... selection) {
 		return new Selection(this, selection).calc(returnType);
+	}
+
+	public void save(String filename) throws IOException {
+		save(new File(filename));
+	}
+
+	public void save(File file) throws IOException {
+		SerializationUtil.saveCompressed(file, this);
 	}
 
 	public final Matrix select(Ret returnType, Collection<? extends Number>... selection) {

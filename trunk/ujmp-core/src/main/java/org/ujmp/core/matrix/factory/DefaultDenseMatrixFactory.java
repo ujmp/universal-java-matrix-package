@@ -23,7 +23,11 @@
 
 package org.ujmp.core.matrix.factory;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultDenseBigDecimalMatrix2D;
 import org.ujmp.core.bigdecimalmatrix.impl.DefaultSparseBigDecimalMatrix;
@@ -52,6 +56,7 @@ import org.ujmp.core.shortmatrix.impl.DefaultSparseShortMatrix;
 import org.ujmp.core.stringmatrix.impl.DefaultDenseStringMatrix2D;
 import org.ujmp.core.stringmatrix.impl.DefaultSparseStringMatrix;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.SerializationUtil;
 
 public class DefaultDenseMatrixFactory extends AbstractMatrixFactory<DenseMatrix> {
 
@@ -159,6 +164,14 @@ public class DefaultDenseMatrixFactory extends AbstractMatrixFactory<DenseMatrix
 
 	public DenseMatrix zeros(long rows, long columns) {
 		return zeros(new long[] { rows, columns });
+	}
+
+	public Matrix load(File file) throws IOException, ClassNotFoundException {
+		return (Matrix) SerializationUtil.loadCompressed(file);
+	}
+
+	public Matrix load(String filename) throws IOException, ClassNotFoundException {
+		return load(new File(filename));
 	}
 
 }

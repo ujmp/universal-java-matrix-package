@@ -36,6 +36,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public abstract class SerializationUtil {
 
@@ -108,6 +110,19 @@ public abstract class SerializationUtil {
 		return o;
 	}
 
+	public static Object loadCompressed(String filename) throws ClassNotFoundException, IOException {
+		return loadCompressed(new File(filename));
+	}
+
+	public static Object loadCompressed(File file) throws ClassNotFoundException, IOException {
+		FileInputStream fis = new FileInputStream(file);
+		GZIPInputStream bis = new GZIPInputStream(fis);
+		Object o = deserialize(bis);
+		bis.close();
+		fis.close();
+		return o;
+	}
+
 	public static void save(String filename, Object o) throws IOException {
 		save(new File(filename), o);
 	}
@@ -115,6 +130,18 @@ public abstract class SerializationUtil {
 	public static void save(File file, Object o) throws IOException {
 		FileOutputStream fos = new FileOutputStream(file);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		serialize(o, bos);
+		bos.close();
+		fos.close();
+	}
+
+	public static void saveCompressed(String filename, Object o) throws IOException {
+		saveCompressed(new File(filename), o);
+	}
+
+	public static void saveCompressed(File file, Object o) throws IOException {
+		FileOutputStream fos = new FileOutputStream(file);
+		GZIPOutputStream bos = new GZIPOutputStream(fos);
 		serialize(o, bos);
 		bos.close();
 		fos.close();

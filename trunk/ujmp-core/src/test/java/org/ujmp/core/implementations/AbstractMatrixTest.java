@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -142,6 +143,16 @@ public abstract class AbstractMatrixTest {
 		assertEquals(0.0, m.getAsDouble(0, 1), TOLERANCE);
 		assertEquals(0.0, m.getAsDouble(1, 1), TOLERANCE);
 		assertEquals(0.0, m.getAsDouble(2, 1), TOLERANCE);
+	}
+
+	@Test
+	public void testLoadSave() throws Exception {
+		Matrix m1 = createMatrix(3, 2);
+		m1.randn(Ret.ORIG);
+		File tmpfile = File.createTempFile("ujmp-junit", ".tmp");
+		m1.save(tmpfile);
+		Matrix m2 = Matrix.Factory.load(tmpfile);
+		assertEquals(m1, m2);
 	}
 
 	@Test

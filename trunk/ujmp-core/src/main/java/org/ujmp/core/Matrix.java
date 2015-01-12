@@ -23,6 +23,7 @@
 
 package org.ujmp.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -131,5 +132,9 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 	public void fireValueChanged(Coordinates coordinates);
 
 	public void fireValueChanged(Coordinates start, Coordinates end);
+
+	public void save(File file) throws IOException;
+
+	public void save(String filename) throws IOException;
 
 }

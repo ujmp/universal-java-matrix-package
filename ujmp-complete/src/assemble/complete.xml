@@ -30,6 +30,7 @@
 				<include>org.ujmp:ujmp-jama</include>
 				<include>org.ujmp:ujmp-jblas</include>
 				<include>org.ujmp:ujmp-jdbc</include>
+				<include>org.ujmp:ujmp-jetty</include>
 				<include>org.ujmp:ujmp-jfreechart</include>
 				<include>org.ujmp:ujmp-jmatio</include>
 				<include>org.ujmp:ujmp-jsch</include>

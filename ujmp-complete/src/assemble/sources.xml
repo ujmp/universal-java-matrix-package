@@ -60,6 +60,10 @@
 		<fileSet>
 			<directory>../ujmp-jdbc/src/main/java</directory>
 			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../ujmp-jetty/src/main/java</directory>
+			<outputDirectory></outputDirectory>
 		</fileSet>		
 		<fileSet>
 			<directory>../ujmp-jfreechart/src/main/java</directory>

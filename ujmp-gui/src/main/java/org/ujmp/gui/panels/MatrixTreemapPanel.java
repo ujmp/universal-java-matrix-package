@@ -33,8 +33,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ujmp.core.treematrix.TreeMatrix;
+import org.ujmp.core.util.ColorUtil;
 import org.ujmp.core.util.Sortable;
-import org.ujmp.gui.util.ColorUtil;
 
 public class MatrixTreemapPanel extends BufferedPanel {
 	private static final long serialVersionUID = -6345970654224113023L;

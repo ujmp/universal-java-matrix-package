@@ -137,4 +137,6 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 
 	public void save(String filename) throws IOException;
 
+	public String toHtml();
+
 }

@@ -21,18 +21,12 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.export.destination;
+package org.ujmp.core.export.format;
 
-import org.ujmp.core.export.format.MatrixDenseCSVStringExportFormat;
-import org.ujmp.core.export.format.MatrixHtmlStringExportFormat;
-import org.ujmp.core.export.format.MatrixLatexStringExportFormat;
-import org.ujmp.core.export.format.MatrixMatlabScriptStringExportFormat;
-import org.ujmp.core.export.format.MatrixRScriptStringExportFormat;
-import org.ujmp.core.export.format.MatrixSQLStringExportFormat;
+import java.io.IOException;
 
-public interface MatrixStringExportDestination extends MatrixDenseCSVStringExportFormat,
-		MatrixSQLStringExportFormat, MatrixMatlabScriptStringExportFormat,
-		MatrixRScriptStringExportFormat, MatrixLatexStringExportFormat,
-		MatrixHtmlStringExportFormat, MatrixExportDestination {
+public interface MatrixHtmlStringExportFormat extends MatrixExportFormat {
+
+	public String asHtml() throws IOException;
 
 }

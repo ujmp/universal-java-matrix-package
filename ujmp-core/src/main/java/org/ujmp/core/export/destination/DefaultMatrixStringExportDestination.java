@@ -29,6 +29,7 @@ import java.io.StringWriter;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.DBType;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterCSVExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterHtmlExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterLatexExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterMatlabScriptExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterRScriptExporter;
@@ -81,6 +82,13 @@ public class DefaultMatrixStringExportDestination extends AbstractMatrixStringEx
 	public String asLatex() throws IOException {
 		StringWriter writer = new StringWriter();
 		new DefaultMatrixWriterLatexExporter(getMatrix(), writer).asLatex();
+		writer.close();
+		return writer.toString();
+	}
+
+	public String asHtml() throws IOException {
+		StringWriter writer = new StringWriter();
+		new DefaultMatrixWriterHtmlExporter(getMatrix(), writer).asHtml();
 		writer.close();
 		return writer.toString();
 	}

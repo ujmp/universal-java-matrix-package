@@ -26,7 +26,7 @@ package org.ujmp.jung;
 import java.awt.Paint;
 
 import org.apache.commons.collections15.Transformer;
-import org.ujmp.gui.util.ColorUtil;
+import org.ujmp.core.util.ColorUtil;
 import org.ujmp.gui.util.UIDefaults;
 
 import edu.uci.ics.jung.visualization.picking.PickedState;

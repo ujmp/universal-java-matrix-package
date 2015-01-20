@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.colormap;
+package org.ujmp.core.util;
 
 import java.awt.Color;
 import java.util.ArrayList;

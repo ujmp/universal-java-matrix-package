@@ -31,6 +31,7 @@ import java.util.TimerTask;
 import javax.swing.event.TableModelEvent;
 
 import org.ujmp.core.Coordinates;
+import org.ujmp.core.util.ColorUtil;
 import org.ujmp.core.util.UJMPTimer;
 import org.ujmp.gui.DefaultMatrixGUIObject;
 

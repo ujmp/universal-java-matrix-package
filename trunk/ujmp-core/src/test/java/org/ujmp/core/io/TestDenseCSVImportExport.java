@@ -125,6 +125,15 @@ public class TestDenseCSVImportExport {
 	}
 
 	@Test
+	public void testStringCSVMultipleSpaces() throws IOException {
+		String text = "1    2   3\n4   5       6";
+		Matrix m1 = Matrix.Factory.importFrom().string(text).asDenseCSV();
+		Matrix m2 = Matrix.Factory.linkToArray(new String[][] { { "1", "2", "3" },
+				{ "4", "5", "6" } });
+		assertEquals(m1, m2);
+	}
+
+	@Test
 	public void testStringCSVFactory() throws IOException {
 		Matrix m1 = Matrix.Factory.randn(8, 6);
 		String s = m1.exportTo().string().asDenseCSV();

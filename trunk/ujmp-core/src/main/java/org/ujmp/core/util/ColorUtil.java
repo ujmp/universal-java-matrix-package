@@ -21,19 +21,17 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.gui.util;
+package org.ujmp.core.util;
 
 import java.awt.Color;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
-import org.ujmp.core.util.StringUtil;
-import org.ujmp.gui.colormap.ColorMap;
 
 public abstract class ColorUtil {
 
-	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black, Color.yellow,
-			Color.cyan };
+	public static final Color[] TRACECOLORS = { Color.blue, Color.green, Color.red, Color.black,
+			Color.yellow, Color.cyan };
 
 	public static final Color contrastBW(Color c) {
 		if ((c.getRed() + c.getGreen() + c.getBlue()) > 200.0) {
@@ -164,6 +162,10 @@ public abstract class ColorUtil {
 	private static int hash(int h) {
 		h ^= (h >>> 20) ^ (h >>> 12);
 		return h ^ (h >>> 7) ^ (h >>> 4);
+	}
+
+	public static String toHtmlColor(Color color) {
+		return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 }

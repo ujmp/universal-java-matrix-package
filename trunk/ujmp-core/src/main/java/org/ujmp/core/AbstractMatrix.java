@@ -1228,6 +1228,14 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return UJMPFormat.getMultiLineInstance().format(this);
 	}
 
+	public String toHtml() {
+		try {
+			return exportTo().string().asHtml();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public final Matrix ones(Ret ret) {
 		return new Ones(this).calc(ret);
 	}

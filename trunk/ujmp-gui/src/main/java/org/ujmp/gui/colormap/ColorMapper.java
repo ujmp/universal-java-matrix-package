@@ -25,6 +25,8 @@ package org.ujmp.gui.colormap;
 
 import java.awt.Color;
 
+import org.ujmp.core.util.ColorMap;
+
 public class ColorMapper {
 
 	private double min = 0.0;

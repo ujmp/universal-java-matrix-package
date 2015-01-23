@@ -219,6 +219,8 @@ public class UJMPFormat extends Format {
 				Object o = m.getAsObject(cursor);
 				if (o == null && m instanceof BaseBigDecimalMatrix) {
 					toAppendTo = format(Double.NaN, toAppendTo, pos);
+				} else if (o instanceof Matrix) {
+					toAppendTo.append("[Matrix]");
 				} else {
 					toAppendTo = format(o, toAppendTo, pos);
 				}

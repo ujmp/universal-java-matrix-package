@@ -51,4 +51,5 @@ public abstract class AbstractDenseStringMatrix extends AbstractStringMatrix imp
 	public final void clear() {
 		new Zeros(this).calc(Ret.ORIG);
 	}
+
 }

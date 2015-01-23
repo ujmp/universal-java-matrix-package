@@ -974,6 +974,10 @@ public interface Eig<T> {
 		 */
 
 		public EigMatrix(Matrix Arg) {
+			if (Arg.containsMissingValues()) {
+				throw new RuntimeException("matrix contains missing values");
+			}
+
 			final double[][] A = Arg.toDoubleArray();
 			n = (int) Arg.getColumnCount();
 			V = new double[n][n];

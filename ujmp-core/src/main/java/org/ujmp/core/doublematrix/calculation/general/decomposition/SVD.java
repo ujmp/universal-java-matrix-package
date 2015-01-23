@@ -192,6 +192,9 @@ public interface SVD<T> {
 		 */
 
 		public SVDMatrix(Matrix Arg, boolean thin, boolean wantu, boolean wantv) {
+			if (Arg.containsMissingValues()) {
+				throw new RuntimeException("matrix contains missing values");
+			}
 
 			// Derived from LINPACK code.
 			// Initialize.

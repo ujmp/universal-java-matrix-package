@@ -47,54 +47,52 @@ import com.jcraft.jsch.UserInfo;
 
 public abstract class JSchUtil {
 
-	public static String remoteWget(String hostname, int port, String username,
-			File keyFile, final String passphrase, String url)
-			throws JSchException, IOException {
-		return remoteExecute(hostname, port, username, keyFile, passphrase,
-				"wget -qO - '" + url + "'");
+	public static String remoteWget(String hostname, int port, String username, File keyFile, final String passphrase,
+			String url) throws JSchException, IOException {
+		return remoteExecute(hostname, port, username, keyFile, passphrase, "wget -qO - '" + url + "'");
 	}
 
-	public static Session forwardLocalPort(String hostname, int port,
-			String username, File keyFile, final String passphrase,
-			int localPortToForward, String remoteHostToForwardTo,
-			int remotePortToForwardTo) throws JSchException, IOException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
-		session.setPortForwardingL(localPortToForward, remoteHostToForwardTo,
-				remotePortToForwardTo);
+	public static Session forwardLocalPort(String hostname, int port, String username, File keyFile,
+			final String passphrase, int localPortToForward, String remoteHostToForwardTo, int remotePortToForwardTo)
+			throws JSchException, IOException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
+		session.setPortForwardingL(localPortToForward, remoteHostToForwardTo, remotePortToForwardTo);
 		session.connect();
 		return session;
 	}
 
-	public static void mkdir(String hostname, int port, String username,
-			File keyFile, final String passphrase, String destinationFolder)
-			throws JSchException, IOException, SftpException {
-		remoteExecute(hostname, port, username, keyFile, passphrase,
-				"mkdir -p '" + destinationFolder + "'");
+	public static void mkdir(String hostname, int port, String username, File keyFile, final String passphrase,
+			String destinationFolder) throws JSchException, IOException, SftpException {
+		remoteExecute(hostname, port, username, keyFile, passphrase, "mkdir -p '" + destinationFolder + "'");
 	}
 
-	public static void installUJMP(String hostname, int port, String username,
-			File keyFile, final String passphrase, String destinationFolder)
-			throws JSchException, IOException, SftpException {
+	public static void installUJMP(String hostname, int port, String username, File keyFile, final String passphrase,
+			String destinationFolder) throws JSchException, IOException, SftpException {
 		byte[] data = HttpUtil.getBytesFromUrl(UJMP.UJMPLOCATION);
-		JSchUtil.mkdir(hostname, port, username, keyFile, passphrase,
-				destinationFolder);
-		JSchUtil.uploadFile(hostname, port, username, keyFile, passphrase,
-				data, destinationFolder, UJMP.UJMPJARNAME);
+		JSchUtil.mkdir(hostname, port, username, keyFile, passphrase, destinationFolder);
+		JSchUtil.uploadFile(hostname, port, username, keyFile, passphrase, data, destinationFolder, UJMP.UJMPJARNAME);
 	}
 
-	public static void startUJMP(String hostname, int port, String username,
-			File keyFile, final String passphrase, String destinationFolder)
-			throws JSchException, IOException, SftpException {
-		String result = JSchUtil.remoteExecute(hostname, port, username,
-				keyFile, passphrase, "cd " + destinationFolder + "; java -jar "
-						+ UJMP.UJMPJARNAME);
-		System.out.println(result);
+	public static void startUJMP(String hostname, int port, String username, File keyFile, final String passphrase,
+			String destinationFolder) throws JSchException, IOException, SftpException {
+		List<String> files = JSchUtil.ls(hostname, port, username, keyFile, passphrase, destinationFolder);
+		String jar = null;
+		for (String file : files) {
+			if (file.startsWith("ujmp") && file.endsWith(".jar")) {
+				jar = file;
+			}
+		}
+		if (jar != null) {
+			String result = JSchUtil.remoteExecute(hostname, port, username, keyFile, passphrase, destinationFolder
+					+ "java -jar " + destinationFolder + "/" + jar);
+			System.out.println(result);
+		} else {
+			throw new RuntimeException("UJMP not found in folder " + destinationFolder);
+		}
 	}
 
-	public static Session createSession(String hostname, int port,
-			String username, File keyFile, final String passphrase)
-			throws JSchException {
+	public static Session createSession(String hostname, int port, String username, File keyFile,
+			final String passphrase) throws JSchException {
 		JSch jsch = new JSch();
 		if (keyFile != null) {
 			jsch.addIdentity(keyFile.getAbsolutePath(), passphrase);
@@ -108,11 +106,9 @@ public abstract class JSchUtil {
 		return session;
 	}
 
-	public static String pwd(String hostname, int port, String username,
-			File keyFile, final String passphrase) throws JSchException,
-			IOException, SftpException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
+	public static String pwd(String hostname, int port, String username, File keyFile, final String passphrase)
+			throws JSchException, IOException, SftpException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
 		session.connect();
 		ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 		channel.connect();
@@ -122,11 +118,9 @@ public abstract class JSchUtil {
 		return pwd;
 	}
 
-	public static List<String> ls(String hostname, int port, String username,
-			File keyFile, final String passphrase, String path)
-			throws JSchException, IOException, SftpException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
+	public static List<String> ls(String hostname, int port, String username, File keyFile, final String passphrase,
+			String path) throws JSchException, IOException, SftpException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
 		session.connect();
 		ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 		channel.connect();
@@ -141,12 +135,9 @@ public abstract class JSchUtil {
 		return files;
 	}
 
-	public static void uploadFile(String hostname, int port, String username,
-			File keyFile, final String passphrase, File file,
-			String destinationFolder) throws JSchException, IOException,
-			SftpException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
+	public static void uploadFile(String hostname, int port, String username, File keyFile, final String passphrase,
+			File file, String destinationFolder) throws JSchException, IOException, SftpException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
 		session.connect();
 		ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 		channel.connect();
@@ -156,12 +147,10 @@ public abstract class JSchUtil {
 		session.disconnect();
 	}
 
-	public static void uploadFile(String hostname, int port, String username,
-			File keyFile, final String passphrase, byte[] data,
-			String destinationFolder, String destinationFileName)
-			throws JSchException, IOException, SftpException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
+	public static void uploadFile(String hostname, int port, String username, File keyFile, final String passphrase,
+			byte[] data, String destinationFolder, String destinationFileName) throws JSchException, IOException,
+			SftpException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
 		session.connect();
 		ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 		channel.connect();
@@ -171,11 +160,9 @@ public abstract class JSchUtil {
 		session.disconnect();
 	}
 
-	public static String remoteExecute(String hostname, int port,
-			String username, File keyFile, final String passphrase,
-			String command) throws JSchException, IOException {
-		Session session = createSession(hostname, port, username, keyFile,
-				passphrase);
+	public static String remoteExecute(String hostname, int port, String username, File keyFile,
+			final String passphrase, String command) throws JSchException, IOException {
+		Session session = createSession(hostname, port, username, keyFile, passphrase);
 		session.connect();
 		ChannelExec channel = (ChannelExec) session.openChannel("exec");
 		channel.setCommand(command);
@@ -233,5 +220,24 @@ public abstract class JSchUtil {
 			}
 		};
 		return ui;
+	}
+
+	public static void startOrInstallUJMP(String hostname, int port, String username, File keyFile,
+			final String passphrase, String destinationFolder) throws JSchException, IOException, SftpException {
+		JSchUtil.mkdir(hostname, port, username, keyFile, passphrase, destinationFolder);
+		List<String> files = JSchUtil.ls(hostname, port, username, keyFile, passphrase, destinationFolder);
+		String jar = null;
+		for (String file : files) {
+			if (file.startsWith("ujmp") && file.endsWith(".jar")) {
+				jar = file;
+				break;
+			}
+		}
+		if (jar == null) {
+			installUJMP(hostname, port, username, keyFile, passphrase, destinationFolder);
+		}
+		String result = JSchUtil.remoteExecute(hostname, port, username, keyFile, passphrase, "java -classpath "
+				+ destinationFolder + "/" + jar + " org.ujmp.core.UJMP");
+		System.out.println(result);
 	}
 }

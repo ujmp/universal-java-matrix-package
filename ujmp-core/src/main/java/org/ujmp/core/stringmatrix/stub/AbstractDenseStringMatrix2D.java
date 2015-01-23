@@ -64,4 +64,8 @@ public abstract class AbstractDenseStringMatrix2D extends AbstractDenseStringMat
 		return 2;
 	}
 
+	public DefaultStringMatrix2DFactory getFactory() {
+		return Factory;
+	}
+
 }

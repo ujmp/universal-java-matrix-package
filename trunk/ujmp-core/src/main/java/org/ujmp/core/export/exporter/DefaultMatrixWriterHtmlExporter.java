@@ -72,13 +72,14 @@ public class DefaultMatrixWriterHtmlExporter extends AbstractMatrixWriterExporte
 		writer.write("<tbody>" + EOL);
 
 		for (int row = 0; row < rowCount; row++) {
+			writer.write("<tr>" + EOL);
+
 			if (matrix.getMetaData() != null) {
 				writer.write("<th>");
 				writer.write(matrix.getRowLabel(row));
 				writer.write("</th>" + EOL);
 			}
 
-			writer.write("<tr>" + EOL);
 			for (int col = 0; col < colCount; col++) {
 				Object o = matrix.getAsObject(row, col);
 				Color bg = ColorUtil.fromObject(o);

@@ -56,9 +56,15 @@ public class OperatingSystemMatrix extends AbstractDenseObjectMatrix2D {
 
 	TimerTask task = new TimerTask() {
 
+		double oldLoadAverage = Double.NaN;
+
 		@Override
 		public void run() {
-			matrix.fireValueChanged();
+			double loadAverage = os.getSystemLoadAverage();
+			if (loadAverage != oldLoadAverage) {
+				matrix.fireValueChanged();
+			}
+			oldLoadAverage = loadAverage;
 		}
 	};
 

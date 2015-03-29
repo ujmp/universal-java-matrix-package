@@ -23,39 +23,42 @@
 
 package org.ujmp.core.util.matrices;
 
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.Enumeration;
-import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.util.concurrent.BackgroundTask;
 
-public class NetworkMatrix extends DefaultMapMatrix<String, Matrix> {
-	private static final long serialVersionUID = -1878074546014731559L;
+public class NetworkInterfaceMatrix extends DefaultMapMatrix<String, Matrix> {
 
-	private static final Object lock = new Object();
-	private static NetworkMatrix instance = null;
+	private static final long serialVersionUID = 2604261022691386860L;
 
-	public static final NetworkMatrix getInstance() throws SocketException {
-		if (instance == null) {
-			synchronized (lock) {
-				if (instance == null) {
-					instance = new NetworkMatrix();
+	public NetworkInterfaceMatrix(final NetworkInterface networkInterface) throws SocketException {
+		setLabel(networkInterface.getDisplayName());
+		setMetaData("MTU", networkInterface.getMTU());
+		setMetaData("IsLoopback", networkInterface.isLoopback());
+		setMetaData("IsPointToPoint", networkInterface.isPointToPoint());
+		setMetaData("IsUp", networkInterface.isUp());
+		setMetaData("IsVirtual", networkInterface.isVirtual());
+
+		new BackgroundTask() {
+
+			@Override
+			public Object run() {
+				for (InterfaceAddress address : networkInterface.getInterfaceAddresses()) {
+					try {
+						put(address.getAddress() + "/" + address.getNetworkPrefixLength(),
+								new SubnetMatrix(address));
+					} catch (SocketException e) {
+						e.printStackTrace();
+					}
 				}
+				return null;
 			}
-		}
-		return instance;
-	}
+		};
 
-	private NetworkMatrix() throws SocketException {
-		super(new TreeMap<String, Matrix>());
-		setLabel("Network");
-		Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-		while (networkInterfaces.hasMoreElements()) {
-			NetworkInterface networkInterface = networkInterfaces.nextElement();
-			put(networkInterface.getName(), new NetworkInterfaceMatrix(networkInterface));
-		}
 	}
 
 	public final boolean isReadOnly() {

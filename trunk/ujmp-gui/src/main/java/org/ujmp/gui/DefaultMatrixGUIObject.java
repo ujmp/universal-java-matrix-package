@@ -76,8 +76,31 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		return columnCount;
 	}
 
+	public void fireValueChanged(Coordinates coordinates, Object value) {
+		iconUpToDate = false;
+		dataCache.put(coordinates, new DataItem(value, ColorUtil.fromObject(value)));
+		for (final Object o : getListenerList().getListenerList()) {
+			if (o instanceof TableModelListener64) {
+				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, coordinates.getRow(), coordinates
+						.getRow(), coordinates.getColumn(), TableModelEvent64.UPDATE));
+			} else if (o instanceof TableModelListener) {
+				((TableModelListener) o).tableChanged(new TableModelEvent(this,
+						MathUtil.longToInt(coordinates.getRow()), MathUtil.longToInt(coordinates.getRow()), MathUtil
+								.longToInt(coordinates.getColumn()), TableModelEvent.UPDATE));
+			}
+		}
+		super.fireValueChanged();
+	}
+
+	public void fireValueChanged(Coordinates start, Coordinates end) {
+		System.out.println("fireValueChanged start, end");
+	}
+
 	public final void fireValueChanged() {
 		iconUpToDate = false;
+		rowCountUpToDate = false;
+		columnCountUpToDate = false;
+		dataCache.clear();
 		for (final Object o : getListenerList().getListenerList()) {
 			if (o instanceof TableModelListener64) {
 				((TableModelListener64) o).tableChanged(new TableModelEvent64(this));
@@ -88,19 +111,12 @@ public class DefaultMatrixGUIObject extends AbstractMatrixGUIObject {
 		super.fireValueChanged();
 	}
 
-	public final void fireValueChanged(final long row, final long column, final Object value) {
-		iconUpToDate = false;
-		dataCache.put(Coordinates.wrap(row, column), new DataItem(value, ColorUtil.fromObject(value)));
-		for (final Object o : getListenerList().getListenerList()) {
-			if (o instanceof TableModelListener64) {
-				((TableModelListener64) o).tableChanged(new TableModelEvent64(this, row, row, column,
-						TableModelEvent64.UPDATE));
-			} else if (o instanceof TableModelListener) {
-				((TableModelListener) o).tableChanged(new TableModelEvent(this, MathUtil.longToInt(row), MathUtil
-						.longToInt(row), MathUtil.longToInt(column), TableModelEvent.UPDATE));
-			}
-		}
+	public final void updateUI() {
 		super.fireValueChanged();
+	}
+
+	public final void fireValueChanged(final long row, final long column, final Object value) {
+		fireValueChanged(Coordinates.wrap(row, column), value);
 	}
 
 	public synchronized Object getValueAt(final int rowIndex, final int columnIndex) {

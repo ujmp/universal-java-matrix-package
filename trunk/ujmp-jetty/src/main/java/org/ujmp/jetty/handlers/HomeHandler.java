@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jetty;
+package org.ujmp.jetty.handlers;
 
 import java.io.IOException;
 
@@ -31,23 +31,39 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.ujmp.core.Matrix;
 import org.ujmp.core.util.ResourceUtil;
 
-public class FaviconHandler extends AbstractHandler {
+public class HomeHandler extends AbstractHandler {
 
-	private final byte[] favicon;
+	private final String header;
+	private final String footer;
 
-	public FaviconHandler() throws IOException {
-		favicon = ResourceUtil.getResourceAsBytes("org/ujmp/jetty/favicon.ico");
+	private final Matrix matrix = Matrix.Factory.localhostMatrix();
+
+	public HomeHandler() throws IOException {
+		header = ResourceUtil.getResourceAsString("org/ujmp/jetty/header.html");
+		footer = ResourceUtil.getResourceAsString("org/ujmp/jetty/footer.html");
 	}
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		baseRequest.setHandled(true);
-		response.setContentType("image/x-icon");
+		response.setContentType("text/html; charset=utf-8");
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getOutputStream().write(favicon);
-		response.getOutputStream().close();
+
+		response.getWriter().println(header);
+
+		response.getWriter().println("<div class=\"container\">");
+
+		response.getWriter().println("<h1>Home</h1>");
+
+		response.getWriter().println(matrix.toHtml());
+
+		response.getWriter().println("</div>");
+
+		response.getWriter().println(footer);
+		response.getWriter().close();
 	}
 
 }

@@ -25,6 +25,7 @@ package org.ujmp.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.net.SocketException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -112,7 +113,11 @@ public class UJMPToolsMenu extends JMenu {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			LocalhostMatrix.getInstance().showGUI();
+			try {
+				LocalhostMatrix.getInstance().showGUI();
+			} catch (SocketException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }

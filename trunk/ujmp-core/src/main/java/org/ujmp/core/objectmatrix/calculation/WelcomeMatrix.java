@@ -23,6 +23,8 @@
 
 package org.ujmp.core.objectmatrix.calculation;
 
+import java.net.SocketException;
+
 import org.ujmp.core.objectmatrix.impl.DefaultDenseObjectMatrix2D;
 import org.ujmp.core.util.matrices.LocalhostMatrix;
 
@@ -48,7 +50,11 @@ public class WelcomeMatrix extends DefaultDenseObjectMatrix2D {
 		setAsObject("Click on the nose...", 5, 2);
 		setAsObject("...to find out what UJMP can do", 5, 6);
 
-		setAsObject(LocalhostMatrix.getInstance(), 7, 4);
+		try {
+			setAsObject(LocalhostMatrix.getInstance(), 7, 4);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
 
 		setAsDouble(-1, 9, 2);
 		setAsDouble(-1, 9, 6);

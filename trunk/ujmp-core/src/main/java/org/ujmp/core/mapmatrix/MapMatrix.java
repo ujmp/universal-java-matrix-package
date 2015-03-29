@@ -30,4 +30,8 @@ import org.ujmp.core.genericmatrix.GenericMatrix2D;
 public interface MapMatrix<K, V> extends GenericMatrix2D<Object>, Map<K, V> {
 
 	public MapMatrix<K, V> clone();
+
+	public String getAsString(Object key);
+
+	public int indexOfKey(Object key);
 }

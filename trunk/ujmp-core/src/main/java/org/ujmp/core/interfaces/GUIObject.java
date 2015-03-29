@@ -29,6 +29,8 @@ import java.io.Serializable;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.ujmp.core.Coordinates;
+
 /**
  * A GUIObject is an object that can be displayed in a Frame. This interface is
  * needed to indicate that an object can be displayed when the package
@@ -42,7 +44,7 @@ import javax.swing.JPanel;
 public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel, HasDescription,
 		HasToolTip {
 
-	public static final String PRELOADER = "[loading]";
+	public static final String PRELOADER = "[loading...]";
 
 	/**
 	 * Indicates that changed in the object have been made, that should be
@@ -67,5 +69,9 @@ public interface GUIObject extends Serializable, Cloneable, Clearable, HasLabel,
 	public JPanel getPanel();
 
 	public CoreObject getCoreObject();
+
+	public void fireValueChanged(Coordinates coordinates, Object object);
+
+	public void fireValueChanged(Coordinates start, Coordinates end);
 
 }

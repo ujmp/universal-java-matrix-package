@@ -105,7 +105,7 @@ public class LoadDataTask extends TimerTask {
 							matrixGUIObject.getDataCache().put(coordinates,
 									new DataItem(object, ColorUtil.fromObject(object)));
 						}
-						matrixGUIObject.fireValueChanged();
+						matrixGUIObject.updateUI();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

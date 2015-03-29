@@ -23,6 +23,8 @@
 
 package org.ujmp.core.util.matrices;
 
+import java.net.SocketException;
+
 import org.ujmp.core.Matrix;
 import org.ujmp.core.filematrix.DirectoryMatrix;
 import org.ujmp.core.util.UJMPSettings;
@@ -33,7 +35,7 @@ public class LocalhostMatrix extends RemoteHostMatrix {
 	private static final Object lock = new Object();
 	private static LocalhostMatrix instance = null;
 
-	public static final LocalhostMatrix getInstance() {
+	public static final LocalhostMatrix getInstance() throws SocketException {
 		if (instance == null) {
 			synchronized (lock) {
 				if (instance == null) {
@@ -44,7 +46,7 @@ public class LocalhostMatrix extends RemoteHostMatrix {
 		return instance;
 	}
 
-	private LocalhostMatrix() {
+	private LocalhostMatrix() throws SocketException {
 		super("localhost");
 		put("Available Processors", Matrix.Factory.availableProcessors());
 		put("Memory Usage", Matrix.Factory.memoryUsage());

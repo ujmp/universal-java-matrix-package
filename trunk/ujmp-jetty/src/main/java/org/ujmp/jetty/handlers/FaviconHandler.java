@@ -21,7 +21,7 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jetty;
+package org.ujmp.jetty.handlers;
 
 import java.io.IOException;
 
@@ -31,16 +31,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.ujmp.core.util.ResourceUtil;
 
-public class HomeHandler extends AbstractHandler {
+public class FaviconHandler extends AbstractHandler {
+
+	private final byte[] favicon;
+
+	public FaviconHandler() throws IOException {
+		favicon = ResourceUtil.getResourceAsBytes("org/ujmp/jetty/favicon.ico");
+	}
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		baseRequest.setHandled(true);
-		response.setContentType("text/html; charset=utf-8");
+		response.setContentType("image/x-icon");
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println("<h1>Welcome to the Universal Java Matrix Package</h1>");
-		response.getWriter().close();
+		response.getOutputStream().write(favicon);
+		response.getOutputStream().close();
 	}
 
 }

@@ -25,8 +25,9 @@ package org.ujmp.core.util.concurrent;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public abstract class BackgroundTask {
 
@@ -34,16 +35,19 @@ public abstract class BackgroundTask {
 
 	private final Future<?> future;
 
+	private final ExecutorService es = Executors.newSingleThreadExecutor();
+
 	public BackgroundTask(final Object... objects) {
 		this.objects = objects;
-		final ThreadPoolExecutor es = UJMPThreadPoolExecutor.getInstance();
 		future = es.submit(new BackgroundTaskCallable());
 	}
 
 	public abstract Object run();
 
 	public Object getResult() throws InterruptedException, ExecutionException {
-		return future.get();
+		Object result = future.get();
+		es.shutdown();
+		return result;
 	}
 
 	public final Object getObject(final int i) {

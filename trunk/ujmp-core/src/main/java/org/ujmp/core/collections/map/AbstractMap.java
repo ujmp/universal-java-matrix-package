@@ -36,11 +36,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.ujmp.core.util.StringUtil;
+
 public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Serializable {
 	private static final long serialVersionUID = -6429342188863787235L;
 
 	public boolean isEmpty() {
 		return size() == 0;
+	}
+
+	public String getAsString(Object key) {
+		return StringUtil.convert(get(key));
 	}
 
 	public void putAll(Map<? extends K, ? extends V> map) {

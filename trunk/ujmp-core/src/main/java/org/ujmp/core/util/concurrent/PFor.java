@@ -33,6 +33,10 @@ public abstract class PFor {
 
 	private final Object[] objects;
 
+	public PFor(final int threads, final int first, final int last) {
+		this(threads, first, last, new Object[] {});
+	}
+
 	public PFor(final int threads, final int first, final int last, final Object... objects) {
 		this.objects = objects;
 
@@ -60,6 +64,10 @@ public abstract class PFor {
 				}
 			}
 		}
+	}
+
+	public PFor(final int first, final int last) {
+		this(first, last, new Object[] {});
 	}
 
 	public PFor(final int first, final int last, final Object... objects) {

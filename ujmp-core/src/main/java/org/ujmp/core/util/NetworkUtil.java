@@ -28,6 +28,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -59,6 +60,15 @@ public abstract class NetworkUtil {
 		int port = serverSocket.getLocalPort();
 		serverSocket.close();
 		return port;
+	}
+
+	public static String getHostName(String address) {
+		try {
+			InetAddress addr = InetAddress.getByName(address);
+			return addr.getHostName();
+		} catch (UnknownHostException e) {
+			return null;
+		}
 	}
 
 }

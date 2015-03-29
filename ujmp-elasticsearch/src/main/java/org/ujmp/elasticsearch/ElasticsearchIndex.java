@@ -44,9 +44,6 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -79,8 +76,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 	}
 
 	public ElasticsearchIndex(String hostname, int port, String index, String type) {
-		this(new TransportClient(ImmutableSettings.settingsBuilder().put("client.transport.ignore_cluster_name", true)
-				.build()).addTransportAddress(new InetSocketTransportAddress(hostname, port)), index, type);
+		this(ElasticsearchUtil.createTransportClient(hostname, port), index, type);
 	}
 
 	public ElasticsearchIndex(Client client, String index, String type) {
@@ -170,12 +166,19 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 
 	@Override
 	protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
-		MapMatrix<String, Object> old = get(key);
-		if (!value.containsKey(ID)) {
-			value.put(ID, key);
+		if (value == null) {
+			remove(key);
+		} else if (value instanceof ElasticsearchSample && ((ElasticsearchSample) value).getIndex() == this) {
+			// TODO: update
+			throw new RuntimeException("not implemented yet");
+		} else {
+			client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
 		}
-		client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
-		return old;
+		// if (!value.containsKey(ID)) {
+		// value.put(ID, key);
+		// }
+
+		return null;
 	}
 
 	public Client getClient() {

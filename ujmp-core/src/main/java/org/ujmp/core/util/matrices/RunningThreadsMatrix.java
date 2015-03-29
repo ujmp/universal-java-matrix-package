@@ -32,8 +32,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimerTask;
 
-import org.ujmp.core.Matrix;
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.UJMPTimer;
 
 public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
@@ -47,17 +48,38 @@ public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 		setColumnLabel(0, "Thread");
 		setColumnLabel(1, "StackTrace");
 
-		final Matrix m = this;
+		final RunningThreadsMatrix m = this;
 		TimerTask task = new TimerTask() {
+
+			private MapMatrix<Object, Object> oldMap = new DefaultMapMatrix<Object, Object>();
+
 			@Override
 			public void run() {
-				m.fireValueChanged();
+				if (oldMap.size() != size()) {
+					oldMap.clear();
+					oldMap.putAll(m);
+					m.fireValueChanged();
+				} else {
+					for (Object key : oldMap.keySet()) {
+						if (!oldMap.containsKey(key)) {
+							oldMap.clear();
+							oldMap.putAll(m);
+							m.fireValueChanged();
+							break;
+						} else {
+							Object value = m.get(key);
+							if (value != oldMap.get(key)) {
+								oldMap.put(key, value);
+								m.fireValueChanged(Coordinates.wrap(m.indexOfKey(key), 1), value);
+							}
+						}
+					}
+				}
 			}
 		};
 		timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
 		timer.schedule(task, 1000, 1000);
 	}
-
 }
 
 class ThreadMap implements Map<Object, Object> {

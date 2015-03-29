@@ -40,8 +40,8 @@ import org.ujmp.core.util.GnuPlot;
 import org.ujmp.core.util.Matlab;
 import org.ujmp.core.util.Octave;
 import org.ujmp.core.util.R;
-import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.DefaultMatrixGUIObject;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.graph.GraphPanel;
 import org.ujmp.gui.plot.MatrixPlot;
 

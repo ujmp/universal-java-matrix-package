@@ -26,6 +26,10 @@ package org.ujmp.jetty;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.ujmp.jetty.handlers.FaviconHandler;
+import org.ujmp.jetty.handlers.HomeHandler;
+import org.ujmp.jetty.handlers.RobotsHandler;
+import org.ujmp.jetty.handlers.StylesheetHandler;
 
 public class UJMPJettyServer {
 
@@ -68,10 +72,16 @@ public class UJMPJettyServer {
 		robotsHandler.setAllowNullPathInfo(true);
 		robotsHandler.setHandler(new RobotsHandler());
 
+		ContextHandler stylesheetHandler = new ContextHandler();
+		stylesheetHandler.setContextPath("/style.css");
+		stylesheetHandler.setAllowNullPathInfo(true);
+		stylesheetHandler.setHandler(new StylesheetHandler());
+
 		ContextHandlerCollection contexts = new ContextHandlerCollection();
 		contexts.addHandler(homeHandler);
 		contexts.addHandler(faviconHandler);
 		contexts.addHandler(robotsHandler);
+		contexts.addHandler(stylesheetHandler);
 
 		server.setHandler(contexts);
 		server.start();

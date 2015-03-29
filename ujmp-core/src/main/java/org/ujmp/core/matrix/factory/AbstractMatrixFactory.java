@@ -32,6 +32,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -243,7 +244,7 @@ public abstract class AbstractMatrixFactory<T extends Matrix> implements BaseMat
 				66.6, 45.9, 17.9, 13.4, 29.3 });
 	}
 
-	public final LocalhostMatrix localhostMatrix() {
+	public final LocalhostMatrix localhostMatrix() throws SocketException {
 		return LocalhostMatrix.getInstance();
 	}
 

@@ -29,6 +29,7 @@ import java.util.TreeMap;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.util.NetworkUtil;
 import org.ujmp.core.util.concurrent.BackgroundTask;
 
 public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
@@ -36,7 +37,7 @@ public class RemoteHostMatrix extends DefaultMapMatrix<String, Matrix> {
 
 	public RemoteHostMatrix(final String address) {
 		super(new TreeMap<String, Matrix>());
-		setLabel(address);
+		setLabel(NetworkUtil.getHostName(address));
 
 		new BackgroundTask() {
 

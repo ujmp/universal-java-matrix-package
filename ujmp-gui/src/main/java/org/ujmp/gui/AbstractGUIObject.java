@@ -25,6 +25,7 @@ package org.ujmp.gui;
 
 import javax.swing.JFrame;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.GUIObject;
 import org.ujmp.gui.util.FrameManager;
@@ -62,6 +63,14 @@ public abstract class AbstractGUIObject implements GUIObject {
 	public abstract String toString();
 
 	public void fireValueChanged() {
+		modCount++;
+	}
+
+	public void fireValueChanged(Coordinates coordinates, Object object) {
+		modCount++;
+	}
+
+	public void fireValueChanged(Coordinates start, Coordinates end) {
 		modCount++;
 	}
 

@@ -25,26 +25,22 @@ package org.ujmp.gui.table;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.Enumeration;
 
 import javax.accessibility.Accessible;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.Scrollable;
-import javax.swing.SizeSequence;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.RowSorterListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.plaf.TableUI;
-import javax.swing.table.TableColumnModel;
 
 public class JTable64 extends JTable implements TableModelListener64, Scrollable, TableColumnModelListener64,
 		ListSelectionListener64, CellEditorListener, Accessible, RowSorterListener {
 	private static final long serialVersionUID = -4778128053560013569L;
-
-	private SizeSequence rowModel = null;
 
 	public JTable64(TableModel64 dataModel) {
 		this(dataModel, null, null);
@@ -138,7 +134,7 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	}
 
 	public void valueChanged(ListSelectionEvent64 e) {
-		valueChanged((ListSelectionEvent) e);
+		super.valueChanged((ListSelectionEvent) e);
 	}
 
 	public void columnAdded(TableColumnModelEvent64 e) {
@@ -158,14 +154,7 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	}
 
 	public void tableChanged(TableModelEvent64 e) {
-		super.tableChanged(e);
-	}
-
-	private SizeSequence getRowModel() {
-		if (rowModel == null) {
-			rowModel = new SizeSequence(getRowCount(), getRowHeight());
-		}
-		return rowModel;
+		super.tableChanged((TableModelEvent) e);
 	}
 
 	// must be override, otherwise it will iterate over all columns
@@ -227,35 +216,10 @@ public class JTable64 extends JTable implements TableModelListener64, Scrollable
 	}
 
 	public void updateUI() {
-		// Update the UIs of the cell renderers, cell editors and header
-		// renderers.
-		TableColumnModel cm = getColumnModel();
-		// for(int column = 0; column < cm.getColumnCount(); column++) {
-		// TableColumn aColumn = cm.getColumn(column);
-		// SwingUtilities.updateRendererOrEditorUI(aColumn.getCellRenderer());
-		// SwingUtilities.updateRendererOrEditorUI(aColumn.getCellEditor());
-		// SwingUtilities.updateRendererOrEditorUI(aColumn.getHeaderRenderer());
-		// }
-
-		// Update the UIs of all the default renderers.
-		Enumeration defaultRenderers = defaultRenderersByColumnClass.elements();
-		// while (defaultRenderers.hasMoreElements()) {
-		// SwingUtilities.updateRendererOrEditorUI(defaultRenderers.nextElement());
-		// }
-
-		// Update the UIs of all the default editors.
-		Enumeration defaultEditors = defaultEditorsByColumnClass.elements();
-		// while (defaultEditors.hasMoreElements()) {
-		// SwingUtilities.updateRendererOrEditorUI(defaultEditors.nextElement());
-		// }
-
 		// Update the UI of the table header
 		if (tableHeader != null && tableHeader.getParent() == null) {
 			tableHeader.updateUI();
 		}
-
-		// Update UI applied to parent ScrollPane
-		// configureEnclosingScrollPaneUI();
 
 		setUI((TableUI) UIManager.getUI(this));
 	}

@@ -25,6 +25,7 @@ package org.ujmp.core.util.matrices;
 
 import java.util.TimerTask;
 
+import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.longmatrix.stub.AbstractDenseLongMatrix2D;
 import org.ujmp.core.util.UJMPTimer;
@@ -48,7 +49,7 @@ public class SystemTimeMatrix extends AbstractDenseLongMatrix2D {
 
 		@Override
 		public void run() {
-			matrix.fireValueChanged();
+			matrix.fireValueChanged(Coordinates.wrap(0, 0), System.currentTimeMillis());
 		}
 	};
 

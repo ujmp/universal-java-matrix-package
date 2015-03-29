@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -78,7 +79,7 @@ public abstract class ResourceUtil {
 
 	public static String getResourceAsString(String url) throws IOException {
 		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(url);
-		InputStreamReader ir = new InputStreamReader(is);
+		InputStreamReader ir = new InputStreamReader(is, Charset.forName("UTF-8"));
 		StringBuilder sb = new StringBuilder();
 
 		char buf[] = new char[8192];

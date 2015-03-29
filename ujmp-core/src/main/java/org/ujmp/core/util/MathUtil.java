@@ -119,11 +119,16 @@ public abstract class MathUtil {
 		return -(fromIndex + 1);
 	}
 
-	public static String md5(byte[] data) throws NoSuchAlgorithmException {
+	public static String md5(byte[] data) {
 		MessageDigest mdAlgorithm;
 		StringBuilder hexString = new StringBuilder();
 
-		mdAlgorithm = MessageDigest.getInstance("MD5");
+		try {
+			mdAlgorithm = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+
 		mdAlgorithm.update(data);
 		byte[] digest = mdAlgorithm.digest();
 

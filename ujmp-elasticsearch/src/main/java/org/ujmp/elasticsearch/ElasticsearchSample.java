@@ -103,4 +103,8 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 		setMetaData(SCORE, score);
 	}
 
+	public ElasticsearchIndex getIndex() {
+		return elasticsearchIndex;
+	}
+
 }

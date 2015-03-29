@@ -979,15 +979,15 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public void fireValueChanged(Coordinates coordinates) {
+	public void fireValueChanged(Coordinates coordinates, Object object) {
 		if (guiObject != null) {
-			guiObject.fireValueChanged();
+			guiObject.fireValueChanged(coordinates, object);
 		}
 	}
 
 	public void fireValueChanged(Coordinates start, Coordinates end) {
 		if (guiObject != null) {
-			guiObject.fireValueChanged();
+			guiObject.fireValueChanged(start, end);
 		}
 	}
 

@@ -129,7 +129,7 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 
 	public void fireValueChanged();
 
-	public void fireValueChanged(Coordinates coordinates);
+	public void fireValueChanged(Coordinates coordinates, Object object);
 
 	public void fireValueChanged(Coordinates start, Coordinates end);
 

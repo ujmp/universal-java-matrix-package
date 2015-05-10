@@ -155,7 +155,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public Matrix[] lu() {
-		org.la4j.matrix.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.LU).decompose();
+		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.LU).decompose();
 		Matrix[] result = new Matrix[3];
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
@@ -164,7 +164,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public Matrix[] svd() {
-		org.la4j.matrix.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.SVD).decompose();
+		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.SVD).decompose();
 		Matrix[] result = new Matrix[3];
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
@@ -173,19 +173,19 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public Matrix chol() {
-		org.la4j.matrix.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.CHOLESKY).decompose();
+		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.CHOLESKY).decompose();
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		return result;
 	}
 
 	public Matrix inv() {
-		org.la4j.matrix.Matrix temp = matrix.withInverter(InverterFactory.SMART).inverse();
+		org.la4j.Matrix temp = matrix.withInverter(InverterFactory.SMART).inverse();
 		Matrix result = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp);
 		return result;
 	}
 
 	public Matrix[] qr() {
-		org.la4j.matrix.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.QR).decompose();
+		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.QR).decompose();
 		Matrix[] result = new Matrix[2];
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
@@ -193,7 +193,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	}
 
 	public Matrix[] eig() {
-		org.la4j.matrix.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.EIGEN).decompose();
+		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.EIGEN).decompose();
 		Matrix[] result = new Matrix[2];
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);

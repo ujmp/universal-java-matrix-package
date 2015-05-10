@@ -101,6 +101,7 @@ import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.Sinh;
 import org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic.Tanh;
 import org.ujmp.core.doublematrix.calculation.entrywise.misc.GrayScale;
 import org.ujmp.core.doublematrix.calculation.entrywise.misc.GrayScale.ColorChannel;
+import org.ujmp.core.doublematrix.calculation.entrywise.misc.LogisticFunction;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Ceil;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Floor;
 import org.ujmp.core.doublematrix.calculation.entrywise.rounding.Round;
@@ -1373,6 +1374,10 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 
 	public final Matrix exp(Ret returnType) {
 		return new Exp(this).calc(returnType);
+	}
+
+	public final Matrix logistic(Ret returnType) {
+		return new LogisticFunction(this).calc(returnType);
 	}
 
 	public final Matrix sortrows(Ret returnType, long column, boolean reverse) {

@@ -49,4 +49,20 @@ public class SetContent extends AbstractObjectCalculation {
 			return getSource().getAsObject(coordinates);
 		}
 	}
+
+	// must be overridden, because only the new part has to be calculated and
+	// not the whole matrix
+	public Matrix calcOrig() {
+		if (!Coordinates.equals(getSource().getSize(), getSize())) {
+			throw new RuntimeException(
+					"Cannot change Matrix size. Use calc(Ret.NEW) or calc(Ret.LINK) instead.");
+		}
+		long[] newCoordinates = new long[position.length];
+		for (long[] c : newContent.allCoordinates()) {
+			Coordinates.plus(newCoordinates, position, c);
+			getSource().setAsObject(getObject(newCoordinates), newCoordinates);
+		}
+		getSource().fireValueChanged();
+		return getSource();
+	}
 }

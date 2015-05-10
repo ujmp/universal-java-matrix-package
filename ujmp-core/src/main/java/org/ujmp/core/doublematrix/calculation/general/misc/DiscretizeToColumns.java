@@ -24,9 +24,9 @@
 package org.ujmp.core.doublematrix.calculation.general.misc;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
@@ -95,7 +95,7 @@ public class DiscretizeToColumns extends AbstractDoubleCalculation {
 
 	private void countValues() {
 		if (values == null) {
-			Set<Object> set = new HashSet<Object>();
+			Set<Object> set = new TreeSet<Object>();
 			for (long row = getSource().getRowCount(); --row >= 0;) {
 				Object o = getSource().getAsObject(row, column);
 				if (ignoreNaN) {

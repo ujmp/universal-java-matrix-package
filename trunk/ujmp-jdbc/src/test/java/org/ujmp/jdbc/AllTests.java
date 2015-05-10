@@ -25,9 +25,19 @@ package org.ujmp.jdbc;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.ujmp.jdbc.map.TestDerbyStringMap;
+import org.ujmp.jdbc.map.TestH2StringMap;
+import org.ujmp.jdbc.map.TestHSQLDBStringMap;
+import org.ujmp.jdbc.map.TestSQLiteStringMap;
 import org.ujmp.jdbc.matrix.TestJDBCSparseObjectMatrix;
+import org.ujmp.jdbc.set.TestDerbyStringSet;
+import org.ujmp.jdbc.set.TestH2StringSet;
+import org.ujmp.jdbc.set.TestHSQLDBStringSet;
+import org.ujmp.jdbc.set.TestSQLiteStringSet;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ TestJDBCSparseObjectMatrix.class })
+@Suite.SuiteClasses({ TestJDBCSparseObjectMatrix.class, TestDerbyStringMap.class, TestH2StringMap.class,
+		TestHSQLDBStringMap.class, TestSQLiteStringMap.class, TestDerbyStringSet.class, TestH2StringSet.class,
+		TestHSQLDBStringSet.class, TestSQLiteStringSet.class })
 public class AllTests {
 }

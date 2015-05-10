@@ -70,7 +70,7 @@ public interface BasicEntrywiseDoubleCalculations {
 	public Matrix log(Ret returnType);
 
 	/**
-	 * Calculates the exponential function all entries in the Matrix.
+	 * Calculates the exponential function for all entries in the Matrix.
 	 * 
 	 * @param returnType
 	 *            Select whether a new or a linked Matrix is returned, or if the
@@ -78,6 +78,16 @@ public interface BasicEntrywiseDoubleCalculations {
 	 * @return Matrix with exp values.
 	 */
 	public Matrix exp(Ret returnType);
+	
+	/**
+	 * Calculates the logistic function for all entries in the Matrix.
+	 * 
+	 * @param returnType
+	 *            Select whether a new or a linked Matrix is returned, or if the
+	 *            operation is performed on the original Matrix
+	 * @return Matrix with 1/(1+exp(-x)) values.
+	 */
+	public Matrix logistic(Ret returnType);
 
 	/**
 	 * Calculates the sign of the entries in a Matrix. For values greater than

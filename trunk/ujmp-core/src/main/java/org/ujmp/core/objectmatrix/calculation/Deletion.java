@@ -64,9 +64,13 @@ public class Deletion extends AbstractObjectCalculation {
 	public Object getObject(long... coordinates) {
 		long row = coordinates[ROW];
 		long col = coordinates[COLUMN];
-		int rowPos = MathUtil.search(deletion[ROW], 0, deletion[ROW].length, row);
-		int colPos = MathUtil.search(deletion[ROW], 0, deletion[ROW].length, col);
-		return getSource().getAsObject(row + rowPos, col + colPos);
+		int rowOffset = 0;
+		int colOffset = 0;
+		for (; rowOffset < deletion[ROW].length && row >= deletion[ROW][rowOffset]; rowOffset++) {
+		}
+		for (; colOffset < deletion[COLUMN].length && col >= deletion[COLUMN][colOffset]; colOffset++) {
+		}
+		return getSource().getAsObject(row + rowOffset, col + colOffset);
 	}
 
 	public long[] getSize() {

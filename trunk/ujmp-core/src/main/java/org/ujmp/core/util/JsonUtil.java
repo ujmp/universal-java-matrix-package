@@ -23,6 +23,11 @@
 
 package org.ujmp.core.util;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+
+import org.json.JSONTokener;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
@@ -30,7 +35,7 @@ import org.ujmp.core.setmatrix.SetMatrix;
 
 public abstract class JsonUtil {
 
-	public String toJson(Matrix m) {
+	public static String toJson(Matrix m) {
 		if (m instanceof ListMatrix) {
 			return toJson((ListMatrix<?>) m);
 		} else if (m instanceof MapMatrix) {
@@ -43,9 +48,36 @@ public abstract class JsonUtil {
 		}
 	}
 
-	public String toJson(ListMatrix<?> m) {
+	public static String toJson(ListMatrix<?> m) {
 		StringBuilder s = new StringBuilder();
 		return s.toString();
 	}
 
+	public static String toJson(MapMatrix<?, ?> m) {
+		StringBuilder s = new StringBuilder();
+		return s.toString();
+	}
+
+	public static String toJson(SetMatrix<?> m) {
+		StringBuilder s = new StringBuilder();
+		return s.toString();
+	}
+
+	public static Matrix parseJson(String string) throws IOException {
+		StringReader s = new StringReader(string);
+		return parseJson(s);
+	}
+
+	public static Matrix parseJson(Reader reader) throws IOException {
+		return parseJson(new JSONTokener(reader));
+	}
+
+	public static Matrix parseJson(JSONTokener t) throws IOException {
+		Object obj = t.nextValue();
+		if (obj instanceof String) {
+			return Matrix.Factory.linkToValue((String) obj);
+		}
+		// TODO
+		return null;
+	}
 }

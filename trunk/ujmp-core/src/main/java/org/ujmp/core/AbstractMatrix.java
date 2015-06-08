@@ -467,6 +467,16 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		return new DiscretizeDictionary(this, dictionary).calc(returnType);
 	}
 
+	public Matrix discretizeToBoolean(int targetColumnCount) {
+		Matrix ret = SparseMatrix2D.Factory.zeros(getRowCount(), targetColumnCount);
+		for (long[] c : availableCoordinates()) {
+			Object o = getAsObject(c);
+			String s = "col" + c[COLUMN] + ":" + o;
+			ret.setAsBoolean(true, c[ROW], Math.abs(s.hashCode()) % targetColumnCount);
+		}
+		return ret;
+	}
+
 	public Matrix indexOfMax(Ret returnType, int dimension) {
 		return new IndexOfMax(dimension, this).calc(returnType);
 	}
@@ -1430,6 +1440,18 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			throw new RuntimeException("only supported for 2d square matrices");
 		}
 		return new LU.LUMatrix(this).det();
+	}
+
+	public double pdet() {
+		Matrix s = svd()[1];
+		double prod = 1;
+		for (int i = 0; i < s.getRowCount(); i++) {
+			double v = s.getAsDouble(i, i);
+			if (v > 0) {
+				prod *= v;
+			}
+		}
+		return prod;
 	}
 
 	public boolean isSingular() {

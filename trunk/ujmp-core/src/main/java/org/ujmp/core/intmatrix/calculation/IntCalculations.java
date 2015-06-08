@@ -23,15 +23,6 @@
 
 package org.ujmp.core.intmatrix.calculation;
 
-import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.collections.Dictionary;
-import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
-
 public interface IntCalculations {
 
-	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
-			int numberOfBins);
-
-	public Matrix discretize(Ret returnType, Dictionary dictionary);
 }

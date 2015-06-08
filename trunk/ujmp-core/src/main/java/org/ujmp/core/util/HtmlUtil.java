@@ -32,10 +32,15 @@ public abstract class HtmlUtil {
 
 	public static final String toSlug(String s) {
 		s = Normalizer.normalize(s, Normalizer.Form.NFD);
+		s = s.replaceAll("\\.", "-");
+		s = s.replaceAll(":", "-");
 		s = s.replaceAll("\\s+", "-");
 		s = s.replaceAll("[^\\p{ASCII}]", "");
 		s = s.replaceAll("[^a-zA-Z0-9- ]", "");
 		s = s.toLowerCase();
+		s = s.replaceAll("--", "-");
+		s = s.replaceAll("--", "-");
+		s = s.replaceAll("--", "-");
 		return s;
 	}
 

@@ -656,4 +656,18 @@ public abstract class TextUtil {
 		text = text.replaceAll("\n", " ");
 		return splitLineIntoSentences(text);
 	}
+
+	public static Matrix stringToVector(String string) {
+		return stringToVector(string, 131072);
+	}
+
+	public static Matrix stringToVector(String string, int size) {
+		Matrix m = Matrix.Factory.zeros(size, 1);
+		StringTokenizer st = new StringTokenizer(string, " \t\n\r\f,.:;?![]'");
+		while (st.hasMoreElements()) {
+			long index = Math.abs(st.nextElement().toString().toLowerCase().hashCode()) % size;
+			m.setAsDouble(m.getAsDouble(index, 0) + 1, index, 0);
+		}
+		return m;
+	}
 }

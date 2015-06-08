@@ -238,4 +238,8 @@ public class UJMPSettings extends DefaultMapMatrix<String, Object> {
 		put(USERAGENT, value);
 	}
 
+	public String getTempDir() {
+		return System.getProperty("java.io.tmpdir");
+	}
+
 }

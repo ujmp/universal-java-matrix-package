@@ -60,6 +60,15 @@ public abstract class ColorUtil {
 		return new Color(r, g, b);
 	}
 
+	public static final Color fromBoolean(boolean v) {
+		return v ? Color.GREEN : Color.BLACK;
+	}
+
+	public static final Color fromBoolean(boolean v, int alpha) {
+		Color c = fromBoolean(v);
+		return new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
+	}
+
 	public static final Color fromDouble(double v) {
 		// inf = 255 255 0 yellow
 		// 1 = 0 255 0 green
@@ -105,9 +114,9 @@ public abstract class ColorUtil {
 		} else if ("ok".equals(lc)) {
 			return Color.green;
 		} else if ("no".equals(lc)) {
-			return Color.red;
+			return Color.black;
 		} else if ("false".equals(lc)) {
-			return Color.red;
+			return Color.black;
 		} else if ("n/a".equals(lc)) {
 			return Color.darkGray;
 		} else if ("error".equals(lc)) {
@@ -131,6 +140,8 @@ public abstract class ColorUtil {
 			return Color.black;
 		} else if (v == GUIObject.PRELOADER) {
 			return Color.LIGHT_GRAY;
+		} else if (v instanceof Boolean) {
+			return fromBoolean((Boolean) v, alpha);
 		} else if (v instanceof Double) {
 			return fromDouble((Double) v, alpha);
 		} else if (v instanceof Float) {

@@ -39,12 +39,13 @@ public class Octave {
 		try {
 			SEARCH = new String[] { System.getProperty("Octave"), "/usr/bin/octave",
 					"/opt/octave/bin/octave",
-					"c:/Program Files (x86)/Octave/3.2.3_gcc-4.4.0/bin/octave.exe" };
+					"c:/Program Files (x86)/Octave/3.2.3_gcc-4.4.0/bin/octave.exe",
+					"c:/Users/arndt/Octave-4.0.0/bin/octave-cli.exe" };
 		} catch (Exception e) {
 		}
 	}
 
-	public static final int POLLINTERVAL = 50;
+	public static final int POLLINTERVAL = 500;
 
 	public static final int MAXPOLLS = 10;
 

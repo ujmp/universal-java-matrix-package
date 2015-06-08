@@ -113,8 +113,7 @@ public class Cov extends AbstractDoubleCalculation {
 
 			@Override
 			public void step(int i) {
-				result.setAsDouble(1, i, i);
-				for (int c = 0; c < count && c < i; c++) {
+				for (int c = 0; c < count && c <= i; c++) {
 					double value = getDouble(i, c);
 					result.setAsDouble(value, i, c);
 					result.setAsDouble(value, c, i);

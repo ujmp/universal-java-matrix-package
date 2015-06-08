@@ -29,6 +29,7 @@ import java.util.TreeMap;
 
 import org.elasticsearch.search.SearchHit;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.util.StringUtil;
 
 public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	private static final long serialVersionUID = -9091555583281035794L;
@@ -48,11 +49,13 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
 		this.elasticsearchIndex = elasticsearchIndex;
 		this.map = source;
+		setId(StringUtil.getString(map.get(ID)));
 	}
 
 	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit hit) {
 		this.elasticsearchIndex = elasticsearchIndex;
 		setId(hit.getId());
+		System.out.println(getId());
 		if (hit.getSource() != null) {
 			this.map = hit.getSource();
 		} else {

@@ -547,11 +547,11 @@ public abstract class MathUtil {
 		List<Integer> list = new FastArrayList<Integer>();
 
 		if (start < end) {
-			for (int l = start; l <= end; l++) {
+			for (int l = start; l < end; l++) {
 				list.add(l);
 			}
 		} else {
-			for (int l = start; l >= end; l--) {
+			for (int l = start - 1; l >= end; l--) {
 				list.add(l);
 			}
 		}
@@ -578,8 +578,14 @@ public abstract class MathUtil {
 		return collectionToInt(sequenceListInt(start, end));
 	}
 
-	public static List<Long> randPerm(long start, long end) {
+	public static List<Long> randPermLong(long start, long end) {
 		List<Long> list = sequenceListLong(start, end);
+		Collections.shuffle(list);
+		return list;
+	}
+
+	public static List<Integer> randPermInt(int start, int end) {
+		List<Integer> list = sequenceListInt(start, end);
 		Collections.shuffle(list);
 		return list;
 	}

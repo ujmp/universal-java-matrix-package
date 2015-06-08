@@ -251,7 +251,7 @@ public abstract class StringUtil {
 			String dimension = fields[i].trim();
 
 			if (dimension.contains("*")) {
-				selection[i] = MathUtil.sequenceLong(0, size[i] - 1);
+				selection[i] = MathUtil.sequenceLong(0, size[i]);
 			} else {
 				List<Long> list = new ArrayList<Long>();
 				String[] dimselections = dimension.split("\\D*[ \\s,]\\D*");
@@ -261,7 +261,7 @@ public abstract class StringUtil {
 						String[] range = dimsel.split("[:-]");
 						if (range.length == 0) {
 							// all coordinates in this dimension
-							list.addAll(MathUtil.sequenceListLong(0, size[i] - 1));
+							list.addAll(MathUtil.sequenceListLong(0, size[i]));
 						} else if (range.length == 2) {
 							// from lower bound to upper bound
 							String startS = range[0];
@@ -273,7 +273,7 @@ public abstract class StringUtil {
 								throw new RuntimeException("Selection is bigger than size");
 							}
 
-							list.addAll(MathUtil.sequenceListLong(start, end));
+							list.addAll(MathUtil.sequenceListLong(start, end + 1));
 						} else {
 							throw new RuntimeException("Selection not supported: " + dimsel);
 						}
@@ -757,5 +757,9 @@ public abstract class StringUtil {
 		} else {
 			return format(object);
 		}
+	}
+
+	public static boolean isEmpty(String string) {
+		return string == null ? true : "".equals(string) ? true : false;
 	}
 }

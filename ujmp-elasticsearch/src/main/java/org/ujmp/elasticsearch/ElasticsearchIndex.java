@@ -134,7 +134,8 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		if (map == null) {
 			return null;
 		} else {
-			return new ElasticsearchSample(this, getResponse.getSource());
+			map.put(ID, getResponse.getId());
+			return new ElasticsearchSample(this, map);
 		}
 	}
 
@@ -142,6 +143,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).setFields(fields).execute()
 				.actionGet();
 		Map<String, Object> map = new TreeMap<String, Object>();
+		map.put(ID, getResponse.getId());
 		for (String k : getResponse.getFields().keySet()) {
 			map.put(k, getResponse.getField(k).getValue());
 		}
@@ -168,16 +170,12 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<Stri
 	protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
 		if (value == null) {
 			remove(key);
-		} else if (value instanceof ElasticsearchSample && ((ElasticsearchSample) value).getIndex() == this) {
-			// TODO: update
-			throw new RuntimeException("not implemented yet");
 		} else {
+			if (!value.containsKey(ID)) {
+				value.put(ID, key);
+			}
 			client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
 		}
-		// if (!value.containsKey(ID)) {
-		// value.put(ID, key);
-		// }
-
 		return null;
 	}
 

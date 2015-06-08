@@ -24,9 +24,19 @@
 package org.ujmp.core.doublematrix.calculation.general.discretize;
 
 import org.ujmp.core.Matrix;
+import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.collections.Dictionary;
+import org.ujmp.core.intmatrix.calculation.Discretize.DiscretizationMethod;
 
 public interface DiscretizeCalculations {
 
 	public Matrix discretizeToColumns(long column);
+
+	public Matrix discretize(Ret returnType, int dimension, DiscretizationMethod method,
+			int numberOfBins);
+
+	public Matrix discretize(Ret returnType, Dictionary dictionary);
+
+	public Matrix discretizeToBoolean(int targetColumnCount);
 
 }

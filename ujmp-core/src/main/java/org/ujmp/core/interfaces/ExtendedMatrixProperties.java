@@ -38,6 +38,8 @@ public interface ExtendedMatrixProperties {
 
 	public double det();
 
+	public double pdet();
+
 	public boolean isSPD();
 
 	public boolean containsMissingValues();

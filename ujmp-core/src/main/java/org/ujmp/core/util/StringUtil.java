@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -356,6 +358,26 @@ public abstract class StringUtil {
 			}
 		}
 		return new String(result);
+	}
+
+	public static String toBinaryString(String string) {
+		return toBinaryString(string.getBytes());
+	}
+
+	public static String toBinaryString(byte[] bytes) {
+		return toBinaryString(BitSet.valueOf(bytes));
+	}
+
+	public static String toBinaryString(BitSet bitSet) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < bitSet.length(); i++) {
+			if (bitSet.get(i)) {
+				sb.append("1");
+			} else {
+				sb.append("0");
+			}
+		}
+		return sb.toString();
 	}
 
 	public static String toString(Matrix m, Object... parameters) {
@@ -761,5 +783,15 @@ public abstract class StringUtil {
 
 	public static boolean isEmpty(String string) {
 		return string == null ? true : "".equals(string) ? true : false;
+	}
+
+	public static String pad(char c, int count) {
+		char[] chars = new char[count];
+		Arrays.fill(chars, c);
+		return String.valueOf(chars);
+	}
+
+	public static String pad(int count) {
+		return pad(' ', count);
 	}
 }

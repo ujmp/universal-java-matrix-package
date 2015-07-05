@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to JBlas");
+		super("interface to jblas");
 		dependencies.add("ujmp-core");
 		dependencies.add("jblas.jar");
 		neededClasses.add("org.jblas.DoubleMatrix");

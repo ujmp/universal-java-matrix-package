@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("library for parallel computing in a Hadoop cluster");
+		super("interface to Hadoop");
 		dependencies.add("ujmp-core");
 		dependencies.add("hadoop-core.jar");
 		dependencies.add("commons-logging.jar");

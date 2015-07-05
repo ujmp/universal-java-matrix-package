@@ -21,19 +21,27 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jsch;
+package org.ujmp.jetty;
 
 import org.ujmp.core.util.AbstractPlugin;
 
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to JSch for SSH connections");
+		super("module for Jetty web server");
 		dependencies.add("ujmp-core");
-		dependencies.add("jsch.jar");
-		dependencies.add("jzlib.jar");
-		neededClasses.add("com.jcraft.jsch.JSch");
-		neededClasses.add("com.jcraft.jzlib.JZlib");
+		dependencies.add("jetty-server.jar");
+		dependencies.add("javax.servlet-api.jar");
+		dependencies.add("jetty-http.jar");
+		dependencies.add("jetty-util.jar");
+		dependencies.add("jetty-io.jar");
+		dependencies.add("json.jar");
+		neededClasses.add("org.eclise.jetty.server.Server");
+		neededClasses.add("javax.servlet.Servlet");
+		neededClasses.add("org.eclipse.jetty.http.HttpField");
+		neededClasses.add("org.eclipse.jetty.util.Jetty");
+		neededClasses.add("org.eclipse.jetty.io.Connection");
+		neededClasses.add("org.json.JSONObject");
 	}
 
 }

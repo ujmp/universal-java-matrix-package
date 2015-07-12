@@ -45,10 +45,10 @@ public class Selection extends AbstractObjectCalculation {
 		super(m);
 		this.selection = new long[selection.length][];
 		if (selection[ROW] != null) {
-			this.selection[ROW] = MathUtil.collectionToLong(selection[ROW]);
+			this.selection[ROW] = MathUtil.collectionToLongArray(selection[ROW]);
 		}
 		if (selection[COLUMN] != null) {
-			this.selection[COLUMN] = MathUtil.collectionToLong(selection[COLUMN]);
+			this.selection[COLUMN] = MathUtil.collectionToLongArray(selection[COLUMN]);
 		}
 		if (this.selection[ROW] != null && this.selection[COLUMN] != null) {
 			size = new long[] { this.selection[ROW].length, this.selection[COLUMN].length };

@@ -412,7 +412,7 @@ public abstract class MathUtil {
 		return r;
 	}
 
-	public static final long[] collectionToLong(final Collection<? extends Number> numbers) {
+	public static final long[] collectionToLongArray(final Collection<? extends Number> numbers) {
 		final long[] ret = new long[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
@@ -421,7 +421,7 @@ public abstract class MathUtil {
 		return ret;
 	}
 
-	public static final double[] collectionToDouble(final Collection<? extends Number> numbers) {
+	public static final double[] collectionToDoubleArray(final Collection<? extends Number> numbers) {
 		final double[] ret = new double[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
@@ -430,7 +430,7 @@ public abstract class MathUtil {
 		return ret;
 	}
 
-	public static final int[] collectionToInt(final Collection<? extends Number> numbers) {
+	public static final int[] collectionToIntArray(final Collection<? extends Number> numbers) {
 		final int[] ret = new int[numbers.size()];
 		int i = 0;
 		for (Number n : numbers) {
@@ -501,91 +501,93 @@ public abstract class MathUtil {
 		return ret;
 	}
 
-	public static List<Long> sequenceListLong(long start, long end) {
-		return sequenceListLong(start, end, 1);
+	public static List<Long> sequenceListLong(long startInclusive, long endExclusive) {
+		return sequenceListLong(startInclusive, endExclusive, 1);
 	}
 
-	public static List<Long> sequenceListLong(long start, long end, long stepsize) {
+	public static List<Long> sequenceListLong(long startInclusive, long endExclusive, long stepsize) {
 		List<Long> list = new FastArrayList<Long>();
 
-		if (start < end) {
+		if (startInclusive < endExclusive) {
 			stepsize = Math.abs(stepsize);
-			for (long l = start; l <= end; l += stepsize) {
+			for (long l = startInclusive; l < endExclusive; l += stepsize) {
 				list.add(l);
 			}
 		} else {
 			stepsize = -Math.abs(stepsize);
-			for (long l = start; l >= end; l += stepsize) {
+			for (long l = startInclusive; l > endExclusive; l += stepsize) {
 				list.add(l);
 			}
 		}
 		return list;
 	}
 
-	public static List<Double> sequenceListDouble(double start, double end) {
-		return sequenceListDouble(start, end, 1);
+	public static List<Double> sequenceListDouble(double startInclusive, double endExclusive) {
+		return sequenceListDouble(startInclusive, endExclusive, 1);
 	}
 
-	public static List<Double> sequenceListDouble(double start, double end, double stepsize) {
+	public static List<Double> sequenceListDouble(double startInclusive, double endExclusive,
+			double stepsize) {
 		List<Double> list = new FastArrayList<Double>();
 
-		if (start < end) {
+		if (startInclusive < endExclusive) {
 			stepsize = Math.abs(stepsize);
-			for (double l = start; l <= end; l += stepsize) {
+			for (double l = startInclusive; l < endExclusive; l += stepsize) {
 				list.add(l);
 			}
 		} else {
 			stepsize = -Math.abs(stepsize);
-			for (double l = start; l >= end; l += stepsize) {
+			for (double l = startInclusive; l > endExclusive; l += stepsize) {
 				list.add(l);
 			}
 		}
 		return list;
 	}
 
-	public static List<Integer> sequenceListInt(int start, int end) {
+	public static List<Integer> sequenceListInt(int startInclusive, int endExclusive) {
 		List<Integer> list = new FastArrayList<Integer>();
 
-		if (start < end) {
-			for (int l = start; l < end; l++) {
+		if (startInclusive < endExclusive) {
+			for (int l = startInclusive; l < endExclusive; l++) {
 				list.add(l);
 			}
 		} else {
-			for (int l = start - 1; l >= end; l--) {
+			for (int l = startInclusive - 1; l > endExclusive; l--) {
 				list.add(l);
 			}
 		}
 		return list;
 	}
 
-	public static long[] sequenceLong(long start, long end) {
-		return collectionToLong(sequenceListLong(start, end));
+	public static long[] sequenceLong(long startInclusive, long endExclusive) {
+		return collectionToLongArray(sequenceListLong(startInclusive, endExclusive));
 	}
 
-	public static long[] sequenceLong(long start, long end, long stepsize) {
-		return collectionToLong(sequenceListLong(start, end, stepsize));
+	public static long[] sequenceLong(long startInclusive, long endExclusive, long stepsize) {
+		return collectionToLongArray(sequenceListLong(startInclusive, endExclusive, stepsize));
 	}
 
-	public static double[] sequenceDouble(double start, double end) {
-		return collectionToDouble(sequenceListDouble(start, end));
+	public static double[] sequenceDouble(double startInclusive, double endExclusive) {
+		return collectionToDoubleArray(sequenceListDouble(startInclusive, endExclusive));
 	}
 
-	public static double[] sequenceDouble(double start, double end, double stepsize) {
-		return collectionToDouble(sequenceListDouble(start, end, stepsize));
+	public static double[] sequenceDouble(double startInclusive, double endExclusive,
+			double stepsize) {
+		return collectionToDoubleArray(sequenceListDouble(startInclusive, endExclusive, stepsize));
 	}
 
-	public static int[] sequenceInt(int start, int end) {
-		return collectionToInt(sequenceListInt(start, end));
+	public static int[] sequenceInt(int startInclusive, int endExclusive) {
+		return collectionToIntArray(sequenceListInt(startInclusive, endExclusive));
 	}
 
-	public static List<Long> randPermLong(long start, long end) {
-		List<Long> list = sequenceListLong(start, end);
+	public static List<Long> randPermLong(long startInclusive, long endExclusive) {
+		List<Long> list = sequenceListLong(startInclusive, endExclusive);
 		Collections.shuffle(list);
 		return list;
 	}
 
-	public static List<Integer> randPermInt(int start, int end) {
-		List<Integer> list = sequenceListInt(start, end);
+	public static List<Integer> randPermInt(int startInclusive, int endExclusive) {
+		List<Integer> list = sequenceListInt(startInclusive, endExclusive);
 		Collections.shuffle(list);
 		return list;
 	}

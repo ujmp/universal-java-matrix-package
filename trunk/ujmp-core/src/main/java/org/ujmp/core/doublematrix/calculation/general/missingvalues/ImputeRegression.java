@@ -69,7 +69,7 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 			Matrix x = getSource();
 
 			if (firstGuess == null) {
-				firstGuess = getSource().impute(Ret.NEW, ImputationMethod.RowMean);
+				firstGuess = getSource().impute(Ret.NEW, ImputationMethod.ColumnMean);
 			}
 
 			imputed = Matrix.Factory.zeros(x.getSize());
@@ -162,6 +162,10 @@ public class ImputeRegression extends AbstractDoubleCalculation {
 			if (!Double.isNaN(v)) {
 				yPredicted.setAsDouble(v, row, 0);
 			}
+		}
+		
+		if (yPredicted.containsMissingValues()) {
+			throw new RuntimeException("imputation did not work");
 		}
 
 		return yPredicted;

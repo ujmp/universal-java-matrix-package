@@ -378,7 +378,7 @@ public abstract class AbstractMatrixTest {
 
 		List<Coordinates> clist = new ArrayList<Coordinates>();
 
-		for (long[] c : m.selectedCoordinates("1:2;:")) {
+		for (long[] c : m.selectedCoordinates("1:3;:")) {
 			clist.add(Coordinates.wrap(c).clone());
 		}
 

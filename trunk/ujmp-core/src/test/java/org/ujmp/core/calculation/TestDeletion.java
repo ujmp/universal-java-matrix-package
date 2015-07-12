@@ -34,14 +34,52 @@ public class TestDeletion {
 	@Test
 	public void testDeleteRow0() {
 		Matrix m = getMatrix();
-		System.out.println(m);
-		m.deleteRows(Ret.NEW, 0);
+		m = m.deleteRows(Ret.NEW, 0);
 		assertEquals(4, m.getRowCount());
 		assertEquals(5, m.getColumnCount());
 		assertEquals(1, m.getAsLong(0, 0));
 		assertEquals(2, m.getAsLong(0, 1));
 		assertEquals(1, m.getAsLong(1, 0));
+	}
+
+	@Test
+	public void testDeleteRow1() {
+		Matrix m = getMatrix();
+		m = m.deleteRows(Ret.NEW, 1);
+		assertEquals(4, m.getRowCount());
+		assertEquals(5, m.getColumnCount());
+		assertEquals(1, m.getAsLong(0, 0));
+		assertEquals(1, m.getAsLong(0, 1));
+		assertEquals(1, m.getAsLong(1, 0));
+		assertEquals(3, m.getAsLong(1, 1));
+
+	}
+
+	@Test
+	public void testDeleteRow1And2() {
+		Matrix m = getMatrix();
+		m = m.deleteRows(Ret.NEW, 1, 2);
+		assertEquals(3, m.getRowCount());
+		assertEquals(5, m.getColumnCount());
+		assertEquals(1, m.getAsLong(0, 0));
+		assertEquals(1, m.getAsLong(0, 1));
+		assertEquals(1, m.getAsLong(1, 0));
+		assertEquals(4, m.getAsLong(1, 1));
+
+	}
+
+	@Test
+	public void testDeleteRow1And2And3() {
+		Matrix m = getMatrix();
 		System.out.println(m);
+		m = m.deleteRows(Ret.NEW, 1, 2, 3);
+		System.out.println(m);
+		assertEquals(2, m.getRowCount());
+		assertEquals(5, m.getColumnCount());
+		assertEquals(1, m.getAsLong(0, 0));
+		assertEquals(1, m.getAsLong(0, 1));
+		assertEquals(1, m.getAsLong(1, 0));
+		assertEquals(5, m.getAsLong(1, 1));
 	}
 
 	private Matrix getMatrix() {

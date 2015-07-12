@@ -275,7 +275,7 @@ public abstract class StringUtil {
 								throw new RuntimeException("Selection is bigger than size");
 							}
 
-							list.addAll(MathUtil.sequenceListLong(start, end + 1));
+							list.addAll(MathUtil.sequenceListLong(start, end));
 						} else {
 							throw new RuntimeException("Selection not supported: " + dimsel);
 						}
@@ -287,7 +287,7 @@ public abstract class StringUtil {
 						}
 					}
 				}
-				selection[i] = MathUtil.collectionToLong(list);
+				selection[i] = MathUtil.collectionToLongArray(list);
 			}
 
 		}

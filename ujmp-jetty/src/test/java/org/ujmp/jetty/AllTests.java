@@ -21,20 +21,12 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.jfreechart;
+package org.ujmp.jetty;
 
-import org.ujmp.core.util.AbstractPlugin;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class Plugin extends AbstractPlugin {
-
-	public Plugin() {
-		super("visualization using the JFreeChart library");
-		dependencies.add("ujmp-core");
-		dependencies.add("ujmp-gui");
-		dependencies.add("jfreechart.jar");
-		dependencies.add("jcommon.jar");
-		neededClasses.add("org.jfree.chart.ChartPanel");
-		neededClasses.add("org.jfree.JCommon");
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({})
+public class AllTests {
 }

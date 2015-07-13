@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -51,5 +51,13 @@ public class TestJSciDenseDoubleMatrix2D extends AbstractMatrixTest {
 	@Override
 	public boolean isTestSparse() {
 		return false;
+	}
+
+	protected boolean isSupported(Matrix a, long feature, MatrixLayout layout, Size size, EntryType generator) {
+		if (MatrixLibraries.SVD == feature && MatrixLayout.SQUARE.equals(layout) && Size.SINGLEENTRY.equals(size)) {
+			return false;
+		} else {
+			return super.isSupported(a, feature, layout, size, generator);
+		}
 	}
 }

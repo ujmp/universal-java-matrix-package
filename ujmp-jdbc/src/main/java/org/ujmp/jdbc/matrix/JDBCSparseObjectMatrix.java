@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -32,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.Erasable;
@@ -52,6 +53,8 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 	private transient PreparedStatement deleteEntryStatement = null;
 
 	private transient PreparedStatement selectAllStatement = null;
+
+	private transient PreparedStatement truncateStatement = null;
 
 	private final String url;
 
@@ -180,7 +183,19 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 	}
 
 	public final void clear() {
-		throw new RuntimeException("matrix cannot be modified");
+		try {
+			PreparedStatement ps = getTruncateStatement();
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private PreparedStatement getTruncateStatement() throws SQLException {
+		if (truncateStatement == null) {
+			truncateStatement = getConnection().prepareStatement("delete from " + tableName);
+		}
+		return truncateStatement;
 	}
 
 	private PreparedStatement getInsertEntryStatement() throws SQLException {
@@ -388,7 +403,59 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
 	}
 
 	public Iterable<long[]> availableCoordinates() {
-		throw new RuntimeException("not implemented");
+		try {
+			PreparedStatement ps = getSelectAllStatement();
+			ResultSet rs = ps.executeQuery();
+			return new ResultSetIterable(rs);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+}
+
+class ResultSetIterable implements Iterable<long[]> {
+
+	private ResultSet resultSet;
+
+	public ResultSetIterable(ResultSet rs) {
+		this.resultSet = rs;
+	}
+
+	public Iterator<long[]> iterator() {
+		try {
+			return new ResultSetIterator(resultSet);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+}
+
+class ResultSetIterator implements Iterator<long[]> {
+
+	private ResultSet resultSet;
+	private boolean hasNext;
+	private final long[] coordinates = new long[2];
+
+	public ResultSetIterator(ResultSet rs) throws SQLException {
+		this.resultSet = rs;
+		hasNext = rs.next();
+	}
+
+	public boolean hasNext() {
+		return hasNext;
+	}
+
+	public long[] next() {
+		try {
+			coordinates[0] = resultSet.getLong(2);
+			coordinates[1] = resultSet.getLong(3);
+			hasNext = resultSet.next();
+			return coordinates;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

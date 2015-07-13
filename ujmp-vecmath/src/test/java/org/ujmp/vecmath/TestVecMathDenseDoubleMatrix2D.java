@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -25,6 +25,9 @@ package org.ujmp.vecmath;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.implementations.AbstractMatrixTest;
+import org.ujmp.core.implementations.AbstractMatrixTest.EntryType;
+import org.ujmp.core.implementations.AbstractMatrixTest.MatrixLayout;
+import org.ujmp.core.implementations.AbstractMatrixTest.Size;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.matrices.MatrixLibraries;
 
@@ -51,5 +54,13 @@ public class TestVecMathDenseDoubleMatrix2D extends AbstractMatrixTest {
 	@Override
 	public boolean isTestSparse() {
 		return false;
+	}
+
+	protected boolean isSupported(Matrix a, long feature, MatrixLayout layout, Size size, EntryType generator) {
+		if (MatrixLibraries.LU == feature && MatrixLayout.SQUARE.equals(layout) && Size.SMALL.equals(size)) {
+			return false;
+		} else {
+			return super.isSupported(a, feature, layout, size, generator);
+		}
 	}
 }

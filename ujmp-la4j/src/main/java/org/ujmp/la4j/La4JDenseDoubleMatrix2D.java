@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -23,6 +23,10 @@
 
 package org.ujmp.la4j;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.la4j.LinearAlgebra.DecompositorFactory;
 import org.la4j.LinearAlgebra.InverterFactory;
 import org.la4j.matrix.dense.Basic2DMatrix;
@@ -36,7 +40,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 
 	public static final La4JDenseDoubleMatrix2DFactory Factory = new La4JDenseDoubleMatrix2DFactory();
 
-	private final Basic2DMatrix matrix;
+	private transient Basic2DMatrix matrix;
 
 	public La4JDenseDoubleMatrix2D(int rows, int columns) {
 		super(rows, columns);
@@ -159,7 +163,7 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 		Matrix[] result = new Matrix[3];
 		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
 		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
-		result[2] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[2]);
+		result[2] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[2].toDenseMatrix());
 		return result;
 	}
 
@@ -195,13 +199,24 @@ public class La4JDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D {
 	public Matrix[] eig() {
 		org.la4j.Matrix[] temp = matrix.withDecompositor(DecompositorFactory.EIGEN).decompose();
 		Matrix[] result = new Matrix[2];
-		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0]);
-		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1]);
+		result[0] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[0].toDenseMatrix());
+		result[1] = new La4JDenseDoubleMatrix2D((Basic2DMatrix) temp[1].toDenseMatrix());
 		return result;
 	}
 
 	public La4JDenseDoubleMatrix2DFactory getFactory() {
 		return Factory;
+	}
+
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+		s.defaultReadObject();
+		byte[] binary = (byte[]) s.readObject();
+		matrix = Basic2DMatrix.fromBinary(binary);
+	}
+
+	private void writeObject(ObjectOutputStream s) throws IOException {
+		s.defaultWriteObject();
+		s.writeObject(matrix.toBinary());
 	}
 
 }

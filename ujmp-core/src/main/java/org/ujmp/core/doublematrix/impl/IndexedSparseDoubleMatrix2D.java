@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -24,8 +24,6 @@
 package org.ujmp.core.doublematrix.impl;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 import org.ujmp.core.doublematrix.stub.AbstractSparseDoubleMatrix2D;
 
 public class IndexedSparseDoubleMatrix2D extends AbstractSparseDoubleMatrix2D {

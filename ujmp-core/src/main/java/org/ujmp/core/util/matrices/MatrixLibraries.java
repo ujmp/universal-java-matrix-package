@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -757,7 +757,7 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(no(), D3PLUS, LA4J);
 		setString(yes(), INV, LA4J);
 		setString(squareTall(), SOLVE, LA4J);
-		setString(all(), SVD, LA4J);
+		setString(squareTall(), SVD, LA4J);
 		setString(square(), LU, LA4J);
 		setString(squareTall(), QR, LA4J);
 		setString(yes(), EIG, LA4J);

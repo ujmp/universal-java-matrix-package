@@ -8,7 +8,9 @@
 	<packaging>pom</packaging>
 	<name>Universal Java Matrix Package</name>
 	<url>https://ujmp.org/</url>
-	<description>The Universal Java Matrix Package (UJMP) is an open source Java library which provides sparse and dense matrix classes, as well as a large number of calculations for linear algebra such as matrix multiplication or matrix inverse. Operations such as mean, correlation, standard deviation, replacement of missing values or the calculation of mutual information are supported, too. The Universal Java Matrix Package provides various visualization methods, import and export filters for a large number of file formats, and even the possibility to link to JDBC databases. Multi-dimensional matrices as well as generic matrices with a specified object type are supported and very large matrices can be handled even when they do not fit into memory.</description>
+	<description>
+	The Universal Java Matrix Package (UJMP) is an open source Java library which provides sparse and dense matrix classes, as well as a large number of calculations for linear algebra such as matrix multiplication or matrix inverse. Operations such as mean, correlation, standard deviation, replacement of missing values or the calculation of mutual information are supported, too. The Universal Java Matrix Package provides various visualization methods, import and export filters for a large number of file formats, and even the possibility to link to JDBC databases. Multi-dimensional matrices as well as generic matrices with a specified object type are supported and very large matrices can be handled even when they do not fit into memory.
+    </description>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -259,19 +261,6 @@
 				<version>2.4.1</version>
 				<configuration>
 					<outputDirectory>${basedir}/target/classes</outputDirectory>
-					<includeEmptyDirs>true</includeEmptyDirs>
-					<resources>
-						<resource>
-							<directory>${basedir}/src/main/resources</directory>
-							<filtering>false</filtering>
-						</resource>
-					</resources>
-					<manifestEntries>
-						<SCM-Revision>${buildNumber}</SCM-Revision>
-						<Project-Version>${project.version}</Project-Version>
-						<Build-Date>${maven.build.timestamp}</Build-Date>
-						<Project-Name>${project.artifactId}-${project.version}</Project-Name>
-					</manifestEntries>
 					<descriptors>
 						<descriptor>src/assemble/complete.xml</descriptor>
 						<descriptor>src/assemble/sources.xml</descriptor>
@@ -283,6 +272,11 @@
 						<manifest>
 							<mainClass>org.ujmp.gui.UJMP</mainClass>
 						</manifest>
+						<manifestEntries>
+							<Project-Version>${project.version}</Project-Version>
+							<Build-Date>${maven.build.timestamp}</Build-Date>
+							<Project-Name>${project.artifactId}-${project.version}</Project-Name>
+						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>

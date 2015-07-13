@@ -20,7 +20,8 @@
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-		</dependency>		
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.ujmp</groupId>

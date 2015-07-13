@@ -4,6 +4,7 @@
 	<artifactId>ujmp-la4j</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-la4j</name>
+	<url>https://ujmp.org/ujmp-la4j/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jdbc</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jdbc</name>
+	<url>https://ujmp.org/ujmp-jdbc/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

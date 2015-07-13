@@ -4,6 +4,7 @@
 	<artifactId>ujmp-examples</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-examples</name>
+	<url>https://ujmp.org/ujmp-examples/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

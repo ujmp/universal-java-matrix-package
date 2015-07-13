@@ -4,6 +4,7 @@
 	<artifactId>ujmp-hadoop</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-hadoop</name>
+	<url>https://ujmp.org/ujmp-hadoop/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

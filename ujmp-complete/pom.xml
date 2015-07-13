@@ -4,6 +4,7 @@
 	<artifactId>ujmp-complete</artifactId>
 	<packaging>pom</packaging>
 	<name>ujmp-complete</name>
+	<url>https://ujmp.org/ujmp-complete/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

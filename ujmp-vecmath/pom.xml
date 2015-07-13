@@ -4,6 +4,7 @@
 	<artifactId>ujmp-vecmath</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-vecmath</name>
+	<url>https://ujmp.org/ujmp-vecmath/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

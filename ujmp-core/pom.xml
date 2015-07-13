@@ -4,6 +4,7 @@
 	<artifactId>ujmp-core</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-core</name>
+	<url>https://ujmp.org/ujmp-core/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

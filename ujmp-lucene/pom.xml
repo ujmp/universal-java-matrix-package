@@ -4,6 +4,7 @@
 	<artifactId>ujmp-lucene</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-lucene</name>
+	<url>https://ujmp.org/ujmp-lucene/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

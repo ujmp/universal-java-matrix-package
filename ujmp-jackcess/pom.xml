@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jackcess</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jackcess</name>
+	<url>https://ujmp.org/ujmp-jackcess/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

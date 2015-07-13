@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jsci</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jsci</name>
+	<url>https://ujmp.org/ujmp-jsci/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

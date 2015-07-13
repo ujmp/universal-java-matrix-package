@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 by Holger Arndt
+ * Copyright (C) 2008-2015 by Holger Arndt
  *
  * This file is part of the Universal Java Matrix Package (UJMP).
  * See the NOTICE file distributed with this work for additional
@@ -27,8 +27,6 @@ import java.math.BigDecimal;
 
 import org.ujmp.core.bigdecimalmatrix.calculation.BigDecimalCalculation;
 import org.ujmp.core.bigdecimalmatrix.stub.AbstractBigDecimalMatrix;
-import org.ujmp.core.calculation.Calculation.Ret;
-import org.ujmp.core.doublematrix.calculation.entrywise.creators.Zeros;
 
 public class BigDecimalCalculationMatrix extends AbstractBigDecimalMatrix {
 	private static final long serialVersionUID = -1984605379151298934L;

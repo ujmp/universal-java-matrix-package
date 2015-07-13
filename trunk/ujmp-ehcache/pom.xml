@@ -4,6 +4,8 @@
 	<artifactId>ujmp-ehcache</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-ehcache</name>
+	<url>https://ujmp.org/ujmp-ehcache/</url>
+	<description>library for caching using EhCache</description>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

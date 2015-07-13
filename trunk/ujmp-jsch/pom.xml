@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jsch</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jsch</name>
+	<url>https://ujmp.org/ujmp-jsch/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

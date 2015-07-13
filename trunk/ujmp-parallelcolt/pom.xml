@@ -4,6 +4,7 @@
 	<artifactId>ujmp-parallelcolt</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-parallelcolt</name>
+	<url>https://ujmp.org/ujmp-parallelcolt/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

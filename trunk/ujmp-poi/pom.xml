@@ -4,6 +4,7 @@
 	<artifactId>ujmp-poi</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-poi</name>
+	<url>https://ujmp.org/ujmp-poi/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

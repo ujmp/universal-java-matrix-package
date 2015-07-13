@@ -3,6 +3,7 @@
 	<artifactId>ujmp-gui</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-gui</name>
+	<url>https://ujmp.org/ujmp-gui/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

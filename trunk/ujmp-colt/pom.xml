@@ -4,6 +4,7 @@
 	<artifactId>ujmp-colt</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-colt</name>
+	<url>https://ujmp.org/ujmp-colt/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

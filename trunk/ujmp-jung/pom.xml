@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jung</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jung</name>
+	<url>https://ujmp.org/ujmp-jung/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

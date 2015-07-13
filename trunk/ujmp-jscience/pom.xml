@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jscience</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jscience</name>
+	<url>https://ujmp.org/ujmp-jscience/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

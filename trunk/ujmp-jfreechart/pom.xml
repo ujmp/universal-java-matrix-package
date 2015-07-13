@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jfreechart</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jfreechart</name>
+	<url>https://ujmp.org/ujmp-jfreechart/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

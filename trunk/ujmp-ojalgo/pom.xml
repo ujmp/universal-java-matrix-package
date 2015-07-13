@@ -4,6 +4,7 @@
 	<artifactId>ujmp-ojalgo</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-ojalgo</name>
+	<url>https://ujmp.org/ujmp-ojalgo/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

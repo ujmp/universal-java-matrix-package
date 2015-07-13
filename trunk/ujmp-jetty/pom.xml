@@ -4,6 +4,7 @@
 	<artifactId>ujmp-jetty</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-jetty</name>
+	<url>https://ujmp.org/ujmp-jetty/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

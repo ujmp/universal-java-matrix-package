@@ -4,6 +4,7 @@
 	<artifactId>ujmp-itext</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-itext</name>
+	<url>https://ujmp.org/ujmp-itext/</url>
 
 	<parent>
 		<groupId>org.ujmp</groupId>

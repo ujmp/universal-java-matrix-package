@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-visualization:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-api:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sourceforge.collections:collections-generic:4.01" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-algorithms:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: colt:colt:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: concurrent:concurrent:1.3.4" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-samples:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-graph-impl:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jung:jung-io:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:wstx-asl:3.2.6" level="project" />
+    <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="module" module-name="ujmp-gui" />
+    <orderEntry type="module" module-name="ujmp-core" />
+    <orderEntry type="library" name="Maven: org.json:json:20141113" level="project" />
+    <orderEntry type="module" module-name="ujmp-gui" scope="TEST" production-on-test="" />
+  </component>
+</module>

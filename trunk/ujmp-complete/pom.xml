@@ -13,6 +13,10 @@
 		<relativePath>../ujmp</relativePath>
 	</parent>
 
+    <properties>
+        <rootPath>${project.parent.basedir}</rootPath>
+    </properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.ujmp</groupId>

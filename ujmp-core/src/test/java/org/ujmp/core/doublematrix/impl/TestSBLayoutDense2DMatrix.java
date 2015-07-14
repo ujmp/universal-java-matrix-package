@@ -22,12 +22,12 @@
  */
 package org.ujmp.core.doublematrix.impl;
 
-import java.util.Arrays;
 
 import junit.framework.TestCase;
-
 import org.junit.Test;
 import org.ujmp.core.doublematrix.impl.BlockMatrixLayout.BlockOrder;
+
+import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class TestSBLayoutDense2DMatrix extends TestCase {

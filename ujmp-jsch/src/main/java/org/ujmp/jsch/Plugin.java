@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to JSch for SSH connections");
+		super("Plugin to enable SSH connections using JSch");
 		dependencies.add("ujmp-core");
 		dependencies.add("jsch.jar");
 		dependencies.add("jzlib.jar");

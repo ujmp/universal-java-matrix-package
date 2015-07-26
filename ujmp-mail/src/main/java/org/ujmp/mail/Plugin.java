@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("library for sending email and connecting to IMAP servers");
+		super("Plugin to enable sending email and connections to IMAP servers");
 		dependencies.add("ujmp-core");
 		dependencies.add("mail.jar");
 		neededClasses.add("javax.mail.Message");

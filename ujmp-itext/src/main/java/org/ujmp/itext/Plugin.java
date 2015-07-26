@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface for PDF export");
+		super("Plugin to enable PDF export");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("iText.jar");

@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("some simple examples how to use UJMP");
+		super("Some simple examples how to use the Universal Java Matrix Package");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("ujmp-jmathplot");

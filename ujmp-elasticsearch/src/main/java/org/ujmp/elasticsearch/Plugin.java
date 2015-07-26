@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to the elasticsearch");
+		super("Plugin to enable text indexing using Elasticsearch");
 		dependencies.add("ujmp-core");
 		dependencies.add("elasticsearch.jar");
 		dependencies.add("lucene-core.jar");

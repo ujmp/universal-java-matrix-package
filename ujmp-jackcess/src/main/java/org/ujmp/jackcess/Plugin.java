@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("import and export filters for mdb files (MS Access databases)");
+		super("Plugin to enable import and export for .mdb files from MS Access databases");
 		dependencies.add("ujmp-core");
 		dependencies.add("jackcess.jar");
 		dependencies.add("commons-logging.jar");

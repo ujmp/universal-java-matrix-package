@@ -4,8 +4,8 @@
 	<artifactId>ujmp-ehcache</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-ehcache</name>
-	<url>https://ujmp.org/ujmp-ehcache/</url>
-	<description>library for caching using EhCache</description>
+	<url>https://ujmp.org/0.3.0/ujmp-ehcache/</url>
+	<description>Plugin to enable caching using the EhCache library</description>
 
 	<parent>
 		<groupId>org.ujmp</groupId>
@@ -15,7 +15,7 @@
 	</parent>
 
     <properties>
-        <rootPath>${project.parent.basedir}</rootPath>
+        <rootdir>${project.parent.basedir}</rootdir>
     </properties>
 
 	<dependencies>

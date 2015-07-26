@@ -4,7 +4,8 @@
 	<artifactId>ujmp-commonsmath</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-commonsmath</name>
-	<url>https://ujmp.org/ujmp-commonsmath/</url>
+	<url>https://ujmp.org/0.3.0/ujmp-commonsmath/</url>
+    <description>Plugin to incorporate dense matrix classes from Apache commons math</description>
 
 	<parent>
 		<groupId>org.ujmp</groupId>
@@ -14,7 +15,7 @@
 	</parent>
 
     <properties>
-        <rootPath>${project.parent.basedir}</rootPath>
+        <rootdir>${project.parent.basedir}</rootdir>
     </properties>
 
 	<dependencies>

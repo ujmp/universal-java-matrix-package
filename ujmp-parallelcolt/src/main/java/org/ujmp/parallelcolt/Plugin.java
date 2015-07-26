@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to parallelcolt");
+		super("Plugin to incorporate dense and sparse matrix classes from ParallelColt");
 		dependencies.add("ujmp-core");
 		dependencies.add("parallelcolt.jar");
 		dependencies.add("arpack-combo.jar");

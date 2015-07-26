@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to jblas");
+		super("Plugin to incorporate dense matrix classes from the jblas library");
 		dependencies.add("ujmp-core");
 		dependencies.add("jblas.jar");
 		neededClasses.add("org.jblas.DoubleMatrix");

@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("module for JDBC database import and export");
+		super("Plugin to enable JDBC database import and export");
 		dependencies.add("ujmp-core");
 		dependencies.add("mysql-connector-java.jar");
 		dependencies.add("postgresql.jar");

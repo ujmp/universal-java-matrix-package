@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("library for caching using EhCache");
+		super("Plugin to enable caching using the EhCache library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ehcache-core.jar");
 		dependencies.add("slf4j-api.jar");

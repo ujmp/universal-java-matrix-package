@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Apache poi");
+		super("Plugin to enable import and export for Excel files using Apache POI");
 		dependencies.add("ujmp-core");
 		dependencies.add("poi-ooxml.jar");
 		neededClasses.add("org.apache.poi.ss.usermodel.Workbook");

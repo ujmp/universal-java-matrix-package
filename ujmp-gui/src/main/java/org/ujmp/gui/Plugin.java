@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("basic visualization module for matrices");
+		super("Plugin to enable visualization and graphics");
 		dependencies.add("ujmp-core");
 	}
 

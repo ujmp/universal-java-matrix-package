@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("import and export filters for .mat files (Matlab)");
+		super("Plugin to enable import and export for .mat files from Matlab");
 		dependencies.add("ujmp-core");
 		dependencies.add("jmatio.jar");
 		neededClasses.add("com.jmatio.io.MatTag");

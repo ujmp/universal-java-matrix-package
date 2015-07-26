@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to the efficient-java-matrix-library");
+		super("Plugin to incorporate dense matrix classes from the Efficient Java Matrix Library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ejml.jar");
 		neededClasses.add("org.ejml.data.DenseMatrix64F");

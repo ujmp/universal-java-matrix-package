@@ -1,51 +1,52 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ujmp-jsch</artifactId>
-	<packaging>jar</packaging>
-	<name>ujmp-jsch</name>
-	<url>https://ujmp.org/ujmp-jsch/</url>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ujmp-jsch</artifactId>
+    <packaging>jar</packaging>
+    <name>ujmp-jsch</name>
+    <url>https://ujmp.org/0.3.0/ujmp-jsch/</url>
+    <description>Plugin to enable SSH connections using JSch</description>
 
-	<parent>
-		<groupId>org.ujmp</groupId>
-		<artifactId>ujmp</artifactId>
-		<version>0.3.0-SNAPSHOT</version>
-		<relativePath>../ujmp</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.ujmp</groupId>
+        <artifactId>ujmp</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+        <relativePath>../ujmp</relativePath>
+    </parent>
 
     <properties>
-        <rootPath>${project.parent.basedir}</rootPath>
+        <rootdir>${project.parent.basedir}</rootdir>
     </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>0.1.51</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jzlib</artifactId>
-			<version>1.1.3</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.51</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jzlib</artifactId>
+            <version>1.1.3</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-core</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.ujmp</groupId>
-			<artifactId>ujmp-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.ujmp</groupId>
+            <artifactId>ujmp-core</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ujmp</groupId>
+            <artifactId>ujmp-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>

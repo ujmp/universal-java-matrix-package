@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("library for reading PDF files");
+		super("Plugin to enable reading PDF files");
 		dependencies.add("ujmp-core");
 		dependencies.add("pdfbox.jar");
 		dependencies.add("jempbox.jar");

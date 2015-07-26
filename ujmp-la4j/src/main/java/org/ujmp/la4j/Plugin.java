@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to la4j");
+		super("Plugin to incorporate dense and sparse matrix classes from la4j");
 		dependencies.add("ujmp-core");
 		dependencies.add("ja4j.jar");
 		neededClasses.add("org.la4j.LinearAlgebra");

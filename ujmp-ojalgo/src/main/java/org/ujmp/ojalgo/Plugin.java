@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to the ojAlgo library");
+		super("Plugin to incorporate dense matrix classes from the ojAlgo library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ojalgo.jar");
 		neededClasses.add("org.ojalgo.array.PrimitiveArray");

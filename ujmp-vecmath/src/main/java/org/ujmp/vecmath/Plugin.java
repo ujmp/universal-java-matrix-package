@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Java3D vecmath");
+		super("Plugin to incorporate dense matrix classes from Java3D vecmath");
 		dependencies.add("ujmp-core");
 		dependencies.add("vecmath.jar");
 		neededClasses.add("javax.vecmath.GMatrix");

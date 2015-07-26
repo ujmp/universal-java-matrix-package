@@ -4,7 +4,8 @@
 	<artifactId>ujmp-ejml</artifactId>
 	<packaging>jar</packaging>
 	<name>ujmp-ejml</name>
-	<url>https://ujmp.org/ujmp-ejml/</url>
+	<url>https://ujmp.org/0.3.0/ujmp-ejml/</url>
+    <description>Plugin to incorporate dense matrix classes from the Efficient Java Matrix Library</description>
 
 	<parent>
 		<groupId>org.ujmp</groupId>
@@ -14,7 +15,7 @@
 	</parent>
 
     <properties>
-        <rootPath>${project.parent.basedir}</rootPath>
+        <rootdir>${project.parent.basedir}</rootdir>
     </properties>
 
 	<dependencies>

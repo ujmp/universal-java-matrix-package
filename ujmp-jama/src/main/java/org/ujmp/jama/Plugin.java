@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to JAMA matrices");
+		super("Plugin to incorporate dense matrix classes from JAMA");
 		dependencies.add("ujmp-core");
 		dependencies.add("jama.jar");
 		neededClasses.add("Jama.Matrix");

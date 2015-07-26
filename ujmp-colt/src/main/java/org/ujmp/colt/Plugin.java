@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Colt matrices");
+		super("Plugin to incorporate dense and sparse matrix classes from the Colt library");
 		dependencies.add("ujmp-core");
 		dependencies.add("colt.jar");
 		dependencies.add("concurrent.jar");

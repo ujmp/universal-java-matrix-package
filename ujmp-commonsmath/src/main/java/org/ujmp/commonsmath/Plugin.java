@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Apache commons mathemathics library");
+		super("Plugin to incorporate dense matrix classes from Apache commons math");
 		dependencies.add("ujmp-core");
 		dependencies.add("commons-math.jar");
 		neededClasses.add("org.apache.commons.math3.Field");

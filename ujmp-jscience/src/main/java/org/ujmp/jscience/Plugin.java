@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to the JScience library");
+		super("Plugin to incorporate dense matrix classes from the JScience library");
 		dependencies.add("ujmp-core");
 		dependencies.add("jscience.jar");
 		neededClasses.add("org.jscience.JScience");

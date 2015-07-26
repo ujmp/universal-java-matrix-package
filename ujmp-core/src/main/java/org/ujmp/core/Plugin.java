@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("main package containing most matrix implementations and calculations");
+		super("Main package of UJMP containing dense and sparse matrix implementations and functions");
 		dependencies.add("none");
 	}
 

@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Matrix Toolkits for Java");
+		super("Plugin to incorporate dense and sparse matrix classes from Matrix Toolkits for Java");
 		dependencies.add("ujmp-core");
 		dependencies.add("mtj.jar");
 		dependencies.add("arpack-combined_all.jar");

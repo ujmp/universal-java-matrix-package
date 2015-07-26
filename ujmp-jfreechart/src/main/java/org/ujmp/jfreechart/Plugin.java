@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("visualization using the JFreeChart library");
+		super("Plugin for visualization using the JFreeChart library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("jfreechart.jar");

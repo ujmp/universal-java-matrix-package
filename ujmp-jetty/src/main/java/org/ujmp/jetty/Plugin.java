@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("module for Jetty web server");
+		super("Plugin to incorporate Jetty web server");
 		dependencies.add("ujmp-core");
 		dependencies.add("jetty-server.jar");
 		dependencies.add("javax.servlet-api.jar");

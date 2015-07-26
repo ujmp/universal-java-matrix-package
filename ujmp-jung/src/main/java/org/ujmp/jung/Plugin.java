@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Jung library for plotting graphs");
+		super("Plugin to incorporate graph visualizations from Jung library");
 		dependencies.add("ujmp-core");
 		dependencies.add("ujmp-gui");
 		dependencies.add("jung-api.jar");

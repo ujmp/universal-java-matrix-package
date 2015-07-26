@@ -28,7 +28,7 @@ import org.ujmp.core.util.AbstractPlugin;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		super("interface to Hadoop");
+		super("Plugin to interface with Hadoop");
 		dependencies.add("ujmp-core");
 		dependencies.add("hadoop-core.jar");
 		dependencies.add("commons-logging.jar");

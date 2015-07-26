@@ -1,5 +1,5 @@
 # Universal Java Matrix Package
-A Java Library for sparse and dense matrices, linear algebra, visualization and big data
+> A Java Library for sparse and dense matrices, linear algebra, visualization and big data
 
 The Universal Java Matrix Package (UJMP) is an open source library for dense and sparse matrix computations and linear algebra in Java. In addition to the basic operations like matrix multiplication, matrix inverse or matrix decomposition, it also supports visualization, JDBC import/export and many other useful functions such as mean, correlation, standard deviation, mutual information, or the replacement of missing values.
 

@@ -23,10 +23,13 @@
 
 package org.ujmp.elasticsearch;
 
-import java.util.Base64;
+
+
+import java.io.IOException;
 import java.util.Set;
 
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.Base64;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
@@ -63,8 +66,13 @@ public class ElasticsearchDataMap extends AbstractMapMatrix<String, byte[]> {
 			return null;
 		}
 		Object data = s.get(DATA);
-		byte[] bytes = Base64.getDecoder().decode(String.valueOf(data).getBytes());
-		return bytes;
+        byte[] bytes;
+        try {
+            bytes = Base64.decode(String.valueOf(data).getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return bytes;
 	}
 
 	public Set<String> keySet() {
@@ -92,9 +100,7 @@ public class ElasticsearchDataMap extends AbstractMapMatrix<String, byte[]> {
 	}
 
 	public void removeData(byte[] data) {
-		if (data == null) {
-			return;
-		} else {
+		if (data != null) {
 			String id = MathUtil.md5(data);
 			remove(id);
 		}

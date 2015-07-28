@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ujmp/ujmp.iml" filepath="$PROJECT_DIR$/ujmp/ujmp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-colt/ujmp-colt.iml" filepath="$PROJECT_DIR$/ujmp-colt/ujmp-colt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-commonsmath/ujmp-commonsmath.iml" filepath="$PROJECT_DIR$/ujmp-commonsmath/ujmp-commonsmath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-complete/ujmp-complete.iml" filepath="$PROJECT_DIR$/ujmp-complete/ujmp-complete.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-core/ujmp-core.iml" filepath="$PROJECT_DIR$/ujmp-core/ujmp-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-ehcache/ujmp-ehcache.iml" filepath="$PROJECT_DIR$/ujmp-ehcache/ujmp-ehcache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-ejml/ujmp-ejml.iml" filepath="$PROJECT_DIR$/ujmp-ejml/ujmp-ejml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-elasticsearch/ujmp-elasticsearch.iml" filepath="$PROJECT_DIR$/ujmp-elasticsearch/ujmp-elasticsearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-examples/ujmp-examples.iml" filepath="$PROJECT_DIR$/ujmp-examples/ujmp-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-gui/ujmp-gui.iml" filepath="$PROJECT_DIR$/ujmp-gui/ujmp-gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-hadoop/ujmp-hadoop.iml" filepath="$PROJECT_DIR$/ujmp-hadoop/ujmp-hadoop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-itext/ujmp-itext.iml" filepath="$PROJECT_DIR$/ujmp-itext/ujmp-itext.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jackcess/ujmp-jackcess.iml" filepath="$PROJECT_DIR$/ujmp-jackcess/ujmp-jackcess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jama/ujmp-jama.iml" filepath="$PROJECT_DIR$/ujmp-jama/ujmp-jama.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jblas/ujmp-jblas.iml" filepath="$PROJECT_DIR$/ujmp-jblas/ujmp-jblas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jdbc/ujmp-jdbc.iml" filepath="$PROJECT_DIR$/ujmp-jdbc/ujmp-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jetty/ujmp-jetty.iml" filepath="$PROJECT_DIR$/ujmp-jetty/ujmp-jetty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jfreechart/ujmp-jfreechart.iml" filepath="$PROJECT_DIR$/ujmp-jfreechart/ujmp-jfreechart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jmatio/ujmp-jmatio.iml" filepath="$PROJECT_DIR$/ujmp-jmatio/ujmp-jmatio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jsch/ujmp-jsch.iml" filepath="$PROJECT_DIR$/ujmp-jsch/ujmp-jsch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jsci/ujmp-jsci.iml" filepath="$PROJECT_DIR$/ujmp-jsci/ujmp-jsci.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jscience/ujmp-jscience.iml" filepath="$PROJECT_DIR$/ujmp-jscience/ujmp-jscience.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-jung/ujmp-jung.iml" filepath="$PROJECT_DIR$/ujmp-jung/ujmp-jung.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-la4j/ujmp-la4j.iml" filepath="$PROJECT_DIR$/ujmp-la4j/ujmp-la4j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-lucene/ujmp-lucene.iml" filepath="$PROJECT_DIR$/ujmp-lucene/ujmp-lucene.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-mail/ujmp-mail.iml" filepath="$PROJECT_DIR$/ujmp-mail/ujmp-mail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-mtj/ujmp-mtj.iml" filepath="$PROJECT_DIR$/ujmp-mtj/ujmp-mtj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-ojalgo/ujmp-ojalgo.iml" filepath="$PROJECT_DIR$/ujmp-ojalgo/ujmp-ojalgo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-parallelcolt/ujmp-parallelcolt.iml" filepath="$PROJECT_DIR$/ujmp-parallelcolt/ujmp-parallelcolt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-pdfbox/ujmp-pdfbox.iml" filepath="$PROJECT_DIR$/ujmp-pdfbox/ujmp-pdfbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-poi/ujmp-poi.iml" filepath="$PROJECT_DIR$/ujmp-poi/ujmp-poi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ujmp-vecmath/ujmp-vecmath.iml" filepath="$PROJECT_DIR$/ujmp-vecmath/ujmp-vecmath.iml" />
+    </modules>
+  </component>
+</project>

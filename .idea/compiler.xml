@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jama" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jama" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jung" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jung" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jblas" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jblas" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-vecmath" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-vecmath" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-elasticsearch" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-elasticsearch" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jscience" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jscience" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-lucene" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-lucene" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-mtj" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-mtj" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-ejml" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-ejml" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jsci" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jsci" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-itext" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-itext" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-ehcache" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-ehcache" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-gui" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-gui" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-parallelcolt" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-parallelcolt" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jmatio" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jmatio" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jackcess" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jackcess" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jsch" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jsch" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-core" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-core" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-mail" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-mail" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-commonsmath" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-commonsmath" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-examples" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-examples" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-pdfbox" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-pdfbox" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-hadoop" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-hadoop" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-colt" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-colt" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jdbc" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jdbc" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-la4j" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-la4j" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jetty" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jetty" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-complete" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-complete" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-jfreechart" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-jfreechart" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-ojalgo" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-ojalgo" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-poi" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ujmp-poi" />
+      </profile>
+      <profile default="false" name="Annotation profile for ujmp-hazelcast" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ujmp" target="1.5" />
+      <module name="ujmp-colt" target="1.5" />
+      <module name="ujmp-commonsmath" target="1.5" />
+      <module name="ujmp-complete" target="1.5" />
+      <module name="ujmp-core" target="1.5" />
+      <module name="ujmp-ehcache" target="1.5" />
+      <module name="ujmp-ejml" target="1.5" />
+      <module name="ujmp-elasticsearch" target="1.5" />
+      <module name="ujmp-examples" target="1.5" />
+      <module name="ujmp-gui" target="1.5" />
+      <module name="ujmp-hadoop" target="1.5" />
+      <module name="ujmp-hazelcast" target="1.5" />
+      <module name="ujmp-itext" target="1.5" />
+      <module name="ujmp-jackcess" target="1.5" />
+      <module name="ujmp-jama" target="1.5" />
+      <module name="ujmp-jblas" target="1.5" />
+      <module name="ujmp-jdbc" target="1.5" />
+      <module name="ujmp-jetty" target="1.5" />
+      <module name="ujmp-jfreechart" target="1.5" />
+      <module name="ujmp-jmatio" target="1.5" />
+      <module name="ujmp-jsch" target="1.5" />
+      <module name="ujmp-jsci" target="1.5" />
+      <module name="ujmp-jscience" target="1.5" />
+      <module name="ujmp-jung" target="1.5" />
+      <module name="ujmp-la4j" target="1.5" />
+      <module name="ujmp-lucene" target="1.5" />
+      <module name="ujmp-mail" target="1.5" />
+      <module name="ujmp-mtj" target="1.5" />
+      <module name="ujmp-ojalgo" target="1.5" />
+      <module name="ujmp-parallelcolt" target="1.5" />
+      <module name="ujmp-pdfbox" target="1.5" />
+      <module name="ujmp-poi" target="1.5" />
+      <module name="ujmp-vecmath" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ujmp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-colt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-commonsmath" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-complete" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-ehcache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-ejml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-elasticsearch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-examples" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-gui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-hadoop" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-itext" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jackcess" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jama" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jblas" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jdbc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jetty" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jfreechart" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jmatio" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jsch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jsci" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jscience" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-jung" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-la4j" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-lucene" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-mail" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-mtj" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-ojalgo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-parallelcolt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-pdfbox" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-poi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ujmp-vecmath" charset="UTF-8" />
+  </component>
+</project>

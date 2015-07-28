@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: net.sf.jsci:lpsolve:2003-11-03">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sf/jsci/lpsolve/2003-11-03/lpsolve-2003-11-03.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sf/jsci/lpsolve/2003-11-03/lpsolve-2003-11-03-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sf/jsci/lpsolve/2003-11-03/lpsolve-2003-11-03-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

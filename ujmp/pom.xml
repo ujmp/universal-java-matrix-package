@@ -47,11 +47,15 @@
     </licenses>
 
     <scm>
-        <url>https://svn.code.sf.net/p/ujmp/code</url>
-        <connection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</connection>
-        <developerConnection>scm:svn:https://svn.code.sf.net/p/ujmp/code/trunk/</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/ujmp/universal-java-matrix-package</url>
+        <connection>scm:git:git://github.com/ujmp/universal-java-matrix-package.git</connection>
+        <developerConnection>scm:git:git@github.com:ujmp/universal-java-matrix-package.git</developerConnection>
     </scm>
+
+    <issueManagement>
+        <url>https://github.com/ujmp/universal-java-matrix-package/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
 
     <modules>
         <module>../ujmp-colt</module>

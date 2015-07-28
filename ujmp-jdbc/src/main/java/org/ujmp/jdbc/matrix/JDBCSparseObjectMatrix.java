@@ -40,422 +40,423 @@ import org.ujmp.core.objectmatrix.stub.AbstractSparseObjectMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implements Closeable, Erasable {
-	private static final long serialVersionUID = -5801269687893136766L;
+    private static final long serialVersionUID = -5801269687893136766L;
 
-	private boolean useExtendedSQL = false;
+    private boolean useExtendedSQL = false;
 
-	private transient Connection connection = null;
+    private transient Connection connection = null;
 
-	private transient PreparedStatement getEntryStatement = null;
+    private transient PreparedStatement getEntryStatement = null;
 
-	private transient PreparedStatement insertEntryStatement = null;
+    private transient PreparedStatement insertEntryStatement = null;
 
-	private transient PreparedStatement deleteEntryStatement = null;
+    private transient PreparedStatement deleteEntryStatement = null;
 
-	private transient PreparedStatement selectAllStatement = null;
+    private transient PreparedStatement selectAllStatement = null;
 
-	private transient PreparedStatement truncateStatement = null;
+    private transient PreparedStatement truncateStatement = null;
 
-	private final String url;
+    private final String url;
 
-	private final String username;
+    private final String username;
 
-	private String password = null;
+    private String password = null;
 
-	private final String tableName;
+    private final String tableName;
 
-	private final String[] columnsForCoordinates;
+    private final String[] columnsForCoordinates;
 
-	private final String columnForValue;
+    private final String columnForValue;
 
-	public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException, IOException, SQLException {
-		this(size, "jdbc:hsqldb:" + File.createTempFile("hsqldbtemp", "").getAbsolutePath() + ";shutdown=true", "SA",
-				"", "matrixTable", "valueColumn", createColumnNames(size));
-	}
+    public JDBCSparseObjectMatrix(long... size) throws ClassNotFoundException, IOException, SQLException {
+        this(size, "jdbc:hsqldb:" + File.createTempFile("hsqldbtemp", "").getAbsolutePath() + ";shutdown=true", "SA", "", "matrixTable", "valueColumn", createColumnNames(size));
+    }
 
-	private static String[] createColumnNames(long... size) {
-		String[] cols = new String[size.length];
-		for (int c = size.length; --c != -1;) {
-			cols[c] = "column" + c;
-		}
-		return cols;
-	}
+    private static String[] createColumnNames(long... size) {
+        String[] cols = new String[size.length];
+        for (int c = size.length; --c != -1; ) {
+            cols[c] = "column" + c;
+        }
+        return cols;
+    }
 
-	public JDBCSparseObjectMatrix(long[] size, String url, String username, String password, String tableName,
-			String columnForValue, String... columnsForCoordinates) throws ClassNotFoundException, SQLException {
-		super(size);
-		this.url = url;
-		this.size = size;
-		this.username = username;
-		this.password = password;
-		this.tableName = tableName;
-		this.columnForValue = columnForValue;
-		this.columnsForCoordinates = columnsForCoordinates;
+    public JDBCSparseObjectMatrix(long[] size, String url, String username, String password, String tableName, String columnForValue, String... columnsForCoordinates) throws ClassNotFoundException, SQLException {
+        super(size);
+        this.url = url;
+        this.size = size;
+        this.username = username;
+        this.password = password;
+        this.tableName = tableName;
+        this.columnForValue = columnForValue;
+        this.columnsForCoordinates = columnsForCoordinates;
 
-		if (url.startsWith("jdbc:hsqldb:")) {
-			Class.forName("org.hsqldb.jdbcDriver");
-		} else if (url.startsWith("jdbc:mysql:")) {
-			Class.forName("com.mysql.jdbc.Driver");
-		} else if (url.startsWith("jdbc:postgresql:")) {
-			Class.forName("org.postgresql.Driver");
-		} else if (url.startsWith("jdbc:derby:")) {
-			Class.forName("org.apache.derby.jdbc.Driver40");
-		}
+        if (url.startsWith("jdbc:hsqldb:")) {
+            Class.forName("org.hsqldb.jdbcDriver");
+        } else if (url.startsWith("jdbc:mysql:")) {
+            Class.forName("com.mysql.jdbc.Driver");
+        } else if (url.startsWith("jdbc:postgresql:")) {
+            Class.forName("org.postgresql.Driver");
+        } else if (url.startsWith("jdbc:derby:")) {
+            Class.forName("org.apache.derby.jdbc.Driver40");
+        }
 
-		createTableIfNotExists();
-	}
+        createTableIfNotExists();
+    }
 
-	public JDBCSparseObjectMatrix(long[] size, Connection connection, String tableName, String columnForValue,
-			String... columnsForCoordinates) throws SQLException {
-		super(size);
-		this.size = size;
-		this.connection = connection;
-		this.username = connection.getMetaData().getUserName();
-		this.url = connection.getMetaData().getURL();
-		this.tableName = tableName;
-		this.columnForValue = columnForValue;
-		this.columnsForCoordinates = columnsForCoordinates;
-		createTableIfNotExists();
-	}
+    public JDBCSparseObjectMatrix(long[] size, Connection connection, String tableName, String columnForValue, String... columnsForCoordinates) throws SQLException {
+        super(size);
+        this.size = size;
+        this.connection = connection;
+        this.username = connection.getMetaData().getUserName();
+        this.url = connection.getMetaData().getURL();
+        this.tableName = tableName;
+        this.columnForValue = columnForValue;
+        this.columnsForCoordinates = columnsForCoordinates;
+        createTableIfNotExists();
+    }
 
-	public JDBCSparseObjectMatrix(Matrix source) throws ClassNotFoundException, IOException, SQLException {
-		this(source.getSize());
-		for (long[] c : source.availableCoordinates()) {
-			setAsObject(source.getAsObject(c), c);
-		}
-		if (source.getMetaData() != null) {
-			setMetaData(source.getMetaData().clone());
-		}
-	}
+    public JDBCSparseObjectMatrix(Matrix source) throws ClassNotFoundException, IOException, SQLException {
+        this(source.getSize());
+        for (long[] c : source.availableCoordinates()) {
+            setAsObject(source.getAsObject(c), c);
+        }
+        if (source.getMetaData() != null) {
+            setMetaData(source.getMetaData().clone());
+        }
+    }
 
-	private void createTableIfNotExists() throws SQLException {
-		// TODO: check if exists
-		// TODO: add primary key
-		Statement statement = getConnection().createStatement();
-		StringBuilder sb = new StringBuilder();
+    private void createTableIfNotExists() throws SQLException {
+        // TODO: check if exists
+        // TODO: add primary key
+        Statement statement = getConnection().createStatement();
+        StringBuilder sb = new StringBuilder();
 
-		sb.append("CREATE TABLE ").append(tableName);
-		sb.append(" (valueColumn float");
-		for (String c : columnsForCoordinates) {
-			sb.append(", ").append(c).append(" int");
-		}
-		sb.append(")");
-		statement.execute(sb.toString());
-	}
+        sb.append("CREATE TABLE ").append(tableName);
+        sb.append(" (valueColumn float");
+        for (String c : columnsForCoordinates) {
+            sb.append(", ").append(c).append(" int");
+        }
+        sb.append(")");
+        statement.execute(sb.toString());
+    }
 
-	private PreparedStatement getSelectAllStatement() throws SQLException {
-		if (selectAllStatement == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("select ");
-			s.append(columnForValue);
-			s.append(", ");
-			for (int i = 0; i < columnsForCoordinates.length; i++) {
-				s.append(columnsForCoordinates[i]);
-				if (i < columnsForCoordinates.length - 1) {
-					s.append(", ");
-				}
-			}
-			s.append(" from ");
-			s.append(tableName);
-			selectAllStatement = getConnection().prepareStatement(s.toString());
-		}
-		return selectAllStatement;
-	}
+    private PreparedStatement getSelectAllStatement() throws SQLException {
+        if (selectAllStatement == null) {
+            StringBuilder s = new StringBuilder();
+            s.append("select ");
+            s.append(columnForValue);
+            s.append(", ");
+            for (int i = 0; i < columnsForCoordinates.length; i++) {
+                s.append(columnsForCoordinates[i]);
+                if (i < columnsForCoordinates.length - 1) {
+                    s.append(", ");
+                }
+            }
+            s.append(" from ");
+            s.append(tableName);
+            selectAllStatement = getConnection().prepareStatement(s.toString());
+        }
+        return selectAllStatement;
+    }
 
-	private PreparedStatement getGetEntryStatement() throws SQLException {
-		if (getEntryStatement == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("select ");
-			s.append(columnForValue);
-			s.append(" from ");
-			s.append(tableName);
-			s.append(" where ");
-			for (int i = 0; i < columnsForCoordinates.length; i++) {
-				s.append(columnsForCoordinates[i]);
-				s.append("=?");
-				if (i < columnsForCoordinates.length - 1) {
-					s.append(" and ");
-				}
-			}
-			getEntryStatement = getConnection().prepareStatement(s.toString());
-		}
-		return getEntryStatement;
-	}
+    private PreparedStatement getGetEntryStatement() throws SQLException {
+        if (getEntryStatement == null) {
+            StringBuilder s = new StringBuilder();
+            s.append("select ");
+            s.append(columnForValue);
+            s.append(" from ");
+            s.append(tableName);
+            s.append(" where ");
+            for (int i = 0; i < columnsForCoordinates.length; i++) {
+                s.append(columnsForCoordinates[i]);
+                s.append("=?");
+                if (i < columnsForCoordinates.length - 1) {
+                    s.append(" and ");
+                }
+            }
+            getEntryStatement = getConnection().prepareStatement(s.toString());
+        }
+        return getEntryStatement;
+    }
 
-	public final void clear() {
-		try {
-			PreparedStatement ps = getTruncateStatement();
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public final void clear() {
+        try {
+            PreparedStatement ps = getTruncateStatement();
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private PreparedStatement getTruncateStatement() throws SQLException {
-		if (truncateStatement == null) {
-			truncateStatement = getConnection().prepareStatement("delete from " + tableName);
-		}
-		return truncateStatement;
-	}
+    private PreparedStatement getTruncateStatement() throws SQLException {
+        if (truncateStatement == null) {
+            truncateStatement = getConnection().prepareStatement("delete from " + tableName);
+        }
+        return truncateStatement;
+    }
 
-	private PreparedStatement getInsertEntryStatement() throws SQLException {
-		if (insertEntryStatement == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("insert into ");
-			s.append(tableName);
-			s.append(" (");
-			s.append(columnForValue);
-			s.append(", ");
-			for (int i = 0; i < columnsForCoordinates.length; i++) {
-				s.append(columnsForCoordinates[i]);
-				if (i < columnsForCoordinates.length - 1) {
-					s.append(", ");
-				}
-			}
-			s.append(") values (?, ");
-			for (int i = 0; i < columnsForCoordinates.length; i++) {
-				s.append("?");
-				if (i < columnsForCoordinates.length - 1) {
-					s.append(", ");
-				}
-			}
-			s.append(")");
+    private PreparedStatement getInsertEntryStatement() throws SQLException {
+        if (insertEntryStatement == null) {
+            StringBuilder s = new StringBuilder();
+            s.append("insert into ");
+            s.append(tableName);
+            s.append(" (");
+            s.append(columnForValue);
+            s.append(", ");
+            for (int i = 0; i < columnsForCoordinates.length; i++) {
+                s.append(columnsForCoordinates[i]);
+                if (i < columnsForCoordinates.length - 1) {
+                    s.append(", ");
+                }
+            }
+            s.append(") values (?, ");
+            for (int i = 0; i < columnsForCoordinates.length; i++) {
+                s.append("?");
+                if (i < columnsForCoordinates.length - 1) {
+                    s.append(", ");
+                }
+            }
+            s.append(")");
 
-			if (useExtendedSQL) {
-				s.append(" on duplicate key update ");
-				s.append(columnForValue);
-				s.append("=?");
-			}
+            if (useExtendedSQL) {
+                s.append(" on duplicate key update ");
+                s.append(columnForValue);
+                s.append("=?");
+            }
 
-			insertEntryStatement = getConnection().prepareStatement(s.toString());
-		}
-		return insertEntryStatement;
-	}
+            insertEntryStatement = getConnection().prepareStatement(s.toString());
+        }
+        return insertEntryStatement;
+    }
 
-	private PreparedStatement getDeleteEntryStatement() throws SQLException {
-		if (deleteEntryStatement == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("delete from ");
-			s.append(tableName);
-			s.append(" where ");
-			for (int i = 0; i < columnsForCoordinates.length; i++) {
-				s.append(columnsForCoordinates[i]);
-				s.append("=?");
-				if (i < columnsForCoordinates.length - 1) {
-					s.append(" and ");
-				}
-			}
-			deleteEntryStatement = getConnection().prepareStatement(s.toString());
-		}
-		return deleteEntryStatement;
-	}
+    private PreparedStatement getDeleteEntryStatement() throws SQLException {
+        if (deleteEntryStatement == null) {
+            StringBuilder s = new StringBuilder();
+            s.append("delete from ");
+            s.append(tableName);
+            s.append(" where ");
+            for (int i = 0; i < columnsForCoordinates.length; i++) {
+                s.append(columnsForCoordinates[i]);
+                s.append("=?");
+                if (i < columnsForCoordinates.length - 1) {
+                    s.append(" and ");
+                }
+            }
+            deleteEntryStatement = getConnection().prepareStatement(s.toString());
+        }
+        return deleteEntryStatement;
+    }
 
-	public synchronized Object getObject(long... coordinates) {
-		try {
-			PreparedStatement ps = getGetEntryStatement();
-			for (int i = 0; i < coordinates.length; i++) {
-				ps.setLong(i + 1, coordinates[i]);
-			}
-			ResultSet rs = ps.executeQuery();
-			Object o = null;
-			if (rs.next()) {
-				o = rs.getObject(1);
-			}
-			rs.close();
-			return o;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public synchronized Object getObject(long... coordinates) {
+        try {
+            PreparedStatement ps = getGetEntryStatement();
+            for (int i = 0; i < coordinates.length; i++) {
+                ps.setLong(i + 1, coordinates[i]);
+            }
+            ResultSet rs = ps.executeQuery();
+            Object o = null;
+            if (rs.next()) {
+                o = rs.getObject(1);
+            }
+            rs.close();
+            return o;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private void deleteObject(long... coordinates) throws SQLException {
-		PreparedStatement ps = getDeleteEntryStatement();
-		for (int i = 0; i < coordinates.length; i++) {
-			ps.setLong(i + 1, coordinates[i]);
-		}
-		ps.execute();
-	}
+    private void deleteObject(long... coordinates) throws SQLException {
+        PreparedStatement ps = getDeleteEntryStatement();
+        for (int i = 0; i < coordinates.length; i++) {
+            ps.setLong(i + 1, coordinates[i]);
+        }
+        ps.execute();
+    }
 
-	public synchronized void setObject(Object value, long... coordinates) {
-		try {
-			if (MathUtil.getDouble(value) == 0.0) {
-				deleteObject(coordinates);
-			} else {
+    public synchronized void setObject(Object value, long... coordinates) {
+        try {
+            if (MathUtil.getDouble(value) == 0.0) {
+                deleteObject(coordinates);
+            } else {
 
-				if (!useExtendedSQL) {
-					deleteObject(coordinates);
-				}
+                if (!useExtendedSQL) {
+                    deleteObject(coordinates);
+                }
 
-				PreparedStatement ps = getInsertEntryStatement();
+                PreparedStatement ps = getInsertEntryStatement();
 
-				ps.setObject(1, value);
-				for (int i = 0; i < coordinates.length; i++) {
-					ps.setLong(i + 2, coordinates[i]);
-				}
+                ps.setObject(1, value);
+                for (int i = 0; i < coordinates.length; i++) {
+                    ps.setLong(i + 2, coordinates[i]);
+                }
 
-				if (useExtendedSQL) {
-					ps.setObject(coordinates.length + 2, value);
-				}
+                if (useExtendedSQL) {
+                    ps.setObject(coordinates.length + 2, value);
+                }
 
-				ps.executeUpdate();
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+                ps.executeUpdate();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public synchronized void close() throws IOException {
-		try {
-			if (connection != null) {
-				connection.close();
-			}
-		} catch (SQLException e) {
-			throw new IOException(e.toString());
-		}
-	}
+    public synchronized void close() throws IOException {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new IOException(e.toString());
+        }
+    }
 
-	public synchronized Connection getConnection() throws SQLException {
-		if (connection == null || connection.isClosed()) {
-			connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
-			// DatabaseMetaData dbm = connection.getMetaData();
-			// dbm = null;
-			// ResultSet rs = dbm.getTables(null, null, "%", null);
+    public synchronized Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
+            // DatabaseMetaData dbm = connection.getMetaData();
+            // dbm = null;
+            // ResultSet rs = dbm.getTables(null, null, "%", null);
 
-			// rs = meta.getPrimaryKeys(null, null, "table");
-			// while (rs.next()) {
-			// String columnName = rs.getString("COLUMN_NAME");
-			// System.out
-			// .println("getPrimaryKeys(): columnName=" + columnName);
-			// }
-		}
-		return connection;
-	}
+            // rs = meta.getPrimaryKeys(null, null, "table");
+            // while (rs.next()) {
+            // String columnName = rs.getString("COLUMN_NAME");
+            // System.out
+            // .println("getPrimaryKeys(): columnName=" + columnName);
+            // }
+        }
+        return connection;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public boolean containsCoordinates(long... coordinates) {
-		return getObject(coordinates) != null;
-	}
+    public boolean containsCoordinates(long... coordinates) {
+        return getObject(coordinates) != null;
+    }
 
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		if (connection != null) {
-			if (!connection.isClosed()) {
-				connection.close();
-			}
-			connection = null;
-		}
-	}
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        if (connection != null) {
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+            connection = null;
+        }
+    }
 
-	public void erase() throws IOException {
-		try {
-			Statement st = getConnection().createStatement();
-			st.execute("drop table " + tableName);
-		} catch (SQLException e) {
-			throw new IOException(e.toString());
-		}
+    public void erase() throws IOException {
+        try {
+            Statement st = getConnection().createStatement();
+            st.execute("drop table " + tableName);
+        } catch (SQLException e) {
+            throw new IOException(e.toString());
+        }
 
-		close();
+        close();
 
-		// maybe it was just a temporary database?
-		if (url.contains("hsqldbtemp")) {
-			String[] s = url.split(":");
-			if (s.length > 2) {
-				String file = "";
-				for (int i = 2; i < s.length; i++) {
-					file += s[i];
-					if (i < s.length - 1) {
-						file += ":";
-					}
-				}
-				s = file.split(";");
-				file = s[0];
+        // maybe it was just a temporary database?
+        if (url.contains("hsqldbtemp")) {
+            String[] s = url.split(":");
+            if (s.length > 2) {
+                String file = "";
+                for (int i = 2; i < s.length; i++) {
+                    file += s[i];
+                    if (i < s.length - 1) {
+                        file += ":";
+                    }
+                }
+                s = file.split(";");
+                file = s[0];
 
-				File file1 = new File(file);
-				if (file1.exists()) {
-					file1.delete();
-				}
-				File file2 = new File(file + ".log");
-				if (file2.exists()) {
-					file2.delete();
-				}
-				File file3 = new File(file + ".properties");
-				if (file3.exists()) {
-					file3.delete();
-				}
-				File file4 = new File(file + ".script");
-				if (file4.exists()) {
-					file4.delete();
-				}
-			}
-		}
-	}
+                File file1 = new File(file);
+                if (file1.exists()) {
+                    file1.delete();
+                }
+                File file2 = new File(file + ".log");
+                if (file2.exists()) {
+                    file2.delete();
+                }
+                File file3 = new File(file + ".properties");
+                if (file3.exists()) {
+                    file3.delete();
+                }
+                File file4 = new File(file + ".script");
+                if (file4.exists()) {
+                    file4.delete();
+                }
+            }
+        }
+    }
 
-	public Iterable<long[]> availableCoordinates() {
-		try {
-			PreparedStatement ps = getSelectAllStatement();
-			ResultSet rs = ps.executeQuery();
-			return new ResultSetIterable(rs);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public Iterable<long[]> availableCoordinates() {
+        try {
+            PreparedStatement ps = getSelectAllStatement();
+            ResultSet rs = ps.executeQuery();
+            return new ResultSetIterable(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 
 class ResultSetIterable implements Iterable<long[]> {
 
-	private ResultSet resultSet;
+    private ResultSet resultSet;
 
-	public ResultSetIterable(ResultSet rs) {
-		this.resultSet = rs;
-	}
+    public ResultSetIterable(ResultSet rs) {
+        this.resultSet = rs;
+    }
 
-	public Iterator<long[]> iterator() {
-		try {
-			return new ResultSetIterator(resultSet);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public Iterator<long[]> iterator() {
+        try {
+            return new ResultSetIterator(resultSet);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 
 class ResultSetIterator implements Iterator<long[]> {
 
-	private ResultSet resultSet;
-	private boolean hasNext;
-	private final long[] coordinates = new long[2];
+    private ResultSet resultSet;
+    private boolean hasNext;
+    private final long[] coordinates = new long[2];
 
-	public ResultSetIterator(ResultSet rs) throws SQLException {
-		this.resultSet = rs;
-		hasNext = rs.next();
-	}
+    public ResultSetIterator(ResultSet rs) throws SQLException {
+        this.resultSet = rs;
+        hasNext = rs.next();
+    }
 
-	public boolean hasNext() {
-		return hasNext;
-	}
+    public boolean hasNext() {
+        return hasNext;
+    }
 
-	public long[] next() {
-		try {
-			coordinates[0] = resultSet.getLong(2);
-			coordinates[1] = resultSet.getLong(3);
-			hasNext = resultSet.next();
-			return coordinates;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public long[] next() {
+        try {
+            coordinates[0] = resultSet.getLong(2);
+            coordinates[1] = resultSet.getLong(3);
+            hasNext = resultSet.next();
+            return coordinates;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException("remove");
+    }
 
 }

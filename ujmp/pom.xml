@@ -4,7 +4,7 @@
 
     <groupId>org.ujmp</groupId>
     <artifactId>ujmp</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0</version>
     <packaging>pom</packaging>
     <name>Universal Java Matrix Package</name>
     <url>https://ujmp.org/</url>

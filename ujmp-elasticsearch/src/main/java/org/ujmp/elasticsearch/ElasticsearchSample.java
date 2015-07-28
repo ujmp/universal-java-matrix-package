@@ -32,82 +32,83 @@ import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.util.StringUtil;
 
 public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
-	private static final long serialVersionUID = -9091555583281035794L;
+    private static final long serialVersionUID = -9091555583281035794L;
 
-	public static final String ID = ElasticsearchIndex.ID;
-	public static final String SCORE = ElasticsearchIndex.SCORE;
+    public static final String ID = ElasticsearchIndex.ID;
+    public static final String SCORE = ElasticsearchIndex.SCORE;
 
-	private final ElasticsearchIndex elasticsearchIndex;
+    private final ElasticsearchIndex elasticsearchIndex;
 
-	private final Map<String, Object> map;
+    private final Map<String, Object> map;
 
-	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex) {
-		this.elasticsearchIndex = elasticsearchIndex;
-		this.map = new TreeMap<String, Object>();
-	}
+    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex) {
+        this.elasticsearchIndex = elasticsearchIndex;
+        this.map = new TreeMap<String, Object>();
+    }
 
-	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
-		this.elasticsearchIndex = elasticsearchIndex;
-		this.map = source;
-		setId(StringUtil.getString(map.get(ID)));
-	}
+    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
+        this.elasticsearchIndex = elasticsearchIndex;
+        this.map = source;
+        setId(StringUtil.getString(map.get(ID)));
+    }
 
-	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit hit) {
-		this.elasticsearchIndex = elasticsearchIndex;
-		setId(hit.getId());
-		System.out.println(getId());
-		if (hit.getSource() != null) {
-			this.map = hit.getSource();
-		} else {
-			this.map = new TreeMap<String, Object>();
-		}
-		setScore(hit.getScore());
-	}
+    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit hit) {
+        this.elasticsearchIndex = elasticsearchIndex;
+        setId(hit.getId());
+        System.out.println(getId());
+        if (hit.getSource() != null) {
+            this.map = hit.getSource();
+        } else {
+            this.map = new TreeMap<String, Object>();
+        }
+        setScore(hit.getScore());
+    }
 
-	public int size() {
-		return map.size();
-	}
+    public int size() {
+        return map.size();
+    }
 
-	public Object get(Object key) {
-		return map.get(key);
-	}
+    public Object get(Object key) {
+        return map.get(key);
+    }
 
-	public Set<String> keySet() {
-		return map.keySet();
-	}
+    public Set<String> keySet() {
+        return map.keySet();
+    }
 
-	@Override
-	protected void clearMap() {
-		elasticsearchIndex.remove(this.get(ID));
-		map.clear();
-	}
+    @Override
+    protected void clearMap() {
+        elasticsearchIndex.remove(this.get(ID));
+        map.clear();
+    }
 
-	@Override
-	protected Object removeFromMap(Object key) {
-		Object old = map.remove(key);
-		elasticsearchIndex.put(this);
-		return old;
-	}
+    @Override
+    protected Object removeFromMap(Object key) {
+        Object old = map.remove(key);
+        elasticsearchIndex.put(this);
+        return old;
+    }
 
-	@Override
-	protected Object putIntoMap(String key, Object value) {
-		Object old = map.put(key, value);
-		if (!SCORE.equals(key)) {
-			elasticsearchIndex.put(this);
-		}
-		return old;
-	}
+    @Override
+    protected Object putIntoMap(String key, Object value) {
+        Object old = map.put(key, value);
+        if (!SCORE.equals(key)) {
+            // TODO: should update
+            elasticsearchIndex.put(this);
+        }
+        return old;
+    }
 
-	public double getScore() {
-		return getMetaDataDouble(SCORE);
-	}
+    public double getScore() {
+        return getMetaDataDouble(SCORE);
+    }
 
-	public void setScore(double score) {
-		setMetaData(SCORE, score);
-	}
+    public void setScore(double score) {
+        setMetaData(SCORE, score);
+    }
 
-	public ElasticsearchIndex getIndex() {
-		return elasticsearchIndex;
-	}
+    public ElasticsearchIndex getIndex() {
+        return elasticsearchIndex;
+    }
 
 }

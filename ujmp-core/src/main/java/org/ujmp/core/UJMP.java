@@ -25,8 +25,8 @@ package org.ujmp.core;
 
 public class UJMP {
 
-	public static final String UJMPVERSION = "0.3.0";
-	public static final String UJMPLOCATION = "https://oss.sonatype.org/content/repositories/snapshots/org/ujmp/ujmp-core/0.3.0/ujmp-core-0.3.0-20141019.102010-5.jar";
+	public static final String UJMPVERSION = "0.3.1-SNAPSHOT";
+	public static final String UJMPLOCATION = "https://oss.sonatype.org/content/repositories/snapshots/org/ujmp/ujmp-core/0.3.1-SNAPSHOT/ujmp-core-0.3.1-SNAPSHOT-20141019.102010-5.jar";
 	public static final String UJMPJARNAME = "ujmp-core-" + UJMP.UJMPVERSION + ".jar";
 
 	public static void main(String[] args) {

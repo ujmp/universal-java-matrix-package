@@ -4,13 +4,13 @@
     <artifactId>ujmp-jetty</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jetty</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jetty/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jetty/</url>
     <description>Plugin to incorporate Jetty web server</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

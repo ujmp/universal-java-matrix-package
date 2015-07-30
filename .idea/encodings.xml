@@ -13,7 +13,6 @@
     <file url="file://$PROJECT_DIR$/ujmp-gui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ujmp-hadoop" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ujmp-hazelcast" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ujmp-hazelcast/hazelcast.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/ujmp-itext" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ujmp-jackcess" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ujmp-jama" charset="UTF-8" />

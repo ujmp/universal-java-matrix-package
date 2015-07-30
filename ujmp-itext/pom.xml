@@ -4,13 +4,13 @@
     <artifactId>ujmp-itext</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-itext</name>
-    <url>https://ujmp.org/0.3.0/ujmp-itext/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-itext/</url>
     <description>Plugin to enable PDF export</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

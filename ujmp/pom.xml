@@ -4,7 +4,7 @@
 
     <groupId>org.ujmp</groupId>
     <artifactId>ujmp</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Universal Java Matrix Package</name>
     <url>https://ujmp.org/</url>
@@ -103,7 +103,7 @@
             <distributionManagement>
                 <site>
                     <id>ujmp.org</id>
-                    <url>scp://ujmp.org/var/www/ujmp.org/0.3.0/ujmp/</url>
+                    <url>scp://ujmp.org/var/www/ujmp.org/0.3.1-SNAPSHOT/ujmp/</url>
                 </site>
             </distributionManagement>
         </profile>

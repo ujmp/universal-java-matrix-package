@@ -4,13 +4,13 @@
     <artifactId>ujmp-examples</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-examples</name>
-    <url>https://ujmp.org/0.3.0/ujmp-examples/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-examples/</url>
     <description>Some simple examples how to use the Universal Java Matrix Package</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

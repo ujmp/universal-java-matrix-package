@@ -4,13 +4,13 @@
     <artifactId>ujmp-lucene</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-lucene</name>
-    <url>https://ujmp.org/0.3.0/ujmp-lucene/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-lucene/</url>
     <description>Plugin to enable text indexing using Apache Lucene</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

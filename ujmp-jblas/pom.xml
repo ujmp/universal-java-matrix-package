@@ -4,13 +4,13 @@
     <artifactId>ujmp-jblas</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jblas</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jblas/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jblas/</url>
     <description>Plugin to incorporate dense matrix classes from the jblas library</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

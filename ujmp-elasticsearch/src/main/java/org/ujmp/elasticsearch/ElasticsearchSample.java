@@ -93,8 +93,7 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
     protected Object putIntoMap(String key, Object value) {
         Object old = map.put(key, value);
         if (!SCORE.equals(key)) {
-            // TODO: should update
-            elasticsearchIndex.put(this);
+            elasticsearchIndex.update(this.getId(), key, value);
         }
         return old;
     }

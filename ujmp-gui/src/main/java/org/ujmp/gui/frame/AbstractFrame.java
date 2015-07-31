@@ -47,102 +47,106 @@ import org.ujmp.gui.util.FrameManager;
 import org.ujmp.gui.util.UIDefaults;
 
 public abstract class AbstractFrame extends JFrame {
-	private static final long serialVersionUID = -4656308453503586700L;
+    private static final long serialVersionUID = -4656308453503586700L;
 
-	private int modCount = -1;
+    private int modCount = -1;
 
-	private final GUIObject guiObject;
+    private final GUIObject guiObject;
 
-	private final StatusBar statusBar;
-	private final TimerTask updateTask;
-	private final UJMPTimer timer;
+    private final StatusBar statusBar;
+    private final TimerTask updateTask;
+    private final UJMPTimer timer;
 
-	public AbstractFrame(Matrix matrix, JComponent component) {
-		this(matrix.getGUIObject(), component);
-	}
+    public AbstractFrame(Matrix matrix, JComponent component) {
+        this(matrix.getGUIObject(), component);
+    }
 
-	public AbstractFrame(GUIObject o, JComponent component) {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		UIDefaults.setDefaults();
-		FrameManager.registerFrame(o, this);
-		this.guiObject = o;
+    public AbstractFrame(GUIObject o, JComponent component) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        UIDefaults.setDefaults();
+        FrameManager.registerFrame(o, this);
+        this.guiObject = o;
 
-		URL url = ClassLoader.getSystemResource("org/ujmp/gui/UJMP.png");
-		Image img = Toolkit.getDefaultToolkit().createImage(url);
-		setIconImage(img);
+        URL url = ClassLoader.getSystemResource("org/ujmp/gui/UJMP.png");
+        if (url != null) {
+            Image img = Toolkit.getDefaultToolkit().createImage(url);
+            if (img != null) {
+                setIconImage(img);
+            }
+        }
 
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		if (d.getHeight() < 800) {
-			setPreferredSize(new Dimension(700, 500));
-			setSize(new Dimension(700, 500));
-			setExtendedState(MAXIMIZED_BOTH);
-		} else if (d.getHeight() < 1024) {
-			setPreferredSize(new Dimension(1000, 600));
-			setSize(new Dimension(1000, 600));
-			setExtendedState(MAXIMIZED_BOTH);
-		} else {
-			setPreferredSize(new Dimension(1280, 800));
-			setSize(new Dimension(1280, 800));
-		}
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        if (d.getHeight() < 800) {
+            setPreferredSize(new Dimension(700, 500));
+            setSize(new Dimension(700, 500));
+            setExtendedState(MAXIMIZED_BOTH);
+        } else if (d.getHeight() < 1024) {
+            setPreferredSize(new Dimension(1000, 600));
+            setSize(new Dimension(1000, 600));
+            setExtendedState(MAXIMIZED_BOTH);
+        } else {
+            setPreferredSize(new Dimension(1280, 800));
+            setSize(new Dimension(1280, 800));
+        }
 
-		statusBar = new StatusBar(guiObject);
-		getContentPane().add(statusBar, BorderLayout.SOUTH);
-		getContentPane().add(component, BorderLayout.CENTER);
+        statusBar = new StatusBar(guiObject);
+        getContentPane().add(statusBar, BorderLayout.SOUTH);
+        getContentPane().add(component, BorderLayout.CENTER);
 
-		updateTask = new TimerTask() {
-			public void run() {
-				updateTitle();
-				if (modCount != guiObject.getModCount()) {
-					modCount = guiObject.getModCount();
-					repaint(1000);
-				}
-			}
-		};
+        updateTask = new TimerTask() {
+            public void run() {
+                updateTitle();
+                if (modCount != guiObject.getModCount()) {
+                    modCount = guiObject.getModCount();
+                    repaint(1000);
+                }
+            }
+        };
 
-		updateTitle();
-		timer = UJMPTimer.newInstance("FrameUpdate "+guiObject.getCoreObject().getClass().getSimpleName());
-		timer.schedule(updateTask, 500, 500);
-	}
+        updateTitle();
+        timer = UJMPTimer.newInstance("FrameUpdate " + guiObject.getCoreObject().getClass().getSimpleName());
+        timer.schedule(updateTask, 500, 500);
+    }
 
-	public final void setVisible(boolean state) {
-		if (state == true && isVisible()) {
-			return;
-		}
-		if (state == false && !isVisible()) {
-			return;
-		}
+    public final void setVisible(boolean state) {
+        if (state == true && isVisible()) {
+            return;
+        }
+        if (state == false && !isVisible()) {
+            return;
+        }
 
-		super.setVisible(state);
-	}
+        super.setVisible(state);
+    }
 
-	private void updateTitle() {
-		String label = guiObject.getLabel() == null ? "no label" : guiObject.getLabel();
-		if (guiObject instanceof MatrixGUIObject) {
-			MatrixGUIObject mgui = (MatrixGUIObject) guiObject;
-			String size = Coordinates.toString("[", "x", "]", mgui.getRowCount64(), mgui.getColumnCount64());
-			setTitle(size + " " + mgui.getMatrix().getClass().getSimpleName() + " [" + label + "]");
-		} else {
-			setTitle(guiObject.toString());
-		}
-		if (guiObject.getIcon() != null) {
-			setIconImage(guiObject.getIcon());
-		}
-	}
+    private void updateTitle() {
+        String label = guiObject.getLabel() == null ? "no label" : guiObject.getLabel();
+        if (guiObject instanceof MatrixGUIObject) {
+            MatrixGUIObject mgui = (MatrixGUIObject) guiObject;
+            String size = Coordinates.toString("[", "x", "]", mgui.getRowCount64(), mgui.getColumnCount64());
+            setTitle(size + " " + mgui.getMatrix().getClass().getSimpleName() + " [" + label + "]");
+        } else {
+            setTitle(guiObject.toString());
+        }
+        if (guiObject.getIcon() != null) {
+            setIconImage(guiObject.getIcon());
+        }
+    }
 
-	public final GUIObject getObject() {
-		return guiObject;
-	}
+    public final GUIObject getObject() {
+        return guiObject;
+    }
 
-	public final void exportToPDF(File file) {
-		ExportPDF.save(file, this);
-	}
+    public final void exportToPDF(File file) {
+        ExportPDF.save(file, this);
+    }
 
-	public final void exportToPNG(File file) {
-		ExportPNG.save(file, this);
-	}
+    public final void exportToPNG(File file) {
+        ExportPNG.save(file, this);
+    }
 
-	public final void exportToJPEG(File file) {
-		ExportJPEG.save(file, this);
-	}
+    public final void exportToJPEG(File file) {
+        ExportJPEG.save(file, this);
+    }
 
 }

@@ -24,98 +24,109 @@
 package org.ujmp.core.filematrix;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
 
+import org.ujmp.core.Matrix;
 import org.ujmp.core.listmatrix.AbstractListMatrix;
+import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.util.VerifyUtil;
 
-public class DirectoryMatrix extends AbstractListMatrix<FileOrDirectoryMatrix> implements
-		FileOrDirectoryMatrix {
-	private static final long serialVersionUID = -4912495890644097086L;
+public class DirectoryMatrix extends AbstractMapMatrix<String, Matrix> implements FileOrDirectoryMatrix {
+    private static final long serialVersionUID = -4912495890644097086L;
 
-	private final File path;
+    private final File path;
 
-	public DirectoryMatrix() {
-		this((File) null);
-	}
+    public DirectoryMatrix() {
+        this((File) null);
+    }
 
-	public DirectoryMatrix(String path) {
-		this(new File(path));
-	}
+    @Override
+    protected synchronized void clearMap() {
+        // TODO: delete all
+    }
 
-	public DirectoryMatrix(File path) {
-		this.path = path;
-		if (path == null) {
-			setLabel("/");
-		} else {
-			if (path.getParent() == null) {
-				setLabel(path.getAbsolutePath());
-			} else {
-				setLabel(path.getName());
-			}
-			setMetaData(PATH, path.getPath());
-			setMetaData(FILENAME, path.getName());
-			setMetaData(CANEXECUTE, path.canExecute());
-			setMetaData(CANREAD, path.canRead());
-			setMetaData(CANWRITE, path.canWrite());
-			setMetaData(ISHIDDEN, path.isHidden());
-			setMetaData(ISDIRECTORY, path.isDirectory());
-			setMetaData(ISFILE, path.isFile());
-			setMetaData(LASTMODIFIED, path.lastModified());
-			setMetaData(SIZE, path.length());
-		}
-	}
+    @Override
+    protected synchronized Matrix removeFromMap(Object key) {
+        // TODO: delete
+        return null;
+    }
 
-	@Override
-	public FileOrDirectoryMatrix get(int index) {
-		File[] files = null;
-		if (path == null) {
-			files = File.listRoots();
-		} else {
-			files = path.listFiles();
-		}
-		if (files[index].isFile()) {
-			return new FileMatrix(files[index]);
-		} else {
-			return new DirectoryMatrix(files[index]);
-		}
-	}
+    @Override
+    protected synchronized Matrix putIntoMap(String key, Matrix value) {
+        try {
+            Matrix old = get(key);
+            value.exportTo().file(path.getAbsolutePath() + File.separator + key).asSerialized();
+            return old;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public boolean addToList(FileOrDirectoryMatrix t) {
-		throw new UnsupportedOperationException();
-	}
+    public DirectoryMatrix(String path) {
+        this(new File(path));
+    }
 
-	@Override
-	public void addToList(int index, FileOrDirectoryMatrix element) {
-		throw new UnsupportedOperationException();
-	}
+    public DirectoryMatrix(File path) {
+        this.path = path;
+        if (path == null) {
+            setLabel("/");
+        } else {
+            if (path.getParent() == null) {
+                setLabel(path.getAbsolutePath());
+            } else {
+                setLabel(path.getName());
+            }
+            setMetaData(PATH, path.getPath());
+            setMetaData(FILENAME, path.getName());
+            setMetaData(CANEXECUTE, path.canExecute());
+            setMetaData(CANREAD, path.canRead());
+            setMetaData(CANWRITE, path.canWrite());
+            setMetaData(ISHIDDEN, path.isHidden());
+            setMetaData(ISDIRECTORY, path.isDirectory());
+            setMetaData(ISFILE, path.isFile());
+            setMetaData(LASTMODIFIED, path.lastModified());
+            setMetaData(SIZE, path.length());
+        }
+    }
 
-	@Override
-	public DirectoryMatrix removeFromList(int index) {
-		throw new UnsupportedOperationException();
-	}
 
-	@Override
-	public boolean removeFromList(Object o) {
-		throw new UnsupportedOperationException();
-	}
+    public synchronized int size() {
+        if (path == null) {
+            return File.listRoots().length;
+        } else {
+            File[] files = path.listFiles();
+            return files == null ? 0 : files.length;
+        }
+    }
 
-	@Override
-	public DirectoryMatrix setToList(int index, FileOrDirectoryMatrix element) {
-		throw new UnsupportedOperationException();
-	}
+    public synchronized Matrix get(Object key) {
+        VerifyUtil.verifyNotNull(key);
+        File file = new File(path.getName() + File.separator + key);
+        if (file.exists()) {
+            if (file.isFile()) {
+                return new FileMatrix(file);
+            } else {
+                return new DirectoryMatrix(file);
+            }
+        } else {
+            return null;
+        }
+    }
 
-	@Override
-	public void clearList() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int size() {
-		if (path == null) {
-			return File.listRoots().length;
-		} else {
-			File[] files = path.listFiles();
-			return files == null ? 0 : files.length;
-		}
-	}
+    public synchronized Set<String> keySet() {
+        // TODO: avoid creation of set every time
+        Set<String> files = new TreeSet<String>();
+        if (path == null) {
+            for (File f : File.listRoots()) {
+                files.add(f.getName());
+            }
+        } else {
+            for (File f : path.listFiles()) {
+                files.add(f.getName());
+            }
+        }
+        return files;
+    }
 }

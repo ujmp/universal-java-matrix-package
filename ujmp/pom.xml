@@ -235,21 +235,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>sourceforge</id>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>sourceforge</id>
-                    <name>SourceForge</name>
-                    <url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>sourceforge</id>
-                    <name>SourceForge</name>
-                    <url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/releases</url>
-                </repository>
-            </distributionManagement>
-        </profile>
     </profiles>
 
     <build>

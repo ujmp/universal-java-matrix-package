@@ -245,7 +245,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 				System.err
 						.println("Invoke Java with the parameter -Xmx512M to increase available memory");
 			}
-		} catch (Throwable t) {
+		} catch (Throwable ignored) {
 		}
 	}
 

@@ -28,6 +28,6 @@ import org.ujmp.core.matrix.factory.DenseMatrix2DFactory;
 
 public interface DenseMatrix2D extends DenseMatrix, Matrix2D {
 
-	public static DenseMatrix2DFactory<? extends DenseMatrix2D> Factory = new DefaultDenseDoubleMatrix2DFactory();
+	DenseMatrix2DFactory<? extends DenseMatrix2D> Factory = new DefaultDenseDoubleMatrix2DFactory();
 
 }

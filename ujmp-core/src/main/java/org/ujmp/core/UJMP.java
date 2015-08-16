@@ -41,8 +41,7 @@ public class UJMP {
         System.out.println(workspace.getRowCount());
         if (workspace instanceof ListMatrix) {
             ListMatrix lm = (ListMatrix) workspace;
-            for (int i = 0; i < lm.size(); i++) {
-                Object o = lm.get(i);
+            for (Object o : lm) {
                 if (o != null && o instanceof Matrix) {
                     Matrix m = (Matrix) o;
                     if ("ujmp.properties".equals(m.getLabel())) {

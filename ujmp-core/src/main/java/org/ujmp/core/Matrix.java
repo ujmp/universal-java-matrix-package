@@ -23,48 +23,16 @@
 
 package org.ujmp.core;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.UnknownHostException;
-
 import org.ujmp.core.annotation.HasMetaData;
-import org.ujmp.core.calculation.CanPerformCalculations;
-import org.ujmp.core.calculation.DivideMatrix;
-import org.ujmp.core.calculation.DivideMatrixCalculation;
-import org.ujmp.core.calculation.DivideScalar;
-import org.ujmp.core.calculation.DivideScalarCalculation;
-import org.ujmp.core.calculation.MinusMatrix;
-import org.ujmp.core.calculation.MinusMatrixCalculation;
-import org.ujmp.core.calculation.MinusScalar;
-import org.ujmp.core.calculation.MinusScalarCalculation;
-import org.ujmp.core.calculation.Mtimes;
-import org.ujmp.core.calculation.MtimesCalculation;
-import org.ujmp.core.calculation.PlusMatrix;
-import org.ujmp.core.calculation.PlusMatrixCalculation;
-import org.ujmp.core.calculation.PlusScalar;
-import org.ujmp.core.calculation.PlusScalarCalculation;
-import org.ujmp.core.calculation.TimesMatrix;
-import org.ujmp.core.calculation.TimesMatrixCalculation;
-import org.ujmp.core.calculation.TimesScalar;
-import org.ujmp.core.calculation.TimesScalarCalculation;
-import org.ujmp.core.calculation.Transpose;
-import org.ujmp.core.calculation.TransposeCalculation;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.calculation.*;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.*;
 import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
 import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
-import org.ujmp.core.interfaces.Conversions;
-import org.ujmp.core.interfaces.CoordinateFunctions;
-import org.ujmp.core.interfaces.CoreObject;
-import org.ujmp.core.interfaces.DistanceMeasures;
-import org.ujmp.core.interfaces.ExtendedMatrixProperties;
-import org.ujmp.core.interfaces.GettersAndSetters;
+import org.ujmp.core.interfaces.*;
 import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * <code>Matrix</code> is the main class for storing any type of data. You have
@@ -81,62 +49,62 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 	/**
 	 * A factory for creating matrices.
 	 */
-	public static final DefaultDenseMatrixFactory Factory = new DefaultDenseMatrixFactory();
+	DefaultDenseMatrixFactory Factory = new DefaultDenseMatrixFactory();
 
-	public static TransposeCalculation<Matrix, Matrix> transpose = Transpose.MATRIX;
+	TransposeCalculation<Matrix, Matrix> transpose = Transpose.MATRIX;
 
-	public static PlusMatrixCalculation<Matrix, Matrix, Matrix> plusMatrix = PlusMatrix.MATRIX;
+	PlusMatrixCalculation<Matrix, Matrix, Matrix> plusMatrix = PlusMatrix.MATRIX;
 
-	public static MinusMatrixCalculation<Matrix, Matrix, Matrix> minusMatrix = MinusMatrix.MATRIX;
+	MinusMatrixCalculation<Matrix, Matrix, Matrix> minusMatrix = MinusMatrix.MATRIX;
 
-	public static TimesMatrixCalculation<Matrix, Matrix, Matrix> timesMatrix = TimesMatrix.MATRIX;
+	TimesMatrixCalculation<Matrix, Matrix, Matrix> timesMatrix = TimesMatrix.MATRIX;
 
-	public static DivideMatrixCalculation<Matrix, Matrix, Matrix> divideMatrix = DivideMatrix.MATRIX;
+	DivideMatrixCalculation<Matrix, Matrix, Matrix> divideMatrix = DivideMatrix.MATRIX;
 
-	public static PlusScalarCalculation<Matrix, Matrix> plusScalar = PlusScalar.MATRIX;
+	PlusScalarCalculation<Matrix, Matrix> plusScalar = PlusScalar.MATRIX;
 
-	public static MinusScalarCalculation<Matrix, Matrix> minusScalar = MinusScalar.MATRIX;
+	MinusScalarCalculation<Matrix, Matrix> minusScalar = MinusScalar.MATRIX;
 
-	public static TimesScalarCalculation<Matrix, Matrix> timesScalar = TimesScalar.MATRIX;
+	TimesScalarCalculation<Matrix, Matrix> timesScalar = TimesScalar.MATRIX;
 
-	public static DivideScalarCalculation<Matrix, Matrix> divideScalar = DivideScalar.MATRIX;
+	DivideScalarCalculation<Matrix, Matrix> divideScalar = DivideScalar.MATRIX;
 
-	public static MtimesCalculation<Matrix, Matrix, Matrix> mtimes = Mtimes.MATRIX;
+	MtimesCalculation<Matrix, Matrix, Matrix> mtimes = Mtimes.MATRIX;
 
-	public static SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
+	SVD<Matrix> svd = org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.INSTANCE;
 
-	public static LU<Matrix> lu = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
+	LU<Matrix> lu = org.ujmp.core.doublematrix.calculation.general.decomposition.LU.INSTANCE;
 
-	public static QR<Matrix> qr = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
+	QR<Matrix> qr = org.ujmp.core.doublematrix.calculation.general.decomposition.QR.INSTANCE;
 
-	public static Inv<Matrix> inv = Inv.INSTANCE;
+	Inv<Matrix> inv = Inv.INSTANCE;
 
-	public static Solve<Matrix> solve = Solve.INSTANCE;
+	Solve<Matrix> solve = Solve.INSTANCE;
 
-	public static Chol<Matrix> chol = Chol.INSTANCE;
+	Chol<Matrix> chol = Chol.INSTANCE;
 
-	public static Eig<Matrix> eig = Eig.INSTANCE;
+	Eig<Matrix> eig = Eig.INSTANCE;
 
-	public Matrix clone();
+	Matrix clone();
 
-	public MatrixExportDestinationSelector exportTo();
+	MatrixExportDestinationSelector exportTo();
 
-	public MatrixImportSourceSelector importFrom();
+	MatrixImportSourceSelector importFrom();
 
-	public void share(String hostname, int port) throws UnknownHostException, IOException;
+	void share(String hostname, int port) throws IOException;
 
-	public void share(int port) throws IOException;
+	void share(int port) throws IOException;
 
-	public void fireValueChanged();
+	void fireValueChanged();
 
-	public void fireValueChanged(Coordinates coordinates, Object object);
+	void fireValueChanged(Coordinates coordinates, Object object);
 
-	public void fireValueChanged(Coordinates start, Coordinates end);
+	void fireValueChanged(Coordinates start, Coordinates end);
 
-	public void save(File file) throws IOException;
+	void save(File file) throws IOException;
 
-	public void save(String filename) throws IOException;
+	void save(String filename) throws IOException;
 
-	public String toHtml();
+	String toHtml();
 
 }

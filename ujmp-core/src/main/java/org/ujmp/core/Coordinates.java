@@ -261,16 +261,16 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
 	}
 
 	public static final long[] parseString(final String s, final String splitRegex) {
-		return parseString(s, "[x,;\t]");
-	}
-
-	public static final long[] parseString(final String s) {
-		final String[] fields = s.split("[,;\tx]");
+		final String[] fields = s.split(splitRegex);
 		final long[] result = new long[fields.length];
 		for (int i = fields.length - 1; i != -1; i--) {
 			result[i] = Long.parseLong(fields[i]);
 		}
 		return result;
+	}
+
+	public static final long[] parseString(final String s) {
+		return parseString(s, "[x,;\t]");
 	}
 
 	public final int getDimensionCount() {

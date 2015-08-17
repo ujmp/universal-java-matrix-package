@@ -23,25 +23,25 @@
 
 package org.ujmp.ojalgo.calculation;
 
-import org.ojalgo.matrix.decomposition.LUDecomposition;
+import org.ojalgo.matrix.decomposition.OjalgoDecompositionUtil;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class Inv implements org.ujmp.core.doublematrix.calculation.general.decomposition.Inv<Matrix> {
 
-	public static Inv INSTANCE = new Inv();
+    public static Inv INSTANCE = new Inv();
 
-	public Matrix calc(Matrix source) {
-		MatrixStore<Double> matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
-		}
-		org.ojalgo.matrix.decomposition.LU<Double> lu = LUDecomposition.makePrimitive();
-		lu.compute(matrix);
-		return new OjalgoDenseDoubleMatrix2D(lu.getInverse());
-	}
+    public Matrix calc(Matrix source) {
+        MatrixStore<Double> matrix;
+        if (source instanceof OjalgoDenseDoubleMatrix2D) {
+            matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+        } else {
+            matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
+        }
+        org.ojalgo.matrix.decomposition.LU<Double> lu = OjalgoDecompositionUtil.lu();
+        lu.compute(matrix);
+        return new OjalgoDenseDoubleMatrix2D(lu.getInverse());
+    }
 
 }

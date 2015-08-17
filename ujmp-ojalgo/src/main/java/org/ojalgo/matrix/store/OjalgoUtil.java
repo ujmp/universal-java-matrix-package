@@ -25,8 +25,9 @@ package org.ojalgo.matrix.store;
 
 public class OjalgoUtil {
 
-	public static PrimitiveDenseStore linkToArray(final int rows, final int cols, final double[] array) {
-		return new PrimitiveDenseStore(rows, cols, array);
-	}
+    public static PrimitiveDenseStore linkToArray(final int rows, final int cols, final double[] array) {
+        return new PrimitiveDenseStore(rows, cols, array);
+    }
+
 
 }

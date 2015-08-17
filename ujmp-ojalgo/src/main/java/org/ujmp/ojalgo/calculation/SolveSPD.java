@@ -24,31 +24,31 @@
 package org.ujmp.ojalgo.calculation;
 
 import org.ojalgo.matrix.decomposition.Cholesky;
-import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
+import org.ojalgo.matrix.decomposition.OjalgoDecompositionUtil;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class SolveSPD implements org.ujmp.core.doublematrix.calculation.general.decomposition.SolveSPD<Matrix> {
 
-	public static SolveSPD INSTANCE = new SolveSPD();
+    public static SolveSPD INSTANCE = new SolveSPD();
 
-	public Matrix calc(Matrix a, Matrix b) {
-		PrimitiveDenseStore a2 = null;
-		PrimitiveDenseStore b2 = null;
-		if (a instanceof OjalgoDenseDoubleMatrix2D) {
-			a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
-		} else {
-			a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
-		}
-		if (b instanceof OjalgoDenseDoubleMatrix2D) {
-			b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
-		} else {
-			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
-		}
-		final Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-		chol.compute(a2);
-		return new OjalgoDenseDoubleMatrix2D(chol.solve(b2));
-	}
+    public Matrix calc(Matrix a, Matrix b) {
+        PrimitiveDenseStore a2;
+        PrimitiveDenseStore b2;
+        if (a instanceof OjalgoDenseDoubleMatrix2D) {
+            a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
+        } else {
+            a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
+        }
+        if (b instanceof OjalgoDenseDoubleMatrix2D) {
+            b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
+        } else {
+            b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
+        }
+        final Cholesky<Double> chol = OjalgoDecompositionUtil.chol();
+        chol.compute(a2);
+        return new OjalgoDenseDoubleMatrix2D(chol.solve(b2));
+    }
 
 }

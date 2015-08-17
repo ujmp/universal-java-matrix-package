@@ -22,7 +22,12 @@
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.6" level="project" />
     <orderEntry type="module" module-name="ujmp-ejml" />
-    <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:core:0.26" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:all:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:core:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:simple:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:denseC64:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:equation:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:dense64:0.28" level="project" />
     <orderEntry type="module" module-name="ujmp-elasticsearch" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-codecs:4.6.1" level="project" />
@@ -70,6 +75,11 @@
     <orderEntry type="library" name="Maven: org.jblas:jblas:1.2.3" level="project" />
     <orderEntry type="module" module-name="ujmp-jdbc" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.18" level="project" />
+    <orderEntry type="library" name="Maven: org.mariadb.jdbc:mariadb-java-client:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna:platform:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901.jdbc4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.8.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.2.8" level="project" />

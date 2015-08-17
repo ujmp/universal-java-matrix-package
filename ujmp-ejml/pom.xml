@@ -24,9 +24,9 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
-			<artifactId>core</artifactId>
-			<version>0.26</version>
+			<groupId>org.ejml</groupId>
+			<artifactId>all</artifactId>
+			<version>0.28</version>
 			<scope>compile</scope>
 		</dependency>
 

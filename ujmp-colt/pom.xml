@@ -4,13 +4,13 @@
     <artifactId>ujmp-colt</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-colt</name>
-    <url>https://ujmp.org/0.3.0/ujmp-colt/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-colt/</url>
     <description>Plugin to incorporate dense and sparse matrix classes from the Colt library</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

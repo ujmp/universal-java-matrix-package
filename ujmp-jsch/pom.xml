@@ -4,13 +4,13 @@
     <artifactId>ujmp-jsch</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jsch</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jsch/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jsch/</url>
     <description>Plugin to enable SSH connections using JSch</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

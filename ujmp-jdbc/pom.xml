@@ -4,13 +4,13 @@
     <artifactId>ujmp-jdbc</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jdbc</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jdbc/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jdbc/</url>
     <description>Plugin to enable JDBC database import and export</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 
@@ -27,6 +27,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.18</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

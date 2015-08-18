@@ -24,26 +24,26 @@
 package org.ujmp.ojalgo.calculation;
 
 import org.ojalgo.matrix.decomposition.Eigenvalue;
-import org.ojalgo.matrix.decomposition.EigenvalueDecomposition;
+import org.ojalgo.matrix.decomposition.OjalgoDecompositionUtil;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class Eig implements org.ujmp.core.doublematrix.calculation.general.decomposition.Eig<Matrix> {
 
-	public static Eig INSTANCE = new Eig();
+    public static Eig INSTANCE = new Eig();
 
-	public Matrix[] calc(Matrix source) {
-		final Eigenvalue<Double> evd = EigenvalueDecomposition.makePrimitive();
-		PrimitiveDenseStore matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
-		}
-		evd.compute(matrix);
-		final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
-		final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
-		return new Matrix[] { v, d };
-	}
+    public Matrix[] calc(Matrix source) {
+        final Eigenvalue<Double> evd = OjalgoDecompositionUtil.eig();
+        PrimitiveDenseStore matrix;
+        if (source instanceof OjalgoDenseDoubleMatrix2D) {
+            matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+        } else {
+            matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
+        }
+        evd.compute(matrix);
+        final Matrix v = new OjalgoDenseDoubleMatrix2D(evd.getV());
+        final Matrix d = new OjalgoDenseDoubleMatrix2D(evd.getD());
+        return new Matrix[]{v, d};
+    }
 }

@@ -23,40 +23,39 @@
 
 package org.ujmp.ojalgo.calculation;
 
+import org.ojalgo.matrix.decomposition.*;
 import org.ojalgo.matrix.decomposition.LU;
-import org.ojalgo.matrix.decomposition.LUDecomposition;
 import org.ojalgo.matrix.decomposition.QR;
-import org.ojalgo.matrix.decomposition.QRDecomposition;
 import org.ojalgo.matrix.store.PrimitiveDenseStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class Solve implements org.ujmp.core.doublematrix.calculation.general.decomposition.Solve<Matrix> {
 
-	public static Solve INSTANCE = new Solve();
+    public static Solve INSTANCE = new Solve();
 
-	public Matrix calc(Matrix a, Matrix b) {
-		PrimitiveDenseStore a2 = null;
-		PrimitiveDenseStore b2 = null;
-		if (a instanceof OjalgoDenseDoubleMatrix2D) {
-			a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
-		} else {
-			a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
-		}
-		if (b instanceof OjalgoDenseDoubleMatrix2D) {
-			b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
-		} else {
-			b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
-		}
-		if (a.isSquare()) {
-			final LU<Double> lu = LUDecomposition.makePrimitive();
-			lu.compute(a2);
-			return new OjalgoDenseDoubleMatrix2D(lu.solve(b2));
-		} else {
-			final QR<Double> qr = QRDecomposition.makePrimitive();
-			qr.compute(a2);
-			return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
-		}
-	}
+    public Matrix calc(Matrix a, Matrix b) {
+        PrimitiveDenseStore a2;
+        PrimitiveDenseStore b2;
+        if (a instanceof OjalgoDenseDoubleMatrix2D) {
+            a2 = ((OjalgoDenseDoubleMatrix2D) a).getWrappedObject();
+        } else {
+            a2 = new OjalgoDenseDoubleMatrix2D(a).getWrappedObject();
+        }
+        if (b instanceof OjalgoDenseDoubleMatrix2D) {
+            b2 = ((OjalgoDenseDoubleMatrix2D) b).getWrappedObject();
+        } else {
+            b2 = new OjalgoDenseDoubleMatrix2D(b).getWrappedObject();
+        }
+        if (a.isSquare()) {
+            final LU<Double> lu = OjalgoDecompositionUtil.lu();
+            lu.compute(a2);
+            return new OjalgoDenseDoubleMatrix2D(lu.solve(b2));
+        } else {
+            final QR<Double> qr = OjalgoDecompositionUtil.qr();
+            qr.compute(a2);
+            return new OjalgoDenseDoubleMatrix2D(qr.solve(b2));
+        }
+    }
 
 }

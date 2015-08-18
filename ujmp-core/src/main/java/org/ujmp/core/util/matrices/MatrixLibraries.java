@@ -81,11 +81,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 
 	public enum MatrixLibrary {
 		Colt, CommonsMath, EJML, JAMA, jblas, JlinAlg, JMathArray, JMatrices, Jsci, Jscience, la4j, Mantissa, MTJ, ojAlgo, ParallelColt, SST, UJMP, VecMath
-	};
+	}
 
 	public static final int COLT = MatrixLibrary.Colt.ordinal();
 	public static final int COMMONSMATH = MatrixLibrary.CommonsMath.ordinal();
-	public static final int EJML = MatrixLibrary.EJML.ordinal();;
+	public static final int EJML = MatrixLibrary.EJML.ordinal();
 	public static final int JAMA = MatrixLibrary.JAMA.ordinal();
 	public static final int JBLAS = MatrixLibrary.jblas.ordinal();
 	public static final int JLINALG = MatrixLibrary.JlinAlg.ordinal();
@@ -107,11 +107,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 	public static final String ERRORTEXT = "error in implementation";
 	public static final String SYMMETRICTEXT = "symmetric matrices only";
 
-	private List<String> footnotes = new ArrayList<String>();
+	private List<String> footnotes = new ArrayList<>();
 
 	public enum MatrixLibrariesFormat {
 		DEFAULT, LATEX, HTMLTABLE, HTMLLIST
-	};
+	}
 
 	private MatrixLibrariesFormat format = MatrixLibrariesFormat.DEFAULT;
 
@@ -236,11 +236,11 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setRowLabel(HOMEPAGE, "Homepage");
 
 		setString(org.ujmp.core.UJMP.UJMPVERSION, VERSION, UJMP);
-		setString(small("2014"), DATE, UJMP);
+		setString(small("2015"), DATE, UJMP);
 		setString(small("LGPL"), LICENSE, UJMP);
 		setString(no(), JAVA14, UJMP);
-		setString(yes(), JAVA5, UJMP);
-		setString(yes(), JAVA6, UJMP);
+		setString(no(), JAVA5, UJMP);
+		setString(no(), JAVA6, UJMP);
 		setString(yes(), JAVA7, UJMP);
 		setString(yes(), JAVA8, UJMP);
 		setString(yes(), MULTITHREADED, UJMP);
@@ -1303,17 +1303,17 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		s.append("</th>\n");
 		for (int c = 0; c < getColumnCount(); c++) {
 			String label = getColumnLabel(c);
-			s.append("<th class=\"text-center\">" + label + "</th>\n");
+			s.append("<th class=\"text-center\">").append(label).append("</th>\n");
 		}
 		s.append("</tr>\n");
 
 		for (int r = 0; r < getRowCount(); r++) {
 			s.append("<tr>\n");
 			String feature = getRowLabel(r);
-			s.append("<th>" + feature + "</th>\n");
+			s.append("<th>").append(feature).append("</th>\n");
 			for (int c = 0; c < getColumnCount(); c++) {
 				String result = getString(r, c);
-				s.append("<td>" + result + "</td>\n");
+				s.append("<td>").append(result).append("</td>\n");
 			}
 			s.append("</tr>\n");
 		}
@@ -1330,19 +1330,19 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 			s.append("<h2>");
 			s.append(label);
 			s.append("</h2>\n");
-			s.append("<p>These are the features of the <strong>" + label + "</strong> library:</p>");
+			s.append("<p>These are the features of the <strong>").append(label).append("</strong> library:</p>");
 			s.append("<ul>\n");
 			for (int r = 0; r < getRowCount(); r++) {
 				String feature = getRowLabel(r);
 				String result = getString(r, c);
 				if ("no".equals(result)) {
 				} else if ("yes".equals(result)) {
-					s.append("<li>" + label + " ");
+					s.append("<li>").append(label).append(" ");
 					s.append(feature);
 					s.append("</li>\n");
 				} else if (!"no".equals(result)) {
-					s.append("<li>" + label + " ");
-					s.append(feature + ": ");
+					s.append("<li>").append(label).append(" ");
+					s.append(feature).append(": ");
 					s.append(getString(r, c));
 					s.append("</li>\n");
 				}

@@ -4,13 +4,13 @@
     <artifactId>ujmp-jmatio</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jmatio</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jmatio/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jmatio/</url>
     <description>Plugin to enable import and export for .mat files from Matlab</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

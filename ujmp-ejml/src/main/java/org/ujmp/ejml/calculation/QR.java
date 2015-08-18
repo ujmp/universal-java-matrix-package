@@ -23,53 +23,54 @@
 
 package org.ujmp.ejml.calculation;
 
-import org.ejml.alg.dense.linsol.qr.LinearSolverQrHouseCol;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.LinearSolverFactory;
 import org.ejml.interfaces.decomposition.QRDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.util.MathUtil;
 import org.ujmp.ejml.EJMLDenseDoubleMatrix2D;
 
 public class QR implements org.ujmp.core.doublematrix.calculation.general.decomposition.QR<Matrix> {
 
-	public static QR INSTANCE = new QR();
+    public static QR INSTANCE = new QR();
 
-	public Matrix[] calc(Matrix source) {
-		QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr((int) source.getRowCount(),
-				(int) source.getColumnCount());
-		DenseMatrix64F matrix = null;
-		if (source instanceof EJMLDenseDoubleMatrix2D) {
-			matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
-		}
-		qr.decompose(matrix);
-		DenseMatrix64F qm = qr.getQ(null, true);
-		DenseMatrix64F rm = qr.getR(null, true);
-		Matrix q = new EJMLDenseDoubleMatrix2D(qm);
-		Matrix r = new EJMLDenseDoubleMatrix2D(rm);
-		return new Matrix[] { q, r };
-	}
+    public Matrix[] calc(Matrix source) {
+        QRDecomposition<DenseMatrix64F> qr = DecompositionFactory.qr((int) source.getRowCount(),
+                (int) source.getColumnCount());
+        DenseMatrix64F matrix;
+        if (source instanceof EJMLDenseDoubleMatrix2D) {
+            matrix = ((EJMLDenseDoubleMatrix2D) source).getWrappedObject();
+        } else {
+            matrix = new EJMLDenseDoubleMatrix2D(source).getWrappedObject();
+        }
+        qr.decompose(matrix);
+        DenseMatrix64F qm = qr.getQ(null, true);
+        DenseMatrix64F rm = qr.getR(null, true);
+        Matrix q = new EJMLDenseDoubleMatrix2D(qm);
+        Matrix r = new EJMLDenseDoubleMatrix2D(rm);
+        return new Matrix[]{q, r};
+    }
 
-	public Matrix solve(Matrix a, Matrix b) {
-		LinearSolver<DenseMatrix64F> solver = new LinearSolverQrHouseCol();
-		DenseMatrix64F a2 = null;
-		DenseMatrix64F b2 = null;
-		if (a instanceof EJMLDenseDoubleMatrix2D) {
-			a2 = ((EJMLDenseDoubleMatrix2D) a).getWrappedObject();
-		} else {
-			a2 = new EJMLDenseDoubleMatrix2D(a).getWrappedObject();
-		}
-		if (b instanceof EJMLDenseDoubleMatrix2D) {
-			b2 = ((EJMLDenseDoubleMatrix2D) b).getWrappedObject();
-		} else {
-			b2 = new EJMLDenseDoubleMatrix2D(b).getWrappedObject();
-		}
-		solver.setA(a2);
-		DenseMatrix64F x = new DenseMatrix64F(a2.numCols, b2.numCols);
-		solver.solve(b2, x);
-		return new EJMLDenseDoubleMatrix2D(x);
-	}
+    public Matrix solve(Matrix a, Matrix b) {
+        LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.qr(MathUtil.longToInt(a.getRowCount()), MathUtil.longToInt(a.getColumnCount()));
+        DenseMatrix64F a2;
+        DenseMatrix64F b2;
+        if (a instanceof EJMLDenseDoubleMatrix2D) {
+            a2 = ((EJMLDenseDoubleMatrix2D) a).getWrappedObject();
+        } else {
+            a2 = new EJMLDenseDoubleMatrix2D(a).getWrappedObject();
+        }
+        if (b instanceof EJMLDenseDoubleMatrix2D) {
+            b2 = ((EJMLDenseDoubleMatrix2D) b).getWrappedObject();
+        } else {
+            b2 = new EJMLDenseDoubleMatrix2D(b).getWrappedObject();
+        }
+        solver.setA(a2);
+        DenseMatrix64F x = new DenseMatrix64F(a2.numCols, b2.numCols);
+        solver.solve(b2, x);
+        return new EJMLDenseDoubleMatrix2D(x);
+    }
 
 }

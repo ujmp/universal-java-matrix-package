@@ -4,13 +4,13 @@
     <artifactId>ujmp-ojalgo</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-ojalgo</name>
-    <url>https://ujmp.org/0.3.0/ujmp-ojalgo/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-ojalgo/</url>
     <description>Plugin to incorporate dense matrix classes from the ojAlgo library</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.ojalgo</groupId>
             <artifactId>ojalgo</artifactId>
-            <version>31.0</version>
+            <version>38.1</version>
             <scope>compile</scope>
         </dependency>
 

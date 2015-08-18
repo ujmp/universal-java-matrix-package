@@ -24,24 +24,24 @@
 package org.ujmp.ojalgo.calculation;
 
 import org.ojalgo.matrix.decomposition.Cholesky;
-import org.ojalgo.matrix.decomposition.CholeskyDecomposition;
+import org.ojalgo.matrix.decomposition.OjalgoDecompositionUtil;
 import org.ojalgo.matrix.store.MatrixStore;
 import org.ujmp.core.Matrix;
 import org.ujmp.ojalgo.OjalgoDenseDoubleMatrix2D;
 
 public class InvSPD implements org.ujmp.core.doublematrix.calculation.general.decomposition.InvSPD<Matrix> {
 
-	public static InvSPD INSTANCE = new InvSPD();
+    public static InvSPD INSTANCE = new InvSPD();
 
-	public Matrix calc(Matrix source) {
-		MatrixStore<Double> matrix = null;
-		if (source instanceof OjalgoDenseDoubleMatrix2D) {
-			matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
-		} else {
-			matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
-		}
-		Cholesky<Double> chol = CholeskyDecomposition.makePrimitive();
-		chol.compute(matrix);
-		return new OjalgoDenseDoubleMatrix2D(chol.getInverse());
-	}
+    public Matrix calc(Matrix source) {
+        MatrixStore<Double> matrix;
+        if (source instanceof OjalgoDenseDoubleMatrix2D) {
+            matrix = ((OjalgoDenseDoubleMatrix2D) source).getWrappedObject();
+        } else {
+            matrix = new OjalgoDenseDoubleMatrix2D(source).getWrappedObject();
+        }
+        Cholesky<Double> chol = OjalgoDecompositionUtil.chol();
+        chol.compute(matrix);
+        return new OjalgoDenseDoubleMatrix2D(chol.getInverse());
+    }
 }

@@ -4,13 +4,13 @@
     <artifactId>ujmp-jsci</artifactId>
     <packaging>jar</packaging>
     <name>ujmp-jsci</name>
-    <url>https://ujmp.org/0.3.0/ujmp-jsci/</url>
+    <url>https://ujmp.org/0.3.1-SNAPSHOT/ujmp-jsci/</url>
     <description>Plugin to incorporate dense matrix classes from the JSci library</description>
 
     <parent>
         <groupId>org.ujmp</groupId>
         <artifactId>ujmp</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1-SNAPSHOT</version>
         <relativePath>../ujmp</relativePath>
     </parent>
 

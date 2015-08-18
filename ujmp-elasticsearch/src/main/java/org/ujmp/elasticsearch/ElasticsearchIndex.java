@@ -58,253 +58,248 @@ import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
 
 public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<String, Object>> implements Closeable {
-	private static final long serialVersionUID = -7047080106649021619L;
+    private static final long serialVersionUID = -7047080106649021619L;
 
-	public static final int SCROLLTIMEOUT = 600000;
-	public static final int SCROLLSIZE = 1000;
-	public static final int DEFAULTPORT = 9300;
+    public static final int SCROLLTIMEOUT = 600000;
+    public static final int SCROLLSIZE = 1000;
+    public static final int DEFAULTPORT = 9300;
 
-	public static final String ID = "_id";
-	public static final String SCORE = "score";
+    public static final String ID = "_id";
+    public static final String SCORE = "score";
 
-	private final Client client;
-	private final String index;
-	private final String type;
+    private final Client client;
+    private final String index;
+    private final String type;
 
-	public ElasticsearchIndex(String hostname, String index, String type) {
-		this(hostname, DEFAULTPORT, index, type);
-	}
+    public ElasticsearchIndex(String hostname, String index, String type) {
+        this(hostname, DEFAULTPORT, index, type);
+    }
 
-	public ElasticsearchIndex(String hostname, int port, String index, String type) {
-		this(ElasticsearchUtil.createTransportClient(hostname, port), index, type);
-	}
+    public ElasticsearchIndex(String hostname, int port, String index, String type) {
+        this(ElasticsearchUtil.createTransportClient(hostname, port), index, type);
+    }
 
-	public ElasticsearchIndex(Client client, String index, String type) {
-		this.client = client;
-		this.index = index;
-		this.type = type;
-		if (!indexExists()) {
-			createIndex();
-		}
-	}
+    public ElasticsearchIndex(Client client, String index, String type) {
+        this.client = client;
+        this.index = index;
+        this.type = type;
+        if (!indexExists()) {
+            createIndex();
+        }
+    }
 
-	public void put(MapMatrix<String, Object> map) {
-		Object id = map.get(ID);
-		if (id != null && id instanceof String) {
-			put((String) id, map);
-		} else {
-			put(MathUtil.guid(), map);
-		}
-	}
+    public void put(MapMatrix<String, Object> map) {
+        Object id = map.get(ID);
+        if (id != null && id instanceof String) {
+            put((String) id, map);
+        } else {
+            put(MathUtil.guid(), map);
+        }
+    }
 
-	private boolean indexExists() {
-		IndicesExistsResponse response = client.admin().indices().exists(new IndicesExistsRequest(index)).actionGet();
-		return response.isExists();
-	}
+    private boolean indexExists() {
+        IndicesExistsResponse response = client.admin().indices().exists(new IndicesExistsRequest(index)).actionGet();
+        return response.isExists();
+    }
 
-	private synchronized void createIndex() {
-		CreateIndexResponse response = client.admin().indices().create(new CreateIndexRequest(index)).actionGet();
-		if (!response.isAcknowledged()) {
-			throw new RuntimeException("cannot create index " + index);
-		}
-		client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-	}
+    private synchronized void createIndex() {
+        CreateIndexResponse response = client.admin().indices().create(new CreateIndexRequest(index)).actionGet();
+        if (!response.isAcknowledged()) {
+            throw new RuntimeException("cannot create index " + index);
+        }
+        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+    }
 
-	public synchronized void deleteIndex() {
-		DeleteIndexResponse response = client.admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
-		if (!response.isAcknowledged()) {
-			throw new RuntimeException("cannot delete index " + index);
-		}
-		client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-	}
+    public synchronized void deleteIndex() {
+        DeleteIndexResponse response = client.admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+        if (!response.isAcknowledged()) {
+            throw new RuntimeException("cannot delete index " + index);
+        }
+        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+    }
 
-	public String getIndex() {
-		return index;
-	}
+    public String getIndex() {
+        return index;
+    }
 
-	public int size() {
-		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
-		return MathUtil.longToInt(response.getCount());
-	}
+    public int size() {
+        MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+        CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
+        return MathUtil.longToInt(response.getCount());
+    }
 
-	public ElasticsearchSample get(Object key) {
-		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
-		Map<String, Object> map = getResponse.getSource();
-		if (map == null) {
-			return null;
-		} else {
-			map.put(ID, getResponse.getId());
-			return new ElasticsearchSample(this, map);
-		}
-	}
+    public ElasticsearchSample get(Object key) {
+        GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
+        Map<String, Object> map = getResponse.getSource();
+        if (map == null) {
+            return null;
+        } else {
+            map.put(ID, getResponse.getId());
+            return new ElasticsearchSample(this, map);
+        }
+    }
 
-	public ElasticsearchSample get(Object key, String... fields) {
-		GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).setFields(fields).execute()
-				.actionGet();
-		Map<String, Object> map = new TreeMap<String, Object>();
-		map.put(ID, getResponse.getId());
-		for (String k : getResponse.getFields().keySet()) {
-			map.put(k, getResponse.getField(k).getValue());
-		}
-		return new ElasticsearchSample(this, map);
-	}
+    public ElasticsearchSample get(Object key, String... fields) {
+        GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).setFields(fields).execute().actionGet();
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put(ID, getResponse.getId());
+        for (String k : getResponse.getFields().keySet()) {
+            map.put(k, getResponse.getField(k).getValue());
+        }
+        return new ElasticsearchSample(this, map);
+    }
 
-	public Set<String> keySet() {
-		return new KeySet(this);
-	}
+    public Set<String> keySet() {
+        return new KeySet(this);
+    }
 
-	@Override
-	protected void clearMap() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    protected void clearMap() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	protected MapMatrix<String, Object> removeFromMap(Object key) {
-		MapMatrix<String, Object> old = get(key);
-		client.prepareDelete(index, type, String.valueOf(key)).execute().actionGet();
-		return old;
-	}
+    @Override
+    protected MapMatrix<String, Object> removeFromMap(Object key) {
+        MapMatrix<String, Object> old = get(key);
+        client.prepareDelete(index, type, String.valueOf(key)).execute().actionGet();
+        return old;
+    }
 
-	@Override
-	protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
-		if (value == null) {
-			remove(key);
-		} else {
-			if (!value.containsKey(ID)) {
-				value.put(ID, key);
-			}
-			client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
-		}
-		return null;
-	}
+    @Override
+    protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
+        if (value == null) {
+            remove(key);
+        } else {
+            if (!value.containsKey(ID)) {
+                value.put(ID, key);
+            }
+            client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
+        }
+        return null;
+    }
 
-	public Client getClient() {
-		return client;
-	}
+    public Client getClient() {
+        return client;
+    }
 
-	public ListMatrix<ElasticsearchSample> search(String query) {
-		ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
+    public ListMatrix<ElasticsearchSample> search(String query) {
+        ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
 
-		QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
-		SearchResponse response = client.prepareSearch(index).setNoFields().setTypes(type)
-				.setSearchType(SearchType.QUERY_AND_FETCH).setQuery(qb).setFrom(0).setSize(10).setExplain(true)
-				.execute().actionGet();
+        QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
+        SearchResponse response = client.prepareSearch(index).setNoFields().setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH).setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
 
-		SearchHit[] results = response.getHits().getHits();
+        SearchHit[] results = response.getHits().getHits();
 
-		for (SearchHit hit : results) {
-			ElasticsearchSample sample = new ElasticsearchSample(this, hit);
-			list.add(sample);
-		}
+        for (SearchHit hit : results) {
+            ElasticsearchSample sample = new ElasticsearchSample(this, hit);
+            list.add(sample);
+        }
 
-		return list;
-	}
+        return list;
+    }
 
-	public int count(String string) {
-		QueryBuilder query = QueryBuilders.queryString(string).defaultOperator(Operator.AND);
-		CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
-		return MathUtil.longToInt(response.getCount());
-	}
+    public int count(String string) {
+        QueryBuilder query = QueryBuilders.queryString(string).defaultOperator(Operator.AND);
+        CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
+        return MathUtil.longToInt(response.getCount());
+    }
 
-	public void close() throws IOException {
-		if (client != null) {
-			client.close();
-		}
-	}
+    public void close() throws IOException {
+        if (client != null) {
+            client.close();
+        }
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
+    public void update(String id, String key, Object value) {
+        client.prepareUpdate(index, type, id).setDoc(key, value).execute().actionGet();
+    }
 }
 
 class KeySet extends AbstractSet<String> {
-	private static final long serialVersionUID = -9047566077947415546L;
+    private static final long serialVersionUID = -9047566077947415546L;
 
-	private final ElasticsearchIndex index;
+    private final ElasticsearchIndex index;
 
-	public KeySet(ElasticsearchIndex index) {
-		this.index = index;
-	}
+    public KeySet(ElasticsearchIndex index) {
+        this.index = index;
+    }
 
-	@Override
-	public boolean add(String value) {
-		throw new UnmodifiableSetException();
-	}
+    @Override
+    public boolean add(String value) {
+        throw new UnmodifiableSetException();
+    }
 
-	@Override
-	public boolean remove(Object o) {
-		throw new UnmodifiableSetException();
-	}
+    @Override
+    public boolean remove(Object o) {
+        throw new UnmodifiableSetException();
+    }
 
-	@Override
-	public void clear() {
-		throw new UnmodifiableSetException();
-	}
+    @Override
+    public void clear() {
+        throw new UnmodifiableSetException();
+    }
 
-	@Override
-	public boolean contains(Object o) {
-		return index.containsKey(o);
-	}
+    @Override
+    public boolean contains(Object o) {
+        return index.containsKey(o);
+    }
 
-	@Override
-	public Iterator<String> iterator() {
-		return new KeyIterator(index);
-	}
+    @Override
+    public Iterator<String> iterator() {
+        return new KeyIterator(index);
+    }
 
-	@Override
-	public int size() {
-		return index.size();
-	}
+    @Override
+    public int size() {
+        return index.size();
+    }
 }
 
 class KeyIterator implements Iterator<String> {
 
-	private final ElasticsearchIndex index;
-	private Iterator<SearchHit> iterator;
-	private SearchResponse scrollResp;
+    private final ElasticsearchIndex index;
+    private Iterator<SearchHit> iterator;
+    private SearchResponse scrollResp;
 
-	public KeyIterator(ElasticsearchIndex index) {
-		this.index = index;
-		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		scrollResp = index.getClient().prepareSearch(index.getIndex()).setTypes(index.getType())
-				.addFields(new String[] {}).setSearchType(SearchType.SCAN)
-				.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).setQuery(query)
-				.setSize(ElasticsearchIndex.SCROLLSIZE).execute().actionGet();
-		scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
-				.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
-		iterator = scrollResp.getHits().iterator();
-	}
+    public KeyIterator(ElasticsearchIndex index) {
+        this.index = index;
+        MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+        scrollResp = index.getClient().prepareSearch(index.getIndex()).setTypes(index.getType()).addFields(new String[]{}).setSearchType(SearchType.SCAN).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).setQuery(query).setSize(ElasticsearchIndex.SCROLLSIZE).execute().actionGet();
+        scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
+        iterator = scrollResp.getHits().iterator();
+    }
 
-	public boolean hasNext() {
-		if (iterator != null && !iterator.hasNext()) {
-			scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
-					.setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
-			if (scrollResp.getHits().getHits().length == 0) {
-				iterator = null;
-			} else {
-				iterator = scrollResp.getHits().iterator();
-			}
-		}
-		if (iterator != null && iterator.hasNext()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public boolean hasNext() {
+        if (iterator != null && !iterator.hasNext()) {
+            scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
+            if (scrollResp.getHits().getHits().length == 0) {
+                iterator = null;
+            } else {
+                iterator = scrollResp.getHits().iterator();
+            }
+        }
+        if (iterator != null && iterator.hasNext()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public String next() {
-		if (iterator != null) {
-			SearchHit hit = iterator.next();
-			return hit.getId();
-		} else {
-			throw new NoSuchElementException();
-		}
-	}
+    public String next() {
+        if (iterator != null) {
+            SearchHit hit = iterator.next();
+            return hit.getId();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 
-	public void remove() {
-		throw new UnmodifiableSetException();
-	}
+    public void remove() {
+        throw new UnmodifiableSetException();
+    }
 
 }

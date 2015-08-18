@@ -29,19 +29,19 @@ import org.ujmp.core.matrix.factory.BaseMatrixFactory;
 
 public interface BaseMatrix extends BaseMatrixProperties {
 
-	public static final Ret LINK = Ret.LINK;
-	public static final Ret ORIG = Ret.ORIG;
-	public static final Ret NEW = Ret.NEW;
+	Ret LINK = Ret.LINK;
+	Ret ORIG = Ret.ORIG;
+	Ret NEW = Ret.NEW;
 
-	public static final int Y = 0;
-	public static final int X = 1;
-	public static final int Z = 2;
+	int Y = 0;
+	int X = 1;
+	int Z = 2;
 
-	public static final int ROW = 0;
-	public static final int COLUMN = 1;
-	public static final int ALL = 0x7fffffff;
-	public static final int NONE = -1;
+	int ROW = 0;
+	int COLUMN = 1;
+	int ALL = 0x7fffffff;
+	int NONE = -1;
 
-	public BaseMatrixFactory<? extends BaseMatrix> getFactory();
+	BaseMatrixFactory<? extends BaseMatrix> getFactory();
 
 }

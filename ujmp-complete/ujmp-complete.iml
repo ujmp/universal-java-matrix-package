@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -22,7 +22,12 @@
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.6" level="project" />
     <orderEntry type="module" module-name="ujmp-ejml" />
-    <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:core:0.26" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:all:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:core:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:simple:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:denseC64:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:equation:0.28" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:dense64:0.28" level="project" />
     <orderEntry type="module" module-name="ujmp-elasticsearch" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-codecs:4.6.1" level="project" />
@@ -70,6 +75,11 @@
     <orderEntry type="library" name="Maven: org.jblas:jblas:1.2.3" level="project" />
     <orderEntry type="module" module-name="ujmp-jdbc" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.18" level="project" />
+    <orderEntry type="library" name="Maven: org.mariadb.jdbc:mariadb-java-client:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna:platform:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901.jdbc4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.8.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.2.8" level="project" />
@@ -82,12 +92,8 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.2.6.v20141205" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.2.6.v20141205" level="project" />
     <orderEntry type="module" module-name="ujmp-jfreechart" />
-    <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.15" level="project" />
-    <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.17" level="project" />
-    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
-    <orderEntry type="library" name="Maven: com.lowagie:itext:2.1.5" level="project" />
-    <orderEntry type="library" name="Maven: bouncycastle:bcmail-jdk14:138" level="project" />
-    <orderEntry type="library" name="Maven: bouncycastle:bcprov-jdk14:138" level="project" />
+    <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.19" level="project" />
+    <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.23" level="project" />
     <orderEntry type="module" module-name="ujmp-jmatio" />
     <orderEntry type="library" name="Maven: net.sourceforge.jmatio:jmatio:1.0" level="project" />
     <orderEntry type="module" module-name="ujmp-jsch" />
@@ -98,6 +104,7 @@
     <orderEntry type="library" name="Maven: net.sf.jsci:lpsolve:2003-11-03" level="project" />
     <orderEntry type="library" name="Maven: org.axsl.org.w3c.dom.mathml:mathml-dom-java:2.0" level="project" />
     <orderEntry type="library" name="Maven: xerces:xercesImpl:2.8.1" level="project" />
+    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.3.03" level="project" />
     <orderEntry type="module" module-name="ujmp-jscience" />
     <orderEntry type="library" name="Maven: org.jscience:jscience:4.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.javolution:javolution:5.2.3" level="project" />
@@ -141,7 +148,7 @@
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-x86_64:natives:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-i686:natives:1.1" level="project" />
     <orderEntry type="module" module-name="ujmp-ojalgo" />
-    <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:31.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:38.1" level="project" />
     <orderEntry type="module" module-name="ujmp-parallelcolt" />
     <orderEntry type="library" name="Maven: net.sourceforge.parallelcolt:parallelcolt:0.10.1" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.jplasma:jplasma:1.2.0" level="project" />

@@ -148,7 +148,7 @@
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-x86_64:natives:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-i686:natives:1.1" level="project" />
     <orderEntry type="module" module-name="ujmp-ojalgo" />
-    <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:38.1" level="project" />
+    <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:37.1" level="project" />
     <orderEntry type="module" module-name="ujmp-parallelcolt" />
     <orderEntry type="library" name="Maven: net.sourceforge.parallelcolt:parallelcolt:0.10.1" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.jplasma:jplasma:1.2.0" level="project" />

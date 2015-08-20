@@ -43,7 +43,7 @@ public abstract class OjalgoDecompositionUtil {
     }
 
     public static Eigenvalue<Double> eig() {
-        return new DynamicEvD.Primitive();
+        return new GeneralEvD.Primitive();
     }
 
 }

@@ -212,7 +212,7 @@ public class OjalgoDenseDoubleMatrix2D extends AbstractDenseDoubleMatrix2D imple
     public Matrix mtimes(final Matrix m) {
         if (m instanceof OjalgoDenseDoubleMatrix2D) {
             final PrimitiveDenseStore mo = ((OjalgoDenseDoubleMatrix2D) m).getWrappedObject();
-            final PrimitiveDenseStore result = (PrimitiveDenseStore) matrix.multiply(mo);
+            final PrimitiveDenseStore result = (PrimitiveDenseStore) matrix.multiplyRight(mo);
             return new OjalgoDenseDoubleMatrix2D(result);
         } else {
             return super.mtimes(m);

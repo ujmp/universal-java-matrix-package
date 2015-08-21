@@ -32,31 +32,14 @@ import org.ujmp.core.util.matrices.UJMPPluginsMatrix;
 
 public class TestPlugins {
 
-	@Test
-	public void testPlugins() {
-		Matrix m = new UJMPPluginsMatrix();
-		for (int r = 0; r < m.getRowCount(); r++) {
-			String name = m.getAsString(r, 0);
-			String status = m.getAsString(r, 4);
-
-			// JDBC, PDFBox and Hadoop require Java 1.6, they
-			// cannot be tested with 1.5
-			if ("ujmp-hadoop".equals(name)
-					&& "1.5".equals(System.getProperty("java.specification.version"))) {
-				assertNotSame(name, "ok", status);
-			} else if ("ujmp-jdbc".equals(name)
-					&& "1.5".equals(System.getProperty("java.specification.version"))) {
-				assertNotSame(name, "ok", status);
-			} else if ("ujmp-pdfbox".equals(name)
-					&& "1.5".equals(System.getProperty("java.specification.version"))) {
-				assertNotSame(name, "ok", status);
-			} else if ("ujmp-ejml".equals(name)
-					&& "1.5".equals(System.getProperty("java.specification.version"))) {
-				assertNotSame(name, "ok", status);
-			} else {
-				assertEquals(name, "ok", status);
-			}
-		}
-	}
+    @Test
+    public void testPlugins() {
+        Matrix m = new UJMPPluginsMatrix();
+        for (int r = 0; r < m.getRowCount(); r++) {
+            String name = m.getAsString(r, 0);
+            String status = m.getAsString(r, 4);
+            assertEquals(name, "ok", status);
+        }
+    }
 
 }

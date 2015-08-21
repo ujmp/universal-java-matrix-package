@@ -89,17 +89,6 @@ public class JDBCSparseObjectMatrix extends AbstractSparseObjectMatrix implement
         this.tableName = tableName;
         this.columnForValue = columnForValue;
         this.columnsForCoordinates = columnsForCoordinates;
-
-        if (url.startsWith("jdbc:hsqldb:")) {
-            Class.forName("org.hsqldb.jdbcDriver");
-        } else if (url.startsWith("jdbc:mysql:")) {
-            Class.forName("com.mysql.jdbc.Driver");
-        } else if (url.startsWith("jdbc:postgresql:")) {
-            Class.forName("org.postgresql.Driver");
-        } else if (url.startsWith("jdbc:derby:")) {
-            Class.forName("org.apache.derby.jdbc.Driver40");
-        }
-
         createTableIfNotExists();
     }
 

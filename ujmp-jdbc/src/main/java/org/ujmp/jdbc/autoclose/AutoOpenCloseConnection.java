@@ -280,7 +280,7 @@ public class AutoOpenCloseConnection implements Connection {
 		try {
 			getConnection().setClientInfo(name, value);
 		} catch (SQLException e) {
-			new SQLClientInfoException();
+			throw new SQLClientInfoException();
 		}
 	}
 
@@ -288,7 +288,7 @@ public class AutoOpenCloseConnection implements Connection {
 		try {
 			getConnection().setClientInfo(properties);
 		} catch (SQLException e) {
-			new SQLClientInfoException();
+			throw new SQLClientInfoException();
 		}
 	}
 

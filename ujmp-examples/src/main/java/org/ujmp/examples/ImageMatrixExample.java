@@ -33,7 +33,7 @@ public class ImageMatrixExample {
 	public static void main(String[] args) throws Exception {
 
 		// get an image
-		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("org/ujmp/examples/data/bigdata.jpg");
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("org/ujmp/examples/bigdata.jpg");
 
 		// load image into matrix. of course, this works with files, too.
 		Matrix imageMatrix = new ImageMatrix(is);

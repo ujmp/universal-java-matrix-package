@@ -40,7 +40,7 @@ public class Plugin extends AbstractPlugin {
 		neededClasses.add("org.postgresql.Driver");
 		neededClasses.add("org.apache.derby.database.Database");
 		neededClasses.add("org.hsqldb.Database");
-		neededClasses.add("org.sqlite.DB");
+		neededClasses.add("org.sqlite.JDBC");
 		neededClasses.add("org.h2.Driver");
 	}
 

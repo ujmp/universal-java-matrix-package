@@ -326,8 +326,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, COLT);
 		setString(singleArray(), MAXIMUMSIZE, COLT);
 
-		setString(small("3.2"), VERSION, COMMONSMATH);
-		setString(small("2013"), DATE, COMMONSMATH);
+		setString(small("3.5"), VERSION, COMMONSMATH);
+		setString(small("2015"), DATE, COMMONSMATH);
 		setString(small("Apache"), LICENSE, COMMONSMATH);
 		setString(no(), JAVA14, COMMONSMATH);
 		setString(yes(), JAVA5, COMMONSMATH);
@@ -370,8 +370,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, COMMONSMATH);
 		setString(ram(), MAXIMUMSIZE, COMMONSMATH);
 
-		setString(small("0.25"), VERSION, EJML);
-		setString(small("2014"), DATE, EJML);
+		setString(small("0.28"), VERSION, EJML);
+		setString(small("2015"), DATE, EJML);
 		setString(small("Apache"), LICENSE, EJML);
 		setString(no(), JAVA14, EJML);
 		setString(no(), JAVA5, EJML);
@@ -458,8 +458,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, JAMA);
 		setString(ram(), MAXIMUMSIZE, JAMA);
 
-		setString(small("1.2.3"), VERSION, JBLAS);
-		setString(small("2013"), DATE, JBLAS);
+		setString(small("1.2.4"), VERSION, JBLAS);
+		setString(small("2015"), DATE, JBLAS);
 		setString(small("BSD"), LICENSE, JBLAS);
 		setString(no(), JAVA14, JBLAS);
 		setString(yes(), JAVA5, JBLAS);
@@ -724,8 +724,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, JSCIENCE);
 		setString(ram(), MAXIMUMSIZE, JSCIENCE);
 
-		setString(small("0.4.9"), VERSION, LA4J);
-		setString(small("2014"), DATE, LA4J);
+		setString(small("0.5.5"), VERSION, LA4J);
+		setString(small("2015"), DATE, LA4J);
 		setString(small("Apache"), LICENSE, LA4J);
 		setString(no(), JAVA14, LA4J);
 		setString(yes(), JAVA5, LA4J);
@@ -812,8 +812,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, MANTISSA);
 		setString(singleArray(), MAXIMUMSIZE, MANTISSA);
 
-		setString(small("1.0.1"), VERSION, MTJ);
-		setString(small("2013"), DATE, MTJ);
+		setString(small("1.0.4"), VERSION, MTJ);
+		setString(small("2015"), DATE, MTJ);
 		setString(small("LGPL"), LICENSE, MTJ);
 		setString(no(), JAVA14, MTJ);
 		setString(yes(), JAVA5, MTJ);
@@ -856,8 +856,8 @@ public class MatrixLibraries extends DefaultDenseStringMatrix2D {
 		setString(bit32(), VALUESPERDIMENSION, MTJ);
 		setString(singleArray(), MAXIMUMSIZE, MTJ);
 
-		setString(small("35.0"), VERSION, OJALGO);
-		setString(small("2013"), DATE, OJALGO);
+		setString(small("37.1"), VERSION, OJALGO);
+		setString(small("2015"), DATE, OJALGO);
 		setString(small("MIT"), LICENSE, OJALGO);
 		setString(no(), JAVA14, OJALGO);
 		setString(yes(), JAVA5, OJALGO);

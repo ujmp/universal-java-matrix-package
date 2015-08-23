@@ -23,6 +23,7 @@
 
 package org.ujmp.core.util;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -33,216 +34,253 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.sun.istack.internal.NotNull;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class UJMPFormat extends Format {
-	private static final long serialVersionUID = -557618747324763226L;
+    private static final long serialVersionUID = -557618747324763226L;
 
-	private static UJMPFormat multiLineInstance = new UJMPFormat(true, 10, true);
+    private static UJMPFormat multiLineInstance = new UJMPFormat(true, 10, true);
 
-	private static UJMPFormat singleLineInstance = new UJMPFormat(false, 100, false);
+    private static UJMPFormat mapInstance = new UJMPFormat(true, 30, true);
 
-	private NumberFormat defaultNumberFormat = null;
+    private static UJMPFormat singleLineInstance = new UJMPFormat(false, 100, false);
 
-	private NumberFormat exponentialNumberFormat = null;
+    private NumberFormat integerFormat = null;
 
-	private DateFormat dateFormat = null;
+    private NumberFormat defaultNumberFormat = null;
 
-	private boolean multiLine = true;
+    private NumberFormat exponentialNumberFormat = null;
 
-	private boolean usePadding = false;
+    private DateFormat dateFormat = null;
 
-	private int width = 10;
+    private boolean multiLine = true;
 
-	public UJMPFormat(boolean multiLine, int width, boolean usePadding) {
-		DecimalFormatSymbols symbols = new DecimalFormatSymbols(UJMPSettings.getLocale());
-		symbols.setNaN("NaN");
-		symbols.setInfinity("Inf");
-		defaultNumberFormat = new DecimalFormat("0.0000", symbols);
-		exponentialNumberFormat = new DecimalFormat("0.000E000", symbols);
-		dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-		this.multiLine = multiLine;
-		this.width = width;
-		this.usePadding = usePadding;
-	}
+    private boolean usePadding = false;
 
-	public static final UJMPFormat getMultiLineInstance() {
-		return multiLineInstance;
-	}
+    private int width = 10;
 
-	public static final UJMPFormat getSingleLineInstance() {
-		return singleLineInstance;
-	}
+    public UJMPFormat(boolean multiLine, int width, boolean usePadding) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(UJMPSettings.getLocale());
+        symbols.setNaN("NaN");
+        symbols.setInfinity("Inf");
+        integerFormat = new DecimalFormat("0", symbols);
+        defaultNumberFormat = new DecimalFormat("0.0000", symbols);
+        exponentialNumberFormat = new DecimalFormat("0.000E000", symbols);
+        dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        this.multiLine = multiLine;
+        this.width = width;
+        this.usePadding = usePadding;
+    }
 
-	@Override
-	public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-		if (obj == null) {
-			if (usePadding) {
-				pad(toAppendTo, ' ', width);
-			}
-			return toAppendTo;
-		} else if (obj instanceof String) {
-			return format((String) obj, toAppendTo, pos);
-		} else if (obj instanceof Matrix) {
-			return format((Matrix) obj, toAppendTo, pos);
-		} else if (obj instanceof Date) {
-			return format((Date) obj, toAppendTo, pos);
-		} else if (obj instanceof byte[]) {
-			return format((byte[]) obj, toAppendTo, pos);
-		} else if (obj instanceof Number) {
-			return format((Number) obj, toAppendTo, pos);
-		} else {
-			return format(String.valueOf(obj), toAppendTo, pos);
-		}
-	}
+    public static final UJMPFormat getMultiLineInstance() {
+        return multiLineInstance;
+    }
 
-	private StringBuffer format(Matrix obj, StringBuffer toAppendTo, FieldPosition pos) {
-		if (obj == null) {
-			if (usePadding) {
-				pad(toAppendTo, ' ', width);
-			}
-			return toAppendTo;
-		} else if (multiLine) {
-			return formatMultiLine(obj, toAppendTo, pos);
-		} else {
-			if (obj.getLabel() != null) {
-				toAppendTo.append("[" + obj.getLabel() + "]");
-			} else {
-				toAppendTo.append("[Matrix]");
-			}
-			return toAppendTo;
-		}
-	}
+    public static final UJMPFormat getMapInstance() {
+        return mapInstance;
+    }
 
-	private StringBuffer format(Date obj, StringBuffer toAppendTo, FieldPosition pos) {
-		int length = toAppendTo.length();
-		toAppendTo = dateFormat.format(obj, toAppendTo, pos);
-		length = width - (toAppendTo.length() - length);
-		if (usePadding) {
-			pad(toAppendTo, ' ', length);
-		}
-		return toAppendTo;
-	}
+    public static final UJMPFormat getSingleLineInstance() {
+        return singleLineInstance;
+    }
 
-	private StringBuffer format(byte[] obj, StringBuffer toAppendTo, FieldPosition pos) {
-		for (int i = 0; i < obj.length; i++) {
-			toAppendTo.append(obj[i]);
-		}
-		return toAppendTo;
-	}
+    @Override
+    public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+        return format(obj, toAppendTo, pos, width, usePadding);
+    }
 
-	private StringBuffer pad(StringBuffer s, char c, int count) {
-		for (int i = 0; i < count; i++) {
-			s.append(c);
-		}
-		return s;
-	}
+    public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos, int width, boolean usePadding) {
+        if (obj == null) {
+            if (usePadding) {
+                pad(toAppendTo, ' ', width);
+            }
+            return toAppendTo;
+        } else if (obj instanceof String) {
+            return formatString((String) obj, toAppendTo, width, usePadding);
+        } else if (obj instanceof Matrix) {
+            return formatMatrix((Matrix) obj, toAppendTo, pos, width, usePadding);
+        } else if (obj instanceof Date) {
+            return formatDate((Date) obj, toAppendTo, pos, width, usePadding);
+        } else if (obj instanceof byte[]) {
+            return formatByteArray((byte[]) obj, toAppendTo, width, usePadding);
+        } else if (obj instanceof Number) {
+            return formatNumber((Number) obj, toAppendTo, width, usePadding);
+        } else {
+            return formatString(String.valueOf(obj), toAppendTo, width, usePadding);
+        }
+    }
 
-	private StringBuffer format(String obj, StringBuffer toAppendTo, FieldPosition pos) {
-		if (obj != null && obj.length() > width) {
-			obj = obj.substring(0, width);
-		}
-		if (obj != null) {
-			toAppendTo.append(obj);
-			if (usePadding) {
-				pad(toAppendTo, ' ', width - obj.length());
-			}
-			return toAppendTo;
-		} else {
-			if (usePadding) {
-				pad(toAppendTo, ' ', width);
-			}
-			return toAppendTo;
-		}
-	}
+    private StringBuffer formatMatrix(Matrix obj, StringBuffer toAppendTo, FieldPosition pos, int width, boolean usePadding) {
+        if (obj == null) {
+            if (usePadding) {
+                pad(toAppendTo, ' ', width);
+            }
+            return toAppendTo;
+        } else if (multiLine) {
+            return formatMultiLine(obj, toAppendTo, pos);
+        } else {
+            if (obj.getLabel() != null) {
+                toAppendTo.append("[").append(obj.getLabel()).append("]");
+            } else {
+                toAppendTo.append("[Matrix]");
+            }
+            return toAppendTo;
+        }
+    }
 
-	private StringBuffer format(Number obj, StringBuffer toAppendTo, FieldPosition pos) {
-		String s = defaultNumberFormat.format(obj);
-		if (s.length() > width) {
-			s = exponentialNumberFormat.format(obj);
-		}
-		if (usePadding) {
-			pad(toAppendTo, ' ', width - s.length());
-		}
-		toAppendTo.append(s);
-		return toAppendTo;
-	}
+    private StringBuffer formatDate(Date obj, StringBuffer toAppendTo, FieldPosition pos, int width, boolean usePadding) {
+        int length = toAppendTo.length();
+        toAppendTo = dateFormat.format(obj, toAppendTo, pos);
+        length = width - (toAppendTo.length() - length);
+        if (usePadding) {
+            pad(toAppendTo, ' ', length);
+        }
+        return toAppendTo;
+    }
 
-	private StringBuffer formatMultiLine(Matrix m, StringBuffer toAppendTo, FieldPosition pos) {
-		long maxRows = UJMPSettings.getInstance().getMaxRowsToPrint();
-		long maxColumns = UJMPSettings.getInstance().getMaxColumnsToPrint();
+    private StringBuffer formatByteArray(byte[] obj, StringBuffer toAppendTo, int width, boolean usePadding) {
+        for (byte anObj : obj) {
+            toAppendTo.append(anObj);
+        }
+        return toAppendTo;
+    }
 
-		final String EOL = System.getProperty("line.separator");
+    private static StringBuffer pad(StringBuffer s, char c, int count) {
+        for (int i = 0; i < count; i++) {
+            s.append(c);
+        }
+        return s;
+    }
 
-		long rowCount = m.getRowCount();
-		long columnCount = m.getColumnCount();
-		long[] cursor = new long[m.getDimensionCount()];
+    private static StringBuffer formatString(String obj, StringBuffer toAppendTo, int width, boolean usePadding) {
+        if (obj != null && obj.length() > width) {
+            obj = obj.substring(0, width);
+        }
+        if (obj != null) {
+            toAppendTo.append(obj);
+            if (usePadding) {
+                pad(toAppendTo, ' ', width - obj.length());
+            }
+            return toAppendTo;
+        } else {
+            if (usePadding) {
+                pad(toAppendTo, ' ', width);
+            }
+            return toAppendTo;
+        }
+    }
 
-		if (m.getDimensionCount() > 2) {
-			toAppendTo.append(m.getDimensionCount());
-			toAppendTo.append("D-Matrix [");
-			toAppendTo.append(Coordinates.toString("x", m.getSize()));
-			toAppendTo.append("]: only two dimensions are printed");
-			toAppendTo.append(EOL);
-		}
+    private StringBuffer formatNumber(Number obj, StringBuffer toAppendTo, int width, boolean usePadding) {
+        String s;
+        if (obj instanceof Integer || obj instanceof Long || obj instanceof BigInteger) {
+            s = integerFormat.format(obj);
+        } else {
+            s = defaultNumberFormat.format(obj);
+        }
+        if (s.length() > width) {
+            s = exponentialNumberFormat.format(obj);
+        }
+        if (usePadding) {
+            pad(toAppendTo, ' ', width - s.length());
+        }
+        toAppendTo.append(s);
+        return toAppendTo;
+    }
 
-		if (m.getMetaData() != null) {
-			format(m.getLabel(), toAppendTo, pos);
-			toAppendTo.append("   ");
-			for (int col = 0; col < columnCount && col < maxColumns; col++) {
-				format(m.getColumnLabel(col), toAppendTo, pos);
-				if (col < columnCount - 1) {
-					toAppendTo.append(' ');
-				}
-			}
-			toAppendTo.append(EOL);
-			pad(toAppendTo, '=', width);
-			toAppendTo.append("   ");
-			for (int col = 0; col < columnCount && col < maxColumns; col++) {
-				pad(toAppendTo, '-', width);
-				if (col < columnCount - 1) {
-					toAppendTo.append(' ');
-				}
-			}
-			toAppendTo.append(EOL);
-		}
+    private StringBuffer formatMultiLine(Matrix m, StringBuffer toAppendTo, FieldPosition pos) {
+        long maxRows = UJMPSettings.getInstance().getMaxRowsToPrint();
+        long maxColumns = UJMPSettings.getInstance().getMaxColumnsToPrint();
 
-		for (cursor[Matrix.ROW] = 0; cursor[Matrix.ROW] < rowCount && cursor[Matrix.ROW] < maxRows; cursor[Matrix.ROW]++) {
-			if (m.getMetaData() != null) {
-				format(m.getRowLabel(cursor[Matrix.ROW]), toAppendTo, pos);
-				toAppendTo.append(" | ");
-			}
-			for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
-					&& cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
-				Object o = m.getAsObject(cursor);
-				if (o == null && m instanceof BaseBigDecimalMatrix) {
-					toAppendTo = format(Double.NaN, toAppendTo, pos);
-				} else if (o instanceof Matrix) {
-					toAppendTo.append("[Matrix]");
-				} else {
-					toAppendTo = format(o, toAppendTo, pos);
-				}
-				if (cursor[Matrix.COLUMN] < columnCount - 1) {
-					toAppendTo.append(' ');
-				}
-			}
-			toAppendTo.append(EOL);
-		}
+        final String EOL = System.getProperty("line.separator");
 
-		if (rowCount == 0 || columnCount == 0) {
-			toAppendTo.append("[" + rowCount + "x" + columnCount + "]" + EOL);
-		} else if (rowCount > UJMPSettings.getInstance().getMaxRowsToPrint()
-				|| columnCount > UJMPSettings.getInstance().getMaxColumnsToPrint()) {
-			toAppendTo.append("[...]");
-		}
+        long rowCount = m.getRowCount();
+        long columnCount = m.getColumnCount();
+        long[] cursor = new long[m.getDimensionCount()];
 
-		return toAppendTo;
-	}
+        if (m.getDimensionCount() > 2) {
+            toAppendTo.append(m.getDimensionCount());
+            toAppendTo.append("D-Matrix [");
+            toAppendTo.append(Coordinates.toString("x", m.getSize()));
+            toAppendTo.append("]: only two dimensions are printed");
+            toAppendTo.append(EOL);
+        }
 
-	@Override
-	public Object parseObject(String source, ParsePosition pos) {
-		throw new RuntimeException("not implemented");
-	}
+        if (m.getMetaData() != null) {
+            formatString(m.getLabel(), toAppendTo, width, usePadding);
+            toAppendTo.append("   ");
+            for (int col = 0; col < columnCount && col < maxColumns; col++) {
+                formatString(m.getColumnLabel(col), toAppendTo, width, usePadding);
+                if (col < columnCount - 1) {
+                    toAppendTo.append(' ');
+                }
+            }
+            toAppendTo.append(EOL);
+            pad(toAppendTo, '=', width);
+            toAppendTo.append("   ");
+            for (int col = 0; col < columnCount && col < maxColumns; col++) {
+                pad(toAppendTo, '-', width);
+                if (col < columnCount - 1) {
+                    toAppendTo.append(' ');
+                }
+            }
+            toAppendTo.append(EOL);
+        }
+
+        for (cursor[Matrix.ROW] = 0; cursor[Matrix.ROW] < rowCount && cursor[Matrix.ROW] < maxRows; cursor[Matrix.ROW]++) {
+            if (m.getMetaData() != null) {
+                formatString(m.getRowLabel(cursor[Matrix.ROW]), toAppendTo, width, usePadding);
+                toAppendTo.append(" | ");
+            }
+            for (cursor[Matrix.COLUMN] = 0; cursor[Matrix.COLUMN] < columnCount
+                    && cursor[Matrix.COLUMN] < maxColumns; cursor[Matrix.COLUMN]++) {
+                Object o = m.getAsObject(cursor);
+                if (o == null && m instanceof BaseBigDecimalMatrix) {
+                    toAppendTo = formatNumber(Double.NaN, toAppendTo, width, usePadding);
+                } else if (o instanceof Matrix) {
+                    toAppendTo.append("[Matrix]");
+                } else {
+                    if (cursor[Matrix.COLUMN] == 0 && m.getColumnCount() == 1) {
+                        toAppendTo = format(o, toAppendTo, pos, 80, usePadding);
+                    } else if (cursor[Matrix.COLUMN] == 1 && m instanceof MapMatrix) {
+                        toAppendTo = format(o, toAppendTo, pos, 60, usePadding);
+                    } else {
+                        toAppendTo = format(o, toAppendTo, pos, width, usePadding);
+                    }
+                }
+                if (cursor[Matrix.COLUMN] < columnCount - 1) {
+                    toAppendTo.append(' ');
+                }
+            }
+            toAppendTo.append(EOL);
+        }
+
+        if (rowCount == 0 || columnCount == 0)
+
+        {
+            toAppendTo.append("[").append(rowCount).append("x").append(columnCount).append("]").append(EOL);
+        } else if (rowCount > UJMPSettings.getInstance().
+
+                getMaxRowsToPrint()
+
+                || columnCount > UJMPSettings.getInstance().
+
+                getMaxColumnsToPrint()
+
+                )
+
+        {
+            toAppendTo.append("[...]");
+        }
+
+        return toAppendTo;
+    }
+
+    @Override
+    public Object parseObject(String source, ParsePosition pos) {
+        throw new RuntimeException("not implemented");
+    }
 }

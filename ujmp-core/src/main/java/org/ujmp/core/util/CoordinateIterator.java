@@ -24,6 +24,9 @@
 package org.ujmp.core.util;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 
 import org.ujmp.core.Coordinates;
 
@@ -38,6 +41,18 @@ public class CoordinateIterator implements Iterable<long[]> {
 	public Iterator<long[]> iterator() {
 		return new It(size);
 	}
+
+	
+	
+	@Override
+	public Spliterator<long[]> spliterator() {
+		long s=size[0];
+		for(int i=1;i<size.length;i++){
+			s*=size[i];
+		}
+		return Spliterators.spliterator(new It(size), s, Spliterator.IMMUTABLE | Spliterator.DISTINCT | Spliterator.NONNULL);
+	}
+
 
 	class It implements Iterator<long[]> {
 		long[] cursor = null;
@@ -76,6 +91,8 @@ public class CoordinateIterator implements Iterable<long[]> {
 		public void remove() {
 			throw new RuntimeException("not implemented");
 		}
+		
+		
 	}
 
 }

@@ -23,6 +23,11 @@
 
 package org.ujmp.core.doublematrix.calculation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.stream.StreamSupport;
+
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.AbstractCalculation;
@@ -36,6 +41,9 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 
 	private static final long serialVersionUID = -7509806754731040687L;
 
+	protected int chunkSize=1000;
+	
+	
 	public AbstractDoubleCalculation(Matrix... sources) {
 		super(sources);
 	}
@@ -44,21 +52,25 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		super(dimension, sources);
 	}
 
+	@Override
 	public DoubleMatrix calcLink() {
 		return new DoubleCalculationMatrix(this);
 	}
 
+	@Override
 	public Matrix calcNew() {
 		Matrix result = DoubleMatrix2D.Factory.zeros(getSize()[ROW], getSize()[COLUMN]);
-		for (long[] c : result.allCoordinates()) {
+		doCalc(result);
+		/*for (long[] c : result.allCoordinates()) {
 			result.setAsDouble(getDouble(c), c);
-		}
+		}*/
 		if (getMetaData() != null) {
 			result.setMetaData(getMetaData().clone());
 		}
 		return result;
 	}
 
+	@Override
 	public Matrix calcOrig() {
 		if (!Coordinates.equals(getSource().getSize(), getSize())) {
 			throw new RuntimeException(
@@ -66,18 +78,51 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		}
 
 		final Matrix matrix = getSource();
-		for (final long[] c : getSource().allCoordinates()) {
-			matrix.setAsDouble(getDouble(c), c);
-		}
+		doCalc(matrix);
 		getSource().fireValueChanged();
 		return getSource();
+	}
+	
+	protected Matrix doCalc(Matrix matrix){
+		System.out.println("Matrix function called");
+		/*long[] size=getSource().getSize();
+		long s=size[0];
+		for(int i=1;i<size.length;i++){
+			s*=size[i];
+		}
+		if(s>chunkSize){
+			//parallel
+			getCalcChunks().parallelStream().forEach(e->{e.forEach(c->matrix.setAsDouble(getDouble(c), c));});
+			*/
+		Spliterator<long[]> split=getSource().allCoordinates().spliterator();
+		StreamSupport.stream(split, true).forEach(c->matrix.setAsDouble(getDouble(c), c));
+		//}else{*/
+			//serial
+			/*for (final long[] c : getSource().allCoordinates()) {
+				matrix.setAsDouble(getDouble(c), c);
+			}*/
+		//}
+		
+		return matrix;
+	}
+	
+	protected List<List<long[]>> getCalcChunks(){
+		ArrayList<long[]> allCo=new ArrayList<long[]>();
+		getSource().allCoordinates().forEach(e->allCo.add(e));
+		ArrayList<List<long[]>> chunks=new ArrayList<List<long[]>>();
+		for(int i=0;i<allCo.size();i+=chunkSize){
+			chunks.add(allCo.subList(i, (i+chunkSize>allCo.size())?allCo.size():i+chunkSize));
+		}
+		return chunks;
 	}
 
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
+	@Override
 	public void setDouble(double value, long... coordinates) {
 	}
 
+	@Override
 	public final ValueType getValueType() {
 		return ValueType.DOUBLE;
 	}

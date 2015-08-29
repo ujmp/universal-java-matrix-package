@@ -94,8 +94,8 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 			//parallel
 			getCalcChunks().parallelStream().forEach(e->{e.forEach(c->matrix.setAsDouble(getDouble(c), c));});
 			*/
-		Spliterator<long[]> split=getSource().allCoordinates().spliterator();
-		StreamSupport.stream(split, true).forEach(c->matrix.setAsDouble(getDouble(c), c));
+		Spliterator<long[]> split=matrix.allCoordinates().spliterator();
+		StreamSupport.stream(split, false).forEach(c->matrix.setAsDouble(getDouble(c), c));
 		//}else{*/
 			//serial
 			/*for (final long[] c : getSource().allCoordinates()) {

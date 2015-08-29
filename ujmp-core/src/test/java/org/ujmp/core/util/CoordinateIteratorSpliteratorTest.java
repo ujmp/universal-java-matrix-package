@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import org.junit.Test;
+import org.ujmp.core.Coordinates;
 
 public class CoordinateIteratorSpliteratorTest {
 
@@ -65,6 +66,28 @@ public class CoordinateIteratorSpliteratorTest {
 		size=dut.getSize();
 		assertTrue("Wrong size calculated with end: 110/"+size, size==70);
 		
+	}
+	
+
+	@Test
+	public void nextTest(){
+
+		CoordinateIteratorSpliterator dut=new CoordinateIteratorSpliterator(6,5,4);
+		ArrayList<long[]> coo=new ArrayList<long[]>();
+		for(int z=0;z<6;z++){
+			for(int y=0;y<5;y++){
+				for(int x=0;x<4;x++){
+					coo.add(new long[]{z,y,x});
+				}
+			}
+		}
+		for(int i=0;i<120;i++){
+			long[] tmp=dut.next();
+			assertTrue("Size is too small",coo.size()>0);
+			assertTrue("Sequence of iterator not correct",Coordinates.equals(coo.get(0),tmp));
+			coo.remove(0);
+		}
+		assertTrue("Elements left",coo.size()==0);
 	}
 	
 	@Test

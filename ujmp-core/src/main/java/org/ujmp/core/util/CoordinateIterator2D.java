@@ -24,14 +24,13 @@
 package org.ujmp.core.util;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 
 import org.ujmp.core.Matrix;
 
 public class CoordinateIterator2D implements Iterable<long[]> {
-
-	private static final int ROW = Matrix.ROW;
-
-	private static final int COLUMN = Matrix.COLUMN;
 
 	private long[] size = null;
 
@@ -44,34 +43,18 @@ public class CoordinateIterator2D implements Iterable<long[]> {
 		}
 	}
 
-	public Iterator<long[]> iterator() {
-		return new Iterator<long[]>() {
 
-			long[] cursor = new long[] { 0, -1 };
-
-			long columnCount = size[COLUMN];
-
-			long rowCount = size[ROW];
-
-			long rowMinus1 = rowCount - 1;
-
-			long columnMinus1 = columnCount - 1;
-
-			boolean isNotEmpty = columnCount != 0 && rowCount != 0;
-
-			public boolean hasNext() {
-				return (cursor[ROW] != rowMinus1 || cursor[COLUMN] != columnMinus1) && isNotEmpty;
-			}
-
-			public long[] next() {
-				return ++cursor[COLUMN] == columnCount && (cursor[COLUMN] = 0) == ++cursor[ROW] ? cursor
-						: cursor;
-			}
-
-			public void remove() {
-				throw new RuntimeException("not implemented");
-			}
-		};
+	@Override
+	public Spliterator<long[]> spliterator() {
+		return new CoordinateIteratorSpliterator2D(size);
 	}
+	
+	
+	@Override
+	public Iterator<long[]> iterator() {
+		return new CoordinateIteratorSpliterator2D(size);
+	}
+	
+	
 
 }

@@ -25,6 +25,7 @@ package org.ujmp.core.genericmatrix.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
@@ -36,7 +37,7 @@ import org.ujmp.core.util.MathUtil;
 public class DefaultSparseGenericMatrix<A> extends AbstractSparseGenericMatrix<A> {
 	private static final long serialVersionUID = -7139128532871448340L;
 
-	protected final Map<Coordinates, A> values = new HashMap<Coordinates, A>();
+	protected final Map<Coordinates, A> values = new ConcurrentHashMap<Coordinates, A>();
 
 	private int maximumNumberOfEntries = -1;
 

@@ -25,7 +25,9 @@ package org.ujmp.core.collections.composite;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Spliterator;
 
 public interface ListSet<T> extends List<T>, Set<T> {
-
+	@Override
+	public Spliterator<T> spliterator();
 }

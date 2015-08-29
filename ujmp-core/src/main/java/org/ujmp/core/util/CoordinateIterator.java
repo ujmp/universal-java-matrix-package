@@ -39,60 +39,15 @@ public class CoordinateIterator implements Iterable<long[]> {
 	}
 
 	public Iterator<long[]> iterator() {
-		return new It(size);
+		return new CoordinateIteratorSpliterator(size);
 	}
 
 	
 	
 	@Override
 	public Spliterator<long[]> spliterator() {
-		long s=size[0];
-		for(int i=1;i<size.length;i++){
-			s*=size[i];
-		}
-		return Spliterators.spliterator(new It(size), s, Spliterator.IMMUTABLE | Spliterator.DISTINCT | Spliterator.NONNULL);
+		return new CoordinateIteratorSpliterator2D(size);
 	}
 
-
-	class It implements Iterator<long[]> {
-		long[] cursor = null;
-
-		long[] size = null;
-
-		long[] lastEntry = null;
-
-		boolean isNotEmpty = false;
-
-		public It(long... size) {
-			this.size = size;
-			this.lastEntry = Coordinates.minus(size, 1);
-			this.cursor = new long[size.length];
-			cursor[cursor.length - 1]--;
-			isNotEmpty = Coordinates.product(size) != 0;
-		}
-
-		public boolean hasNext() {
-			return !Coordinates.equals(lastEntry, cursor) && isNotEmpty;
-		}
-
-		public long[] next() {
-			increment(cursor.length - 1);
-			return cursor;
-		}
-
-		private void increment(int dim) {
-			cursor[dim]++;
-			if (cursor[dim] == size[dim]) {
-				cursor[dim] = 0;
-				increment(dim - 1);
-			}
-		}
-
-		public void remove() {
-			throw new RuntimeException("not implemented");
-		}
-		
-		
-	}
 
 }

@@ -40,8 +40,6 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 		DoubleCalculation {
 
 	private static final long serialVersionUID = -7509806754731040687L;
-
-	protected int chunkSize=1000;
 	
 	
 	public AbstractDoubleCalculation(Matrix... sources) {
@@ -84,38 +82,13 @@ public abstract class AbstractDoubleCalculation extends AbstractCalculation impl
 	}
 	
 	protected Matrix doCalc(Matrix matrix){
-		System.out.println("Matrix function called");
-		/*long[] size=getSource().getSize();
-		long s=size[0];
-		for(int i=1;i<size.length;i++){
-			s*=size[i];
-		}
-		if(s>chunkSize){
-			//parallel
-			getCalcChunks().parallelStream().forEach(e->{e.forEach(c->matrix.setAsDouble(getDouble(c), c));});
-			*/
+		//System.out.println("Matrix function called");
 		Spliterator<long[]> split=matrix.allCoordinates().spliterator();
-		StreamSupport.stream(split, false).forEach(c->matrix.setAsDouble(getDouble(c), c));
-		//}else{*/
-			//serial
-			/*for (final long[] c : getSource().allCoordinates()) {
-				matrix.setAsDouble(getDouble(c), c);
-			}*/
-		//}
+		StreamSupport.stream(split, true).forEach(c->matrix.setAsDouble(getDouble(c), c));
 		
 		return matrix;
 	}
 	
-	protected List<List<long[]>> getCalcChunks(){
-		ArrayList<long[]> allCo=new ArrayList<long[]>();
-		getSource().allCoordinates().forEach(e->allCo.add(e));
-		ArrayList<List<long[]>> chunks=new ArrayList<List<long[]>>();
-		for(int i=0;i<allCo.size();i+=chunkSize){
-			chunks.add(allCo.subList(i, (i+chunkSize>allCo.size())?allCo.size():i+chunkSize));
-		}
-		return chunks;
-	}
-
 	// this method is doing nothing, but it has to be there for submatrix or
 	// selection where it is overridden
 	@Override

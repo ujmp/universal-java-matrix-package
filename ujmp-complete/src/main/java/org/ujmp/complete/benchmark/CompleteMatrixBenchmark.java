@@ -23,31 +23,19 @@
 
 package org.ujmp.complete.benchmark;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import edu.emory.mathcs.utils.ConcurrencyUtils;
 import org.ujmp.colt.benchmark.ColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathArrayDenseDoubleMatrix2DBenchmark;
 import org.ujmp.commonsmath.benchmark.CommonsMathBlockDenseDoubleMatrix2DBenchmark;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.benchmark.AbstractMatrix2DBenchmark;
-import org.ujmp.core.benchmark.ArrayDenseDoubleMatrix2DBenchmark;
-import org.ujmp.core.benchmark.BenchmarkUtil;
-import org.ujmp.core.benchmark.BlockDenseDoubleMatrix2DBenchmark;
-import org.ujmp.core.benchmark.DefaultDenseDoubleMatrix2DBenchmark;
+import org.ujmp.core.benchmark.*;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.doublematrix.DenseDoubleMatrix2D;
 import org.ujmp.core.doublematrix.DoubleMatrix2D;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
-import org.ujmp.core.util.CommandLineUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPSettings;
 import org.ujmp.core.util.matrices.MatrixLibraries;
@@ -64,7 +52,8 @@ import org.ujmp.ojalgo.benchmark.OjalgoDenseDoubleMatrix2DBenchmark;
 import org.ujmp.parallelcolt.benchmark.ParallelColtDenseDoubleMatrix2DBenchmark;
 import org.ujmp.vecmath.benchmark.VecMathDenseDoubleMatrix2DBenchmark;
 
-import edu.emory.mathcs.utils.ConcurrencyUtils;
+import java.io.File;
+import java.util.*;
 
 public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
@@ -155,7 +144,6 @@ public class CompleteMatrixBenchmark extends AbstractMatrix2DBenchmark {
 
 	public static void main(String[] args) throws Exception {
 		CompleteMatrixBenchmark mb = new CompleteMatrixBenchmark();
-		CommandLineUtil.parse(mb.getConfig(), args);
 		mb.saveSettings();
 		mb.runAll();
 		mb.evaluate();

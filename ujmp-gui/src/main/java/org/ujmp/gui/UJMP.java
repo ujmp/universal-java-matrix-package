@@ -23,26 +23,15 @@
 
 package org.ujmp.gui;
 
-import java.applet.Applet;
+public class UJMP extends org.ujmp.core.UJMP {
+    private static final long serialVersionUID = 9112777043274552132L;
 
-import org.ujmp.core.Matrix;
+    protected UJMP() throws Exception {
+    }
 
-public class UJMP extends Applet {
-	private static final long serialVersionUID = 9112777043274552132L;
+    public static void main(String[] args) throws Exception {
+        org.ujmp.core.UJMP.main(args);
+    }
 
-	public static final String UJMPVERSION = org.ujmp.core.UJMP.UJMPVERSION;
-
-	public static void main(String[] args) throws Exception {
-		Matrix m = Matrix.Factory.welcomeMatrix();
-		m.showGUI();
-	}
-
-	public void init() {
-		try {
-			main(new String[] {});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 }

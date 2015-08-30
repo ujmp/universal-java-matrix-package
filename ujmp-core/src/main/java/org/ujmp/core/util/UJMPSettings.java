@@ -27,219 +27,274 @@ import java.math.MathContext;
 import java.util.Locale;
 
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class UJMPSettings extends DefaultMapMatrix<String, Object> {
-	private static final long serialVersionUID = -4677534766141735270L;
+    private static final long serialVersionUID = -4677534766141735270L;
 
-	private static final Object lock = new Object();
+    private static final Object lock = new Object();
 
-	public static final String USEBLOCKMATRIXMULTIPLY = "UseBlockMatrixMultiply";
-	public static final String USEMULTITHREADEDRANDOM = "UseMultThreadedRandom";
-	public static final String DEFAULTBLOCKSIZE = "DefaultBlockSize";
-	public static final String MATHCONTEXT = "MathContext";
-	public static final String DEFAULTTOLERANCE = "DefaultTolerance";
-	public static final String NUMBEROFTHREADS = "NumberOfThreads";
+    public static final String USEBLOCKMATRIXMULTIPLY = "UseBlockMatrixMultiply";
+    public static final String USEMULTITHREADEDRANDOM = "UseMultThreadedRandom";
+    public static final String DEFAULTBLOCKSIZE = "DefaultBlockSize";
+    public static final String MATHCONTEXT = "MathContext";
+    public static final String DEFAULTTOLERANCE = "DefaultTolerance";
+    public static final String NUMBEROFTHREADS = "NumberOfThreads";
 
-	public static final String USEJBLAS = "UseJBlas";
-	public static final String USEOJALGO = "UseOjalgo";
-	public static final String USEEJML = "UseEJML";
-	public static final String USEPARALLELCOLT = "UseParallelColt";
-	public static final String USECOMMONSMATH = "UseCommonsMath";
-	public static final String USEMTJ = "UseMTJ";
+    public static final String USEJBLAS = "UseJBlas";
+    public static final String USEOJALGO = "UseOjalgo";
+    public static final String USEEJML = "UseEJML";
+    public static final String USEPARALLELCOLT = "UseParallelColt";
+    public static final String USECOMMONSMATH = "UseCommonsMath";
+    public static final String USEMTJ = "UseMTJ";
 
-	public static final String MAXROWSTOPRINT = "MaxRowsToPrint";
-	public static final String MAXCOLSTOPRINT = "MaxColsToPrint";
-	public static final String MAXTOOLTIPROWS = "MaxTooltipRows";
-	public static final String MAXTOOLTIPCOLS = "MaxTooltipCols";
+    public static final String MAXROWSTOPRINT = "MaxRowsToPrint";
+    public static final String MAXCOLSTOPRINT = "MaxColsToPrint";
+    public static final String MAXTOOLTIPROWS = "MaxTooltipRows";
+    public static final String MAXTOOLTIPCOLS = "MaxTooltipCols";
 
-	public static final String USERAGENT = "UserAgent";
+    public static final String USERAGENT = "UserAgent";
 
-	private static UJMPSettings instance = null;
+    public static final String ACTION = "Action";
 
-	private UJMPSettings() {
-		put(DEFAULTBLOCKSIZE, 100);
-		put(MATHCONTEXT, MathContext.DECIMAL128);
-		put(USEMULTITHREADEDRANDOM, true);
-		put(USEBLOCKMATRIXMULTIPLY, false);
-		put(DEFAULTTOLERANCE, 1.0e-12);
+    private static UJMPSettings instance = null;
 
-		put(USEJBLAS, true);
-		put(USEEJML, true);
-		put(USEOJALGO, true);
-		put(USEPARALLELCOLT, true);
-		put(USEMTJ, true);
-		put(USECOMMONSMATH, true);
+    private UJMPSettings() {
 
-		put(MAXROWSTOPRINT, 100);
-		put(MAXCOLSTOPRINT, 100);
-		put(MAXTOOLTIPROWS, 10);
-		put(MAXTOOLTIPCOLS, 10);
+        //System.getProperties().getProperty("user.home") + "/.ujmp/ujmp.settings";
 
-		put(USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0");
+        put(DEFAULTBLOCKSIZE, 100);
+        put(MATHCONTEXT, MathContext.DECIMAL128);
+        put(USEMULTITHREADEDRANDOM, true);
+        put(USEBLOCKMATRIXMULTIPLY, false);
+        put(DEFAULTTOLERANCE, 1.0e-12);
 
-		put(NUMBEROFTHREADS, Runtime.getRuntime().availableProcessors());
-		Locale.setDefault(Locale.US);
-		System.setProperty("file.encoding", "UTF-8");
-		System.setProperty("sun.jnu.encoding", "UTF-8");
-	}
+        put(USEJBLAS, true);
+        put(USEEJML, true);
+        put(USEOJALGO, true);
+        put(USEPARALLELCOLT, true);
+        put(USEMTJ, true);
+        put(USECOMMONSMATH, true);
 
-	public static final UJMPSettings getInstance() {
-		if (instance == null) {
-			synchronized (lock) {
-				if (instance == null) {
-					instance = new UJMPSettings();
-				}
-			}
-		}
-		return instance;
-	}
+        put(MAXROWSTOPRINT, 100);
+        put(MAXCOLSTOPRINT, 100);
+        put(MAXTOOLTIPROWS, 10);
+        put(MAXTOOLTIPCOLS, 10);
 
-	public MathContext getMathContext() {
-		return (MathContext) get(MATHCONTEXT);
-	}
+        put(USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0");
 
-	public void setMathContext(MathContext mc) {
-		put(MATHCONTEXT, mc);
-	}
+        put(ACTION, "none");
 
-	public int getNumberOfThreads() {
-		return MathUtil.getInt(get(NUMBEROFTHREADS));
-	}
+        put(NUMBEROFTHREADS, Runtime.getRuntime().availableProcessors());
+        Locale.setDefault(Locale.US);
+        System.setProperty("file.encoding", "UTF-8");
+        System.setProperty("sun.jnu.encoding", "UTF-8");
+    }
 
-	public void setNumberOfThreads(int numberOfThreads) {
-		put(NUMBEROFTHREADS, numberOfThreads);
-	}
+    public static final UJMPSettings getInstance() {
+        if (instance == null) {
+            synchronized (lock) {
+                if (instance == null) {
+                    instance = new UJMPSettings();
+                }
+            }
+        }
+        return instance;
+    }
 
-	public double getTolerance() {
-		return MathUtil.getDouble(get(DEFAULTTOLERANCE));
-	}
+    public String getAction() {
+        return getAsString(ACTION);
+    }
 
-	public void setTolerance(double tolerance) {
-		put(DEFAULTTOLERANCE, tolerance);
-	}
+    public MathContext getMathContext() {
+        return (MathContext) get(MATHCONTEXT);
+    }
 
-	public int getMaxColumnsToPrint() {
-		return MathUtil.getInt(get(MAXCOLSTOPRINT));
-	}
+    public void setMathContext(MathContext mc) {
+        put(MATHCONTEXT, mc);
+    }
 
-	public void setMaxColumnsToPrint(int maxColumnsToPrint) {
-		put(MAXCOLSTOPRINT, maxColumnsToPrint);
-	}
+    public int getNumberOfThreads() {
+        return MathUtil.getInt(get(NUMBEROFTHREADS));
+    }
 
-	public int getMaxRowsToPrint() {
-		return MathUtil.getInt(get(MAXROWSTOPRINT));
-	}
+    public void setNumberOfThreads(int numberOfThreads) {
+        put(NUMBEROFTHREADS, numberOfThreads);
+    }
 
-	public void setMaxRowsToPrint(int maxRowsToPrint) {
-		put(MAXROWSTOPRINT, maxRowsToPrint);
-	}
+    public double getTolerance() {
+        return MathUtil.getDouble(get(DEFAULTTOLERANCE));
+    }
 
-	public int getMaxToolTipCols() {
-		return MathUtil.getInt(get(MAXTOOLTIPCOLS));
-	}
+    public void setTolerance(double tolerance) {
+        put(DEFAULTTOLERANCE, tolerance);
+    }
 
-	public void setMaxToolTipCols(int maxToolTipCols) {
-		put(MAXTOOLTIPCOLS, maxToolTipCols);
-	}
+    public int getMaxColumnsToPrint() {
+        return MathUtil.getInt(get(MAXCOLSTOPRINT));
+    }
 
-	public int getMaxToolTipRows() {
-		return MathUtil.getInt(get(MAXTOOLTIPROWS));
-	}
+    public void setMaxColumnsToPrint(int maxColumnsToPrint) {
+        put(MAXCOLSTOPRINT, maxColumnsToPrint);
+    }
 
-	public void setMaxToolTipRows(int maxToolTipRows) {
-		put(MAXTOOLTIPROWS, maxToolTipRows);
-	}
+    public int getMaxRowsToPrint() {
+        return MathUtil.getInt(get(MAXROWSTOPRINT));
+    }
 
-	public static Locale getLocale() {
-		return Locale.getDefault();
-	}
+    public void setMaxRowsToPrint(int maxRowsToPrint) {
+        put(MAXROWSTOPRINT, maxRowsToPrint);
+    }
 
-	public static void setLocale(Locale locale) {
-		Locale.setDefault(locale);
-	}
+    public int getMaxToolTipCols() {
+        return MathUtil.getInt(get(MAXTOOLTIPCOLS));
+    }
 
-	public void setUseCommonsMath(boolean useCommonsMath) {
-		put(USECOMMONSMATH, useCommonsMath);
-	}
+    public void setMaxToolTipCols(int maxToolTipCols) {
+        put(MAXTOOLTIPCOLS, maxToolTipCols);
+    }
 
-	public boolean isUseCommonsMath() {
-		return MathUtil.getBoolean(get(USECOMMONSMATH));
-	}
+    public int getMaxToolTipRows() {
+        return MathUtil.getInt(get(MAXTOOLTIPROWS));
+    }
 
-	public void setUseJBlas(boolean useJBlas) {
-		put(USEJBLAS, useJBlas);
-	}
+    public void setMaxToolTipRows(int maxToolTipRows) {
+        put(MAXTOOLTIPROWS, maxToolTipRows);
+    }
 
-	public boolean isUseJBlas() {
-		return MathUtil.getBoolean(get(USEJBLAS));
-	}
+    public static Locale getLocale() {
+        return Locale.getDefault();
+    }
 
-	public void setUseOjalgo(boolean useOjalgo) {
-		put(USEOJALGO, useOjalgo);
-	}
+    public static void setLocale(Locale locale) {
+        Locale.setDefault(locale);
+    }
 
-	public boolean isUseOjalgo() {
-		return MathUtil.getBoolean(get(USEOJALGO));
-	}
+    public void setUseCommonsMath(boolean useCommonsMath) {
+        put(USECOMMONSMATH, useCommonsMath);
+    }
 
-	public void setUseEJML(boolean useEJML) {
-		put(USEEJML, useEJML);
-	}
+    public boolean isUseCommonsMath() {
+        return MathUtil.getBoolean(get(USECOMMONSMATH));
+    }
 
-	public boolean isUseEJML() {
-		return MathUtil.getBoolean(get(USEEJML));
-	}
+    public void setUseJBlas(boolean useJBlas) {
+        put(USEJBLAS, useJBlas);
+    }
 
-	public void setUseParallelColt(boolean useParallelColt) {
-		put(USEPARALLELCOLT, useParallelColt);
-	}
+    public boolean isUseJBlas() {
+        return MathUtil.getBoolean(get(USEJBLAS));
+    }
 
-	public boolean isUseParallelColt() {
-		return MathUtil.getBoolean(get(USEPARALLELCOLT));
-	}
+    public void setUseOjalgo(boolean useOjalgo) {
+        put(USEOJALGO, useOjalgo);
+    }
 
-	public void setUseMTJ(boolean useMTJ) {
-		put(USEMTJ, useMTJ);
-	}
+    public boolean isUseOjalgo() {
+        return MathUtil.getBoolean(get(USEOJALGO));
+    }
 
-	public boolean isUseMTJ() {
-		return MathUtil.getBoolean(get(USEMTJ));
-	}
+    public void setUseEJML(boolean useEJML) {
+        put(USEEJML, useEJML);
+    }
 
-	public boolean isUseBlockMatrixMultiply() {
-		return MathUtil.getBoolean(get(USEBLOCKMATRIXMULTIPLY));
-	}
+    public boolean isUseEJML() {
+        return MathUtil.getBoolean(get(USEEJML));
+    }
 
-	public void setUseBlockMatrixMultiply(boolean useBlockMatrix) {
-		put(USEBLOCKMATRIXMULTIPLY, useBlockMatrix);
-	}
+    public void setUseParallelColt(boolean useParallelColt) {
+        put(USEPARALLELCOLT, useParallelColt);
+    }
 
-	public boolean isUseMultiThreadedRandom() {
-		return MathUtil.getBoolean(USEMULTITHREADEDRANDOM);
-	}
+    public boolean isUseParallelColt() {
+        return MathUtil.getBoolean(get(USEPARALLELCOLT));
+    }
 
-	public void setUseMultiThreadedRandom(boolean value) {
-		put(USEMULTITHREADEDRANDOM, value);
-	}
+    public void setUseMTJ(boolean useMTJ) {
+        put(USEMTJ, useMTJ);
+    }
 
-	public int getDefaultBlockSize() {
-		return MathUtil.getInt(get(DEFAULTBLOCKSIZE));
-	}
+    public boolean isUseMTJ() {
+        return MathUtil.getBoolean(get(USEMTJ));
+    }
 
-	public void setDefaultBlockSize(int defaultBlockSize) {
-		put(DEFAULTBLOCKSIZE, defaultBlockSize);
-	}
+    public boolean isUseBlockMatrixMultiply() {
+        return MathUtil.getBoolean(get(USEBLOCKMATRIXMULTIPLY));
+    }
 
-	public String getUserAgent() {
-		return StringUtil.getString(get(USERAGENT));
-	}
+    public void setUseBlockMatrixMultiply(boolean useBlockMatrix) {
+        put(USEBLOCKMATRIXMULTIPLY, useBlockMatrix);
+    }
 
-	public void setUserAgent(String value) {
-		put(USERAGENT, value);
-	}
+    public boolean isUseMultiThreadedRandom() {
+        return MathUtil.getBoolean(USEMULTITHREADEDRANDOM);
+    }
 
-	public String getTempDir() {
-		return System.getProperty("java.io.tmpdir");
-	}
+    public void setUseMultiThreadedRandom(boolean value) {
+        put(USEMULTITHREADEDRANDOM, value);
+    }
 
+    public int getDefaultBlockSize() {
+        return MathUtil.getInt(get(DEFAULTBLOCKSIZE));
+    }
+
+    public void setDefaultBlockSize(int defaultBlockSize) {
+        put(DEFAULTBLOCKSIZE, defaultBlockSize);
+    }
+
+    public String getUserAgent() {
+        return StringUtil.getString(get(USERAGENT));
+    }
+
+    public void setUserAgent(String value) {
+        put(USERAGENT, value);
+    }
+
+    public String getTempDir() {
+        return System.getProperty("java.io.tmpdir");
+    }
+
+    public static UJMPSettings parse(String... args) {
+        UJMPSettings settings = UJMPSettings.getInstance();
+        for (String s : args) {
+            if (s != null) {
+                if (s.startsWith("--")) {
+                    addArgument(settings, s.replaceFirst("--", ""));
+                } else if (s.startsWith("-")) {
+                    addArgument(settings, s.replaceFirst("-", ""));
+                } else {
+                    settings.put("name", s);
+                }
+            }
+        }
+        return settings;
+    }
+
+
+    private static void addArgument(UJMPSettings matrix, String s) {
+        if (s.contains("=")) {
+            String[] keyValue = s.split("=");
+            String key = keyValue[0];
+            String value = keyValue[1];
+            addKeyValue(matrix, key, value);
+        } else {
+            addKeyValue(matrix, s, true);
+        }
+    }
+
+    private static void addKeyValue(UJMPSettings matrix, String key, Object value) {
+        for (String k : matrix.keySet()) {
+            if (k.equalsIgnoreCase(key)) {
+                matrix.put(k, value);
+                break;
+            }
+        }
+    }
+
+
+    public static final void printOptions(UJMPSettings config) {
+        for (String s : config.keySet()) {
+            System.out.println(StringUtil.padLeft("--" + s, 20) + " (default: " + config.get(s) + ")");
+        }
+    }
 }

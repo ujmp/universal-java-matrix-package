@@ -1154,7 +1154,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix deleteColumns(Ret returnType, long... columns) {
-		return delete(returnType, new long[] {}, columns);
+		return delete(returnType, new long[]{}, columns);
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double v) {
@@ -1236,7 +1236,11 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public String toString() {
-		return UJMPFormat.getMultiLineInstance().format(this);
+		if(this instanceof MapMatrix) {
+			return UJMPFormat.getMapInstance().format(this);
+		} else {
+			return UJMPFormat.getMultiLineInstance().format(this);
+		}
 	}
 
 	public String toHtml() {

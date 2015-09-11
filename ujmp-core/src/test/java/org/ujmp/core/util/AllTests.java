@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ TestStringUtil.class, TestXMLUtil.class, ByteBufferConcatenationTest.class })
+@Suite.SuiteClasses({ TestStringUtil.class, TestXMLUtil.class, ByteBufferConcatenationTest.class,
+	CoordinateIteratorSpliteratorTest.class, CoordinateIteratorSpliterator2DTest.class})
 public class AllTests {
 }

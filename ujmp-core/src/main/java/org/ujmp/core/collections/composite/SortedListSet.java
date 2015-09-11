@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.SortedSet;
+import java.util.Spliterator;
 import java.util.TreeSet;
 
 public class SortedListSet<A> extends AbstractList<A> implements SortedSet<A>, ListSet<A>,
@@ -42,6 +43,12 @@ public class SortedListSet<A> extends AbstractList<A> implements SortedSet<A>, L
 	private final List<A> list = new ArrayList<A>();
 
 	public SortedListSet() {
+	}
+
+	
+	@Override
+	public Spliterator<A> spliterator() {
+		return SortedSet.super.spliterator();
 	}
 
 	public Comparator<? super A> comparator() {

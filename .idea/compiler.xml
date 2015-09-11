@@ -242,39 +242,39 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ujmp" target="1.7" />
-      <module name="ujmp-colt" target="1.7" />
-      <module name="ujmp-commonsmath" target="1.7" />
-      <module name="ujmp-complete" target="1.7" />
-      <module name="ujmp-core" target="1.7" />
-      <module name="ujmp-ehcache" target="1.7" />
-      <module name="ujmp-ejml" target="1.7" />
-      <module name="ujmp-elasticsearch" target="1.7" />
-      <module name="ujmp-examples" target="1.7" />
-      <module name="ujmp-gui" target="1.7" />
-      <module name="ujmp-hadoop" target="1.7" />
+      <module name="ujmp" target="1.8" />
+      <module name="ujmp-colt" target="1.8" />
+      <module name="ujmp-commonsmath" target="1.8" />
+      <module name="ujmp-complete" target="1.8" />
+      <module name="ujmp-core" target="1.8" />
+      <module name="ujmp-ehcache" target="1.8" />
+      <module name="ujmp-ejml" target="1.8" />
+      <module name="ujmp-elasticsearch" target="1.8" />
+      <module name="ujmp-examples" target="1.8" />
+      <module name="ujmp-gui" target="1.8" />
+      <module name="ujmp-hadoop" target="1.8" />
       <module name="ujmp-hazelcast" target="1.5" />
-      <module name="ujmp-itext" target="1.7" />
-      <module name="ujmp-jackcess" target="1.7" />
-      <module name="ujmp-jama" target="1.7" />
-      <module name="ujmp-jblas" target="1.7" />
-      <module name="ujmp-jdbc" target="1.7" />
-      <module name="ujmp-jetty" target="1.7" />
-      <module name="ujmp-jfreechart" target="1.7" />
-      <module name="ujmp-jmatio" target="1.7" />
-      <module name="ujmp-jsch" target="1.7" />
-      <module name="ujmp-jsci" target="1.7" />
-      <module name="ujmp-jscience" target="1.7" />
-      <module name="ujmp-jung" target="1.7" />
-      <module name="ujmp-la4j" target="1.7" />
-      <module name="ujmp-lucene" target="1.7" />
-      <module name="ujmp-mail" target="1.7" />
-      <module name="ujmp-mtj" target="1.7" />
-      <module name="ujmp-ojalgo" target="1.7" />
-      <module name="ujmp-parallelcolt" target="1.7" />
-      <module name="ujmp-pdfbox" target="1.7" />
-      <module name="ujmp-poi" target="1.7" />
-      <module name="ujmp-vecmath" target="1.7" />
+      <module name="ujmp-itext" target="1.8" />
+      <module name="ujmp-jackcess" target="1.8" />
+      <module name="ujmp-jama" target="1.8" />
+      <module name="ujmp-jblas" target="1.8" />
+      <module name="ujmp-jdbc" target="1.8" />
+      <module name="ujmp-jetty" target="1.8" />
+      <module name="ujmp-jfreechart" target="1.8" />
+      <module name="ujmp-jmatio" target="1.8" />
+      <module name="ujmp-jsch" target="1.8" />
+      <module name="ujmp-jsci" target="1.8" />
+      <module name="ujmp-jscience" target="1.8" />
+      <module name="ujmp-jung" target="1.8" />
+      <module name="ujmp-la4j" target="1.8" />
+      <module name="ujmp-lucene" target="1.8" />
+      <module name="ujmp-mail" target="1.8" />
+      <module name="ujmp-mtj" target="1.8" />
+      <module name="ujmp-ojalgo" target="1.8" />
+      <module name="ujmp-parallelcolt" target="1.8" />
+      <module name="ujmp-pdfbox" target="1.8" />
+      <module name="ujmp-poi" target="1.8" />
+      <module name="ujmp-vecmath" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

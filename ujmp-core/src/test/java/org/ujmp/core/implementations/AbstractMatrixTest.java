@@ -1525,7 +1525,8 @@ public abstract class AbstractMatrixTest {
 	public final void test0DivideXMatrix() throws Exception {
 		Matrix m1 = createMatrixWithAnnotation(5, 7);
 		Matrix m2 = createMatrixWithAnnotation(5, 7);
-		m2.randn(Ret.ORIG);
+		m2.rand(Ret.ORIG);
+		m2.plus(Ret.ORIG, true, 1);
 		Matrix m3 = m1.divide(m2);
 		assertTrue(getLabel(), m3.isEmpty());
 

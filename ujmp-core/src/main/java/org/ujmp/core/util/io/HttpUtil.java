@@ -47,6 +47,10 @@ public abstract class HttpUtil {
 		return output.toByteArray();
 	}
 
+	public static final String getStringFromUrl(URL url) throws IOException {
+		return new String(getBytesFromUrl(url));
+	}
+
 	public static final String getStringFromUrl(String urlString) throws IOException {
 		return new String(getBytesFromUrl(urlString));
 	}

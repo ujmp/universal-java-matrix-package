@@ -24,6 +24,7 @@
 package org.ujmp.core.importer.source;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.ujmp.core.Matrix;
@@ -36,6 +37,10 @@ public class DefaultMatrixUrlImportSource extends AbstractMatrixURLImportSource 
 
 	public DefaultMatrixUrlImportSource(Matrix matrix, URL url) {
 		super(matrix, url);
+	}
+
+	public DefaultMatrixUrlImportSource(Matrix matrix, String url) throws MalformedURLException {
+		super(matrix, new URL(url));
 	}
 
 	public Matrix asDenseCSV() throws IOException {

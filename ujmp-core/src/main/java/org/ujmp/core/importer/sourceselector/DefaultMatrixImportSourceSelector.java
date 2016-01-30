@@ -81,6 +81,10 @@ public class DefaultMatrixImportSourceSelector extends AbstractMatrixImportSourc
 	public MatrixURLImportSource url(URL url) throws IOException {
 		return new DefaultMatrixUrlImportSource(getTargetMatrix(), url);
 	}
+	
+	public MatrixURLImportSource url(String url) throws IOException {
+		return new DefaultMatrixUrlImportSource(getTargetMatrix(), url);
+	}
 
 	public MatrixByteArrayImportSource byteArray(byte[] bytes) {
 		return new DefaultMatrixByteArrayImportSource(getTargetMatrix(), bytes);

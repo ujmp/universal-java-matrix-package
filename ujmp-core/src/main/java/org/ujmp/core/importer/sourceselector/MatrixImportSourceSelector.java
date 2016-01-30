@@ -43,6 +43,8 @@ public interface MatrixImportSourceSelector {
 
 	public MatrixURLImportSource url(URL url) throws IOException;
 
+	public MatrixURLImportSource url(String url) throws IOException;
+
 	public MatrixFileImportSource file(File file) throws IOException;
 
 	public MatrixFileImportSource file(String file) throws IOException;

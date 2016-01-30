@@ -75,7 +75,7 @@ public abstract class HttpUtil {
 		connection.setUseCaches(false);
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
-		connection.setConnectTimeout(3000);
+		connection.setConnectTimeout(UJMPSettings.getInstance().getConnectionTimeout());
 
 		InputStream input = connection.getInputStream();
 		byte[] buffer = new byte[8192];

@@ -219,6 +219,7 @@ import org.ujmp.core.util.SerializationUtil;
 import org.ujmp.core.util.StringUtil;
 import org.ujmp.core.util.UJMPFormat;
 import org.ujmp.core.util.UJMPSettings;
+import org.ujmp.core.util.VerifyUtil;
 import org.ujmp.core.util.concurrent.PForEquidistant;
 import org.ujmp.core.util.io.MatrixSocketThread;
 
@@ -242,8 +243,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			long mem = Runtime.getRuntime().maxMemory();
 			if (mem < 133234688) {
 				System.err.println("Available memory is very low: " + (mem / 1000000) + "M");
-				System.err
-						.println("Invoke Java with the parameter -Xmx512M to increase available memory");
+				System.err.println(
+						"Invoke Java with the parameter -Xmx512M to increase available memory");
 			}
 		} catch (Throwable ignored) {
 		}
@@ -350,8 +351,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final String getDimensionLabel(int dimension) {
-		return metaData == null ? null : StringUtil.getString(metaData.get(DIMENSIONMETADATA
-				+ dimension));
+		return metaData == null ? null
+				: StringUtil.getString(metaData.get(DIMENSIONMETADATA + dimension));
 	}
 
 	public final void setDimensionMetaData(int dimension, Object label, long... position) {
@@ -1154,7 +1155,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public final Matrix deleteColumns(Ret returnType, long... columns) {
-		return delete(returnType, new long[]{}, columns);
+		return delete(returnType, new long[] {}, columns);
 	}
 
 	public Matrix minus(Ret returnType, boolean ignoreNaN, double v) {
@@ -1236,7 +1237,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public String toString() {
-		if(this instanceof MapMatrix) {
+		if (this instanceof MapMatrix) {
 			return UJMPFormat.getMapInstance().format(this);
 		} else {
 			return UJMPFormat.getMultiLineInstance().format(this);
@@ -1490,6 +1491,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public double minkowskiDistanceTo(Matrix m, double p, boolean ignoreNaN) {
+		VerifyUtil.verifySameSize(this, m);
 		double sum = 0.0;
 		if (ignoreNaN) {
 			for (long[] c : allCoordinates()) {
@@ -1505,6 +1507,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 	}
 
 	public double chebyshevDistanceTo(Matrix m, boolean ignoreNaN) {
+		VerifyUtil.verifySameSize(this, m);
 		double max = 0.0;
 		if (ignoreNaN) {
 			for (long[] c : allCoordinates()) {

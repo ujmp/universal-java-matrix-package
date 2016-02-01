@@ -23,26 +23,24 @@
 
 package org.ujmp.gui.util;
 
-import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import org.ujmp.core.util.ResourceUtil;
 
 public class Preloader extends JLabel {
-    private static final long serialVersionUID = -4807849743952928996L;
+	private static final long serialVersionUID = -4807849743952928996L;
 
-    public Preloader() {
-        super();
-        try {
-            ImageIcon icon = ResourceUtil.loadImageIcon("org/ujmp/gui/preloader.gif");
-            setIcon(icon);
-        } catch (IOException e) {
-            setText("loading...");
-        }
-        setHorizontalAlignment(JLabel.CENTER);
-        setVerticalAlignment(JLabel.CENTER);
-    }
+	public Preloader() {
+		super();
+		try {
+			ImageIcon icon = ResourceUtil.loadImageIcon("org/ujmp/gui/preloader.gif");
+			setIcon(icon);
+		} catch (Throwable t) {
+			setText("loading...");
+		}
+		setHorizontalAlignment(JLabel.CENTER);
+		setVerticalAlignment(JLabel.CENTER);
+	}
 
 }

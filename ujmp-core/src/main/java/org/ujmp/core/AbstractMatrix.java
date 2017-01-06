@@ -262,7 +262,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		// not quite optimized
 		List<Matrix> list = new FastArrayList<Matrix>();
 		for (int c = 0; c < getColumnCount(); c++) {
-			list.add(selectRows(Ret.LINK, c));
+			list.add(selectColumns(Ret.LINK, c));
 		}
 		return list;
 	}

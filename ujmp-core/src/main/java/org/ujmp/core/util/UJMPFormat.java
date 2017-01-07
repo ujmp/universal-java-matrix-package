@@ -34,7 +34,6 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.sun.istack.internal.NotNull;
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.bigdecimalmatrix.BaseBigDecimalMatrix;

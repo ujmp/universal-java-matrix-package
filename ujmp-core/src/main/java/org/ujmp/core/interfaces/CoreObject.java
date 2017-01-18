@@ -24,11 +24,12 @@
 package org.ujmp.core.interfaces;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-public interface CoreObject extends Serializable, Clearable, Cloneable, HasGUIObject, HasId,
-		HasLabel, HasDescription {
+public interface CoreObject
+		extends Serializable, Clearable, Cloneable, HasGUIObject, HasId, HasLabel, HasDescription {
 
-	public long getCoreObjectId();
+	public UUID getUUID();
 
 	public CoreObject clone();
 

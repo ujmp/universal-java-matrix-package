@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -226,18 +227,15 @@ import org.ujmp.core.util.io.MatrixSocketThread;
 public abstract class AbstractMatrix extends Number implements Matrix {
 	private static final long serialVersionUID = 5264103919889924711L;
 
-	private static long runningId = 0;
-
 	protected transient GUIObject guiObject = null;
 
 	protected long[] size;
 
-	private final long id;
+	private final UUID uuid;
 
 	private MapMatrix<String, Object> metaData = null;
 
 	static {
-		runningId = System.nanoTime() + System.currentTimeMillis();
 		DecompositionOps.init();
 		try {
 			long mem = Runtime.getRuntime().maxMemory();
@@ -274,7 +272,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			verifyTrue(size[i] >= 0, "coordinates must be positive");
 		}
 		this.size = size;
-		id = runningId++;
+		this.uuid = UUID.randomUUID();
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {
@@ -293,8 +291,8 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 		}
 	}
 
-	public final long getCoreObjectId() {
-		return id;
+	public final UUID getUUID() {
+		return uuid;
 	}
 
 	public double getAsDouble(long... coordinates) {

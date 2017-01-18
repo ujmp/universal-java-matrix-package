@@ -99,7 +99,7 @@ public abstract class MathUtil {
 		}
 	}
 
-	public static String md5(String text) throws NoSuchAlgorithmException {
+	public static String md5(String text) {
 		return md5(text.getBytes());
 	}
 

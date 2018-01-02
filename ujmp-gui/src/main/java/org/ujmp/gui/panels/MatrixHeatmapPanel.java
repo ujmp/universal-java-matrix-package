@@ -38,6 +38,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.TimerTask;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -53,6 +54,8 @@ import javax.swing.event.TableModelEvent;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.interfaces.HasToolTip;
+import org.ujmp.core.util.UJMPTimer;
+import org.ujmp.core.util.concurrent.UJMPThreadPoolExecutor;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.actions.MatrixActions;
 import org.ujmp.gui.interfaces.CanBeRepainted;
@@ -105,6 +108,20 @@ public class MatrixHeatmapPanel extends JPanel implements ComponentListener, Tab
 		ToolTipManager.sharedInstance().registerComponent(this);
 
 		registerKeyboardActions();
+
+		// hack to force update TODO: find better way
+		final MatrixHeatmapPanel mhp = this;
+		UJMPTimer timer = UJMPTimer.newInstance(this.getClass().getSimpleName());
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				repaintUI();
+				GraphicsExecutor.scheduleUpdate(mhp);
+			}
+		}, 1000);
+		// end
+		
 	}
 
 	private void registerKeyboardActions() {

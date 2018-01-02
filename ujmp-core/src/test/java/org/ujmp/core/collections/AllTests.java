@@ -27,8 +27,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ TestArrayIndexList.class, TestTextMap.class, TestSortedListSet.class,
-		TestSoftHashMapList.class, TestSoftHashMap.class, TestSerializedObjectMap.class,
-		TestRingBufferList.class, TestLazyMap.class, TestCachedMap.class, TestHashMapList.class })
+@Suite.SuiteClasses({ TestArrayIndexList.class, TestTextMap.class, TestSoftHashMapList.class, TestSoftHashMap.class,
+		TestSerializedObjectMap.class, TestRingBufferList.class, TestLazyMap.class, TestCachedMap.class,
+		TestHashMapList.class })
 public class AllTests {
 }

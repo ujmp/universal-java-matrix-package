@@ -33,14 +33,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.collections.list.FastArrayList;
 import org.ujmp.core.objectmatrix.stub.AbstractDenseObjectMatrix2D;
 import org.ujmp.core.util.MathUtil;
 import org.ujmp.core.util.StringUtil;
 
-public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements
-		MapMatrix<K, V> {
+public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2D implements MapMatrix<K, V> {
 	private static final long serialVersionUID = 5571429371462164416L;
 
 	private volatile boolean isIndexUpToDate = false;
@@ -57,10 +55,6 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 
 	public synchronized final Object getObject(long row, long column) {
 		return getObject(MathUtil.longToInt(row), MathUtil.longToInt(column));
-	}
-
-	public synchronized final int indexOfKey(Object key) {
-		return keyIndexList.indexOf(key);
 	}
 
 	public synchronized final Object getObject(int row, int column) {
@@ -133,9 +127,8 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		}
 	}
 
-	public synchronized boolean containsKey(Object key) {
-		buildIndexIfNecessary();
-		return keyIndexList.contains(key);
+	public boolean containsKey(Object key) {
+		return keySet().contains(key);
 	}
 
 	public synchronized boolean containsValue(Object value) {
@@ -203,7 +196,7 @@ public abstract class AbstractMapMatrix<K, V> extends AbstractDenseObjectMatrix2
 		isIndexUpToDate = false;
 		V v = putIntoMap(key, value);
 		if (v != null) {
-			fireValueChanged(Coordinates.wrap(indexOfKey(key), 1), value);
+			fireValueChanged();
 		} else {
 			fireValueChanged();
 		}

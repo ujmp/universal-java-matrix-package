@@ -21,23 +21,25 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.export.exporter;
+package org.ujmp.core.exception;
 
-import java.io.OutputStream;
+public class NotImplementedException extends UnsupportedOperationException {
+	private static final long serialVersionUID = 8080968567891445471L;
 
-import org.ujmp.core.Matrix;
-
-public abstract class AbstractMatrixStreamExporter extends AbstractMatrixExporter implements MatrixStreamExporter {
-
-	private final OutputStream outputStream;
-
-	public AbstractMatrixStreamExporter(Matrix matrix, OutputStream outputStream) {
-		super(matrix);
-		this.outputStream = outputStream;
+	public NotImplementedException() {
+		this("this method is not implemented yet");
 	}
 
-	public final OutputStream getOutputStream() {
-		return outputStream;
+	public NotImplementedException(String message) {
+		super(message);
+	}
+
+	public NotImplementedException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public NotImplementedException(Throwable cause) {
+		super(cause);
 	}
 
 }

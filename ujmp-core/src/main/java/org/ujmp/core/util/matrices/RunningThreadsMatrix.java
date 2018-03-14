@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimerTask;
 
-import org.ujmp.core.Coordinates;
 import org.ujmp.core.mapmatrix.DefaultMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.UJMPTimer;
@@ -70,7 +69,7 @@ public class RunningThreadsMatrix extends DefaultMapMatrix<Object, Object> {
 							Object value = m.get(key);
 							if (value != oldMap.get(key)) {
 								oldMap.put(key, value);
-								m.fireValueChanged(Coordinates.wrap(m.indexOfKey(key), 1), value);
+								m.fireValueChanged();
 							}
 						}
 					}

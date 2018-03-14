@@ -23,6 +23,8 @@
 
 package org.ujmp.core.interfaces;
 
+import java.util.UUID;
+
 public interface HasId {
 	public static final String ID = "Id";
 
@@ -40,5 +42,7 @@ public interface HasId {
 	 *            the new id.
 	 */
 	public void setId(String id);
+
+	public UUID getUUID();
 
 }

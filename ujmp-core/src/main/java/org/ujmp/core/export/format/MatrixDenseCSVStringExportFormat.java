@@ -23,14 +23,12 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 public interface MatrixDenseCSVStringExportFormat extends MatrixExportFormat {
 
-	public String asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException;
+	public String asDenseCSV(char columnSeparator, char enclosingCharacter);
 
-	public String asDenseCSV(char columnSeparator) throws IOException;
+	public String asDenseCSV(char columnSeparator);
 
-	public String asDenseCSV() throws IOException;
+	public String asDenseCSV();
 
 }

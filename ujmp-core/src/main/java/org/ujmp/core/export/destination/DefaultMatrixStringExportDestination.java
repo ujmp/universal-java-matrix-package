@@ -30,6 +30,7 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.DBType;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterCSVExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterHtmlExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterJsonExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterLatexExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterMatlabScriptExporter;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterRScriptExporter;
@@ -41,55 +42,88 @@ public class DefaultMatrixStringExportDestination extends AbstractMatrixStringEx
 		super(matrix);
 	}
 
-	public String asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+	public String asDenseCSV(char columnSeparator, char enclosingCharacter) {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterCSVExporter(getMatrix(), writer).asDenseCSV(columnSeparator,
-				enclosingCharacter);
-		writer.close();
+		try {
+			new DefaultMatrixWriterCSVExporter(getMatrix(), writer).asDenseCSV(columnSeparator, enclosingCharacter);
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 
-	public String asDenseCSV(char columnSeparator) throws IOException {
+	public String asDenseCSV(char columnSeparator) {
 		return asDenseCSV(columnSeparator, '\0');
 	}
 
-	public String asDenseCSV() throws IOException {
+	public String asDenseCSV() {
 		return asDenseCSV('\t');
 	}
 
-	public String asSQL(DBType db, String databaseName, String tableName) throws IOException {
+	public String asSQL(DBType db, String databaseName, String tableName) {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterSQLExporter(getMatrix(), writer).asSQL(db, databaseName, tableName);
-		writer.close();
+		try {
+			new DefaultMatrixWriterSQLExporter(getMatrix(), writer).asSQL(db, databaseName, tableName);
+			writer.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 
-	public String asMatlabScript(String variableName) throws IOException {
+	public String asMatlabScript(String variableName) {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterMatlabScriptExporter(getMatrix(), writer)
-				.asMatlabScript(variableName);
-		writer.close();
+		try {
+			new DefaultMatrixWriterMatlabScriptExporter(getMatrix(), writer).asMatlabScript(variableName);
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 
-	public String asRScript(String variableName) throws IOException {
+	public String asRScript(String variableName) {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterRScriptExporter(getMatrix(), writer).asRScript(variableName);
-		writer.close();
+		try {
+			new DefaultMatrixWriterRScriptExporter(getMatrix(), writer).asRScript(variableName);
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 
-	public String asLatex() throws IOException {
+	public String asLatex() {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterLatexExporter(getMatrix(), writer).asLatex();
-		writer.close();
+		try {
+			new DefaultMatrixWriterLatexExporter(getMatrix(), writer).asLatex();
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 
-	public String asHtml() throws IOException {
+	public String asHtml() {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterHtmlExporter(getMatrix(), writer).asHtml();
-		writer.close();
+		try {
+			new DefaultMatrixWriterHtmlExporter(getMatrix(), writer).asHtml();
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return writer.toString();
+	}
+
+	public String asJson() {
+		StringWriter writer = new StringWriter();
+		try {
+			new DefaultMatrixWriterJsonExporter(getMatrix(), writer).asJson();
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString();
 	}
 

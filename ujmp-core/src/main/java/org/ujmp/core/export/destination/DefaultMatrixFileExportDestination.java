@@ -23,81 +23,110 @@
 
 package org.ujmp.core.export.destination;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.ujmp.core.Matrix;
 import org.ujmp.core.enums.DBType;
-import org.ujmp.core.export.exporter.*;
+import org.ujmp.core.exception.NotImplementedException;
+import org.ujmp.core.export.exporter.DefaultMatrixStreamSerializedExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterCSVExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterHtmlExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterJsonExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterLatexExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterMatlabScriptExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterRScriptExporter;
+import org.ujmp.core.export.exporter.DefaultMatrixWriterSQLExporter;
 
 public class DefaultMatrixFileExportDestination extends AbstractMatrixFileExportDestination {
 
-    public DefaultMatrixFileExportDestination(Matrix matrix, File file) {
-        super(matrix, file);
-    }
+	public DefaultMatrixFileExportDestination(Matrix matrix, File file) {
+		super(matrix, file);
+	}
 
-    public void asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
-        FileWriter fileWriter = new FileWriter(getFile());
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        new DefaultMatrixWriterCSVExporter(getMatrix(), bufferedWriter).asDenseCSV(columnSeparator, enclosingCharacter);
-        bufferedWriter.close();
-        fileWriter.close();
-    }
+	public void asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterCSVExporter(getMatrix(), bufferedWriter).asDenseCSV(columnSeparator, enclosingCharacter);
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asDenseCSV(char columnSeparator) throws IOException {
-        asDenseCSV(columnSeparator, '\0');
-    }
+	public void asDenseCSV(char columnSeparator) throws IOException {
+		asDenseCSV(columnSeparator, '\0');
+	}
 
-    public void asDenseCSV() throws IOException {
-        asDenseCSV('\t');
-    }
+	public void asDenseCSV() throws IOException {
+		asDenseCSV('\t');
+	}
 
-    public void asSQL(DBType db, String databaseName, String tableName) throws IOException {
-        FileWriter fileWriter = new FileWriter(getFile());
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        new DefaultMatrixWriterSQLExporter(getMatrix(), bufferedWriter).asSQL(db, databaseName, tableName);
-        bufferedWriter.close();
-        fileWriter.close();
-    }
+	public void asSQL(DBType db, String databaseName, String tableName) throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterSQLExporter(getMatrix(), bufferedWriter).asSQL(db, databaseName, tableName);
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asMatlabScript(String variableName) throws IOException {
-        FileWriter fileWriter = new FileWriter(getFile());
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        new DefaultMatrixWriterMatlabScriptExporter(getMatrix(), bufferedWriter).asMatlabScript(variableName);
-        bufferedWriter.close();
-        fileWriter.close();
-    }
+	public void asMatlabScript(String variableName) throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterMatlabScriptExporter(getMatrix(), bufferedWriter).asMatlabScript(variableName);
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asRScript(String variableName) throws IOException {
-        FileWriter fileWriter = new FileWriter(getFile());
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        new DefaultMatrixWriterRScriptExporter(getMatrix(), bufferedWriter).asRScript(variableName);
-        bufferedWriter.close();
-        fileWriter.close();
-    }
+	public void asRScript(String variableName) throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterRScriptExporter(getMatrix(), bufferedWriter).asRScript(variableName);
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asLatex() throws IOException {
-        FileWriter fileWriter = new FileWriter(getFile());
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        new DefaultMatrixWriterLatexExporter(getMatrix(), bufferedWriter).asLatex();
-        bufferedWriter.close();
-        fileWriter.close();
-    }
+	public void asLatex() throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterLatexExporter(getMatrix(), bufferedWriter).asLatex();
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asXLS() throws IOException {
-        // TODO Auto-generated method stub
+	public void asXLS() throws IOException {
+		throw new NotImplementedException();
+	}
 
-    }
+	public void asPLT(Object... parameters) throws IOException {
+		throw new NotImplementedException();
+	}
 
-    public void asPLT(Object... parameters) throws IOException {
-        // TODO Auto-generated method stub
+	public void asSerialized() throws IOException {
+		FileOutputStream fos = new FileOutputStream(getFile());
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		new DefaultMatrixStreamSerializedExporter(getMatrix(), bos).asSerialized();
+		bos.close();
+		fos.close();
+	}
 
-    }
+	@Override
+	public void asHtml() throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterHtmlExporter(getMatrix(), bufferedWriter).asHtml();
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 
-    public void asSerialized() throws IOException {
-        FileOutputStream fos = new FileOutputStream(getFile());
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        new DefaultMatrixStreamSerializedExporter(getMatrix(), bos).asSerialized();
-        bos.close();
-        fos.close();
-    }
+	@Override
+	public void asJson() throws IOException {
+		FileWriter fileWriter = new FileWriter(getFile());
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		new DefaultMatrixWriterJsonExporter(getMatrix(), bufferedWriter).asJson();
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 }

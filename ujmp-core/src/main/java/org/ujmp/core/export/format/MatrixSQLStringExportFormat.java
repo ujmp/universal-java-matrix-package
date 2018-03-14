@@ -23,12 +23,10 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 import org.ujmp.core.enums.DBType;
 
 public interface MatrixSQLStringExportFormat extends MatrixExportFormat {
 
-	public String asSQL(DBType db, String databaseName, String tableName) throws IOException;
+	public String asSQL(DBType db, String databaseName, String tableName);
 
 }

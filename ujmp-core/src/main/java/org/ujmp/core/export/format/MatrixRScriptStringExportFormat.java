@@ -23,10 +23,8 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 public interface MatrixRScriptStringExportFormat extends MatrixExportFormat {
 
-	public String asRScript(String variableName) throws IOException;
+	public String asRScript(String variableName);
 
 }

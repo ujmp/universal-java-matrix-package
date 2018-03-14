@@ -21,23 +21,10 @@
  * Boston, MA  02110-1301  USA
  */
 
-package org.ujmp.core.export.exporter;
+package org.ujmp.core.export.format;
 
-import java.io.OutputStream;
+public interface MatrixJsonStringExportFormat extends MatrixExportFormat {
 
-import org.ujmp.core.Matrix;
-
-public abstract class AbstractMatrixStreamExporter extends AbstractMatrixExporter implements MatrixStreamExporter {
-
-	private final OutputStream outputStream;
-
-	public AbstractMatrixStreamExporter(Matrix matrix, OutputStream outputStream) {
-		super(matrix);
-		this.outputStream = outputStream;
-	}
-
-	public final OutputStream getOutputStream() {
-		return outputStream;
-	}
+	public String asJson();
 
 }

@@ -23,10 +23,8 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 public interface MatrixHtmlStringExportFormat extends MatrixExportFormat {
 
-	public String asHtml() throws IOException;
+	public String asHtml();
 
 }

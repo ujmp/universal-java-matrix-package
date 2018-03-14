@@ -30,57 +30,57 @@ import org.ujmp.core.enums.ValueType;
 
 public interface BaseMatrixProperties {
 
-	public Iterable<Object> allValues();
+	Iterable<Object> allValues();
 
-	public ValueType getValueType();
+	ValueType getValueType();
 
-	public long getValueCount();
+	long getValueCount();
 
-	public boolean isReadOnly();
+	boolean isReadOnly();
 
-	public boolean isSingular();
+	boolean isSingular();
 
-	public boolean equals(Object o);
+	boolean equals(Object o);
 
-	public boolean equalsContent(Object o);
+	boolean equalsContent(Object o);
 
-	public boolean equalsAnnotation(Object o);
+	boolean equalsAnnotation(Object o);
 
-	public boolean isDiagonal();
+	boolean isDiagonal();
 
-	public boolean isSquare();
+	boolean isSquare();
 
-	public boolean isSymmetric();
+	boolean isSymmetric();
 
-	public boolean isEmpty();
+	boolean isEmpty();
 
-	public boolean isColumnVector();
+	boolean isColumnVector();
 
-	public boolean isRowVector();
+	boolean isRowVector();
 
-	public boolean isScalar();
+	boolean isScalar();
 
-	public boolean isResizable();
+	boolean isResizable();
 
-	public boolean isMultidimensionalMatrix();
+	boolean isMultidimensionalMatrix();
 
-	public boolean isSparse();
+	boolean isSparse();
 
-	public boolean isTransient();
+	boolean isTransient();
 
-	public List<Matrix> getRowList();
+	List<Matrix> getRowList();
 
-	public List<Matrix> getColumnList();
+	List<Matrix> getColumnList();
 
-	public long getRowCount();
+	long getRowCount();
 
-	public long getColumnCount();
+	long getColumnCount();
 
-	public long getZCount();
+	long getZCount();
 
-	public long getSize(int dimension);
+	long getSize(int dimension);
 
-	public long[] getSize();
+	long[] getSize();
 
 	/**
 	 * Sets the size of the matrix. This is an optional method that is not
@@ -90,10 +90,14 @@ public interface BaseMatrixProperties {
 	 * @param size
 	 *            the new size of the matrix
 	 */
-	public void setSize(long... size);
+	void setSize(long... size);
 
-	public int getDimensionCount();
+	int getDimensionCount();
 
-	public String toString();
+	String toString();
+
+	String toHtml();
+
+	String toJson();
 
 }

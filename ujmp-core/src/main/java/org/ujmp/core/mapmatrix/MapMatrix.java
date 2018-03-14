@@ -33,5 +33,4 @@ public interface MapMatrix<K, V> extends GenericMatrix2D<Object>, Map<K, V> {
 
 	public String getAsString(Object key);
 
-	public int indexOfKey(Object key);
 }

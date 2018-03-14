@@ -23,10 +23,8 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 public interface MatrixLatexStringExportFormat extends MatrixExportFormat {
 
-	public String asLatex() throws IOException;
+	public String asLatex();
 
 }

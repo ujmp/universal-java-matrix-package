@@ -23,10 +23,8 @@
 
 package org.ujmp.core.export.format;
 
-import java.io.IOException;
-
 public interface MatrixMatlabScriptStringExportFormat extends MatrixExportFormat {
 
-	public String asMatlabScript(String variableName) throws IOException;
+	public String asMatlabScript(String variableName);
 
 }

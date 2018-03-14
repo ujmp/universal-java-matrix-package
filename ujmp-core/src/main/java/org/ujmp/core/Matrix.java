@@ -23,16 +23,47 @@
 
 package org.ujmp.core;
 
-import org.ujmp.core.annotation.HasMetaData;
-import org.ujmp.core.calculation.*;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.*;
-import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
-import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
-import org.ujmp.core.interfaces.*;
-import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.ujmp.core.annotation.HasMetaData;
+import org.ujmp.core.calculation.CanPerformCalculations;
+import org.ujmp.core.calculation.DivideMatrix;
+import org.ujmp.core.calculation.DivideMatrixCalculation;
+import org.ujmp.core.calculation.DivideScalar;
+import org.ujmp.core.calculation.DivideScalarCalculation;
+import org.ujmp.core.calculation.MinusMatrix;
+import org.ujmp.core.calculation.MinusMatrixCalculation;
+import org.ujmp.core.calculation.MinusScalar;
+import org.ujmp.core.calculation.MinusScalarCalculation;
+import org.ujmp.core.calculation.Mtimes;
+import org.ujmp.core.calculation.MtimesCalculation;
+import org.ujmp.core.calculation.PlusMatrix;
+import org.ujmp.core.calculation.PlusMatrixCalculation;
+import org.ujmp.core.calculation.PlusScalar;
+import org.ujmp.core.calculation.PlusScalarCalculation;
+import org.ujmp.core.calculation.TimesMatrix;
+import org.ujmp.core.calculation.TimesMatrixCalculation;
+import org.ujmp.core.calculation.TimesScalar;
+import org.ujmp.core.calculation.TimesScalarCalculation;
+import org.ujmp.core.calculation.Transpose;
+import org.ujmp.core.calculation.TransposeCalculation;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Chol;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Eig;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Inv;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.LU;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.QR;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.Solve;
+import org.ujmp.core.export.destinationselector.MatrixExportDestinationSelector;
+import org.ujmp.core.importer.sourceselector.MatrixImportSourceSelector;
+import org.ujmp.core.interfaces.Conversions;
+import org.ujmp.core.interfaces.CoordinateFunctions;
+import org.ujmp.core.interfaces.CoreObject;
+import org.ujmp.core.interfaces.DistanceMeasures;
+import org.ujmp.core.interfaces.ExtendedMatrixProperties;
+import org.ujmp.core.interfaces.GettersAndSetters;
+import org.ujmp.core.matrix.factory.DefaultDenseMatrixFactory;
 
 /**
  * <code>Matrix</code> is the main class for storing any type of data. You have
@@ -42,9 +73,8 @@ import java.io.IOException;
  * 
  * @author Holger Arndt
  */
-public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, GettersAndSetters,
-		CanPerformCalculations, DistanceMeasures, Comparable<Matrix>, HasMetaData, Conversions,
-		ExtendedMatrixProperties {
+public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, GettersAndSetters, CanPerformCalculations,
+		DistanceMeasures, Comparable<Matrix>, HasMetaData, Conversions, ExtendedMatrixProperties {
 
 	/**
 	 * A factory for creating matrices.
@@ -85,8 +115,6 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 
 	Eig<Matrix> eig = Eig.INSTANCE;
 
-	Matrix clone();
-
 	MatrixExportDestinationSelector exportTo();
 
 	MatrixImportSourceSelector importFrom();
@@ -94,8 +122,6 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 	void share(String hostname, int port) throws IOException;
 
 	void share(int port) throws IOException;
-
-	void fireValueChanged();
 
 	void fireValueChanged(Coordinates coordinates, Object object);
 
@@ -105,6 +131,6 @@ public interface Matrix extends BaseMatrix, CoreObject, CoordinateFunctions, Get
 
 	void save(String filename) throws IOException;
 
-	String toHtml();
+	public Matrix clone();
 
 }

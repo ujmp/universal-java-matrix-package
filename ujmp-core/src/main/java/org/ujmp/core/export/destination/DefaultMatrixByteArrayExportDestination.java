@@ -29,26 +29,28 @@ import java.io.StringWriter;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.export.exporter.DefaultMatrixWriterCSVExporter;
 
-public class DefaultMatrixByteArrayExportDestination extends
-		AbstractMatrixByteArrayExportDestination {
+public class DefaultMatrixByteArrayExportDestination extends AbstractMatrixByteArrayExportDestination {
 
 	public DefaultMatrixByteArrayExportDestination(Matrix matrix) {
 		super(matrix);
 	}
 
-	public byte[] asDenseCSV(char columnSeparator, char enclosingCharacter) throws IOException {
+	public byte[] asDenseCSV(char columnSeparator, char enclosingCharacter) {
 		StringWriter writer = new StringWriter();
-		new DefaultMatrixWriterCSVExporter(getMatrix(), writer).asDenseCSV(columnSeparator,
-				enclosingCharacter);
-		writer.close();
+		try {
+			new DefaultMatrixWriterCSVExporter(getMatrix(), writer).asDenseCSV(columnSeparator, enclosingCharacter);
+			writer.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		return writer.toString().getBytes();
 	}
 
-	public byte[] asDenseCSV(char columnSeparator) throws IOException {
+	public byte[] asDenseCSV(char columnSeparator) {
 		return asDenseCSV(columnSeparator, '\0');
 	}
 
-	public byte[] asDenseCSV() throws IOException {
+	public byte[] asDenseCSV() {
 		return asDenseCSV('\t');
 	}
 

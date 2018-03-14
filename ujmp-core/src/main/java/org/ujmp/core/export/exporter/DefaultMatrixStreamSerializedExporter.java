@@ -26,23 +26,21 @@ package org.ujmp.core.export.exporter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Writer;
 
 import org.ujmp.core.Matrix;
-import org.ujmp.core.export.format.MatrixMatlabScriptExportFormat;
 import org.ujmp.core.export.format.MatrixSerializedExportFormat;
-import org.ujmp.core.util.Base64;
 
-public class DefaultMatrixStreamSerializedExporter extends AbstractMatrixStreamExporter implements MatrixSerializedExportFormat {
+public class DefaultMatrixStreamSerializedExporter extends AbstractMatrixStreamExporter
+		implements MatrixSerializedExportFormat {
 
-    public DefaultMatrixStreamSerializedExporter(Matrix matrix, OutputStream outputStream) {
-        super(matrix, outputStream);
-    }
+	public DefaultMatrixStreamSerializedExporter(Matrix matrix, OutputStream outputStream) {
+		super(matrix, outputStream);
+	}
 
-    public void asSerialized() throws IOException {
-        final OutputStream os = getOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(os);
-        oos.writeObject(getMatrix());
-    }
+	public void asSerialized() throws IOException {
+		final OutputStream os = getOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(os);
+		oos.writeObject(getMatrix());
+	}
 
 }

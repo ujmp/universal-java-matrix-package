@@ -32,82 +32,106 @@ import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.util.StringUtil;
 
 public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
-    private static final long serialVersionUID = -9091555583281035794L;
+	private static final long serialVersionUID = -9091555583281035794L;
 
-    public static final String ID = ElasticsearchIndex.ID;
-    public static final String SCORE = ElasticsearchIndex.SCORE;
+	public static final String ID = ElasticsearchIndex.ID;
+	public static final String SCORE = ElasticsearchIndex.SCORE;
 
-    private final ElasticsearchIndex elasticsearchIndex;
+	private ElasticsearchIndex elasticsearchIndex = null;
 
-    private final Map<String, Object> map;
+	private final Map<String, Object> map;
 
-    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex) {
-        this.elasticsearchIndex = elasticsearchIndex;
-        this.map = new TreeMap<String, Object>();
-    }
+	public ElasticsearchSample() {
+		this.map = new TreeMap<String, Object>();
+	}
 
-    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> source) {
-        this.elasticsearchIndex = elasticsearchIndex;
-        this.map = source;
-        setId(StringUtil.getString(map.get(ID)));
-    }
+	public ElasticsearchSample(Map<String, Object> map) {
+		this.map = map;
+	}
 
-    public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit hit) {
-        this.elasticsearchIndex = elasticsearchIndex;
-        setId(hit.getId());
-        System.out.println(getId());
-        if (hit.getSource() != null) {
-            this.map = hit.getSource();
-        } else {
-            this.map = new TreeMap<String, Object>();
-        }
-        setScore(hit.getScore());
-    }
+	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex) {
+		this.elasticsearchIndex = elasticsearchIndex;
+		this.map = new TreeMap<String, Object>();
+	}
 
-    public int size() {
-        return map.size();
-    }
+	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, Map<String, Object> map) {
+		this.elasticsearchIndex = elasticsearchIndex;
+		this.map = map;
+		setId(StringUtil.getString(map.get(ID)));
+	}
 
-    public Object get(Object key) {
-        return map.get(key);
-    }
+	public ElasticsearchSample(ElasticsearchIndex elasticsearchIndex, SearchHit searchHit) {
+		this.elasticsearchIndex = elasticsearchIndex;
+		setId(searchHit.getId());
+		if (searchHit.getSourceAsMap() != null) {
+			this.map = searchHit.getSourceAsMap();
+		} else {
+			this.map = new TreeMap<String, Object>();
+		}
+		setScore(searchHit.getScore());
+	}
 
-    public Set<String> keySet() {
-        return map.keySet();
-    }
+	public int size() {
+		return map.size();
+	}
 
-    @Override
-    protected void clearMap() {
-        elasticsearchIndex.remove(this.get(ID));
-        map.clear();
-    }
+	public Object get(Object key) {
+		return map.get(key);
+	}
 
-    @Override
-    protected Object removeFromMap(Object key) {
-        Object old = map.remove(key);
-        elasticsearchIndex.put(this);
-        return old;
-    }
+	public Set<String> keySet() {
+		return map.keySet();
+	}
 
-    @Override
-    protected Object putIntoMap(String key, Object value) {
-        Object old = map.put(key, value);
-        if (!SCORE.equals(key)) {
-            elasticsearchIndex.update(this.getId(), key, value);
-        }
-        return old;
-    }
+	@Override
+	protected void clearMap() {
+		map.clear();
+		if (elasticsearchIndex != null) {
+			elasticsearchIndex.remove(this.get(ID));
+		}
+	}
 
-    public double getScore() {
-        return getMetaDataDouble(SCORE);
-    }
+	@Override
+	protected Object removeFromMap(Object key) {
+		Object old = map.remove(key);
+		if (elasticsearchIndex != null) {
+			elasticsearchIndex.put(this);
+		}
+		return old;
+	}
 
-    public void setScore(double score) {
-        setMetaData(SCORE, score);
-    }
+	@Override
+	protected Object putIntoMap(String key, Object value) {
+		if (ID.equals(key)) {
+			if (getId() == null) {
+				setId(key);
+			} else {
+				throw new RuntimeException("id cannot be changed");
+			}
+			return null;
+		} else {
+			Object old = map.put(key, value);
+			if (elasticsearchIndex != null && !SCORE.equals(key)) {
+				elasticsearchIndex.update(this.getId(), key, value);
+			}
+			return old;
+		}
+	}
 
-    public ElasticsearchIndex getIndex() {
-        return elasticsearchIndex;
-    }
+	public double getScore() {
+		return getMetaDataDouble(SCORE);
+	}
+
+	public void setScore(double score) {
+		setMetaData(SCORE, score);
+	}
+
+	public ElasticsearchIndex getIndex() {
+		return elasticsearchIndex;
+	}
+
+	protected void setIndex(ElasticsearchIndex index) {
+		this.elasticsearchIndex = index;
+	}
 
 }

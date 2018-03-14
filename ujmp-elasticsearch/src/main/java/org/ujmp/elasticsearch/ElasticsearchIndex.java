@@ -25,11 +25,11 @@ package org.ujmp.elasticsearch;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.print.attribute.UnmodifiableSetException;
 
@@ -39,267 +39,312 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.action.count.CountResponse;
+import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.QueryStringQueryBuilder.Operator;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.ujmp.core.collections.set.AbstractSet;
 import org.ujmp.core.listmatrix.DefaultListMatrix;
 import org.ujmp.core.listmatrix.ListMatrix;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.util.MathUtil;
+import org.ujmp.core.util.StringUtil;
 
-public class ElasticsearchIndex extends AbstractMapMatrix<String, MapMatrix<String, Object>> implements Closeable {
-    private static final long serialVersionUID = -7047080106649021619L;
+public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Object>> implements Closeable {
+	private static final long serialVersionUID = -7047080106649021619L;
 
-    public static final int SCROLLTIMEOUT = 600000;
-    public static final int SCROLLSIZE = 1000;
-    public static final int DEFAULTPORT = 9300;
+	public static final int DEFAULTPORT = 9300;
 
-    public static final String ID = "_id";
-    public static final String SCORE = "score";
+	public static final String DEFAULTTYPE = "doc";
 
-    private final Client client;
-    private final String index;
-    private final String type;
+	public static final String ID = "_id";
+	public static final String SCORE = "score";
 
-    public ElasticsearchIndex(String hostname, String index, String type) {
-        this(hostname, DEFAULTPORT, index, type);
-    }
+	private final Client client;
+	private final AdminClient adminClient;
+	private final String indexName;
+	private final IndicesAdminClient indicesAdminClient;
 
-    public ElasticsearchIndex(String hostname, int port, String index, String type) {
-        this(ElasticsearchUtil.createTransportClient(hostname, port), index, type);
-    }
+	private int scrollTimeout = 600000;
+	private int scrollsize = 500;
 
-    public ElasticsearchIndex(Client client, String index, String type) {
-        this.client = client;
-        this.index = index;
-        this.type = type;
-        if (!indexExists()) {
-            createIndex();
-        }
-    }
+	public ElasticsearchIndex(String hostname, String index) throws UnknownHostException {
+		this(hostname, DEFAULTPORT, index);
+	}
 
-    public void put(MapMatrix<String, Object> map) {
-        Object id = map.get(ID);
-        if (id != null && id instanceof String) {
-            put((String) id, map);
-        } else {
-            put(MathUtil.guid(), map);
-        }
-    }
+	public ElasticsearchIndex(String hostname, int port, String index) throws UnknownHostException {
+		this(ElasticsearchUtil.createTransportClient(hostname, port), index);
+	}
 
-    private boolean indexExists() {
-        IndicesExistsResponse response = client.admin().indices().exists(new IndicesExistsRequest(index)).actionGet();
-        return response.isExists();
-    }
+	public ElasticsearchIndex(Client client, String indexName) {
+		this.client = client;
+		this.adminClient = client.admin();
+		this.indicesAdminClient = adminClient.indices();
+		this.indexName = indexName;
+		if (!indexExists()) {
+			createIndex();
+		}
+	}
 
-    private synchronized void createIndex() {
-        CreateIndexResponse response = client.admin().indices().create(new CreateIndexRequest(index)).actionGet();
-        if (!response.isAcknowledged()) {
-            throw new RuntimeException("cannot create index " + index);
-        }
-        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-    }
+	public synchronized Map<String, Object> put(Map<String, Object> map) {
+		if (map == null) {
+			throw new RuntimeException("cannot add empty map");
+		}
+		if (map instanceof MapMatrix) {
+			MapMatrix<String, Object> mapMatrix = (MapMatrix<String, Object>) map;
+			if (StringUtil.isEmpty(mapMatrix.getId())) {
+				return putIntoMap(MathUtil.guid(), map);
+			} else {
+				return putIntoMap(mapMatrix.getId(), map);
+			}
+		} else {
+			Object id = map.get(ID);
+			if (id != null && id instanceof String) {
+				return putIntoMap((String) id, map);
+			} else {
+				return putIntoMap(MathUtil.guid(), map);
+			}
+		}
+	}
 
-    public synchronized void deleteIndex() {
-        DeleteIndexResponse response = client.admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
-        if (!response.isAcknowledged()) {
-            throw new RuntimeException("cannot delete index " + index);
-        }
-        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-    }
+	private synchronized boolean indexExists() {
+		IndicesExistsResponse response = indicesAdminClient.exists(new IndicesExistsRequest(indexName)).actionGet();
+		return response.isExists();
+	}
 
-    public String getIndex() {
-        return index;
-    }
+	private synchronized void createIndex() {
+		CreateIndexResponse response = indicesAdminClient.create(new CreateIndexRequest(indexName)).actionGet();
+		if (!response.isAcknowledged()) {
+			throw new RuntimeException("cannot create index " + indexName);
+		}
+		adminClient.cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+	}
 
-    public int size() {
-        MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-        CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
-        return MathUtil.longToInt(response.getCount());
-    }
+	public synchronized void delete() {
+		DeleteIndexResponse response = indicesAdminClient.delete(new DeleteIndexRequest(indexName)).actionGet();
+		if (!response.isAcknowledged()) {
+			throw new RuntimeException("cannot delete index " + indexName);
+		}
+		adminClient.cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+	}
 
-    public ElasticsearchSample get(Object key) {
-        GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).execute().actionGet();
-        Map<String, Object> map = getResponse.getSource();
-        if (map == null) {
-            return null;
-        } else {
-            map.put(ID, getResponse.getId());
-            return new ElasticsearchSample(this, map);
-        }
-    }
+	public String getIndexName() {
+		return indexName;
+	}
 
-    public ElasticsearchSample get(Object key, String... fields) {
-        GetResponse getResponse = client.prepareGet(index, type, String.valueOf(key)).setFields(fields).execute().actionGet();
-        Map<String, Object> map = new TreeMap<String, Object>();
-        map.put(ID, getResponse.getId());
-        for (String k : getResponse.getFields().keySet()) {
-            map.put(k, getResponse.getField(k).getValue());
-        }
-        return new ElasticsearchSample(this, map);
-    }
+	public synchronized int size() {
+		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+		SearchResponse response = client.prepareSearch(indexName)
+				.setSource(new SearchSourceBuilder().size(0).query(query)).get();
+		return MathUtil.longToInt(response.getHits().getTotalHits());
+	}
 
-    public Set<String> keySet() {
-        return new KeySet(this);
-    }
+	public synchronized ElasticsearchSample get(Object key) {
+		GetResponse getResponse = client.prepareGet(indexName, null, String.valueOf(key)).execute().actionGet();
+		Map<String, Object> map = getResponse.getSource();
+		if (map == null) {
+			return null;
+		} else {
+			map.put(ID, getResponse.getId());
+			return new ElasticsearchSample(this, map);
+		}
+	}
 
-    @Override
-    protected void clearMap() {
-        throw new UnsupportedOperationException();
-    }
+	public synchronized Set<String> keySet() {
+		return new KeySet(this);
+	}
 
-    @Override
-    protected MapMatrix<String, Object> removeFromMap(Object key) {
-        MapMatrix<String, Object> old = get(key);
-        client.prepareDelete(index, type, String.valueOf(key)).execute().actionGet();
-        return old;
-    }
+	@Override
+	protected synchronized void clearMap() {
+		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(query)
+				.source(indexName).get();
+	}
 
-    @Override
-    protected MapMatrix<String, Object> putIntoMap(String key, MapMatrix<String, Object> value) {
-        if (value == null) {
-            remove(key);
-        } else {
-            if (!value.containsKey(ID)) {
-                value.put(ID, key);
-            }
-            client.prepareIndex(index, type, key).setSource(value).execute().actionGet();
-        }
-        return null;
-    }
+	public synchronized void optimize() {
+		ForceMergeResponse response = client.admin().indices().prepareForceMerge(indexName).execute().actionGet();
+	}
 
-    public Client getClient() {
-        return client;
-    }
+	@Override
+	protected synchronized MapMatrix<String, Object> removeFromMap(Object key) {
+		MapMatrix<String, Object> old = get(key);
+		client.prepareDelete(indexName, DEFAULTTYPE, String.valueOf(key)).execute().actionGet();
+		return old;
+	}
 
-    public ListMatrix<ElasticsearchSample> search(String query) {
-        ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
+	@Override
+	protected synchronized MapMatrix<String, Object> putIntoMap(String key, Map<String, Object> value) {
+		if (key == null) {
+			throw new RuntimeException("key cannot be null");
+		}
+		if (value == null) {
+			remove(key);
+			return null;
+		} else {
+			Object tmpKey = null;
+			if (value.containsKey(ID)) {
+				tmpKey = value.remove(key);
+			}
+			client.prepareIndex(indexName, DEFAULTTYPE, key).setSource(value).execute().actionGet();
+			if (value instanceof ElasticsearchSample) {
+				((ElasticsearchSample) value).setIndex(this);
+			}
+			if (tmpKey != null) {
+				value.put(ID, tmpKey);
+			}
+			return null;
+		}
+	}
 
-        QueryBuilder qb = QueryBuilders.queryString(query).defaultOperator(Operator.AND);
-        SearchResponse response = client.prepareSearch(index).setNoFields().setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH).setQuery(qb).setFrom(0).setSize(10).setExplain(true).execute().actionGet();
+	public int getScrollTimeout() {
+		return scrollTimeout;
+	}
 
-        SearchHit[] results = response.getHits().getHits();
+	public void setScrollTimeout(int scrollTimeout) {
+		this.scrollTimeout = scrollTimeout;
+	}
 
-        for (SearchHit hit : results) {
-            ElasticsearchSample sample = new ElasticsearchSample(this, hit);
-            list.add(sample);
-        }
+	public int getScrollsize() {
+		return scrollsize;
+	}
 
-        return list;
-    }
+	public void setScrollsize(int scrollsize) {
+		this.scrollsize = scrollsize;
+	}
 
-    public int count(String string) {
-        QueryBuilder query = QueryBuilders.queryString(string).defaultOperator(Operator.AND);
-        CountResponse response = client.prepareCount(index).setTypes(type).setQuery(query).execute().actionGet();
-        return MathUtil.longToInt(response.getCount());
-    }
+	public Client getClient() {
+		return client;
+	}
 
-    public void close() throws IOException {
-        if (client != null) {
-            client.close();
-        }
-    }
+	public synchronized ListMatrix<ElasticsearchSample> search(String queryString, int size) {
+		return search(QueryBuilders.queryStringQuery(queryString), size);
+	}
 
-    public String getType() {
-        return type;
-    }
+	public synchronized ListMatrix<ElasticsearchSample> search(QueryBuilder queryBuilder, int size) {
+		ListMatrix<ElasticsearchSample> list = new DefaultListMatrix<ElasticsearchSample>();
 
-    public void update(String id, String key, Object value) {
-        client.prepareUpdate(index, type, id).setDoc(key, value).execute().actionGet();
-    }
+		SearchResponse response = client.prepareSearch(indexName).setTypes(DEFAULTTYPE)
+				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(queryBuilder).setSize(size).get();
+
+		SearchHit[] results = response.getHits().getHits();
+
+		for (SearchHit hit : results) {
+			ElasticsearchSample sample = new ElasticsearchSample(this, hit);
+			list.add(sample);
+		}
+
+		return list;
+	}
+
+	public synchronized void close() throws IOException {
+		if (client != null) {
+			client.close();
+		}
+	}
+
+	public synchronized void update(String id, String key, Object value) {
+		client.prepareUpdate(indexName, DEFAULTTYPE, id).setDoc(key, value).execute().actionGet();
+	}
 }
 
 class KeySet extends AbstractSet<String> {
-    private static final long serialVersionUID = -9047566077947415546L;
+	private static final long serialVersionUID = -9047566077947415546L;
 
-    private final ElasticsearchIndex index;
+	private final ElasticsearchIndex index;
 
-    public KeySet(ElasticsearchIndex index) {
-        this.index = index;
-    }
+	public KeySet(ElasticsearchIndex index) {
+		this.index = index;
+	}
 
-    @Override
-    public boolean add(String value) {
-        throw new UnmodifiableSetException();
-    }
+	@Override
+	public boolean add(String value) {
+		throw new UnmodifiableSetException();
+	}
 
-    @Override
-    public boolean remove(Object o) {
-        throw new UnmodifiableSetException();
-    }
+	@Override
+	public boolean remove(Object o) {
+		throw new UnmodifiableSetException();
+	}
 
-    @Override
-    public void clear() {
-        throw new UnmodifiableSetException();
-    }
+	@Override
+	public void clear() {
+		throw new UnmodifiableSetException();
+	}
 
-    @Override
-    public boolean contains(Object o) {
-        return index.containsKey(o);
-    }
+	@Override
+	public boolean contains(Object o) {
+		return index.containsKey(o);
+	}
 
-    @Override
-    public Iterator<String> iterator() {
-        return new KeyIterator(index);
-    }
+	@Override
+	public Iterator<String> iterator() {
+		return new KeyIterator(index);
+	}
 
-    @Override
-    public int size() {
-        return index.size();
-    }
+	@Override
+	public int size() {
+		return index.size();
+	}
 }
 
 class KeyIterator implements Iterator<String> {
 
-    private final ElasticsearchIndex index;
-    private Iterator<SearchHit> iterator;
-    private SearchResponse scrollResp;
+	private final ElasticsearchIndex index;
+	private Iterator<SearchHit> iterator;
+	private SearchResponse scrollResp;
 
-    public KeyIterator(ElasticsearchIndex index) {
-        this.index = index;
-        MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-        scrollResp = index.getClient().prepareSearch(index.getIndex()).setTypes(index.getType()).addFields(new String[]{}).setSearchType(SearchType.SCAN).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).setQuery(query).setSize(ElasticsearchIndex.SCROLLSIZE).execute().actionGet();
-        scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
-        iterator = scrollResp.getHits().iterator();
-    }
+	public KeyIterator(ElasticsearchIndex index) {
+		this.index = index;
+		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
 
-    public boolean hasNext() {
-        if (iterator != null && !iterator.hasNext()) {
-            scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(ElasticsearchIndex.SCROLLTIMEOUT)).execute().actionGet();
-            if (scrollResp.getHits().getHits().length == 0) {
-                iterator = null;
-            } else {
-                iterator = scrollResp.getHits().iterator();
-            }
-        }
-        if (iterator != null && iterator.hasNext()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+		scrollResp = index.getClient().prepareSearch(index.getIndexName())
+				.setScroll(new TimeValue(index.getScrollTimeout())).setQuery(query).setSize(index.getScrollsize())
+				.get();
 
-    public String next() {
-        if (iterator != null) {
-            SearchHit hit = iterator.next();
-            return hit.getId();
-        } else {
-            throw new NoSuchElementException();
-        }
-    }
+		iterator = scrollResp.getHits().iterator();
+	}
 
-    public void remove() {
-        throw new UnmodifiableSetException();
-    }
+	public boolean hasNext() {
+		if (iterator != null && !iterator.hasNext()) {
+
+			scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
+					.setScroll(new TimeValue(index.getScrollTimeout())).execute().actionGet();
+			if (scrollResp.getHits().getHits().length == 0) {
+				iterator = null;
+			} else {
+				iterator = scrollResp.getHits().iterator();
+			}
+		}
+		if (iterator != null && iterator.hasNext()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String next() {
+		if (iterator != null) {
+			SearchHit hit = iterator.next();
+			return hit.getId();
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
+	public void remove() {
+		throw new UnmodifiableSetException();
+	}
 
 }

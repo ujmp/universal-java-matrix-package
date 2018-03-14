@@ -23,15 +23,22 @@
 
 package org.ujmp.elasticsearch;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 public abstract class ElasticsearchUtil {
 
-	public static TransportClient createTransportClient(String hostname, int port) {
-		return new TransportClient(ImmutableSettings.settingsBuilder()
-				.put("client.transport.ignore_cluster_name", true).build())
-				.addTransportAddress(new InetSocketTransportAddress(hostname, port));
+	public static TransportClient createTransportClient(String hostname, int port) throws UnknownHostException {
+		InetAddress inetAddress = InetAddress.getByName(hostname);
+		TransportAddress transportAddress = new TransportAddress(inetAddress, port);
+		Settings settings = Settings.builder().put("client.transport.ignore_cluster_name", true).build();
+		TransportClient transportClient = new PreBuiltTransportClient(settings);
+		transportClient.addTransportAddress(transportAddress);
+		return transportClient;
 	}
 }

@@ -39,7 +39,6 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -50,7 +49,6 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -80,12 +78,12 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
 	private int scrollTimeout = 600000;
 	private int scrollsize = 500;
 
-	public ElasticsearchIndex(String hostname, String index) throws UnknownHostException {
-		this(hostname, DEFAULTPORT, index);
+	public ElasticsearchIndex(String hostname, String indexName) throws UnknownHostException {
+		this(hostname, DEFAULTPORT, indexName);
 	}
 
-	public ElasticsearchIndex(String hostname, int port, String index) throws UnknownHostException {
-		this(ElasticsearchUtil.createTransportClient(hostname, port), index);
+	public ElasticsearchIndex(String hostname, int port, String indexName) throws UnknownHostException {
+		this(ElasticsearchUtil.createTransportClient(hostname, port), indexName);
 	}
 
 	public ElasticsearchIndex(Client client, String indexName) {
@@ -96,6 +94,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
 		if (!indexExists()) {
 			createIndex();
 		}
+		this.setMetaData(new ElasticsearchIndexStatistics(client, indexName));
 	}
 
 	public synchronized Map<String, Object> put(Map<String, Object> map) {
@@ -169,12 +168,11 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
 	@Override
 	protected synchronized void clearMap() {
 		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(query)
-				.source(indexName).get();
+		DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(query).source(indexName).get();
 	}
 
 	public synchronized void optimize() {
-		ForceMergeResponse response = client.admin().indices().prepareForceMerge(indexName).execute().actionGet();
+		client.admin().indices().prepareForceMerge(indexName).execute().actionGet();
 	}
 
 	@Override

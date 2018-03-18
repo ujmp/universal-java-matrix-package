@@ -31,11 +31,14 @@ import java.util.TreeSet;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.client.Client;
 import org.ujmp.core.mapmatrix.AbstractMapMatrix;
+import org.ujmp.core.mapmatrix.MapMatrix;
 
 public class ElasticsearchCluster extends AbstractMapMatrix<String, ElasticsearchIndex> {
 	private static final long serialVersionUID = 6665231410976080744L;
 
 	private final Client client;
+
+	private final MapMatrix<String, Object> clusterHealth;
 
 	public ElasticsearchCluster(String hostname) throws UnknownHostException {
 		this(ElasticsearchUtil.createTransportClient(hostname, ElasticsearchIndex.DEFAULTPORT));
@@ -47,6 +50,8 @@ public class ElasticsearchCluster extends AbstractMapMatrix<String, Elasticsearc
 
 	public ElasticsearchCluster(Client client) {
 		this.client = client;
+		this.clusterHealth = new ElasticsearchClusterHealth(client);
+		this.setMetaData(clusterHealth);
 	}
 
 	@Override
@@ -88,6 +93,10 @@ public class ElasticsearchCluster extends AbstractMapMatrix<String, Elasticsearc
 
 	public ElasticsearchIndex createIndex(String indexName) {
 		return put(indexName, null);
+	}
+
+	public ElasticsearchClusterHealth getHealth() {
+		return (ElasticsearchClusterHealth) clusterHealth;
 	}
 
 }

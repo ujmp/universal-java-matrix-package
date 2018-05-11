@@ -307,7 +307,7 @@ class KeyIterator implements Iterator<String> {
 		this.index = index;
 		MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
 
-		scrollResp = index.getClient().prepareSearch(index.getIndexName())
+		scrollResp = index.getClient().prepareSearch(index.getIndexName()).setFetchSource("_id","_source")
 				.setScroll(new TimeValue(index.getScrollTimeout())).setQuery(query).setSize(index.getScrollsize())
 				.get();
 

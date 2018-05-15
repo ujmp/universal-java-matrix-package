@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -17,7 +17,7 @@
     <orderEntry type="module" module-name="ujmp-commonsmath" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.5" level="project" />
     <orderEntry type="module" module-name="ujmp-core" />
-    <orderEntry type="library" name="Maven: org.json:json:20141113" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
     <orderEntry type="module" module-name="ujmp-ehcache" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.10.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
@@ -29,20 +29,55 @@
     <orderEntry type="library" name="Maven: org.ejml:equation:0.28" level="project" />
     <orderEntry type="library" name="Maven: org.ejml:dense64:0.28" level="project" />
     <orderEntry type="module" module-name="ujmp-elasticsearch" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:1.7.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:4.10.4" level="project" />
-    <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.5" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm:4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.client:transport:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-core:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-backward-codecs:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial-extras:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial3d:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:7.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:securesm:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-cli:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:5.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.carrotsearch:hppc:0.7.1" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.9" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.10" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.8.10" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.10" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.8.10" level="project" />
+    <orderEntry type="library" name="Maven: com.tdunning:t-digest:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:jna:4.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:transport-netty4-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.16.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.locationtech.spatial4j:spatial4j:0.6" level="project" />
+    <orderEntry type="library" name="Maven: com.vividsolutions:jts:1.13" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:reindex-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.client:elasticsearch-rest-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpasyncclient:4.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:lang-mustache-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.spullara.mustache.java:compiler:0.9.3" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:percolator-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:parent-join-client:6.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch.plugin:rank-eval-client:6.2.2" level="project" />
     <orderEntry type="module" module-name="ujmp-examples" />
     <orderEntry type="module" module-name="ujmp-gui" />
     <orderEntry type="module" module-name="ujmp-hadoop" />
@@ -123,6 +158,7 @@
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:4.10.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.10.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:4.10.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:4.10.4" level="project" />
     <orderEntry type="module" module-name="ujmp-mail" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.3" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />

@@ -40,22 +40,17 @@ import org.ujmp.core.stringmatrix.calculation.StringCalculations;
  * </ul>
  * </p>
  * 
- * </p> Standard calculations are very easy to use, since these calculations can
+ * <p> Standard calculations are very easy to use, since these calculations can
  * be directly used by calling the methods explicitely. E.g. for calculating the
  * mean of a matrix, the method <code>mean</code> can be used. More advanced
- * calculations are available by using the <code>calc</code> methods. The
- * calculation to call can be either given by a String (containing the name of
- * the calculation) or the corresponding enum from {@link Calculcation.Calc}.
+ * calculations are available by using the <code>calc</code> methods.
  * </p>
  * 
  * <p>
  * Own calculations can be implemented by implementing the interface
  * {@link Calculation} and using the the method <code>calc<code>.
  * </p>
- * 
- * 
- * 
- * @see Calculation.Calc for available calculations
+ *
  * @author Holger Arndt
  * 
  */

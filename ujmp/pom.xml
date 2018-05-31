@@ -119,95 +119,13 @@
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
-            <build>
-                <plugins>
-                    <!-- create javadoc -->
-                    <plugin>
-                        <inherited>true</inherited>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.3</version>
-                        <configuration>
-                            <!-- collect all files in one directory, seems to take longer -->
-                            <!-- Creating fake javadoc directory to prevent repeated invocations when enabled -->
-                            <!-- <outputDirectory>${rootdir}/target/apidocs/${project.name}</outputDirectory>
-                            <reportOutputDirectory>${rootdir}/target/apidocs/${project.name}</reportOutputDirectory> -->
-
-                            <!-- include source code in javadoc, seems to take longer if enabled -->
-                            <linksource>false</linksource>
-
-                            <!-- helps to speed things up -->
-                            <maxmemory>2g</maxmemory>
-
-                            <!-- set this to true to fix the OutOfMemoryException in Java 8 for Windows -->
-                            <noindex>false</noindex>
-
-                            <!-- it takes very long when set to false -->
-                            <notree>false</notree>
-
-                            <!-- not sure what this does -->
-                            <failOnError>false</failOnError>
-
-                            <!-- other possible settings, don't seem to be necessary -->
-                            <!-- <notree>true</notree> -->
-                            <!-- <additionalJOptions> -->
-                            <!--   <additionalJOption>-J-Xss512M</additionalJOption> -->
-                            <!--   <additionalJOption>-J-XX:MaxPermSize=512M</additionalJOption> -->
-                            <!-- </additionalJOptions> -->
-
-                            <links>
-                                <link>https://ujmp.org/${project.version}/ujmp-colt/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-commonsmath/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-complete/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-core/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-ehcache/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-ejml/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-elasticsearch/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-examples/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-gui/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-hadoop/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-itext/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jackcess/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jama/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jblas/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jdbc/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jetty/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jfreechart/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jmatio/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jsch/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jsci/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jscience/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-jung/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-la4j/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-lucene/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-mail/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-mtj/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-ojalgo/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-parallelcolt/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-pdfbox/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-poi/apidocs</link>
-                                <link>https://ujmp.org/${project.version}/ujmp-vecmath/apidocs</link>
-                            </links>
-
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
         </profile>
     </profiles>
 
     <build>
 
         <!-- copy license files to META-INF -->
+        <!--
         <resources>
             <resource>
                 <targetPath>META-INF</targetPath>
@@ -218,6 +136,7 @@
                 </includes>
             </resource>
         </resources>
+        -->
 
         <plugins>
 
@@ -226,7 +145,7 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>2.21.0</version>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
                 </configuration>
@@ -237,24 +156,103 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
 
+            <!-- create javadoc -->
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <!-- collect all files in one directory, seems to take longer -->
+                    <!-- Creating fake javadoc directory to prevent repeated invocations when enabled -->
+                    <!-- <outputDirectory>${rootdir}/target/apidocs/${project.name}</outputDirectory>
+                    <reportOutputDirectory>${rootdir}/target/apidocs/${project.name}</reportOutputDirectory> -->
+
+                    <!-- include source code in javadoc, seems to take longer if enabled -->
+                    <linksource>true</linksource>
+
+                    <!-- helps to speed things up -->
+                    <maxmemory>2g</maxmemory>
+
+                    <!-- set this to true to fix the OutOfMemoryException in Java 8 for Windows -->
+                    <noindex>false</noindex>
+
+                    <!-- it takes very long when set to false -->
+                    <notree>false</notree>
+
+                    <!-- not sure what this does -->
+                    <failOnError>false</failOnError>
+
+                    <!-- other possible settings, don't seem to be necessary -->
+                    <!-- <notree>true</notree> -->
+                    <!-- <additionalJOptions> -->
+                    <!--   <additionalJOption>-J-Xss512M</additionalJOption> -->
+                    <!--   <additionalJOption>-J-XX:MaxPermSize=512M</additionalJOption> -->
+                    <!-- </additionalJOptions> -->
+
+                    <links>
+                        <link>https://ujmp.org/${project.version}/ujmp-colt/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-commonsmath/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-complete/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-core/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-ehcache/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-ejml/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-elasticsearch/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-examples/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-gui/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-hadoop/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-itext/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jackcess/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jama/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jblas/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jdbc/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jetty/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jfreechart/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jmatio/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jsch/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jsci/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jscience/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-jung/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-la4j/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-lucene/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-mail/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-mtj/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-ojalgo/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-parallelcolt/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-pdfbox/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-poi/apidocs</link>
+                        <link>https://ujmp.org/${project.version}/ujmp-vecmath/apidocs</link>
+                    </links>
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- needed for creating project site -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.4</version>
+                <version>3.7.1</version>
                 <dependencies>
                     <!-- for scp protocol -->
                     <dependency>
                         <groupId>org.apache.maven.wagon</groupId>
                         <artifactId>wagon-ssh</artifactId>
-                        <version>2.0</version>
+                        <version>3.0.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -263,7 +261,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8</version>
+                <version>2.9</version>
             </plugin>
 
             <!-- create sources jar files -->
@@ -271,7 +269,7 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -302,7 +300,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.2</version>
+                <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
@@ -315,7 +313,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -347,7 +345,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.5</version>
+                <version>3.1.0</version>
                 <configuration>
                     <outputDirectory>${rootdir}/target</outputDirectory>
                     <descriptors>

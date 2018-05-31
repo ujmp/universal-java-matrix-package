@@ -48,13 +48,14 @@ import org.ujmp.core.util.UJMPSettings;
  * the parameter type, and without doing some inspection or copy tricks, I can't
  * get there from here. I only use this for doubles anyway, so here's the
  * version that I use. The C++ version is still available.
- * <p>
  * </p>
+ * <p>
  * The matrix inversion was in from the start, as the only really useful part of
  * the Class. I added the bandwidth reduction routine in 1991 - I was stuck in
  * SOS (USAF school) at the time and was thinking about optimizing the bandwidth
  * of a matrix made from a finite-element grid by renumbering the nodes of the
- * grid. </p>
+ * grid.
+ * </p>
  * <p>
  * Changes by Holger Arndt: The original code has been adapted for the Universal
  * Java Matrix Package. Methods for different matrix implementations have been

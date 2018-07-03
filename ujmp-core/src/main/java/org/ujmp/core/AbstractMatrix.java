@@ -270,7 +270,7 @@ public abstract class AbstractMatrix extends Number implements Matrix {
 			verifyTrue(size[i] >= 0, "coordinates must be positive");
 		}
 		this.size = size;
-		this.uuid = UUID.randomUUID();
+		this.uuid = new UUID(MathUtil.RANDOM.nextLong(), MathUtil.RANDOM.nextLong());
 	}
 
 	public BaseMatrixFactory<? extends Matrix> getFactory() {

@@ -64,7 +64,7 @@ public abstract class MathUtil {
 
 	private static final ThreadLocal<Random> randoms = new ThreadLocal<Random>();
 
-	private static final Random random = new RandomSimple();
+	public static final Random RANDOM = new RandomSimple();
 
 	public static Random getRandom() {
 		if (UJMPSettings.getInstance().isUseMultiThreadedRandom()) {
@@ -75,7 +75,7 @@ public abstract class MathUtil {
 			}
 			return random;
 		} else {
-			return random;
+			return RANDOM;
 		}
 	}
 

@@ -27,52 +27,56 @@ import org.ujmp.core.Matrix;
 import org.ujmp.core.floatmatrix.stub.AbstractDenseFloatMatrix2D;
 
 public class ArrayDenseFloatMatrix2D extends AbstractDenseFloatMatrix2D {
-	private static final long serialVersionUID = 6599658021180126741L;
+    private static final long serialVersionUID = 6599658021180126741L;
 
-	private final float[][] values;
+    private final float[][] values;
 
-	public ArrayDenseFloatMatrix2D(float[]... v) {
-		super(v.length, v[0].length);
-		this.values = v;
-	}
+    public ArrayDenseFloatMatrix2D(float[]... v) {
+        super(v.length, v[0].length);
+        this.values = v;
+    }
 
-	public ArrayDenseFloatMatrix2D(int rows, int columns) {
-		super(rows, columns);
-		values = new float[rows][columns];
-	}
+    public ArrayDenseFloatMatrix2D(int rows, int columns) {
+        super(rows, columns);
+        values = new float[rows][columns];
+    }
 
-	public long getRowCount() {
-		return values.length;
-	}
+    public final float[][] getFloatArray2D() {
+        return values;
+    }
 
-	public long getColumnCount() {
-		return values.length == 0 ? 0 : values[0].length;
-	}
+    public long getRowCount() {
+        return values.length;
+    }
 
-	public float getFloat(long row, long column) {
-		return values[(int) row][(int) column];
-	}
+    public long getColumnCount() {
+        return values.length == 0 ? 0 : values[0].length;
+    }
 
-	public void setFloat(float value, long row, long column) {
-		values[(int) row][(int) column] = value;
-	}
+    public float getFloat(long row, long column) {
+        return values[(int) row][(int) column];
+    }
 
-	public float getFloat(int row, int column) {
-		return values[row][column];
-	}
+    public void setFloat(float value, long row, long column) {
+        values[(int) row][(int) column] = value;
+    }
 
-	public void setFloat(float value, int row, int column) {
-		values[row][column] = value;
-	}
+    public float getFloat(int row, int column) {
+        return values[row][column];
+    }
 
-	public final Matrix transpose() {
-		float[][] result = new float[values[0].length][values.length];
-		for (int r = result.length; --r >= 0;) {
-			for (int c = result[0].length; --c >= 0;) {
-				result[r][c] = values[c][r];
-			}
-		}
-		return new ArrayDenseFloatMatrix2D(result);
-	}
+    public void setFloat(float value, int row, int column) {
+        values[row][column] = value;
+    }
+
+    public final Matrix transpose() {
+        float[][] result = new float[values[0].length][values.length];
+        for (int r = result.length; --r >= 0; ) {
+            for (int c = result[0].length; --c >= 0; ) {
+                result[r][c] = values[c][r];
+            }
+        }
+        return new ArrayDenseFloatMatrix2D(result);
+    }
 
 }

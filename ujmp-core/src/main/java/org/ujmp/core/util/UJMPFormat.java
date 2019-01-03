@@ -30,7 +30,6 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.ujmp.core.Coordinates;
@@ -62,7 +61,7 @@ public class UJMPFormat extends Format {
 		symbols.setInfinity("Inf");
 		defaultNumberFormat = new DecimalFormat("0.0000", symbols);
 		exponentialNumberFormat = new DecimalFormat("0.000E000", symbols);
-		dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		dateFormat = DateUtil.DATEFORMAT;
 		this.multiLine = multiLine;
 		this.width = width;
 		this.usePadding = usePadding;

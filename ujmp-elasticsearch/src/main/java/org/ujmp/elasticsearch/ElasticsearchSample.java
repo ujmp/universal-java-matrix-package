@@ -112,7 +112,7 @@ public class ElasticsearchSample extends AbstractMapMatrix<String, Object> {
 		} else {
 			Object old = map.put(key, value);
 			if (elasticsearchIndex != null && !SCORE.equals(key)) {
-				elasticsearchIndex.update(this.getId(), key, value);
+				elasticsearchIndex.updateField(this.getId(), key, value);
 			}
 			return old;
 		}

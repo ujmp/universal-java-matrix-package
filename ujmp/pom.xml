@@ -145,7 +145,7 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>2.22.1</version>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
                 </configuration>
@@ -156,7 +156,7 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -168,7 +168,7 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <configuration>
                     <!-- collect all files in one directory, seems to take longer -->
                     <!-- Creating fake javadoc directory to prevent repeated invocations when enabled -->
@@ -189,6 +189,9 @@
 
                     <!-- not sure what this does -->
                     <failOnError>false</failOnError>
+
+                    <!-- create html5 javadoc -->
+                    <additionalOptions>-html5</additionalOptions>
 
                     <!-- other possible settings, don't seem to be necessary -->
                     <!-- <notree>true</notree> -->
@@ -261,7 +264,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.0.0</version>
             </plugin>
 
             <!-- create sources jar files -->
@@ -313,7 +316,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -345,7 +348,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <outputDirectory>${rootdir}/target</outputDirectory>
                     <descriptors>

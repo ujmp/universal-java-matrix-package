@@ -23,22 +23,30 @@
 
 package org.ujmp.elasticsearch;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public abstract class ElasticsearchUtil {
 
-	public static TransportClient createTransportClient(String hostname, int port) throws UnknownHostException {
-		InetAddress inetAddress = InetAddress.getByName(hostname);
-		TransportAddress transportAddress = new TransportAddress(inetAddress, port);
-		Settings settings = Settings.builder().put("client.transport.ignore_cluster_name", true).build();
-		TransportClient transportClient = new PreBuiltTransportClient(settings);
-		transportClient.addTransportAddress(transportAddress);
-		return transportClient;
-	}
+    public static TransportClient createTransportClient(String hostname, int port) throws UnknownHostException {
+        InetAddress inetAddress = InetAddress.getByName(hostname);
+        TransportAddress transportAddress = new TransportAddress(inetAddress, port);
+        Settings settings = Settings.builder().put("client.transport.ignore_cluster_name", true).build();
+        TransportClient transportClient = new PreBuiltTransportClient(settings);
+        transportClient.addTransportAddress(transportAddress);
+        return transportClient;
+    }
+
+    public static RestHighLevelClient createRestHighLevelClient(String hostname, int port) {
+        RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "http")));
+        return client;
+    }
 }

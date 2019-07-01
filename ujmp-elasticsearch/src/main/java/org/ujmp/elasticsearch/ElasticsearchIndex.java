@@ -28,6 +28,8 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -38,12 +40,16 @@ import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
+import org.elasticsearch.index.reindex.DeleteByQueryRequestBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -89,6 +95,10 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
         this(ElasticsearchUtil.createTransportClient(hostname, port), indexName, mapping, settings);
     }
 
+    public ElasticsearchIndex(String hostname, int port, String indexName, String mapping, String settings) throws UnknownHostException {
+        this(ElasticsearchUtil.createTransportClient(hostname, port), indexName, mapping, settings);
+    }
+
 
     public ElasticsearchIndex(String hostname, String indexName, Map<String, Object> mapping) throws UnknownHostException {
         this(hostname, DEFAULTPORT, indexName, mapping);
@@ -96,6 +106,10 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
 
     public ElasticsearchIndex(String hostname, String indexName) throws UnknownHostException {
         this(hostname, DEFAULTPORT, indexName);
+    }
+
+    public ElasticsearchIndex(String hostname, String indexName, String mapping, String settings) throws UnknownHostException {
+        this(hostname, DEFAULTPORT, indexName, mapping, settings);
     }
 
     public ElasticsearchIndex(String hostname, int port, String indexName) throws UnknownHostException {
@@ -107,10 +121,21 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
     }
 
     public ElasticsearchIndex(Client client, String indexName) {
-        this(client, indexName, null, null);
+        this(client, indexName, (String) null, (String) null);
     }
 
     public ElasticsearchIndex(Client client, String indexName, Map<String, Object> mapping, Map<String, Object> settings) {
+        this.client = client;
+        this.adminClient = client.admin();
+        this.indicesAdminClient = adminClient.indices();
+        this.indexName = indexName;
+        if (!indexExists()) {
+            createIndex(mapping, settings);
+        }
+        this.setMetaData(new ElasticsearchIndexStatistics(client, indexName));
+    }
+
+    public ElasticsearchIndex(Client client, String indexName, String mapping, String settings) {
         this.client = client;
         this.adminClient = client.admin();
         this.indicesAdminClient = adminClient.indices();
@@ -180,6 +205,42 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
         adminClient.cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
     }
 
+    private synchronized void createIndex(String mapping, String settings) {
+        CreateIndexRequest request = new CreateIndexRequest(indexName);
+        if (mapping != null) {
+            request.mapping(DEFAULTTYPE, mapping, XContentType.JSON);
+        }
+        if (settings != null) {
+            request.settings(settings, XContentType.JSON);
+        }
+        CreateIndexResponse response = indicesAdminClient.create(request).actionGet();
+        if (!response.isAcknowledged()) {
+            throw new RuntimeException("cannot create index " + indexName);
+        }
+        adminClient.cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+    }
+
+    public Map<String, Object> getMapping() {
+        GetMappingsRequest request = new GetMappingsRequest();
+        request.indices(indexName);
+        GetMappingsResponse getMappingResponse = adminClient.indices().getMappings(request).actionGet();
+        ImmutableOpenMap<String, MappingMetaData> mappings = getMappingResponse.getMappings().get(indexName);
+        String type = mappings.keys().iterator().next().value;
+        MappingMetaData mappingMetaData = mappings.get(type);
+        Map<String, Object> mappingSource = mappingMetaData.getSourceAsMap();
+        return mappingSource;
+    }
+
+    public String getMappingAsJson() {
+        GetMappingsRequest request = new GetMappingsRequest();
+        request.indices(indexName);
+        GetMappingsResponse getMappingResponse = adminClient.indices().getMappings(request).actionGet();
+        ImmutableOpenMap<String, MappingMetaData> mappings = getMappingResponse.getMappings().get(indexName);
+        String type = mappings.keys().iterator().next().value;
+        MappingMetaData mappingMetaData = mappings.get(type);
+        return mappingMetaData.source().toString();
+    }
+
     public synchronized void delete() {
         AcknowledgedResponse response = indicesAdminClient.delete(new DeleteIndexRequest(indexName)).actionGet();
         if (!response.isAcknowledged()) {
@@ -195,7 +256,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
     public synchronized int size() {
         MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
         SearchResponse response = client.prepareSearch(indexName).setSource(new SearchSourceBuilder().size(0).query(query)).get();
-        return MathUtil.longToInt(response.getHits().getTotalHits());
+        return MathUtil.longToInt(response.getHits().getTotalHits().value);
     }
 
     public synchronized ElasticsearchSample get(Object key) {
@@ -216,7 +277,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
     @Override
     protected synchronized void clearMap() {
         MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
-        DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(query).source(indexName).get();
+        new DeleteByQueryRequestBuilder(client, DeleteByQueryAction.INSTANCE).filter(query).source(indexName).get();
     }
 
     public synchronized void optimize() {
@@ -309,7 +370,7 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
             list.add(sample);
         }
 
-        list.setMetaData("count", response.getHits().totalHits);
+        list.setMetaData("count", response.getHits().getTotalHits().value);
 
         return list;
     }

@@ -35,6 +35,19 @@ public class WriteBufferMap<K, V> extends AbstractMap<K, V> implements Closeable
         }
     }
 
+    public void setMaxBatchSize(int maxBatchSize) {
+        this.maxBatchSize = maxBatchSize;
+    }
+
+    public void setMaxWriteBufferSize(int maxWriteBufferSize) {
+        this.maxWriteBufferSize = maxWriteBufferSize;
+    }
+
+    public void setCommitInterval(int commitInterval) {
+        this.commitInterval = commitInterval;
+    }
+
+
     @Override
     public V get(Object key) {
         V value1 = writeBuffer.get(key);

@@ -38,6 +38,8 @@ import org.ujmp.core.util.MathUtil;
 
 public abstract class SQLUtil {
 
+	public static final String MARIADB_PARAMETERS = "?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&connectTimeout=120000&socketTimeout=120000&useFractionalSeconds=true&rewriteBatchedStatements=true";
+
 	public static final String URL = "URL";
 	public static final String TABLENAME = "TableName";
 	public static final String DATABASENAME = "DatabaseName";

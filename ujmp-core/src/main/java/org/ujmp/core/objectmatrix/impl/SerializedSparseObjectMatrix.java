@@ -23,21 +23,21 @@
 
 package org.ujmp.core.objectmatrix.impl;
 
-import java.io.IOException;
-
 import org.ujmp.core.Coordinates;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.collections.map.SerializedObjectMap;
+import org.ujmp.core.collections.map.DiskMap;
 import org.ujmp.core.interfaces.Erasable;
 import org.ujmp.core.mapmatrix.MapMatrix;
 import org.ujmp.core.objectmatrix.stub.AbstractMapToSparseMatrixWrapper;
+
+import java.io.IOException;
 
 public class SerializedSparseObjectMatrix extends AbstractMapToSparseMatrixWrapper implements
 		Erasable {
 	private static final long serialVersionUID = 2239927901825378258L;
 
 	public SerializedSparseObjectMatrix(long... size) throws IOException {
-		super(new SerializedObjectMap<Coordinates, Object>(), size);
+		super(new DiskMap<Coordinates, Object>(), size);
 	}
 
 	public SerializedSparseObjectMatrix(Matrix source) throws IOException {

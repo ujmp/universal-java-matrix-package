@@ -7,24 +7,43 @@ import java.util.Map;
 import java.util.Set;
 
 public class WriteBufferMap<K, V> extends AbstractMap<K, V> implements Closeable {
+    private static final long serialVersionUID = 3346616946039334002L;
 
     private final Map<K, V> writeTarget;
     private final Map<K, V> writeBuffer;
     private final WriteThread writeThread;
-    private int commitInterval = 1000;
-    private int maxWriteBufferSize = 100000;
-    private int maxBatchSize = 10000;
+    private int commitInterval;
+    private int maxWriteBufferSize;
+    private int maxBatchSize;
     private boolean isClosed = false;
 
-    public WriteBufferMap(Map<K, V> writeTarget, Map<K, V> writeBuffer) {
+    public WriteBufferMap(Map<K, V> writeTarget, Map<K, V> writeBuffer, int commitInterval, int maxWriteBufferSize, int maxBatchSize) {
         this.writeTarget = writeTarget;
         this.writeBuffer = writeBuffer;
+        this.commitInterval = commitInterval;
+        this.maxWriteBufferSize = maxWriteBufferSize;
+        this.maxBatchSize = maxBatchSize;
         this.writeThread = new WriteThread(this, writeTarget, writeBuffer);
     }
 
+    public WriteBufferMap(Map<K, V> writeTarget, int commitInterval, int maxWriteBufferSize, int maxBatchSize) {
+        this(writeTarget, new HashMap<>(), commitInterval, maxWriteBufferSize, maxBatchSize);
+    }
 
-    public WriteBufferMap(Map<K, V> map) {
-        this(map, new HashMap<>());
+    public WriteBufferMap(Map<K, V> writeTarget, Map<K, V> writeBuffer, int commitInterval) {
+        this(writeTarget, writeBuffer, commitInterval, 100000, 10000);
+    }
+
+    public WriteBufferMap(Map<K, V> writeTarget, int commitInterval) {
+        this(writeTarget, new HashMap<>(), commitInterval, 100000, 10000);
+    }
+
+    public WriteBufferMap(Map<K, V> writeTarget, Map<K, V> writeBuffer) {
+        this(writeTarget, writeBuffer, 1000);
+    }
+
+    public WriteBufferMap(Map<K, V> writeTarget) {
+        this(writeTarget, new HashMap<>());
     }
 
     @Override
@@ -51,12 +70,11 @@ public class WriteBufferMap<K, V> extends AbstractMap<K, V> implements Closeable
     @Override
     public V get(Object key) {
         V value1 = writeBuffer.get(key);
-        V value2 = writeTarget.get(key);
         if (value1 != null) {
             return value1;
-        } else {
-            return value2;
         }
+        V value2 = writeTarget.get(key);
+        return value2;
     }
 
     @Override
@@ -146,7 +164,9 @@ class WriteThread<K, V> extends Thread {
                     e.printStackTrace();
                 }
             }
+
             lastRunTime = System.currentTimeMillis();
+
             while (!writeBuffer.isEmpty() && currentBatch.size() < writeBufferMap.getMaxBatchSize()) {
                 K key;
                 V value;
@@ -156,6 +176,7 @@ class WriteThread<K, V> extends Thread {
                 }
                 currentBatch.put(key, value);
             }
+
             if (!currentBatch.isEmpty()) {
                 writeTarget.putAll(currentBatch);
                 currentBatch.clear();

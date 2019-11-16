@@ -23,10 +23,10 @@
 
 package org.ujmp.core.util;
 
+import org.ujmp.core.Matrix;
+
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.ujmp.core.Matrix;
 
 public abstract class VerifyUtil {
 
@@ -184,5 +184,21 @@ public abstract class VerifyUtil {
 
     public static void verifyNotNull(Object object) {
         verifyNotNull(object, "parameter must not be null");
+    }
+
+    public static <T> T notNull(final T object) {
+        if (object == null) {
+            throw new IllegalArgumentException("object must not be null");
+        } else {
+            return object;
+        }
+    }
+
+    public static int between(int number, int min, int max) {
+        if (number < min || number >= max) {
+            throw new IllegalArgumentException("number must be between " + min + " (inclusive) and " + max + " (exclusive)");
+        } else {
+            return number;
+        }
     }
 }

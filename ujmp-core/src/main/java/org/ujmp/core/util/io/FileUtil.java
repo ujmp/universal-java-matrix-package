@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -235,19 +236,20 @@ public class FileUtil {
 		return list;
 	}
 
-	public static int countFiles(File path) {
-		int count = 0;
-		File[] files = path.listFiles();
-		if (files != null) {
-			for (File f : files) {
-				if (f.isDirectory()) {
-					count += countFiles(f);
-				} else {
-					count++;
-				}
-			}
-		}
-		return count;
+	public static int countFiles(File path) throws IOException {
+		return  (int) Files.walk(path.toPath()).parallel().filter(Files::isRegularFile).count();
+//		int count = 0;
+//		File[] files = path.listFiles();
+//		if (files != null) {
+//			for (File f : files) {
+//				if (f.isDirectory()) {
+//					count += countFiles(f);
+//				} else {
+//					count++;
+//				}
+//			}
+//		}
+//		return count;
 	}
 
 	public static ListMatrix<File> listRecursive(File path) {

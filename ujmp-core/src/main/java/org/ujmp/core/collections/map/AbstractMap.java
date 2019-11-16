@@ -23,204 +23,190 @@
 
 package org.ujmp.core.collections.map;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.io.Serializable;
-import java.util.AbstractCollection;
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import org.ujmp.core.util.StringUtil;
 
+import java.io.*;
+import java.util.*;
+
 public abstract class AbstractMap<K, V> extends java.util.AbstractMap<K, V> implements Serializable {
-	private static final long serialVersionUID = -6429342188863787235L;
+    private static final long serialVersionUID = -6429342188863787235L;
 
-	public boolean isEmpty() {
-		return size() == 0;
-	}
+    public String getAsString(Object key) {
+        return StringUtil.convert(get(key));
+    }
 
-	public String getAsString(Object key) {
-		return StringUtil.convert(get(key));
-	}
+    public void putAll(Map<? extends K, ? extends V> map) {
+        for (K k : map.keySet()) {
+            put(k, map.get(k));
+        }
+    }
 
-	public void putAll(Map<? extends K, ? extends V> map) {
-		for (K k : map.keySet()) {
-			put(k, map.get(k));
-		}
-	}
+    public boolean containsKey(Object key) {
+        return keySet().contains(key);
+    }
 
-	public boolean containsKey(Object key) {
-		return keySet().contains(key);
-	}
+    public boolean containsValue(Object value) {
+        for (K key : keySet()) {
+            if (value.equals(get(key))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean containsValue(Object value) {
-		for (K key : keySet()) {
-			if (value.equals(get(key))) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public Collection<V> values() {
+        final AbstractMap<K, V> map = this;
+        return new AbstractCollection<V>() {
+            @Override
+            public Iterator<V> iterator() {
+                return new Iterator<V>() {
+                    Iterator<K> it = keySet().iterator();
 
-	public Collection<V> values() {
-		final AbstractMap<K, V> map = this;
-		return new AbstractCollection<V>() {
-			@Override
-			public Iterator<V> iterator() {
-				return new Iterator<V>() {
-					Iterator<K> it = keySet().iterator();
+                    public boolean hasNext() {
+                        return it.hasNext();
+                    }
 
-					public boolean hasNext() {
-						return it.hasNext();
-					}
+                    public V next() {
+                        return get(it.next());
+                    }
 
-					public V next() {
-						return get(it.next());
-					}
+                    public void remove() {
+                        throw new RuntimeException("not implemented");
+                    }
+                };
+            }
 
-					public void remove() {
-						throw new RuntimeException("not implemented");
-					}
-				};
-			}
+            @Override
+            public int size() {
+                return map.size();
+            }
+        };
+    }
 
-			@Override
-			public int size() {
-				return map.size();
-			}
-		};
-	}
+    public Set<java.util.Map.Entry<K, V>> entrySet() {
+        final AbstractMap<K, V> map = this;
+        return new AbstractSet<Entry<K, V>>() {
 
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		final AbstractMap<K, V> map = this;
-		return new AbstractSet<Entry<K, V>>() {
+            @Override
+            public Iterator<java.util.Map.Entry<K, V>> iterator() {
+                return new Iterator<Entry<K, V>>() {
 
-			@Override
-			public Iterator<java.util.Map.Entry<K, V>> iterator() {
-				return new Iterator<Entry<K, V>>() {
+                    Iterator<K> it = keySet().iterator();
 
-					Iterator<K> it = keySet().iterator();
+                    public boolean hasNext() {
+                        return it.hasNext();
+                    }
 
-					public boolean hasNext() {
-						return it.hasNext();
-					}
+                    public java.util.Map.Entry<K, V> next() {
+                        final K k = it.next();
+                        final V v = get(k);
+                        return new java.util.Map.Entry<K, V>() {
 
-					public java.util.Map.Entry<K, V> next() {
-						final K k = it.next();
-						final V v = get(k);
-						return new java.util.Map.Entry<K, V>() {
+                            public K getKey() {
+                                return k;
+                            }
 
-							public K getKey() {
-								return k;
-							}
+                            public V getValue() {
+                                return v;
+                            }
 
-							public V getValue() {
-								return v;
-							}
+                            public V setValue(V value) {
+                                throw new RuntimeException("not implemented");
+                            }
+                        };
+                    }
 
-							public V setValue(V value) {
-								throw new RuntimeException("not implemented");
-							}
-						};
-					}
+                    public void remove() {
+                        throw new RuntimeException("not implemented");
+                    }
+                };
+            }
 
-					public void remove() {
-						throw new RuntimeException("not implemented");
-					}
-				};
-			}
+            @Override
+            public int size() {
+                return map.size();
+            }
+        };
+    }
 
-			@Override
-			public int size() {
-				return map.size();
-			}
-		};
-	}
+    @SuppressWarnings("unchecked")
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        s.defaultReadObject();
+        beforeReadObject(s);
+        int size = s.readInt();
+        for (int i = 0; i < size; i++) {
+            try {
+                K k = (K) s.readObject();
+                V v = (V) s.readObject();
+                try {
+                    put(k, v);
+                } catch (Exception e) {
+                    remove(k);
+                    put(k, v);
+                }
+            } catch (OptionalDataException e) {
+                return;
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-		s.defaultReadObject();
-		beforeReadObject(s);
-		int size = s.readInt();
-		for (int i = 0; i < size; i++) {
-			try {
-				K k = (K) s.readObject();
-				V v = (V) s.readObject();
-				try {
-					put(k, v);
-				} catch (Exception e) {
-					remove(k);
-					put(k, v);
-				}
-			} catch (OptionalDataException e) {
-				return;
-			}
-		}
-	}
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
+        beforeWriteObject(s);
+        s.writeInt(size());
+        for (Object k : keySet()) {
+            Object v = get(k);
+            s.writeObject(k);
+            s.writeObject(v);
+        }
+    }
 
-	private void writeObject(ObjectOutputStream s) throws IOException {
-		s.defaultWriteObject();
-		beforeWriteObject(s);
-		s.writeInt(size());
-		for (Object k : keySet()) {
-			Object v = get(k);
-			s.writeObject(k);
-			s.writeObject(v);
-		}
-	}
+    public String toString() {
+        if (isEmpty()) {
+            return "{}";
+        }
 
-	public String toString() {
-		if (isEmpty()) {
-			return "{}";
-		}
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        Set<K> keys = keySet();
+        int i = 0;
+        for (K k : keys) {
+            V v = get(k);
+            sb.append(k);
+            sb.append('=');
+            sb.append(v);
+            if (i++ < keys.size() - 1) {
+                sb.append(',').append(' ');
+            }
+        }
 
-		StringBuilder sb = new StringBuilder();
-		sb.append('{');
-		Set<K> keys = keySet();
-		int i = 0;
-		for (K k : keys) {
-			V v = get(k);
-			sb.append(k);
-			sb.append('=');
-			sb.append(v);
-			if (i++ < keys.size() - 1) {
-				sb.append(',').append(' ');
-			}
-		}
+        return sb.append('}').toString();
+    }
 
-		return sb.append('}').toString();
-	}
+    public Map<K, V> get(K... keys) {
+        Map<K, V> map = new HashMap<K, V>();
+        for (K key : keys) {
+            map.put(key, get(key));
+        }
+        return map;
+    }
 
-	public Map<K, V> get(K... keys) {
-		Map<K, V> map = new HashMap<K, V>();
-		for (K key : keys) {
-			map.put(key, get(key));
-		}
-		return map;
-	}
+    public abstract void clear();
 
-	public abstract void clear();
+    public abstract V get(Object key);
 
-	public abstract V get(Object key);
+    public abstract Set<K> keySet();
 
-	public abstract Set<K> keySet();
+    public abstract V put(K key, V value);
 
-	public abstract V put(K key, V value);
+    public abstract V remove(Object key);
 
-	public abstract V remove(Object key);
+    public abstract int size();
 
-	public abstract int size();
+    protected void beforeWriteObject(ObjectOutputStream s) throws IOException {
+    }
 
-	protected void beforeWriteObject(ObjectOutputStream s) throws IOException {
-	}
-
-	protected void beforeReadObject(ObjectInputStream is) throws IOException,
-			ClassNotFoundException {
-	}
+    protected void beforeReadObject(ObjectInputStream is) throws IOException,
+            ClassNotFoundException {
+    }
 }

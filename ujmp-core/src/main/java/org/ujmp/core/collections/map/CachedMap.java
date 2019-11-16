@@ -23,129 +23,120 @@
 
 package org.ujmp.core.collections.map;
 
-import java.io.Closeable;
-import java.io.Flushable;
-import java.io.IOException;
-import java.util.HashMap;
+import java.io.*;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
-import org.ujmp.core.interfaces.Wrapper;
+public class CachedMap<K, V> extends AbstractMap<K, V> implements Flushable, Closeable {
+    private static final long serialVersionUID = 1383398694858918398L;
 
-public class CachedMap<K, V> extends AbstractMap<K, V> implements Wrapper<Map<K, V>>, Flushable,
-		Closeable {
-	private static final long serialVersionUID = 1383398694858918398L;
+    private Map<K, V> source;
 
-	private transient Map<K, V> source = null;
+    private transient Map<K, V> cache;
 
-	private transient Map<K, V> cache = null;
+    public CachedMap(Map<K, V> source) {
+        this(source, new SoftHashMap<>());
+    }
 
-	public CachedMap(Map<K, V> source) {
-		setWrappedObject(source);
-	}
+    public CachedMap(Map<K, V> source, Map<K, V> cache) {
+        this.source = source;
+        this.cache = cache;
+    }
 
-	public CachedMap(Map<K, V> source, Map<K, V> cache) {
-		setWrappedObject(source);
-		this.cache = cache;
-	}
+    public void clear() {
+        cache.clear();
+        source.clear();
+    }
 
-	public void clear() {
-		getCache().clear();
-		getWrappedObject().clear();
-	}
+    public boolean containsKey(Object key) {
+        if (cache.containsKey(key)) {
+            return true;
+        } else {
+            return source.containsKey(key);
+        }
+    }
 
-	public boolean containsKey(Object key) {
-		if (getCache().containsKey(key)) {
-			return true;
-		}
-		return getWrappedObject().containsKey(key);
-	}
+    public boolean containsValue(Object value) {
+        if (cache.containsValue(value)) {
+            return true;
+        } else {
+            return source.containsValue(value);
+        }
+    }
 
-	public boolean containsValue(Object value) {
-		if (getCache().containsValue(value)) {
-			return true;
-		}
-		return getWrappedObject().containsValue(value);
-	}
+    @SuppressWarnings("unchecked")
+    public V get(Object key) {
+        V value = cache.get(key);
+        if (value == null) {
+            value = source.get(key);
+            if (value != null) {
+                cache.put((K) key, value);
+            }
+        }
+        return value;
+    }
 
-	@SuppressWarnings("unchecked")
-	public V get(Object key) {
-		V value = getCache().get(key);
-		if (value == null) {
-			value = getWrappedObject().get(key);
-			if (value != null) {
-				getCache().put((K) key, value);
-			}
-		}
-		return value;
-	}
+    public boolean isEmpty() {
+        if (!cache.isEmpty()) {
+            return false;
+        } else {
+            return source.isEmpty();
+        }
+    }
 
-	public boolean isEmpty() {
-		if (!getCache().isEmpty()) {
-			return false;
-		}
-		return getWrappedObject().isEmpty();
-	}
+    public Set<K> keySet() {
+        return source.keySet();
+    }
 
-	public Set<K> keySet() {
-		return getWrappedObject().keySet();
-	}
+    public V put(K key, V value) {
+        cache.put(key, value);
+        return source.put(key, value);
+    }
 
-	public V put(K key, V value) {
-		getCache().put(key, value);
-		return getWrappedObject().put(key, value);
-	}
+    public void putAll(Map<? extends K, ? extends V> m) {
+        for (K k : m.keySet()) {
+            put(k, m.get(k));
+        }
+    }
 
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for (K k : m.keySet()) {
-			put(k, m.get(k));
-		}
-	}
+    public V remove(Object key) {
+        cache.remove(key);
+        return source.remove(key);
+    }
 
-	public V remove(Object key) {
-		getCache().remove(key);
-		return getWrappedObject().remove(key);
-	}
+    public int size() {
+        return source.size();
+    }
 
-	public int size() {
-		return getWrappedObject().size();
-	}
 
-	public Map<K, V> getWrappedObject() {
-		if (source == null) {
-			source = new HashMap<K, V>();
-		}
-		return source;
-	}
+    public void close() throws IOException {
+        if (source instanceof Closeable) {
+            ((Closeable) source).close();
+        }
+        if (cache instanceof Closeable) {
+            ((Closeable) cache).close();
+        }
+    }
 
-	public void setWrappedObject(Map<K, V> object) {
-		getCache().clear();
-		this.source = object;
-	}
+    public void flush() throws IOException {
+        if (source instanceof Flushable) {
+            ((Flushable) source).flush();
+        }
+        if (cache instanceof Flushable) {
+            ((Flushable) cache).flush();
+        }
+    }
 
-	public Map<K, V> getCache() {
-		if (cache == null) {
-			cache = new SoftHashMap<K, V>();
-		}
-		return cache;
-	}
 
-	public void close() throws IOException {
-		if (source instanceof Closeable) {
-			((Closeable) source).close();
-		}
-		if (cache instanceof Closeable) {
-			((Closeable) cache).close();
-		}
-	}
+    protected void beforeWriteObject(ObjectOutputStream s) throws IOException {
+        s.writeObject(source);
+    }
 
-	public void flush() throws IOException {
-		if (source instanceof Flushable) {
-			((Flushable) source).flush();
-		}
-		if (cache instanceof Flushable) {
-			((Flushable) cache).flush();
-		}
-	}
+    protected void beforeReadObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        cache = new WeakHashMap<>();
+        source = (Map<K, V>) s.readObject();
+    }
 
 }
+

@@ -23,14 +23,14 @@
 
 package org.ujmp.core.collections;
 
-import java.util.Map;
+import org.ujmp.core.collections.map.DiskMap;
 
-import org.ujmp.core.collections.map.TextMap;
+import java.util.Map;
 
 public class TestTextMap extends AbstractStringMapTest {
 
 	public Map<String, String> createMap() throws Exception {
-		return new TextMap();
+		return new DiskMap();
 	}
 
 }

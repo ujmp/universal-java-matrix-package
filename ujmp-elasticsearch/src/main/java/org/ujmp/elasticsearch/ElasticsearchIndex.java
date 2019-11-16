@@ -66,7 +66,7 @@ import java.io.Closeable;
 import java.net.UnknownHostException;
 import java.util.*;
 
-public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Object>> implements Closeable {
+public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Object>> implements Closeable, Iterable<ElasticsearchSample> {
     private static final long serialVersionUID = -7047080106649021619L;
 
     public static final int DEFAULTPORT = 9300;
@@ -384,6 +384,11 @@ public class ElasticsearchIndex extends AbstractMapMatrix<String, Map<String, Ob
     public synchronized void updateField(String id, String key, Object value) {
         client.prepareUpdate(indexName, DEFAULTTYPE, id).setDoc(key, value).setRefreshPolicy(refreshPolicy).execute().actionGet();
     }
+
+    @Override
+    public Iterator<ElasticsearchSample> iterator() {
+        return new SampleIterator(this);
+    }
 }
 
 class KeySet extends AbstractSet<String> {
@@ -465,6 +470,56 @@ class KeyIterator implements Iterator<String> {
         if (iterator != null) {
             SearchHit hit = iterator.next();
             return hit.getId();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
+    public void remove() {
+        throw new UnmodifiableSetException();
+    }
+
+}
+
+class SampleIterator implements Iterator<ElasticsearchSample> {
+
+    private final ElasticsearchIndex index;
+    private Iterator<SearchHit> iterator;
+    private SearchResponse scrollResp;
+
+    public SampleIterator(ElasticsearchIndex index) {
+        this.index = index;
+        MatchAllQueryBuilder query = QueryBuilders.matchAllQuery();
+
+        scrollResp = index.getClient().prepareSearch(index.getIndexName())
+                .setScroll(new TimeValue(index.getScrollTimeout())).setQuery(query).setSize(index.getScrollsize())
+                .get();
+
+        iterator = scrollResp.getHits().iterator();
+    }
+
+    public boolean hasNext() {
+        if (iterator != null && !iterator.hasNext()) {
+
+            scrollResp = index.getClient().prepareSearchScroll(scrollResp.getScrollId())
+                    .setScroll(new TimeValue(index.getScrollTimeout())).execute().actionGet();
+            if (scrollResp.getHits().getHits().length == 0) {
+                iterator = null;
+            } else {
+                iterator = scrollResp.getHits().iterator();
+            }
+        }
+        if (iterator != null && iterator.hasNext()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ElasticsearchSample next() {
+        if (iterator != null) {
+            SearchHit hit = iterator.next();
+            return new ElasticsearchSample(index, hit);
         } else {
             throw new NoSuchElementException();
         }

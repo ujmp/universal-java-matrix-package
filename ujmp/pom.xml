@@ -19,7 +19,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rootdir>${basedir}</rootdir>
+
+        <!-- set to true to speed up building jar -->
         <skipTests>true</skipTests>
+
+        <!-- set to true to speed up building jar -->
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 
     <developers>

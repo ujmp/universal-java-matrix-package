@@ -46,12 +46,10 @@ import static org.ujmp.core.util.VerifyUtil.between;
 import static org.ujmp.core.util.VerifyUtil.notNull;
 
 public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
-    private static final long serialVersionUID = -8615077389159395747L;
-
     public static final int COMPRESSION_LEVEL_DEFAULT = 6;
-
+    private static final long serialVersionUID = -8615077389159395747L;
     private File path;
-    private String additionalFileExtension;
+    private final String additionalFileExtension;
     private int maxDirectoryDepth = 255;
     private int maxDirectoryLength = 255;
 
@@ -62,30 +60,9 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
     private Compression compression;
     private int compressionLevel = COMPRESSION_LEVEL_DEFAULT;
     private Object xzOptions;
+    private final ContentEncoding contentEncoding;
+    private final FilenameEncoding filenameEncoding;
 
-    public enum Compression {
-        NO_COMPRESSION(".dat"), GZIP_COMPRESSION(".gz"), BZIP2_COMPRESSION(".bz2"), XZ_COMPRESSION(".xz");
-
-        private final String fileExtension;
-
-        Compression(String fileExtension) {
-            this.fileExtension = fileExtension;
-        }
-    }
-
-    private ContentEncoding contentEncoding;
-
-    public enum ContentEncoding {
-        TEXT, BINARY, SERIALIZED_OBJECT;
-    }
-
-    private FilenameEncoding filenameEncoding;
-
-    public enum FilenameEncoding {
-        NONE, BASE64, SHA128, SHA256, SHA512;
-    }
-
-    @SuppressWarnings("unchecked")
     public DiskMap(File path, String fileExtension, FilenameEncoding filenameEncoding, ContentEncoding contentEncoding, Compression compression) throws IOException {
         this.path = notNull(path);
         this.additionalFileExtension = fileExtension;
@@ -156,6 +133,21 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         this(createRandomPath());
     }
 
+    private static File createRandomPath() throws IOException {
+        File path = File.createTempFile("diskmap" + System.nanoTime(), "");
+        path.delete();
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        return path;
+    }
+
+    private static boolean isEmpty(File dir) throws IOException {
+        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir.toPath())) {
+            return !dirStream.iterator().hasNext();
+        }
+    }
+
     public int getCompressionLevel() {
         return compressionLevel;
     }
@@ -180,19 +172,11 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         this.maxDirectoryLength = maxDirectoryLength;
     }
 
-    private static File createRandomPath() throws IOException {
-        File path = File.createTempFile("diskmap" + System.nanoTime(), "");
-        path.delete();
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        return path;
-    }
-
     public final File getPath() {
         return path;
     }
 
+    @Override
     public synchronized final int size() {
         try {
             return (int) Files.walk(path.toPath()).parallel().filter(Files::isRegularFile).count();
@@ -241,12 +225,6 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         return new File(filename.toString());
     }
 
-    private static boolean isEmpty(File dir) throws IOException {
-        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir.toPath())) {
-            return !dirStream.iterator().hasNext();
-        }
-    }
-
     private void deleteParentsIfEmpty(File file) {
         File parent = file.getParentFile();
         if (parent == null || parent.equals(path)) {
@@ -262,6 +240,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
+    @Override
     public synchronized final V remove(Object key) {
         try {
             File file = getFileForKey(key);
@@ -275,6 +254,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
+    @Override
     public synchronized final boolean containsKey(Object key) {
         try {
             File file = getFileForKey(key);
@@ -287,6 +267,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
+    @Override
     public final Set<K> keySet() {
         if (path == null || !path.exists()) {
             return Collections.emptySet();
@@ -294,8 +275,6 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         return new FileIteratorSet<>(this);
     }
 
-
-    @SuppressWarnings("unchecked")
     K getKeyForFile(File file) {
         try {
 
@@ -331,6 +310,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
+    @Override
     public final synchronized void clear() {
         try {
             erase();
@@ -339,10 +319,17 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "DiskMap " + path;
+    }
+
+    @Override
     public final void erase() {
         FileUtil.deleteRecursive(path);
     }
 
+    @Override
     public final synchronized V put(K key, V value) {
         try {
             if (key == null) {
@@ -398,7 +385,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public final synchronized V get(Object key) {
         try {
             File file = getFileForKey(key);
@@ -438,7 +425,7 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         }
     }
 
-
+    @Override
     protected void beforeWriteObject(ObjectOutputStream s) throws IOException {
         s.writeObject(path);
         s.writeInt(maxDirectoryDepth);
@@ -446,11 +433,31 @@ public class DiskMap<K, V> extends AbstractMap<K, V> implements Erasable {
         s.writeObject(compression);
     }
 
+    @Override
     protected void beforeReadObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         path = (File) s.readObject();
         maxDirectoryDepth = s.readInt();
         maxDirectoryLength = s.readInt();
         compression = (Compression) s.readObject();
+    }
+
+    public enum Compression {
+        NO_COMPRESSION(".dat"), GZIP_COMPRESSION(".gz"), BZIP2_COMPRESSION(".bz2"), XZ_COMPRESSION(".xz");
+
+        private final String fileExtension;
+
+        Compression(String fileExtension) {
+            this.fileExtension = fileExtension;
+        }
+    }
+
+
+    public enum ContentEncoding {
+        TEXT, BINARY, SERIALIZED_OBJECT
+    }
+
+    public enum FilenameEncoding {
+        NONE, BASE64, SHA128, SHA256, SHA512
     }
 
 }
